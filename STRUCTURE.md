@@ -4,81 +4,70 @@
 
 **Documentation Policy:**
 
-- Do NOT use emojis in any documentation files, including README, STRUCTURE, and Copilot instructions.
+- Do NOT use emojis in any documentation files, including `README.md`, `STRUCTURE.md`, and Copilot instructions.
 
-# Folder Structure Documentation
+This document outlines the folder structure for the Japan SSW static site (Phase 1 — HTML + CSS).
 
-This document outlines the folder structure and organization of the Japan SSW project.
+## Root directory
 
-## Root Directory
-
-- `index.html` - Main homepage entry point
-- `README.md` - Project documentation
-- `.gitignore` - Git ignore configuration
+- `index.html` — Main homepage entry
+- `README.md` — Project documentation and contributor notes
+- `.gitignore` — Git ignore configuration
 
 ## Folders
 
 ### `/pages/`
 
-Contains all additional HTML pages:
+Contains site pages (HTML):
 
-- `about.html` - About page
-- `services.html` - Services page
-- `contact.html` - Contact page with form
+- `about.html` — About page
+- `services.html` — Services page
+- `contact.html` — Contact page (form)
 
 ### `/assets/`
 
-Static assets organized by type:
+Static assets grouped by type. Only CSS and static assets are active in Phase 1; JavaScript is Phase 2 (optional).
 
 #### `/assets/css/`
 
-- `main.css` - Primary stylesheet with variables and base styles
-- `components.css` - Reusable component styles
-- `utilities.css` - Utility classes and helpers
+- `main.css` — Primary stylesheet (design tokens, layout, components, utilities)
+- `components.css` — Optional reusable components (Phase 2 organization)
+- `utilities.css` — Optional utilities (Phase 2 organization)
 
-#### `/assets/js/`
+#### `/assets/js/` (Phase 2 — optional)
 
-- `main.js` - JavaScript entry point and initialization
-- `/modules/` - Modular JavaScript files
-  - `navigation.js` - Navigation and scroll behavior
-  - `forms.js` - Form validation and submission
-  - `utils.js` - Utility functions and helpers
-  - `animations.js` - Animation controls and effects
+This project is Phase 1: HTML + CSS only. JavaScript will be introduced later if needed. When added, prefer small, modular files under `/assets/js/modules/` and document them in `docs/`.
 
-#### `/assets/images/`
+#### `/assets/images/`, `/assets/icons/`, `/assets/fonts/`
 
-Image assets (empty - ready for project images)
-
-#### `/assets/icons/`
-
-Icons and favicons (empty - ready for project icons)
-
-#### `/assets/fonts/`
-
-Custom fonts (empty - ready for custom fonts)
+- Image and media assets.
+- Icons and favicons.
+- Web fonts and font-face sources.
 
 ### `/components/`
 
-Reusable HTML components (empty - ready for component templates)
+Reserved for reusable server-side or static HTML fragments and templates. Keep filenames consistent with HTML naming (lowercase, hyphens) e.g. `contact-form.html`.
 
 ### `/.github/`
 
-GitHub configuration:
+- Repository config and guidance files (pull request templates, `copilot_instructions.md`).
 
-- `copilot_instructions.md` - Development guidelines and best practices
+## Naming conventions
 
-## File Naming Conventions
+- HTML files: lowercase with hyphens (e.g., `contact-form.html`).
+- CSS files: lowercase with hyphens (e.g., `main.css`).
+- JS modules: camelCase (e.g., `navigationController.js`) when Phase 2 is enabled.
+- Images: lowercase with hyphens (e.g., `hero-image.jpg`).
+- Component fragments: lowercase with hyphens to match HTML convention (e.g., `contact-form.html`).
 
-- HTML files: lowercase with hyphens (e.g., `contact-form.html`)
-- CSS files: lowercase with hyphens (e.g., `main.css`)
-- JavaScript files: camelCase for modules (e.g., `navigationController.js`)
-- Image files: lowercase with hyphens (e.g., `hero-image.jpg`)
-- Component files: PascalCase (e.g., `ContactForm.html`)
+## Guidelines
 
-## Asset Organization Guidelines
+1. Keep related assets together by feature or page.
+2. Use descriptive, predictable filenames.
+3. Prefer semantic HTML and small, focused CSS components.
+4. Reserve the root for essential files only.
 
-1. Keep related assets grouped together
-2. Use descriptive file names
-3. Maintain consistent naming conventions
-4. Organize by feature or page when the project grows
-5. Keep the root directory clean with only essential files
+If you want, I can also:
+
+- Remove speculative files from the repo (create the folders only), or
+- Add a short Phase 2 checklist with recommended JS module conventions in `docs/`.

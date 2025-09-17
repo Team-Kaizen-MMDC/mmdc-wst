@@ -59,7 +59,7 @@ Purpose: concise coding and design standards to keep the Japan SSW frontend cons
 - `--light-color: #fcfcfc` — backgrounds/cards
 - `--dark-color: #290000` — headings, dark UI, footer
 
-If you need this document expanded into separate coding style and visual design sections, I can split it into `CODE_GUIDE.md` and `DESIGN_GUIDE.md` under `docs/`.
+
 
 ## Recommended Links
 

@@ -1,22 +1,66 @@
 /*
-  assets/css/main.css
+  ======================================================================
+  assets/css/main.css — Project CSS Guide (top-of-file documentation)
+  ======================================================================
 
-  Purpose:
-    - Central stylesheet for Phase 1 (HTML + CSS only).
-    - Contains design tokens (CSS variables), core layout, components,
-      utility classes, and responsive rules.
+  Purpose
+  - Single source CSS for Phase 1 (static HTML + CSS only).
+  - Holds design tokens (variables), layout primitives, component styles,
+    utilities, responsive rules, and accessibility-focused styles.
 
-  Structure (high level):
-    1. Design tokens (colors, fonts, spacing)
-    2. Base styles and layout helpers (.container, header, footer)
-    3. Component styles (hero, cards, footer, forms)
-    4. Utilities (spacing, helpers) used to replace inline styles
-    5. Responsive and accessibility tweaks
+  File structure & conventions
+  - Grouping order (logical sections):
+    1) Design tokens (CSS custom properties)
+    2) Resets & base typographic rules
+    3) Layout containers (.container, header, footer)
+    4) Components (hero, cards, nav, footer-cta, forms)
+    5) Utilities (spacing, text helpers, visibility)
+    6) Responsive overrides and accessibility tweaks
 
-  Phase notes:
-    - JavaScript and Bootstrap are intentionally not enabled in Phase 1.
-    - HTML files include commented Phase-2 placeholders for future JS/Bootstrap
-      includes. Uncomment them when moving to Phase 2.
+  Naming conventions
+  - Use semantic class names (e.g., .site-header, .feature-card).
+  - Utility classes use short, clear tokens (e.g., .mt-sm, .fw-600).
+  - Button variants: .btn, .btn-primary, .btn-secondary, .btn-dark.
+
+  Header contract (important for cross-page consistency)
+  - The header uses this structure in all pages:
+      <header class="site-header">
+        <div class="container header-inner">
+          <a class="brand" href="/">Brand</a>
+          <nav class="site-nav" aria-label="Main navigation">...</nav>
+          <div class="header-actions">...Signup / Log in...</div>
+        </div>
+      </header>
+  - Key classes to reference when styling or modifying:
+    - .site-header: header background, border and global header scope
+    - .header-inner: flex container that aligns brand, nav and actions
+    - .site-nav: navigation link group
+    - .header-actions: right-side action group (signup/login)
+
+  Responsive guidance
+  - Desktop: header is a horizontal flex layout with nav centered left and
+    actions to the right.
+  - Mobile: header stacks vertically and the nav wraps for accessibility.
+    Responsive rules near the end of the file control these behaviors.
+
+  Phase 2 notes
+  - Bootstrap and JS are intentionally commented-out for Phase 1. When
+    enabling Phase 2, prefer importing only the Bootstrap utilities you
+    need or convert components to native CSS if possible.
+
+  Accessibility
+  - Focus styles are preserved for links and form controls. When adding
+    interactive behaviors in Phase 2, keep keyboard navigation and focus
+    order unchanged.
+
+  Editing tips for contributors
+  - Add new component CSS near related components (search for existing
+    patterns like "Hero" or "Footer").
+  - Prefer small, composable utility classes for spacing rather than
+    introducing per-page inline styles.
+  - Run a local preview (`python3 -m http.server 8000`) to validate visual
+    changes across breakpoints.
+
 */
 
 :root {
@@ -83,6 +127,75 @@ body {
 .site-nav a:focus,
 .site-nav a:hover {
   color: var(--primary-color);
+}
+
+/* Header actions (signup / login) */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-left: 1rem;
+}
+.header-actions .signup-link {
+  color: rgba(0, 0, 0, 0.6);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+}
+.header-actions .login-btn {
+  display: inline-block;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  background: var(--primary-color);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  border: none;
+}
+.header-actions .login-btn:hover {
+  filter: brightness(0.95);
+}
+
+/* Responsive header tweaks */
+@media (max-width: 900px) {
+  .header-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 0.75rem 0;
+  }
+  .site-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    width: 100%;
+  }
+  .site-nav a {
+    margin-left: 0;
+    padding: 0.25rem 0;
+  }
+  .header-actions {
+    margin-left: 0;
+    align-self: stretch;
+    justify-content: flex-end;
+  }
+  .header-actions .signup-link {
+    padding-left: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-actions {
+    justify-content: flex-start;
+  }
+  .header-actions .login-btn {
+    padding: 0.4rem 0.7rem;
+    font-size: 13px;
+  }
+  .brand {
+    font-size: 1.05rem;
+  }
 }
 
 /* Utility text */
