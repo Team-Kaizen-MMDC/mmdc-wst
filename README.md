@@ -25,9 +25,10 @@ features and optional Bootstrap utilities.
 - License & Team
 
 ## Overview
-Japan SSW is a frontend-first static site scaffold used as the Phase‑1 deliverable for the MMDC/WST project. The site demonstrates a clean, responsive layout and a small set of canonical pages used to communicate services and contact information. Phase‑1 intentionally uses only HTML and CSS (no runtime JavaScript or Bootstrap utilities) to keep the presentation layer simple and portable.
 
-This repository holds the wireframe-driven static pages and a canonical stylesheet (`assets/css/main.css`) that defines the design tokens (colors, spacing, typography) and header contract used across pages.
+Japan SSW is a frontend-first static site scaffold used as the Phase‑1 deliverable for the MMDC/WST project. The site demonstrates a clean, responsive layout and a small set of pages used to communicate services and contact information. Phase‑1 intentionally uses only HTML and CSS (no runtime JavaScript or Bootstrap utilities) to keep the presentation layer simple and portable.
+
+This repository holds the wireframe-driven static pages and a stylesheet (`assets/css/main.css`) that defines the design tokens (colors, spacing, typography) and header contract used across pages.
 
 ## Features (Phase 1)
 
@@ -41,7 +42,6 @@ Phase 2 roadmap (planned):
 - Add progressive JavaScript features (forms, interactivity)
 - Optionally enable Bootstrap utilities for faster UI components
 - Add unit/integration tests and CI checks
-
 
 ## Wireframe Summary
 
