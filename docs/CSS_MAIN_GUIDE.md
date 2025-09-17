@@ -87,7 +87,7 @@ Markup example:
 ```html
 <header class="site-header">
   <div class="container header-inner">
-  <a class="brand" href="index.html">Japan SSW</a>
+    <a class="brand" href="index.html">Japan SSW</a>
     <nav class="site-nav" aria-label="Main navigation">
       <a href="#jobs">Jobs</a>
       <a href="#companies">Companies</a>
