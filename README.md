@@ -94,6 +94,20 @@ japan-ssw/
 - Keep JavaScript modular and avoid global state
 - Optimize images and lazy-load large assets
 
+ ### Recommended Resources & Documentation
+
+- **HTML / CSS / JS (reference):** [MDN Web Docs](https://developer.mozilla.org/)
+- **Accessibility (WCAG & ARIA):** [W3C Web Accessibility Initiative](https://www.w3.org/WAI/) and ARIA spec ([WAI-ARIA 1.2](https://www.w3.org/TR/wai-aria-1.2/))
+- **Accessibility Guidance & Testing:** [WebAIM](https://webaim.org/) and [The A11Y Project](https://www.a11yproject.com/)
+- **Performance & Auditing:** [Google Lighthouse](https://developers.google.com/web/tools/lighthouse) and [WebPageTest](https://www.webpagetest.org/)
+- **Progressive Enhancement & Best Practices:** [Google Web Fundamentals](https://developers.google.com/web/fundamentals)
+- **Image Optimization:** [Squoosh](https://squoosh.app/) and [Image Optimization Guide](https://web.dev/fast/#optimize-images)
+- **Bootstrap Documentation:** [Bootstrap 5 Docs](https://getbootstrap.com/docs/5.3/)
+- **JavaScript Modules & Patterns:** [ES Modules (MDN)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
+- **SEO Basics for Static Sites:** [Google Search Central](https://developers.google.com/search/docs/fundamentals/seo-starter-guide)
+
+Use these resources when implementing features, writing docs, or reviewing PRs to ensure accessibility, performance, and maintainability.
+
 ## Contributing
 
 We use a branch-based workflow (no forking required). Create feature branches in this repository and open PRs against `main`.

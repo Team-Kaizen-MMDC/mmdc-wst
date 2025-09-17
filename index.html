@@ -1,137 +1,289 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Japan SSW - Modern Web Solutions" />
-    <meta name="keywords" content="web, development, solutions" />
-    <meta name="author" content="Team Kaizen MMDC" />
-
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content="Japan SSW - Jobs & Community" />
     <title>Japan SSW</title>
 
-    <!-- Bootstrap CSS -->
+    <!-- Inter font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap"
       rel="stylesheet"
-      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-      crossorigin="anonymous"
     />
 
-    <!-- Custom CSS -->
+    <!-- Site CSS -->
     <link rel="stylesheet" href="assets/css/main.css" />
-
-    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico" />
   </head>
   <body>
-    <!-- Header -->
-    <header class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container">
-        <a class="navbar-brand" href="index.html">Japan SSW</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <nav class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="index.html"
-                >Home</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="pages/about.html">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="pages/services.html">Services</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="pages/contact.html">Contact</a>
-            </li>
-          </ul>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="/">Japan SSW</a>
+        <nav class="site-nav" aria-label="Main navigation">
+          <a href="#jobs">Jobs</a>
+          <a href="#companies">Companies</a>
+          <a href="pages/about.html">About</a>
+          <a href="pages/contact.html">Contact</a>
         </nav>
       </div>
     </header>
 
-    <!-- Main Content -->
     <main>
-      <!-- Hero Section -->
-      <section class="hero bg-primary text-white py-5">
+      <!-- Hero -->
+      <section class="hero hero-centered">
         <div class="container">
-          <div class="row">
-            <div class="col-lg-8 mx-auto text-center">
-              <h1 class="display-4">Welcome to Japan SSW</h1>
-              <p class="lead">Modern web solutions for your business needs</p>
-              <a href="pages/about.html" class="btn btn-light btn-lg"
-                >Learn More</a
+          <div
+            style="max-width: 880px; margin: 3rem auto 4rem; text-align: center"
+          >
+            <h1 style="margin-bottom: 0.75rem; color: var(--dark-color)">
+              Specified Skilled Worker Jobs in Japan
+            </h1>
+            <p class="muted" style="margin-top: 0.5rem">
+              Your one-stop destination for job matching, visa assistance, and
+              essential community resources.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Job Board (card panel centered) -->
+      <section id="jobs" class="section-padding">
+        <div class="container">
+          <div style="display: flex; justify-content: center">
+            <div class="job-panel feature-card" style="width: 760px">
+              <div
+                style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem"
               >
+                <div class="job-item">
+                  <div class="job-meta muted">Image</div>
+                  <h4>Ground Handling Support (Haneda)</h4>
+                  <p class="muted">Kaisha — Tokyo</p>
+                </div>
+                <div class="job-item">
+                  <div class="job-meta muted">Image</div>
+                  <h4>Ground Handling Support (Haneda)</h4>
+                  <p class="muted">Kaisha — Tokyo</p>
+                </div>
+                <div class="job-item">
+                  <div class="job-meta muted">Image</div>
+                  <h4>Ground Handling Support (Haneda)</h4>
+                  <p class="muted">Kaisha — Tokyo</p>
+                </div>
+                <div class="job-item">
+                  <div class="job-meta muted">Image</div>
+                  <h4>Ground Handling Support (Haneda)</h4>
+                  <p class="muted">Kaisha — Tokyo</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="text-align: center; margin-top: 2.25rem">
+            <a class="btn btn-primary" href="#jobs">Search SSW jobs</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Top Company grid -->
+      <section id="companies" class="features" aria-label="Top companies">
+        <div class="container">
+          <h2 class="section-title">Top Company</h2>
+          <div class="company-grid" style="margin-top: 1.5rem">
+            <!-- 3x3 grid of company cards -->
+            <div class="company-card feature-card">Nissan</div>
+            <div class="company-card feature-card">Yamaha</div>
+            <div class="company-card feature-card">Hitachi</div>
+            <div class="company-card feature-card">JAL</div>
+            <div class="company-card feature-card">Nissan</div>
+            <div class="company-card feature-card">Yamaha</div>
+            <div class="company-card feature-card">Hitachi</div>
+            <div class="company-card feature-card">JAL</div>
+            <div class="company-card feature-card">Nissan</div>
+          </div>
+
+          <div style="text-align: center; margin-top: 1.75rem">
+            <a class="btn btn-primary" href="#companies">View Company</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Registered Support Organization (wide card) -->
+      <section class="section-padding">
+        <div class="container">
+          <h2 class="section-title">Registered Support Organization</h2>
+          <div
+            style="display: flex; justify-content: center; margin-top: 1.25rem"
+          >
+            <div
+              class="feature-card"
+              style="
+                max-width: 1000px;
+                display: flex;
+                gap: 1.5rem;
+                align-items: center;
+              "
+            >
+              <img
+                src="assets/images/hero-illustration.svg"
+                alt="ASEAN PLUS"
+                style="width: 320px; height: auto; object-fit: cover"
+              />
+              <div>
+                <h3>ASEAN PLUS</h3>
+                <p class="muted">Lorem ipsum dolor sit amet consectetur.</p>
+                <p class="muted">
+                  Short description about the organization and its support
+                  services for foreign workers.
+                </p>
+                <p style="margin-top: 0.5rem">
+                  <a class="btn btn-primary" href="#">Search Agency</a>
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Features Section -->
-      <section class="features py-5">
+      <!-- About Us card -->
+      <section class="features">
         <div class="container">
-          <div class="row">
-            <div class="col-md-4">
-              <div class="card h-100">
-                <div class="card-body text-center">
-                  <h5 class="card-title">Feature 1</h5>
-                  <p class="card-text">Description of your first feature.</p>
-                </div>
+          <h2 class="section-title">About Us</h2>
+          <div style="display: flex; justify-content: center; margin-top: 1rem">
+            <div
+              class="feature-card"
+              style="
+                max-width: 900px;
+                display: grid;
+                grid-template-columns: 280px 1fr;
+                gap: 1rem;
+                align-items: center;
+              "
+            >
+              <img
+                src="assets/images/hero-illustration.svg"
+                alt="About"
+                style="width: 100%; height: auto; object-fit: cover"
+              />
+              <div>
+                <p style="font-weight: 600">
+                  JapanSSW is your one-stop platform for skilled trade job
+                  seekers under the Specified Skilled Worker (SSW) visa in
+                  Japan.
+                </p>
+                <p class="muted">
+                  Founded in 2024 by Juan Angelo, JapanSSW provides job
+                  matching, visa guidance, and community resources to help
+                  foreign workers find stable employment and build better
+                  futures in Japan.
+                </p>
+                <p style="margin-top: 0.5rem">
+                  <a class="btn btn-primary" href="pages/about.html"
+                    >Learn more</a
+                  >
+                </p>
               </div>
             </div>
-            <div class="col-md-4">
-              <div class="card h-100">
-                <div class="card-body text-center">
-                  <h5 class="card-title">Feature 2</h5>
-                  <p class="card-text">Description of your second feature.</p>
-                </div>
-              </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Job Alerts Band (red) -->
+      <section class="alerts-band">
+        <div class="container" style="text-align: center">
+          <h3 style="color: #fff; margin-bottom: 0.5rem">Get Job Alerts</h3>
+          <p style="color: #fff; margin-bottom: 1rem">
+            Sign up for our newsletter to get handpicked jobs in Japan —
+            straight to your inbox.
+          </p>
+          <div style="display: flex; justify-content: center; gap: 0.5rem">
+            <input
+              type="email"
+              class="form-control"
+              placeholder="Your email address"
+            />
+            <button class="btn btn-dark">Sign Up</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Post a Job CTA -->
+      <section id="post-job" class="section-padding">
+        <div class="container">
+          <div
+            class="feature-card"
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            "
+          >
+            <div>
+              <h3>Want to post jobs?</h3>
+              <p class="muted">
+                Reach qualified engineers and designers in Japan.
+              </p>
             </div>
-            <div class="col-md-4">
-              <div class="card h-100">
-                <div class="card-body text-center">
-                  <h5 class="card-title">Feature 3</h5>
-                  <p class="card-text">Description of your third feature.</p>
-                </div>
-              </div>
+            <div>
+              <a class="btn btn-primary" href="#">Post a Job</a>
             </div>
           </div>
         </div>
       </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-dark text-white py-4">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6">
-            <p>&copy; 2025 Japan SSW. All rights reserved.</p>
+    <footer class="site-footer site-footer--dark" role="contentinfo">
+      <div class="container footer-grid">
+        <div class="footer-cta">
+          <h3>Want to post jobs on JapanSSW?</h3>
+          <p class="muted" style="color: rgba(255, 255, 255, 0.9)">
+            Reach qualified candidates under the SSW programme.
+          </p>
+          <div class="footer-cta-actions">
+            <a class="btn btn-secondary" href="#">Employer Login</a>
+            <a class="btn btn-primary" href="#">Post a Job</a>
           </div>
-          <div class="col-md-6 text-end">
-            <p>Built by Team Kaizen MMDC</p>
+        </div>
+
+        <div class="footer-links">
+          <div class="link-col">
+            <h4>Company</h4>
+            <ul>
+              <li><a href="/">Home</a></li>
+              <li><a href="pages/about.html">About</a></li>
+              <li><a href="pages/contact.html">Contact</a></li>
+            </ul>
+          </div>
+          <div class="link-col">
+            <h4>Jobs</h4>
+            <ul>
+              <li><a href="#jobs">Search Jobs</a></li>
+              <li><a href="#companies">Companies</a></li>
+              <li><a href="#post-job">Post a Job</a></li>
+            </ul>
+          </div>
+          <div class="link-col">
+            <h4>Resources</h4>
+            <ul>
+              <li><a href="#">Visa Guidance</a></li>
+              <li><a href="#">Employer Hub</a></li>
+              <li><a href="#">Privacy</a></li>
+            </ul>
           </div>
         </div>
       </div>
+
+      <div class="container footer-legal">
+        <div class="legal-inner">
+          <small>&copy; 2025 Japan SSW. All rights reserved.</small>
+          <nav aria-label="Footer legal">
+            <a href="#">Terms</a>
+            <a href="#">Privacy</a>
+          </nav>
+        </div>
+      </div>
     </footer>
-
-    <!-- Bootstrap JS -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-      crossorigin="anonymous"
-    ></script>
-
-    <!-- Custom JS -->
-    <script src="assets/js/main.js"></script>
   </body>
 </html>
