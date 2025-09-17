@@ -24,11 +24,10 @@ Purpose: concise coding and design standards to keep the Japan SSW frontend cons
 
 ## Typography
 
-- Body: `Open Sans` (loaded via Google Fonts) — use `--font-body`.
-- Body: `Open Sans` (loaded via Google Fonts) — use `--font-body`.
-- Headings: system Helvetica stack via `--font-heading`.
-- Japanese text: use `--font-jp` and apply via `:lang(ja)` or `.jp` when necessary.
-- Sizes: H1 36px/44px, H2 32px/36px, H3 28px/36px (set in `main.css`).
+- Base font stack: the project uses a system + Inter stack exposed as `--font-family-sans` in `assets/css/main.css` (`Inter`, system-ui, -apple-system, `Segoe UI`, Roboto, `Helvetica Neue`, Arial, sans-serif). The `html` element sets this stack by default.
+- Monospace stack: available as `--font-family-mono` for code-like UI elements.
+- Headings: use semantic headings (H1..H6) and rely on the stylesheet's sizing; override only when necessary.
+- Sizes: H1/H2/H3 sizes are controlled in `main.css` as part of the base/type scale—prefer editing `--base-font-size` or the heading rules instead of inline styles.
 
 ## Accessibility
 
@@ -53,13 +52,31 @@ Purpose: concise coding and design standards to keep the Japan SSW frontend cons
 
 ## Design tokens (reference)
 
+The canonical token definitions live in the top of `assets/css/main.css` inside the `:root` block. Change them there to affect the whole site.
+
 - `--primary-color: #eb0000` — primary CTAs
 - `--secondary-color: #a57668` — secondary accents
 - `--accent-color: #008cff` — accents and links
 - `--light-color: #fcfcfc` — backgrounds/cards
 - `--dark-color: #290000` — headings, dark UI, footer
+- `--ui-color: #f7f7f7` — UI surface / subtle backgrounds
+- `--border-radius: 8px` — global rounding
+- `--transition: all 0.2s ease` — default motion timing
+- `--box-shadow: 0 6px 18px rgba(0,0,0,0.08)` — default shadow
+- `--font-family-sans` and `--font-family-mono` — typography stacks
 
+Example usage in CSS:
 
+```css
+.btn-primary {
+  background: var(--primary-color);
+  color: #fff;
+}
+.site-footer {
+  background: var(--dark-color);
+  color: #fff;
+}
+```
 
 ## Recommended Links
 

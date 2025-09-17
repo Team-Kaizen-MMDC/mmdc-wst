@@ -1,0 +1,27 @@
+{
+  "name": "mmdc-wst",
+  "version": "1.0.0",
+  "description": "![Version](https://img.shields.io/badge/version-1.0.0-blue.svg) ![HTML5](https://img.shields.io/badge/HTML5-5.2-orange) ![CSS3](https://img.shields.io/badge/CSS3-3-blue) ![JavaScript](https://img.shields.io/badge/JavaScript-ES6-yellow) ![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-purple) ![Node.js](https://img.shields.io/badge/Node.js-18-green)",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Team-Kaizen-MMDC/mmdc-wst.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Team-Kaizen-MMDC/mmdc-wst/issues"
+  },
+  "homepage": "https://github.com/Team-Kaizen-MMDC/mmdc-wst#readme",
+  "devDependencies": {
+    "playwright": "^1.55.0"
+  }
+}

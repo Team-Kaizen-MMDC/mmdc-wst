@@ -21,6 +21,51 @@ Central stylesheet for Phase 1 (static HTML + CSS). It contains design tokens, l
 - Buttons: use `.btn` along with `.btn-primary`, `.btn-secondary`, or `.btn-dark`.
 - Header: keep the `site-header` contract consistent across pages.
 
+## Design tokens and where to edit
+
+The design tokens (colors, radii, typography stacks, and common motion tokens) live at the top of `assets/css/main.css` in the `:root` block. Update those variables to change the site's global theme.
+
+Common tokens you'll find and may edit:
+
+```css
+:root {
+  --primary-color: #eb0000;
+  --secondary-color: #a57668;
+  --accent-color: #008cff;
+  --light-color: #fcfcfc;
+  --dark-color: #290000;
+  --ui-color: #f7f7f7;
+
+  --border-radius: 8px;
+  --transition: all 0.2s ease;
+  --box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+
+  --font-family-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif;
+  --font-family-mono: "SFMono-Regular", Menlo, Monaco, "Roboto Mono",
+    "Courier New", monospace;
+
+  --base-font-size: 16px;
+}
+```
+
+Changing `--primary-color` will update CTAs and other components that reference it. If you want to experiment locally, edit these values then refresh the served pages.
+
+Additional typography tokens you may see in `:root`:
+
+- `--font-heading` — heading font stack (Helvetica family by default)
+- `--font-body` — body font stack (Open Sans + system fallbacks)
+- `--font-jp` — Japanese font stack (Yu Gothic / Hiragino / Meiryo)
+
+Note about loading fonts: `--font-body` references `Open Sans`. To ensure consistent rendering across environments, add this to your page `<head>` if you want the web font loaded:
+
+```html
+<link
+  href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap"
+  rel="stylesheet"
+/>
+```
+
 ## Header contract
 
 All pages should use the same header markup for consistent navigation and behavior.
@@ -81,4 +126,3 @@ python3 -m http.server 8000
 
 - Navigation spacing: adjust `.site-nav a { margin-left: X }`.
 - Header wrapping issues: tune `.header-inner` breakpoint rules.
-
