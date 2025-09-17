@@ -1,0 +1,196 @@
+/*
+  assets/css/components.css
+
+  Component-Specific Styles (Phase 2 - Optional)
+    - This file contains reusable component styles (buttons, cards,
+      navigation helpers, media components) intended for Phase 2 when
+      the project moves to a more modular CSS approach.
+    - For Phase 1 the project uses `assets/css/main.css` only. This file
+      is intentionally NOT included in HTML for Phase 1 to avoid extra
+      HTTP requests and to keep the initial deliverable minimal.
+    - To enable in Phase 2: either import or link this file from HTML
+      or integrate into a build pipeline.
+*/
+
+/* ===================================================================
+   Component-Specific Styles
+   =================================================================== */
+
+/* Reusable component styles that can be imported into main.css */
+
+/* Button Components */
+.btn-outline-custom {
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+  background-color: transparent;
+}
+
+.btn-outline-custom:hover {
+  color: white;
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+/* Card Components */
+.card-feature {
+  text-align: center;
+  padding: 2rem 1rem;
+  height: 100%;
+}
+
+.card-feature .card-icon {
+  font-size: 3rem;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+.card-testimonial {
+  background-color: var(--light-color);
+  border-left: 4px solid var(--primary-color);
+}
+
+.card-testimonial .card-body {
+  padding: 2rem;
+}
+
+/* Navigation Components */
+.navbar-scroll {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(10px);
+}
+
+.nav-link-custom {
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.nav-link-custom::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background-color: var(--primary-color);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.nav-link-custom:hover::after,
+.nav-link-custom.active::after {
+  width: 100%;
+}
+
+/* Form Components */
+.form-floating .form-control {
+  height: calc(3.5rem + 2px);
+  padding: 1rem 0.75rem;
+}
+
+.form-floating label {
+  padding: 1rem 0.75rem;
+}
+
+.input-group-custom {
+  position: relative;
+}
+
+.input-group-custom .form-control {
+  padding-right: 3rem;
+}
+
+.input-group-custom .input-icon {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--secondary-color);
+  z-index: 5;
+}
+
+/* Section Components */
+.section-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.section-header h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.section-header .lead {
+  font-size: 1.25rem;
+  color: var(--secondary-color);
+}
+
+/* Media Components */
+.image-overlay {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--border-radius);
+}
+
+.image-overlay::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 123, 255, 0.8),
+    rgba(0, 86, 179, 0.8)
+  );
+  opacity: 0;
+  transition: var(--transition);
+  z-index: 1;
+}
+
+.image-overlay:hover::before {
+  opacity: 1;
+}
+
+.image-overlay img {
+  transition: var(--transition);
+}
+
+.image-overlay:hover img {
+  transform: scale(1.05);
+}
+
+/* Loading Components */
+.loading-spinner {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  border: 0.25rem solid var(--light-color);
+  border-radius: 50%;
+  border-top-color: var(--primary-color);
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Alert Components */
+.alert-custom {
+  border: none;
+  border-radius: var(--border-radius);
+  border-left: 4px solid var(--primary-color);
+  box-shadow: var(--box-shadow);
+}
+
+/* Badge Components */
+.badge-custom {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  font-weight: 500;
+}

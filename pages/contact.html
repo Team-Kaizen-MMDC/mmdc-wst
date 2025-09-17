@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!--
+      pages/contact.html - Contact form page
+      - Phase 1: Contact form is present as markup only; no client-side JS handling.
+      - Form fields are plain HTML; in Phase 2 we will add JS validation/submit handlers.
+      - Header/footer use shared components; keep relative link paths when editing.
+    -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Contact Japan SSW" />
+
+    <title>Contact - Japan SSW</title>
+
+    <!-- Open Sans for body text (wireframe) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../assets/css/main.css" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.ico" />
+    <!-- Phase 2 placeholder: Bootstrap CSS (uncomment when enabling Bootstrap)
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    -->
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="../">Japan SSW</a>
+        <nav class="site-nav" aria-label="Main navigation">
+          <a href="../index.html#jobs">Jobs</a>
+          <a href="../index.html#companies">Companies</a>
+          <a href="agency.html">Agency</a>
+          <a href="about.html">About</a>
+        </nav>
+        <div class="header-actions">
+          <a class="signup-link muted" href="#">Signup</a>
+          <a class="btn btn-primary login-btn" href="#">Log in</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+      <section class="py-5">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8 mx-auto">
+              <h1 class="mb-4">Contact Us</h1>
+              <p class="lead">Get in touch with our team.</p>
+
+              <form class="mt-4">
+                <div class="mb-3">
+                  <label for="name" class="form-label">Name</label>
+                  <input type="text" class="form-control" id="name" required />
+                </div>
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="message" class="form-label">Message</label>
+                  <textarea
+                    class="form-control"
+                    id="message"
+                    rows="5"
+                    required
+                  ></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                  Send Message
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <p>&copy; 2025 Japan SSW. All rights reserved.</p>
+          </div>
+          <div class="col-md-6 text-end">
+            <p>Built by Team Kaizen MMDC</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Custom JS (if required) -->
+    <!-- Phase 2 placeholder: Bootstrap JS bundle & site JavaScript
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+    -->
+  </body>
+</html>

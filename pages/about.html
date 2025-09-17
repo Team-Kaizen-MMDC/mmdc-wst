@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!--
+      pages/about.html - About page
+      - Phase 1: uses HTML + CSS only
+      - Shared header: use `../index.html` or root links where appropriate
+      - Footer is the shared `site-footer` used across pages
+      - Phase 2 placeholders for Bootstrap/JS are included as commented blocks
+    -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="About Japan SSW" />
+
+    <title>About - Japan SSW</title>
+
+    <!-- Open Sans for body text (wireframe) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.ico" />
+    <!-- Phase 2 placeholder: Bootstrap CSS (uncomment when enabling Bootstrap)
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    -->
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="../">Japan SSW</a>
+        <nav class="site-nav" aria-label="Main navigation">
+          <a href="../index.html#jobs">Jobs</a>
+          <a href="../index.html#companies">Companies</a>
+          <a href="agency.html">Agency</a>
+          <a href="about.html">About</a>
+        </nav>
+        <div class="header-actions">
+          <a class="signup-link muted" href="#">Signup</a>
+          <a class="btn btn-primary login-btn" href="#">Log in</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- About US (wireframe content) -->
+      <section class="section-padding">
+        <div class="container">
+          <h1 class="section-title">About US</h1>
+
+          <div class="max-w-980 mt-sm">
+            <p>
+              JapanSSW is a comprehensive platform dedicated to empowering
+              foreign workers seeking skilled trade jobs in Japan under the
+              Specified Skilled Worker (SSW) visa. We aim to bridge the gap
+              between job seekers and opportunities by providing streamlined
+              job-matching services, visa assistance, and essential community
+              resources.
+            </p>
+
+            <p>
+              Our journey began in 2024 when Juan Angelo, a first-year student
+              at MMDC and an SSW visa holder, founded JapanSSW. Inspired by his
+              own experiences as a working student in Japan, Juan recognized the
+              challenges foreign workers face, from navigating complex
+              immigration policies to finding secure employment. His vision was
+              to create a platform that not only simplifies these processes but
+              also drives meaningful change in Japan’s labor landscape.
+            </p>
+          </div>
+
+          <h2 class="section-title mt-xl">Our Mission</h2>
+          <p class="text-center max-w-900 mt-sm">
+            Fair careers for workers. Trusted recruitment for employers.
+            Sustainable growth for Japan.
+          </p>
+
+          <h2 class="section-title mt-md">Our Vision</h2>
+          <p class="text-center max-w-900 mt-sm">
+            To be Japan's leading platform that empowers skilled foreign workers
+            to achieve meaningful careers and brighter futures.
+          </p>
+        </div>
+      </section>
+
+      <!-- Team section removed per request -->
+
+      <!-- CTA -->
+      <section class="cta-band">
+        <div class="container">
+          <div class="feature-card feature-cta">
+            <div>
+              <h3 class="m-0">Want to work with us?</h3>
+              <p class="muted mt-xxs">
+                We partner with companies to hire and onboard exceptional
+                talent.
+              </p>
+            </div>
+            <div>
+              <a class="btn btn-primary" href="../index.html#post-job"
+                >Contact Us</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer site-footer--dark" role="contentinfo">
+      <div class="container footer-grid">
+        <div class="footer-cta">
+          <h3>Want to post jobs on JapanSSW?</h3>
+          <p class="muted">
+            Reach qualified candidates under the SSW programme.
+          </p>
+          <div class="footer-cta-actions">
+            <a class="btn btn-secondary" href="../">Employer Login</a>
+            <a class="btn btn-primary" href="../index.html#post-job"
+              >Post a Job</a
+            >
+          </div>
+        </div>
+
+        <div class="footer-links">
+          <div class="link-col">
+            <h4>Company</h4>
+            <ul>
+              <li><a href="../">Home</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+          <div class="link-col">
+            <h4>Jobs</h4>
+            <ul>
+              <li><a href="../index.html#jobs">Search Jobs</a></li>
+              <li><a href="../index.html#companies">Companies</a></li>
+              <li><a href="../index.html#post-job">Post a Job</a></li>
+            </ul>
+          </div>
+          <div class="link-col">
+            <h4>Resources</h4>
+            <ul>
+              <li><a href="#">Visa Guidance</a></li>
+              <li><a href="#">Employer Hub</a></li>
+              <li><a href="#">Privacy</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="container footer-legal">
+        <div class="legal-inner">
+          <small>&copy; 2025 Japan SSW. All rights reserved.</small>
+          <nav aria-label="Footer legal">
+            <a href="#">Terms</a>
+            <a href="#">Privacy</a>
+          </nav>
+        </div>
+      </div>
+    </footer>
+    <!-- Phase 2 placeholder: Bootstrap JS bundle & site JavaScript
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+    -->
+  </body>
+</html>

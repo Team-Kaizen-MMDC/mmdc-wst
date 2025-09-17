@@ -1,0 +1,1297 @@
+/*
+  ======================================================================
+  assets/css/main.css — Project CSS Guide (top-of-file documentation)
+  ======================================================================
+
+  Purpose
+  - Single source CSS for Phase 1 (static HTML + CSS only).
+  - Holds design tokens (variables), layout primitives, component styles,
+    utilities, responsive rules, and accessibility-focused styles.
+
+  File structure & conventions
+  - Grouping order (logical sections):
+    1) Design tokens (CSS custom properties)
+    2) Resets & base typographic rules
+    3) Layout containers (.container, header, footer)
+    4) Components (hero, cards, nav, footer-cta, forms)
+    5) Utilities (spacing, text helpers, visibility)
+    6) Responsive overrides and accessibility tweaks
+
+  Naming conventions
+  - Use semantic class names (e.g., .site-header, .feature-card).
+  - Utility classes use short, clear tokens (e.g., .mt-sm, .fw-600).
+  - Button variants: .btn, .btn-primary, .btn-secondary, .btn-dark.
+
+  Header contract (important for cross-page consistency)
+  - The header uses this structure in all pages:
+      <header class="site-header">
+        <div class="container header-inner">
+          <a class="brand" href="/">Brand</a>
+          <nav class="site-nav" aria-label="Main navigation">...</nav>
+          <div class="header-actions">...Signup / Log in...</div>
+        </div>
+      </header>
+  - Key classes to reference when styling or modifying:
+    - .site-header: header background, border and global header scope
+    - .header-inner: flex container that aligns brand, nav and actions
+    - .site-nav: navigation link group
+    - .header-actions: right-side action group (signup/login)
+
+  Responsive guidance
+  - Desktop: header is a horizontal flex layout with nav centered left and
+    actions to the right.
+  - Mobile: header stacks vertically and the nav wraps for accessibility.
+    Responsive rules near the end of the file control these behaviors.
+
+  Phase 2 notes
+  - Bootstrap and JS are intentionally commented-out for Phase 1. When
+    enabling Phase 2, prefer importing only the Bootstrap utilities you
+    need or convert components to native CSS if possible.
+
+  Accessibility
+  - Focus styles are preserved for links and form controls. When adding
+    interactive behaviors in Phase 2, keep keyboard navigation and focus
+    order unchanged.
+
+  Editing tips for contributors
+  - Add new component CSS near related components (search for existing
+    patterns like "Hero" or "Footer").
+  - Prefer small, composable utility classes for spacing rather than
+    introducing per-page inline styles.
+  - Run a local preview (`python3 -m http.server 8000`) to validate visual
+    changes across breakpoints.
+
+*/
+
+:root {
+  --primary-color: #eb0000;
+  --secondary-color: #a57668;
+  --accent-color: #008cff;
+  --light-color: #fcfcfc;
+  --dark-color: #290000;
+  --ui-color: #a79f9f;
+
+  --font-family-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --border-radius: 0.375rem;
+  --box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  --transition: all 0.2s ease;
+
+  /* Typography tokens (from the design guide) */
+  --font-heading: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-body: "Open Sans", system-ui, -apple-system, "Segoe UI", Roboto, Arial,
+    sans-serif;
+  --font-jp: "Yu Gothic", "YuGothic", "Hiragino Kaku Gothic ProN", Meiryo,
+    sans-serif;
+
+  /* Heading scale */
+  --h1-size: 36px;
+  --h1-line-height: 44px;
+  --h2-size: 32px;
+  --h2-line-height: 36px;
+  --h3-size: 28px;
+  --h3-line-height: 36px;
+
+  /* Body & small text */
+  --body-size: 16px;
+  --body-line-height: 24px;
+  --small-size: 14px;
+  --small-line-height: 20px;
+
+  /* Button text */
+  --btn-size: 15px;
+  --btn-line-height: 20px;
+}
+
+/* Base styles */
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--dark-color);
+  font-size: var(--body-size);
+  line-height: var(--body-line-height);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Heading scale from design guide */
+h1 {
+  font-family: var(--font-heading);
+  font-size: var(--h1-size);
+  line-height: var(--h1-line-height);
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+}
+
+h2 {
+  font-family: var(--font-heading);
+  font-size: var(--h2-size);
+  line-height: var(--h2-line-height);
+  font-weight: 700;
+  margin: 0 0 0.75rem;
+}
+
+h3 {
+  font-family: var(--font-heading);
+  font-size: var(--h3-size);
+  line-height: var(--h3-line-height);
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+}
+
+/* Buttons should use the body/btn tokens */
+.btn {
+  font-family: var(--font-body);
+  font-size: var(--btn-size);
+  line-height: var(--btn-line-height);
+  font-weight: 700;
+}
+
+/* Japanese font stack for elements where lang=ja or .jp is used */
+:lang(ja),
+.jp {
+  font-family: var(--font-jp);
+}
+
+/* Layout container */
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Header */
+.site-header {
+  background: var(--light-color);
+  border-bottom: 1px solid var(--ui-color);
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0;
+}
+.brand {
+  font-weight: 700;
+  color: var(--dark-color);
+  text-decoration: none;
+}
+.site-nav a {
+  margin-left: 1rem;
+  color: var(--dark-color);
+  text-decoration: none;
+  font-weight: 500;
+}
+.site-nav a:focus,
+.site-nav a:hover {
+  color: var(--primary-color);
+}
+
+/* Header actions (signup / login) */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-left: 1rem;
+}
+.header-actions .signup-link {
+  color: rgba(0, 0, 0, 0.6);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+}
+.header-actions .login-btn {
+  display: inline-block;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  background: var(--primary-color);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  border: none;
+}
+.header-actions .login-btn:hover {
+  filter: brightness(0.95);
+}
+
+/* Responsive header tweaks */
+@media (max-width: 900px) {
+  .header-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 0.75rem 0;
+  }
+  .site-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    width: 100%;
+  }
+  .site-nav a {
+    margin-left: 0;
+    padding: 0.25rem 0;
+  }
+  .header-actions {
+    margin-left: 0;
+    align-self: stretch;
+    justify-content: flex-end;
+  }
+  .header-actions .signup-link {
+    padding-left: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-actions {
+    justify-content: flex-start;
+  }
+  .header-actions .login-btn {
+    padding: 0.4rem 0.7rem;
+    font-size: 13px;
+  }
+  .brand {
+    font-size: 1.05rem;
+  }
+}
+
+/* Utility text */
+.muted {
+  color: rgba(0, 0, 0, 0.6);
+}
+.section-title {
+  text-align: center;
+  margin-bottom: 1.25rem;
+}
+.section-padding {
+  padding: 2.25rem 0;
+}
+
+/* Hero */
+.hero-centered {
+  background: #fbf8f7;
+  padding: 2.25rem 0 1rem;
+}
+.hero-centered h1 {
+  font-size: 1.875rem;
+  margin: 0 0 0.5rem;
+  font-weight: 700;
+}
+.lead {
+  color: rgba(0, 0, 0, 0.75);
+}
+
+/* Cards */
+.feature-card {
+  background: #fff;
+  padding: 1.25rem;
+  border-radius: 12px;
+  box-shadow: var(--box-shadow);
+}
+.job-panel {
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  padding: 1rem;
+}
+
+/* Grid helpers */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+.company-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+@media (max-width: 900px) {
+  .features-grid,
+  .company-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 0.6rem 0.9rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+}
+.btn-primary {
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+}
+.btn-primary:hover {
+  filter: brightness(0.95);
+}
+.btn-secondary {
+  background: #fff;
+  color: var(--dark-color);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+.btn-dark {
+  background: var(--dark-color);
+  color: #fff;
+}
+
+/* ------------------------------------------------------------------
+   Typography (wireframe): Helvetica for headings, Open Sans for body,
+   Yu Gothic for Japanese text. Sizes follow the design spec.
+   Appended at the end to ensure these rules take precedence.
+   ------------------------------------------------------------------ */
+:root {
+  --font-body: "Open Sans", system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --font-heading: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-jp: "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+}
+
+html,
+body {
+  font-family: var(--font-body);
+  font-size: 16px; /* body text size per wireframe */
+}
+
+h1 {
+  font-family: var(--font-heading);
+  font-size: 36px;
+  line-height: 44px;
+  margin: 0 0 0.5rem;
+}
+h2 {
+  font-family: var(--font-heading);
+  font-size: 32px;
+  line-height: 36px;
+}
+h3 {
+  font-family: var(--font-heading);
+  font-size: 28px;
+  line-height: 36px;
+}
+
+/* Buttons/CTAs use heading font weight */
+.btn,
+button {
+  font-family: var(--font-heading);
+  font-size: 14px;
+}
+
+/* Japanese content should use Yu Gothic when present */
+:lang(ja),
+.jp {
+  font-family: var(--font-jp);
+}
+
+/* Alerts band */
+.alerts-band {
+  background: var(--primary-color);
+  color: #fff;
+  padding: 2rem 0;
+  text-align: center;
+}
+.alerts-band .form-control {
+  width: 360px;
+  max-width: 80%;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  border: none;
+}
+
+/* Footer */
+.site-footer--dark {
+  background: #6b0000;
+  color: #fff;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  padding: 1rem 0 1.25rem;
+}
+.footer-cta h3 {
+  color: #fff;
+  margin: 0 0 0.5rem;
+}
+.footer-cta .muted {
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 0.75rem;
+}
+.footer-cta-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+.footer-links {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+.link-col h4 {
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+.link-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.link-col li {
+  margin-bottom: 0.5rem;
+}
+.link-col a {
+  color: rgba(255, 255, 255, 0.95);
+  text-decoration: none;
+}
+.footer-legal {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  margin-top: 1rem;
+  padding-top: 1rem;
+}
+.legal-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+.footer-legal nav a {
+  margin-left: 0.75rem;
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+}
+@media (max-width: 900px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+  .footer-links {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+  .legal-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+}
+
+/* Forms & focus */
+.form-control {
+  border-radius: 6px;
+  border: 1px solid #d0d0d0;
+  padding: 0.5rem 0.75rem;
+}
+.form-control:focus {
+  outline: 3px solid rgba(235, 0, 0, 0.15);
+}
+.btn:focus,
+.form-control:focus,
+.site-nav a:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* Small helper spacing */
+.mt-1 {
+  margin-top: 0.5rem;
+}
+.mt-2 {
+  margin-top: 1rem;
+}
+
+/* Accessibility: reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* ===================================================================
+   CSS Reset and Base Styles
+   =================================================================== */
+
+/* CSS Custom Properties (Variables) */
+:root {
+  /* Japan SSW brand palette (from provided Color Scheme attachment) */
+  --primary-color: #eb0000; /* Primary - Buttons, links, key CTAs */
+  --secondary-color: #a57668; /* Secondary - secondary buttons, highlights */
+  --accent-color: #008cff; /* Accent - icons, notifications */
+  --light-color: #fcfcfc; /* Light - backgrounds, cards */
+  --dark-color: #290000; /* Dark - headings, text, footer */
+  --ui-color: #a79f9f; /* UI - borders, dividers */
+
+  --font-family-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --font-family-mono: "Monaco", "Menlo", "Ubuntu Mono", monospace;
+
+  --border-radius: 0.375rem;
+  --box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  --transition: all 0.3s ease;
+}
+
+/* Base Typography */
+body {
+  font-family: var(--font-family-sans);
+  line-height: 1.6;
+  color: var(--dark-color);
+}
+
+/* Spacing tokens */
+:root {
+  --space-lg: 4rem;
+  --space-md: 2rem;
+  --space-sm: 1rem;
+}
+
+h1,
+
+/* Hero centered variant for the homepage */
+.hero-centered {
+  background: #fbf8f7;
+  padding: 2.25rem 0 1rem;
+}
+
+.hero-centered h1 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.muted {
+  color: #6b6464;
+}
+
+/* Job panel and items */
+.job-panel {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  padding: 1.25rem;
+}
+.job-item h4 {
+  margin: 0.25rem 0 0.25rem;
+}
+.job-item .job-meta {
+  font-size: 0.8rem;
+}
+
+/* Company grid 3x3 */
+.company-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+.company-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 88px;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+  font-weight: 600;
+}
+
+/* Alerts band (full-width red) */
+.alerts-band {
+  background: var(--primary-color);
+  color: #fff;
+  padding: 2rem 0;
+}
+.alerts-band .form-control {
+  width: 360px;
+  max-width: 60%;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  border: none;
+}
+.btn-dark {
+  background: var(--dark-color);
+  color: #fff;
+  border-radius: 6px;
+  padding: 0.55rem 0.9rem;
+  border: none;
+}
+
+/* Footer dark */
+.site-footer--dark {
+  background: #6b0000;
+  padding: 2rem 0 1.25rem;
+}
+.site-footer--dark a {
+  color: #fff;
+  text-decoration: none;
+}
+
+/* Button variants */
+.btn {
+  display: inline-block;
+  padding: 0.6rem 0.85rem;
+  border-radius: 8px;
+  text-decoration: none;
+}
+.btn-primary {
+  background: var(--primary-color);
+  color: #fff;
+}
+.btn-secondary {
+  background: #fff;
+  color: var(--dark-color);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+/* Utilities */
+.section-padding {
+  padding: 2.25rem 0;
+}
+
+@media (max-width: 900px) {
+  .company-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .job-panel {
+    width: 92% !important;
+  }
+  .hero-centered h1 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Footer layout for wider footer content */
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+  padding: 1rem 0 1.25rem;
+}
+.footer-cta h3 {
+  color: #fff;
+  margin: 0 0 0.5rem;
+}
+.footer-cta .muted {
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 0.75rem;
+}
+.footer-cta-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+.footer-links {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+.link-col h4 {
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+.link-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.link-col li {
+  margin-bottom: 0.5rem;
+}
+.link-col a {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.footer-legal {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  margin-top: 1rem;
+  padding-top: 1rem;
+}
+.legal-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+.footer-legal nav a {
+  margin-left: 0.75rem;
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+}
+
+@media (max-width: 900px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+  .footer-links {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+  .footer-cta-actions {
+    margin-top: 0.5rem;
+  }
+  .legal-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+}
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+p {
+  margin-bottom: 1rem;
+}
+
+/* ===================================================================
+   Component Styles
+   =================================================================== */
+
+/* Navigation */
+.navbar {
+  box-shadow: var(--box-shadow);
+  transition: var(--transition);
+}
+
+.navbar-brand {
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.nav-link {
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.nav-link:hover {
+  color: var(--primary-color) !important;
+}
+
+/* Hero Section */
+.hero {
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+}
+
+.hero h1 {
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+.hero .btn {
+  padding: 0.75rem 2rem;
+  font-weight: 600;
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+}
+
+.hero .btn.btn-primary {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+}
+
+/* Cards */
+.card {
+  border: none;
+  box-shadow: var(--box-shadow);
+  transition: var(--transition);
+  border-radius: var(--border-radius);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.card-title {
+  color: var(--dark-color);
+  font-weight: 600;
+}
+
+.feature-card img {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+}
+
+/* Forms */
+.form-control {
+  border-radius: var(--border-radius);
+  border: 1px solid #ced4da;
+  transition: var(--transition);
+}
+
+.form-control:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem rgba(0, 140, 255, 0.12);
+}
+
+.btn {
+  border-radius: var(--border-radius);
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+  background-color: #bc0000;
+  border-color: #bc0000;
+  transform: translateY(-1px);
+}
+
+/* Footer */
+footer {
+  margin-top: auto;
+}
+
+/* Team grid */
+.team-member {
+  text-align: center;
+}
+.team-member img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 9999px;
+  margin-bottom: 1rem;
+  box-shadow: var(--box-shadow);
+}
+
+/* ===================================================================
+   Utility Classes
+   =================================================================== */
+
+/* Spacing utilities */
+.section-padding {
+  padding: 4rem 0;
+}
+
+/* Text utilities */
+.text-gradient {
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--accent-color)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Animation utilities */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: var(--transition);
+}
+
+.fade-in.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===================================================================
+   Responsive Design
+   =================================================================== */
+
+/* Mobile-first responsive design */
+@media (max-width: 576px) {
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .hero .lead {
+    font-size: 1rem;
+  }
+
+  .section-padding {
+    padding: 2rem 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar-nav {
+    text-align: center;
+    margin-top: 1rem;
+  }
+
+  .card {
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .hero {
+    min-height: 70vh;
+  }
+}
+
+/* ===================================================================
+   Accessibility Enhancements
+   =================================================================== */
+
+/* Focus indicators */
+.btn:focus,
+.form-control:focus,
+.nav-link:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* Reduced motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ===================================================================
+   Layout helpers for CSS-only scaffold
+   =================================================================== */
+
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.site-header {
+  background: var(--light-color);
+  border-bottom: 1px solid var(--ui-color);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0;
+}
+
+.brand {
+  font-weight: 700;
+  color: var(--dark-color);
+  text-decoration: none;
+}
+
+.site-nav a {
+  margin-left: 1rem;
+  color: var(--dark-color);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.hero {
+  color: white;
+  padding: 4rem 0;
+}
+
+.hero-inner {
+  display: grid;
+  grid-template-columns: 1fr 480px;
+  gap: 2rem;
+  align-items: center;
+}
+
+.hero-copy h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.lead {
+  color: rgba(255, 255, 255, 0.95);
+  margin-bottom: 1.25rem;
+}
+
+.hero-ctas .btn {
+  margin-right: 0.75rem;
+}
+
+.btn {
+  display: inline-block;
+  text-decoration: none;
+  padding: 0.6rem 1rem;
+  border-radius: var(--border-radius);
+}
+.btn-primary {
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+}
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.hero-art img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.features {
+  padding: 4rem 0;
+  background: var(--light-color);
+  color: var(--dark-color);
+}
+.section-title {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+.feature-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  text-align: center;
+}
+.feature-icon {
+  margin-bottom: 1rem;
+  display: inline-block;
+}
+
+.site-footer {
+  background: var(--dark-color);
+  color: #fff;
+  padding: 1.25rem 0;
+}
+.footer-inner {
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+  }
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Styles for homepage-specific sections added in expanded index.html
+   ------------------------------------------------------------------ */
+
+.hero-search {
+  display: flex;
+  gap: 0.5rem;
+  max-width: 680px;
+}
+.hero-search .form-control {
+  flex: 1 1 auto;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+}
+.hero-search .form-control::placeholder {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.muted {
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 0.95rem;
+}
+
+.features-grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+.feature-card h3 {
+  margin-top: 0;
+  margin-bottom: 0.25rem;
+}
+
+.feature-card p {
+  margin-bottom: 0.75rem;
+}
+
+.feature-card .btn {
+  margin-top: 0.5rem;
+}
+
+.site-footer {
+  background: var(--dark-color);
+  color: #fff;
+  padding: 1.25rem 0;
+}
+.site-footer a {
+  color: rgba(255, 255, 255, 0.95);
+  text-decoration: none;
+  margin: 0 0.25rem;
+}
+
+/* Responsive tweaks for smaller screens */
+@media (max-width: 900px) {
+  .hero-search {
+    flex-direction: column;
+  }
+  .hero-search .form-control {
+    width: 100%;
+  }
+  .hero-ctas {
+    text-align: left;
+  }
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Small helpers for buttons that use dark footer color */
+.btn-dark {
+  background: var(--dark-color);
+  color: #fff;
+  border-radius: var(--border-radius);
+  padding: 0.6rem 1rem;
+}
+
+/* Utility classes to replace inline styles used in the HTML */
+.text-center {
+  text-align: center;
+}
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+.w-760 {
+  width: 760px;
+}
+.max-w-880 {
+  max-width: 880px;
+}
+.max-w-900 {
+  max-width: 900px;
+}
+.max-w-980 {
+  max-width: 980px;
+}
+.img-320 {
+  width: 320px;
+  height: auto;
+}
+.img-full {
+  width: 100%;
+  height: auto;
+}
+.object-cover {
+  object-fit: cover;
+}
+.fw-600 {
+  font-weight: 600;
+}
+.m-0 {
+  margin: 0;
+}
+.gap-05 {
+  gap: 0.5rem;
+}
+
+/* Spacing utilities (approximate values used in inline styles) */
+.mt-xxs {
+  margin-top: 0.25rem;
+}
+.mt-xs {
+  margin-top: 0.5rem;
+}
+.mt-sm {
+  margin-top: 1rem;
+}
+.mt-md {
+  margin-top: 1.5rem;
+}
+.mt-lg {
+  margin-top: 1.75rem;
+}
+.mt-xl {
+  margin-top: 3.5rem;
+}
+
+/* Hero specific helpers */
+.hero-content {
+  max-width: 880px;
+  margin: 3rem auto 4rem;
+  text-align: center;
+}
+.hero-title {
+  margin-bottom: 0.75rem;
+  color: var(--dark-color);
+}
+
+/* Feature variants used by homepage/about sections */
+.feature-wide {
+  max-width: 1000px;
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+.feature-two-col {
+  max-width: 900px;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 1rem;
+  align-items: center;
+}
+.feature-cta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* CTA band used on About page */
+.cta-band {
+  padding: 2.5rem 0;
+  background: rgba(235, 0, 0, 0.04);
+}
+
+/* Alerts band fine-tuning */
+.alerts-band h3 {
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+.alerts-band p {
+  color: #fff;
+  margin-bottom: 1rem;
+}
