@@ -8,7 +8,7 @@
 
 # Folder Structure Documentation
 
-This document outlines the folder structure and organization of the MMDC WST project.
+This document outlines the folder structure and organization of the Japan SSW project.
 
 ## Root Directory
 

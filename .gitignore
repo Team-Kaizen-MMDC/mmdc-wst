@@ -137,5 +137,5 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
-# Ignore GitHub configuration folder
-.github/
+# Ignore only Copilot instructions file in .github
+.github/copilot_instructions.md

@@ -13,7 +13,7 @@ import { AnimationController } from "./modules/animations.js";
 // ===================================================================
 
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("MMDC WST - Website Initialized");
+  console.log("Japan SSW - Website Initialized");
 
   // Initialize components
   initializeWebsite();
