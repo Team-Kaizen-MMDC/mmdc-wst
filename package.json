@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/Team-Kaizen-MMDC/mmdc-wst#readme",
   "devDependencies": {
+    "markdownlint-cli2": "^0.18.1",
     "playwright": "^1.55.0"
   }
 }

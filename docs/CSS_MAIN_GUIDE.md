@@ -48,8 +48,8 @@ Common tokens you'll find and may edit:
   --transition: all 0.2s ease;
   --box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
 
-  --font-family-sans: "Inter", system-ui, -apple-system, "Segoe UI",
-    Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-family-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif;
   --font-family-mono: "SFMono-Regular", Menlo, Monaco, "Roboto Mono",
     "Courier New", monospace;
 
