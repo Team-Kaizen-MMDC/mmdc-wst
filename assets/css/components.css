@@ -1,3 +1,17 @@
+/*
+  assets/css/components.css
+
+  Component-Specific Styles (Phase 2 - Optional)
+    - This file contains reusable component styles (buttons, cards,
+      navigation helpers, media components) intended for Phase 2 when
+      the project moves to a more modular CSS approach.
+    - For Phase 1 the project uses `assets/css/main.css` only. This file
+      is intentionally NOT included in HTML for Phase 1 to avoid extra
+      HTTP requests and to keep the initial deliverable minimal.
+    - To enable in Phase 2: either import or link this file from HTML
+      or integrate into a build pipeline.
+*/
+
 /* ===================================================================
    Component-Specific Styles
    =================================================================== */

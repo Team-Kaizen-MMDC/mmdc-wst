@@ -1,6 +1,22 @@
-/* Cleaned main.css for initial static site (no Bootstrap/JS)
-   - Contains design tokens, core layout, components, and responsive rules
-   - Keep this minimal for the first static deliverable
+/*
+  assets/css/main.css
+
+  Purpose:
+    - Central stylesheet for Phase 1 (HTML + CSS only).
+    - Contains design tokens (CSS variables), core layout, components,
+      utility classes, and responsive rules.
+
+  Structure (high level):
+    1. Design tokens (colors, fonts, spacing)
+    2. Base styles and layout helpers (.container, header, footer)
+    3. Component styles (hero, cards, footer, forms)
+    4. Utilities (spacing, helpers) used to replace inline styles
+    5. Responsive and accessibility tweaks
+
+  Phase notes:
+    - JavaScript and Bootstrap are intentionally not enabled in Phase 1.
+    - HTML files include commented Phase-2 placeholders for future JS/Bootstrap
+      includes. Uncomment them when moving to Phase 2.
 */
 
 :root {

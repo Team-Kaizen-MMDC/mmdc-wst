@@ -6,7 +6,9 @@
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-purple)
 ![Node.js](https://img.shields.io/badge/Node.js-18-green)
 
-A modern, responsive website built with HTML, CSS, JavaScript, and Bootstrap.
+A modern, responsive website scaffold. Phase 1 of this project uses only
+HTML and CSS (no JavaScript or Bootstrap). Phase 2 will add JavaScript
+features and optional Bootstrap utilities.
 
 ## Table of Contents
 
@@ -26,20 +28,28 @@ A modern, responsive website built with HTML, CSS, JavaScript, and Bootstrap.
 
 Japan SSW is a frontend-only scaffold for building modern, responsive websites using HTML, CSS, JavaScript, and Bootstrap. It targets accessible, performant, and maintainable static sites.
 
-## Features
+## Features (Phase 1)
 
-- Responsive, mobile-first layout using Bootstrap 5
-- ES6+ modular JavaScript
+- Responsive, mobile-first layout using CSS Grid and Flexbox
 - Accessibility best practices (semantic HTML, ARIA)
-- Performance: lazy-loading, optimized assets
-- Simple, static deployment (GitHub Pages)
+- Performance: minimal assets, optimized images
+- Simple, static deployment ([GitHub Pages](https://pages.github.com/))
+
+Phase 2 roadmap (planned):
+
+- Add progressive JavaScript features (forms, interactivity)
+- Optionally enable Bootstrap utilities for faster UI components
+- Add unit/integration tests and CI checks
 
 ## Technologies
 
 - HTML5
 - CSS3 (variables, Grid, Flexbox)
-- JavaScript (ES6 modules)
-- Bootstrap 5 (CDN)
+- JavaScript will be introduced in Phase 2 (ES6 modules)
+
+Note: Bootstrap and site JavaScript are intentionally disabled in Phase 1.
+HTML files contain commented placeholders where Bootstrap/JS includes can be
+uncommented during Phase 2.
 
 ## Getting Started
 
@@ -95,19 +105,19 @@ japan-ssw/
 - Keep JavaScript modular and avoid global state
 - Optimize images and lazy-load large assets
 
-- See `docs/CODE_AND_DESIGN_GUIDE.md` for the project's coding and visual design standards.
+See the project's coding and visual design standards in [docs/CODE_AND_DESIGN_GUIDE.md](docs/CODE_AND_DESIGN_GUIDE.md).
 
 ### Recommended Resources & Documentation
 
 - **HTML / CSS / JS (reference):** [MDN Web Docs](https://developer.mozilla.org/)
-- **Accessibility (WCAG & ARIA):** [W3C Web Accessibility Initiative](https://www.w3.org/WAI/) and ARIA spec ([WAI-ARIA 1.2](https://www.w3.org/TR/wai-aria-1.2/))
+- **Accessibility (WCAG & ARIA):** [W3C Web Accessibility Initiative (WAI)](https://www.w3.org/WAI/) and the ARIA specification: [WAI-ARIA 1.2](https://www.w3.org/TR/wai-aria-1.2/)
 - **Accessibility Guidance & Testing:** [WebAIM](https://webaim.org/) and [The A11Y Project](https://www.a11yproject.com/)
 - **Performance & Auditing:** [Google Lighthouse](https://developers.google.com/web/tools/lighthouse) and [WebPageTest](https://www.webpagetest.org/)
 - **Progressive Enhancement & Best Practices:** [Google Web Fundamentals](https://developers.google.com/web/fundamentals)
-- **Image Optimization:** [Squoosh](https://squoosh.app/) and [Image Optimization Guide](https://web.dev/fast/#optimize-images)
-- **Bootstrap Documentation:** [Bootstrap 5 Docs](https://getbootstrap.com/docs/5.3/)
-- **JavaScript Modules & Patterns:** [ES Modules (MDN)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
-- **SEO Basics for Static Sites:** [Google Search Central](https://developers.google.com/search/docs/fundamentals/seo-starter-guide)
+- **Image Optimization:** [Squoosh](https://squoosh.app/) and [Web.Dev — Image Optimization Guide](https://web.dev/fast/#optimize-images)
+- **Bootstrap Documentation:** [Bootstrap 5 Documentation](https://getbootstrap.com/docs/5.3/)
+- **JavaScript Modules & Patterns:** [ES Modules — MDN Guide](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
+- **SEO Basics for Static Sites:** [Google Search Central — SEO Starter Guide](https://developers.google.com/search/docs/fundamentals/seo-starter-guide)
 
 Use these resources when implementing features, writing docs, or reviewing PRs to ensure accessibility, performance, and maintainability.
 

@@ -25,6 +25,7 @@ Purpose: concise coding and design standards to keep the Japan SSW frontend cons
 ## Typography
 
 - Body: `Open Sans` (loaded via Google Fonts) — use `--font-body`.
+- Body: `Open Sans` (loaded via Google Fonts) — use `--font-body`.
 - Headings: system Helvetica stack via `--font-heading`.
 - Japanese text: use `--font-jp` and apply via `:lang(ja)` or `.jp` when necessary.
 - Sizes: H1 36px/44px, H2 32px/36px, H3 28px/36px (set in `main.css`).
@@ -59,3 +60,11 @@ Purpose: concise coding and design standards to keep the Japan SSW frontend cons
 - `--dark-color: #290000` — headings, dark UI, footer
 
 If you need this document expanded into separate coding style and visual design sections, I can split it into `CODE_GUIDE.md` and `DESIGN_GUIDE.md` under `docs/`.
+
+## Recommended Links
+
+- **Open Sans (Google Fonts):** [Open Sans — Google Fonts](https://fonts.google.com/specimen/Open+Sans)
+- **MDN Web Docs (HTML/CSS/JS):** [MDN Web Docs](https://developer.mozilla.org/)
+- **WAI / ARIA:** [W3C Web Accessibility Initiative (WAI)](https://www.w3.org/WAI/) and [WAI-ARIA 1.2 Spec](https://www.w3.org/TR/wai-aria-1.2/)
+- **Accessibility Guidance:** [WebAIM](https://webaim.org/) and [The A11Y Project](https://www.a11yproject.com/)
+- **Image Optimization Tools / Guides:** [Squoosh](https://squoosh.app/) and [Web.Dev — Image Optimization](https://web.dev/fast/#optimize-images)

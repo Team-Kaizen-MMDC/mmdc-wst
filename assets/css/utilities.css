@@ -1,3 +1,15 @@
+/*
+  assets/css/utilities.css
+
+  Utility Classes (Phase 2 - Optional)
+    - Collection of utility helper classes (spacing, layout, transforms,
+      display helpers) intended for projects that prefer a modular CSS
+      approach.
+    - For Phase 1 these utilities are optional; `assets/css/main.css`
+      already provides the essential utilities used by the HTML.
+    - Keep this file in the repo as an optional resource for Phase 2.
+*/
+
 /* ===================================================================
    Utility Classes
    =================================================================== */

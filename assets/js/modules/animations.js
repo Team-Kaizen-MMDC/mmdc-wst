@@ -1,3 +1,12 @@
+/*
+  assets/js/modules/animations.js
+
+  AnimationController module (Phase 2):
+    - Controls scroll/hover animations and page transitions.
+    - Placeholder code for Phase 2. Disabled in Phase 1 by leaving HTML
+      script includes commented; enable when moving to Phase 2.
+*/
+
 // ===================================================================
 // Animation Controller Module
 // ===================================================================

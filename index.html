@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!--
+      index.html - Homepage
+      Phase 1: HTML + CSS only. No JavaScript or Bootstrap enabled.
+      Structure:
+        - Header: .site-header (shared across pages)
+        - Main: hero, jobs, companies, registered support org, about, alerts, CTA
+        - Footer: .site-footer (multi-column layout)
+      Notes:
+        - Fonts and primary styles are in `assets/css/main.css`.
+        - Phase 2 placeholders for Bootstrap/JS are present as commented blocks.
+        - Keep link paths at the root (e.g., `pages/about.html`) when editing from root.
+    -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="description" content="Japan SSW - Jobs & Community" />
@@ -17,6 +29,14 @@
     <!-- Site CSS -->
     <link rel="stylesheet" href="assets/css/main.css" />
     <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico" />
+    <!-- Phase 2 placeholder: Bootstrap CSS (uncomment when enabling Bootstrap)
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    -->
   </head>
   <body>
     <header class="site-header">
@@ -253,5 +273,13 @@
         </div>
       </div>
     </footer>
+    <!-- Phase 2 placeholder: Bootstrap JS bundle & site JavaScript
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+    <script src="assets/js/main.js"></script>
+    -->
   </body>
 </html>

@@ -1,3 +1,13 @@
+/*
+  assets/js/main.js
+
+  Note: JavaScript is part of Phase 2. These modules exist as placeholders
+  and documentation for future interactivity. In Phase 1 the site is
+  intentionally delivered as HTML + CSS only — JS includes are commented
+  out in HTML files. When enabling Phase 2, uncomment the script tags and
+  ensure the site JS is loaded after the DOM.
+*/
+
 // ===================================================================
 // Main JavaScript Entry Point
 // ===================================================================

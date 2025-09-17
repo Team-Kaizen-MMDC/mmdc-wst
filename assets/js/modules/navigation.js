@@ -1,3 +1,13 @@
+/*
+  assets/js/modules/navigation.js
+
+  Navigation module (Phase 2):
+    - Provides enhanced navigation behaviors (smooth scroll, active states,
+      mobile toggle). These scripts are placeholders for Phase 2.
+    - In Phase 1 JavaScript is intentionally disabled; HTML files contain
+      commented script placeholders. Enable JS and Bootstrap in Phase 2.
+*/
+
 // ===================================================================
 // Navigation Module
 // ===================================================================
