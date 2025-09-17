@@ -4,7 +4,9 @@ This document explains the purpose, structure, and conventions used in `assets/c
 
 ## Purpose
 
-Central stylesheet for Phase 1 (static HTML + CSS). It contains design tokens, layout primitives, component styles, utilities, and responsive rules.
+Central stylesheet for Phase 1 (static HTML + CSS). It contains design
+tokens, layout primitives, component styles, utilities, and responsive
+rules.
 
 ## File structure (high level)
 
@@ -17,13 +19,19 @@ Central stylesheet for Phase 1 (static HTML + CSS). It contains design tokens, l
 
 ## Conventions
 
-- Class naming: semantic classes for components and short utility classes for spacing and typography.
+- Class naming: semantic classes for components and short utility
+  classes for spacing and typography.
 - Buttons: use `.btn` along with `.btn-primary`, `.btn-secondary`, or `.btn-dark`.
 - Header: keep the `site-header` contract consistent across pages.
 
+- The CSS includes breakpoints that stack the header on narrow viewports
+  and allow the nav to wrap.
+
 ## Design tokens and where to edit
 
-The design tokens (colors, radii, typography stacks, and common motion tokens) live at the top of `assets/css/main.css` in the `:root` block. Update those variables to change the site's global theme.
+The design tokens (colors, radii, typography stacks, and common motion
+tokens) live at the top of `assets/css/main.css` in the `:root` block.
+Update those variables to change the site's global theme.
 
 Common tokens you'll find and may edit:
 
@@ -40,8 +48,8 @@ Common tokens you'll find and may edit:
   --transition: all 0.2s ease;
   --box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
 
-  --font-family-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
-    Arial, sans-serif;
+  --font-family-sans: "Inter", system-ui, -apple-system, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-family-mono: "SFMono-Regular", Menlo, Monaco, "Roboto Mono",
     "Courier New", monospace;
 
@@ -49,7 +57,9 @@ Common tokens you'll find and may edit:
 }
 ```
 
-Changing `--primary-color` will update CTAs and other components that reference it. If you want to experiment locally, edit these values then refresh the served pages.
+Changing `--primary-color` will update CTAs and other components that
+reference it. If you want to experiment locally, edit these values then
+refresh the served pages.
 
 Additional typography tokens you may see in `:root`:
 
@@ -57,7 +67,9 @@ Additional typography tokens you may see in `:root`:
 - `--font-body` — body font stack (Open Sans + system fallbacks)
 - `--font-jp` — Japanese font stack (Yu Gothic / Hiragino / Meiryo)
 
-Note about loading fonts: `--font-body` references `Open Sans`. To ensure consistent rendering across environments, add this to your page `<head>` if you want the web font loaded:
+Note about loading fonts: `--font-body` references `Open Sans`. To
+ensure consistent rendering across environments, add this to your page
+`<head>` if you want the web font loaded:
 
 ```html
 <link
@@ -92,23 +104,30 @@ Markup example:
 
 Notes:
 
-- For pages inside the `pages/` folder use relative paths (e.g., `../index.html#jobs` or `about.html`).
-- The `header-actions` container houses non-navigation CTAs (sign up / login).
+- For pages inside the `pages/` folder use relative paths. Example:
+  `../index.html#jobs` or `about.html`.
+- The `header-actions` container houses non-navigation CTAs
+  (sign up / login).
 
 ## Responsive rules
 
-- The CSS includes breakpoints that stack the header on narrow viewports and allow the nav to wrap.
+- The CSS includes breakpoints that stack the header on narrow viewports
+  and allow the nav to wrap.
 
 To test locally:
 
 ```bash
 python3 -m http.server 8000
-# Visit http://localhost:8000
+# Visit:
+# http://localhost:8000
 ```
 
 ## Accessibility
 
-- Focus states are defined for `.btn`, `.form-control`, and `.site-nav a`.
+- Focus states are defined for:
+  - `.btn`
+  - `.form-control`
+  - `.site-nav a`
 - Keep keyboard order: Brand -> Nav -> Header actions.
 
 ## Phase 2 migration notes
