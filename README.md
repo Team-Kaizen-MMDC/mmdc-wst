@@ -26,7 +26,9 @@ features and optional Bootstrap utilities.
 
 ## Overview
 
-Japan SSW is a frontend-only scaffold for building modern, responsive websites using HTML, CSS, JavaScript, and Bootstrap. It targets accessible, performant, and maintainable static sites.
+Japan SSW is a frontend-first static site scaffold used as the Phase‑1 deliverable for the MMDC/WST project. The site demonstrates a clean, responsive layout and a small set of pages used to communicate services and contact information. Phase‑1 intentionally uses only HTML and CSS (no runtime JavaScript or Bootstrap utilities) to keep the presentation layer simple and portable.
+
+This repository holds the wireframe-driven static pages and a stylesheet (`assets/css/main.css`) that defines the design tokens (colors, spacing, typography) and header contract used across pages.
 
 ## Features (Phase 1)
 
@@ -40,6 +42,22 @@ Phase 2 roadmap (planned):
 - Add progressive JavaScript features (forms, interactivity)
 - Optionally enable Bootstrap utilities for faster UI components
 - Add unit/integration tests and CI checks
+
+## Wireframe Summary
+
+This project follows a simple wireframe that maps directly to the HTML pages in this repo. The wireframe focuses on clarity, a small content hierarchy, and predictable navigation:
+
+- **Primary purpose:** present the team's services and contact details with an approachable, readable layout.
+- **Target audience:** site visitors seeking information about the team's offerings and how to get in touch.
+- **Main pages:** `index.html` (home/hero), `pages/agency.html` (about / agency overview), `pages/services.html` (services grid or list), `pages/contact.html` (contact info / form), `about.html` (team or company details).
+- **Header contract:** a single `.site-header` element containing a `.brand` (logo/text), a `nav.site-nav` for primary links, and a `.header-actions` region for secondary links and CTAs (for example: a muted signup link and a primary `.btn`). Keep header markup consistent across pages so the CSS tokens and layout behave predictably.
+- **Hero/Above-the-fold:** large heading, short description, primary CTA button. Keep copy concise.
+- **Content sections:** services or features presented as a grid/cards; optional testimonial or highlights band; concise contact block in the footer or on the contact page.
+
+Notes:
+
+- The contact form is a Phase‑2 enhancement — the Phase‑1 wireframe uses a static contact page with mailto links or simple instructions.
+- Typography and spacing come from the `:root` tokens in `assets/css/main.css`, enabling consistent sizing across breakpoints.
 
 ## Technologies
 
