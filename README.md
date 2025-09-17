@@ -17,6 +17,7 @@ A modern, responsive website built with HTML, CSS, JavaScript, and Bootstrap.
 - Development
 - File Structure
 - Best Practices
+- Code & Design Guide
 - Contributing
 - Deployment
 - License & Team
@@ -94,7 +95,9 @@ japan-ssw/
 - Keep JavaScript modular and avoid global state
 - Optimize images and lazy-load large assets
 
- ### Recommended Resources & Documentation
+- See `docs/CODE_AND_DESIGN_GUIDE.md` for the project's coding and visual design standards.
+
+### Recommended Resources & Documentation
 
 - **HTML / CSS / JS (reference):** [MDN Web Docs](https://developer.mozilla.org/)
 - **Accessibility (WCAG & ARIA):** [W3C Web Accessibility Initiative](https://www.w3.org/WAI/) and ARIA spec ([WAI-ARIA 1.2](https://www.w3.org/TR/wai-aria-1.2/))

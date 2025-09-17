@@ -6,11 +6,11 @@
     <meta name="description" content="Japan SSW - Jobs & Community" />
     <title>Japan SSW</title>
 
-    <!-- Inter font -->
+    <!-- Open Sans for body text (wireframe) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap"
       rel="stylesheet"
     />
 
@@ -35,13 +35,9 @@
       <!-- Hero -->
       <section class="hero hero-centered">
         <div class="container">
-          <div
-            style="max-width: 880px; margin: 3rem auto 4rem; text-align: center"
-          >
-            <h1 style="margin-bottom: 0.75rem; color: var(--dark-color)">
-              Specified Skilled Worker Jobs in Japan
-            </h1>
-            <p class="muted" style="margin-top: 0.5rem">
+          <div class="hero-content">
+            <h1 class="hero-title">Specified Skilled Worker Jobs in Japan</h1>
+            <p class="muted mt-xs">
               Your one-stop destination for job matching, visa assistance, and
               essential community resources.
             </p>
@@ -52,11 +48,9 @@
       <!-- Job Board (card panel centered) -->
       <section id="jobs" class="section-padding">
         <div class="container">
-          <div style="display: flex; justify-content: center">
-            <div class="job-panel feature-card" style="width: 760px">
-              <div
-                style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem"
-              >
+          <div class="flex-center">
+            <div class="job-panel feature-card w-760">
+              <div class="grid-2">
                 <div class="job-item">
                   <div class="job-meta muted">Image</div>
                   <h4>Ground Handling Support (Haneda)</h4>
@@ -81,7 +75,7 @@
             </div>
           </div>
 
-          <div style="text-align: center; margin-top: 2.25rem">
+          <div class="text-center mt-md">
             <a class="btn btn-primary" href="#jobs">Search SSW jobs</a>
           </div>
         </div>
@@ -91,7 +85,7 @@
       <section id="companies" class="features" aria-label="Top companies">
         <div class="container">
           <h2 class="section-title">Top Company</h2>
-          <div class="company-grid" style="margin-top: 1.5rem">
+          <div class="company-grid mt-md">
             <!-- 3x3 grid of company cards -->
             <div class="company-card feature-card">Nissan</div>
             <div class="company-card feature-card">Yamaha</div>
@@ -104,7 +98,7 @@
             <div class="company-card feature-card">Nissan</div>
           </div>
 
-          <div style="text-align: center; margin-top: 1.75rem">
+          <div class="text-center mt-lg">
             <a class="btn btn-primary" href="#companies">View Company</a>
           </div>
         </div>
@@ -114,22 +108,12 @@
       <section class="section-padding">
         <div class="container">
           <h2 class="section-title">Registered Support Organization</h2>
-          <div
-            style="display: flex; justify-content: center; margin-top: 1.25rem"
-          >
-            <div
-              class="feature-card"
-              style="
-                max-width: 1000px;
-                display: flex;
-                gap: 1.5rem;
-                align-items: center;
-              "
-            >
+          <div class="flex-center mt-sm">
+            <div class="feature-card feature-wide">
               <img
                 src="assets/images/hero-illustration.svg"
                 alt="ASEAN PLUS"
-                style="width: 320px; height: auto; object-fit: cover"
+                class="img-320 object-cover"
               />
               <div>
                 <h3>ASEAN PLUS</h3>
@@ -138,7 +122,7 @@
                   Short description about the organization and its support
                   services for foreign workers.
                 </p>
-                <p style="margin-top: 0.5rem">
+                <p class="mt-xs">
                   <a class="btn btn-primary" href="#">Search Agency</a>
                 </p>
               </div>
@@ -151,24 +135,15 @@
       <section class="features">
         <div class="container">
           <h2 class="section-title">About Us</h2>
-          <div style="display: flex; justify-content: center; margin-top: 1rem">
-            <div
-              class="feature-card"
-              style="
-                max-width: 900px;
-                display: grid;
-                grid-template-columns: 280px 1fr;
-                gap: 1rem;
-                align-items: center;
-              "
-            >
+          <div class="flex-center mt-sm">
+            <div class="feature-card feature-two-col">
               <img
                 src="assets/images/hero-illustration.svg"
                 alt="About"
-                style="width: 100%; height: auto; object-fit: cover"
+                class="img-full object-cover"
               />
               <div>
-                <p style="font-weight: 600">
+                <p class="fw-600">
                   JapanSSW is your one-stop platform for skilled trade job
                   seekers under the Specified Skilled Worker (SSW) visa in
                   Japan.
@@ -179,7 +154,7 @@
                   foreign workers find stable employment and build better
                   futures in Japan.
                 </p>
-                <p style="margin-top: 0.5rem">
+                <p class="mt-xs">
                   <a class="btn btn-primary" href="pages/about.html"
                     >Learn more</a
                   >
@@ -192,13 +167,13 @@
 
       <!-- Job Alerts Band (red) -->
       <section class="alerts-band">
-        <div class="container" style="text-align: center">
-          <h3 style="color: #fff; margin-bottom: 0.5rem">Get Job Alerts</h3>
-          <p style="color: #fff; margin-bottom: 1rem">
+        <div class="container text-center">
+          <h3>Get Job Alerts</h3>
+          <p>
             Sign up for our newsletter to get handpicked jobs in Japan —
             straight to your inbox.
           </p>
-          <div style="display: flex; justify-content: center; gap: 0.5rem">
+          <div class="flex-center gap-05">
             <input
               type="email"
               class="form-control"
@@ -212,14 +187,7 @@
       <!-- Post a Job CTA -->
       <section id="post-job" class="section-padding">
         <div class="container">
-          <div
-            class="feature-card"
-            style="
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-            "
-          >
+          <div class="feature-card feature-cta">
             <div>
               <h3>Want to post jobs?</h3>
               <p class="muted">
@@ -238,7 +206,7 @@
       <div class="container footer-grid">
         <div class="footer-cta">
           <h3>Want to post jobs on JapanSSW?</h3>
-          <p class="muted" style="color: rgba(255, 255, 255, 0.9)">
+          <p class="muted">
             Reach qualified candidates under the SSW programme.
           </p>
           <div class="footer-cta-actions">

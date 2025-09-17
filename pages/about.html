@@ -7,6 +7,13 @@
 
     <title>About - Japan SSW</title>
 
+    <!-- Open Sans for body text (wireframe) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../assets/css/main.css" />
     <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.ico" />
@@ -28,11 +35,9 @@
       <!-- About US (wireframe content) -->
       <section class="section-padding">
         <div class="container">
-          <h1 class="section-title" style="color: var(--dark-color)">
-            About US
-          </h1>
+          <h1 class="section-title">About US</h1>
 
-          <div style="max-width: 980px; margin: 1.25rem auto 2rem">
+          <div class="max-w-980 mt-sm">
             <p>
               JapanSSW is a comprehensive platform dedicated to empowering
               foreign workers seeking skilled trade jobs in Japan under the
@@ -53,82 +58,29 @@
             </p>
           </div>
 
-          <h2
-            class="section-title"
-            style="margin-top: 3.5rem; color: var(--dark-color)"
-          >
-            Our Mission
-          </h2>
-          <p
-            style="text-align: center; max-width: 900px; margin: 1rem auto 2rem"
-          >
+          <h2 class="section-title mt-xl">Our Mission</h2>
+          <p class="text-center max-w-900 mt-sm">
             Fair careers for workers. Trusted recruitment for employers.
             Sustainable growth for Japan.
           </p>
 
-          <h2
-            class="section-title"
-            style="margin-top: 2.5rem; color: var(--dark-color)"
-          >
-            Our Vision
-          </h2>
-          <p
-            style="text-align: center; max-width: 900px; margin: 1rem auto 2rem"
-          >
+          <h2 class="section-title mt-md">Our Vision</h2>
+          <p class="text-center max-w-900 mt-sm">
             To be Japan's leading platform that empowers skilled foreign workers
             to achieve meaningful careers and brighter futures.
           </p>
         </div>
       </section>
 
-      <!-- Team -->
-      <section class="features">
-        <div class="container">
-          <h2 class="section-title">Meet the Team</h2>
-          <div class="features-grid">
-            <div class="feature-card team-member">
-              <img
-                src="../assets/images/team/placeholder-avatar.svg"
-                alt="Alex"
-              />
-              <h4>Alex</h4>
-              <p class="muted">Lead Designer</p>
-            </div>
-            <div class="feature-card team-member">
-              <img
-                src="../assets/images/team/placeholder-avatar.svg"
-                alt="Jordan"
-              />
-              <h4>Jordan</h4>
-              <p class="muted">Frontend Engineer</p>
-            </div>
-            <div class="feature-card team-member">
-              <img
-                src="../assets/images/team/placeholder-avatar.svg"
-                alt="Sam"
-              />
-              <h4>Sam</h4>
-              <p class="muted">Project Manager</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <!-- Team section removed per request -->
 
       <!-- CTA -->
-      <section style="padding: 2.5rem 0; background: rgba(235, 0, 0, 0.04)">
+      <section class="cta-band">
         <div class="container">
-          <div
-            class="feature-card"
-            style="
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              gap: 1rem;
-            "
-          >
+          <div class="feature-card feature-cta">
             <div>
-              <h3 style="margin: 0">Want to work with us?</h3>
-              <p class="muted" style="margin: 0.25rem 0 0">
+              <h3 class="m-0">Want to work with us?</h3>
+              <p class="muted mt-xxs">
                 We partner with companies to hire and onboard exceptional
                 talent.
               </p>
@@ -143,11 +95,57 @@
       </section>
     </main>
 
-    <footer class="site-footer">
-      <div class="container footer-inner">
-        <p style="margin: 0; opacity: 0.9">
-          &copy; 2025 Japan SSW. Built by Team Kaizen MMDC.
-        </p>
+    <footer class="site-footer site-footer--dark" role="contentinfo">
+      <div class="container footer-grid">
+        <div class="footer-cta">
+          <h3>Want to post jobs on JapanSSW?</h3>
+          <p class="muted">
+            Reach qualified candidates under the SSW programme.
+          </p>
+          <div class="footer-cta-actions">
+            <a class="btn btn-secondary" href="../">Employer Login</a>
+            <a class="btn btn-primary" href="../index.html#post-job"
+              >Post a Job</a
+            >
+          </div>
+        </div>
+
+        <div class="footer-links">
+          <div class="link-col">
+            <h4>Company</h4>
+            <ul>
+              <li><a href="../">Home</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+          <div class="link-col">
+            <h4>Jobs</h4>
+            <ul>
+              <li><a href="../index.html#jobs">Search Jobs</a></li>
+              <li><a href="../index.html#companies">Companies</a></li>
+              <li><a href="../index.html#post-job">Post a Job</a></li>
+            </ul>
+          </div>
+          <div class="link-col">
+            <h4>Resources</h4>
+            <ul>
+              <li><a href="#">Visa Guidance</a></li>
+              <li><a href="#">Employer Hub</a></li>
+              <li><a href="#">Privacy</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="container footer-legal">
+        <div class="legal-inner">
+          <small>&copy; 2025 Japan SSW. All rights reserved.</small>
+          <nav aria-label="Footer legal">
+            <a href="#">Terms</a>
+            <a href="#">Privacy</a>
+          </nav>
+        </div>
       </div>
     </footer>
   </body>
