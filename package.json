@@ -6,6 +6,7 @@
   "directories": {
     "doc": "docs"
   },
+  "random-commit": "testing pull request",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
