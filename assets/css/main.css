@@ -113,7 +113,7 @@
 
 /* Base styles */
 * {
-  box-sizing: border-box;
+  box-sizing: border-box; /* Better box model handling */
 }
 html,
 body {
@@ -225,20 +225,6 @@ button {
   font-weight: 500;
   padding: 0.25rem 0.5rem;
 }
-.header-actions .login-btn {
-  display: inline-block;
-  padding: 0.45rem 0.9rem;
-  border-radius: 999px;
-  background: var(--primary-color);
-  color: #fff;
-  text-decoration: none;
-  font-weight: 600;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-  border: none;
-}
-.header-actions .login-btn:hover {
-  filter: brightness(0.95);
-}
 
 /* Responsive header tweaks */
 @media (max-width: 900px) {
@@ -272,12 +258,12 @@ button {
   .header-actions {
     justify-content: flex-start;
   }
-  .header-actions .login-btn {
-    padding: 0.4rem 0.7rem;
-    font-size: 13px;
-  }
   .brand {
     font-size: 1.05rem;
+  }
+  .login-btn {
+    padding: 0.4rem 0.7rem;
+    font-size: 13px;
   }
 }
 
@@ -338,30 +324,101 @@ button {
   }
 }
 
-/* Buttons */
+/* ===================================================================
+   Button System (Consolidated) - All button styles in one section
+   =================================================================== */
+
+/* Base button class - all common properties */
 .btn {
   display: inline-block;
-  padding: 0.6rem 0.9rem;
-  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  border-radius: var(--border-radius);
   text-decoration: none;
+  font-family: var(--font-body);
+  font-size: var(--btn-size);
+  line-height: var(--btn-line-height);
   font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition);
 }
+
+/* Button variants */
 .btn-primary {
   background: var(--primary-color);
   color: #fff;
-  border: none;
 }
+
 .btn-primary:hover {
+  background: #bc0000;
   filter: brightness(0.95);
+  transform: translateY(-1px);
 }
+
 .btn-secondary {
   background: #fff;
   color: var(--dark-color);
   border: 1px solid rgba(0, 0, 0, 0.06);
 }
+
+.btn-secondary:hover {
+  background: rgba(0, 0, 0, 0.02);
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
 .btn-dark {
   background: var(--dark-color);
   color: #fff;
+}
+
+.btn-dark:hover {
+  background: #1a0000;
+  filter: brightness(1.05);
+}
+
+/* Specialized button styles */
+.login-btn {
+  display: inline-block;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  background: var(--primary-color);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  border: none;
+  transition: var(--transition);
+}
+
+.login-btn:hover {
+  filter: brightness(0.95);
+}
+
+/* Hero-specific button overrides */
+.hero .btn {
+  padding: 0.75rem 2rem;
+  font-weight: 600;
+}
+
+/* CTA spacing */
+.hero-ctas .btn {
+  margin-right: 0.75rem;
+}
+
+.footer-cta-actions .btn {
+  margin-right: 0.5rem;
+}
+
+/* Focus states for all buttons */
+.btn:focus,
+.login-btn:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* Button spacing utilities */
+.feature-card .btn {
+  margin-top: 0.5rem;
 }
 
 /* ------------------------------------------------------------------
@@ -475,12 +532,6 @@ button {
 .form-control:focus {
   outline: 3px solid rgba(235, 0, 0, 0.15);
 }
-.btn:focus,
-.form-control:focus,
-.site-nav a:focus {
-  outline: 2px solid var(--primary-color);
-  outline-offset: 2px;
-}
 
 /* Small helper spacing */
 .mt-1 {
@@ -567,13 +618,6 @@ button {
   border-radius: 6px;
   border: none;
 }
-.btn-dark {
-  background: var(--dark-color);
-  color: #fff;
-  border-radius: 6px;
-  padding: 0.55rem 0.9rem;
-  border: none;
-}
 
 /* Footer dark */
 .site-footer--dark {
@@ -583,23 +627,6 @@ button {
 .site-footer--dark a {
   color: #fff;
   text-decoration: none;
-}
-
-/* Button variants */
-.btn {
-  display: inline-block;
-  padding: 0.6rem 0.85rem;
-  border-radius: 8px;
-  text-decoration: none;
-}
-.btn-primary {
-  background: var(--primary-color);
-  color: #fff;
-}
-.btn-secondary {
-  background: #fff;
-  color: var(--dark-color);
-  border: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 /* Utilities */
@@ -741,19 +768,6 @@ p {
   margin-bottom: 1.5rem;
 }
 
-.hero .btn {
-  padding: 0.75rem 2rem;
-  font-weight: 600;
-  border-radius: var(--border-radius);
-  transition: var(--transition);
-}
-
-.hero .btn.btn-primary {
-  background: var(--primary-color);
-  color: white;
-  border: none;
-}
-
 /* Cards */
 .card {
   border: none;
@@ -790,23 +804,6 @@ p {
 .form-control:focus {
   border-color: var(--primary-color);
   box-shadow: 0 0 0 0.2rem rgba(0, 140, 255, 0.12);
-}
-
-.btn {
-  border-radius: var(--border-radius);
-  font-weight: 500;
-  transition: var(--transition);
-}
-
-.btn-primary {
-  background-color: var(--primary-color);
-  border-color: var(--primary-color);
-}
-
-.btn-primary:hover {
-  background-color: #bc0000;
-  border-color: #bc0000;
-  transform: translateY(-1px);
 }
 
 /* Footer */
@@ -900,10 +897,16 @@ footer {
    Accessibility Enhancements
    =================================================================== */
 
-/* Focus indicators */
-.btn:focus,
+/* Form focus states */
+.form-control:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem rgba(0, 140, 255, 0.12);
+}
+
+/* Navigation and form focus indicators */
 .form-control:focus,
-.nav-link:focus {
+.nav-link:focus,
+.site-nav a:focus {
   outline: 2px solid var(--primary-color);
   outline-offset: 2px;
 }
@@ -979,23 +982,6 @@ footer {
 
 .hero-ctas .btn {
   margin-right: 0.75rem;
-}
-
-.btn {
-  display: inline-block;
-  text-decoration: none;
-  padding: 0.6rem 1rem;
-  border-radius: var(--border-radius);
-}
-.btn-primary {
-  background: var(--primary-color);
-  color: #fff;
-  border: none;
-}
-.btn-secondary {
-  background: rgba(255, 255, 255, 0.12);
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .hero-art img {
@@ -1115,14 +1101,6 @@ footer {
   .features-grid {
     grid-template-columns: 1fr;
   }
-}
-
-/* Small helpers for buttons that use dark footer color */
-.btn-dark {
-  background: var(--dark-color);
-  color: #fff;
-  border-radius: var(--border-radius);
-  padding: 0.6rem 1rem;
 }
 
 /* Utility classes to replace inline styles used in the HTML */
