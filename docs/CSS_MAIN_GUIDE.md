@@ -2,6 +2,8 @@
 
 This document explains the purpose, structure, and conventions used in `assets/css/main.css`.
 
+Note: A recent refactor and consolidation of `main.css` is documented in `docs/CSS_CLEANUP_SUMMARY.md`.
+
 ## Purpose
 
 Central stylesheet for Phase 1 (static HTML + CSS). It contains design

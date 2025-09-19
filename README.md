@@ -98,6 +98,8 @@ Open `http://localhost:8000` in your browser.
 - JS in `assets/js/` (entry: `main.js`, modules under `modules/`)
 - Assets in `assets/images/`, `assets/icons/`, `assets/fonts/`
 
+- CSS cleanup summary: see `docs/CSS_CLEANUP_SUMMARY.md` for the recent refactor and conventions.
+
 ## File Structure
 
 ```text
