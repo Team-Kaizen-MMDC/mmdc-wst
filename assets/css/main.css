@@ -153,8 +153,18 @@ h3 {
   margin: 0 0 0.5rem;
 }
 
+/* Additional heading levels */
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  margin: 0 0 1rem;
+}
+
 /* Buttons should use the body/btn tokens */
-.btn {
+.btn,
+button {
   font-family: var(--font-body);
   font-size: var(--btn-size);
   line-height: var(--btn-line-height);
@@ -356,39 +366,8 @@ h3 {
 
 /* ------------------------------------------------------------------
    Typography (wireframe): Helvetica for headings, Open Sans for body,
-   Yu Gothic for Japanese text. Sizes follow the design spec.
-   Appended at the end to ensure these rules take precedence.
+   Yu Gothic for Japanese text. Consolidated from design spec.
    ------------------------------------------------------------------ */
-
-html,
-body {
-  font-family: var(--font-body);
-  font-size: 16px; /* body text size per wireframe */
-}
-
-h1 {
-  font-family: var(--font-heading);
-  font-size: 36px;
-  line-height: 44px;
-  margin: 0 0 0.5rem;
-}
-h2 {
-  font-family: var(--font-heading);
-  font-size: 32px;
-  line-height: 36px;
-}
-h3 {
-  font-family: var(--font-heading);
-  font-size: 28px;
-  line-height: 36px;
-}
-
-/* Buttons/CTAs use heading font weight */
-.btn,
-button {
-  font-family: var(--font-heading);
-  font-size: 14px;
-}
 
 /* Japanese content should use Yu Gothic when present */
 :lang(ja),
@@ -524,15 +503,9 @@ button {
    =================================================================== */
 
 /* Base Typography */
-body {
-  font-family: var(--font-family-sans);
-  line-height: 1.6;
-  color: var(--dark-color);
-}
+/* (Typography rules consolidated above in main section) */
 
 /* Spacing tokens */
-
-h1,
 
 /* Hero centered variant for the homepage */
 .hero-centered {
@@ -721,14 +694,6 @@ h1,
     align-items: flex-start;
     gap: 0.5rem;
   }
-}
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-weight: 600;
-  margin-bottom: 1rem;
 }
 
 p {
