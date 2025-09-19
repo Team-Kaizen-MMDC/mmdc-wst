@@ -293,34 +293,167 @@ button {
   color: rgba(0, 0, 0, 0.75);
 }
 
-/* Cards */
-.feature-card {
-  background: #fff;
-  padding: 1.25rem;
-  border-radius: 12px;
+/* ===================================================================
+   Card System (Consolidated) - All card components in one section
+   =================================================================== */
+
+/* Base card styling */
+.card {
+  border: none;
   box-shadow: var(--box-shadow);
-}
-.job-panel {
-  border-radius: 12px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
-  padding: 1rem;
+  transition: var(--transition);
+  border-radius: var(--border-radius);
+  background: #fff;
 }
 
-/* Grid helpers */
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.card-title {
+  color: var(--dark-color);
+  font-weight: 600;
+}
+
+/* Feature cards for showcasing features */
+.feature-card {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: var(--box-shadow);
+  text-align: center;
+}
+
+.feature-card h3 {
+  margin-top: 0;
+  margin-bottom: 0.25rem;
+}
+
+.feature-card p {
+  margin-bottom: 0.75rem;
+}
+
+.feature-card .btn {
+  margin-top: 0.5rem;
+}
+
+.feature-card img {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+  margin-bottom: 1rem;
+}
+
+/* Job panels for job listings */
+.job-panel {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  padding: 1.25rem;
+}
+
+.job-item h4 {
+  margin: 0.25rem 0 0.25rem;
+}
+
+.job-item .job-meta {
+  font-size: 0.8rem;
+}
+
+/* Company cards for company showcases */
+.company-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 88px;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+  font-weight: 600;
+}
+
+/* Responsive card adjustments */
+@media (max-width: 900px) {
+  .card {
+    margin-bottom: 1.5rem;
+  }
+  .job-panel {
+    width: 92% !important;
+  }
+}
+
+/* ===================================================================
+   Grid System (Consolidated) - All grid layouts in one section
+   =================================================================== */
+
+/* Three-column feature grid */
 .features-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Three columns , equal size each*/
-  gap: 1.25rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
 }
+
+/* Three-column company grid */
 .company-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Three columns */
+  grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
 }
+
+/* Hero layout grid */
+.hero-inner {
+  display: grid;
+  grid-template-columns: 1fr 480px;
+  gap: 2rem;
+  align-items: center;
+}
+
+/* Two-column footer grid */
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+  padding: 1rem 0 1.25rem;
+}
+
+/* Utility grid classes */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.feature-two-col {
+  max-width: 900px;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* Grid responsive breakpoints */
 @media (max-width: 900px) {
   .features-grid,
   .company-grid {
     grid-template-columns: repeat(1, 1fr);
+  }
+  
+  .hero-inner {
+    grid-template-columns: 1fr;
+  }
+  
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .company-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -447,55 +580,76 @@ button {
   border: none;
 }
 
-/* Footer */
+/* ===================================================================
+   Footer System (Consolidated) - All footer styles in one section
+   =================================================================== */
+
 .site-footer--dark {
   background: #6b0000;
   color: #fff;
+  padding: 2rem 0 1.25rem;
 }
+
+.site-footer--dark a {
+  color: #fff;
+  text-decoration: none;
+}
+
 .footer-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
+  align-items: start;
   padding: 1rem 0 1.25rem;
 }
+
 .footer-cta h3 {
   color: #fff;
   margin: 0 0 0.5rem;
 }
+
 .footer-cta .muted {
   color: rgba(255, 255, 255, 0.9);
   margin-bottom: 0.75rem;
 }
+
 .footer-cta-actions {
   display: flex;
   gap: 0.5rem;
 }
+
 .footer-links {
   display: flex;
   gap: 1rem;
   justify-content: flex-end;
 }
+
 .link-col h4 {
   color: #fff;
   margin-bottom: 0.5rem;
 }
+
 .link-col ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
+
 .link-col li {
   margin-bottom: 0.5rem;
 }
+
 .link-col a {
   color: rgba(255, 255, 255, 0.95);
   text-decoration: none;
 }
+
 .footer-legal {
   border-top: 1px solid rgba(255, 255, 255, 0.06);
   margin-top: 1rem;
   padding-top: 1rem;
 }
+
 .legal-inner {
   display: flex;
   justify-content: space-between;
@@ -503,11 +657,14 @@ button {
   gap: 1rem;
   color: rgba(255, 255, 255, 0.85);
 }
+
 .footer-legal nav a {
   margin-left: 0.75rem;
   color: rgba(255, 255, 255, 0.85);
   text-decoration: none;
 }
+
+/* Footer responsive design */
 @media (max-width: 900px) {
   .footer-grid {
     grid-template-columns: 1fr;
@@ -516,11 +673,31 @@ button {
     justify-content: flex-start;
     flex-wrap: wrap;
   }
+  .footer-cta-actions {
+    margin-top: 0.5rem;
+  }
   .legal-inner {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
   }
+}
+
+/* Standalone site footer for simpler layouts */
+.site-footer {
+  background: var(--dark-color);
+  color: #fff;
+  padding: 1.25rem 0;
+}
+
+.site-footer a {
+  color: rgba(255, 255, 255, 0.95);
+  text-decoration: none;
+  margin: 0 0.25rem;
+}
+
+.footer-inner {
+  text-align: center;
 }
 
 /* Forms & focus */
@@ -574,37 +751,6 @@ button {
   color: #6b6464;
 }
 
-/* Job panel and items */
-.job-panel {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
-  padding: 1.25rem;
-}
-.job-item h4 {
-  margin: 0.25rem 0 0.25rem;
-}
-.job-item .job-meta {
-  font-size: 0.8rem;
-}
-
-/* Company grid 3x3 */
-.company-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-}
-.company-card {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 88px;
-  border-radius: 10px;
-  background: #fff;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
-  font-weight: 600;
-}
-
 /* Alerts band (full-width red) */
 .alerts-band {
   background: var(--primary-color);
@@ -619,107 +765,17 @@ button {
   border: none;
 }
 
-/* Footer dark */
-.site-footer--dark {
-  background: #6b0000;
-  padding: 2rem 0 1.25rem;
-}
-.site-footer--dark a {
-  color: #fff;
-  text-decoration: none;
-}
-
 /* Utilities */
 .section-padding {
   padding: 2.25rem 0;
 }
 
 @media (max-width: 900px) {
-  .company-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
   .job-panel {
     width: 92% !important;
   }
   .hero-centered h1 {
     font-size: 1.5rem;
-  }
-}
-
-/* Footer layout for wider footer content */
-.footer-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  align-items: start;
-  padding: 1rem 0 1.25rem;
-}
-.footer-cta h3 {
-  color: #fff;
-  margin: 0 0 0.5rem;
-}
-.footer-cta .muted {
-  color: rgba(255, 255, 255, 0.9);
-  margin-bottom: 0.75rem;
-}
-.footer-cta-actions {
-  display: flex;
-  gap: 0.5rem;
-}
-.footer-links {
-  display: flex;
-  gap: 1rem;
-  justify-content: flex-end;
-}
-.link-col h4 {
-  color: #fff;
-  margin-bottom: 0.5rem;
-}
-.link-col ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-.link-col li {
-  margin-bottom: 0.5rem;
-}
-.link-col a {
-  color: rgba(255, 255, 255, 0.95);
-}
-
-.footer-legal {
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  margin-top: 1rem;
-  padding-top: 1rem;
-}
-.legal-inner {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  color: rgba(255, 255, 255, 0.85);
-}
-.footer-legal nav a {
-  margin-left: 0.75rem;
-  color: rgba(255, 255, 255, 0.85);
-  text-decoration: none;
-}
-
-@media (max-width: 900px) {
-  .footer-grid {
-    grid-template-columns: 1fr;
-  }
-  .footer-links {
-    justify-content: flex-start;
-    flex-wrap: wrap;
-  }
-  .footer-cta-actions {
-    margin-top: 0.5rem;
-  }
-  .legal-inner {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
   }
 }
 
@@ -766,19 +822,6 @@ p {
 .hero h1 {
   font-weight: 700;
   margin-bottom: 1.5rem;
-}
-
-/* Cards */
-.card {
-  border: none;
-  box-shadow: var(--box-shadow);
-  transition: var(--transition);
-  border-radius: var(--border-radius);
-}
-
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
 }
 
 .card-title {
@@ -926,38 +969,6 @@ footer {
    Layout helpers for CSS-only scaffold
    =================================================================== */
 
-.container {
-  width: 100%;
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
-
-.site-header {
-  background: var(--light-color);
-  border-bottom: 1px solid var(--ui-color);
-}
-
-.header-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem 0;
-}
-
-.brand {
-  font-weight: 700;
-  color: var(--dark-color);
-  text-decoration: none;
-}
-
-.site-nav a {
-  margin-left: 1rem;
-  color: var(--dark-color);
-  text-decoration: none;
-  font-weight: 500;
-}
-
 .hero {
   color: white;
   padding: 4rem 0;
@@ -999,38 +1010,13 @@ footer {
   text-align: center;
   margin-bottom: 2rem;
 }
-
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-}
-.feature-card {
-  background: white;
-  padding: 1.5rem;
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
-  text-align: center;
-}
 .feature-icon {
   margin-bottom: 1rem;
   display: inline-block;
 }
 
-.site-footer {
-  background: var(--dark-color);
-  color: #fff;
-  padding: 1.25rem 0;
-}
-.footer-inner {
-  text-align: center;
-}
-
 @media (max-width: 900px) {
   .hero-inner {
-    grid-template-columns: 1fr;
-  }
-  .features-grid {
     grid-template-columns: 1fr;
   }
 }
@@ -1059,10 +1045,6 @@ footer {
   color: rgba(0, 0, 0, 0.6);
   font-size: 0.95rem;
 }
-
-.features-grid {
-  grid-template-columns: repeat(3, 1fr);
-}
 .feature-card h3 {
   margin-top: 0;
   margin-bottom: 0.25rem;
@@ -1074,17 +1056,6 @@ footer {
 
 .feature-card .btn {
   margin-top: 0.5rem;
-}
-
-.site-footer {
-  background: var(--dark-color);
-  color: #fff;
-  padding: 1.25rem 0;
-}
-.site-footer a {
-  color: rgba(255, 255, 255, 0.95);
-  text-decoration: none;
-  margin: 0 0.25rem;
 }
 
 /* Responsive tweaks for smaller screens */
