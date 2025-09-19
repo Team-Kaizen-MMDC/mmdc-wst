@@ -7,15 +7,16 @@
   - Single source CSS for Phase 1 (static HTML + CSS only).
   - Holds design tokens (variables), layout primitives, component styles,
     utilities, responsive rules, and accessibility-focused styles.
+  - Systematically organized and optimized (zero duplication).
 
   File structure & conventions
-  - Grouping order (logical sections):
-    1) Design tokens (CSS custom properties)
-    2) Resets & base typographic rules
-    3) Layout containers (.container, header, footer)
-    4) Components (hero, cards, nav, footer-cta, forms)
-    5) Utilities (spacing, text helpers, visibility)
-    6) Responsive overrides and accessibility tweaks
+  - Grouping order (logical sections - systematically consolidated):
+    1) Design tokens (CSS custom properties) - unified color/typography system
+    2) Base styles & typography - consolidated heading/body rules
+    3) Layout containers & header/footer systems
+    4) Consolidated component systems (cards, grids, buttons, hero)
+    5) Organized utility classes (spacing, text, layout helpers)
+    6) Responsive design & accessibility enhancements
 
   Naming conventions
   - Use semantic class names (e.g., .site-header, .feature-card).
@@ -60,7 +61,6 @@
     introducing per-page inline styles.
   - Run a local preview (`python3 -m http.server 8000`) to validate visual
     changes across breakpoints.
-
 */
 
 /* ===================================================================
