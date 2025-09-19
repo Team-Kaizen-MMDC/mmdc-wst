@@ -43,5 +43,3 @@ This document summarizes the six-phase cleanup and consolidation performed on `a
 
 - Option A: Keep a single `main.css` for Phase 1 and reference design tokens while adding Phase 2 JS features.
 - Option B: For Phase 2+, split large `main.css` into small, focused files (e.g., `tokens.css`, `layout.css`, `components.css`, `utilities.css`) and import from a build process.
-
-
