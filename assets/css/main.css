@@ -352,7 +352,7 @@ button {
 .btn-primary:hover {
   background: #bc0000;
   filter: brightness(0.95);
-  transform: translateY(-1px);
+  transform: translateY(-1px); /* Slight lift on hover */
 }
 
 .btn-secondary {
