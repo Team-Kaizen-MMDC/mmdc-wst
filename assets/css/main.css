@@ -267,18 +267,6 @@ button {
   }
 }
 
-/* Utility text */
-.muted {
-  color: rgba(0, 0, 0, 0.6);
-}
-.section-title {
-  text-align: center;
-  margin-bottom: 1.25rem;
-}
-.section-padding {
-  padding: 2.25rem 0;
-}
-
 /* Hero */
 .hero-centered {
   background: #fbf8f7;
@@ -441,11 +429,11 @@ button {
   .company-grid {
     grid-template-columns: repeat(1, 1fr);
   }
-  
+
   .hero-inner {
     grid-template-columns: 1fr;
   }
-  
+
   .footer-grid {
     grid-template-columns: 1fr;
   }
@@ -579,6 +567,14 @@ button {
   border-radius: 6px;
   border: none;
 }
+.alerts-band h3 {
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+.alerts-band p {
+  color: #fff;
+  margin-bottom: 1rem;
+}
 
 /* ===================================================================
    Footer System (Consolidated) - All footer styles in one section
@@ -710,13 +706,7 @@ button {
   outline: 3px solid rgba(235, 0, 0, 0.15);
 }
 
-/* Small helper spacing */
-.mt-1 {
-  margin-top: 0.5rem;
-}
-.mt-2 {
-  margin-top: 1rem;
-}
+/* Spacing utilities consolidated below */
 
 /* Accessibility: reduced motion */
 @media (prefers-reduced-motion: reduce) {
@@ -747,10 +737,6 @@ button {
   letter-spacing: 0.2px;
 }
 
-.muted {
-  color: #6b6464;
-}
-
 /* Alerts band (full-width red) */
 .alerts-band {
   background: var(--primary-color);
@@ -763,11 +749,6 @@ button {
   padding: 0.5rem 0.75rem;
   border-radius: 6px;
   border: none;
-}
-
-/* Utilities */
-.section-padding {
-  padding: 2.25rem 0;
 }
 
 @media (max-width: 900px) {
@@ -870,23 +851,6 @@ footer {
 /* ===================================================================
    Utility Classes
    =================================================================== */
-
-/* Spacing utilities */
-.section-padding {
-  padding: 4rem 0;
-}
-
-/* Text utilities */
-.text-gradient {
-  background: linear-gradient(
-    135deg,
-    var(--primary-color),
-    var(--accent-color)
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
 
 /* Animation utilities */
 .fade-in {
@@ -1041,10 +1005,6 @@ footer {
   color: rgba(255, 255, 255, 0.75);
 }
 
-.muted {
-  color: rgba(0, 0, 0, 0.6);
-  font-size: 0.95rem;
-}
 .feature-card h3 {
   margin-top: 0;
   margin-bottom: 0.25rem;
@@ -1075,53 +1035,12 @@ footer {
 }
 
 /* Utility classes to replace inline styles used in the HTML */
-.text-center {
-  text-align: center;
-}
-.flex-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.grid-2 {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-}
-.w-760 {
-  width: 760px;
-}
-.max-w-880 {
-  max-width: 880px;
-}
-.max-w-900 {
-  max-width: 900px;
-}
-.max-w-980 {
-  max-width: 980px;
-}
-.img-320 {
-  width: 320px;
-  height: auto;
-}
-.img-full {
-  width: 100%;
-  height: auto;
-}
-.object-cover {
-  object-fit: cover;
-}
-.fw-600 {
-  font-weight: 600;
-}
-.m-0 {
-  margin: 0;
-}
-.gap-05 {
-  gap: 0.5rem;
-}
 
-/* Spacing utilities (approximate values used in inline styles) */
+/* ===================================================================
+   Utility Classes - Consolidated spacing, text, and layout helpers
+   =================================================================== */
+
+/* Spacing utilities - consistent margin/padding scale */
 .mt-xxs {
   margin-top: 0.25rem;
 }
@@ -1141,15 +1060,132 @@ footer {
   margin-top: 3.5rem;
 }
 
-/* Hero specific helpers */
+/* Section padding utility */
+.section-padding {
+  padding: 2.25rem 0;
+}
+
+/* Text utilities */
+.text-center {
+  text-align: center;
+}
+
+.text-gradient {
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--accent-color)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.muted {
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 0.95rem;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 1.25rem;
+}
+
+/* Layout utilities */
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+/* Width utilities */
+.w-760 {
+  width: 760px;
+}
+
+.max-w-880 {
+  max-width: 880px;
+}
+
+.max-w-900 {
+  max-width: 900px;
+}
+
+.max-w-980 {
+  max-width: 980px;
+}
+
+/* Image utilities */
+.img-320 {
+  width: 320px;
+  height: auto;
+}
+
+.img-full {
+  width: 100%;
+  height: auto;
+}
+
+.object-cover {
+  object-fit: cover;
+}
+
+/* Typography weight utilities */
+.fw-600 {
+  font-weight: 600;
+}
+
+/* Spacing utilities */
+.m-0 {
+  margin: 0;
+}
+
+.gap-05 {
+  gap: 0.5rem;
+}
+
+/* Feature layout utilities */
 .hero-content {
   max-width: 880px;
   margin: 3rem auto 4rem;
   text-align: center;
 }
+
 .hero-title {
   margin-bottom: 0.75rem;
   color: var(--dark-color);
+}
+
+.feature-wide {
+  max-width: 1000px;
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.feature-two-col {
+  max-width: 900px;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 1rem;
+  align-items: center;
+}
+
+.feature-cta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cta-band {
+  padding: 2.5rem 0;
+  background: rgba(235, 0, 0, 0.04);
 }
 
 /* Feature variants used by homepage/about sections */
@@ -1158,32 +1194,4 @@ footer {
   display: flex;
   gap: 1.5rem;
   align-items: center;
-}
-.feature-two-col {
-  max-width: 900px;
-  display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: 1rem;
-  align-items: center;
-}
-.feature-cta {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-/* CTA band used on About page */
-.cta-band {
-  padding: 2.5rem 0;
-  background: rgba(235, 0, 0, 0.04);
-}
-
-/* Alerts band fine-tuning */
-.alerts-band h3 {
-  color: #fff;
-  margin-bottom: 0.5rem;
-}
-.alerts-band p {
-  color: #fff;
-  margin-bottom: 1rem;
 }
