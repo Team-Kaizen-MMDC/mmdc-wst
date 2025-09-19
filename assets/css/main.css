@@ -125,7 +125,7 @@ body {
   color: var(--dark-color);
   font-size: var(--body-size);
   line-height: var(--body-line-height);
-  -webkit-font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased; /* Improved font rendering for (Safari, Chrome on macOS)*/
 }
 
 /* Heading scale from design guide */
@@ -323,12 +323,12 @@ button {
 /* Grid helpers */
 .features-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr); /* Three columns , equal size each*/
   gap: 1.25rem;
 }
 .company-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr); /* Three columns */
   gap: 1rem;
 }
 @media (max-width: 900px) {
