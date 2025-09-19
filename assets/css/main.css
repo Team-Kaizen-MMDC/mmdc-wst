@@ -543,15 +543,10 @@ button {
 }
 
 /* ------------------------------------------------------------------
-   Typography (wireframe): Helvetica for headings, Open Sans for body,
-   Yu Gothic for Japanese text. Consolidated from design spec.
+   Typography (wireframe): Consolidated typography system
    ------------------------------------------------------------------ */
 
-/* Japanese content should use Yu Gothic when present */
-:lang(ja),
-.jp {
-  font-family: var(--font-jp);
-}
+/* Typography rules already defined in main typography section above */
 
 /* Alerts band */
 .alerts-band {
@@ -717,55 +712,15 @@ button {
 }
 
 /* ===================================================================
-   CSS Reset and Base Styles
+   Base Styles and Typography - Already consolidated above
    =================================================================== */
-
-/* Base Typography */
-/* (Typography rules consolidated above in main section) */
-
-/* Spacing tokens */
-
-/* Hero centered variant for the homepage */
-.hero-centered {
-  background: #fbf8f7;
-  padding: 2.25rem 0 1rem;
-}
-
-.hero-centered h1 {
-  font-size: 1.875rem;
-  font-weight: 700;
-  letter-spacing: 0.2px;
-}
-
-/* Alerts band (full-width red) */
-.alerts-band {
-  background: var(--primary-color);
-  color: #fff;
-  padding: 2rem 0;
-}
-.alerts-band .form-control {
-  width: 360px;
-  max-width: 60%;
-  padding: 0.5rem 0.75rem;
-  border-radius: 6px;
-  border: none;
-}
-
-@media (max-width: 900px) {
-  .job-panel {
-    width: 92% !important;
-  }
-  .hero-centered h1 {
-    font-size: 1.5rem;
-  }
-}
 
 p {
   margin-bottom: 1rem;
 }
 
 /* ===================================================================
-   Component Styles
+   Component Styles - Main layout and interactive components
    =================================================================== */
 
 /* Navigation */
@@ -788,14 +743,20 @@ p {
   color: var(--primary-color) !important;
 }
 
-/* Hero Section */
+/* ===================================================================
+   Hero Section - Consolidated hero and hero-centered styles
+   =================================================================== */
+
+/* Main hero with gradient background */
 .hero {
   background: linear-gradient(
     135deg,
     var(--primary-color),
     var(--secondary-color)
   );
+  color: white;
   min-height: 60vh;
+  padding: 4rem 0;
   display: flex;
   align-items: center;
 }
@@ -803,6 +764,98 @@ p {
 .hero h1 {
   font-weight: 700;
   margin-bottom: 1.5rem;
+}
+
+.hero-inner {
+  display: grid;
+  grid-template-columns: 1fr 480px;
+  gap: 2rem;
+  align-items: center;
+}
+
+.hero-copy h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.lead {
+  color: rgba(255, 255, 255, 0.95);
+  margin-bottom: 1.25rem;
+}
+
+.hero-ctas .btn {
+  margin-right: 0.75rem;
+}
+
+.hero-art img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Hero centered variant for homepage */
+.hero-centered {
+  background: #fbf8f7;
+  padding: 2.25rem 0 1rem;
+}
+
+.hero-centered h1 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+/* Hero search component */
+.hero-search {
+  display: flex;
+  gap: 0.5rem;
+  max-width: 680px;
+}
+
+.hero-search .form-control {
+  flex: 1 1 auto;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+}
+
+.hero-search .form-control::placeholder {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* Hero responsive design */
+@media (max-width: 900px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+  }
+  .hero-search {
+    flex-direction: column;
+  }
+  .hero-search .form-control {
+    width: 100%;
+  }
+  .hero-ctas {
+    text-align: left;
+  }
+  .hero-centered h1 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero h1 {
+    font-size: 2rem;
+  }
+  .hero .lead {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .hero {
+    min-height: 70vh;
+  }
 }
 
 .card-title {
@@ -869,19 +922,6 @@ footer {
    =================================================================== */
 
 /* Mobile-first responsive design */
-@media (max-width: 576px) {
-  .hero h1 {
-    font-size: 2rem;
-  }
-
-  .hero .lead {
-    font-size: 1rem;
-  }
-
-  .section-padding {
-    padding: 2rem 0;
-  }
-}
 
 @media (max-width: 768px) {
   .navbar-nav {
@@ -895,8 +935,8 @@ footer {
 }
 
 @media (min-width: 992px) {
-  .hero {
-    min-height: 70vh;
+  .section-padding {
+    padding: 4rem 0;
   }
 }
 
@@ -933,38 +973,6 @@ footer {
    Layout helpers for CSS-only scaffold
    =================================================================== */
 
-.hero {
-  color: white;
-  padding: 4rem 0;
-}
-
-.hero-inner {
-  display: grid;
-  grid-template-columns: 1fr 480px;
-  gap: 2rem;
-  align-items: center;
-}
-
-.hero-copy h1 {
-  font-size: 2.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.lead {
-  color: rgba(255, 255, 255, 0.95);
-  margin-bottom: 1.25rem;
-}
-
-.hero-ctas .btn {
-  margin-right: 0.75rem;
-}
-
-.hero-art img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
 .features {
   padding: 4rem 0;
   background: var(--light-color);
@@ -989,22 +997,6 @@ footer {
    Styles for homepage-specific sections added in expanded index.html
    ------------------------------------------------------------------ */
 
-.hero-search {
-  display: flex;
-  gap: 0.5rem;
-  max-width: 680px;
-}
-.hero-search .form-control {
-  flex: 1 1 auto;
-  padding: 0.75rem 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  background: rgba(255, 255, 255, 0.06);
-  color: #fff;
-}
-.hero-search .form-control::placeholder {
-  color: rgba(255, 255, 255, 0.75);
-}
-
 .feature-card h3 {
   margin-top: 0;
   margin-bottom: 0.25rem;
@@ -1020,14 +1012,8 @@ footer {
 
 /* Responsive tweaks for smaller screens */
 @media (max-width: 900px) {
-  .hero-search {
-    flex-direction: column;
-  }
-  .hero-search .form-control {
-    width: 100%;
-  }
-  .hero-ctas {
-    text-align: left;
+  .job-panel {
+    width: 92% !important;
   }
   .features-grid {
     grid-template-columns: 1fr;
