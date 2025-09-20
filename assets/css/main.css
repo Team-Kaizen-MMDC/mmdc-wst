@@ -377,6 +377,22 @@ button {
   font-weight: 600;
 }
 
+/* BEM aliases for company-card (alias-first migration)
+   - Add `.company-card__title` for card title text
+   - Add `.company-card__logo` for image/logo elements inside the card
+*/
+.company-card .feature-card__title,
+.company-card__title {
+  font-weight: 600;
+  color: var(--dark-color);
+}
+
+.company-card__logo {
+  display: block;
+  max-width: 120px;
+  margin-bottom: 0.5rem;
+}
+
 /* Responsive card adjustments */
 @media (max-width: 900px) {
   .card {
