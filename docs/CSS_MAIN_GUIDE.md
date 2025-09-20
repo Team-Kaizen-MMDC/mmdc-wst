@@ -88,17 +88,17 @@ Markup example:
 
 ```html
 <header class="site-header">
-  <div class="container header-inner">
-    <a class="brand" href="index.html">Japan SSW</a>
+  <div class="container site-header__inner">
+    <a class="site-header__brand" href="index.html">Japan SSW</a>
     <nav class="site-nav" aria-label="Main navigation">
-      <a href="#jobs">Jobs</a>
-      <a href="#companies">Companies</a>
-      <a href="pages/agency.html">Agency</a>
-      <a href="pages/about.html">About</a>
+      <a class="site-header__nav-link" href="#jobs">Jobs</a>
+      <a class="site-header__nav-link" href="#companies">Companies</a>
+      <a class="site-header__nav-link" href="pages/agency.html">Agency</a>
+      <a class="site-header__nav-link" href="pages/about.html">About</a>
     </nav>
-    <div class="header-actions">
-      <a class="signup-link muted" href="#">Signup</a>
-      <a class="btn btn-primary login-btn" href="#">Log in</a>
+    <div class="site-header__actions">
+      <a class="site-header__signup muted" href="#">Signup</a>
+      <a class="btn btn-primary site-header__login-btn" href="#">Log in</a>
     </div>
   </div>
 </header>

@@ -50,7 +50,7 @@ This project follows a simple wireframe that maps directly to the HTML pages in 
 - **Primary purpose:** present the team's services and contact details with an approachable, readable layout.
 - **Target audience:** site visitors seeking information about the team's offerings and how to get in touch.
 - **Main pages:** `index.html` (home/hero), `pages/agency.html` (about / agency overview), `pages/services.html` (services grid or list), `pages/contact.html` (contact info / form), `about.html` (team or company details).
-- **Header contract:** a single `.site-header` element containing a `.brand` (logo/text), a `nav.site-nav` for primary links, and a `.header-actions` region for secondary links and CTAs (for example: a muted signup link and a primary `.btn`). Keep header markup consistent across pages so the CSS tokens and layout behave predictably.
+- **Header contract:** a single `.site-header` element containing a `.site-header__brand` (logo/text), a `nav.site-nav` for primary links, and a `.site-header__actions` region for secondary links and CTAs (for example: a muted signup link and a primary `.btn`). Keep header markup consistent across pages so the CSS tokens and layout behave predictably.
 - **Hero/Above-the-fold:** large heading, short description, primary CTA button. Keep copy concise.
 - **Content sections:** services or features presented as a grid/cards; optional testimonial or highlights band; concise contact block in the footer or on the contact page.
 
