@@ -352,13 +352,18 @@ button {
   padding: 1.25rem;
 }
 
-.job-item h4 {
+/* Job item element aliases for safe BEM migration */
+.job-item h4,
+.job-panel__title {
   margin: 0.25rem 0 0.25rem;
 }
 
-.job-item .job-meta {
+.job-item .job-meta,
+.job-panel__meta {
   font-size: 0.8rem;
 }
+
+/* Use `.job-panel__item` on HTML job entries when migrating markup. */
 
 /* Company cards for company showcases */
 .company-card {
@@ -606,6 +611,10 @@ button {
   padding: 1rem 0 1.25rem;
 }
 
+/* BEM aliases for site-footer (safe, alias-first migration)
+   - Add element selectors alongside legacy selectors to avoid breaking pages
+*/
+
 .footer-cta h3 {
   color: #fff;
   margin: 0 0 0.5rem;
@@ -621,13 +630,29 @@ button {
   gap: 0.5rem;
 }
 
+.site-footer__cta-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
 .footer-links {
   display: flex;
   gap: 1rem;
   justify-content: flex-end;
 }
 
+.site-footer__links {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
 .link-col h4 {
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.site-footer__link-col h4 {
   color: #fff;
   margin-bottom: 0.5rem;
 }
@@ -647,13 +672,32 @@ button {
   text-decoration: none;
 }
 
+.site-footer__link-col a {
+  color: rgba(255, 255, 255, 0.95);
+  text-decoration: none;
+}
+
 .footer-legal {
   border-top: 1px solid rgba(255, 255, 255, 0.06);
   margin-top: 1rem;
   padding-top: 1rem;
 }
 
+.site-footer__legal {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  margin-top: 1rem;
+  padding-top: 1rem;
+}
+
 .legal-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.site-footer__legal-inner {
   display: flex;
   justify-content: space-between;
   align-items: center;
