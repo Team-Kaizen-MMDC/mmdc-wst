@@ -190,36 +190,36 @@ button {
   background: var(--light-color);
   border-bottom: 1px solid var(--ui-color);
 }
-.header-inner {
+.site-header__inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 1rem 0;
 }
-.brand {
+.site-header__brand {
   font-weight: 700;
   color: var(--dark-color);
   text-decoration: none;
 }
-.site-nav a {
+.site-header__nav-link {
   margin-left: 1rem;
   color: var(--dark-color);
   text-decoration: none;
   font-weight: 500;
 }
-.site-nav a:focus,
-.site-nav a:hover {
+.site-header__nav-link:focus,
+.site-header__nav-link:hover {
   color: var(--primary-color);
 }
 
 /* Header actions (signup / login) */
-.header-actions {
+.site-header__actions {
   display: flex;
   align-items: center;
   gap: 0.75rem;
   margin-left: 1rem;
 }
-.header-actions .signup-link {
+.site-header__signup {
   color: rgba(0, 0, 0, 0.6);
   text-decoration: none;
   font-weight: 500;
@@ -228,40 +228,40 @@ button {
 
 /* Responsive header tweaks */
 @media (max-width: 900px) {
-  .header-inner {
+  .site-header__inner {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
     padding: 0.75rem 0;
   }
-  .site-nav {
+  .site-header__nav {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem 1rem;
     width: 100%;
   }
-  .site-nav a {
+  .site-header__nav-link {
     margin-left: 0;
     padding: 0.25rem 0;
   }
-  .header-actions {
+  .site-header__actions {
     margin-left: 0;
     align-self: stretch;
     justify-content: flex-end;
   }
-  .header-actions .signup-link {
+  .site-header__signup {
     padding-left: 0;
   }
 }
 
 @media (max-width: 480px) {
-  .header-actions {
+  .site-header__actions {
     justify-content: flex-start;
   }
-  .brand {
+  .site-header__brand {
     font-size: 1.05rem;
   }
-  .login-btn {
+  .site-header__login-btn {
     padding: 0.4rem 0.7rem;
     font-size: 13px;
   }
