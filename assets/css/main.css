@@ -313,20 +313,29 @@ button {
   text-align: center;
 }
 
-.feature-card h3 {
+/* Feature card (BEM): add element aliases for safer migration
+   - Keep legacy selectors to avoid breaking existing pages immediately
+   - Prefer new `.feature-card__*` elements in markup moving forward
+*/
+.feature-card h3,
+.feature-card__title {
   margin-top: 0;
   margin-bottom: 0.25rem;
 }
 
-.feature-card p {
+.feature-card p,
+.feature-card__desc {
   margin-bottom: 0.75rem;
 }
 
-.feature-card .btn {
+.feature-card .btn,
+.feature-card__cta.btn,
+.feature-card__cta {
   margin-top: 0.5rem;
 }
 
-.feature-card img {
+.feature-card img,
+.feature-card__img {
   display: inline-block;
   background: rgba(255, 255, 255, 0.9);
   padding: 10px;
