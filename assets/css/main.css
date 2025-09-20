@@ -1098,6 +1098,12 @@ footer {
    Utility Classes - Consolidated spacing, text, and layout helpers
    =================================================================== */
 
+/* Utilities: allowed primitives
+  - Purpose: small, reusable helpers (spacing, sizing, text, layout)
+  - Rule: Keep these global utilities as primitives during Phase 1.
+  - Do NOT convert utilities to BEM blocks/elements.
+*/
+
 /* Spacing utilities - consistent margin/padding scale */
 .mt-xxs {
   margin-top: 0.25rem;

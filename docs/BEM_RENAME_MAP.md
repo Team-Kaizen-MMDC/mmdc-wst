@@ -117,5 +117,3 @@ Notes:
 4. Update docs (`docs/CSS_MAIN_GUIDE.md`, `assets/css/main.css` top doc) to explain BEM usage.
 
 ---
-
-If you'd like, I can proceed to convert the header CSS now (create a single commit updating CSS selectors), then update HTML in a follow-up commit. Confirm and I'll start the header CSS conversion.
