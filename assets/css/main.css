@@ -352,9 +352,11 @@ button {
 /* Company cards for company showcases */
 .company-card {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 88px;
+  gap: 0.5rem;
+  min-height: 120px;
   border-radius: 10px;
   background: #fff;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
@@ -374,6 +376,21 @@ button {
   display: block;
   max-width: 120px;
   margin-bottom: 0.5rem;
+}
+
+/* Company card media/body helpers for consistent layout */
+.company-card__media {
+  width: auto;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.company-card__body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 /* Responsive card adjustments */
@@ -876,6 +893,98 @@ p {
   .hero {
     min-height: 70vh;
   }
+}
+
+/* Hero background element (responsive CSS background with overlay) */
+.hero__bg {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 60vh;
+  max-height: 720px;
+  background-image: url("../images/aiImages/TokyoDay-480.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+}
+.hero {
+  position: relative;
+  overflow: hidden;
+}
+.hero__bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    rgba(255, 255, 255, 0.6),
+    rgba(255, 255, 255, 0.6)
+  );
+  pointer-events: none;
+}
+
+@media (min-width: 600px) {
+  .hero__bg {
+    background-image: url("../images/aiImages/TokyoDay-800.jpg");
+  }
+}
+
+@media (min-width: 1100px) {
+  .hero__bg {
+    background-image: url("../images/aiImages/TokyoDay-1200.jpg");
+    height: 70vh;
+  }
+}
+
+/* Prefer WebP hero images when supported (image-set) with JPEG fallback */
+@supports (
+  background-image: image-set(url("../images/aiImages/TokyoDay-480.webp") 1x)
+) {
+  .hero__bg {
+    background-image: image-set(
+      url("../images/aiImages/TokyoDay-480.webp") 1x,
+      url("../images/aiImages/TokyoDay-480.jpg") 1x
+    );
+  }
+  @media (min-width: 600px) {
+    .hero__bg {
+      background-image: image-set(
+        url("../images/aiImages/TokyoDay-800.webp") 1x,
+        url("../images/aiImages/TokyoDay-800.jpg") 1x
+      );
+    }
+  }
+  @media (min-width: 1100px) {
+    .hero__bg {
+      background-image: image-set(
+        url("../images/aiImages/TokyoDay-1200.webp") 1x,
+        url("../images/aiImages/TokyoDay-1200.jpg") 1x
+      );
+    }
+  }
+}
+
+/* Ensure hero content renders above the background/overlay */
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* Small image helper for thumbnails (increased to 80px) */
+.img-64 {
+  width: 80px;
+  height: 80px;
+  display: inline-block;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+/* Large image helper for prominent thumbnails */
+.img-lg {
+  width: 120px;
+  height: 120px;
+  display: inline-block;
+  border-radius: 10px;
+  object-fit: cover;
 }
 
 .card-title {

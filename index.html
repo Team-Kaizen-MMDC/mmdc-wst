@@ -65,6 +65,8 @@
       <!-- Hero -->
       <section class="hero hero-centered">
         <div class="container">
+          <div class="hero__bg" aria-hidden="true"></div>
+
           <div class="hero-content">
             <h1 class="hero-title">Specified Skilled Worker Jobs in Japan</h1>
             <p class="muted mt-xs">
@@ -82,32 +84,118 @@
             <div class="job-panel feature-card w-760">
               <div class="grid-2">
                 <div class="job-item job-panel__item">
-                  <div class="job-meta muted job-panel__meta">Image</div>
+                  <div class="job-meta muted job-panel__meta">
+                    <picture>
+                      <source
+                        type="image/webp"
+                        srcset="
+                          assets/images/aiImages/Mechanic1-640.webp 640w,
+                          assets/images/aiImages/Mechanic1-320.webp 320w
+                        "
+                      />
+                      <img
+                        src="assets/images/aiImages/Mechanic1-320.png"
+                        srcset="
+                          assets/images/aiImages/Mechanic1-320.png 320w,
+                          assets/images/aiImages/Mechanic1-640.png 640w
+                        "
+                        sizes="120px"
+                        alt="Mechanic role"
+                        class="img-lg object-cover"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </picture>
+                  </div>
                   <h4 class="feature-card__title job-panel__title">
-                    Ground Handling Support (Haneda)
+                    Mechanic — Ground Support (Haneda)
                   </h4>
-                  <p class="muted feature-card__desc">Kaisha — Tokyo</p>
+                  <p class="muted feature-card__desc">Haneda Airport — Tokyo</p>
                 </div>
                 <div class="job-item job-panel__item">
-                  <div class="job-meta muted job-panel__meta">Image</div>
+                  <div class="job-meta muted job-panel__meta">
+                    <picture>
+                      <source
+                        type="image/webp"
+                        srcset="
+                          assets/images/aiImages/Cleaner1-640.webp 640w,
+                          assets/images/aiImages/Cleaner1-320.webp 320w
+                        "
+                      />
+                      <img
+                        src="assets/images/aiImages/Cleaner1-320.png"
+                        srcset="
+                          assets/images/aiImages/Cleaner1-320.png 320w,
+                          assets/images/aiImages/Cleaner1-640.png 640w
+                        "
+                        sizes="120px"
+                        alt="Cleaner role"
+                        class="img-lg object-cover"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </picture>
+                  </div>
                   <h4 class="job-panel__title">
-                    Ground Handling Support (Haneda)
+                    Cleaner — Facilities Maintenance
                   </h4>
-                  <p class="muted job-panel__meta">Kaisha — Tokyo</p>
+                  <p class="muted job-panel__meta">Office Facilities — Tokyo</p>
                 </div>
                 <div class="job-item job-panel__item">
-                  <div class="job-meta muted job-panel__meta">Image</div>
+                  <div class="job-meta muted job-panel__meta">
+                    <picture>
+                      <source
+                        type="image/webp"
+                        srcset="
+                          assets/images/aiImages/Construction1-640.webp 640w,
+                          assets/images/aiImages/Construction1-320.webp 320w
+                        "
+                      />
+                      <img
+                        src="assets/images/aiImages/Construction1-320.png"
+                        srcset="
+                          assets/images/aiImages/Construction1-320.png 320w,
+                          assets/images/aiImages/Construction1-640.png 640w
+                        "
+                        sizes="120px"
+                        alt="Construction role"
+                        class="img-lg object-cover"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </picture>
+                  </div>
                   <h4 class="job-panel__title">
-                    Ground Handling Support (Haneda)
+                    Construction Worker — Site Support
                   </h4>
-                  <p class="muted job-panel__meta">Kaisha — Tokyo</p>
+                  <p class="muted job-panel__meta">Contractor — Saitama</p>
                 </div>
                 <div class="job-item job-panel__item">
-                  <div class="job-meta muted job-panel__meta">Image</div>
-                  <h4 class="job-panel__title">
-                    Ground Handling Support (Haneda)
-                  </h4>
-                  <p class="muted job-panel__meta">Kaisha — Tokyo</p>
+                  <div class="job-meta muted job-panel__meta">
+                    <picture>
+                      <source
+                        type="image/webp"
+                        srcset="
+                          assets/images/aiImages/Server2-640.webp 640w,
+                          assets/images/aiImages/Server2-320.webp 320w
+                        "
+                      />
+                      <img
+                        src="assets/images/aiImages/Server2-320.png"
+                        srcset="
+                          assets/images/aiImages/Server2-320.png 320w,
+                          assets/images/aiImages/Server2-640.png 640w
+                        "
+                        sizes="120px"
+                        alt="Server role"
+                        class="img-lg object-cover"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </picture>
+                  </div>
+                  <h4 class="job-panel__title">Server — Hospitality</h4>
+                  <p class="muted job-panel__meta">Restaurant — Tokyo</p>
                 </div>
               </div>
             </div>
@@ -124,47 +212,237 @@
         <div class="container">
           <h2 class="section-title">Top Company</h2>
           <div class="company-grid mt-md">
-            <!-- 3x3 grid of company cards -->
+            <!-- Clean, well-formed 3x3 grid of company cards -->
             <div class="company-card feature-card">
-              <span class="feature-card__title company-card__title"
-                >Nissan</span
-              >
+              <div class="company-card__media">
+                <picture>
+                  <source
+                    type="image/webp"
+                    srcset="
+                      assets/images/aiImages/BakeryWorker-640.webp 640w,
+                      assets/images/aiImages/BakeryWorker-320.webp 320w
+                    "
+                  />
+                  <img
+                    src="assets/images/aiImages/BakeryWorker.png"
+                    class="img-64 object-cover feature-card__img"
+                    alt="Bakery worker"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
+              </div>
+              <div class="company-card__body">
+                <span class="feature-card__title company-card__title"
+                  >ANA InterContinental</span
+                >
+              </div>
             </div>
+
             <div class="company-card feature-card">
-              <span class="feature-card__title company-card__title"
-                >Yamaha</span
-              >
+              <div class="company-card__media">
+                <picture>
+                  <source
+                    type="image/webp"
+                    srcset="
+                      assets/images/aiImages/HotelStaff-640.webp 640w,
+                      assets/images/aiImages/HotelStaff-320.webp 320w
+                    "
+                  />
+                  <img
+                    src="assets/images/aiImages/HotelStaff.png"
+                    class="img-64 object-cover feature-card__img"
+                    alt="Hotel staff"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
+              </div>
+              <div class="company-card__body">
+                <span class="feature-card__title company-card__title"
+                  >Prince Hotels</span
+                >
+              </div>
             </div>
+
             <div class="company-card feature-card">
-              <span class="feature-card__title company-card__title"
-                >Hitachi</span
-              >
+              <div class="company-card__media">
+                <picture>
+                  <source
+                    type="image/webp"
+                    srcset="
+                      assets/images/aiImages/Caregiver1-640.webp 640w,
+                      assets/images/aiImages/Caregiver1-320.webp 320w
+                    "
+                  />
+                  <img
+                    src="assets/images/aiImages/Caregiver1.jpg"
+                    class="img-64 object-cover feature-card__img"
+                    alt="Caregiver"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
+              </div>
+              <div class="company-card__body">
+                <span class="feature-card__title company-card__title"
+                  >SOMPO Care</span
+                >
+              </div>
             </div>
+
             <div class="company-card feature-card">
-              <span class="feature-card__title company-card__title">JAL</span>
+              <div class="company-card__media">
+                <picture>
+                  <source
+                    type="image/webp"
+                    srcset="
+                      assets/images/aiImages/Mechanic1-640.webp 640w,
+                      assets/images/aiImages/Mechanic1-320.webp 320w
+                    "
+                  />
+                  <img
+                    src="assets/images/aiImages/Mechanic1-320.png"
+                    class="img-64 object-cover feature-card__img"
+                    alt="Mechanic"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
+              </div>
+              <div class="company-card__body">
+                <span class="feature-card__title company-card__title"
+                  >Nissan</span
+                >
+              </div>
             </div>
+
             <div class="company-card feature-card">
-              <span class="feature-card__title company-card__title"
-                >Nissan</span
-              >
+              <div class="company-card__media">
+                <picture>
+                  <source
+                    type="image/webp"
+                    srcset="
+                      assets/images/aiImages/Cleaner1-640.webp 640w,
+                      assets/images/aiImages/Cleaner1-320.webp 320w
+                    "
+                  />
+                  <img
+                    src="assets/images/aiImages/Cleaner1.png"
+                    class="img-64 object-cover feature-card__img"
+                    alt="Cleaner"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
+              </div>
+              <div class="company-card__body">
+                <span class="feature-card__title company-card__title"
+                  >Daikin</span
+                >
+              </div>
             </div>
+
             <div class="company-card feature-card">
-              <span class="feature-card__title company-card__title"
-                >Yamaha</span
-              >
+              <div class="company-card__media">
+                <picture>
+                  <source
+                    type="image/webp"
+                    srcset="
+                      assets/images/aiImages/Construction1-640.webp 640w,
+                      assets/images/aiImages/Construction1-320.webp 320w
+                    "
+                  />
+                  <img
+                    src="assets/images/aiImages/Construction1-320.png"
+                    class="img-64 object-cover feature-card__img"
+                    alt="Construction worker"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
+              </div>
+              <div class="company-card__body">
+                <span class="feature-card__title company-card__title"
+                  >Kandenko</span
+                >
+              </div>
             </div>
+
             <div class="company-card feature-card">
-              <span class="feature-card__title company-card__title"
-                >Hitachi</span
-              >
+              <div class="company-card__media">
+                <picture>
+                  <source
+                    type="image/webp"
+                    srcset="
+                      assets/images/aiImages/Server2-640.webp 640w,
+                      assets/images/aiImages/Server2-320.webp 320w
+                    "
+                  />
+                  <img
+                    src="assets/images/aiImages/Server2.jpg"
+                    class="img-64 object-cover feature-card__img"
+                    alt="Server / Restaurant"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
+              </div>
+              <div class="company-card__body">
+                <span class="feature-card__title company-card__title"
+                  >Yoshinoya</span
+                >
+              </div>
             </div>
+
             <div class="company-card feature-card">
-              <span class="feature-card__title company-card__title">JAL</span>
+              <div class="company-card__media">
+                <picture>
+                  <source
+                    type="image/webp"
+                    srcset="
+                      assets/images/aiImages/Receptionist1-640.webp 640w,
+                      assets/images/aiImages/Receptionist1-320.webp 320w
+                    "
+                  />
+                  <img
+                    src="assets/images/aiImages/Receptionist1.jpg"
+                    class="img-64 object-cover feature-card__img"
+                    alt="Receptionist"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
+              </div>
+              <div class="company-card__body">
+                <span class="feature-card__title company-card__title">ANA</span>
+              </div>
             </div>
+
             <div class="company-card feature-card">
-              <span class="feature-card__title company-card__title"
-                >Nissan</span
-              >
+              <div class="company-card__media">
+                <picture>
+                  <source
+                    type="image/webp"
+                    srcset="
+                      assets/images/aiImages/Applying1-640.webp 640w,
+                      assets/images/aiImages/Applying1-320.webp 320w
+                    "
+                  />
+                  <img
+                    src="assets/images/aiImages/Applying1.jpg"
+                    class="img-64 object-cover feature-card__img"
+                    alt="Applying"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
+              </div>
+              <div class="company-card__body">
+                <span class="feature-card__title company-card__title"
+                  >Mitsubishi Heavy Industries</span
+                >
+              </div>
             </div>
           </div>
 
@@ -180,11 +458,26 @@
           <h2 class="section-title">Registered Support Organization</h2>
           <div class="flex-center mt-sm">
             <div class="feature-card feature-wide">
-              <img
-                src="assets/images/hero-illustration.svg"
-                alt="ASEAN PLUS"
-                class="img-320 object-cover feature-card__img"
-              />
+              <picture>
+                <source
+                  type="image/webp"
+                  srcset="
+                    assets/images/aiImages/Receptionist1-640.webp 640w,
+                    assets/images/aiImages/Receptionist1-320.webp 320w
+                  "
+                />
+                <img
+                  src="assets/images/aiImages/Receptionist1.jpg"
+                  srcset="
+                    assets/images/aiImages/Receptionist1.jpg 320w,
+                    assets/images/aiImages/Receptionist1.jpg 640w
+                  "
+                  alt="Receptionist at front desk"
+                  class="img-320 object-cover feature-card__img"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </picture>
               <div>
                 <h3 class="feature-card__title">ASEAN PLUS</h3>
                 <p class="muted feature-card__desc">
