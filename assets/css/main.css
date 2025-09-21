@@ -352,9 +352,11 @@ button {
 /* Company cards for company showcases */
 .company-card {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 88px;
+  gap: 0.5rem;
+  min-height: 120px;
   border-radius: 10px;
   background: #fff;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
@@ -378,8 +380,8 @@ button {
 
 /* Company card media/body helpers for consistent layout */
 .company-card__media {
-  width: 100%;
-  height: 88px; /* match company-card min-height */
+  width: auto;
+  height: auto;
   display: flex;
   align-items: center;
   justify-content: center;
