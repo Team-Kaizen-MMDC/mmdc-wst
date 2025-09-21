@@ -541,7 +541,7 @@ button {
   margin-right: 0.75rem;
 }
 
-.footer-cta-actions .btn {
+.site-footer__cta-actions .btn {
   margin-right: 0.5rem;
 }
 
@@ -588,9 +588,10 @@ button {
 }
 
 /* ===================================================================
-   Footer System (Consolidated) - All footer styles in one section
+   Footer System (Consolidated) - BEM-first, legacy selectors removed
    =================================================================== */
 
+/* Dark variant for site footer */
 .site-footer--dark {
   background: #6b0000;
   color: #fff;
@@ -602,7 +603,8 @@ button {
   text-decoration: none;
 }
 
-.footer-grid {
+/* Grid for site footer (BEM alias) */
+.site-footer__grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
@@ -610,23 +612,15 @@ button {
   padding: 1rem 0 1.25rem;
 }
 
-/* BEM aliases for site-footer (safe, alias-first migration)
-   - Add element selectors alongside legacy selectors to avoid breaking pages
-*/
-
-.footer-cta h3 {
+/* CTA area (BEM) */
+.site-footer__cta h3 {
   color: #fff;
   margin: 0 0 0.5rem;
 }
 
-.footer-cta .muted {
+.site-footer__cta-muted {
   color: rgba(255, 255, 255, 0.9);
   margin-bottom: 0.75rem;
-}
-
-.footer-cta-actions {
-  display: flex;
-  gap: 0.5rem;
 }
 
 .site-footer__cta-actions {
@@ -634,21 +628,11 @@ button {
   gap: 0.5rem;
 }
 
-.footer-links {
-  display: flex;
-  gap: 1rem;
-  justify-content: flex-end;
-}
-
+/* Footer links and link columns (BEM) */
 .site-footer__links {
   display: flex;
   gap: 1rem;
   justify-content: flex-end;
-}
-
-.link-col h4 {
-  color: #fff;
-  margin-bottom: 0.5rem;
 }
 
 .site-footer__link-col h4 {
@@ -656,19 +640,14 @@ button {
   margin-bottom: 0.5rem;
 }
 
-.link-col ul {
+.site-footer__link-col ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.link-col li {
+.site-footer__link-col li {
   margin-bottom: 0.5rem;
-}
-
-.link-col a {
-  color: rgba(255, 255, 255, 0.95);
-  text-decoration: none;
 }
 
 .site-footer__link-col a {
@@ -676,24 +655,11 @@ button {
   text-decoration: none;
 }
 
-.footer-legal {
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  margin-top: 1rem;
-  padding-top: 1rem;
-}
-
+/* Legal area (BEM) */
 .site-footer__legal {
   border-top: 1px solid rgba(255, 255, 255, 0.06);
   margin-top: 1rem;
   padding-top: 1rem;
-}
-
-.legal-inner {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  color: rgba(255, 255, 255, 0.85);
 }
 
 .site-footer__legal-inner {
@@ -704,31 +670,30 @@ button {
   color: rgba(255, 255, 255, 0.85);
 }
 
-.footer-legal nav a {
+.site-footer__legal nav a {
   margin-left: 0.75rem;
   color: rgba(255, 255, 255, 0.85);
   text-decoration: none;
 }
 
-/* Footer responsive design */
+/* Footer responsive design (target BEM aliases) */
 @media (max-width: 900px) {
-  .footer-grid {
+  .site-footer__grid {
     grid-template-columns: 1fr;
   }
-  .footer-links {
+  .site-footer__links {
     justify-content: flex-start;
     flex-wrap: wrap;
   }
-  .footer-cta-actions {
+  .site-footer__cta-actions {
     margin-top: 0.5rem;
   }
-  .legal-inner {
+  .site-footer__legal-inner {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
   }
 }
-
 /* Standalone site footer for simpler layouts */
 .site-footer {
   background: var(--dark-color);
