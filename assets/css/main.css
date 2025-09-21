@@ -24,19 +24,10 @@
   - Button variants: .btn, .btn-primary, .btn-secondary, .btn-dark.
 
   Header contract (important for cross-page consistency)
-  - The header uses this structure in all pages:
-      <header class="site-header">
-        <div class="container header-inner">
-          <a class="brand" href="index.html">Brand</a>
-          <nav class="site-nav" aria-label="Main navigation">...</nav>
-          <div class="header-actions">...Signup / Log in...</div>
-        </div>
-      </header>
-  - Key classes to reference when styling or modifying:
-    - .site-header: header background, border and global header scope
-    - .header-inner: flex container that aligns brand, nav and actions
-    - .site-nav: navigation link group
-    - .header-actions: right-side action group (signup/login)
+  - The header uses the `.site-header` block and BEM element classes such as
+    `.site-header__inner`, `.site-header__brand`, `.site-header__nav`, and
+    `.site-header__actions` across pages. Keep these element selectors in
+    markup when updating header structure.
 
   Responsive guidance
   - Desktop: header is a horizontal flex layout with nav centered left and
@@ -1025,7 +1016,7 @@ footer {
 /* Navigation and form focus indicators */
 .form-control:focus,
 .nav-link:focus,
-.site-nav a:focus {
+.site-header__nav-link:focus {
   outline: 2px solid var(--primary-color);
   outline-offset: 2px;
 }
