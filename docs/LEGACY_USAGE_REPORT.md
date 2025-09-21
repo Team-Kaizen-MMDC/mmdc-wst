@@ -1,0 +1,89 @@
+# Legacy Usage Report
+
+This report lists legacy (pre-BEM) selectors found in the codebase, where they occur, and notes about whether BEM aliases exist. Use this to plan safe removal batches.
+
+Guidance
+
+- Remove legacy selectors in small batches after visual checks.
+- For each selector listed below: confirm BEM alias exists in HTML and CSS before removal.
+
+---
+
+## Summary (high level)
+
+- Files scanned: `assets/css/main.css`, `docs/UTILITIES_AUDIT.md`, HTML pages under project root and `pages/`.
+- Found legacy selectors: `.header-inner`, `.brand`, `.site-nav`, `.header-actions`, `.feature-card h3`, `.feature-card p`, `.feature-card .btn`, `.job-item`, `.job-meta`, `.company-card` (block present but legacy inner selectors remain), `.hero-inner`, `.footer-grid`, `.footer-cta`, `.footer-cta-actions`, `.footer-links`, `.link-col`, `.footer-legal`, `.legal-inner`, `.login-btn`.
+
+## Detailed occurrences
+
+- `.header-inner`
+
+  - Found in: `assets/css/main.css` (top-of-file header contract comment and `.container header-inner` sample markup lines)
+  - BEM alias: `.site-header__inner` exists in CSS.
+  - Notes: used in header documentation; HTML was updated in earlier Phase 1 to use `.site-header__inner` but the legacy class still appears in comments and example markup.
+
+- `.brand`
+
+  - Found in: `assets/css/main.css` (example markup line in header contract)
+  - BEM alias: `.site-header__brand` exists.
+  - Notes: sample markup only; check HTML pages for remaining uses.
+
+- `.site-nav`
+
+  - Found in: `assets/css/main.css` (header contract sample)
+  - BEM alias: `.site-header__nav` / `.site-header__nav-link` exist.
+
+- `.header-actions`
+
+  - Found in: `assets/css/main.css` (header contract sample)
+  - BEM alias: `.site-header__actions`, `.site-header__signup`, `.site-header__login-btn` exist.
+
+- `.feature-card h3` / `.feature-card p` / `.feature-card .btn`
+
+  - Found in: `assets/css/main.css` (feature card rules and duplicate homepage-specific section)
+  - BEM alias: `.feature-card__title`, `.feature-card__desc`, `.feature-card__cta` exist.
+  - Notes: Feature card legacy selectors are kept alongside aliases for alias-first migration; safe to remove once all HTML uses the BEM elements.
+
+- `.job-item` / `.job-item h4` / `.job-item .job-meta`
+
+  - Found in: `assets/css/main.css` (job panel section)
+  - BEM alias: `.job-panel__item` (placeholder mentioned), `.job-panel__title`, `.job-panel__meta` exist.
+
+- `.company-card` and `.company-card .feature-card__title`
+
+  - Found in: `assets/css/main.css` (company-card block + BEM alias comments)
+  - BEM alias: `.company-card__title`, `.company-card__logo` exist.
+
+- `.hero-inner` / `.hero-copy` / `.hero-ctas` / `.hero-art` / `.hero-search`
+
+  - Found in: `assets/css/main.css` multiple hero sections (both gradient hero and centered variant).
+  - BEM alias: hero block retained (`.hero`); `.hero-inner` is used as a layout helper and does not have a BEM element alias — deliberate utility-like layout class.
+  - Notes: consider scoping hero-inner to `.hero__inner` if you want strict BEM; currently used in multiple contexts so treat carefully.
+
+- Footer selectors: `.footer-grid`, `.footer-cta`, `.footer-cta-actions`, `.footer-links`, `.link-col`, `.footer-legal`, `.legal-inner`
+
+  - Found in: `assets/css/main.css` (Footer section)
+  - BEM aliases: `.site-footer__grid` (implicit via `.footer-grid` usage), `.site-footer__cta-actions`, `.site-footer__links`, `.site-footer__link-col`, `.site-footer__legal`, `.site-footer__legal-inner` exist. Some legacy selectors retained for compatibility.
+
+- `.login-btn`
+  - Found in: `assets/css/main.css` (button system section combining `.site-header__login-btn, .login-btn`)
+  - BEM alias: `.site-header__login-btn` exists; `.login-btn` treated as a small button variant/utility.
+
+## Recommendations / Next steps
+
+- Priority batch suggestions:
+
+  1. Header (safe): remove `.header-inner`, `.brand`, `.site-nav`, `.header-actions` from CSS once all HTML uses `.site-header__*`.
+  2. Feature cards: remove legacy descendant selectors (`.feature-card h3`, `.feature-card p`, `.feature-card .btn`) after confirming HTML uses `.feature-card__*`.
+  3. Job panel & company-card: remove `.job-item` and internal selectors after confirming `.job-panel__*` and `.company-card__*` are used in all templates.
+  4. Footer: remove legacy `.footer-*` selectors after testing; this may require careful review because footers often repeat across many pages.
+  5. Hero layout helpers (e.g., `.hero-inner`): review usage across pages; either convert to `.hero__inner` with scoped selectors or keep as a layout utility.
+
+- For each batch:
+  - Create a small branch and commit that batch's removals.
+  - Run visual smoke tests (local `http.server` and manual checks across viewports).
+  - Capture before/after screenshots and have a rollback plan (revert commit) if regressions are found.
+
+---
+
+Generated by automated scan on September 20, 2025.

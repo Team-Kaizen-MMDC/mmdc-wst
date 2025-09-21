@@ -24,19 +24,10 @@
   - Button variants: .btn, .btn-primary, .btn-secondary, .btn-dark.
 
   Header contract (important for cross-page consistency)
-  - The header uses this structure in all pages:
-      <header class="site-header">
-        <div class="container header-inner">
-          <a class="brand" href="index.html">Brand</a>
-          <nav class="site-nav" aria-label="Main navigation">...</nav>
-          <div class="header-actions">...Signup / Log in...</div>
-        </div>
-      </header>
-  - Key classes to reference when styling or modifying:
-    - .site-header: header background, border and global header scope
-    - .header-inner: flex container that aligns brand, nav and actions
-    - .site-nav: navigation link group
-    - .header-actions: right-side action group (signup/login)
+  - The header uses the `.site-header` block and BEM element classes such as
+    `.site-header__inner`, `.site-header__brand`, `.site-header__nav`, and
+    `.site-header__actions` across pages. Keep these element selectors in
+    markup when updating header structure.
 
   Responsive guidance
   - Desktop: header is a horizontal flex layout with nav centered left and
@@ -190,36 +181,36 @@ button {
   background: var(--light-color);
   border-bottom: 1px solid var(--ui-color);
 }
-.header-inner {
+.site-header__inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 1rem 0;
 }
-.brand {
+.site-header__brand {
   font-weight: 700;
   color: var(--dark-color);
   text-decoration: none;
 }
-.site-nav a {
+.site-header__nav-link {
   margin-left: 1rem;
   color: var(--dark-color);
   text-decoration: none;
   font-weight: 500;
 }
-.site-nav a:focus,
-.site-nav a:hover {
+.site-header__nav-link:focus,
+.site-header__nav-link:hover {
   color: var(--primary-color);
 }
 
 /* Header actions (signup / login) */
-.header-actions {
+.site-header__actions {
   display: flex;
   align-items: center;
   gap: 0.75rem;
   margin-left: 1rem;
 }
-.header-actions .signup-link {
+.site-header__signup {
   color: rgba(0, 0, 0, 0.6);
   text-decoration: none;
   font-weight: 500;
@@ -228,40 +219,40 @@ button {
 
 /* Responsive header tweaks */
 @media (max-width: 900px) {
-  .header-inner {
+  .site-header__inner {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
     padding: 0.75rem 0;
   }
-  .site-nav {
+  .site-header__nav {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem 1rem;
     width: 100%;
   }
-  .site-nav a {
+  .site-header__nav-link {
     margin-left: 0;
     padding: 0.25rem 0;
   }
-  .header-actions {
+  .site-header__actions {
     margin-left: 0;
     align-self: stretch;
     justify-content: flex-end;
   }
-  .header-actions .signup-link {
+  .site-header__signup {
     padding-left: 0;
   }
 }
 
 @media (max-width: 480px) {
-  .header-actions {
+  .site-header__actions {
     justify-content: flex-start;
   }
-  .brand {
+  .site-header__brand {
     font-size: 1.05rem;
   }
-  .login-btn {
+  .site-header__login-btn {
     padding: 0.4rem 0.7rem;
     font-size: 13px;
   }
@@ -313,20 +304,24 @@ button {
   text-align: center;
 }
 
-.feature-card h3 {
+/* Feature card (BEM): add element aliases for safer migration
+   - Keep legacy selectors to avoid breaking existing pages immediately
+   - Prefer new `.feature-card__*` elements in markup moving forward
+*/
+.feature-card__title {
   margin-top: 0;
   margin-bottom: 0.25rem;
 }
 
-.feature-card p {
+.feature-card__desc {
   margin-bottom: 0.75rem;
 }
 
-.feature-card .btn {
+.feature-card__cta {
   margin-top: 0.5rem;
 }
 
-.feature-card img {
+.feature-card__img {
   display: inline-block;
   background: rgba(255, 255, 255, 0.9);
   padding: 10px;
@@ -343,13 +338,16 @@ button {
   padding: 1.25rem;
 }
 
-.job-item h4 {
+/* Job item element aliases for safe BEM migration */
+.job-panel__title {
   margin: 0.25rem 0 0.25rem;
 }
 
-.job-item .job-meta {
+.job-panel__meta {
   font-size: 0.8rem;
 }
+
+/* Use `.job-panel__item` on HTML job entries when migrating markup. */
 
 /* Company cards for company showcases */
 .company-card {
@@ -361,6 +359,21 @@ button {
   background: #fff;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
   font-weight: 600;
+}
+
+/* BEM aliases for company-card (alias-first migration)
+   - Add `.company-card__title` for card title text
+   - Add `.company-card__logo` for image/logo elements inside the card
+*/
+.company-card__title {
+  font-weight: 600;
+  color: var(--dark-color);
+}
+
+.company-card__logo {
+  display: block;
+  max-width: 120px;
+  margin-bottom: 0.5rem;
 }
 
 /* Responsive card adjustments */
@@ -498,6 +511,7 @@ button {
 }
 
 /* Specialized button styles */
+.site-header__login-btn,
 .login-btn {
   display: inline-block;
   padding: 0.45rem 0.9rem;
@@ -511,6 +525,7 @@ button {
   transition: var(--transition);
 }
 
+.site-header__login-btn:hover,
 .login-btn:hover {
   filter: brightness(0.95);
 }
@@ -526,19 +541,20 @@ button {
   margin-right: 0.75rem;
 }
 
-.footer-cta-actions .btn {
+.site-footer__cta-actions .btn {
   margin-right: 0.5rem;
 }
 
 /* Focus states for all buttons */
 .btn:focus,
+.site-header__login-btn:focus,
 .login-btn:focus {
   outline: 2px solid var(--primary-color);
   outline-offset: 2px;
 }
 
 /* Button spacing utilities */
-.feature-card .btn {
+.feature-card__cta {
   margin-top: 0.5rem;
 }
 
@@ -572,9 +588,10 @@ button {
 }
 
 /* ===================================================================
-   Footer System (Consolidated) - All footer styles in one section
+   Footer System (Consolidated) - BEM-first, legacy selectors removed
    =================================================================== */
 
+/* Dark variant for site footer */
 .site-footer--dark {
   background: #6b0000;
   color: #fff;
@@ -586,7 +603,8 @@ button {
   text-decoration: none;
 }
 
-.footer-grid {
+/* Grid for site footer (BEM alias) */
+.site-footer__grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
@@ -594,54 +612,57 @@ button {
   padding: 1rem 0 1.25rem;
 }
 
-.footer-cta h3 {
+/* CTA area (BEM) */
+.site-footer__cta h3 {
   color: #fff;
   margin: 0 0 0.5rem;
 }
 
-.footer-cta .muted {
+.site-footer__cta-muted {
   color: rgba(255, 255, 255, 0.9);
   margin-bottom: 0.75rem;
 }
 
-.footer-cta-actions {
+.site-footer__cta-actions {
   display: flex;
   gap: 0.5rem;
 }
 
-.footer-links {
+/* Footer links and link columns (BEM) */
+.site-footer__links {
   display: flex;
   gap: 1rem;
   justify-content: flex-end;
 }
 
-.link-col h4 {
+.site-footer__link-col h4 {
   color: #fff;
   margin-bottom: 0.5rem;
 }
 
-.link-col ul {
+.site-footer__link-col ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.link-col li {
+.site-footer__link-col li {
   margin-bottom: 0.5rem;
 }
 
-.link-col a {
+.site-footer__link-col a {
   color: rgba(255, 255, 255, 0.95);
   text-decoration: none;
 }
 
-.footer-legal {
+/* Legal area (BEM) */
+.site-footer__legal {
   border-top: 1px solid rgba(255, 255, 255, 0.06);
   margin-top: 1rem;
   padding-top: 1rem;
 }
 
-.legal-inner {
+.site-footer__legal-inner {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -649,31 +670,30 @@ button {
   color: rgba(255, 255, 255, 0.85);
 }
 
-.footer-legal nav a {
+.site-footer__legal nav a {
   margin-left: 0.75rem;
   color: rgba(255, 255, 255, 0.85);
   text-decoration: none;
 }
 
-/* Footer responsive design */
+/* Footer responsive design (target BEM aliases) */
 @media (max-width: 900px) {
-  .footer-grid {
+  .site-footer__grid {
     grid-template-columns: 1fr;
   }
-  .footer-links {
+  .site-footer__links {
     justify-content: flex-start;
     flex-wrap: wrap;
   }
-  .footer-cta-actions {
+  .site-footer__cta-actions {
     margin-top: 0.5rem;
   }
-  .legal-inner {
+  .site-footer__legal-inner {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
   }
 }
-
 /* Standalone site footer for simpler layouts */
 .site-footer {
   background: var(--dark-color);
@@ -953,7 +973,7 @@ footer {
 /* Navigation and form focus indicators */
 .form-control:focus,
 .nav-link:focus,
-.site-nav a:focus {
+.site-header__nav-link:focus {
   outline: 2px solid var(--primary-color);
   outline-offset: 2px;
 }
@@ -997,16 +1017,16 @@ footer {
    Styles for homepage-specific sections added in expanded index.html
    ------------------------------------------------------------------ */
 
-.feature-card h3 {
+.feature-card__title {
   margin-top: 0;
   margin-bottom: 0.25rem;
 }
 
-.feature-card p {
+.feature-card__desc {
   margin-bottom: 0.75rem;
 }
 
-.feature-card .btn {
+.feature-card__cta {
   margin-top: 0.5rem;
 }
 
@@ -1025,6 +1045,12 @@ footer {
 /* ===================================================================
    Utility Classes - Consolidated spacing, text, and layout helpers
    =================================================================== */
+
+/* Utilities: allowed primitives
+  - Purpose: small, reusable helpers (spacing, sizing, text, layout)
+  - Rule: Keep these global utilities as primitives during Phase 1.
+  - Do NOT convert utilities to BEM blocks/elements.
+*/
 
 /* Spacing utilities - consistent margin/padding scale */
 .mt-xxs {

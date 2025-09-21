@@ -40,17 +40,23 @@
   </head>
   <body>
     <header class="site-header">
-      <div class="container header-inner">
-        <a class="brand" href="index.html">Japan SSW</a>
-        <nav class="site-nav" aria-label="Main navigation">
-          <a href="#jobs">Jobs</a>
-          <a href="#companies">Companies</a>
-          <a href="pages/agency.html">Agency</a>
-          <a href="pages/about.html">About</a>
+      <div class="container site-header__inner">
+        <a class="site-header__brand" href="index.html">Japan SSW</a>
+        <nav class="site-header__nav" aria-label="Main navigation">
+          <a class="site-header__nav-link" href="#jobs">Jobs</a>
+          <a class="site-header__nav-link" href="#companies">Companies</a>
+          <a class="site-header__nav-link" href="pages/agency.html">Agency</a>
+          <a class="site-header__nav-link" href="pages/about.html">About</a>
         </nav>
-        <div class="header-actions">
-          <a class="signup-link muted" href="#">Signup</a>
-          <a class="btn btn-primary login-btn" href="#">Log in</a>
+        <div class="site-header__actions">
+          <a class="site-header__signup muted" href="pages/createAccount.html"
+            >Signup</a
+          >
+          <a
+            class="btn btn-primary site-header__login-btn"
+            href="pages/signin.html"
+            >Log in</a
+          >
         </div>
       </div>
     </header>
@@ -75,25 +81,33 @@
           <div class="flex-center">
             <div class="job-panel feature-card w-760">
               <div class="grid-2">
-                <div class="job-item">
-                  <div class="job-meta muted">Image</div>
-                  <h4>Ground Handling Support (Haneda)</h4>
-                  <p class="muted">Kaisha — Tokyo</p>
+                <div class="job-item job-panel__item">
+                  <div class="job-meta muted job-panel__meta">Image</div>
+                  <h4 class="feature-card__title job-panel__title">
+                    Ground Handling Support (Haneda)
+                  </h4>
+                  <p class="muted feature-card__desc">Kaisha — Tokyo</p>
                 </div>
-                <div class="job-item">
-                  <div class="job-meta muted">Image</div>
-                  <h4>Ground Handling Support (Haneda)</h4>
-                  <p class="muted">Kaisha — Tokyo</p>
+                <div class="job-item job-panel__item">
+                  <div class="job-meta muted job-panel__meta">Image</div>
+                  <h4 class="job-panel__title">
+                    Ground Handling Support (Haneda)
+                  </h4>
+                  <p class="muted job-panel__meta">Kaisha — Tokyo</p>
                 </div>
-                <div class="job-item">
-                  <div class="job-meta muted">Image</div>
-                  <h4>Ground Handling Support (Haneda)</h4>
-                  <p class="muted">Kaisha — Tokyo</p>
+                <div class="job-item job-panel__item">
+                  <div class="job-meta muted job-panel__meta">Image</div>
+                  <h4 class="job-panel__title">
+                    Ground Handling Support (Haneda)
+                  </h4>
+                  <p class="muted job-panel__meta">Kaisha — Tokyo</p>
                 </div>
-                <div class="job-item">
-                  <div class="job-meta muted">Image</div>
-                  <h4>Ground Handling Support (Haneda)</h4>
-                  <p class="muted">Kaisha — Tokyo</p>
+                <div class="job-item job-panel__item">
+                  <div class="job-meta muted job-panel__meta">Image</div>
+                  <h4 class="job-panel__title">
+                    Ground Handling Support (Haneda)
+                  </h4>
+                  <p class="muted job-panel__meta">Kaisha — Tokyo</p>
                 </div>
               </div>
             </div>
@@ -111,15 +125,47 @@
           <h2 class="section-title">Top Company</h2>
           <div class="company-grid mt-md">
             <!-- 3x3 grid of company cards -->
-            <div class="company-card feature-card">Nissan</div>
-            <div class="company-card feature-card">Yamaha</div>
-            <div class="company-card feature-card">Hitachi</div>
-            <div class="company-card feature-card">JAL</div>
-            <div class="company-card feature-card">Nissan</div>
-            <div class="company-card feature-card">Yamaha</div>
-            <div class="company-card feature-card">Hitachi</div>
-            <div class="company-card feature-card">JAL</div>
-            <div class="company-card feature-card">Nissan</div>
+            <div class="company-card feature-card">
+              <span class="feature-card__title company-card__title"
+                >Nissan</span
+              >
+            </div>
+            <div class="company-card feature-card">
+              <span class="feature-card__title company-card__title"
+                >Yamaha</span
+              >
+            </div>
+            <div class="company-card feature-card">
+              <span class="feature-card__title company-card__title"
+                >Hitachi</span
+              >
+            </div>
+            <div class="company-card feature-card">
+              <span class="feature-card__title company-card__title">JAL</span>
+            </div>
+            <div class="company-card feature-card">
+              <span class="feature-card__title company-card__title"
+                >Nissan</span
+              >
+            </div>
+            <div class="company-card feature-card">
+              <span class="feature-card__title company-card__title"
+                >Yamaha</span
+              >
+            </div>
+            <div class="company-card feature-card">
+              <span class="feature-card__title company-card__title"
+                >Hitachi</span
+              >
+            </div>
+            <div class="company-card feature-card">
+              <span class="feature-card__title company-card__title">JAL</span>
+            </div>
+            <div class="company-card feature-card">
+              <span class="feature-card__title company-card__title"
+                >Nissan</span
+              >
+            </div>
           </div>
 
           <div class="text-center mt-lg">
@@ -137,17 +183,21 @@
               <img
                 src="assets/images/hero-illustration.svg"
                 alt="ASEAN PLUS"
-                class="img-320 object-cover"
+                class="img-320 object-cover feature-card__img"
               />
               <div>
-                <h3>ASEAN PLUS</h3>
-                <p class="muted">Lorem ipsum dolor sit amet consectetur.</p>
-                <p class="muted">
+                <h3 class="feature-card__title">ASEAN PLUS</h3>
+                <p class="muted feature-card__desc">
+                  Lorem ipsum dolor sit amet consectetur.
+                </p>
+                <p class="muted feature-card__desc">
                   Short description about the organization and its support
                   services for foreign workers.
                 </p>
                 <p class="mt-xs">
-                  <a class="btn btn-primary" href="#">Search Agency</a>
+                  <a class="btn btn-primary feature-card__cta" href="#"
+                    >Search Agency</a
+                  >
                 </p>
               </div>
             </div>
@@ -227,20 +277,20 @@
     </main>
 
     <footer class="site-footer site-footer--dark" role="contentinfo">
-      <div class="container footer-grid">
-        <div class="footer-cta">
+      <div class="container footer-grid site-footer__grid">
+        <div class="footer-cta site-footer__cta">
           <h3>Want to post jobs on JapanSSW?</h3>
-          <p class="muted">
+          <p class="muted site-footer__cta-muted">
             Reach qualified candidates under the SSW programme.
           </p>
-          <div class="footer-cta-actions">
+          <div class="footer-cta-actions site-footer__cta-actions">
             <a class="btn btn-secondary" href="#">Employer Login</a>
             <a class="btn btn-primary" href="#">Post a Job</a>
           </div>
         </div>
 
-        <div class="footer-links">
-          <div class="link-col">
+        <div class="footer-links site-footer__links">
+          <div class="link-col site-footer__link-col">
             <h4>Company</h4>
             <ul>
               <li><a href="index.html">Home</a></li>
@@ -248,7 +298,7 @@
               <li><a href="pages/contact.html">Contact</a></li>
             </ul>
           </div>
-          <div class="link-col">
+          <div class="link-col site-footer__link-col">
             <h4>Jobs</h4>
             <ul>
               <li><a href="#jobs">Search Jobs</a></li>
@@ -256,7 +306,7 @@
               <li><a href="#post-job">Post a Job</a></li>
             </ul>
           </div>
-          <div class="link-col">
+          <div class="link-col site-footer__link-col">
             <h4>Resources</h4>
             <ul>
               <li><a href="#">Visa Guidance</a></li>
@@ -266,9 +316,8 @@
           </div>
         </div>
       </div>
-
-      <div class="container footer-legal">
-        <div class="legal-inner">
+      <div class="container footer-legal site-footer__legal">
+        <div class="legal-inner site-footer__legal-inner">
           <small>&copy; 2025 Japan SSW. All rights reserved.</small>
           <nav aria-label="Footer legal">
             <a href="#">Terms</a>

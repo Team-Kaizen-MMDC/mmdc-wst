@@ -35,17 +35,29 @@
   </head>
   <body>
     <header class="site-header">
-      <div class="container header-inner">
-        <a class="brand" href="../">Japan SSW</a>
-        <nav class="site-nav" aria-label="Main navigation">
-          <a href="../index.html#jobs">Jobs</a>
-          <a href="../index.html#companies">Companies</a>
-          <a href="agency.html">Agency</a>
-          <a href="about.html">About</a>
+      <div class="container site-header__inner">
+        <a class="site-header__brand" href="../index.html">Japan SSW</a>
+        <nav class="site-header__nav" aria-label="Main navigation">
+          <a class="site-header__nav-link" href="../index.html#jobs">Jobs</a>
+          <a class="site-header__nav-link" href="../index.html#companies"
+            >Companies</a
+          >
+          <a class="site-header__nav-link" href="../pages/agency.html"
+            >Agency</a
+          >
+          <a class="site-header__nav-link" href="about.html">About</a>
         </nav>
-        <div class="header-actions">
-          <a class="signup-link muted" href="#">Signup</a>
-          <a class="btn btn-primary login-btn" href="#">Log in</a>
+        <div class="site-header__actions">
+          <a
+            class="site-header__signup muted"
+            href="../pages/createAccount.html"
+            >Signup</a
+          >
+          <a
+            class="btn btn-primary site-header__login-btn"
+            href="../pages/signin.html"
+            >Log in</a
+          >
         </div>
       </div>
     </header>
@@ -98,14 +110,16 @@
         <div class="container">
           <div class="feature-card feature-cta">
             <div>
-              <h3 class="m-0">Want to work with us?</h3>
-              <p class="muted mt-xxs">
+              <h3 class="m-0 feature-card__title">Want to work with us?</h3>
+              <p class="muted mt-xxs feature-card__desc">
                 We partner with companies to hire and onboard exceptional
                 talent.
               </p>
             </div>
             <div>
-              <a class="btn btn-primary" href="../index.html#post-job"
+              <a
+                class="btn btn-primary feature-card__cta"
+                href="../index.html#post-job"
                 >Contact Us</a
               >
             </div>
@@ -115,22 +129,21 @@
     </main>
 
     <footer class="site-footer site-footer--dark" role="contentinfo">
-      <div class="container footer-grid">
-        <div class="footer-cta">
+      <div class="container footer-grid site-footer__grid">
+        <div class="footer-cta site-footer__cta">
           <h3>Want to post jobs on JapanSSW?</h3>
-          <p class="muted">
+          <p class="muted site-footer__cta-muted">
             Reach qualified candidates under the SSW programme.
           </p>
-          <div class="footer-cta-actions">
+          <div class="footer-cta-actions site-footer__cta-actions">
             <a class="btn btn-secondary" href="../">Employer Login</a>
             <a class="btn btn-primary" href="../index.html#post-job"
               >Post a Job</a
             >
           </div>
         </div>
-
-        <div class="footer-links">
-          <div class="link-col">
+        <div class="footer-links site-footer__links">
+          <div class="link-col site-footer__link-col">
             <h4>Company</h4>
             <ul>
               <li><a href="../">Home</a></li>
@@ -138,7 +151,7 @@
               <li><a href="contact.html">Contact</a></li>
             </ul>
           </div>
-          <div class="link-col">
+          <div class="link-col site-footer__link-col">
             <h4>Jobs</h4>
             <ul>
               <li><a href="../index.html#jobs">Search Jobs</a></li>
@@ -146,7 +159,7 @@
               <li><a href="../index.html#post-job">Post a Job</a></li>
             </ul>
           </div>
-          <div class="link-col">
+          <div class="link-col site-footer__link-col">
             <h4>Resources</h4>
             <ul>
               <li><a href="#">Visa Guidance</a></li>
@@ -156,9 +169,8 @@
           </div>
         </div>
       </div>
-
-      <div class="container footer-legal">
-        <div class="legal-inner">
+      <div class="container footer-legal site-footer__legal">
+        <div class="legal-inner site-footer__legal-inner">
           <small>&copy; 2025 Japan SSW. All rights reserved.</small>
           <nav aria-label="Footer legal">
             <a href="#">Terms</a>

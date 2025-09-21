@@ -6,10 +6,29 @@
     <title>JapanSSW Login</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/main.css" />
 </head>
-<body class="bg-white flex items-center justify-center min-h-screen">
+<body class="bg-white">
 
-    <div class="flex w-full max-w-6xl h-[80vh] bg-white rounded-xl shadow-lg overflow-hidden">
+        <header class="site-header">
+            <div class="container site-header__inner">
+                <a class="site-header__brand" href="../index.html">Japan SSW</a>
+                <nav class="site-header__nav" aria-label="Main navigation">
+                    <a class="site-header__nav-link" href="../index.html#jobs">Jobs</a>
+                    <a class="site-header__nav-link" href="../index.html#companies">Companies</a>
+                    <a class="site-header__nav-link" href="agency.html">Agency</a>
+                    <a class="site-header__nav-link" href="about.html">About</a>
+                </nav>
+                <div class="site-header__actions">
+                    <a class="site-header__signup muted" href="createAccount.html">Signup</a>
+                    <a class="btn btn-primary site-header__login-btn" href="signin.html">Log in</a>
+                </div>
+            </div>
+        </header>
+
+        <main>
+
+        <div class="flex w-full max-w-6xl h-[80vh] bg-white rounded-xl shadow-lg overflow-hidden mx-auto my-12">
         <!-- Left Panel - JapanSSW -->
         <div class="hidden md:flex flex-col w-1/2 p-8 bg-gray-100 border-r border-gray-200">
             <h1 class="text-3xl font-Inter text-red-600">Japan<b>SSW</b></h1>
@@ -20,7 +39,7 @@
             <div class="w-full max-w-sm">
                 <h2 class="text-4xl font-Helvetica text-gray-800 mb-14 text-center">Welcome Back</h2>
                 
-                <form action="/index.html" method="GET">
+                <form action="../index.html" method="GET">
                     <div class="my-6">
                         <label for="email" class="block text-sm font-bold text-gray-700">Email</label>
                         <input id="email" name="email" type="email" autocomplete="email" required class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm" placeholder="juandlc@mail.com">
@@ -48,5 +67,58 @@
             </div>
         </div>
     </div>
+        </div>
+
+        </main>
+
+        <footer class="site-footer site-footer--dark" role="contentinfo">
+            <div class="container footer-grid site-footer__grid">
+                <div class="footer-cta site-footer__cta">
+                    <h3>Want to post jobs on JapanSSW?</h3>
+                    <p class="muted site-footer__cta-muted">Reach qualified candidates under the SSW programme.</p>
+                    <div class="footer-cta-actions site-footer__cta-actions">
+                        <a class="btn btn-secondary" href="#">Employer Login</a>
+                        <a class="btn btn-primary" href="#">Post a Job</a>
+                    </div>
+                </div>
+
+                <div class="footer-links site-footer__links">
+                    <div class="link-col site-footer__link-col">
+                        <h4>Company</h4>
+                        <ul>
+                            <li><a href="../index.html">Home</a></li>
+                            <li><a href="about.html">About</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="link-col site-footer__link-col">
+                        <h4>Jobs</h4>
+                        <ul>
+                            <li><a href="../index.html#jobs">Search Jobs</a></li>
+                            <li><a href="../index.html#companies">Companies</a></li>
+                            <li><a href="../index.html#post-job">Post a Job</a></li>
+                        </ul>
+                    </div>
+                    <div class="link-col site-footer__link-col">
+                        <h4>Resources</h4>
+                        <ul>
+                            <li><a href="#">Visa Guidance</a></li>
+                            <li><a href="#">Employer Hub</a></li>
+                            <li><a href="#">Privacy</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="container footer-legal site-footer__legal">
+                <div class="legal-inner site-footer__legal-inner">
+                    <small>&copy; 2025 Japan SSW. All rights reserved.</small>
+                    <nav aria-label="Footer legal">
+                        <a href="#">Terms</a>
+                        <a href="#">Privacy</a>
+                    </nav>
+                </div>
+            </div>
+        </footer>
+
 </body>
 </html>
