@@ -918,6 +918,34 @@ p {
   }
 }
 
+/* Prefer WebP hero images when supported (image-set) with JPEG fallback */
+@supports (
+  background-image: image-set(url("../images/aiImages/TokyoDay-480.webp") 1x)
+) {
+  .hero__bg {
+    background-image: image-set(
+      url("../images/aiImages/TokyoDay-480.webp") 1x,
+      url("../images/aiImages/TokyoDay-480.jpg") 1x
+    );
+  }
+  @media (min-width: 600px) {
+    .hero__bg {
+      background-image: image-set(
+        url("../images/aiImages/TokyoDay-800.webp") 1x,
+        url("../images/aiImages/TokyoDay-800.jpg") 1x
+      );
+    }
+  }
+  @media (min-width: 1100px) {
+    .hero__bg {
+      background-image: image-set(
+        url("../images/aiImages/TokyoDay-1200.webp") 1x,
+        url("../images/aiImages/TokyoDay-1200.jpg") 1x
+      );
+    }
+  }
+}
+
 /* Ensure hero content renders above the background/overlay */
 .hero-content {
   position: relative;
