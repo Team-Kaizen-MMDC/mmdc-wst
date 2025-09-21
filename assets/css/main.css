@@ -878,6 +878,70 @@ p {
   }
 }
 
+/* Hero background element (responsive CSS background with overlay) */
+.hero__bg {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 60vh;
+  max-height: 720px;
+  background-image: url("../images/aiImages/TokyoDay-480.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+}
+.hero {
+  position: relative;
+  overflow: hidden;
+}
+.hero__bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    rgba(255, 255, 255, 0.6),
+    rgba(255, 255, 255, 0.6)
+  );
+  pointer-events: none;
+}
+
+@media (min-width: 600px) {
+  .hero__bg {
+    background-image: url("../images/aiImages/TokyoDay-800.jpg");
+  }
+}
+
+@media (min-width: 1100px) {
+  .hero__bg {
+    background-image: url("../images/aiImages/TokyoDay-1200.jpg");
+    height: 70vh;
+  }
+}
+
+/* Ensure hero content renders above the background/overlay */
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* Small image helper for thumbnails (increased to 80px) */
+.img-64 {
+  width: 80px;
+  height: 80px;
+  display: inline-block;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+/* Large image helper for prominent thumbnails */
+.img-lg {
+  width: 120px;
+  height: 120px;
+  display: inline-block;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
 .card-title {
   color: var(--dark-color);
   font-weight: 600;
