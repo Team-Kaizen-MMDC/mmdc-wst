@@ -1,409 +1,520 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Add/Edit Profile</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        body {
-            font-family: 'Open Sans';
-        }
+      body {
+        font-family: "Open Sans";
+      }
     </style>
-</head>
+  </head>
 
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
-
+  <body class="bg-gray-100 flex items-center justify-center min-h-screen">
     <div class="w-full max-w-2xl bg-white p-8 rounded-xl shadow-lg">
-        <!-- Header -->
-        <div class="flex justify-between items-center mb-6">
-            <h1 class="text-2xl font-bold text-gray-800">Add/Edit Profile</h1>
-            <button class="text-gray-500 hover:text-gray-700 font-bold">close</button>
+      <!-- Header -->
+      <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold text-gray-800">Add/Edit Profile</h1>
+        <button class="text-gray-500 hover:text-gray-700 font-bold">
+          close
+        </button>
+      </div>
+
+      <!-- Form -->
+      <form class="space-y-6" action="contact.html" method="GET">
+        <!-- First Name -->
+        <div>
+          <label for="firstName" class="block text-sm font-medium text-gray-700"
+            >First Name*</label
+          >
+          <input
+            id="firstName"
+            name="firstName"
+            type="text"
+            placeholder="Ex: Juan"
+            required
+            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
+          />
         </div>
 
-        <!-- Form -->
-        <form class="space-y-6">
-            <!-- First Name -->
-            <div>
-                <label for="firstName" class="block text-sm font-medium text-gray-700">First Name*</label>
-                <input id="firstName" name="firstName" type="text" placeholder="Ex: Juan" required class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500">
-            </div>
+        <!-- Middle Name -->
+        <div>
+          <label
+            for="middleName"
+            class="block text-sm font-medium text-gray-700"
+            >Middle Name</label
+          >
+          <input
+            id="middleName"
+            name="middleName"
+            type="text"
+            placeholder="Ex: Santiago"
+            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
+          />
+        </div>
 
-            <!-- Middle Name -->
-            <div>
-                <label for="middleName" class="block text-sm font-medium text-gray-700">Middle Name</label>
-                <input id="middleName" name="middleName" type="text" placeholder="Ex: Santiago" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500">
-            </div>
+        <!-- Last Name -->
+        <div>
+          <label for="lastName" class="block text-sm font-medium text-gray-700"
+            >Last Name*</label
+          >
+          <input
+            id="lastName"
+            name="lastName"
+            type="text"
+            placeholder="Ex: Dela Cruz"
+            required
+            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
+          />
+        </div>
 
-            <!-- Last Name -->
-            <div>
-                <label for="lastName" class="block text-sm font-medium text-gray-700">Last Name*</label>
-                <input id="lastName" name="lastName" type="text" placeholder="Ex: Dela Cruz" required class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500">
-            </div>
-            
-            <!-- Birthday -->
-            <div class="space-y-2">
-                <label class="block text-sm font-medium text-gray-700">Birthday</label>
-                <div class="flex space-x-4">
-                    <select id="yearSelect" class="block w-1/3 px-4 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500">
-                        <option value="2007">2007</option>
-                        <option value="2006">2006</option>
-                        <option value="2005">2005</option>
-                        <option value="2004">2004</option>
-                        <option value="2003">2003</option>
-                        <option value="2002">2002</option>
-                        <option value="2001">2001</option>
-                        <option value="2000">2000</option>
-                        <option value="1999">1999</option>
-                        <option value="1998">1998</option>
-                        <option value="1997">1997</option>
-                        <option value="1996">1996</option>
-                        <option value="1995">1995</option>
-                        <option value="1994">1994</option>
-                        <option value="1993">1993</option>
-                        <option value="1992">1992</option>
-                        <option value="1991">1991</option>
-                        <option value="1990">1990</option>
-                    </select>
-                    <select id="monthSelect" class="block w-1/3 px-4 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500">
-                        <option>January</option>
-                        <option>February</option>
-                        <option>March</option>
-                        <option>April</option>
-                        <option>May</option>
-                        <option>June</option>
-                        <option>July</option>
-                        <option>August</option>
-                        <option>September</option>
-                        <option>October</option>
-                        <option>November</option>
-                        <option>December</option>
-                    </select>
-                    <select id="daySelect" class="block w-1/3 px-4 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                        <option>6</option>
-                        <option>7</option>
-                        <option>8</option>
-                        <option>9</option>
-                        <option>10</option>
-                        <option>11</option>
-                        <option>12</option>
-                        <option>13</option>
-                        <option>14</option>
-                        <option>15</option>
-                        <option>16</option>
-                        <option>17</option>
-                        <option>18</option>
-                        <option>19</option>
-                        <option>20</option>
-                        <option>21</option>
-                        <option>22</option>
-                        <option>23</option>
-                        <option>24</option>
-                        <option>25</option>
-                        <option>26</option>
-                        <option>27</option>
-                        <option>28</option>
-                        <option>29</option>
-                        <option>30</option>
-                        <option>31</option>
-                    </select>
-                </div>
-            </div>
+        <!-- Birthday -->
+        <div class="space-y-2">
+          <label class="block text-sm font-medium text-gray-700"
+            >Birthday</label
+          >
+          <div class="flex space-x-4">
+            <select
+              id="yearSelect"
+              class="block w-1/3 px-4 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
+            >
+              <option value="2007">2007</option>
+              <option value="2006">2006</option>
+              <option value="2005">2005</option>
+              <option value="2004">2004</option>
+              <option value="2003">2003</option>
+              <option value="2002">2002</option>
+              <option value="2001">2001</option>
+              <option value="2000">2000</option>
+              <option value="1999">1999</option>
+              <option value="1998">1998</option>
+              <option value="1997">1997</option>
+              <option value="1996">1996</option>
+              <option value="1995">1995</option>
+              <option value="1994">1994</option>
+              <option value="1993">1993</option>
+              <option value="1992">1992</option>
+              <option value="1991">1991</option>
+              <option value="1990">1990</option>
+            </select>
+            <select
+              id="monthSelect"
+              class="block w-1/3 px-4 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
+            >
+              <option>January</option>
+              <option>February</option>
+              <option>March</option>
+              <option>April</option>
+              <option>May</option>
+              <option>June</option>
+              <option>July</option>
+              <option>August</option>
+              <option>September</option>
+              <option>October</option>
+              <option>November</option>
+              <option>December</option>
+            </select>
+            <select
+              id="daySelect"
+              class="block w-1/3 px-4 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
+            >
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+              <option>6</option>
+              <option>7</option>
+              <option>8</option>
+              <option>9</option>
+              <option>10</option>
+              <option>11</option>
+              <option>12</option>
+              <option>13</option>
+              <option>14</option>
+              <option>15</option>
+              <option>16</option>
+              <option>17</option>
+              <option>18</option>
+              <option>19</option>
+              <option>20</option>
+              <option>21</option>
+              <option>22</option>
+              <option>23</option>
+              <option>24</option>
+              <option>25</option>
+              <option>26</option>
+              <option>27</option>
+              <option>28</option>
+              <option>29</option>
+              <option>30</option>
+              <option>31</option>
+            </select>
+          </div>
+        </div>
 
-            <!-- Gender & Nationality -->
-            <div class="space-y-2">
-                <label class="block text-sm font-medium text-gray-700">Gender</label>
-                <div class="flex space-x-4">
-                    <select class="block w-1/2 px-4 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500">
-                        <option>Male</option>
-                        <option>Female</option>
-                    </select>
-                    <select class="block w-1/2 px-4 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500">
-                        <option>Filipino</option>
-                        <option>Afghan</option>
-                        <option>Albanian</option>
-                        <option>Algerian</option>
-                        <option>American</option>
-                        <option>Andorran</option>
-                        <option>Angolan</option>
-                        <option>Antiguans</option>
-                        <option>Argentinean</option>
-                        <option>Armenian</option>
-                        <option>Australian</option>
-                        <option>Austrian</option>
-                        <option>Azerbaijani</option>
-                        <option>Bahamian</option>
-                        <option>Bahraini</option>
-                        <option>Bangladeshi</option>
-                        <option>Barbadian</option>
-                        <option>Barbudans</option>
-                        <option>Batswana</option>
-                        <option>Belarusian</option>
-                        <option>Belgian</option>
-                        <option>Belizean</option>
-                        <option>Beninese</option>
-                        <option>Bhutanese</option>
-                        <option>Bolivian</option>
-                        <option>Bosnian</option>
-                        <option>Brazilian</option>
-                        <option>British</option>
-                        <option>Bruneian</option>
-                        <option>Bulgarian</option>
-                        <option>Burkinabe</option>
-                        <option>Burmese</option>
-                        <option>Burundian</option>
-                        <option>Cambodian</option>
-                        <option>Cameroonian</option>
-                        <option>Canadian</option>
-                        <option>Cape Verdean</option>
-                        <option>Central African</option>
-                        <option>Chadian</option>
-                        <option>Chilean</option>
-                        <option>Chinese</option>
-                        <option>Colombian</option>
-                        <option>Comoran</option>
-                        <option>Congolese</option>
-                        <option>Costa Rican</option>
-                        <option>Croatian</option>
-                        <option>Cuban</option>
-                        <option>Cypriot</option>
-                        <option>Czech</option>
-                        <option>Danish</option>
-                        <option>Djibouti</option>
-                        <option>Dominican</option>
-                        <option>Dutch</option>
-                        <option>East Timorese</option>
-                        <option>Ecuadorean</option>
-                        <option>Egyptian</option>
-                        <option>Emirian</option>
-                        <option>Equatorial Guinean</option>
-                        <option>Eritrean</option>
-                        <option>Estonian</option>
-                        <option>Ethiopian</option>
-                        <option>Fijian</option>
-                        <option>Finnish</option>
-                        <option>French</option>
-                        <option>Gabonese</option>
-                        <option>Gambian</option>
-                        <option>Georgian</option>
-                        <option>German</option>
-                        <option>Ghanaian</option>
-                        <option>Greek</option>
-                        <option>Grenadian</option>
-                        <option>Guatemalan</option>
-                        <option>Guinea-Bissauan</option>
-                        <option>Guinean</option>
-                        <option>Guyanese</option>
-                        <option>Haitian</option>
-                        <option>Herzegovinian</option>
-                        <option>Honduran</option>
-                        <option>Hungarian</option>
-                        <option>I-Kiribati</option>
-                        <option>Icelander</option>
-                        <option>Indian</option>
-                        <option>Indonesian</option>
-                        <option>Iranian</option>
-                        <option>Iraqi</option>
-                        <option>Irish</option>
-                        <option>Israeli</option>
-                        <option>Italian</option>
-                        <option>Ivorian</option>
-                        <option>Jamaican</option>
-                        <option>Japanese</option>
-                        <option>Jordanian</option>
-                        <option>Kazakhstani</option>
-                        <option>Kenyan</option>
-                        <option>Kittian and Nevisian</option>
-                        <option>Kuwaiti</option>
-                        <option>Kyrgyz</option>
-                        <option>Laotian</option>
-                        <option>Latvian</option>
-                        <option>Lebanese</option>
-                        <option>Liberian</option>
-                        <option>Libyan</option>
-                        <option>Liechtensteiner</option>
-                        <option>Lithuanian</option>
-                        <option>Luxembourger</option>
-                        <option>Macedonian</option>
-                        <option>Malagasy</option>
-                        <option>Malawian</option>
-                        <option>Malaysian</option>
-                        <option>Maldivian</option>
-                        <option>Malian</option>
-                        <option>Maltese</option>
-                        <option>Marshallese</option>
-                        <option>Mauritanian</option>
-                        <option>Mauritian</option>
-                        <option>Mexican</option>
-                        <option>Micronesian</option>
-                        <option>Moldovan</option>
-                        <option>Monacan</option>
-                        <option>Mongolian</option>
-                        <option>Moroccan</option>
-                        <option>Mosotho</option>
-                        <option>Motswana</option>
-                        <option>Mozambican</option>
-                        <option>Namibian</option>
-                        <option>Nauruan</option>
-                        <option>Nepalese</option>
-                        <option>New Zealander</option>
-                        <option>Ni-Vanuatu</option>
-                        <option>Nicaraguan</option>
-                        <option>Nigerian</option>
-                        <option>Nigerien</option>
-                        <option>North Korean</option>
-                        <option>Northern Irish</option>
-                        <option>Norwegian</option>
-                        <option>Omani</option>
-                        <option>Pakistani</option>
-                        <option>Palauan</option>
-                        <option>Panamanian</option>
-                        <option>Papua New Guinean</option>
-                        <option>Paraguayan</option>
-                        <option>Peruvian</option>
-                        <option>Polish</option>
-                        <option>Portuguese</option>
-                        <option>Qatari</option>
-                        <option>Romanian</option>
-                        <option>Russian</option>
-                        <option>Rwandan</option>
-                        <option>Saint Lucian</option>
-                        <option>Salvadoran</option>
-                        <option>Samoan</option>
-                        <option>San Marinese</option>
-                        <option>Sao Tomean</option>
-                        <option>Saudi</option>
-                        <option>Scottish</option>
-                        <option>Senegalese</option>
-                        <option>Serbian</option>
-                        <option>Seychellois</option>
-                        <option>Sierra Leonean</option>
-                        <option>Singaporean</option>
-                        <option>Slovakian</option>
-                        <option>Slovenian</option>
-                        <option>Solomon Islander</option>
-                        <option>Somali</option>
-                        <option>South African</option>
-                        <option>South Korean</option>
-                        <option>Spanish</option>
-                        <option>Sri Lankan</option>
-                        <option>Sudanese</option>
-                        <option>Surinamer</option>
-                        <option>Swazi</option>
-                        <option>Swedish</option>
-                        <option>Swiss</option>
-                        <option>Syrian</option>
-                        <option>Taiwanese</option>
-                        <option>Tajik</option>
-                        <option>Tanzanian</option>
-                        <option>Thai</option>
-                        <option>Togolese</option>
-                        <option>Tongan</option>
-                        <option>Trinidadian or Tobagonian</option>
-                        <option>Tunisian</option>
-                        <option>Turkish</option>
-                        <option>Tuvaluan</option>
-                        <option>Ugandan</option>
-                        <option>Ukrainian</option>
-                        <option>Uruguayan</option>
-                        <option>Uzbekistani</option>
-                        <option>Venezuelan</option>
-                        <option>Vietnamese</option>
-                        <option>Welsh</option>
-                        <option>Yemenite</option>
-                        <option>Zambian</option>
-                        <option>Zimbabwean</option>
-                    </select>
-                </div>
-            </div>
+        <!-- Gender & Nationality -->
+        <div class="space-y-2">
+          <label class="block text-sm font-medium text-gray-700">Gender</label>
+          <div class="flex space-x-4">
+            <select
+              class="block w-1/2 px-4 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
+            >
+              <option>Male</option>
+              <option>Female</option>
+            </select>
+            <select
+              class="block w-1/2 px-4 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
+            >
+              <option>Filipino</option>
+              <option>Afghan</option>
+              <option>Albanian</option>
+              <option>Algerian</option>
+              <option>American</option>
+              <option>Andorran</option>
+              <option>Angolan</option>
+              <option>Antiguans</option>
+              <option>Argentinean</option>
+              <option>Armenian</option>
+              <option>Australian</option>
+              <option>Austrian</option>
+              <option>Azerbaijani</option>
+              <option>Bahamian</option>
+              <option>Bahraini</option>
+              <option>Bangladeshi</option>
+              <option>Barbadian</option>
+              <option>Barbudans</option>
+              <option>Batswana</option>
+              <option>Belarusian</option>
+              <option>Belgian</option>
+              <option>Belizean</option>
+              <option>Beninese</option>
+              <option>Bhutanese</option>
+              <option>Bolivian</option>
+              <option>Bosnian</option>
+              <option>Brazilian</option>
+              <option>British</option>
+              <option>Bruneian</option>
+              <option>Bulgarian</option>
+              <option>Burkinabe</option>
+              <option>Burmese</option>
+              <option>Burundian</option>
+              <option>Cambodian</option>
+              <option>Cameroonian</option>
+              <option>Canadian</option>
+              <option>Cape Verdean</option>
+              <option>Central African</option>
+              <option>Chadian</option>
+              <option>Chilean</option>
+              <option>Chinese</option>
+              <option>Colombian</option>
+              <option>Comoran</option>
+              <option>Congolese</option>
+              <option>Costa Rican</option>
+              <option>Croatian</option>
+              <option>Cuban</option>
+              <option>Cypriot</option>
+              <option>Czech</option>
+              <option>Danish</option>
+              <option>Djibouti</option>
+              <option>Dominican</option>
+              <option>Dutch</option>
+              <option>East Timorese</option>
+              <option>Ecuadorean</option>
+              <option>Egyptian</option>
+              <option>Emirian</option>
+              <option>Equatorial Guinean</option>
+              <option>Eritrean</option>
+              <option>Estonian</option>
+              <option>Ethiopian</option>
+              <option>Fijian</option>
+              <option>Finnish</option>
+              <option>French</option>
+              <option>Gabonese</option>
+              <option>Gambian</option>
+              <option>Georgian</option>
+              <option>German</option>
+              <option>Ghanaian</option>
+              <option>Greek</option>
+              <option>Grenadian</option>
+              <option>Guatemalan</option>
+              <option>Guinea-Bissauan</option>
+              <option>Guinean</option>
+              <option>Guyanese</option>
+              <option>Haitian</option>
+              <option>Herzegovinian</option>
+              <option>Honduran</option>
+              <option>Hungarian</option>
+              <option>I-Kiribati</option>
+              <option>Icelander</option>
+              <option>Indian</option>
+              <option>Indonesian</option>
+              <option>Iranian</option>
+              <option>Iraqi</option>
+              <option>Irish</option>
+              <option>Israeli</option>
+              <option>Italian</option>
+              <option>Ivorian</option>
+              <option>Jamaican</option>
+              <option>Japanese</option>
+              <option>Jordanian</option>
+              <option>Kazakhstani</option>
+              <option>Kenyan</option>
+              <option>Kittian and Nevisian</option>
+              <option>Kuwaiti</option>
+              <option>Kyrgyz</option>
+              <option>Laotian</option>
+              <option>Latvian</option>
+              <option>Lebanese</option>
+              <option>Liberian</option>
+              <option>Libyan</option>
+              <option>Liechtensteiner</option>
+              <option>Lithuanian</option>
+              <option>Luxembourger</option>
+              <option>Macedonian</option>
+              <option>Malagasy</option>
+              <option>Malawian</option>
+              <option>Malaysian</option>
+              <option>Maldivian</option>
+              <option>Malian</option>
+              <option>Maltese</option>
+              <option>Marshallese</option>
+              <option>Mauritanian</option>
+              <option>Mauritian</option>
+              <option>Mexican</option>
+              <option>Micronesian</option>
+              <option>Moldovan</option>
+              <option>Monacan</option>
+              <option>Mongolian</option>
+              <option>Moroccan</option>
+              <option>Mosotho</option>
+              <option>Motswana</option>
+              <option>Mozambican</option>
+              <option>Namibian</option>
+              <option>Nauruan</option>
+              <option>Nepalese</option>
+              <option>New Zealander</option>
+              <option>Ni-Vanuatu</option>
+              <option>Nicaraguan</option>
+              <option>Nigerian</option>
+              <option>Nigerien</option>
+              <option>North Korean</option>
+              <option>Northern Irish</option>
+              <option>Norwegian</option>
+              <option>Omani</option>
+              <option>Pakistani</option>
+              <option>Palauan</option>
+              <option>Panamanian</option>
+              <option>Papua New Guinean</option>
+              <option>Paraguayan</option>
+              <option>Peruvian</option>
+              <option>Polish</option>
+              <option>Portuguese</option>
+              <option>Qatari</option>
+              <option>Romanian</option>
+              <option>Russian</option>
+              <option>Rwandan</option>
+              <option>Saint Lucian</option>
+              <option>Salvadoran</option>
+              <option>Samoan</option>
+              <option>San Marinese</option>
+              <option>Sao Tomean</option>
+              <option>Saudi</option>
+              <option>Scottish</option>
+              <option>Senegalese</option>
+              <option>Serbian</option>
+              <option>Seychellois</option>
+              <option>Sierra Leonean</option>
+              <option>Singaporean</option>
+              <option>Slovakian</option>
+              <option>Slovenian</option>
+              <option>Solomon Islander</option>
+              <option>Somali</option>
+              <option>South African</option>
+              <option>South Korean</option>
+              <option>Spanish</option>
+              <option>Sri Lankan</option>
+              <option>Sudanese</option>
+              <option>Surinamer</option>
+              <option>Swazi</option>
+              <option>Swedish</option>
+              <option>Swiss</option>
+              <option>Syrian</option>
+              <option>Taiwanese</option>
+              <option>Tajik</option>
+              <option>Tanzanian</option>
+              <option>Thai</option>
+              <option>Togolese</option>
+              <option>Tongan</option>
+              <option>Trinidadian or Tobagonian</option>
+              <option>Tunisian</option>
+              <option>Turkish</option>
+              <option>Tuvaluan</option>
+              <option>Ugandan</option>
+              <option>Ukrainian</option>
+              <option>Uruguayan</option>
+              <option>Uzbekistani</option>
+              <option>Venezuelan</option>
+              <option>Vietnamese</option>
+              <option>Welsh</option>
+              <option>Yemenite</option>
+              <option>Zambian</option>
+              <option>Zimbabwean</option>
+            </select>
+          </div>
+        </div>
 
-            <!-- Location -->
-            <div>
-                <label for="location" class="block text-sm font-medium text-gray-700">Location *</label>
-                <input id="location" name="location" type="text" placeholder="Ex: Japan" required class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500">
-            </div>
-            
-            <!-- City -->
-            <div>
-                <label for="city" class="block text-sm font-medium text-gray-700">City*</label>
-                <input id="city" name="city" type="text" placeholder="Ex: Osaka" required class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500">
-            </div>
+        <!-- Location -->
+        <div>
+          <label for="location" class="block text-sm font-medium text-gray-700"
+            >Location *</label
+          >
+          <input
+            id="location"
+            name="location"
+            type="text"
+            placeholder="Ex: Japan"
+            required
+            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
+          />
+        </div>
 
-            <!-- Address -->
-            <div>
-                <label for="address" class="block text-sm font-medium text-gray-700">Address</label>
-                <input id="address" name="address" type="text" placeholder="Ex: stree, building name, number, etc" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500">
-            </div>
-            
-            <!-- Field -->
-            <div>
-                <label for="field" class="block text-sm font-medium text-gray-700">Field*</label>
-                <select id="field" name="field" class="mt-1 block w-full px-4 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500">
-                    <option>Accommodation</option>
-                    <option>Agriculture</option>
-                    <option>Automobile</option>
-                    <option>Automobile Transportation</option>
-                    <option>Aviation</option>
-                    <option>Building Cleaning</option>
-                    <option>Construction</option>
-                    <option>Fishery/Aquaculture</option>
-                    <option>Food and Beverages</option>
-                    <option>Food Services</option>
-                    <option>Forestry</option>
-                    <option>Industrial Product</option>
-                    <option>Nursing Care</option>
-                    <option>Railway</option>
-                    <option>Shipbuilding</option>
-                    <option>Wood Industry</option>
-                </select>
-            </div>
+        <!-- City -->
+        <div>
+          <label for="city" class="block text-sm font-medium text-gray-700"
+            >City*</label
+          >
+          <input
+            id="city"
+            name="city"
+            type="text"
+            placeholder="Ex: Osaka"
+            required
+            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
+          />
+        </div>
 
-            <!-- Prometric Test -->
-            <div>
-                <label for="prometricTest" class="block text-sm font-medium text-gray-700">Prometric test*</label>
-                <select id="prometricTest" name="prometricTest" class="mt-1 block w-full px-4 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500">
-                    <option>Accommodation Industry Proficiency Test</option>
-                    <option>Agriculture Skill Assessment Test</option>
-                    <option>Automobile Repair and Maintenance Field Specified Skills Evaluation Test</option>
-                    <option>Aviation Specified Skills Evaluation Test</option>
-                    <option>Building Cleaning Management Field Specified Skilled Worker Evaluation Test</option>
-                    <option>Construction Field Specified Skilled Worker Evaluation Test</option>
-                    <option>Fishing Industry Skills Proficiency Test</option>
-                    <option>Food and Beverage Manufacturing Industry Specified Skills Evaluation Test</option>
-                    <option>Food Service Industry Specified Skills Evaluation Test</option>
-                    <option>Industrial Product Manufacturing Specified Skills Evaluation Test</option>
-                    <option>Nippon Kaiji Kyokai</option>
-                    <option>Nursing Care Skills Evaluation Test</option>
-                    <option>Nursing Care Japanese Language Evaluation Test</option>
-                    <option>Not Applicable</option>
-                </select>
-            </div>
+        <!-- Address -->
+        <div>
+          <label for="address" class="block text-sm font-medium text-gray-700"
+            >Address</label
+          >
+          <input
+            id="address"
+            name="address"
+            type="text"
+            placeholder="Ex: stree, building name, number, etc"
+            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
+          />
+        </div>
 
-            <!-- JLPT Level -->
-            <div>
-                <label for="jlptLevel" class="block text-sm font-medium text-gray-700">JLPT level*</label>
-                <select id="jlptLevel" name="jlptLevel" class="mt-1 block w-full px-4 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500">
-                    <option>N5 level</option>
-                    <option>N4 level</option>
-                    <option>N3 level</option>
-                    <option>N2 level</option>
-                    <option>N1 level</option>
-                </select>
-            </div>
+        <!-- Field -->
+        <div>
+          <label for="field" class="block text-sm font-medium text-gray-700"
+            >Field*</label
+          >
+          <select
+            id="field"
+            name="field"
+            class="mt-1 block w-full px-4 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
+          >
+            <option>Accommodation</option>
+            <option>Agriculture</option>
+            <option>Automobile</option>
+            <option>Automobile Transportation</option>
+            <option>Aviation</option>
+            <option>Building Cleaning</option>
+            <option>Construction</option>
+            <option>Fishery/Aquaculture</option>
+            <option>Food and Beverages</option>
+            <option>Food Services</option>
+            <option>Forestry</option>
+            <option>Industrial Product</option>
+            <option>Nursing Care</option>
+            <option>Railway</option>
+            <option>Shipbuilding</option>
+            <option>Wood Industry</option>
+          </select>
+        </div>
 
-            <!-- Save Button -->
-            <div class="pt-4 flex justify-center">
-                <button type="submit" class="w-40 flex justify-center py-2 px-4 border border-transparent rounded-3xl shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-                    Save
-                </button>
-            </div>
-        </form>
+        <!-- Prometric Test -->
+        <div>
+          <label
+            for="prometricTest"
+            class="block text-sm font-medium text-gray-700"
+            >Prometric test*</label
+          >
+          <select
+            id="prometricTest"
+            name="prometricTest"
+            class="mt-1 block w-full px-4 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
+          >
+            <option>Accommodation Industry Proficiency Test</option>
+            <option>Agriculture Skill Assessment Test</option>
+            <option>
+              Automobile Repair and Maintenance Field Specified Skills
+              Evaluation Test
+            </option>
+            <option>Aviation Specified Skills Evaluation Test</option>
+            <option>
+              Building Cleaning Management Field Specified Skilled Worker
+              Evaluation Test
+            </option>
+            <option>
+              Construction Field Specified Skilled Worker Evaluation Test
+            </option>
+            <option>Fishing Industry Skills Proficiency Test</option>
+            <option>
+              Food and Beverage Manufacturing Industry Specified Skills
+              Evaluation Test
+            </option>
+            <option>
+              Food Service Industry Specified Skills Evaluation Test
+            </option>
+            <option>
+              Industrial Product Manufacturing Specified Skills Evaluation Test
+            </option>
+            <option>Nippon Kaiji Kyokai</option>
+            <option>Nursing Care Skills Evaluation Test</option>
+            <option>Nursing Care Japanese Language Evaluation Test</option>
+            <option>Not Applicable</option>
+          </select>
+        </div>
+
+        <!-- JLPT Level -->
+        <div>
+          <label for="jlptLevel" class="block text-sm font-medium text-gray-700"
+            >JLPT level*</label
+          >
+          <select
+            id="jlptLevel"
+            name="jlptLevel"
+            class="mt-1 block w-full px-4 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
+          >
+            <option>N5 level</option>
+            <option>N4 level</option>
+            <option>N3 level</option>
+            <option>N2 level</option>
+            <option>N1 level</option>
+          </select>
+        </div>
+
+        <!-- Save Button -->
+        <div class="pt-4 flex justify-center">
+          <button
+            type="submit"
+            class="w-40 flex justify-center py-2 px-4 border border-transparent rounded-3xl shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+          >
+            Save
+          </button>
+        </div>
+      </form>
     </div>
-</body>
+  </body>
 </html>
