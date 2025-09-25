@@ -1316,3 +1316,618 @@ footer {
   gap: 1.5rem;
   align-items: center;
 }
+
+/* ===============================
+   Profile Dashboard - Bento Layout
+   =============================== */
+  
+   /* ensure padding included in height calculations */
+body.profile-dashboard,
+body.profile-dashboard * {
+  box-sizing: border-box;
+}
+   
+   body.profile-dashboard .bento-wrapper {
+     width: 100%;
+     max-width: 1920px;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     padding: 20px;
+   }
+   
+   body.profile-dashboard .bento-container {
+     width: 90%;
+     max-width: 1185px;
+     display: grid;
+     grid-template-columns: repeat(2, 1fr);
+     gap: 20px;
+     align-items: stretch;
+     background: #FAF8F8;
+     padding: 20px;
+     border-radius: 12px;
+     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+     
+   }
+   
+   /* -------------------------------
+      Base Bento Box
+   --------------------------------*/
+   body.profile-dashboard .bento-box {
+    box-sizing: border-box;
+     background: #ffffff;
+     border-radius: 8px;
+     display: flex;
+     flex-direction: column;
+     justify-content: flex-start;
+     align-items: stretch;
+     padding: 12px 16px;
+     gap: 8px;
+     font-size: 16px;
+     
+   }
+   
+   /* Titles inside any box */
+   body.profile-dashboard .bento-box__title {
+     font-size: 20px;
+     font-weight: bold;
+   }
+   
+   /* Paragraph inside any box */
+   body.profile-dashboard .bento-box__paragraph {
+     font-size: 13px;
+     color: #555;
+     line-height: 1.4;
+   }
+   
+   /* -------------------------------
+      Box 1 - Profile
+   --------------------------------*/
+   body.profile-dashboard .bento-box--profile {
+     align-items: center;
+     justify-content: flex-start;
+     position: relative;
+       gap: 10px;                
+  height: 200px;            
+  width: 100%;             
+  padding: 0;               
+  box-sizing: border-box;
+   }
+   
+   body.profile-dashboard .bento-box__small-circle {
+     position: absolute;
+     top: 10px;
+     right: 10px;
+     width: 25px;
+     height: 25px;
+     background: #000;
+     border-radius: 50%;
+   }
+   
+   body.profile-dashboard .bento-box__profile-image {
+    padding-left: 24px;
+      width: 100px;
+     height: 100px;
+     background: #000;
+     border-radius: 50%;
+     align-self: stretch;
+     margin-bottom: 50px;
+     top: 70px;
+     left: 10px;
+      position: absolute;
+   }
+   
+   body.profile-dashboard .bento-box__completion-text {
+     position: absolute;
+  bottom: 10px;      /* distance from the bottom */
+  left: 0;           /* align with left edge */
+  right: 0;          /* align with right edge */
+  text-align: right; /* or right if you prefer */
+  font-size: 13px;
+  color: #555;
+  padding-right: 15px;
+    
+   }
+   
+
+   /* -------------------------------
+      Box 2 - PR 
+   --------------------------------*/
+body.profile-dashboard .bento-box--pr {
+ align-items: center;
+     justify-content: flex-end;
+     position: relative;
+       gap: 10px;                
+  height: 444px;            
+  width: 100%;             
+  padding: 0;               
+  box-sizing: border-box;         
+
+}
+
+/* header row (PR points) */
+body.profile-dashboard .bento-box--pr .bento-box__row--title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+body.profile-dashboard .bento-box--pr .bento-box__title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #3c0a0a;
+}
+
+body.profile-dashboard .bento-box--pr .bento-box__title {
+  font-size: 13px;
+  font-weight: bold;
+  color: #D1C9C9;
+}
+
+   /* -------------------------------
+      Box 3 - Action Box Profile info
+   --------------------------------*/
+  body.profile-dashboard .bento-box--action {
+  width: 100%;
+  padding: 15px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Header Row */
+body.profile-dashboard .bento-box__row--title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+body.profile-dashboard .bento-box__name {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+body.profile-dashboard .bento-box__edit {
+  font-size: 16px;
+  color: #800000; /* maroon like in screenshot */
+  cursor: pointer;
+}
+
+/* Subtitle */
+body.profile-dashboard .bento-box__subtitle {
+  font-size: 13px;
+  color: #333;
+}
+
+/* Divider */
+body.profile-dashboard .bento-box__divider {
+   display: block;         /* force hr to show */
+  width: 100%;            /* span full width */
+  border: none;           /* reset any defaults */
+  border-top: 2px solid #A79F9F !important; /* force override */
+  margin: 8px 0;
+}
+
+/* Info Grid */
+body.profile-dashboard .bento-box__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 2-column layout */
+  row-gap: 6px;
+  column-gap: 20px;
+  font-size: 14px;
+  color: #111;
+}
+
+/* Resume CTA */
+body.profile-dashboard .bento-box__resume {
+  margin-top: auto;
+  width: 100%;
+  text-align: right;
+  font-size: 14px;
+  color: #666;
+  cursor: pointer;
+  
+}
+   
+
+/* Box 4 parent - split container */
+body.profile-dashboard .bento-box--split {
+  display: flex;            
+  flex-direction: row;      /* left & right side by side */
+  gap: 10px;                
+  height: 255px;            /* same height as other Bento boxes */
+  width: 100%;             
+  padding: 0;               /* remove extra padding to match other boxes */
+  box-sizing: border-box;   /* ensure height includes border/padding */
+  background: #FAF8F8;
+}
+
+/* Box 4 inner boxes - fill parent height */
+body.profile-dashboard .bento-box--split .bento-box__inner {
+  box-sizing: border-box;
+  flex: 1;                 
+  height: 100%;            
+  display: flex;           
+  flex-direction: column;  
+  
+  padding: 8px 20px;      /* same as other boxes */
+  background: #ffffff;
+  border-radius: 8px;      /* match other boxes */
+  gap: 6px;                
+}
+
+
+/* Title inside Box 4 inner boxes */
+body.profile-dashboard .bento-box--split .bento-box__inner .bento-box__title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* Paragraph inside Box 4 inner boxes */
+body.profile-dashboard .bento-box--split .bento-box__inner .bento-box__paragraph {
+  font-size: 13px;
+  color: #555555;
+  line-height: 1.4;
+  flex-direction: column;  
+  padding-left: 10px;
+  padding-top: 10px;
+  
+}
+
+
+
+
+/* Box 5 - Experience */
+body.profile-dashboard .bento-box--experience {
+  height: 100%; /* ensure full cell height */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* header on top, content row at bottom */
+  padding: 12px 16px;
+}
+
+/* header row (Experience + Add) */
+body.profile-dashboard .bento-box--experience .bento-box__row--title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+body.profile-dashboard .bento-box--experience .bento-box__title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #3c0a0a;
+}
+
+body.profile-dashboard .bento-box--experience .bento-box__add {
+  font-size: 16px;
+  font-weight: bold;
+  color: #c40000;
+  cursor: pointer;
+}
+
+/* bottom content row */
+body.profile-dashboard .bento-box--experience .bento-box__row--content {
+ 
+  display: flex;
+  justify-content: space-between; /* left = job info, right = edit */
+  align-items: center;          /* align items at the bottom */
+  width: 100%;
+
+  
+}
+
+/* left side: image + details */
+body.profile-dashboard .bento-box__job-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1 1 auto;
+}
+
+/* image */
+body.profile-dashboard .bento-box__image {
+  width: 50px;
+  height: 50px;
+  background: #e20a0a;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+/* details column */
+body.profile-dashboard .bento-box__job-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* job title */
+body.profile-dashboard .bento-box__job-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #3c0a0a;
+}
+
+/* company + status on one row */
+body.profile-dashboard .bento-box__company-status {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  font-size: 14px;
+  color: #333;
+}
+
+/* dates */
+body.profile-dashboard .bento-box__date {
+  font-size: 13px;
+  color: #777;
+}
+
+/* edit CTA on the right */
+body.profile-dashboard .bento-box--experience .bento-box__edit {
+  font-size: 16px;
+  font-weight: 700;
+  color: #800000;
+  cursor: pointer;
+  margin-left: 16px; /* keep some gap from job-info */
+  align-self: align-center;
+ 
+}
+
+/* Box 6 - Skills */
+
+body.profile-dashboard .bento-box--skills {
+  height: auto; /* ensure full cell height */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* header on top, content row at bottom */
+  padding: 12px 16px;
+}
+
+/* header row (Experience + Add) */
+body.profile-dashboard .bento-box--skills .bento-box__row--title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+body.profile-dashboard .bento-box--skills .bento-box__title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #3c0a0a;
+}
+
+body.profile-dashboard .bento-box--skills .bento-box__add {
+  font-size: 16px;
+  font-weight: bold;
+  color: #c40000;
+  cursor: pointer;
+}
+
+/* bottom content row */
+body.profile-dashboard .bento-box--skills .bento-box__row--content {
+    display: flex;
+  justify-content: space-between; /* left = job info, right = edit */
+  align-items: center;          /* align items at the bottom */
+  width: 100%;
+}
+
+/* left side: image + details */
+body.profile-dashboard .bento-box__skill-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1 1 auto;
+}
+
+/* image */
+body.profile-dashboard .bento-box__image {
+  width: 50px;
+  height: 50px;
+  background: #d9d9d9;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+/* details column */
+body.profile-dashboard .bento-box__skills-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* job title */
+body.profile-dashboard .bento-box__skill-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #3c0a0a;
+}
+
+
+/* edit CTA on the right */
+body.profile-dashboard .bento-box--skills .bento-box__edit {
+ font-size: 16px;
+  font-weight: 700;
+  color: #800000;
+  cursor: pointer;
+  margin-left: 16px; /* keep some gap from job-info */
+  align-self: align-center;
+
+  
+}
+
+
+/* Box 7 - Education */
+body.profile-dashboard .bento-box--education {
+  height: auto; /* ensure full cell height */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* header on top, content row at bottom */
+  padding: 12px 16px;
+}
+
+/* header row (education + Add) */
+body.profile-dashboard .bento-box--education .bento-box__row--title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+body.profile-dashboard .bento-box--education .bento-box__title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #3c0a0a;
+}
+
+body.profile-dashboard .bento-box--education .bento-box__add {
+  font-size: 16px;
+  font-weight: bold;
+  color: #c40000;
+  cursor: pointer;
+}
+
+/* bottom content row */
+body.profile-dashboard .bento-box--education .bento-box__row--content {
+ display: flex;
+  justify-content: space-between; /* left = job info, right = edit */
+  align-items: center;          /* align items at the bottom */
+  width: 100%;
+}
+
+/* left side: image + details */
+body.profile-dashboard .bento-box__education-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1 1 auto;
+}
+
+/* image */
+body.profile-dashboard .bento-box__image {
+  width: 50px;
+  height: 50px;
+  background: #d9d9d9;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+/* details column */
+body.profile-dashboard .bento-box__education-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* job title */
+body.profile-dashboard .bento-box__education-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #3c0a0a;
+}
+
+/* company + status on one row */
+body.profile-dashboard .bento-box__course-major {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  font-size: 14px;
+  color: #333;
+}
+
+/* dates */
+body.profile-dashboard .bento-box__date {
+  font-size: 13px;
+  color: #777;
+}
+
+/* edit CTA on the right */
+body.profile-dashboard .bento-box--education .bento-box__edit {
+  font-size: 16px;
+  font-weight: 700;
+  color: #800000;
+  cursor: pointer;
+  margin-left: 16px; /* keep some gap from job-info */
+  align-self: align-center;
+}
+
+
+   /* -------------------------------
+      Boxes 8 - Simple CTA Boxes
+   --------------------------------*/
+
+   body.profile-dashboard .bento-box--availability-preferences {
+  height: 100%; /* ensure full cell height */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* header on top, content row at bottom */
+  padding: 12px 16px;
+}
+
+/* header row (availability-preferences) */
+body.profile-dashboard .bento-box--availability-preferences .bento-box__row--title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+body.profile-dashboard .bento-box--availability-preferences .bento-box__title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #3c0a0a;
+}
+
+   
+   body.profile-dashboard .bento-box--availability-preferences .bento-box__cta {
+     display: flex;
+     gap: 8px;
+     align-items: baseline;
+   }
+   
+   body.profile-dashboard .bento-box--availability-preferences .bento-box__cta-text {
+  font-size: 16px;
+  font-weight: bold;
+  color: #c40000;
+  cursor: pointer;
+}
+
+  body.profile-dashboard .bento-box--availability-preferences .bento-box__cta-small {
+  font-size: 13px;
+  font-weight: 400;
+  color: #A57668;
+  cursor: pointer;
+}
+
+/* ===============================
+   Bento Box Fix Overrides
+   =============================== */
+
+/* General cleanup for all bento boxes */
+body.profile-dashboard .bento-box {
+  justify-content: flex-start; /* pack at top */
+  align-items: flex-start;     /* prevent stretch */
+  height: auto;                /* let content dictate size */
+  min-height: 150px;           /* fallback minimum */
+}
+
+/* Remove rigid fixed heights */
+
+body.profile-dashboard .bento-box--split {
+  height: auto !important;
+  min-height: 150px;
+}
+
+/* Tighter spacing for rows and grids */
+body.profile-dashboard .bento-box__row,
+body.profile-dashboard .bento-box__grid {
+  gap: 6px;
+}
+
+/* Split box fix */
+body.profile-dashboard .bento-box--split {
+  align-items: stretch;
+}
+body.profile-dashboard .bento-box--split .bento-box__inner {
+  height: auto;
+}
+
