@@ -1316,3 +1316,202 @@ footer {
   gap: 1.5rem;
   align-items: center;
 }
+
+/* ===============================
+   Profile Dashboard - Bento Layout
+   =============================== */
+   body.profile-dashboard,
+   html {
+     height: 100%;
+     font-family: Arial, sans-serif;
+   }
+   
+   body.profile-dashboard .bento-wrapper {
+     width: 100%;
+     max-width: 1920px;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     padding: 20px;
+   }
+   
+   body.profile-dashboard .bento-container {
+     width: 90%;
+     max-width: 1185px;
+     display: grid;
+     grid-template-columns: repeat(2, 1fr);
+     grid-template-rows: repeat(4, 1fr);
+     gap: 20px;
+     background: #fff;
+     padding: 20px;
+     border-radius: 12px;
+     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+   }
+   
+   /* -------------------------------
+      Base Bento Box
+   --------------------------------*/
+   body.profile-dashboard .bento-box {
+    box-sizing: border-box;
+     background: #d9d9d9;
+     border-radius: 8px;
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: flex-start;
+     padding: 15px 20px;
+     gap: 8px;
+     font-size: 16px;
+   }
+   
+   /* Titles inside any box */
+   body.profile-dashboard .bento-box__title {
+     font-size: 20px;
+     font-weight: bold;
+   }
+   
+   /* Paragraph inside any box */
+   body.profile-dashboard .bento-box__paragraph {
+     font-size: 13px;
+     color: #555;
+     line-height: 1.4;
+   }
+   
+   /* -------------------------------
+      Box 1 - Profile
+   --------------------------------*/
+   body.profile-dashboard .bento-box--profile {
+     align-items: center;
+     justify-content: flex-end;
+     position: relative;
+   }
+   
+   body.profile-dashboard .bento-box__small-circle {
+     position: absolute;
+     top: 10px;
+     right: 10px;
+     width: 25px;
+     height: 25px;
+     background: #000;
+     border-radius: 50%;
+   }
+   
+   body.profile-dashboard .bento-box__profile-image {
+     width: 100px;
+     height: 100px;
+     background: #000;
+     border-radius: 50%;
+     align-self: flex-start;
+     margin-bottom: 20px;
+   }
+   
+   body.profile-dashboard .bento-box__completion-text {
+     text-align: center;
+     width: 100%;
+     font-size: 13px;
+     color: #555;
+   }
+   
+   /* -------------------------------
+      Box 3 - Action Box
+   --------------------------------*/
+   body.profile-dashboard .bento-box--action {
+     width: 100%;
+   }
+   
+   body.profile-dashboard .bento-box__row {
+     display: flex;
+     justify-content: space-between;
+     width: 100%;
+     align-items: center;
+   }
+   
+   body.profile-dashboard .bento-box__row--title .bento-box__edit,
+   body.profile-dashboard .bento-box__upload {
+     font-size: 14px;
+     color: #008cff;
+     cursor: pointer;
+   }
+   
+   body.profile-dashboard .bento-box__subtitle {
+     font-size: 14px;
+     color: #555;
+   }
+   
+   body.profile-dashboard .bento-box__row--cta {
+     display: flex;
+     justify-content: space-between;
+     width: 100%;
+     align-items: center;
+     gap: 8px;
+   }
+   
+   body.profile-dashboard .bento-box__cta-text {
+     font-size: 20px;
+     color: #008cff;
+   }
+   
+   body.profile-dashboard .bento-box__cta-small {
+     font-size: 13px;
+     color: #555;
+   }
+   
+
+/* Box 4 parent - split container */
+body.profile-dashboard .bento-box--split {
+  display: flex;            
+  flex-direction: row;      /* left & right side by side */
+  gap: 10px;                
+  height: 121px;            /* same height as other Bento boxes */
+  width: 100%;             
+  padding: 0;               /* remove extra padding to match other boxes */
+  box-sizing: border-box;   /* ensure height includes border/padding */
+}
+
+/* Box 4 inner boxes - fill parent height */
+body.profile-dashboard .bento-box--split .bento-box__inner {
+  box-sizing: border-box;
+  flex: 1;                 
+  height: 100%;            
+  display: flex;           
+  flex-direction: column;  
+  justify-content: center; 
+  align-items: flex-start; 
+  padding: 8px 20px;      /* same as other boxes */
+  background: #b0b0b0;
+  border-radius: 8px;      /* match other boxes */
+  gap: 6px;                
+}
+
+
+/* Title inside Box 4 inner boxes */
+body.profile-dashboard .bento-box--split .bento-box__inner .bento-box__title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* Paragraph inside Box 4 inner boxes */
+body.profile-dashboard .bento-box--split .bento-box__inner .bento-box__paragraph {
+  font-size: 13px;
+  color: #555555;
+  line-height: 1.4;
+}
+
+
+
+   
+   /* -------------------------------
+      Boxes 5–8 - Simple CTA Boxes
+   --------------------------------*/
+   body.profile-dashboard .bento-box--cta-box {
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     gap: 8px;
+   }
+   body.profile-dashboard .bento-box--cta-box .bento-box__cta {
+     display: flex;
+     gap: 8px;
+     align-items: baseline;
+   }
+   
