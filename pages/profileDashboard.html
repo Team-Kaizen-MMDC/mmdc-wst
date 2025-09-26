@@ -11,17 +11,36 @@
     <!-- Site Header -->
   <header class="site-header">
     <div class="container site-header__inner">
-      <a class="site-header__brand" href="../index.html">Japan SSW</a>
+      <a class="site-header__brand" href="index.html">Japan SSW</a>
       <nav class="site-header__nav" aria-label="Main navigation">
         <a class="site-header__nav-link" href="#jobs">Jobs</a>
         <a class="site-header__nav-link" href="#companies">Companies</a>
         <a class="site-header__nav-link" href="pages/agency.html">Agency</a>
         <a class="site-header__nav-link" href="pages/about.html">About</a>
       </nav>
+      
       <div class="site-header__actions">
-        <a class="site-header__signup muted" href="pages/createAccount.html">Signup</a>
-        <a class="btn btn-primary site-header__login-btn" href="pages/signin.html">Log in</a>
-      </div>
+                <div class="site-header__user-menu">
+                    <a id="user-menu-btn" class="btn btn-secondary site-header__user-menu-btn" href="#">Hi! Juan</a>
+                    
+                    <!-- User Menu Dropdown -->
+                    <div id="user-menu-dropdown" class="user-menu-dropdown">
+                      <h4 class="user-menu-dropdown__greeting">Welcome Back!</h4>
+                        <h3 class="user-menu-dropdown__userName">Juan Dela Cruz</h3>
+                        <a href="#" class="user-menu-dropdown__link">View Profile</a>
+                          <a href="#" class="user-menu-dropdown__link">Message</a>
+                            <!-- Divider -->
+                               <hr class="user-menu-dropdown__divider" />
+
+                            <a href="#" class="user-menu-dropdown__link">Language</a>
+                              <a href="#" class="user-menu-dropdown__link">Help</a>
+                        <a href="#" class="user-menu-dropdown__link">Settings</a>
+                        <button type="button" class="user-menu-dropdown__link">Sign out</button>
+                    </div>
+                </div>
+            </div>
+
+            <script src="../assets/js/main.js"></script>
     </div>
   </header>
 

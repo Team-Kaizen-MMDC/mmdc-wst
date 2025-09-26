@@ -258,6 +258,87 @@ button {
   }
 }
 
+/* User menu Dropdown */
+.site-header__user-menu {
+  position: relative;
+}
+
+.user-menu-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 250px;
+  background-color: white;
+  border: 1px solid #e2e8f0;
+  border-radius:  0.5rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+  z-index: 100;
+  display: none; /* use block for to show use none for Hidden by default */
+  padding: 1rem;
+}
+
+.user-menu-dropdown__greeting {
+  padding: 0px;
+  font-size:  0.875rem;
+  color: #290000;
+  font-weight:  600;
+  margin-bottom: 0.01rem;
+}
+
+.user-menu-dropdown__userName {
+  margin: 0px;
+  font-size: 1.125rem;
+  color: #290000;
+  font-weight: 700;
+  margin-bottom:  1rem;
+}
+
+/* Divider */
+user-menu-dropdown__divider {
+   display: block;        
+  width: 100%;         
+  border: none;       
+  border-top: 1px solid #e2e8f0;
+  margin: 0.5rem 0;
+}
+
+.user-menu-dropdown.is-active {
+  display: block;  /* Shown when the 'is-active' class is added */
+
+}
+
+.user-menu-dropdown a,
+.user-menu-dropdown button {
+  display: block;
+  width: 100%;
+  padding:  0.50rem 0;
+  text-align: left;
+  text-decoration: none;
+  color: #A79F9F;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.user-menu-dropdown a:hover,
+.user-menu-dropdown button:hover {
+  color: #EB0000;
+}
+
+/* New secondary button style for the user menu */
+.btn-secondary {
+background-color: #FCFCFC;
+color: #FCFCFC;
+border: 1px solid #fcebeb;
+}
+
+.btn-secondary:hover {
+color: #EB0000; /* A light red color for the hover effect */
+
+}
+
+
 /* Hero */
 .hero-centered {
   background: #fbf8f7;
