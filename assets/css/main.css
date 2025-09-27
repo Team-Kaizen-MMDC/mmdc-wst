@@ -1931,3 +1931,77 @@ body.profile-dashboard .bento-box--split .bento-box__inner {
   height: auto;
 }
 
+/* ===========================
+   Job Detail Page (HTML+CSS)
+   Author: MK
+   =========================== */
+.job-card-wrap {
+  background: #f5f5f5;
+  padding: 1.25rem 0 2.5rem;
+}
+
+.job-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: var(--box-shadow);
+  padding: 1.25rem 1.25rem 1.5rem;
+  position: relative;
+}
+@media (min-width: 900px) { .job-card { padding: 1.5rem 2rem 2rem; } }
+
+.job-card__head {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: .75rem; margin-bottom: .5rem;
+}
+.job-card__crumb {
+  display: inline-flex; align-items: center;
+  font-size: 12px; font-weight: 600; color: var(--dark-color);
+  background: #f7f7f7; border: 1px solid rgba(0,0,0,.06);
+  padding: .35rem .6rem; border-radius: 999px;
+}
+.job-card__cta-top { padding: .55rem 1rem; border-radius: 999px; }
+
+.job-card__title { margin: .25rem 0 .25rem; font-size: 1.6rem; line-height: 1.25; }
+@media (min-width: 900px) { .job-card__title { font-size: 2rem; } }
+
+.job-card__meta { margin: 0 0 1rem; }
+
+/* Grid for Conditions / Requirements */
+.job-spec {
+  display: grid; grid-template-columns: 1fr; gap: 1rem; margin-bottom: 1.25rem;
+}
+@media (min-width: 900px) {
+  .job-spec { grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+}
+.job-spec__col {
+  border: 1px solid rgba(0,0,0,.06);
+  border-radius: 10px; background: #fff; padding: .9rem 1rem;
+}
+.job-spec__title { font-size: 1rem; margin: 0 0 .5rem; }
+.job-spec__list { list-style: none; padding: 0; margin: 0; display: grid; gap: .5rem; }
+
+.job-pill {
+  border: 1px solid rgba(0,0,0,.08);
+  background: #fafafa;
+  border-radius: 10px;
+  padding: .6rem .75rem;
+  display: grid; gap: .15rem;
+  font-size: .95rem;
+}
+.job-pill--accent { background: rgba(235,0,0,.04); border-color: rgba(235,0,0,.15); }
+.job-pill__icon { font-size: 1rem; margin-right: .25rem; }
+.job-pill__note { display: block; color: rgba(0,0,0,.55); font-size: .8rem; margin-top: .1rem; }
+
+.job-body { display: grid; gap: 1.25rem; }
+.job-body h2 { font-size: 1.125rem; margin: .25rem 0 .5rem; }
+.job-link { color: var(--accent-color); text-decoration: underline; }
+
+/* Sticky bottom CTA (follows comp) */
+.job-sticky-cta {
+  position: sticky; bottom: 0; z-index: 30;
+  background: linear-gradient(to top, rgba(255,255,255,1), rgba(255,255,255,.92));
+  border-top: 1px solid rgba(0,0,0,.06);
+  padding: .6rem 0;
+}
+.job-sticky-cta__inner { display: flex; justify-content: center; }
+.job-sticky-cta__btn { padding: .7rem 1.25rem; border-radius: 999px; }
