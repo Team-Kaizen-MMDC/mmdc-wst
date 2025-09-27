@@ -1,222 +1,214 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Profile Dashboard</title>
-  <link rel="stylesheet" href="../assets/css/main.css" />
-</head>
-<body class="profile-dashboard">
-
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile Dashboard</title>
+    <link rel="stylesheet" href="../assets/css/main.css" />
+  </head>
+  <body class="profile-dashboard">
     <!-- Site Header -->
-  <header class="site-header">
-    <div class="container site-header__inner">
-      <a class="site-header__brand" href="../index.html">Japan SSW</a>
-      <nav class="site-header__nav" aria-label="Main navigation">
-        <a class="site-header__nav-link" href="#jobs">Jobs</a>
-        <a class="site-header__nav-link" href="#companies">Companies</a>
-        <a class="site-header__nav-link" href="pages/agency.html">Agency</a>
-        <a class="site-header__nav-link" href="pages/about.html">About</a>
-      </nav>
-      <div class="site-header__actions">
-        <a class="site-header__signup muted" href="pages/createAccount.html">Signup</a>
-        <a class="btn btn-primary site-header__login-btn" href="pages/signin.html">Log in</a>
+    <header class="site-header">
+      <div class="container site-header__inner">
+        <a class="site-header__brand" href="../index.html">Japan SSW</a>
+        <nav class="site-header__nav" aria-label="Main navigation">
+          <a class="site-header__nav-link" href="#jobs">Jobs</a>
+          <a class="site-header__nav-link" href="#companies">Companies</a>
+          <a class="site-header__nav-link" href="pages/agency.html">Agency</a>
+          <a class="site-header__nav-link" href="pages/about.html">About</a>
+        </nav>
       </div>
-    </div>
-  </header>
+    </header>
 
-  <main>
-  <div class="bento-wrapper">
-    <div class="bento-container">
+    <main>
+      <div class="bento-wrapper">
+        <div class="bento-container">
+          <!-- Box 1: Profile -->
+          <div class="bento-box bento-box--profile">
+            <div class="bento-box__small-circle"></div>
+            <div class="bento-box__profile-image"></div>
+            <div class="bento-box__completion-text">
+              Profile Completion 0% - Complete it to get more job matches
+            </div>
+          </div>
 
-      <!-- Box 1: Profile -->
-      <div class="bento-box bento-box--profile">
-        <div class="bento-box__small-circle"></div>
-        <div class="bento-box__profile-image"></div>
-        <div class="bento-box__completion-text">
-          Profile Completion 0% - 
-          Complete it to get more job matches
+          <!-- Box 2 -->
+          <div class="bento-box bento-box--text">
+            <div class="bento-box__title">PR Points!</div>
+            <div class="bento-box__paragraph">
+              Write your appeal to get notice by employer!
+            </div>
+          </div>
+
+          <!-- Box 3 -->
+          <div class="bento-box bento-box--action">
+            <!-- Header row -->
+            <div class="bento-box__row bento-box__row--title">
+              <div class="bento-box__name">Dela Cruz Juan</div>
+              <div class="bento-box__edit">edit</div>
+            </div>
+
+            <!-- Subtitle -->
+            <div class="bento-box__subtitle">Osaka Japan</div>
+
+            <!-- Divider -->
+            <hr class="bento-box__divider" />
+
+            <!-- Info Grid -->
+            <div class="bento-box__grid">
+              <div>Engineering Visa</div>
+              <div>valid until 2026/05</div>
+
+              <div>31 years old</div>
+              <div>Male</div>
+
+              <div>Nationality</div>
+              <div>Experience</div>
+
+              <div>Skill Certificate</div>
+              <div>Skills Certificate</div>
+            </div>
+
+            <!-- Bottom CTA -->
+            <div class="bento-box__resume">View Resume →</div>
+          </div>
+
+          <!-- Box 4: Split -->
+          <div class="bento-box bento-box--split">
+            <div class="bento-box__inner bento-box--text">
+              <div class="bento-box__title">Application Tracking</div>
+              <div class="bento-box__paragraph">Applied: 5</div>
+              <div class="bento-box__paragraph">Pending: 2</div>
+              <div class="bento-box__paragraph">Interview:1</div>
+              <div class="bento-box__paragraph">Rejected: 2</div>
+            </div>
+            <div class="bento-box__inner bento-box--text">
+              <div class="bento-box__title">Notifications</div>
+              <div class="bento-box__paragraph">
+                Interview Date: September 12, 2025 (10:00 am) XYZ Care Services
+                (OSAKA)
+              </div>
+              <div class="bento-box__paragraph">
+                Interview Date: September 19, 2025 (11:00 am) AB Day Care
+                (TOKYO)
+              </div>
+            </div>
+          </div>
+
+          <!-- Boxes 5 -->
+          <!-- Box 5: Experience  -->
+          <div class="bento-box bento-box--experience">
+            <!-- header: left title + right Add -->
+            <div class="bento-box__row bento-box__row--title">
+              <div class="bento-box__title">Experience</div>
+              <div class="bento-box__add">Add</div>
+            </div>
+
+            <!-- bottom content row: left = image + details, right = edit -->
+            <div class="bento-box__row bento-box__row--content">
+              <div class="bento-box__job-info">
+                <div class="bento-box__image"></div>
+
+                <div class="bento-box__job-details">
+                  <div class="bento-box__job-title">Graphic Designer</div>
+
+                  <!-- separate company and status -->
+                  <div class="bento-box__company-status">
+                    <span class="bento-box__company">Facebook</span>
+                    <span class="bento-box__status">Part-time</span>
+                  </div>
+
+                  <!-- separate start / end dates -->
+                  <div class="bento-box__date">
+                    <span class="bento-box__date-start">2023</span> -
+                    <span class="bento-box__date-end">2028</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bento-box__edit">edit</div>
+            </div>
+          </div>
+
+          <!-- Boxes 6 -->
+
+          <div class="bento-box bento-box--skills">
+            <!-- header: left title + right Add -->
+            <div class="bento-box__row bento-box__row--title">
+              <div class="bento-box__title">Skills</div>
+              <div class="bento-box__add">Add</div>
+            </div>
+
+            <!-- bottom content row: left = image + details, right = edit -->
+            <div class="bento-box__row bento-box__row--content">
+              <div class="bento-box__skill-info">
+                <div class="bento-box__image" aria-hidden="true"></div>
+
+                <div class="bento-box__skills-details">
+                  <div class="bento-box__skill-title">Web Design</div>
+                </div>
+
+                <div class="bento-box__edit">edit</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Boxes 7 -->
+          <div class="bento-box bento-box--education">
+            <!-- header: left title + right Add -->
+            <div class="bento-box__row bento-box__row--title">
+              <div class="bento-box__title">Education</div>
+              <div class="bento-box__add">Add</div>
+            </div>
+
+            <!-- bottom content row: left = image + details, right = edit -->
+            <div class="bento-box__row bento-box__row--content">
+              <div class="bento-box__education-info">
+                <div class="bento-box__image" aria-hidden="true"></div>
+
+                <div class="bento-box__education-details">
+                  <div class="bento-box__education-title">
+                    Mapua Malayan Digital College
+                  </div>
+
+                  <!-- separate course and major -->
+                  <div class="bento-box__course-major">
+                    <span class="bento-box__course"
+                      >Bachelor of Science IT</span
+                    >
+                    <span class="bento-box__major">Software Development</span>
+                  </div>
+
+                  <!-- separate start / end dates -->
+                  <div class="bento-box__date">
+                    <span class="bento-box__date-start">2023</span> -
+                    <span class="bento-box__date-end">2028</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bento-box__edit">edit</div>
+            </div>
+          </div>
+
+          <!-- Boxes 8-->
+
+          <div class="bento-box bento-box--availability-preferences">
+            <!-- header: left title  -->
+            <div class="bento-box__row bento-box__row--title">
+              <div class="bento-box__title">Availability / Preferences</div>
+            </div>
+
+            <!-- bottom content row: left = image + details, right = edit -->
+            <div class="bento-box__cta">
+              <span class="bento-box__cta-text">[Add Preferences]</span>
+              <span class="bento-box__cta-small"
+                >(add Preferences to get more job matches)</span
+              >
+            </div>
+          </div>
         </div>
       </div>
-
-      <!-- Box 2 -->
-      <div class="bento-box bento-box--text">
-        <div class="bento-box__title">PR Points!</div>
-        <div class="bento-box__paragraph">
-          Write your appeal to get notice by employer!
-        </div>
-      </div>
-
-      <!-- Box 3 -->
- <div class="bento-box bento-box--action">
-  <!-- Header row -->
-  <div class="bento-box__row bento-box__row--title">
-    <div class="bento-box__name">Dela Cruz Juan</div>
-    <div class="bento-box__edit">edit</div>
-  </div>
-
-  <!-- Subtitle -->
-  <div class="bento-box__subtitle">Osaka Japan</div>
-
-  <!-- Divider -->
-  <hr class="bento-box__divider" />
-
-  <!-- Info Grid -->
-  <div class="bento-box__grid">
-    <div>Engineering Visa</div>
-    <div>valid until 2026/05</div>
-
-    <div>31 years old</div>
-    <div>Male</div>
-
-    <div>Nationality</div>
-    <div>Experience</div>
-
-    <div>Skill Certificate</div>
-    <div>Skills Certificate</div>
-  </div>
-
-
-  
-  <!-- Bottom CTA -->
-  <div class="bento-box__resume">View Resume →</div>
-</div>
-
-
-      <!-- Box 4: Split -->
-      <div class="bento-box bento-box--split">
-        <div class="bento-box__inner bento-box--text">
-          <div class="bento-box__title">Application Tracking</div>
-          <div class="bento-box__paragraph">Applied: 5</div>
-            <div class="bento-box__paragraph">Pending: 2</div>
-            <div class="bento-box__paragraph">Interview:1</div>
-            <div class="bento-box__paragraph">Rejected: 2</div>
-        </div>
-        <div class="bento-box__inner bento-box--text">
-          <div class="bento-box__title">Notifications</div>
-          <div class="bento-box__paragraph">Interview Date: September 12,
-             2025 (10:00 am) XYZ Care Services (OSAKA)</div>
-          <div class="bento-box__paragraph">Interview Date:  September 19, 
-            2025 (11:00 am) AB Day Care (TOKYO)</div>
-        </div>
-      </div>
-
-     <!-- Boxes 5 -->
-<!-- Box 5: Experience  -->
-<div class="bento-box bento-box--experience">
-  <!-- header: left title + right Add -->
-  <div class="bento-box__row bento-box__row--title">
-    <div class="bento-box__title">Experience</div>
-    <div class="bento-box__add">Add</div>
-  </div>
-
-  <!-- bottom content row: left = image + details, right = edit -->
-  <div class="bento-box__row bento-box__row--content">
-    <div class="bento-box__job-info">
-      <div class="bento-box__image"></div>
-
-      <div class="bento-box__job-details">
-        <div class="bento-box__job-title">Graphic Designer</div>
-
-        <!-- separate company and status -->
-        <div class="bento-box__company-status">
-          <span class="bento-box__company">Facebook</span>
-          <span class="bento-box__status">Part-time</span>
-        </div>
-
-        <!-- separate start / end dates -->
-        <div class="bento-box__date">
-          <span class="bento-box__date-start">2023</span> -
-          <span class="bento-box__date-end">2028</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="bento-box__edit">edit</div>
-  </div>
-</div>
-
-    
-
-     <!-- Boxes 6 -->
-
-<div class="bento-box bento-box--skills">
-  <!-- header: left title + right Add -->
-  <div class="bento-box__row bento-box__row--title">
-    <div class="bento-box__title">Skills</div>
-    <div class="bento-box__add">Add</div>
-  </div>
-
-  <!-- bottom content row: left = image + details, right = edit -->
-  <div class="bento-box__row bento-box__row--content">
-    <div class="bento-box__skill-info">
-      <div class="bento-box__image" aria-hidden="true"></div>
-
-      <div class="bento-box__skills-details">
-        <div class="bento-box__skill-title">Web Design</div>
-        </div>
-
-    <div class="bento-box__edit">edit</div>
-</div>
-    </div>
-  </div>
-
-
-     <!-- Boxes 7 -->
-     <div class="bento-box bento-box--education">
-  <!-- header: left title + right Add -->
-  <div class="bento-box__row bento-box__row--title">
-    <div class="bento-box__title">Education</div>
-    <div class="bento-box__add">Add</div>
-  </div>
-
-  <!-- bottom content row: left = image + details, right = edit -->
-  <div class="bento-box__row bento-box__row--content">
-    <div class="bento-box__education-info">
-      <div class="bento-box__image" aria-hidden="true"></div>
-
-      <div class="bento-box__education-details">
-        <div class="bento-box__education-title">Mapua Malayan Digital College</div>
-
-        <!-- separate course and major -->
-        <div class="bento-box__course-major">
-          <span class="bento-box__course">Bachelor of Science IT</span>
-          <span class="bento-box__major">Software Development</span>
-        </div>
-
-        <!-- separate start / end dates -->
-        <div class="bento-box__date">
-          <span class="bento-box__date-start">2023</span> -
-          <span class="bento-box__date-end">2028</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="bento-box__edit">edit</div>
-  </div>
-</div>
-
-  <!-- Boxes 8-->
-
-    <div class="bento-box bento-box--availability-preferences">
-  <!-- header: left title  -->
-  <div class="bento-box__row bento-box__row--title">
-    <div class="bento-box__title">Availability / Preferences</div>
-  </div>
-
-  <!-- bottom content row: left = image + details, right = edit -->
-        <div class="bento-box__cta">
-          <span class="bento-box__cta-text">[Add Preferences]</span>
-          <span class="bento-box__cta-small">(add Preferences to get more job matches)</span>
-        </div>
-      </div>
-  </div>
-
-      
-
-
- </div>
-
- </main>
-</body>
+    </main>
+  </body>
 </html>
