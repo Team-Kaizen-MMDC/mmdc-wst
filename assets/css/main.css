@@ -915,11 +915,11 @@ p {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    rgba(255, 255, 255, 0.6),
-    rgba(255, 255, 255, 0.6)
-  );
+  /* Darken the image to improve text contrast and add a subtle blur */
+  background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.35));
   pointer-events: none;
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
 }
 
 @media (min-width: 600px) {
@@ -967,6 +967,42 @@ p {
 .hero-content {
   position: relative;
   z-index: 1;
+}
+
+/* Improve text readability on hero images */
+.hero-content {
+  color: #fff; /* default hero copy to white for contrast */
+}
+
+.hero-title,
+.hero-centered .hero-title {
+  color: #fff;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.55);
+}
+
+.hero-content .muted {
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+}
+
+/* Responsive typographic scaling for the hero title and subtitle */
+.hero-title {
+  /* small: 1.5rem, preferred: 3rem, max: 4rem */
+  font-size: clamp(1.5rem, 2.5vw + 1.5rem, 4rem);
+  line-height: 1.05;
+  letter-spacing: 0.2px;
+}
+
+.hero-content .muted {
+  /* subtitle: small comfortable size that scales */
+  font-size: clamp(0.95rem, 1.2vw + 0.8rem, 1.25rem);
+  line-height: 1.45;
+}
+
+@media (min-width: 1400px) {
+  .hero-title {
+    font-size: 4.5rem; /* give extra scale on very large screens */
+  }
 }
 
 /* Small image helper for thumbnails (increased to 80px) */
@@ -1320,129 +1356,124 @@ footer {
 /* ===============================
    Profile Dashboard - Bento Layout
    =============================== */
-  
-   /* ensure padding included in height calculations */
+
+/* ensure padding included in height calculations */
 body.profile-dashboard,
 body.profile-dashboard * {
   box-sizing: border-box;
 }
-   
-   body.profile-dashboard .bento-wrapper {
-     width: 100%;
-     max-width: 1920px;
-     display: flex;
-     align-items: center;
-     justify-content: center;
-     padding: 20px;
-   }
-   
-   body.profile-dashboard .bento-container {
-     width: 90%;
-     max-width: 1185px;
-     display: grid;
-     grid-template-columns: repeat(2, 1fr);
-     gap: 20px;
-     align-items: stretch;
-     background: #FAF8F8;
-     padding: 20px;
-     border-radius: 12px;
-     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-     
-   }
-   
-   /* -------------------------------
+
+body.profile-dashboard .bento-wrapper {
+  width: 100%;
+  max-width: 1920px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+body.profile-dashboard .bento-container {
+  width: 90%;
+  max-width: 1185px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  align-items: stretch;
+  background: #faf8f8;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* -------------------------------
       Base Bento Box
    --------------------------------*/
-   body.profile-dashboard .bento-box {
-    box-sizing: border-box;
-     background: #ffffff;
-     border-radius: 8px;
-     display: flex;
-     flex-direction: column;
-     justify-content: flex-start;
-     align-items: stretch;
-     padding: 12px 16px;
-     gap: 8px;
-     font-size: 16px;
-     
-   }
-   
-   /* Titles inside any box */
-   body.profile-dashboard .bento-box__title {
-     font-size: 20px;
-     font-weight: bold;
-   }
-   
-   /* Paragraph inside any box */
-   body.profile-dashboard .bento-box__paragraph {
-     font-size: 13px;
-     color: #555;
-     line-height: 1.4;
-   }
-   
-   /* -------------------------------
+body.profile-dashboard .bento-box {
+  box-sizing: border-box;
+  background: #ffffff;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  padding: 12px 16px;
+  gap: 8px;
+  font-size: 16px;
+}
+
+/* Titles inside any box */
+body.profile-dashboard .bento-box__title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* Paragraph inside any box */
+body.profile-dashboard .bento-box__paragraph {
+  font-size: 13px;
+  color: #555;
+  line-height: 1.4;
+}
+
+/* -------------------------------
       Box 1 - Profile
    --------------------------------*/
-   body.profile-dashboard .bento-box--profile {
-     align-items: center;
-     justify-content: flex-start;
-     position: relative;
-       gap: 10px;                
-  height: 200px;            
-  width: 100%;             
-  padding: 0;               
+body.profile-dashboard .bento-box--profile {
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+  gap: 10px;
+  height: 200px;
+  width: 100%;
+  padding: 0;
   box-sizing: border-box;
-   }
-   
-   body.profile-dashboard .bento-box__small-circle {
-     position: absolute;
-     top: 10px;
-     right: 10px;
-     width: 25px;
-     height: 25px;
-     background: #000;
-     border-radius: 50%;
-   }
-   
-   body.profile-dashboard .bento-box__profile-image {
-    padding-left: 24px;
-      width: 100px;
-     height: 100px;
-     background: #000;
-     border-radius: 50%;
-     align-self: stretch;
-     margin-bottom: 50px;
-     top: 70px;
-     left: 10px;
-      position: absolute;
-   }
-   
-   body.profile-dashboard .bento-box__completion-text {
-     position: absolute;
-  bottom: 10px;      /* distance from the bottom */
-  left: 0;           /* align with left edge */
-  right: 0;          /* align with right edge */
+}
+
+body.profile-dashboard .bento-box__small-circle {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 25px;
+  height: 25px;
+  background: #000;
+  border-radius: 50%;
+}
+
+body.profile-dashboard .bento-box__profile-image {
+  padding-left: 24px;
+  width: 100px;
+  height: 100px;
+  background: #000;
+  border-radius: 50%;
+  align-self: stretch;
+  margin-bottom: 50px;
+  top: 70px;
+  left: 10px;
+  position: absolute;
+}
+
+body.profile-dashboard .bento-box__completion-text {
+  position: absolute;
+  bottom: 10px; /* distance from the bottom */
+  left: 0; /* align with left edge */
+  right: 0; /* align with right edge */
   text-align: right; /* or right if you prefer */
   font-size: 13px;
   color: #555;
   padding-right: 15px;
-    
-   }
-   
+}
 
-   /* -------------------------------
+/* -------------------------------
       Box 2 - PR 
    --------------------------------*/
 body.profile-dashboard .bento-box--pr {
- align-items: center;
-     justify-content: flex-end;
-     position: relative;
-       gap: 10px;                
-  height: 444px;            
-  width: 100%;             
-  padding: 0;               
-  box-sizing: border-box;         
-
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+  gap: 10px;
+  height: 444px;
+  width: 100%;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 /* header row (PR points) */
@@ -1461,13 +1492,13 @@ body.profile-dashboard .bento-box--pr .bento-box__title {
 body.profile-dashboard .bento-box--pr .bento-box__title {
   font-size: 13px;
   font-weight: bold;
-  color: #D1C9C9;
+  color: #d1c9c9;
 }
 
-   /* -------------------------------
+/* -------------------------------
       Box 3 - Action Box Profile info
    --------------------------------*/
-  body.profile-dashboard .bento-box--action {
+body.profile-dashboard .bento-box--action {
   width: 100%;
   padding: 15px 20px;
   display: flex;
@@ -1502,10 +1533,10 @@ body.profile-dashboard .bento-box__subtitle {
 
 /* Divider */
 body.profile-dashboard .bento-box__divider {
-   display: block;         /* force hr to show */
-  width: 100%;            /* span full width */
-  border: none;           /* reset any defaults */
-  border-top: 2px solid #A79F9F !important; /* force override */
+  display: block; /* force hr to show */
+  width: 100%; /* span full width */
+  border: none; /* reset any defaults */
+  border-top: 2px solid #a79f9f !important; /* force override */
   margin: 8px 0;
 }
 
@@ -1527,36 +1558,33 @@ body.profile-dashboard .bento-box__resume {
   font-size: 14px;
   color: #666;
   cursor: pointer;
-  
 }
-   
 
 /* Box 4 parent - split container */
 body.profile-dashboard .bento-box--split {
-  display: flex;            
-  flex-direction: row;      /* left & right side by side */
-  gap: 10px;                
-  height: 255px;            /* same height as other Bento boxes */
-  width: 100%;             
-  padding: 0;               /* remove extra padding to match other boxes */
-  box-sizing: border-box;   /* ensure height includes border/padding */
-  background: #FAF8F8;
+  display: flex;
+  flex-direction: row; /* left & right side by side */
+  gap: 10px;
+  height: 255px; /* same height as other Bento boxes */
+  width: 100%;
+  padding: 0; /* remove extra padding to match other boxes */
+  box-sizing: border-box; /* ensure height includes border/padding */
+  background: #faf8f8;
 }
 
 /* Box 4 inner boxes - fill parent height */
 body.profile-dashboard .bento-box--split .bento-box__inner {
   box-sizing: border-box;
-  flex: 1;                 
-  height: 100%;            
-  display: flex;           
-  flex-direction: column;  
-  
-  padding: 8px 20px;      /* same as other boxes */
-  background: #ffffff;
-  border-radius: 8px;      /* match other boxes */
-  gap: 6px;                
-}
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 
+  padding: 8px 20px; /* same as other boxes */
+  background: #ffffff;
+  border-radius: 8px; /* match other boxes */
+  gap: 6px;
+}
 
 /* Title inside Box 4 inner boxes */
 body.profile-dashboard .bento-box--split .bento-box__inner .bento-box__title {
@@ -1565,18 +1593,17 @@ body.profile-dashboard .bento-box--split .bento-box__inner .bento-box__title {
 }
 
 /* Paragraph inside Box 4 inner boxes */
-body.profile-dashboard .bento-box--split .bento-box__inner .bento-box__paragraph {
+body.profile-dashboard
+  .bento-box--split
+  .bento-box__inner
+  .bento-box__paragraph {
   font-size: 13px;
   color: #555555;
   line-height: 1.4;
-  flex-direction: column;  
+  flex-direction: column;
   padding-left: 10px;
   padding-top: 10px;
-  
 }
-
-
-
 
 /* Box 5 - Experience */
 body.profile-dashboard .bento-box--experience {
@@ -1609,13 +1636,10 @@ body.profile-dashboard .bento-box--experience .bento-box__add {
 
 /* bottom content row */
 body.profile-dashboard .bento-box--experience .bento-box__row--content {
- 
   display: flex;
   justify-content: space-between; /* left = job info, right = edit */
-  align-items: center;          /* align items at the bottom */
+  align-items: center; /* align items at the bottom */
   width: 100%;
-
-  
 }
 
 /* left side: image + details */
@@ -1672,7 +1696,6 @@ body.profile-dashboard .bento-box--experience .bento-box__edit {
   cursor: pointer;
   margin-left: 16px; /* keep some gap from job-info */
   align-self: align-center;
- 
 }
 
 /* Box 6 - Skills */
@@ -1707,9 +1730,9 @@ body.profile-dashboard .bento-box--skills .bento-box__add {
 
 /* bottom content row */
 body.profile-dashboard .bento-box--skills .bento-box__row--content {
-    display: flex;
+  display: flex;
   justify-content: space-between; /* left = job info, right = edit */
-  align-items: center;          /* align items at the bottom */
+  align-items: center; /* align items at the bottom */
   width: 100%;
 }
 
@@ -1744,19 +1767,15 @@ body.profile-dashboard .bento-box__skill-title {
   color: #3c0a0a;
 }
 
-
 /* edit CTA on the right */
 body.profile-dashboard .bento-box--skills .bento-box__edit {
- font-size: 16px;
+  font-size: 16px;
   font-weight: 700;
   color: #800000;
   cursor: pointer;
   margin-left: 16px; /* keep some gap from job-info */
   align-self: align-center;
-
-  
 }
-
 
 /* Box 7 - Education */
 body.profile-dashboard .bento-box--education {
@@ -1789,9 +1808,9 @@ body.profile-dashboard .bento-box--education .bento-box__add {
 
 /* bottom content row */
 body.profile-dashboard .bento-box--education .bento-box__row--content {
- display: flex;
+  display: flex;
   justify-content: space-between; /* left = job info, right = edit */
-  align-items: center;          /* align items at the bottom */
+  align-items: center; /* align items at the bottom */
   width: 100%;
 }
 
@@ -1851,12 +1870,11 @@ body.profile-dashboard .bento-box--education .bento-box__edit {
   align-self: align-center;
 }
 
-
-   /* -------------------------------
+/* -------------------------------
       Boxes 8 - Simple CTA Boxes
    --------------------------------*/
 
-   body.profile-dashboard .bento-box--availability-preferences {
+body.profile-dashboard .bento-box--availability-preferences {
   height: 100%; /* ensure full cell height */
   display: flex;
   flex-direction: column;
@@ -1865,7 +1883,9 @@ body.profile-dashboard .bento-box--education .bento-box__edit {
 }
 
 /* header row (availability-preferences) */
-body.profile-dashboard .bento-box--availability-preferences .bento-box__row--title {
+body.profile-dashboard
+  .bento-box--availability-preferences
+  .bento-box__row--title {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1877,24 +1897,27 @@ body.profile-dashboard .bento-box--availability-preferences .bento-box__title {
   color: #3c0a0a;
 }
 
-   
-   body.profile-dashboard .bento-box--availability-preferences .bento-box__cta {
-     display: flex;
-     gap: 8px;
-     align-items: baseline;
-   }
-   
-   body.profile-dashboard .bento-box--availability-preferences .bento-box__cta-text {
+body.profile-dashboard .bento-box--availability-preferences .bento-box__cta {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+}
+
+body.profile-dashboard
+  .bento-box--availability-preferences
+  .bento-box__cta-text {
   font-size: 16px;
   font-weight: bold;
   color: #c40000;
   cursor: pointer;
 }
 
-  body.profile-dashboard .bento-box--availability-preferences .bento-box__cta-small {
+body.profile-dashboard
+  .bento-box--availability-preferences
+  .bento-box__cta-small {
   font-size: 13px;
   font-weight: 400;
-  color: #A57668;
+  color: #a57668;
   cursor: pointer;
 }
 
@@ -1905,9 +1928,9 @@ body.profile-dashboard .bento-box--availability-preferences .bento-box__title {
 /* General cleanup for all bento boxes */
 body.profile-dashboard .bento-box {
   justify-content: flex-start; /* pack at top */
-  align-items: flex-start;     /* prevent stretch */
-  height: auto;                /* let content dictate size */
-  min-height: 150px;           /* fallback minimum */
+  align-items: flex-start; /* prevent stretch */
+  height: auto; /* let content dictate size */
+  min-height: 150px; /* fallback minimum */
 }
 
 /* Remove rigid fixed heights */
@@ -1930,4 +1953,3 @@ body.profile-dashboard .bento-box--split {
 body.profile-dashboard .bento-box--split .bento-box__inner {
   height: auto;
 }
-
