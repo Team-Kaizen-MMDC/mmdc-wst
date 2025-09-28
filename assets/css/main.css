@@ -1326,6 +1326,145 @@ footer {
   align-items: center;
 }
 
+/* ------------------------------------------------------------------
+   Legal page alignment
+   ------------------------------------------------------------------
+   Terms and Privacy pages use `.feature-card.feature-wide` for their
+   content. The base `.feature-card` defaults to `text-align: center` to
+   support small UI cards; that centering is undesirable for long legal
+   text. Scope a conservative left-alignment to headings, paragraphs and
+   lists inside `.feature-card.feature-wide` to improve readability.
+*/
+.feature-card.feature-wide,
+.feature-card.feature-wide h1,
+.feature-card.feature-wide h2,
+.feature-card.feature-wide h3,
+.feature-card.feature-wide p,
+.feature-card.feature-wide ul,
+.feature-card.feature-wide ol,
+.feature-card.feature-wide li,
+.feature-card.feature-wide .muted {
+  text-align: left;
+}
+
+/* Render legal pages as readable single-column content
+   - `.feature-card.feature-wide` is used for Terms/Privacy. The card
+     previously used flex layout which caused the long paragraphs to
+     be squeezed into multiple narrow columns. Force a normal block
+     flow for this specific card so text stacks naturally.
+*/
+.feature-card.feature-wide {
+  display: block; /* stop using flex for long-form content */
+  max-width: 820px; /* comfortable readable measure */
+  margin-left: auto;
+  margin-right: auto;
+  padding: 2rem; /* give legal text breathing room */
+}
+.feature-card.feature-wide > * {
+  /* ensure inner elements don't try to align as flex children */
+  display: block;
+  width: auto;
+}
+
+/* Privacy link micro-interactions (scoped) */
+a[href="/pages/privacy.html"] {
+  color: var(--dark-color);
+  text-decoration: none;
+  transition: color 180ms ease, text-decoration-color 180ms ease;
+  border-bottom: 1px solid transparent;
+}
+
+a[href="/pages/privacy.html"]:hover,
+a[href="/pages/privacy.html"]:focus {
+  color: var(--primary-color);
+  text-decoration: underline;
+  border-bottom-color: rgba(0, 0, 0, 0.06);
+}
+
+a[href="/pages/privacy.html"]:focus {
+  outline: 3px solid rgba(235, 0, 0, 0.12);
+  outline-offset: 2px;
+}
+
+/* Footer link hover/focus effects (global for all .site-footer a) */
+.site-footer a {
+  color: var(--footer-link-color, #fff);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 180ms ease, text-decoration-color 180ms ease,
+    border-bottom-color 180ms ease;
+}
+.site-footer a:hover,
+.site-footer a:focus {
+  color: var(--primary-color);
+  text-decoration: underline;
+  border-bottom-color: rgba(235, 0, 0, 0.18);
+}
+.site-footer a:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* ===================================================================
+   Job list styles (homepage) - small, self-contained rules
+   - Purpose: align job details and actions, provide responsive spacing
+   - Keep these near other homepage component rules for discoverability
+   =================================================================== */
+.job-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.job-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.job-details {
+  flex: 1 1 auto;
+  min-width: 0; /* allow truncation if needed */
+}
+
+.job-actions {
+  flex: 0 0 auto;
+  margin-left: 1rem;
+}
+
+.job-panel__title,
+.job-panel__meta {
+  text-align: left;
+}
+
+/* Ensure job-panel card (which reuses .feature-card) does not center its content
+   Job details should always be left-aligned for readability */
+.job-panel .job-details,
+.job-panel .muted {
+  text-align: left;
+}
+
+/* Small screens: stack action under details for narrow viewports */
+@media (max-width: 560px) {
+  .job-item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .job-actions {
+    margin-left: 0;
+    margin-top: 0.75rem;
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
 .feature-two-col {
   max-width: 900px;
   display: grid;
