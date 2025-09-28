@@ -1386,6 +1386,25 @@ a[href="/pages/privacy.html"]:focus {
   outline-offset: 2px;
 }
 
+/* Footer link hover/focus effects (global for all .site-footer a) */
+.site-footer a {
+  color: var(--footer-link-color, #fff);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 180ms ease, text-decoration-color 180ms ease,
+    border-bottom-color 180ms ease;
+}
+.site-footer a:hover,
+.site-footer a:focus {
+  color: var(--primary-color);
+  text-decoration: underline;
+  border-bottom-color: rgba(235, 0, 0, 0.18);
+}
+.site-footer a:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
 /* ===================================================================
    Job list styles (homepage) - small, self-contained rules
    - Purpose: align job details and actions, provide responsive spacing
