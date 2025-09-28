@@ -15,9 +15,14 @@
         <main>
 
         <div class="flex w-full max-w-6xl h-[80vh] bg-white rounded-xl shadow-lg overflow-hidden mx-auto my-12">
-        <!-- Left Panel - JapanSSW -->
-        <div class="hidden md:flex flex-col w-1/2 p-8 bg-gray-100 border-r border-gray-200">
-            <h1 class="text-3xl font-Inter text-red-600">Japan<b>SSW</b></h1>
+        <!-- Left Panel - JapanSSW (image for desktop) -->
+        <div class="hidden md:flex relative items-center justify-center w-1/2 p-0 bg-gray-100 border-r border-gray-200">
+            <!-- JapanSSW title kept visible above the image -->
+            <h1 class="absolute top-8 left-8 z-20 text-2xl md:text-3xl lg:text-4xl font-Inter text-red-600 drop-shadow-md bg-white bg-opacity-75 px-3 py-1 rounded-md">Japan<b>SSW</b></h1>
+            <picture class="w-full h-full">
+                <source type="image/webp" srcset="../assets/images/aiImages/Applying1-640.webp 640w, ../assets/images/aiImages/Applying1-320.webp 320w">
+                <img src="../assets/images/aiImages/Applying1.jpg" alt="Applicant filling form" class="object-cover w-full h-full" loading="lazy" />
+            </picture>
         </div>
 
         <!-- Right Panel - Create an account Form -->
