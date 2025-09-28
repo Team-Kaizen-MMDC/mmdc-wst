@@ -125,6 +125,10 @@ dist
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
 
+# Cursor IDE files
+.cursor/
+.cursorignore
+
 # yarn v3
 .pnp.*
 .yarn/*
