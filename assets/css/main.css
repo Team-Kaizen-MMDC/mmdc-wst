@@ -1651,14 +1651,14 @@ body.profile-dashboard .bento-box__paragraph {
       Box 1 - Profile
    --------------------------------*/
 body.profile-dashboard .bento-box--profile {
-  align-items: center;
+  align-items: flex-start;
   justify-content: flex-start;
   position: relative;
   gap: 10px;
-  height: 200px;
   width: 100%;
-  padding: 0;
+  padding: 16px 16px 48px 140px; /* reserve space on the left for the avatar */
   box-sizing: border-box;
+  min-height: 120px; /* let content determine height, but keep a comfortable minimum */
 }
 
 body.profile-dashboard .bento-box__small-circle {
@@ -1672,27 +1672,50 @@ body.profile-dashboard .bento-box__small-circle {
 }
 
 body.profile-dashboard .bento-box__profile-image {
-  padding-left: 24px;
-  width: 100px;
-  height: 100px;
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  width: 96px;
+  height: 96px;
   background: #000;
   border-radius: 50%;
-  align-self: stretch;
-  margin-bottom: 50px;
-  top: 70px;
-  left: 10px;
-  position: absolute;
+  object-fit: cover;
+  margin: 0;
 }
 
 body.profile-dashboard .bento-box__completion-text {
   position: absolute;
-  bottom: 10px; /* distance from the bottom */
-  left: 0; /* align with left edge */
-  right: 0; /* align with right edge */
-  text-align: right; /* or right if you prefer */
+  bottom: 16px; /* distance from the bottom */
+  right: 16px; /* keep away from the right edge */
+  left: 140px; /* ensure it doesn't overlap the avatar area */
+  text-align: right;
   font-size: 13px;
   color: #555;
-  padding-right: 15px;
+  padding-right: 0;
+}
+
+/* Mobile: make the avatar part of the normal flow to avoid overlap */
+@media (max-width: 900px) {
+  body.profile-dashboard .bento-box--profile {
+    padding: 12px; /* no left inset on mobile */
+    min-height: 140px;
+  }
+
+  body.profile-dashboard .bento-box__profile-image {
+    position: static;
+    width: 80px;
+    height: 80px;
+    margin: 0 12px 8px 0;
+    float: left;
+  }
+
+  body.profile-dashboard .bento-box__completion-text {
+    position: static;
+    text-align: right;
+    margin-top: 8px;
+    left: auto;
+    right: 12px;
+  }
 }
 
 /* -------------------------------
@@ -1803,6 +1826,83 @@ body.profile-dashboard .bento-box--split {
   padding: 0; /* remove extra padding to match other boxes */
   box-sizing: border-box; /* ensure height includes border/padding */
   background: #faf8f8;
+}
+
+/* ------------------------------------------------------------------
+   Responsive rules for Profile Dashboard (mobile-first adjustments)
+   - Collapse the two-column grid to one column on smaller viewports
+   - Stack split boxes and allow flexible heights
+   - Tweak paddings and font sizes for readability
+   ------------------------------------------------------------------ */
+@media (max-width: 900px) {
+  body.profile-dashboard .bento-wrapper {
+    padding: 12px;
+  }
+
+  body.profile-dashboard .bento-container {
+    grid-template-columns: 1fr; /* single column stack */
+    width: 100%;
+    padding: 12px;
+    gap: 12px;
+  }
+
+  /* Make boxes flow naturally with auto heights */
+  body.profile-dashboard .bento-box {
+    padding: 12px;
+    min-height: auto;
+  }
+
+  /* Reduce profile box height for mobile */
+  body.profile-dashboard .bento-box--profile {
+    height: 140px;
+  }
+
+  /* Stack left/right halves in split boxes */
+  body.profile-dashboard .bento-box--split {
+    flex-direction: column;
+    height: auto;
+  }
+
+  body.profile-dashboard .bento-box--split .bento-box__inner {
+    padding: 10px 12px;
+    height: auto;
+  }
+
+  /* Make action box and other dense boxes use auto height */
+  body.profile-dashboard .bento-box--action,
+  body.profile-dashboard .bento-box--experience,
+  body.profile-dashboard .bento-box--skills,
+  body.profile-dashboard .bento-box--education {
+    height: auto;
+  }
+
+  /* Slightly smaller title text on small screens */
+  body.profile-dashboard .bento-box__title {
+    font-size: 18px;
+  }
+
+  /* Ensure tooltip fits on mobile by constraining width */
+  body.profile-dashboard .tooltip-bubble {
+    min-width: 160px;
+    max-width: calc(100% - 32px);
+    left: 50%;
+    transform: translate(-50%, 8px);
+  }
+}
+
+@media (max-width: 480px) {
+  body.profile-dashboard .bento-container {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  body.profile-dashboard .bento-box__title {
+    font-size: 16px;
+  }
+
+  body.profile-dashboard .bento-box__paragraph {
+    font-size: 13px;
+  }
 }
 
 /* Box 4 inner boxes - fill parent height */
