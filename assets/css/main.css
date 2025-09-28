@@ -713,6 +713,65 @@ button {
   gap: 0.5rem;
 }
 
+/* Improve CTA readability and control sizing */
+.site-footer__cta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.site-footer__cta h3 {
+  font-size: 1.5rem; /* larger, clearer heading */
+  line-height: 1.1;
+  margin: 0 0 0.25rem 0;
+  color: #fff;
+}
+
+.site-footer__cta .muted {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.98rem;
+  max-width: 42ch; /* keep lines readable */
+}
+
+/* Input + button layout in the CTA */
+.site-footer__cta-controls {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.site-footer__cta-controls input[type="text"],
+.site-footer__cta-controls input[type="email"] {
+  padding: 0.6rem 0.9rem;
+  border-radius: 6px;
+  border: none;
+  min-width: 180px;
+  flex: 1 1 auto;
+  background: #fff;
+  color: var(--dark-color, #111);
+}
+
+.site-footer__cta-controls .btn {
+  padding: 0.55rem 1rem;
+  border-radius: 8px;
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+  font-weight: 600;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
+}
+
+/* Ensure controls stack on small screens */
+@media (max-width: 640px) {
+  .site-footer__cta-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .site-footer__cta-controls .btn {
+    width: 100%;
+  }
+}
+
 .site-footer__link-col h4 {
   color: #fff;
   margin-bottom: 0.5rem;
@@ -1478,6 +1537,31 @@ a[href="/pages/privacy.html"]:focus {
 }
 .site-footer a:focus {
   outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* Footer-scoped button overrides -------------------------------------------------
+   Ensure .btn-secondary (Employer Login) remains legible on the dark footer
+   without changing the global .btn-secondary styles used elsewhere. This
+   uses a transparent/low-contrast white surface and white text with a soft
+   border to preserve hierarchy next to the primary CTA.
+*/
+.site-footer--dark .btn.btn-secondary {
+  background: transparent; /* keep it subtle on the dark background */
+  color: #ffffff; /* force white text for contrast */
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: none; /* remove heavy shadows inside footer */
+}
+
+.site-footer--dark .btn.btn-secondary:hover,
+.site-footer--dark .btn.btn-secondary:focus {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.28);
+  color: #fff;
+}
+
+.site-footer--dark .btn.btn-secondary:focus {
+  outline: 3px solid rgba(255, 255, 255, 0.06);
   outline-offset: 2px;
 }
 
