@@ -36,7 +36,29 @@
 
           <!-- Box 2 -->
           <div class="bento-box bento-box--text">
-            <div class="bento-box__title">PR Points!</div>
+            <div class="bento-box__title">
+              Permanent Residency Points
+              <button
+                type="button"
+                class="info-btn"
+                aria-describedby="pr-points-desc"
+                aria-label="What are Japan Permanent Residency points?"
+              >
+                i
+              </button>
+              <div class="tooltip-bubble" role="status" aria-hidden="true">
+                Japan PR points are awarded for employment history, education,
+                language ability, and other measurable factors. Earning the
+                required points can make you eligible to apply for Permanent
+                Residency in Japan.
+              </div>
+              <div id="pr-points-desc" class="sr-only">
+                Japan Permanent Residency (PR) points are awarded for employment
+                history, education, language ability, and other factors;
+                accumulating sufficient points can make you eligible to apply
+                for permanent residency.
+              </div>
+            </div>
             <div class="bento-box__paragraph">
               Write your appeal to get notice by employer!
             </div>
@@ -212,5 +234,6 @@
         </div>
       </div>
     </main>
+    <!-- tooltip styles moved into assets/css/main.css -->
   </body>
 </html>
