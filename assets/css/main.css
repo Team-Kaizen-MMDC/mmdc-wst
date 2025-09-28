@@ -61,6 +61,7 @@
 :root {
   /* Japan SSW brand palette */
   --primary-color: #eb0000; /* Primary - Buttons, links, key CTAs */
+  --primary-color-shift: #d40000; /* Slightly darker variant for subtle hover shift */
   --secondary-color: #a57668; /* Secondary - secondary buttons, highlights */
   --accent-color: #008cff; /* Accent - icons, notifications */
   --light-color: #fcfcfc; /* Light - backgrounds, cards */
@@ -753,6 +754,50 @@ button {
 .site-footer__grid {
   display: grid;
   grid-template-columns: 1fr 420px; /* CTA left, compact link columns on the right */
+
+  /* Company link hover/focus styles used on index and company listing pages */
+  .company-link,
+  .company-card a,
+  .company-grid a {
+    color: var(--dark-color);
+    text-decoration: none; /* no underline by default */
+    transition: color 160ms var(--transition),
+      border-bottom-color 160ms var(--transition);
+    display: inline-block;
+    border-bottom: 1px solid transparent;
+  }
+
+  .company-link:hover,
+  .company-card a:hover,
+  .company-grid a:hover,
+  .company-link:focus,
+  .company-card a:focus,
+  .company-grid a:focus {
+    color: var(--primary-color-shift);
+    /* underline only on hover/focus for visible affordance */
+    text-decoration: underline;
+    border-bottom-color: rgba(212, 0, 0, 0.18);
+    transform: none;
+    filter: none;
+    /* subtle depth to emphasize the color shift */
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+  }
+
+  /* keep a strong focus state for keyboard users */
+  .company-link:focus,
+  .company-card a:focus,
+  .company-grid a:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+    color: var(--primary-color);
+    text-decoration: underline; /* ensure focus also shows underline */
+  }
+
+  /* Ensure cards with links don't overflow when lift transforms occur */
+  .company-card,
+  .feature-card {
+    will-change: transform;
+  }
   align-items: start;
   gap: 1.5rem; /* modest gap between CTA and links */
   padding: 0.25rem 0; /* small internal padding to keep things tight */
@@ -1350,6 +1395,24 @@ p {
   display: inline-block;
   border-radius: 10px;
   object-fit: cover;
+}
+
+/* 160px image helper used on company detail pages */
+.img-160 {
+  width: 160px;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+/* Ensure the left (image) column of feature-two-col centers its content
+   so logos are vertically and horizontally aligned with the text column. */
+.feature-two-col > div:first-child {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .card-title {
@@ -2639,4 +2702,17 @@ body.profile-dashboard .bento-box--split {
 }
 body.profile-dashboard .bento-box--split .bento-box__inner {
   height: auto;
+}
+
+/* Global link affordance: remove underlines by default, show underline on hover/focus
+   This rule is intentionally light-weight and placed near the end so component
+   selectors can override when necessary. Keeps site visually clean while
+   preserving accessibility (underline on focus). */
+a {
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  text-decoration: underline;
 }
