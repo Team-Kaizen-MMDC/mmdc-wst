@@ -1488,14 +1488,14 @@ footer {
      be squeezed into multiple narrow columns. Force a normal block
      flow for this specific card so text stacks naturally.
 */
-.feature-card.feature-wide {
+.legal-content .feature-card.feature-wide {
   display: block; /* stop using flex for long-form content */
   max-width: 820px; /* comfortable readable measure */
   margin-left: auto;
   margin-right: auto;
   padding: 2rem; /* give legal text breathing room */
 }
-.feature-card.feature-wide > * {
+.legal-content .feature-card.feature-wide > * {
   /* ensure inner elements don't try to align as flex children */
   display: block;
   width: auto;
