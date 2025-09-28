@@ -6,9 +6,6 @@
   "directories": {
     "doc": "docs"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Team-Kaizen-MMDC/mmdc-wst.git"
@@ -22,9 +19,8 @@
   },
   "homepage": "https://github.com/Team-Kaizen-MMDC/mmdc-wst#readme",
   "devDependencies": {
-    "@playwright/test": "^1.55.1",
-    "markdownlint-cli2": "^0.18.1",
-    "playwright": "^1.55.0"
+    "@playwright/test": "^1.40.0",
+    "playwright": "^1.40.0"
   },
   "dependencies": {
     "argparse": "^2.0.1",
@@ -99,5 +95,12 @@
     "to-regex-range": "^5.0.1",
     "uc.micro": "^2.1.0",
     "unicorn-magic": "^0.3.0"
+  },
+  "scripts": {
+    "playwright:install": "npx playwright install",
+    "server": "python3 -m http.server 8000",
+    "test:playwright": "npx playwright test",
+    "test:playwright:headed": "npx playwright test --headed",
+    "test:playwright:chromium": "npx playwright test --project=chromium"
   }
 }
