@@ -217,6 +217,74 @@ button {
   padding: 0.25rem 0.5rem;
 }
 
+/* Improved header responsiveness and touch usability */
+.site-header {
+  position: sticky; /* keep header visible while scrolling */
+  top: 0;
+  z-index: 60;
+  background: var(
+    --light-color
+  ); /* ensure solid background for clear contrast */
+}
+
+.site-header__inner {
+  transition: padding 180ms ease, background 180ms ease;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  align-items: center; /* keep vertical alignment consistent */
+}
+
+/* Brand and nav sizing adjustments using clamp for responsive scaling */
+.site-header__brand {
+  font-size: clamp(1rem, 1.6vw + 0.6rem, 1.25rem);
+  display: inline-block;
+  padding-right: 0.75rem; /* space between brand and nav */
+}
+
+.site-header__nav {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  /* allow horizontal scrolling on very narrow screens to avoid collapsing links */
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  justify-content: center; /* center nav items visually between brand and actions */
+}
+
+.site-header__nav::-webkit-scrollbar {
+  height: 6px;
+}
+.site-header__nav::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 6px;
+}
+
+/* Increase tap targets for nav links and actions */
+.site-header__nav-link {
+  padding: 0.5rem 0.5rem; /* slightly wider tap area */
+  display: inline-block;
+  white-space: nowrap; /* avoid wrapping individual links */
+  color: var(--dark-color);
+}
+
+.site-header__actions a,
+.site-header__actions .btn {
+  padding: 0.45rem 0.6rem; /* compact but tappable */
+  line-height: 1;
+}
+
+/* Make the login button less visually heavy */
+.site-header__login-btn {
+  /* Match the base .btn metrics so header login looks like other CTAs */
+  padding: 0.6rem 1rem; /* same as .btn */
+  border-radius: var(--border-radius); /* same rounded rectangle as .btn */
+  box-shadow: none; /* keep flat like primary Apply buttons */
+  font-size: var(--btn-size);
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+}
+
 /* Responsive header tweaks */
 @media (max-width: 900px) {
   .site-header__inner {
@@ -435,7 +503,7 @@ button {
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
   align-items: start;
-  padding: 1rem 0 1.25rem;
+  padding: 0.5rem 0; /* small internal spacing only */
 }
 
 /* Utility grid classes */
@@ -531,13 +599,13 @@ button {
 .site-header__login-btn,
 .login-btn {
   display: inline-block;
-  padding: 0.45rem 0.9rem;
-  border-radius: 999px;
+  padding: 0.6rem 1rem; /* align with .btn */
+  border-radius: var(--border-radius);
   background: var(--primary-color);
   color: #fff;
   text-decoration: none;
   font-weight: 600;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  box-shadow: none; /* flat like .btn.btn-primary */
   border: none;
   transition: var(--transition);
 }
@@ -612,7 +680,7 @@ button {
 .site-footer--dark {
   background: #6b0000;
   color: #fff;
-  padding: 2rem 0 1.25rem;
+  padding: 1rem 0; /* reduced vertical padding to avoid oversized footer */
 }
 
 .site-footer--dark a {
@@ -623,10 +691,10 @@ button {
 /* Grid for site footer (BEM alias) */
 .site-footer__grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+  grid-template-columns: 1fr 420px; /* CTA left, compact link columns on the right */
   align-items: start;
-  padding: 1rem 0 1.25rem;
+  gap: 1.5rem; /* modest gap between CTA and links */
+  padding: 0.25rem 0; /* small internal padding to keep things tight */
 }
 
 /* CTA area (BEM) */
@@ -637,19 +705,12 @@ button {
 
 .site-footer__cta-muted {
   color: rgba(255, 255, 255, 0.9);
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.5rem; /* slightly tighter */
 }
 
 .site-footer__cta-actions {
   display: flex;
   gap: 0.5rem;
-}
-
-/* Footer links and link columns (BEM) */
-.site-footer__links {
-  display: flex;
-  gap: 1rem;
-  justify-content: flex-end;
 }
 
 .site-footer__link-col h4 {
@@ -672,11 +733,20 @@ button {
   text-decoration: none;
 }
 
+/* Desktop: lay out the footer link columns horizontally in three columns.
+   On narrow screens this will be overridden by the mobile media query. */
+.site-footer__links {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(140px, 1fr));
+  gap: 1.25rem 2rem;
+  align-items: start;
+}
+
 /* Legal area (BEM) */
 .site-footer__legal {
   border-top: 1px solid rgba(255, 255, 255, 0.06);
-  margin-top: 1rem;
-  padding-top: 1rem;
+  margin-top: 0.6rem; /* reduce gap above legal bar */
+  padding-top: 0.6rem; /* tighter legal bar */
 }
 
 .site-footer__legal-inner {
@@ -699,8 +769,8 @@ button {
     grid-template-columns: 1fr;
   }
   .site-footer__links {
-    justify-content: flex-start;
-    flex-wrap: wrap;
+    /* stack vertically on small screens */
+    display: block;
   }
   .site-footer__cta-actions {
     margin-top: 0.5rem;
@@ -715,7 +785,7 @@ button {
 .site-footer {
   background: var(--dark-color);
   color: #fff;
-  padding: 1.25rem 0;
+  padding: 0.5rem 0; /* match slimmer footprint */
 }
 
 .site-footer a {
@@ -725,7 +795,7 @@ button {
 }
 
 .footer-inner {
-  text-align: center;
+  text-align: left; /* CTA should align left in slimmer layout */
 }
 
 /* Forms & focus */
@@ -932,6 +1002,12 @@ p {
   .hero__bg {
     background-image: url("../images/aiImages/TokyoDay-1200.jpg");
     height: 70vh;
+  }
+  /* Ensure nav can scroll horizontally on very small screens */
+  .site-header__nav {
+    gap: 0.6rem;
+    width: 100%;
+    overflow-x: auto;
   }
 }
 
@@ -1456,12 +1532,12 @@ a[href="/pages/privacy.html"]:focus {
   .job-item {
     flex-direction: column;
     align-items: stretch;
-  }
-  .job-actions {
-    margin-left: 0;
-    margin-top: 0.75rem;
     display: flex;
     justify-content: flex-end;
+  }
+
+  .site-footer__links {
+    display: block; /* stack vertically on very small screens */
   }
 }
 
