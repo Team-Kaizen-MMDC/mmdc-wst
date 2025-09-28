@@ -1027,7 +1027,7 @@ p {
     min-height: 100vh;
     padding: 2rem 0;
   }
-  
+
   .hero-content {
     margin: 2rem auto 3rem;
   }
@@ -1068,12 +1068,43 @@ p {
   -webkit-transform: translateZ(0);
 }
 
+/* Ensure the hero content is always above the video/background */
+.hero-content {
+  position: relative;
+  z-index: 2; /* sits above video (z-index:0) and overlay (z-index:1) */
+}
+
+/* A subtle overlay placed above the video but below content to improve
+   text contrast regardless of video brightness. Uses a pseudo-element on
+   the hero container so the DOM doesn't need extra markup. */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1; /* sits between video (0) and content (2) */
+  background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.28));
+  pointer-events: none;
+}
+
+/* Respect reduced-motion preferences: hide video and static overlay */
+@media (prefers-reduced-motion: reduce) {
+  .hero__video {
+    display: none !important;
+  }
+  .hero__bg {
+    display: block; /* fall back to hero image */
+  }
+  .hero::before {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.35));
+  }
+}
+
 /* Hide video on mobile to save bandwidth (optional) */
 @media (max-width: 768px) {
   .hero__video {
     display: none;
   }
-  
+
   .hero__bg {
     display: block;
   }
@@ -1084,7 +1115,7 @@ p {
   .hero__video {
     display: block;
   }
-  
+
   .hero__bg {
     display: none;
   }
@@ -1092,7 +1123,8 @@ p {
 
 /* Animated background keyframes */
 @keyframes heroBackgroundMove {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1.05) translateX(0px) translateY(0px);
   }
   25% {
@@ -1134,7 +1166,8 @@ p {
 
 /* Overlay animation */
 @keyframes heroOverlayPulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
