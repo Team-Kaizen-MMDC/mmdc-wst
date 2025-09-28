@@ -162,6 +162,12 @@ button {
   font-weight: 700;
 }
 
+/* Small button modifier for secondary actions */
+.btn--small {
+  padding: 0.45rem 0.7rem;
+  font-size: 13px;
+}
+
 /* Japanese font stack for elements where lang=ja or .jp is used */
 :lang(ja),
 .jp {
@@ -396,6 +402,58 @@ button {
   border-radius: 12px;
   box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
   margin-bottom: 1rem;
+}
+
+/* Agency list — responsive card/grid layout used on pages/agency.html */
+.agency-list {
+  list-style: none; /* remove bullets */
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr; /* stack on small screens */
+}
+
+.agency-item {
+  background: var(--light-color);
+  padding: 1.25rem;
+  border-radius: 12px;
+  box-shadow: var(--box-shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center; /* center content on small screens */
+  text-align: center;
+}
+
+.agency-item__name {
+  margin: 0 0 0.25rem;
+}
+
+.agency-item__desc {
+  margin: 0 0 0.75rem;
+}
+
+.agency-item .btn {
+  margin-top: 0.5rem;
+}
+
+/* Desktop / tablet layout: two columns, left-align card content */
+@media (min-width: 768px) {
+  .agency-list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+  .feature-card {
+    text-align: left; /* make overall feature-card left aligned on larger screens */
+  }
+  .agency-item {
+    align-items: flex-start;
+    text-align: left;
+  }
+  .agency-item .btn {
+    align-self: flex-start; /* keep CTA aligned with content */
+  }
 }
 
 /* Job panels for job listings */
