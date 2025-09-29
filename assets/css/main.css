@@ -734,6 +734,13 @@ button {
   margin-bottom: 1rem;
 }
 
+/* Disabled state for demo buttons */
+.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none; /* stops clicks */
+}
+
 /* ===================================================================
    Footer System (Consolidated) - BEM-first, legacy selectors removed
    =================================================================== */
