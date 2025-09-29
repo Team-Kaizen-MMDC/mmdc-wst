@@ -1720,6 +1720,39 @@ footer {
 }
 
 /* ------------------------------------------------------------------
+   Mobile Responsiveness for RSO Card (.feature-wide)
+   - On screens up to 768px wide, stack the image and text vertically.
+   ------------------------------------------------------------------ */
+
+@media (max-width: 768px) {
+    .feature-wide {
+        flex-direction: column; /* Stack image and text block vertically */
+        gap: 1rem; /* Adjust gap when stacking */
+        padding: 1rem; /* Add padding to the card for mobile */
+    }
+
+    /* Override any fixed image width (.img-320) to ensure full-width on mobile */
+    .feature-wide picture,
+    .feature-wide .img-320 {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto;
+    }
+
+    /* Add space below the image when stacked */
+    .feature-wide .feature-card__img {
+        margin-bottom: 0.5rem; 
+    }
+
+    /* Center the CTA button's container paragraph on mobile */
+    .feature-wide p.mt-xs {
+        
+        display: flex;
+        justify-content: center;
+    }
+}
+
+/* ------------------------------------------------------------------
    Legal page alignment
    ------------------------------------------------------------------
    Terms and Privacy pages use `.feature-card.feature-wide` for their
