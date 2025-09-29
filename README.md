@@ -100,6 +100,41 @@ Open `http://localhost:8000` in your browser.
 
 - CSS cleanup summary: see `docs/CSS_CLEANUP_SUMMARY.md` for the recent refactor and conventions.
 
+## Running tests
+
+Playwright-based smoke tests live under `tests/playwright/`. The Playwright config (`tests/playwright/playwright.config.js`) sets `baseURL` to `http://localhost:8000`, so tests expect a local static server to be available.
+
+One-time setup:
+
+```bash
+npm ci
+npx playwright install
+```
+
+Run tests (two options):
+
+1. Start a server manually (separate terminal) and run Playwright:
+
+```bash
+# start server (serves at http://localhost:8000)
+python3 -m http.server 8000
+
+# in another terminal
+npx playwright test --config=tests/playwright/playwright.config.js
+```
+
+2. Use the convenience npm script (starts server, runs Playwright, then stops the server):
+
+```bash
+npm run test:playwright:with-server
+```
+
+Notes:
+
+- If Playwright reports "Cannot navigate to invalid URL" for goto(`/`), make sure you pass the Playwright config (it provides baseURL) or use the convenience script above.
+- The Python static server can show BrokenPipe/ConnectionReset noise when Playwright runs many workers; this is expected for that server under concurrent load. Use `npx http-server` or a small Node static server for quieter logs if desired.
+- If npm scripts surface shell startup errors (for example from `.zshrc`), guard optional tool initializations in your rc file (for example `if command -v jenv >/dev/null; then jenv init; fi`).
+
 ## File Structure
 
 ```text
