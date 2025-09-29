@@ -1883,12 +1883,42 @@ a[href="/pages/privacy.html"]:focus {
   }
 }
 
+/* ------------------------------------------------------------------
+   Mobile Responsiveness for About Us Card (.feature-two-col)
+   - On screens up to 900px wide, stack the content vertically.
+   ------------------------------------------------------------------ */
+
 .feature-two-col {
   max-width: 900px;
   display: grid;
   grid-template-columns: 280px 1fr;
   gap: 1rem;
   align-items: center;
+}
+
+/* ------------------------------------------------------------------
+   Mobile Responsiveness for About Us Card (.feature-two-col)
+   - On screens up to 768px wide, stack the content vertically.
+   ------------------------------------------------------------------ */
+@media (max-width: 768px) {
+    .feature-two-col {
+        /* Change grid to a single column to stack the content */
+        grid-template-columns: 1fr;
+        padding: 1rem; /* Add breathing room on smaller screens */
+    }
+
+    /* Ensure the image and its container take up the full width */
+    .feature-two-col picture,
+    .feature-two-col img {
+        width: 100%;
+        height: auto; /* Maintain aspect ratio */
+    }
+
+    /* Center the CTA button's container paragraph using Flexbox */
+    .feature-two-col p.mt-xs {
+        display: flex;
+        justify-content: center;
+    }
 }
 
 .feature-cta {
