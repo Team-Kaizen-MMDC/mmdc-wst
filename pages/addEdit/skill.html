@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Add Skill</title>
+    <title>Add/Edit Skill</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
@@ -59,15 +59,21 @@
           />
         </div>
 
-        <!-- Save Button -->
-        <div class="pt-4 flex justify-center">
-          <button
-            type="submit"
-            class="w-40 flex justify-center py-2 px-4 border border-transparent rounded-2xl shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-          >
-            Save
-          </button>
-        </div>
+        <!-- Buttons Section -->
+           <div class="flex flex-col items-center space-y-4 pt-4">
+            <!-- Skip Button (Above Save Button) -->
+             <a href="../profileDAshboard.html"
+              class="text-sm font-medium text-gray-500 underline hover:text-red-600 focus:outline-none"
+              > Skip 
+              </a>
+
+             <!-- Save Button -->
+            <button type="submit"
+             class="w-40 flex justify-center py-2 px-4 border border-transparent rounded-3xl shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-150 ease-in-out"
+             > Save
+              </button>
+           </div>
+
       </form>
     </div>
   </body>
