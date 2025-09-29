@@ -61,6 +61,7 @@
 :root {
   /* Japan SSW brand palette */
   --primary-color: #eb0000; /* Primary - Buttons, links, key CTAs */
+  --primary-color-shift: #d40000; /* Slightly darker variant for subtle hover shift */
   --secondary-color: #a57668; /* Secondary - secondary buttons, highlights */
   --accent-color: #008cff; /* Accent - icons, notifications */
   --light-color: #fcfcfc; /* Light - backgrounds, cards */
@@ -162,6 +163,12 @@ button {
   font-weight: 700;
 }
 
+/* Small button modifier for secondary actions */
+.btn--small {
+  padding: 0.45rem 0.7rem;
+  font-size: 13px;
+}
+
 /* Japanese font stack for elements where lang=ja or .jp is used */
 :lang(ja),
 .jp {
@@ -215,6 +222,74 @@ button {
   text-decoration: none;
   font-weight: 500;
   padding: 0.25rem 0.5rem;
+}
+
+/* Improved header responsiveness and touch usability */
+.site-header {
+  position: sticky; /* keep header visible while scrolling */
+  top: 0;
+  z-index: 60;
+  background: var(
+    --light-color
+  ); /* ensure solid background for clear contrast */
+}
+
+.site-header__inner {
+  transition: padding 180ms ease, background 180ms ease;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  align-items: center; /* keep vertical alignment consistent */
+}
+
+/* Brand and nav sizing adjustments using clamp for responsive scaling */
+.site-header__brand {
+  font-size: clamp(1rem, 1.6vw + 0.6rem, 1.25rem);
+  display: inline-block;
+  padding-right: 0.75rem; /* space between brand and nav */
+}
+
+.site-header__nav {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  /* allow horizontal scrolling on very narrow screens to avoid collapsing links */
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  justify-content: center; /* center nav items visually between brand and actions */
+}
+
+.site-header__nav::-webkit-scrollbar {
+  height: 6px;
+}
+.site-header__nav::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 6px;
+}
+
+/* Increase tap targets for nav links and actions */
+.site-header__nav-link {
+  padding: 0.5rem 0.5rem; /* slightly wider tap area */
+  display: inline-block;
+  white-space: nowrap; /* avoid wrapping individual links */
+  color: var(--dark-color);
+}
+
+.site-header__actions a,
+.site-header__actions .btn {
+  padding: 0.45rem 0.6rem; /* compact but tappable */
+  line-height: 1;
+}
+
+/* Make the login button less visually heavy */
+.site-header__login-btn {
+  /* Match the base .btn metrics so header login looks like other CTAs */
+  padding: 0.6rem 1rem; /* same as .btn */
+  border-radius: var(--border-radius); /* same rounded rectangle as .btn */
+  box-shadow: none; /* keep flat like primary Apply buttons */
+  font-size: var(--btn-size);
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
 }
 
 /* Responsive header tweaks */
@@ -411,6 +486,58 @@ color: #EB0000; /* A light red color for the hover effect */
   margin-bottom: 1rem;
 }
 
+/* Agency list — responsive card/grid layout used on pages/agency.html */
+.agency-list {
+  list-style: none; /* remove bullets */
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr; /* stack on small screens */
+}
+
+.agency-item {
+  background: var(--light-color);
+  padding: 1.25rem;
+  border-radius: 12px;
+  box-shadow: var(--box-shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center; /* center content on small screens */
+  text-align: center;
+}
+
+.agency-item__name {
+  margin: 0 0 0.25rem;
+}
+
+.agency-item__desc {
+  margin: 0 0 0.75rem;
+}
+
+.agency-item .btn {
+  margin-top: 0.5rem;
+}
+
+/* Desktop / tablet layout: two columns, left-align card content */
+@media (min-width: 768px) {
+  .agency-list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+  .feature-card {
+    text-align: left; /* make overall feature-card left aligned on larger screens */
+  }
+  .agency-item {
+    align-items: flex-start;
+    text-align: left;
+  }
+  .agency-item .btn {
+    align-self: flex-start; /* keep CTA aligned with content */
+  }
+}
+
 /* Job panels for job listings */
 .job-panel {
   background: #fff;
@@ -461,11 +588,14 @@ color: #EB0000; /* A light red color for the hover effect */
 
 /* Company card media/body helpers for consistent layout */
 .company-card__media {
-  width: auto;
-  height: auto;
+  width: 100%;
+  height: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 0.5rem;
+  padding: 10px;
+  box-sizing: border-box;
 }
 .company-card__body {
   display: flex;
@@ -516,7 +646,7 @@ color: #EB0000; /* A light red color for the hover effect */
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
   align-items: start;
-  padding: 1rem 0 1.25rem;
+  padding: 0.5rem 0; /* small internal spacing only */
 }
 
 /* Utility grid classes */
@@ -612,13 +742,13 @@ color: #EB0000; /* A light red color for the hover effect */
 .site-header__login-btn,
 .login-btn {
   display: inline-block;
-  padding: 0.45rem 0.9rem;
-  border-radius: 999px;
+  padding: 0.6rem 1rem; /* align with .btn */
+  border-radius: var(--border-radius);
   background: var(--primary-color);
   color: #fff;
   text-decoration: none;
   font-weight: 600;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  box-shadow: none; /* flat like .btn.btn-primary */
   border: none;
   transition: var(--transition);
 }
@@ -693,7 +823,8 @@ color: #EB0000; /* A light red color for the hover effect */
 .site-footer--dark {
   background: #6b0000;
   color: #fff;
-  padding: 2rem 0 1.25rem;
+  /* slimmer vertical footprint while keeping touch targets usable */
+  padding: 0.5rem 0; /* tighter than before */
 }
 
 .site-footer--dark a {
@@ -704,10 +835,54 @@ color: #EB0000; /* A light red color for the hover effect */
 /* Grid for site footer (BEM alias) */
 .site-footer__grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+  grid-template-columns: 1fr 420px; /* CTA left, compact link columns on the right */
+
+  /* Company link hover/focus styles used on index and company listing pages */
+  .company-link,
+  .company-card a,
+  .company-grid a {
+    color: var(--dark-color);
+    text-decoration: none; /* no underline by default */
+    transition: color 160ms var(--transition),
+      border-bottom-color 160ms var(--transition);
+    display: inline-block;
+    border-bottom: 1px solid transparent;
+  }
+
+  .company-link:hover,
+  .company-card a:hover,
+  .company-grid a:hover,
+  .company-link:focus,
+  .company-card a:focus,
+  .company-grid a:focus {
+    color: var(--primary-color-shift);
+    /* underline only on hover/focus for visible affordance */
+    text-decoration: underline;
+    border-bottom-color: rgba(212, 0, 0, 0.18);
+    transform: none;
+    filter: none;
+    /* subtle depth to emphasize the color shift */
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+  }
+
+  /* keep a strong focus state for keyboard users */
+  .company-link:focus,
+  .company-card a:focus,
+  .company-grid a:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+    color: var(--primary-color);
+    text-decoration: underline; /* ensure focus also shows underline */
+  }
+
+  /* Ensure cards with links don't overflow when lift transforms occur */
+  .company-card,
+  .feature-card {
+    will-change: transform;
+  }
   align-items: start;
-  padding: 1rem 0 1.25rem;
+  gap: 1rem; /* modest reduced gap between CTA and links */
+  padding: 0.15rem 0; /* tighter internal padding */
 }
 
 /* CTA area (BEM) */
@@ -718,24 +893,76 @@ color: #EB0000; /* A light red color for the hover effect */
 
 .site-footer__cta-muted {
   color: rgba(255, 255, 255, 0.9);
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.5rem; /* slightly tighter */
 }
 
 .site-footer__cta-actions {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.375rem;
 }
 
-/* Footer links and link columns (BEM) */
-.site-footer__links {
+/* Improve CTA readability and control sizing */
+.site-footer__cta {
   display: flex;
-  gap: 1rem;
-  justify-content: flex-end;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.site-footer__cta h3 {
+  font-size: 1.125rem; /* slightly smaller heading to reduce height */
+  line-height: 1.15;
+  margin: 0 0 0.2rem 0;
+  color: #fff;
+}
+
+.site-footer__cta .muted {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.9rem;
+  max-width: 42ch; /* keep lines readable */
+}
+
+/* Input + button layout in the CTA */
+.site-footer__cta-controls {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.site-footer__cta-controls input[type="text"],
+.site-footer__cta-controls input[type="email"] {
+  padding: 0.45rem 0.75rem;
+  border-radius: 6px;
+  border: none;
+  min-width: 160px;
+  flex: 1 1 auto;
+  background: #fff;
+  color: var(--dark-color, #111);
+}
+
+.site-footer__cta-controls .btn {
+  padding: 0.45rem 0.9rem;
+  border-radius: 8px;
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+  font-weight: 600;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* Ensure controls stack on small screens */
+@media (max-width: 640px) {
+  .site-footer__cta-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .site-footer__cta-controls .btn {
+    width: 100%;
+  }
 }
 
 .site-footer__link-col h4 {
   color: #fff;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
 }
 
 .site-footer__link-col ul {
@@ -745,7 +972,7 @@ color: #EB0000; /* A light red color for the hover effect */
 }
 
 .site-footer__link-col li {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.35rem;
 }
 
 .site-footer__link-col a {
@@ -753,18 +980,27 @@ color: #EB0000; /* A light red color for the hover effect */
   text-decoration: none;
 }
 
+/* Desktop: lay out the footer link columns horizontally in three columns.
+   On narrow screens this will be overridden by the mobile media query. */
+.site-footer__links {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(120px, 1fr));
+  gap: 0.75rem 1rem;
+  align-items: start;
+}
+
 /* Legal area (BEM) */
 .site-footer__legal {
   border-top: 1px solid rgba(255, 255, 255, 0.06);
-  margin-top: 1rem;
-  padding-top: 1rem;
+  margin-top: 0.4rem; /* reduce gap above legal bar */
+  padding-top: 0.4rem; /* tighter legal bar */
 }
 
 .site-footer__legal-inner {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 1rem;
+  gap: 0.5rem;
   color: rgba(255, 255, 255, 0.85);
 }
 
@@ -780,8 +1016,8 @@ color: #EB0000; /* A light red color for the hover effect */
     grid-template-columns: 1fr;
   }
   .site-footer__links {
-    justify-content: flex-start;
-    flex-wrap: wrap;
+    /* stack vertically on small screens */
+    display: block;
   }
   .site-footer__cta-actions {
     margin-top: 0.5rem;
@@ -796,7 +1032,7 @@ color: #EB0000; /* A light red color for the hover effect */
 .site-footer {
   background: var(--dark-color);
   color: #fff;
-  padding: 1.25rem 0;
+  padding: 0.5rem 0; /* match slimmer footprint */
 }
 
 .site-footer a {
@@ -806,7 +1042,7 @@ color: #EB0000; /* A light red color for the hover effect */
 }
 
 .footer-inner {
-  text-align: center;
+  text-align: left; /* CTA should align left in slimmer layout */
 }
 
 /* Forms & focus */
@@ -873,7 +1109,7 @@ p {
     var(--secondary-color)
   );
   color: white;
-  min-height: 60vh;
+  min-height: 100vh;
   padding: 4rem 0;
   display: flex;
   align-items: center;
@@ -970,23 +1206,121 @@ p {
   }
 }
 
+/* Mobile optimizations for full-screen hero */
+@media (max-width: 768px) {
+  .hero {
+    min-height: 100vh;
+    padding: 2rem 0;
+  }
+
+  .hero-content {
+    margin: 2rem auto 3rem;
+  }
+}
+
 @media (min-width: 992px) {
   .hero {
-    min-height: 70vh;
+    min-height: 100vh;
   }
 }
 
 /* Hero background element (responsive CSS background with overlay) */
 .hero__bg {
   position: absolute;
-  inset: 0 0 auto 0;
-  height: 60vh;
-  max-height: 720px;
+  inset: 0;
+  height: 100vh;
   background-image: url("../images/aiImages/TokyoDay-480.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   z-index: 0;
+  /* Animation properties */
+  animation: heroBackgroundMove 20s ease-in-out infinite;
+  transform: scale(1.05);
+}
+
+/* Video background (when video is available) */
+.hero__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  /* Performance optimizations */
+  will-change: transform;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+/* Ensure the hero content is always above the video/background */
+.hero-content {
+  position: relative;
+  z-index: 2; /* sits above video (z-index:0) and overlay (z-index:1) */
+}
+
+/* A subtle overlay placed above the video but below content to improve
+   text contrast regardless of video brightness. Uses a pseudo-element on
+   the hero container so the DOM doesn't need extra markup. */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1; /* sits between video (0) and content (2) */
+  background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.28));
+  pointer-events: none;
+}
+
+/* Respect reduced-motion preferences: hide video and static overlay */
+@media (prefers-reduced-motion: reduce) {
+  .hero__video {
+    display: none !important;
+  }
+  .hero__bg {
+    display: block; /* fall back to hero image */
+  }
+  .hero::before {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.35));
+  }
+}
+
+/* Hide video on mobile to save bandwidth (optional) */
+@media (max-width: 768px) {
+  .hero__video {
+    display: none;
+  }
+
+  .hero__bg {
+    display: block;
+  }
+}
+
+/* Show video on larger screens */
+@media (min-width: 769px) {
+  .hero__video {
+    display: block;
+  }
+
+  .hero__bg {
+    display: none;
+  }
+}
+
+/* Animated background keyframes */
+@keyframes heroBackgroundMove {
+  0%,
+  100% {
+    transform: scale(1.05) translateX(0px) translateY(0px);
+  }
+  25% {
+    transform: scale(1.08) translateX(-10px) translateY(-5px);
+  }
+  50% {
+    transform: scale(1.06) translateX(5px) translateY(-10px);
+  }
+  75% {
+    transform: scale(1.07) translateX(-5px) translateY(5px);
+  }
 }
 .hero {
   position: relative;
@@ -996,11 +1330,34 @@ p {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    rgba(255, 255, 255, 0.6),
-    rgba(255, 255, 255, 0.6)
-  );
+  /* Darken the image to improve text contrast and add a subtle blur */
+  background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.35));
   pointer-events: none;
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+  /* Subtle animation for overlay */
+  animation: heroOverlayPulse 8s ease-in-out infinite;
+}
+
+/* Video overlay (when using video background) */
+.hero__video::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.3));
+  pointer-events: none;
+  animation: heroOverlayPulse 8s ease-in-out infinite;
+}
+
+/* Overlay animation */
+@keyframes heroOverlayPulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
 }
 
 @media (min-width: 600px) {
@@ -1012,7 +1369,13 @@ p {
 @media (min-width: 1100px) {
   .hero__bg {
     background-image: url("../images/aiImages/TokyoDay-1200.jpg");
-    height: 70vh;
+    height: 100vh;
+  }
+  /* Ensure nav can scroll horizontally on very small screens */
+  .site-header__nav {
+    gap: 0.6rem;
+    width: 100%;
+    overflow-x: auto;
   }
 }
 
@@ -1050,13 +1413,61 @@ p {
   z-index: 1;
 }
 
+/* Improve text readability on hero images */
+.hero-content {
+  color: #fff; /* default hero copy to white for contrast */
+}
+
+.hero-title,
+.hero-centered .hero-title {
+  color: #fff;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.55);
+}
+
+.hero-content .muted {
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+}
+
+/* Responsive typographic scaling for the hero title and subtitle */
+.hero-title {
+  /* small: 1.5rem, preferred: 3rem, max: 4rem */
+  font-size: clamp(1.5rem, 2.5vw + 1.5rem, 4rem);
+  line-height: 1.05;
+  letter-spacing: 0.2px;
+}
+
+.hero-content .muted {
+  /* subtitle: small comfortable size that scales */
+  font-size: clamp(0.95rem, 1.2vw + 0.8rem, 1.25rem);
+  line-height: 1.45;
+}
+
+@media (min-width: 1400px) {
+  .hero-title {
+    font-size: 4.5rem; /* give extra scale on very large screens */
+  }
+}
+
 /* Small image helper for thumbnails (increased to 80px) */
 .img-64 {
   width: 80px;
   height: 80px;
-  display: inline-block;
+  display: block;
+  margin: 0 auto;
   border-radius: 8px;
   object-fit: cover;
+}
+
+/* Logo-specific styling for company cards */
+.company-card .img-64 {
+  object-fit: contain;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  max-width: 80px;
+  max-height: 80px;
 }
 
 /* Large image helper for prominent thumbnails */
@@ -1066,6 +1477,24 @@ p {
   display: inline-block;
   border-radius: 10px;
   object-fit: cover;
+}
+
+/* 160px image helper used on company detail pages */
+.img-160 {
+  width: 160px;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+/* Ensure the left (image) column of feature-two-col centers its content
+   so logos are vertically and horizontally aligned with the text column. */
+.feature-two-col > div:first-child {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .card-title {
@@ -1371,6 +1800,170 @@ footer {
   align-items: center;
 }
 
+/* ------------------------------------------------------------------
+   Legal page alignment
+   ------------------------------------------------------------------
+   Terms and Privacy pages use `.feature-card.feature-wide` for their
+   content. The base `.feature-card` defaults to `text-align: center` to
+   support small UI cards; that centering is undesirable for long legal
+   text. Scope a conservative left-alignment to headings, paragraphs and
+   lists inside `.feature-card.feature-wide` to improve readability.
+*/
+.feature-card.feature-wide,
+.feature-card.feature-wide h1,
+.feature-card.feature-wide h2,
+.feature-card.feature-wide h3,
+.feature-card.feature-wide p,
+.feature-card.feature-wide ul,
+.feature-card.feature-wide ol,
+.feature-card.feature-wide li,
+.feature-card.feature-wide .muted {
+  text-align: left;
+}
+
+/* Render legal pages as readable single-column content
+   - `.feature-card.feature-wide` is used for Terms/Privacy. The card
+     previously used flex layout which caused the long paragraphs to
+     be squeezed into multiple narrow columns. Force a normal block
+     flow for this specific card so text stacks naturally.
+*/
+.legal-content .feature-card.feature-wide {
+  display: block; /* stop using flex for long-form content */
+  max-width: 820px; /* comfortable readable measure */
+  margin-left: auto;
+  margin-right: auto;
+  padding: 2rem; /* give legal text breathing room */
+}
+.legal-content .feature-card.feature-wide > * {
+  /* ensure inner elements don't try to align as flex children */
+  display: block;
+  width: auto;
+}
+
+/* Privacy link micro-interactions (scoped) */
+a[href="/pages/privacy.html"] {
+  color: var(--dark-color);
+  text-decoration: none;
+  transition: color 180ms ease, text-decoration-color 180ms ease;
+  border-bottom: 1px solid transparent;
+}
+
+a[href="/pages/privacy.html"]:hover,
+a[href="/pages/privacy.html"]:focus {
+  color: var(--primary-color);
+  text-decoration: underline;
+  border-bottom-color: rgba(0, 0, 0, 0.06);
+}
+
+a[href="/pages/privacy.html"]:focus {
+  outline: 3px solid rgba(235, 0, 0, 0.12);
+  outline-offset: 2px;
+}
+
+/* Footer link hover/focus effects (global for all .site-footer a) */
+.site-footer a {
+  color: var(--footer-link-color, #fff);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 180ms ease, text-decoration-color 180ms ease,
+    border-bottom-color 180ms ease;
+}
+.site-footer a:hover,
+.site-footer a:focus {
+  color: var(--primary-color);
+  text-decoration: underline;
+  border-bottom-color: rgba(235, 0, 0, 0.18);
+}
+.site-footer a:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* Footer-scoped button overrides -------------------------------------------------
+   Ensure .btn-secondary (Employer Login) remains legible on the dark footer
+   without changing the global .btn-secondary styles used elsewhere. This
+   uses a transparent/low-contrast white surface and white text with a soft
+   border to preserve hierarchy next to the primary CTA.
+*/
+.site-footer--dark .btn.btn-secondary {
+  background: transparent; /* keep it subtle on the dark background */
+  color: #ffffff; /* force white text for contrast */
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: none; /* remove heavy shadows inside footer */
+}
+
+.site-footer--dark .btn.btn-secondary:hover,
+.site-footer--dark .btn.btn-secondary:focus {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.28);
+  color: #fff;
+}
+
+.site-footer--dark .btn.btn-secondary:focus {
+  outline: 3px solid rgba(255, 255, 255, 0.06);
+  outline-offset: 2px;
+}
+
+/* ===================================================================
+   Job list styles (homepage) - small, self-contained rules
+   - Purpose: align job details and actions, provide responsive spacing
+   - Keep these near other homepage component rules for discoverability
+   =================================================================== */
+.job-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.job-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.job-details {
+  flex: 1 1 auto;
+  min-width: 0; /* allow truncation if needed */
+}
+
+.job-actions {
+  flex: 0 0 auto;
+  margin-left: 1rem;
+}
+
+.job-panel__title,
+.job-panel__meta {
+  text-align: left;
+}
+
+/* Ensure job-panel card (which reuses .feature-card) does not center its content
+   Job details should always be left-aligned for readability */
+.job-panel .job-details,
+.job-panel .muted {
+  text-align: left;
+}
+
+/* Small screens: stack action under details for narrow viewports */
+@media (max-width: 560px) {
+  .job-item {
+    flex-direction: column;
+    align-items: stretch;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .site-footer__links {
+    display: block; /* stack vertically on very small screens */
+  }
+}
+
 .feature-two-col {
   max-width: 900px;
   display: grid;
@@ -1401,129 +1994,241 @@ footer {
 /* ===============================
    Profile Dashboard - Bento Layout
    =============================== */
-  
-   /* ensure padding included in height calculations */
+
+/* ensure padding included in height calculations */
 body.profile-dashboard,
 body.profile-dashboard * {
   box-sizing: border-box;
 }
-   
-   body.profile-dashboard .bento-wrapper {
-     width: 100%;
-     max-width: 1920px;
-     display: flex;
-     align-items: center;
-     justify-content: center;
-     padding: 20px;
-   }
-   
-   body.profile-dashboard .bento-container {
-     width: 90%;
-     max-width: 1185px;
-     display: grid;
-     grid-template-columns: repeat(2, 1fr);
-     gap: 20px;
-     align-items: stretch;
-     background: #FAF8F8;
-     padding: 20px;
-     border-radius: 12px;
-     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-     
-   }
-   
-   /* -------------------------------
+
+body.profile-dashboard .bento-wrapper {
+  width: 100%;
+  max-width: 1920px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+body.profile-dashboard .bento-container {
+  width: 90%;
+  max-width: 1185px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  align-items: stretch;
+  background: #faf8f8;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* -------------------------------
       Base Bento Box
    --------------------------------*/
-   body.profile-dashboard .bento-box {
-    box-sizing: border-box;
-     background: #ffffff;
-     border-radius: 8px;
-     display: flex;
-     flex-direction: column;
-     justify-content: flex-start;
-     align-items: stretch;
-     padding: 12px 16px;
-     gap: 8px;
-     font-size: 16px;
-     
-   }
-   
-   /* Titles inside any box */
-   body.profile-dashboard .bento-box__title {
-     font-size: 20px;
-     font-weight: bold;
-   }
-   
-   /* Paragraph inside any box */
-   body.profile-dashboard .bento-box__paragraph {
-     font-size: 13px;
-     color: #555;
-     line-height: 1.4;
-   }
-   
-   /* -------------------------------
-      Box 1 - Profile
-   --------------------------------*/
-   body.profile-dashboard .bento-box--profile {
-     align-items: center;
-     justify-content: flex-start;
-     position: relative;
-       gap: 10px;                
-  height: 200px;            
-  width: 100%;             
-  padding: 0;               
+body.profile-dashboard .bento-box {
   box-sizing: border-box;
-   }
-   
-   body.profile-dashboard .bento-box__small-circle {
-     position: absolute;
-     top: 10px;
-     right: 10px;
-     width: 25px;
-     height: 25px;
-     background: #000;
-     border-radius: 50%;
-   }
-   
-   body.profile-dashboard .bento-box__profile-image {
-    padding-left: 24px;
-      width: 100px;
-     height: 100px;
-     background: #000;
-     border-radius: 50%;
-     align-self: stretch;
-     margin-bottom: 50px;
-     top: 70px;
-     left: 10px;
-      position: absolute;
-   }
-   
-   body.profile-dashboard .bento-box__completion-text {
-     position: absolute;
-  bottom: 10px;      /* distance from the bottom */
-  left: 0;           /* align with left edge */
-  right: 0;          /* align with right edge */
-  text-align: right; /* or right if you prefer */
+  background: #ffffff;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  padding: 12px 16px;
+  gap: 8px;
+  font-size: 16px;
+}
+
+/* Titles inside any box */
+body.profile-dashboard .bento-box__title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* ------------------------------------------------------------------
+   Tooltip & Info Button (Profile Dashboard)
+   - Centralized styles for the info control used on profileDashboard.html
+   - Visible tooltip bubble appears on hover/focus; descriptive copy
+     remains available to assistive tech via aria-describedby.
+   ------------------------------------------------------------------ */
+
+body.profile-dashboard .bento-box__title {
+  position: relative; /* anchor absolute-positioned tooltip bubbles */
+}
+
+body.profile-dashboard .info-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 0.5rem;
+  width: 1.6rem;
+  height: 1.6rem;
+  line-height: 1.6rem;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 0;
+}
+
+body.profile-dashboard .info-btn:focus {
+  outline: 3px solid rgba(235, 0, 0, 0.12);
+  outline-offset: 2px;
+}
+
+/* Visible tooltip bubble (appears on hover/focus of the info button) */
+body.profile-dashboard .tooltip-bubble {
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translate(8px, -50%);
+  background: #fff;
+  color: var(--dark-color);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  box-shadow: var(--box-shadow);
+  font-size: 0.9rem;
+  min-width: 220px;
+  opacity: 0;
+  pointer-events: none;
+  transition: var(--transition);
+  z-index: 30;
+}
+
+/* Show the bubble on hover or when the button receives keyboard focus */
+body.profile-dashboard .info-btn:hover + .tooltip-bubble,
+body.profile-dashboard .info-btn:focus + .tooltip-bubble {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(12px, -50%);
+}
+
+/* Responsive: place tooltip below the button on small viewports */
+@media (max-width: 640px) {
+  body.profile-dashboard .tooltip-bubble {
+    left: 50%;
+    top: 100%;
+    transform: translate(-50%, 8px);
+    min-width: 200px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  }
+
+  /* ensure hover/focus still shows the bubble when placed below */
+  body.profile-dashboard .info-btn:hover + .tooltip-bubble,
+  body.profile-dashboard .info-btn:focus + .tooltip-bubble {
+    transform: translate(-50%, 8px);
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+/* Screen-reader only utility (used for descriptive copy referenced by aria-describedby) */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Paragraph inside any box */
+body.profile-dashboard .bento-box__paragraph {
   font-size: 13px;
   color: #555;
-  padding-right: 15px;
-    
-   }
-   
+  line-height: 1.4;
+}
 
-   /* -------------------------------
+/* -------------------------------
+      Box 1 - Profile
+   --------------------------------*/
+body.profile-dashboard .bento-box--profile {
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: relative;
+  gap: 10px;
+  width: 100%;
+  padding: 16px 16px 48px 140px; /* reserve space on the left for the avatar */
+  box-sizing: border-box;
+  min-height: 120px; /* let content determine height, but keep a comfortable minimum */
+}
+
+body.profile-dashboard .bento-box__small-circle {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 25px;
+  height: 25px;
+  background: #000;
+  border-radius: 50%;
+}
+
+body.profile-dashboard .bento-box__profile-image {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  width: 96px;
+  height: 96px;
+  background: #000;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0;
+}
+
+body.profile-dashboard .bento-box__completion-text {
+  position: absolute;
+  bottom: 16px; /* distance from the bottom */
+  right: 16px; /* keep away from the right edge */
+  left: 140px; /* ensure it doesn't overlap the avatar area */
+  text-align: right;
+  font-size: 13px;
+  color: #555;
+  padding-right: 0;
+}
+
+/* Mobile: make the avatar part of the normal flow to avoid overlap */
+@media (max-width: 900px) {
+  body.profile-dashboard .bento-box--profile {
+    padding: 12px; /* no left inset on mobile */
+    min-height: 140px;
+  }
+
+  body.profile-dashboard .bento-box__profile-image {
+    position: static;
+    width: 80px;
+    height: 80px;
+    margin: 0 12px 8px 0;
+    float: left;
+  }
+
+  body.profile-dashboard .bento-box__completion-text {
+    position: static;
+    text-align: right;
+    margin-top: 8px;
+    left: auto;
+    right: 12px;
+  }
+}
+
+/* -------------------------------
       Box 2 - PR 
    --------------------------------*/
 body.profile-dashboard .bento-box--pr {
- align-items: center;
-     justify-content: flex-end;
-     position: relative;
-       gap: 10px;                
-  height: 444px;            
-  width: 100%;             
-  padding: 0;               
-  box-sizing: border-box;         
-
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+  gap: 10px;
+  height: 444px;
+  width: 100%;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 /* header row (PR points) */
@@ -1542,13 +2247,13 @@ body.profile-dashboard .bento-box--pr .bento-box__title {
 body.profile-dashboard .bento-box--pr .bento-box__title {
   font-size: 13px;
   font-weight: bold;
-  color: #D1C9C9;
+  color: #d1c9c9;
 }
 
-   /* -------------------------------
+/* -------------------------------
       Box 3 - Action Box Profile info
    --------------------------------*/
-  body.profile-dashboard .bento-box--action {
+body.profile-dashboard .bento-box--action {
   width: 100%;
   padding: 15px 20px;
   display: flex;
@@ -1583,10 +2288,10 @@ body.profile-dashboard .bento-box__subtitle {
 
 /* Divider */
 body.profile-dashboard .bento-box__divider {
-   display: block;         /* force hr to show */
-  width: 100%;            /* span full width */
-  border: none;           /* reset any defaults */
-  border-top: 2px solid #A79F9F !important; /* force override */
+  display: block; /* force hr to show */
+  width: 100%; /* span full width */
+  border: none; /* reset any defaults */
+  border-top: 2px solid #a79f9f !important; /* force override */
   margin: 8px 0;
 }
 
@@ -1608,36 +2313,110 @@ body.profile-dashboard .bento-box__resume {
   font-size: 14px;
   color: #666;
   cursor: pointer;
-  
 }
-   
 
 /* Box 4 parent - split container */
 body.profile-dashboard .bento-box--split {
-  display: flex;            
-  flex-direction: row;      /* left & right side by side */
-  gap: 10px;                
-  height: 255px;            /* same height as other Bento boxes */
-  width: 100%;             
-  padding: 0;               /* remove extra padding to match other boxes */
-  box-sizing: border-box;   /* ensure height includes border/padding */
-  background: #FAF8F8;
+  display: flex;
+  flex-direction: row; /* left & right side by side */
+  gap: 10px;
+  height: 255px; /* same height as other Bento boxes */
+  width: 100%;
+  padding: 0; /* remove extra padding to match other boxes */
+  box-sizing: border-box; /* ensure height includes border/padding */
+  background: #faf8f8;
+}
+
+/* ------------------------------------------------------------------
+   Responsive rules for Profile Dashboard (mobile-first adjustments)
+   - Collapse the two-column grid to one column on smaller viewports
+   - Stack split boxes and allow flexible heights
+   - Tweak paddings and font sizes for readability
+   ------------------------------------------------------------------ */
+@media (max-width: 900px) {
+  body.profile-dashboard .bento-wrapper {
+    padding: 12px;
+  }
+
+  body.profile-dashboard .bento-container {
+    grid-template-columns: 1fr; /* single column stack */
+    width: 100%;
+    padding: 12px;
+    gap: 12px;
+  }
+
+  /* Make boxes flow naturally with auto heights */
+  body.profile-dashboard .bento-box {
+    padding: 12px;
+    min-height: auto;
+  }
+
+  /* Reduce profile box height for mobile */
+  body.profile-dashboard .bento-box--profile {
+    height: 140px;
+  }
+
+  /* Stack left/right halves in split boxes */
+  body.profile-dashboard .bento-box--split {
+    flex-direction: column;
+    height: auto;
+  }
+
+  body.profile-dashboard .bento-box--split .bento-box__inner {
+    padding: 10px 12px;
+    height: auto;
+  }
+
+  /* Make action box and other dense boxes use auto height */
+  body.profile-dashboard .bento-box--action,
+  body.profile-dashboard .bento-box--experience,
+  body.profile-dashboard .bento-box--skills,
+  body.profile-dashboard .bento-box--education {
+    height: auto;
+  }
+
+  /* Slightly smaller title text on small screens */
+  body.profile-dashboard .bento-box__title {
+    font-size: 18px;
+  }
+
+  /* Ensure tooltip fits on mobile by constraining width */
+  body.profile-dashboard .tooltip-bubble {
+    min-width: 160px;
+    max-width: calc(100% - 32px);
+    left: 50%;
+    transform: translate(-50%, 8px);
+  }
+}
+
+@media (max-width: 480px) {
+  body.profile-dashboard .bento-container {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  body.profile-dashboard .bento-box__title {
+    font-size: 16px;
+  }
+
+  body.profile-dashboard .bento-box__paragraph {
+    font-size: 13px;
+  }
 }
 
 /* Box 4 inner boxes - fill parent height */
 body.profile-dashboard .bento-box--split .bento-box__inner {
   box-sizing: border-box;
-  flex: 1;                 
-  height: 100%;            
-  display: flex;           
-  flex-direction: column;  
-  
-  padding: 8px 20px;      /* same as other boxes */
-  background: #ffffff;
-  border-radius: 8px;      /* match other boxes */
-  gap: 6px;                
-}
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 
+  padding: 8px 20px; /* same as other boxes */
+  background: #ffffff;
+  border-radius: 8px; /* match other boxes */
+  gap: 6px;
+}
 
 /* Title inside Box 4 inner boxes */
 body.profile-dashboard .bento-box--split .bento-box__inner .bento-box__title {
@@ -1646,18 +2425,17 @@ body.profile-dashboard .bento-box--split .bento-box__inner .bento-box__title {
 }
 
 /* Paragraph inside Box 4 inner boxes */
-body.profile-dashboard .bento-box--split .bento-box__inner .bento-box__paragraph {
+body.profile-dashboard
+  .bento-box--split
+  .bento-box__inner
+  .bento-box__paragraph {
   font-size: 13px;
   color: #555555;
   line-height: 1.4;
-  flex-direction: column;  
+  flex-direction: column;
   padding-left: 10px;
   padding-top: 10px;
-  
 }
-
-
-
 
 /* Box 5 - Experience */
 body.profile-dashboard .bento-box--experience {
@@ -1690,13 +2468,10 @@ body.profile-dashboard .bento-box--experience .bento-box__add {
 
 /* bottom content row */
 body.profile-dashboard .bento-box--experience .bento-box__row--content {
- 
   display: flex;
   justify-content: space-between; /* left = job info, right = edit */
-  align-items: center;          /* align items at the bottom */
+  align-items: center; /* align items at the bottom */
   width: 100%;
-
-  
 }
 
 /* left side: image + details */
@@ -1753,7 +2528,6 @@ body.profile-dashboard .bento-box--experience .bento-box__edit {
   cursor: pointer;
   margin-left: 16px; /* keep some gap from job-info */
   align-self: align-center;
- 
 }
 
 /* Box 6 - Skills */
@@ -1788,9 +2562,9 @@ body.profile-dashboard .bento-box--skills .bento-box__add {
 
 /* bottom content row */
 body.profile-dashboard .bento-box--skills .bento-box__row--content {
-    display: flex;
+  display: flex;
   justify-content: space-between; /* left = job info, right = edit */
-  align-items: center;          /* align items at the bottom */
+  align-items: center; /* align items at the bottom */
   width: 100%;
 }
 
@@ -1825,19 +2599,15 @@ body.profile-dashboard .bento-box__skill-title {
   color: #3c0a0a;
 }
 
-
 /* edit CTA on the right */
 body.profile-dashboard .bento-box--skills .bento-box__edit {
- font-size: 16px;
+  font-size: 16px;
   font-weight: 700;
   color: #800000;
   cursor: pointer;
   margin-left: 16px; /* keep some gap from job-info */
   align-self: align-center;
-
-  
 }
-
 
 /* Box 7 - Education */
 body.profile-dashboard .bento-box--education {
@@ -1870,9 +2640,9 @@ body.profile-dashboard .bento-box--education .bento-box__add {
 
 /* bottom content row */
 body.profile-dashboard .bento-box--education .bento-box__row--content {
- display: flex;
+  display: flex;
   justify-content: space-between; /* left = job info, right = edit */
-  align-items: center;          /* align items at the bottom */
+  align-items: center; /* align items at the bottom */
   width: 100%;
 }
 
@@ -1932,12 +2702,11 @@ body.profile-dashboard .bento-box--education .bento-box__edit {
   align-self: align-center;
 }
 
-
-   /* -------------------------------
+/* -------------------------------
       Boxes 8 - Simple CTA Boxes
    --------------------------------*/
 
-   body.profile-dashboard .bento-box--availability-preferences {
+body.profile-dashboard .bento-box--availability-preferences {
   height: 100%; /* ensure full cell height */
   display: flex;
   flex-direction: column;
@@ -1946,7 +2715,9 @@ body.profile-dashboard .bento-box--education .bento-box__edit {
 }
 
 /* header row (availability-preferences) */
-body.profile-dashboard .bento-box--availability-preferences .bento-box__row--title {
+body.profile-dashboard
+  .bento-box--availability-preferences
+  .bento-box__row--title {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1958,24 +2729,27 @@ body.profile-dashboard .bento-box--availability-preferences .bento-box__title {
   color: #3c0a0a;
 }
 
-   
-   body.profile-dashboard .bento-box--availability-preferences .bento-box__cta {
-     display: flex;
-     gap: 8px;
-     align-items: baseline;
-   }
-   
-   body.profile-dashboard .bento-box--availability-preferences .bento-box__cta-text {
+body.profile-dashboard .bento-box--availability-preferences .bento-box__cta {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+}
+
+body.profile-dashboard
+  .bento-box--availability-preferences
+  .bento-box__cta-text {
   font-size: 16px;
   font-weight: bold;
   color: #c40000;
   cursor: pointer;
 }
 
-  body.profile-dashboard .bento-box--availability-preferences .bento-box__cta-small {
+body.profile-dashboard
+  .bento-box--availability-preferences
+  .bento-box__cta-small {
   font-size: 13px;
   font-weight: 400;
-  color: #A57668;
+  color: #a57668;
   cursor: pointer;
 }
 
@@ -1986,9 +2760,9 @@ body.profile-dashboard .bento-box--availability-preferences .bento-box__title {
 /* General cleanup for all bento boxes */
 body.profile-dashboard .bento-box {
   justify-content: flex-start; /* pack at top */
-  align-items: flex-start;     /* prevent stretch */
-  height: auto;                /* let content dictate size */
-  min-height: 150px;           /* fallback minimum */
+  align-items: flex-start; /* prevent stretch */
+  height: auto; /* let content dictate size */
+  min-height: 150px; /* fallback minimum */
 }
 
 /* Remove rigid fixed heights */
@@ -2012,3 +2786,15 @@ body.profile-dashboard .bento-box--split .bento-box__inner {
   height: auto;
 }
 
+/* Global link affordance: remove underlines by default, show underline on hover/focus
+   This rule is intentionally light-weight and placed near the end so component
+   selectors can override when necessary. Keeps site visually clean while
+   preserving accessibility (underline on focus). */
+a {
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  text-decoration: underline;
+}

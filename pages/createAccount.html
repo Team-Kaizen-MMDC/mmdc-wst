@@ -10,28 +10,19 @@
 </head>
 <body class="bg-white">
 
-        <header class="site-header">
-            <div class="container site-header__inner">
-                <a class="site-header__brand" href="../index.html">Japan SSW</a>
-                <nav class="site-header__nav" aria-label="Main navigation">
-                    <a class="site-header__nav-link" href="../index.html#jobs">Jobs</a>
-                    <a class="site-header__nav-link" href="../index.html#companies">Companies</a>
-                    <a class="site-header__nav-link" href="agency.html">Agency</a>
-                    <a class="site-header__nav-link" href="about.html">About</a>
-                </nav>
-                <div class="site-header__actions">
-                    <a class="site-header__signup muted" href="createAccount.html">Signup</a>
-                    <a class="btn btn-primary site-header__login-btn" href="signin.html">Log in</a>
-                </div>
-            </div>
-        </header>
+
 
         <main>
 
         <div class="flex w-full max-w-6xl h-[80vh] bg-white rounded-xl shadow-lg overflow-hidden mx-auto my-12">
-        <!-- Left Panel - JapanSSW -->
-        <div class="hidden md:flex flex-col w-1/2 p-8 bg-gray-100 border-r border-gray-200">
-            <h1 class="text-3xl font-Inter text-red-600">Japan<b>SSW</b></h1>
+        <!-- Left Panel - JapanSSW (image for desktop) -->
+        <div class="hidden md:flex relative items-center justify-center w-1/2 p-0 bg-gray-100 border-r border-gray-200">
+            <!-- JapanSSW title kept visible above the image -->
+            <h1 class="absolute top-8 left-8 z-20 text-2xl md:text-3xl lg:text-4xl font-Inter text-red-600 drop-shadow-md bg-white bg-opacity-75 px-3 py-1 rounded-md">Japan<b>SSW</b></h1>
+            <picture class="w-full h-full">
+                <source type="image/webp" srcset="../assets/images/aiImages/Applying1-640.webp 640w, ../assets/images/aiImages/Applying1-320.webp 320w">
+                <img src="../assets/images/aiImages/Applying1.jpg" alt="Applicant filling form" class="object-cover w-full h-full" loading="lazy" />
+            </picture>
         </div>
 
         <!-- Right Panel - Create an account Form -->
@@ -53,8 +44,8 @@
 
                     <div class="flex items-center justify-between">
                         <div class="flex items-center">
-                            <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded">
-                            <label for="remember-me" class="ml-2 block text-sm text-gray-900">Agree</label>
+                            <input id="remember-me" name="remember-me" type="checkbox" required aria-required="true" class="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded">
+                            <label for="remember-me" class="ml-2 block text-sm text-gray-900">I agree to the <a href="privacy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a></label>
                         </div>
                         <a href="#" class="text-sm text-gray-500 hover:text-red-500">Forgot Password?</a>
                     </div>
@@ -103,9 +94,9 @@
                     <div class="link-col site-footer__link-col">
                         <h4>Resources</h4>
                         <ul>
-                            <li><a href="#">Visa Guidance</a></li>
+                            <li><a href="visaGuidance.html">Visa Guidance</a></li>
                             <li><a href="#">Employer Hub</a></li>
-                            <li><a href="#">Privacy</a></li>
+                            <li><a href="privacy.html">Privacy</a></li>
                         </ul>
                     </div>
                 </div>
@@ -114,8 +105,8 @@
                 <div class="legal-inner site-footer__legal-inner">
                     <small>&copy; 2025 Japan SSW. All rights reserved.</small>
                     <nav aria-label="Footer legal">
-                        <a href="#">Terms</a>
-                        <a href="#">Privacy</a>
+                        <a href="terms.html">Terms</a>
+                        <a href="privacy.html">Privacy</a>
                     </nav>
                 </div>
             </div>
