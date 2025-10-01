@@ -1,12 +1,29 @@
+<!-- Moved from pages/server-hospitality.html -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Yoshinoya — Japan SSW</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Server — Hospitality – Japan SSW</title>
+
+    <!-- Fonts (same as other pages) -->
+    <link rel="preconnect" href="../../fonts.googleapis.com" />
+    <link rel="preconnect" href="../../fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Project CSS -->
     <link rel="stylesheet" href="../../assets/css/main.css" />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="../../assets/icons/favicon.ico"
+    />
   </head>
   <body>
+    <!-- Shared Header -->
     <header class="site-header">
       <div class="container site-header__inner">
         <a class="site-header__brand" href="../../index.html">Japan SSW</a>
@@ -30,45 +47,70 @@
         </div>
       </div>
     </header>
+
     <main>
-      <section class="section-padding">
+      <!-- Job header card -->
+      <section class="job-card-wrap">
         <div class="container">
-          <div class="feature-card feature-two-col">
-            <div>
-              <picture>
-                <source
-                  type="image/webp"
-                  srcset="../../assets/images/company-logos/Yoshinoya.webp"
-                />
-                <img
-                  src="../../assets/images/company-logos/Yoshinoya.png"
-                  alt="Yoshinoya logo"
-                  class="img-160 object-contain"
-                />
-              </picture>
+          <article class="job-card" aria-labelledby="job-title">
+            <header class="job-card__head">
+              <div class="job-card__crumb" aria-label="Company">Restaurant</div>
+              <a class="btn btn-primary job-card__cta-top" href="#apply"
+                >Apply now →</a
+              >
+            </header>
+
+            <h1 id="job-title" class="job-card__title">Server — Hospitality</h1>
+
+            <p class="job-card__meta muted">
+              Tokyo • Hospitality • Full time •
+              <time datetime="2025-11-01">2025</time>
+            </p>
+
+            <div class="job-spec">
+              <section class="job-spec__col" aria-labelledby="cond-title">
+                <h2 id="cond-title" class="job-spec__title">Conditions</h2>
+                <ul class="job-spec__list">
+                  <li class="job-pill">¥170,000 to ¥260,000/month</li>
+                  <li class="job-pill">Apply from <strong>Anywhere</strong></li>
+                </ul>
+              </section>
+
+              <section class="job-spec__col" aria-labelledby="req-title">
+                <h2 id="req-title" class="job-spec__title">Requirements</h2>
+                <ul class="job-spec__list">
+                  <li class="job-pill">
+                    <strong>Language</strong>Japanese N4+
+                  </li>
+                  <li class="job-pill">
+                    Customer service experience preferred
+                  </li>
+                </ul>
+              </section>
             </div>
-            <div>
-              <h1 class="feature-card__title">Yoshinoya</h1>
-              <p class="muted">
-                Yoshinoya is a popular Japanese fast-food chain known for
-                gyūdon. They hire restaurant staff, kitchen workers and service
-                staff nationwide.
-              </p>
-              <p class="mt-md">
-                <a
-                  class="btn btn-primary"
-                  href="../createAccount.html?company=yoshinoya"
-                  >View jobs</a
-                >
-                <a class="btn btn-secondary" href="../../index.html#companies"
-                  >Back to companies</a
-                >
-              </p>
+
+            <div class="job-body">
+              <section>
+                <h2>About the Role</h2>
+                <p>
+                  Provide table service in a fast-paced restaurant environment.
+                </p>
+              </section>
+
+              <section>
+                <h2>Responsibilities</h2>
+                <ul>
+                  <li>Serve customers and handle payments</li>
+                  <li>Ensure clean and welcoming dining environment</li>
+                </ul>
+              </section>
             </div>
-          </div>
+          </article>
         </div>
       </section>
     </main>
+
+    <!-- Shared Footer -->
     <footer class="site-footer site-footer--dark">
       <div class="container footer-grid site-footer__grid">
         <div class="footer-cta site-footer__cta">
@@ -77,8 +119,10 @@
             Reach qualified candidates under the SSW programme.
           </p>
           <div class="footer-cta-actions site-footer__cta-actions">
-            <a class="btn btn-secondary" href="#">Employer Login</a>
-            <a class="btn btn-primary" href="#">Post a Job</a>
+            <a class="btn btn-secondary" href="../../">Employer Login</a>
+            <a class="btn btn-primary" href="../../index.html#post-job"
+              >Post a Job</a
+            >
           </div>
         </div>
         <div class="footer-links site-footer__links">
