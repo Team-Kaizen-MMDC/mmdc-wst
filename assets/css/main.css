@@ -1813,6 +1813,39 @@ footer {
 }
 
 /* ------------------------------------------------------------------
+   Mobile Responsiveness for RSO Card (.feature-wide)
+   - On screens up to 768px wide, stack the image and text vertically.
+   ------------------------------------------------------------------ */
+
+@media (max-width: 768px) {
+    .feature-wide {
+        flex-direction: column; /* Stack image and text block vertically */
+        gap: 1rem; /* Adjust gap when stacking */
+        padding: 1rem; /* Add padding to the card for mobile */
+    }
+
+    /* Override any fixed image width (.img-320) to ensure full-width on mobile */
+    .feature-wide picture,
+    .feature-wide .img-320 {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto;
+    }
+
+    /* Add space below the image when stacked */
+    .feature-wide .feature-card__img {
+        margin-bottom: 0.5rem; 
+    }
+
+    /* Center the CTA button's container paragraph on mobile */
+    .feature-wide p.mt-xs {
+        
+        display: flex;
+        justify-content: center;
+    }
+}
+
+/* ------------------------------------------------------------------
    Legal page alignment
    ------------------------------------------------------------------
    Terms and Privacy pages use `.feature-card.feature-wide` for their
@@ -1976,12 +2009,42 @@ a[href="/pages/privacy.html"]:focus {
   }
 }
 
+/* ------------------------------------------------------------------
+   Mobile Responsiveness for About Us Card (.feature-two-col)
+   - On screens up to 900px wide, stack the content vertically.
+   ------------------------------------------------------------------ */
+
 .feature-two-col {
   max-width: 900px;
   display: grid;
   grid-template-columns: 280px 1fr;
   gap: 1rem;
   align-items: center;
+}
+
+/* ------------------------------------------------------------------
+   Mobile Responsiveness for About Us Card (.feature-two-col)
+   - On screens up to 768px wide, stack the content vertically.
+   ------------------------------------------------------------------ */
+@media (max-width: 768px) {
+    .feature-two-col {
+        /* Change grid to a single column to stack the content */
+        grid-template-columns: 1fr;
+        padding: 1rem; /* Add breathing room on smaller screens */
+    }
+
+    /* Ensure the image and its container take up the full width */
+    .feature-two-col picture,
+    .feature-two-col img {
+        width: 100%;
+        height: auto; /* Maintain aspect ratio */
+    }
+
+    /* Center the CTA button's container paragraph using Flexbox */
+    .feature-two-col p.mt-xs {
+        display: flex;
+        justify-content: center;
+    }
 }
 
 .feature-cta {
@@ -2810,6 +2873,7 @@ a:hover,
 a:focus {
   text-decoration: underline;
 }
+ feature/companyProfileDashboard
 ====== feature/companyProfileDashboard
 
 
@@ -3135,6 +3199,57 @@ a:focus {
             font-size: 16px;
         }
 ======
+=======
+======fix/aboutus-content
+
+
+/* ===========================
+   About Us Card (custom only)
+   =========================== */
+
+   .about-us-wrapper {
+   padding-top: 5rem; /* Large space above the card */
+    padding-bottom: 5rem; /* Large space below the card */
+}
+
+   
+.about-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto; /* center it */
+  display: flex;
+  flex-direction: column;
+  line-height: 1.6;
+  text-align: center;
+  
+}
+
+.about-card__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #290000
+  padding: 2rem;
+}
+
+.about-card__subtitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: #290000
+   padding: 2rem;
+}
+
+.about-card__text {
+  margin-bottom: 1rem;
+  color: var(--text-color, #290000);
+}
+=======
+ main
 /* ===========================
    Job Detail Page (HTML+CSS)
    Author: MK
