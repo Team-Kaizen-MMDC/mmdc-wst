@@ -112,6 +112,7 @@ body {
   height: 100%;
 }
 body {
+
   margin: 0;
   font-family: var(--font-body);
   color: var(--dark-color);
@@ -827,6 +828,27 @@ color: #EB0000; /* A light red color for the hover effect */
    =================================================================== */
 
 /* Dark variant for site footer */
+
+.sticky-footer-layout {
+  /* Set minimum height to the viewport height (100% of the screen) */
+  min-height: 100vh;
+
+  display: flex; 
+  flex-direction: column; 
+}
+
+.sticky-footer-layout > main {
+  /* This is the key: forces the main content to grow and push the footer down */
+  flex-grow: 1; 
+}
+
+/* This is good practice for safety */
+.sticky-footer-layout > .site-header,
+.sticky-footer-layout > .site-footer--dark {
+  flex-shrink: 0;
+}
+
+
 .site-footer--dark {
   background: #6b0000;
   color: #fff;
@@ -2873,7 +2895,8 @@ a:hover,
 a:focus {
   text-decoration: underline;
 }
-======fix/aboutus-content
+
+
 
 
 /* ===========================
@@ -2904,7 +2927,7 @@ a:focus {
   font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: 1rem;
-  color: #290000
+  color: #290000;
   padding: 2rem;
 }
 
@@ -2913,19 +2936,22 @@ a:focus {
   font-weight: 600;
   margin-top: 1.5rem;
   margin-bottom: 0.5rem;
-  color: #290000
-   padding: 2rem;
+  color: #290000;
+  padding: 2rem;
 }
+
 
 .about-card__text {
   margin-bottom: 1rem;
   color: var(--text-color, #290000);
 }
-=======
+
+
 /* ===========================
    Job Detail Page (HTML+CSS)
    Author: MK
    =========================== */
+
 .job-card-wrap {
   background: #f5f5f5;
   padding: 1.25rem 0 2.5rem;
@@ -2996,4 +3022,4 @@ a:focus {
 }
 .job-sticky-cta__inner { display: flex; justify-content: center; }
 .job-sticky-cta__btn { padding: .7rem 1.25rem; border-radius: 999px; }
-======
+
