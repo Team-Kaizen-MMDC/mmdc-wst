@@ -832,6 +832,7 @@ color: #EB0000; /* A light red color for the hover effect */
   color: #fff;
   /* slimmer vertical footprint while keeping touch targets usable */
   padding: 0.5rem 0; /* tighter than before */
+  
 }
 
 .site-footer--dark a {
@@ -842,7 +843,7 @@ color: #EB0000; /* A light red color for the hover effect */
 /* Grid for site footer (BEM alias) */
 .site-footer__grid {
   display: grid;
-  grid-template-columns: 1fr 420px; /* CTA left, compact link columns on the right */
+  grid-template-columns: 1fr 420px; /* CTA left, compact link columns on the right *
 
   /* Company link hover/focus styles used on index and company listing pages */
   .company-link,
@@ -1017,24 +1018,107 @@ color: #EB0000; /* A light red color for the hover effect */
   text-decoration: none;
 }
 
+/* ==============================================
+   1. TABLET BREAKPOINT (900px): Structural Collapse
+      Switches the main grid from 2 columns to 1 column.
+   ============================================== */
 /* Footer responsive design (target BEM aliases) */
 @media (max-width: 900px) {
   .site-footer__grid {
     grid-template-columns: 1fr;
+       text-align: center;        /* center text globally */
+    justify-items: center;     /* center grid items */  
+    padding: 25px;
   }
   .site-footer__links {
-    /* stack vertically on small screens */
-    display: block;
+    display: grid;             /* keep grid for equal spacing */
+    grid-template-columns: repeat(3, minmax(120px, 1fr));/* stack link columns */
+    gap: 1rem;
+    margin-top: 1.5rem;
+    text-align: center;
+    padding: 25px;
   }
+
+  .site-footer__link-col {
+    text-align: center;
+  }
+
   .site-footer__cta-actions {
-    margin-top: 0.5rem;
+    margin-top: 0.75rem;
+    justify-content: center;
   }
+
   .site-footer__legal-inner {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
+    align-items: center;        /* ✅ center instead of flex-start */
+    text-align: center;
+    gap: 0.75rem;
   }
 }
+
+
+/* ==============================================
+   2. MOBILE BREAKPOINT (768px): Centering and Polish
+   ============================================== */
+@media (max-width: 768px) {
+  .site-footer__grid {
+  /* Center all inline content (text, titles, paragraphs) */
+  text-align: center;
+  align-items: center;
+  }
+  .site-footer__cta{
+    text-align: center;
+    padding: 20px;
+  } 
+
+  .site-footer__cta .site-footer__cta-muted {
+    text-align: center !important;  /* force center */
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+    /* Ensure individual link columns are centered when stacked */
+  .site-footer__link-col {
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 1rem; 
+  }
+
+  .site-footer__cta .site-footer__cta-muted {
+    text-align: center;
+  }
+
+ .site-footer__cta-actions {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  /* Center the legal text/links within the legal bar (Overrides 900px rule) */
+  .site-footer__legal-inner {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 0.5rem;
+  }
+
+  .site-footer__legal-inner nav {
+    display: flex;
+    gap: 5rem;
+    justify-content: center;
+  }
+  
+  .site-footer__legal {
+    padding: 20px;
+    display: flex; 
+    text-align: center;
+    justify-content: center;
+  }
+
+}
+
+
 /* Standalone site footer for simpler layouts */
 .site-footer {
   background: var(--dark-color);
@@ -2873,7 +2957,6 @@ a:hover,
 a:focus {
   text-decoration: underline;
 }
-======fix/aboutus-content
 
 
 /* ===========================
@@ -2904,7 +2987,7 @@ a:focus {
   font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: 1rem;
-  color: #290000
+  color: #290000;
   padding: 2rem;
 }
 
@@ -2913,15 +2996,15 @@ a:focus {
   font-weight: 600;
   margin-top: 1.5rem;
   margin-bottom: 0.5rem;
-  color: #290000
-   padding: 2rem;
+  color: #290000;
+  padding: 2rem;
 }
 
 .about-card__text {
   margin-bottom: 1rem;
   color: var(--text-color, #290000);
 }
-=======
+
 /* ===========================
    Job Detail Page (HTML+CSS)
    Author: MK
@@ -2996,4 +3079,3 @@ a:focus {
 }
 .job-sticky-cta__inner { display: flex; justify-content: center; }
 .job-sticky-cta__btn { padding: .7rem 1.25rem; border-radius: 999px; }
-======
