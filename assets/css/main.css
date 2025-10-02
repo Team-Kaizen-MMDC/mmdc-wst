@@ -2873,7 +2873,7 @@ a:hover,
 a:focus {
   text-decoration: underline;
 }
-======fix/aboutus-content
+
 
 
 /* ===========================
@@ -2904,7 +2904,7 @@ a:focus {
   font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: 1rem;
-  color: #290000
+  color: #290000;
   padding: 2rem;
 }
 
@@ -2913,7 +2913,7 @@ a:focus {
   font-weight: 600;
   margin-top: 1.5rem;
   margin-bottom: 0.5rem;
-  color: #290000
+  color: #290000;
    padding: 2rem;
 }
 
@@ -2921,7 +2921,7 @@ a:focus {
   margin-bottom: 1rem;
   color: var(--text-color, #290000);
 }
-=======
+
 /* ===========================
    Job Detail Page (HTML+CSS)
    Author: MK
@@ -2996,4 +2996,4 @@ a:focus {
 }
 .job-sticky-cta__inner { display: flex; justify-content: center; }
 .job-sticky-cta__btn { padding: .7rem 1.25rem; border-radius: 999px; }
-======
+
