@@ -2997,7 +2997,7 @@ a:focus {
     /* For spacing within a field group */
 }
 
-.form-label {
+.contact-card-container .form-label {
     display: block;
     font-size: 0.875rem; /* sm */
     font-weight: 500; /* medium */
@@ -3005,8 +3005,8 @@ a:focus {
     margin-bottom: 4px; /* mb-1 */
 }
 
-.form-input,
-.form-textarea {
+.contact-card-container .form-input,
+.contact-card-container .form-textarea {
     width: 100%;
     padding: 10px 16px; /* px-4 py-2 */
     border: 1px solid #A57668; /* border-gray-300 */
@@ -3018,8 +3018,8 @@ a:focus {
 }
 
 /* Focus styles matching the original Tailwind focus ring */
-.form-input:focus,
-.form-textarea:focus {
+.contact-card-container .form-input:focus,
+.contact-card-container .form-textarea:focus {
     outline: none;
     border-color: #A57668; /* indigo-600 */
     box-shadow: 0 0 0 3px #A57668; /* focus:ring-2 focus:ring-indigo-500 */
@@ -3027,7 +3027,7 @@ a:focus {
 
 
 /* --- Submit Button --- */
-.submit-button {
+.contact-card-container .submit-button {
     width: 100%;
     display: flex;
     align-items: center;
@@ -3044,24 +3044,24 @@ a:focus {
     transition: background-color 0.15s, transform 0.15s;
 }
 
-.submit-button:hover {
+.contact-card-container .submit-button:hover {
     background-color: #be0202; /* indigo-700 */
     transform: scale(1.01);
 }
 
-.submit-button:focus {
+.contact-card-container .submit-button:focus {
     outline: none;
     box-shadow: 0 0 0 4px #a5b4fc, 0 0 0 6px #eb0000; /* focus ring */
 }
 
-.button-icon {
+.contact-card-container .button-icon {
     width: 20px;
     height: 20px;
     margin-right: 8px;
 }
 
 /* --- Success Message --- */
-.success-message {
+.contact-card-container .success-message {
     margin-top: 24px;
     padding: 16px;
     background-color: #d1fae5; /* green-100 */
@@ -3069,14 +3069,14 @@ a:focus {
     border-radius: 8px;
     border: 1px solid #a7f3d0; /* green-200 */
 }
-.success-text {
+.contact-card-container .success-text {
     font-weight: 600;
     display: flex;
     align-items: center;
 }
 
 /* Utility to hide the element */
-.hidden {
+.contact-card-container .hidden {
     display: none !important;
 }
 /* ===========================
