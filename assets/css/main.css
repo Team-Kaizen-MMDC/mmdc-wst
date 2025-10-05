@@ -3384,9 +3384,7 @@ a:focus {
     gap: 24px; /* space-y-6 */
 }
 
-.form-group {
-    /* For spacing within a field group */
-}
+
 
 .contact-card-container .form-label {
     display: block;
