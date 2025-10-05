@@ -3313,6 +3313,8 @@ a:focus {
 ======fix/aboutus-content
 
 
+
+
 /* ===========================
    About Us Card (custom only)
    =========================== */
@@ -3349,6 +3351,7 @@ a:focus {
   margin-top: 1.5rem;
   margin-bottom: 0.5rem;
   color: #290000;
+   padding: 2rem;
   padding: 2rem;
 }
 
