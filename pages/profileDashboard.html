@@ -20,27 +20,33 @@
           <a class="site-header__nav-link" href="about.html">About</a>
         </nav>
 
-          <div class="site-header__actions">
-                <div class="site-header__user-menu">
-                    <a id="user-menu-btn" class="btn btn-secondary site-header__user-menu-btn" href="#">Juan</a>
-                    
-                    <!-- User Menu Dropdown -->
-                    <div id="user-menu-dropdown" class="user-menu-dropdown">
-                      <h4 class="user-menu-dropdown__greeting">Welcome Back!</h4>
-                        <h3 class="user-menu-dropdown__userName">Juan Dela Cruz</h3>
-                        <a href="#" class="user-menu-dropdown__link">View Profile</a>
-                          <a href="#" class="user-menu-dropdown__link">Message</a>
-                            <!-- Divider -->
-                               <hr class="user-menu-dropdown__divider" />
+        <div class="site-header__actions">
+          <div class="site-header__user-menu">
+            <a
+              id="user-menu-btn"
+              class="btn btn-secondary site-header__user-menu-btn"
+              href="#"
+              >Juan</a
+            >
 
-                            <a href="#" class="user-menu-dropdown__link">Language</a>
-                              <a href="#" class="user-menu-dropdown__link">Help</a>
-                        <a href="#" class="user-menu-dropdown__link">Settings</a>
-                        <button type="button" class="user-menu-dropdown__link">Sign out</button>
-                    </div>
-                </div>
+            <!-- User Menu Dropdown -->
+            <div id="user-menu-dropdown" class="user-menu-dropdown">
+              <h4 class="user-menu-dropdown__greeting">Welcome Back!</h4>
+              <h3 class="user-menu-dropdown__userName">Juan Dela Cruz</h3>
+              <a href="#" class="user-menu-dropdown__link">View Profile</a>
+              <a href="#" class="user-menu-dropdown__link">Message</a>
+              <!-- Divider -->
+              <hr class="user-menu-dropdown__divider" />
+
+              <a href="#" class="user-menu-dropdown__link">Language</a>
+              <a href="#" class="user-menu-dropdown__link">Help</a>
+              <a href="#" class="user-menu-dropdown__link">Settings</a>
+              <button type="button" class="user-menu-dropdown__link">
+                Sign out
+              </button>
             </div>
-
+          </div>
+        </div>
       </div>
     </header>
 
@@ -63,22 +69,25 @@
               <button
                 type="button"
                 class="info-btn"
-                aria-describedby="pr-points-desc"
+                id="pr-points-btn"
+                aria-describedby="pr-points-tooltip"
+                aria-controls="pr-points-tooltip"
+                aria-expanded="false"
                 aria-label="What are Japan Permanent Residency points?"
               >
                 i
               </button>
-              <div class="tooltip-bubble" role="status" aria-hidden="true">
+
+              <div
+                id="pr-points-tooltip"
+                class="tooltip-bubble"
+                role="tooltip"
+                aria-hidden="true"
+              >
                 Japan PR points are awarded for employment history, education,
                 language ability, and other measurable factors. Earning the
                 required points can make you eligible to apply for Permanent
                 Residency in Japan.
-              </div>
-              <div id="pr-points-desc" class="sr-only">
-                Japan Permanent Residency (PR) points are awarded for employment
-                history, education, language ability, and other factors;
-                accumulating sufficient points can make you eligible to apply
-                for permanent residency.
               </div>
             </div>
             <div class="bento-box__paragraph">
@@ -147,8 +156,11 @@
             <!-- header: left title + right Add -->
             <div class="bento-box__row bento-box__row--title">
               <div class="bento-box__title">Experience</div>
-              <div class="bento-box__add">Add</div>
+              <div class="bento-box__add">
+                  <a href="addEdit/experience.html">Add</a>
+             </div>
             </div>
+         
 
             <!-- bottom content row: left = image + details, right = edit -->
             <div class="bento-box__row bento-box__row--content">
@@ -182,7 +194,9 @@
             <!-- header: left title + right Add -->
             <div class="bento-box__row bento-box__row--title">
               <div class="bento-box__title">Skills</div>
-              <div class="bento-box__add">Add</div>
+              <div class="bento-box__add">
+                 <a href="addEdit/skill.html">Add</a>
+              </div>
             </div>
 
             <!-- bottom content row: left = image + details, right = edit -->
@@ -204,7 +218,9 @@
             <!-- header: left title + right Add -->
             <div class="bento-box__row bento-box__row--title">
               <div class="bento-box__title">Education</div>
-              <div class="bento-box__add">Add</div>
+              <div class="bento-box__add">
+                 <a href="addEdit/education.html">Add</a>
+              </div>
             </div>
 
             <!-- bottom content row: left = image + details, right = edit -->
@@ -257,5 +273,38 @@
       </div>
     </main>
     <!-- tooltip styles moved into assets/css/main.css -->
+    <script>
+      // Lightweight tooltip toggle for accessibility
+      (function () {
+        const btn = document.getElementById("pr-points-btn");
+        const tip = document.getElementById("pr-points-tooltip");
+        if (!btn || !tip) return;
+
+        function show() {
+          tip.setAttribute("aria-hidden", "false");
+          btn.setAttribute("aria-expanded", "true");
+          tip.classList.add("tooltip-bubble--visible");
+        }
+        function hide() {
+          tip.setAttribute("aria-hidden", "true");
+          btn.setAttribute("aria-expanded", "false");
+          tip.classList.remove("tooltip-bubble--visible");
+        }
+
+        btn.addEventListener("focus", show);
+        btn.addEventListener("blur", hide);
+        btn.addEventListener("mouseenter", show);
+        btn.addEventListener("mouseleave", hide);
+        btn.addEventListener("keydown", (e) => {
+          if (e.key === "Escape" || e.key === "Esc") hide();
+          if (e.key === "Enter" || e.key === " ") {
+            // toggle on Enter or Space
+            if (btn.getAttribute("aria-expanded") === "true") hide();
+            else show();
+            e.preventDefault();
+          }
+        });
+      })();
+    </script>
   </body>
 </html>
