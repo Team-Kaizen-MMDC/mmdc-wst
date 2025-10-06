@@ -19,14 +19,14 @@ This guide explains how to implement **free bilingual support** (English ↔ Jap
 
 ## Why This Solution?
 
-| Feature | Free i18n (This Solution) | Google Translate API | Other Services |
-|---------|---------------------------|----------------------|----------------|
-| **Cost** | $0 | $20/million chars | $10-50/month |
-| **Speed** | < 50ms | 200-500ms | 100-300ms |
-| **Offline** | ✅ Yes | ❌ No | ❌ No |
-| **Privacy** | ✅ No data sent | ❌ Data sent to Google | ❌ Data sent to service |
-| **Quality** | ⭐⭐⭐⭐⭐ (Human) | ⭐⭐⭐ (Machine) | ⭐⭐⭐⭐ (Depends) |
-| **Customization** | ✅ Full control | ❌ Limited | ⚠️ Some control |
+| Feature           | Free i18n (This Solution) | Google Translate API   | Other Services          |
+| ----------------- | ------------------------- | ---------------------- | ----------------------- |
+| **Cost**          | $0                        | $20/million chars      | $10-50/month            |
+| **Speed**         | < 50ms                    | 200-500ms              | 100-300ms               |
+| **Offline**       | ✅ Yes                    | ❌ No                  | ❌ No                   |
+| **Privacy**       | ✅ No data sent           | ❌ Data sent to Google | ❌ Data sent to service |
+| **Quality**       | ⭐⭐⭐⭐⭐ (Human)        | ⭐⭐⭐ (Machine)       | ⭐⭐⭐⭐ (Depends)      |
+| **Customization** | ✅ Full control           | ❌ Limited             | ⚠️ Some control         |
 
 ---
 
@@ -55,77 +55,77 @@ Create `assets/js/core/translations.js`:
 export const translations = {
   en: {
     // Navigation
-    'nav.home': 'Home',
-    'nav.about': 'About Us',
-    'nav.services': 'Services',
-    'nav.jobs': 'Jobs',
-    'nav.contact': 'Contact',
-    'nav.signin': 'Sign In',
-    'nav.signup': 'Sign Up',
-    
+    "nav.home": "Home",
+    "nav.about": "About Us",
+    "nav.services": "Services",
+    "nav.jobs": "Jobs",
+    "nav.contact": "Contact",
+    "nav.signin": "Sign In",
+    "nav.signup": "Sign Up",
+
     // Hero Section
-    'hero.title': 'Find Your Dream Job in Japan',
-    'hero.subtitle': 'Connect with top employers across Japan',
-    'hero.cta': 'Browse Jobs',
-    
+    "hero.title": "Find Your Dream Job in Japan",
+    "hero.subtitle": "Connect with top employers across Japan",
+    "hero.cta": "Browse Jobs",
+
     // Buttons
-    'btn.apply': 'Apply Now',
-    'btn.learn_more': 'Learn More',
-    'btn.submit': 'Submit',
-    'btn.cancel': 'Cancel',
-    'btn.save': 'Save',
-    'btn.edit': 'Edit',
-    
+    "btn.apply": "Apply Now",
+    "btn.learn_more": "Learn More",
+    "btn.submit": "Submit",
+    "btn.cancel": "Cancel",
+    "btn.save": "Save",
+    "btn.edit": "Edit",
+
     // Forms
-    'form.name': 'Full Name',
-    'form.email': 'Email Address',
-    'form.phone': 'Phone Number',
-    'form.message': 'Your Message',
-    'form.required': 'This field is required',
-    'form.invalid_email': 'Please enter a valid email address',
-    
+    "form.name": "Full Name",
+    "form.email": "Email Address",
+    "form.phone": "Phone Number",
+    "form.message": "Your Message",
+    "form.required": "This field is required",
+    "form.invalid_email": "Please enter a valid email address",
+
     // Footer
-    'footer.copyright': '© 2025 Japan SSW. All rights reserved.',
-    'footer.privacy': 'Privacy Policy',
-    'footer.terms': 'Terms of Service',
+    "footer.copyright": "© 2025 Japan SSW. All rights reserved.",
+    "footer.privacy": "Privacy Policy",
+    "footer.terms": "Terms of Service",
   },
-  
+
   ja: {
     // Navigation
-    'nav.home': 'ホーム',
-    'nav.about': '私たちについて',
-    'nav.services': 'サービス',
-    'nav.jobs': '求人',
-    'nav.contact': 'お問い合わせ',
-    'nav.signin': 'ログイン',
-    'nav.signup': 'アカウント作成',
-    
+    "nav.home": "ホーム",
+    "nav.about": "私たちについて",
+    "nav.services": "サービス",
+    "nav.jobs": "求人",
+    "nav.contact": "お問い合わせ",
+    "nav.signin": "ログイン",
+    "nav.signup": "アカウント作成",
+
     // Hero Section
-    'hero.title': '日本で夢の仕事を見つけよう',
-    'hero.subtitle': '日本全国の優良企業とつながる',
-    'hero.cta': '求人を探す',
-    
+    "hero.title": "日本で夢の仕事を見つけよう",
+    "hero.subtitle": "日本全国の優良企業とつながる",
+    "hero.cta": "求人を探す",
+
     // Buttons
-    'btn.apply': '今すぐ応募',
-    'btn.learn_more': '詳細を見る',
-    'btn.submit': '送信',
-    'btn.cancel': 'キャンセル',
-    'btn.save': '保存',
-    'btn.edit': '編集',
-    
+    "btn.apply": "今すぐ応募",
+    "btn.learn_more": "詳細を見る",
+    "btn.submit": "送信",
+    "btn.cancel": "キャンセル",
+    "btn.save": "保存",
+    "btn.edit": "編集",
+
     // Forms
-    'form.name': '氏名',
-    'form.email': 'メールアドレス',
-    'form.phone': '電話番号',
-    'form.message': 'メッセージ',
-    'form.required': 'この項目は必須です',
-    'form.invalid_email': '有効なメールアドレスを入力してください',
-    
+    "form.name": "氏名",
+    "form.email": "メールアドレス",
+    "form.phone": "電話番号",
+    "form.message": "メッセージ",
+    "form.required": "この項目は必須です",
+    "form.invalid_email": "有効なメールアドレスを入力してください",
+
     // Footer
-    'footer.copyright': '© 2025 Japan SSW. 全著作権所有。',
-    'footer.privacy': 'プライバシーポリシー',
-    'footer.terms': '利用規約',
-  }
+    "footer.copyright": "© 2025 Japan SSW. 全著作権所有。",
+    "footer.privacy": "プライバシーポリシー",
+    "footer.terms": "利用規約",
+  },
 };
 ```
 
@@ -134,15 +134,15 @@ export const translations = {
 Create `assets/js/core/i18n.js`:
 
 ```javascript
-import { Storage } from './Storage.js';
-import { translations } from './translations.js';
-import { EventBus } from './EventBus.js';
+import { Storage } from "./Storage.js";
+import { translations } from "./translations.js";
+import { EventBus } from "./EventBus.js";
 
 export class I18n {
-  static STORAGE_KEY = 'preferred_language';
-  static DEFAULT_LANG = 'en';
-  static SUPPORTED_LANGS = ['en', 'ja'];
-  
+  static STORAGE_KEY = "preferred_language";
+  static DEFAULT_LANG = "en";
+  static SUPPORTED_LANGS = ["en", "ja"];
+
   /**
    * Get current language from storage or browser
    */
@@ -152,17 +152,17 @@ export class I18n {
     if (stored && this.SUPPORTED_LANGS.includes(stored)) {
       return stored;
     }
-    
+
     // 2. Check browser language
-    const browserLang = navigator.language.split('-')[0];
+    const browserLang = navigator.language.split("-")[0];
     if (this.SUPPORTED_LANGS.includes(browserLang)) {
       return browserLang;
     }
-    
+
     // 3. Fallback to default
     return this.DEFAULT_LANG;
   }
-  
+
   /**
    * Set language and update UI
    */
@@ -171,15 +171,15 @@ export class I18n {
       console.warn(`Unsupported language: ${lang}`);
       return;
     }
-    
+
     Storage.set(this.STORAGE_KEY, lang);
     document.documentElement.lang = lang;
     this.updatePageContent();
-    
+
     // Emit event for other components
-    EventBus.emit('language:changed', { language: lang });
+    EventBus.emit("language:changed", { language: lang });
   }
-  
+
   /**
    * Translate a key
    */
@@ -187,43 +187,43 @@ export class I18n {
     const lang = this.getCurrentLanguage();
     return translations[lang]?.[key] || fallback || key;
   }
-  
+
   /**
    * Alias for translate
    */
   static t(key, fallback = null) {
     return this.translate(key, fallback);
   }
-  
+
   /**
    * Update all translatable content on page
    */
   static updatePageContent() {
     // Update text content
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-      const key = el.getAttribute('data-i18n');
+    document.querySelectorAll("[data-i18n]").forEach((el) => {
+      const key = el.getAttribute("data-i18n");
       el.textContent = this.translate(key);
     });
-    
+
     // Update placeholder attributes
-    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-      const key = el.getAttribute('data-i18n-placeholder');
+    document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+      const key = el.getAttribute("data-i18n-placeholder");
       el.placeholder = this.translate(key);
     });
-    
+
     // Update title attributes (tooltips)
-    document.querySelectorAll('[data-i18n-title]').forEach(el => {
-      const key = el.getAttribute('data-i18n-title');
+    document.querySelectorAll("[data-i18n-title]").forEach((el) => {
+      const key = el.getAttribute("data-i18n-title");
       el.title = this.translate(key);
     });
-    
+
     // Update aria-label attributes
-    document.querySelectorAll('[data-i18n-aria]').forEach(el => {
-      const key = el.getAttribute('data-i18n-aria');
-      el.setAttribute('aria-label', this.translate(key));
+    document.querySelectorAll("[data-i18n-aria]").forEach((el) => {
+      const key = el.getAttribute("data-i18n-aria");
+      el.setAttribute("aria-label", this.translate(key));
     });
   }
-  
+
   /**
    * Initialize i18n on page load
    */
@@ -240,43 +240,43 @@ export class I18n {
 Create `assets/js/components/LanguageToggle.js`:
 
 ```javascript
-import { I18n } from '../core/i18n.js';
-import { EventBus } from '../core/EventBus.js';
+import { I18n } from "../core/i18n.js";
+import { EventBus } from "../core/EventBus.js";
 
 export class LanguageToggle {
   constructor(buttonElement) {
     this.button = buttonElement;
     this.init();
   }
-  
+
   init() {
     this.updateButtonText();
     this.attachEventListeners();
   }
-  
+
   attachEventListeners() {
-    this.button.addEventListener('click', () => this.toggleLanguage());
-    
+    this.button.addEventListener("click", () => this.toggleLanguage());
+
     // Update button when language changes from other sources
-    EventBus.on('language:changed', () => this.updateButtonText());
+    EventBus.on("language:changed", () => this.updateButtonText());
   }
-  
+
   toggleLanguage() {
     const current = I18n.getCurrentLanguage();
-    const newLang = current === 'en' ? 'ja' : 'en';
+    const newLang = current === "en" ? "ja" : "en";
     I18n.setLanguage(newLang);
   }
-  
+
   updateButtonText() {
     const current = I18n.getCurrentLanguage();
-    
+
     // Show the language the user can switch TO (not current)
-    if (current === 'en') {
-      this.button.textContent = '日本語'; // "Japanese" in Japanese
-      this.button.setAttribute('aria-label', 'Switch to Japanese');
+    if (current === "en") {
+      this.button.textContent = "日本語"; // "Japanese" in Japanese
+      this.button.setAttribute("aria-label", "Switch to Japanese");
     } else {
-      this.button.textContent = 'English';
-      this.button.setAttribute('aria-label', '英語に切り替え');
+      this.button.textContent = "English";
+      this.button.setAttribute("aria-label", "英語に切り替え");
     }
   }
 }
@@ -289,69 +289,76 @@ Add `data-i18n` attributes to all translatable elements:
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title data-i18n="page.title">Japan SSW - Find Your Dream Job</title>
-</head>
-<body>
-  <!-- Header -->
-  <header class="site-header">
-    <div class="site-header__container">
-      <a href="/" class="site-header__brand">
-        <span data-i18n="nav.home">Home</span>
-      </a>
-      
-      <nav class="site-header__nav">
-        <a href="/about" data-i18n="nav.about">About Us</a>
-        <a href="/services" data-i18n="nav.services">Services</a>
-        <a href="/jobs" data-i18n="nav.jobs">Jobs</a>
-        <a href="/contact" data-i18n="nav.contact">Contact</a>
-      </nav>
-      
-      <div class="site-header__actions">
-        <!-- Language Toggle Button -->
-        <button 
-          id="lang-toggle" 
-          class="btn btn-sm btn-outline-secondary"
-          aria-label="Switch language"
-        >
-          日本語
-        </button>
-        
-        <a href="/signin" class="btn btn-sm btn-outline-primary" data-i18n="nav.signin">Sign In</a>
+  <head>
+    <meta charset="UTF-8" />
+    <title data-i18n="page.title">Japan SSW - Find Your Dream Job</title>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="site-header">
+      <div class="site-header__container">
+        <a href="/" class="site-header__brand">
+          <span data-i18n="nav.home">Home</span>
+        </a>
+
+        <nav class="site-header__nav">
+          <a href="/about" data-i18n="nav.about">About Us</a>
+          <a href="/services" data-i18n="nav.services">Services</a>
+          <a href="/jobs" data-i18n="nav.jobs">Jobs</a>
+          <a href="/contact" data-i18n="nav.contact">Contact</a>
+        </nav>
+
+        <div class="site-header__actions">
+          <!-- Language Toggle Button -->
+          <button
+            id="lang-toggle"
+            class="btn btn-sm btn-outline-secondary"
+            aria-label="Switch language"
+          >
+            日本語
+          </button>
+
+          <a
+            href="/signin"
+            class="btn btn-sm btn-outline-primary"
+            data-i18n="nav.signin"
+            >Sign In</a
+          >
+        </div>
       </div>
-    </div>
-  </header>
-  
-  <!-- Hero Section -->
-  <section class="hero">
-    <h1 data-i18n="hero.title">Find Your Dream Job in Japan</h1>
-    <p data-i18n="hero.subtitle">Connect with top employers across Japan</p>
-    <a href="/jobs" class="btn btn-primary" data-i18n="hero.cta">Browse Jobs</a>
-  </section>
-  
-  <!-- Contact Form -->
-  <form>
-    <input 
-      type="text" 
-      data-i18n-placeholder="form.name"
-      placeholder="Full Name"
-      aria-label="Full Name"
-    >
-    
-    <input 
-      type="email" 
-      data-i18n-placeholder="form.email"
-      placeholder="Email Address"
-      aria-label="Email Address"
-    >
-    
-    <button type="submit" data-i18n="btn.submit">Submit</button>
-  </form>
-  
-  <!-- Load JavaScript -->
-  <script type="module" src="/assets/js/main.js"></script>
-</body>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <h1 data-i18n="hero.title">Find Your Dream Job in Japan</h1>
+      <p data-i18n="hero.subtitle">Connect with top employers across Japan</p>
+      <a href="/jobs" class="btn btn-primary" data-i18n="hero.cta"
+        >Browse Jobs</a
+      >
+    </section>
+
+    <!-- Contact Form -->
+    <form>
+      <input
+        type="text"
+        data-i18n-placeholder="form.name"
+        placeholder="Full Name"
+        aria-label="Full Name"
+      />
+
+      <input
+        type="email"
+        data-i18n-placeholder="form.email"
+        placeholder="Email Address"
+        aria-label="Email Address"
+      />
+
+      <button type="submit" data-i18n="btn.submit">Submit</button>
+    </form>
+
+    <!-- Load JavaScript -->
+    <script type="module" src="/assets/js/main.js"></script>
+  </body>
 </html>
 ```
 
@@ -360,15 +367,15 @@ Add `data-i18n` attributes to all translatable elements:
 Update `assets/js/main.js`:
 
 ```javascript
-import { I18n } from './core/i18n.js';
-import { LanguageToggle } from './components/LanguageToggle.js';
+import { I18n } from "./core/i18n.js";
+import { LanguageToggle } from "./components/LanguageToggle.js";
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   // Initialize i18n
   I18n.init();
-  
+
   // Initialize language toggle button
-  const langToggle = document.getElementById('lang-toggle');
+  const langToggle = document.getElementById("lang-toggle");
   if (langToggle) {
     new LanguageToggle(langToggle);
   }
@@ -382,32 +389,32 @@ document.addEventListener('DOMContentLoaded', () => {
 ### Basic Translation
 
 ```javascript
-import { I18n } from './core/i18n.js';
+import { I18n } from "./core/i18n.js";
 
 // Get current language
 const lang = I18n.getCurrentLanguage(); // 'en' or 'ja'
 
 // Translate a key
-const homeText = I18n.translate('nav.home'); // 'Home' or 'ホーム'
+const homeText = I18n.translate("nav.home"); // 'Home' or 'ホーム'
 
 // Short alias
-const jobsText = I18n.t('nav.jobs'); // 'Jobs' or '求人'
+const jobsText = I18n.t("nav.jobs"); // 'Jobs' or '求人'
 
 // With fallback
-const text = I18n.t('missing.key', 'Default Text'); // 'Default Text'
+const text = I18n.t("missing.key", "Default Text"); // 'Default Text'
 ```
 
 ### Dynamic Content
 
 ```javascript
-import { I18n } from './core/i18n.js';
+import { I18n } from "./core/i18n.js";
 
 // Create dynamic content
-const jobCard = document.createElement('div');
+const jobCard = document.createElement("div");
 jobCard.innerHTML = `
   <h3>${job.title}</h3>
-  <p>${I18n.t('job.location')}: ${job.location}</p>
-  <p>${I18n.t('job.salary')}: ${job.salary}</p>
+  <p>${I18n.t("job.location")}: ${job.location}</p>
+  <p>${I18n.t("job.salary")}: ${job.salary}</p>
   <button data-i18n="btn.apply">Apply Now</button>
 `;
 
@@ -418,23 +425,23 @@ I18n.updatePageContent();
 ### Programmatic Language Change
 
 ```javascript
-import { I18n } from './core/i18n.js';
+import { I18n } from "./core/i18n.js";
 
 // Change to Japanese
-I18n.setLanguage('ja');
+I18n.setLanguage("ja");
 
 // Change to English
-I18n.setLanguage('en');
+I18n.setLanguage("en");
 ```
 
 ### Listen for Language Changes
 
 ```javascript
-import { EventBus } from './core/EventBus.js';
+import { EventBus } from "./core/EventBus.js";
 
-EventBus.on('language:changed', ({ language }) => {
+EventBus.on("language:changed", ({ language }) => {
   console.log(`Language changed to: ${language}`);
-  
+
   // Reload dynamic content if needed
   loadJobListings(language);
 });
@@ -457,22 +464,22 @@ Use **hierarchical dot notation** for organization:
   // Navigation
   'nav.home': 'Home',
   'nav.about': 'About Us',
-  
+
   // Buttons
   'btn.submit': 'Submit',
   'btn.cancel': 'Cancel',
-  
+
   // Forms
   'form.name': 'Full Name',
   'form.email.label': 'Email Address',
   'form.email.placeholder': 'Enter your email',
   'form.email.error.required': 'Email is required',
   'form.email.error.invalid': 'Invalid email format',
-  
+
   // Messages
   'msg.success.submit': 'Form submitted successfully!',
   'msg.error.network': 'Network error. Please try again.',
-  
+
   // Job Listings
   'job.title': 'Job Title',
   'job.location': 'Location',
@@ -491,7 +498,7 @@ Use **hierarchical dot notation** for organization:
 The `<html lang="...">` attribute is automatically updated:
 
 ```javascript
-I18n.setLanguage('ja'); // Sets <html lang="ja">
+I18n.setLanguage("ja"); // Sets <html lang="ja">
 ```
 
 **Why?** Screen readers use this to pronounce text correctly.
@@ -501,12 +508,7 @@ I18n.setLanguage('ja'); // Sets <html lang="ja">
 Use `data-i18n-aria` for accessible labels:
 
 ```html
-<button 
-  data-i18n="btn.apply"
-  data-i18n-aria="btn.apply.aria"
->
-  Apply Now
-</button>
+<button data-i18n="btn.apply" data-i18n-aria="btn.apply.aria">Apply Now</button>
 ```
 
 ### 3. Keyboard Navigation
@@ -546,18 +548,22 @@ When language changes, screen readers announce the new language automatically du
 
 ```javascript
 // translations/common.js - Always loaded
-export const common = { /* ... */ };
+export const common = {
+  /* ... */
+};
 
 // translations/jobs.js - Load only on jobs page
-export const jobs = { /* ... */ };
+export const jobs = {
+  /* ... */
+};
 ```
 
 2. **Code splitting** by page:
 
 ```javascript
 // Only load job translations on jobs page
-if (window.location.pathname === '/jobs') {
-  const { jobs } = await import('./translations/jobs.js');
+if (window.location.pathname === "/jobs") {
+  const { jobs } = await import("./translations/jobs.js");
   Object.assign(translations.en, jobs.en);
   Object.assign(translations.ja, jobs.ja);
 }
@@ -584,36 +590,36 @@ if (window.location.pathname === '/jobs') {
 
 ```javascript
 // tests/playwright/language-toggle.spec.js
-import { test, expect } from '@playwright/test';
+import { test, expect } from "@playwright/test";
 
-test.describe('Language Toggle', () => {
-  test('should switch from English to Japanese', async ({ page }) => {
-    await page.goto('/');
-    
+test.describe("Language Toggle", () => {
+  test("should switch from English to Japanese", async ({ page }) => {
+    await page.goto("/");
+
     // Check initial language (English)
-    await expect(page.locator('[data-i18n="nav.home"]')).toHaveText('Home');
-    
+    await expect(page.locator('[data-i18n="nav.home"]')).toHaveText("Home");
+
     // Click language toggle
-    await page.click('#lang-toggle');
-    
+    await page.click("#lang-toggle");
+
     // Check language switched (Japanese)
-    await expect(page.locator('[data-i18n="nav.home"]')).toHaveText('ホーム');
-    
+    await expect(page.locator('[data-i18n="nav.home"]')).toHaveText("ホーム");
+
     // Check HTML lang attribute
-    await expect(page.locator('html')).toHaveAttribute('lang', 'ja');
+    await expect(page.locator("html")).toHaveAttribute("lang", "ja");
   });
-  
-  test('should persist language preference', async ({ page }) => {
-    await page.goto('/');
-    
+
+  test("should persist language preference", async ({ page }) => {
+    await page.goto("/");
+
     // Switch to Japanese
-    await page.click('#lang-toggle');
-    
+    await page.click("#lang-toggle");
+
     // Reload page
     await page.reload();
-    
+
     // Check language persisted
-    await expect(page.locator('[data-i18n="nav.home"]')).toHaveText('ホーム');
+    await expect(page.locator('[data-i18n="nav.home"]')).toHaveText("ホーム");
   });
 });
 ```
@@ -640,9 +646,9 @@ I18n.updatePageContent();
 
 ```javascript
 try {
-  Storage.set('lang', 'ja');
+  Storage.set("lang", "ja");
 } catch (error) {
-  console.warn('localStorage unavailable:', error);
+  console.warn("localStorage unavailable:", error);
   // Fallback: use session variable
 }
 ```
@@ -653,10 +659,10 @@ try {
 
 ```javascript
 // With fallback
-I18n.t('missing.key', 'Default Text');
+I18n.t("missing.key", "Default Text");
 
 // Or handle missing keys
-const text = I18n.t('key') || 'Default Text';
+const text = I18n.t("key") || "Default Text";
 ```
 
 ---
@@ -676,13 +682,13 @@ const text = I18n.t('key') || 'Default Text';
 
 ```javascript
 // Pluralization
-I18n.t('jobs.count', { count: 5 }); // "5 jobs" or "5つの求人"
+I18n.t("jobs.count", { count: 5 }); // "5 jobs" or "5つの求人"
 
 // Variable interpolation
-I18n.t('greeting', { name: 'Juan' }); // "Hello, Juan!" or "こんにちは、Juanさん!"
+I18n.t("greeting", { name: "Juan" }); // "Hello, Juan!" or "こんにちは、Juanさん!"
 
 // Date formatting
-I18n.formatDate(new Date(), 'long'); // "January 1, 2025" or "2025年1月1日"
+I18n.formatDate(new Date(), "long"); // "January 1, 2025" or "2025年1月1日"
 ```
 
 ---
@@ -695,7 +701,7 @@ I18n.formatDate(new Date(), 'long'); // "January 1, 2025" or "2025年1月1日"
 ✅ **Privacy-friendly** - No external data  
 ✅ **Accessible** - WCAG 2.1 AA compliant  
 ✅ **Lightweight** - Only 8KB total  
-✅ **Easy to maintain** - Simple JSON dictionaries  
+✅ **Easy to maintain** - Simple JSON dictionaries
 
 **Implementation time:** 1-2 days  
 **Ongoing maintenance:** Add new keys as needed (~5 min per page)

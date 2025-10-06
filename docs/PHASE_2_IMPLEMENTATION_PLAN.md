@@ -584,7 +584,7 @@ Implement **free, client-side bilingual support** for English and Japanese users
 ✅ **Low Complexity** - Simple JSON dictionaries and localStorage  
 ✅ **Accessibility Critical** - Essential for users in Japan  
 ✅ **Quick Implementation** - Can be completed in 1-2 days  
-✅ **Offline-Ready** - Works without internet connection  
+✅ **Offline-Ready** - Works without internet connection
 
 ### Architecture
 
@@ -603,19 +603,19 @@ assets/js/
 // core/translations.js
 export const translations = {
   en: {
-    'nav.home': 'Home',
-    'nav.jobs': 'Jobs',
-    'hero.title': 'Find Your Dream Job in Japan',
-    'btn.apply': 'Apply Now',
-    'form.required': 'This field is required',
+    "nav.home": "Home",
+    "nav.jobs": "Jobs",
+    "hero.title": "Find Your Dream Job in Japan",
+    "btn.apply": "Apply Now",
+    "form.required": "This field is required",
   },
   ja: {
-    'nav.home': 'ホーム',
-    'nav.jobs': '求人',
-    'hero.title': '日本で夢の仕事を見つけよう',
-    'btn.apply': '今すぐ応募',
-    'form.required': 'この項目は必須です',
-  }
+    "nav.home": "ホーム",
+    "nav.jobs": "求人",
+    "hero.title": "日本で夢の仕事を見つけよう",
+    "btn.apply": "今すぐ応募",
+    "form.required": "この項目は必須です",
+  },
 };
 ```
 
@@ -623,34 +623,34 @@ export const translations = {
 
 ```javascript
 // core/i18n.js
-import { Storage } from './Storage.js';
-import { translations } from './translations.js';
+import { Storage } from "./Storage.js";
+import { translations } from "./translations.js";
 
 export class I18n {
   static getCurrentLanguage() {
     // 1. Check localStorage
-    const stored = Storage.get('lang');
+    const stored = Storage.get("lang");
     if (stored) return stored;
-    
+
     // 2. Check browser language
-    const browserLang = navigator.language.split('-')[0];
-    return ['en', 'ja'].includes(browserLang) ? browserLang : 'en';
+    const browserLang = navigator.language.split("-")[0];
+    return ["en", "ja"].includes(browserLang) ? browserLang : "en";
   }
-  
+
   static setLanguage(lang) {
-    Storage.set('lang', lang);
+    Storage.set("lang", lang);
     document.documentElement.lang = lang;
     this.updatePageContent();
   }
-  
+
   static translate(key) {
     const lang = this.getCurrentLanguage();
     return translations[lang]?.[key] || key;
   }
-  
+
   static updatePageContent() {
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-      const key = el.getAttribute('data-i18n');
+    document.querySelectorAll("[data-i18n]").forEach((el) => {
+      const key = el.getAttribute("data-i18n");
       el.textContent = this.translate(key);
     });
   }
@@ -672,11 +672,7 @@ export class I18n {
 </button>
 
 <!-- Forms -->
-<input 
-  type="text" 
-  data-i18n-placeholder="form.name"
-  placeholder="Full Name"
->
+<input type="text" data-i18n-placeholder="form.name" placeholder="Full Name" />
 ```
 
 ### Performance
@@ -1083,15 +1079,16 @@ export class LazyLoad {
 
 **Approach:** Free, client-side translation using JSON dictionaries (no API costs)
 
-| Feature                    | Component       | Complexity | Impact | Notes                          |
-| -------------------------- | --------------- | ---------- | ------ | ------------------------------ |
-| Language Toggle            | i18n.js         | Low        | High   | localStorage-based persistence |
-| Translation Dictionary     | translations.js | Medium     | High   | EN/JP JSON mappings            |
-| Dynamic Content Updates    | i18n.js         | Low        | High   | data-i18n attribute system     |
-| Language Detection         | i18n.js         | Low        | Medium | Browser language + manual      |
-| Accessible Toggle Button   | LanguageToggle  | Low        | High   | ARIA labels, keyboard support  |
+| Feature                  | Component       | Complexity | Impact | Notes                          |
+| ------------------------ | --------------- | ---------- | ------ | ------------------------------ |
+| Language Toggle          | i18n.js         | Low        | High   | localStorage-based persistence |
+| Translation Dictionary   | translations.js | Medium     | High   | EN/JP JSON mappings            |
+| Dynamic Content Updates  | i18n.js         | Low        | High   | data-i18n attribute system     |
+| Language Detection       | i18n.js         | Low        | Medium | Browser language + manual      |
+| Accessible Toggle Button | LanguageToggle  | Low        | High   | ARIA labels, keyboard support  |
 
 **Why Phase 2?**
+
 - Target audience is bilingual (Japanese workers, English-speaking employers)
 - Critical for user accessibility in Japan
 - Low complexity (no backend, no API, no cost)

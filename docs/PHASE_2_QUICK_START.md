@@ -329,57 +329,57 @@ const profile = Storage.get("profile", {});
 ```javascript
 // core/i18n.js
 export class I18n {
-  static STORAGE_KEY = 'preferred_language';
-  static DEFAULT_LANG = 'en';
-  
+  static STORAGE_KEY = "preferred_language";
+  static DEFAULT_LANG = "en";
+
   static translations = {
     en: {
-      'nav.home': 'Home',
-      'nav.about': 'About Us',
-      'nav.services': 'Services',
-      'nav.jobs': 'Jobs',
-      'nav.contact': 'Contact',
-      'btn.apply': 'Apply Now',
-      'btn.learn_more': 'Learn More',
-      'footer.copyright': '© 2025 Japan SSW. All rights reserved.'
+      "nav.home": "Home",
+      "nav.about": "About Us",
+      "nav.services": "Services",
+      "nav.jobs": "Jobs",
+      "nav.contact": "Contact",
+      "btn.apply": "Apply Now",
+      "btn.learn_more": "Learn More",
+      "footer.copyright": "© 2025 Japan SSW. All rights reserved.",
     },
     ja: {
-      'nav.home': 'ホーム',
-      'nav.about': '私たちについて',
-      'nav.services': 'サービス',
-      'nav.jobs': '求人',
-      'nav.contact': 'お問い合わせ',
-      'btn.apply': '今すぐ応募',
-      'btn.learn_more': '詳細を見る',
-      'footer.copyright': '© 2025 Japan SSW. 全著作権所有。'
-    }
+      "nav.home": "ホーム",
+      "nav.about": "私たちについて",
+      "nav.services": "サービス",
+      "nav.jobs": "求人",
+      "nav.contact": "お問い合わせ",
+      "btn.apply": "今すぐ応募",
+      "btn.learn_more": "詳細を見る",
+      "footer.copyright": "© 2025 Japan SSW. 全著作権所有。",
+    },
   };
-  
+
   static getCurrentLanguage() {
     return Storage.get(this.STORAGE_KEY, this.DEFAULT_LANG);
   }
-  
+
   static setLanguage(lang) {
     Storage.set(this.STORAGE_KEY, lang);
     document.documentElement.lang = lang;
     this.updatePageContent();
   }
-  
+
   static translate(key) {
     const lang = this.getCurrentLanguage();
     return this.translations[lang]?.[key] || key;
   }
-  
+
   static updatePageContent() {
     // Update all elements with data-i18n attribute
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-      const key = el.getAttribute('data-i18n');
+    document.querySelectorAll("[data-i18n]").forEach((el) => {
+      const key = el.getAttribute("data-i18n");
       el.textContent = this.translate(key);
     });
-    
+
     // Update placeholder attributes
-    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-      const key = el.getAttribute('data-i18n-placeholder');
+    document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+      const key = el.getAttribute("data-i18n-placeholder");
       el.placeholder = this.translate(key);
     });
   }
@@ -390,14 +390,14 @@ export class I18n {
 // <button data-i18n="btn.apply">Apply Now</button>
 
 // Language toggle button
-import { I18n } from './core/i18n.js';
+import { I18n } from "./core/i18n.js";
 
-const toggleBtn = document.getElementById('lang-toggle');
-toggleBtn.addEventListener('click', () => {
+const toggleBtn = document.getElementById("lang-toggle");
+toggleBtn.addEventListener("click", () => {
   const current = I18n.getCurrentLanguage();
-  const newLang = current === 'en' ? 'ja' : 'en';
+  const newLang = current === "en" ? "ja" : "en";
   I18n.setLanguage(newLang);
-  toggleBtn.textContent = newLang === 'en' ? '日本語' : 'English';
+  toggleBtn.textContent = newLang === "en" ? "日本語" : "English";
 });
 ```
 
@@ -518,8 +518,8 @@ form.addEventListener('submit', (e) => {
 
 ```html
 <!-- 1. Add language toggle button to header -->
-<button 
-  id="lang-toggle" 
+<button
+  id="lang-toggle"
   class="btn btn-sm btn-outline-secondary"
   aria-label="Switch language"
 >
@@ -536,24 +536,24 @@ form.addEventListener('submit', (e) => {
 
 ```javascript
 // 3. Initialize i18n on page load
-import { I18n } from './core/i18n.js';
+import { I18n } from "./core/i18n.js";
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   // Set initial language from storage
   const lang = I18n.getCurrentLanguage();
   document.documentElement.lang = lang;
   I18n.updatePageContent();
-  
+
   // Update toggle button text
-  const toggleBtn = document.getElementById('lang-toggle');
-  toggleBtn.textContent = lang === 'en' ? '日本語' : 'English';
-  
+  const toggleBtn = document.getElementById("lang-toggle");
+  toggleBtn.textContent = lang === "en" ? "日本語" : "English";
+
   // Handle toggle clicks
-  toggleBtn.addEventListener('click', () => {
+  toggleBtn.addEventListener("click", () => {
     const current = I18n.getCurrentLanguage();
-    const newLang = current === 'en' ? 'ja' : 'en';
+    const newLang = current === "en" ? "ja" : "en";
     I18n.setLanguage(newLang);
-    toggleBtn.textContent = newLang === 'en' ? '日本語' : 'English';
+    toggleBtn.textContent = newLang === "en" ? "日本語" : "English";
   });
 });
 ```
