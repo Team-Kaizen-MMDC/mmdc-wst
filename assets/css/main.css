@@ -1824,7 +1824,7 @@ footer {
 }
 
 .muted {
-  color: rgba(0, 0, 0, 0.6);
+  color: #595959; /* Darker gray for better contrast (WCAG AA compliant: 7:1 ratio) */
   font-size: 0.95rem;
 }
 
@@ -2984,23 +2984,27 @@ a:hover,
 a:focus {
   text-decoration: underline;
 }
- 
-
 
 /* ===============================
    Company  Dashboard - Bento Layout
    =============================== */
 
+body.company-dashboard {
+  background-color: #f7f7f7; /* Light gray background for the page */
+}
 
-
-         body.company-dashboard {
-            background-color: #f7f7f7; /* Light gray background for the page */
-        }
-
-         /* -------------------------------
+/* -------------------------------
               Bento Wrapper and Container
            --------------------------------*/
 
+body.company-dashboard .bento-wrapper {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 40px 20px;
+  min-height: 100vh;
+}
 
         body.company-dashboard .bento-wrapper {
             width: 100%;
@@ -3046,56 +3050,54 @@ a:focus {
  /* -------------------------------
               Base Bento Box Styling
            --------------------------------*/
-        body.company-dashboard .bento-box {
-            box-sizing: border-box;
-            background: #ffffff;
-            border-radius: 8px;
-            padding: 24px;
+body.company-dashboard .bento-box {
+  box-sizing: border-box;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 24px;
 
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03); /* Lighter shadow for boxes */
-            border: 1px solid #eee; /* Subtle border for definition */
-            
-            display: flex;
-            flex-direction: column;
-            gap: 15px; /* Default spacing between content elements */
-            min-height: 150px;
-            
-            /* General text styles */
-            font-size: 16px;
-            color: #290000;
-            
-        }
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03); /* Lighter shadow for boxes */
+  border: 1px solid #eee; /* Subtle border for definition */
 
-                
-        /* -------------------------------
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Default spacing between content elements */
+  min-height: 150px;
+
+  /* General text styles */
+  font-size: 16px;
+  color: #290000;
+}
+
+/* -------------------------------
               Box 1: Navigation Bar Styling
            --------------------------------*/
 
-          /* Box 1: Navigation Bar */
+/* Box 1: Navigation Bar */
 .bento-box--navi {
   min-height: unset !important;
-  grid-area: box-1;              /* keep grid placement */
-  display: flex !important;      /* force flex, override .bento-box */
-  flex-direction: row !important;/* force horizontal */
+  grid-area: box-1; /* keep grid placement */
+  display: flex !important; /* force flex, override .bento-box */
+  flex-direction: row !important; /* force horizontal */
   align-items: center;
   justify-content: space-evenly;
   gap: 30px;
-  padding:  10px 15px;
+  padding: 10px 15px;
 
   box-shadow: none;
   border: none;
   border-bottom: 1px solid #eee;
   padding: 0 0 15px 0;
   background: none;
-  min-height: auto;     
-   height: auto;
+  min-height: auto;
+  height: auto;
 }
 
 /* Navigation links inside Box 1 */
 .bento-box--navi .bento-box__navi-item {
-  display: inline-block;          /* make links line up horizontally */
+  display: inline-block; /* make links line up horizontally */
   font-size: 16px;
-  color: #A79F9F;
+  color: #a79f9f;
   cursor: pointer;
   padding-bottom: 5px;
   text-decoration: none;
@@ -3107,210 +3109,379 @@ a:focus {
   font-weight: 600;
 }
 
-
-
-            /* -------------------------------
+/* -------------------------------
               General Content Styling
            --------------------------------*/
-             .bento-box__title {
-            font-size: 24px;
-            font-weight: 700;
-            color: #290000;
-            margin: 0;
-            padding: 0;
-        }
-        
-        .bento-box__header-flex {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 5px; /* Space below the main header row */
-        }
+.bento-box__title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #290000;
+  margin: 0;
+  padding: 0;
+}
 
-        .bento-box__link {
-            font-size: 13px;
-            color: #290000;
-            text-decoration: none;
-        }
-        
-        /* Red link style used in multiple places */
-        .text-red {
-            color: #EB0000;
-            font-weight: 500;
-        }
+.bento-box__header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px; /* Space below the main header row */
+}
 
-          /* -------------------------------
+.bento-box__link {
+  font-size: 13px;
+  color: #290000;
+  text-decoration: none;
+}
+
+/* Red link style used in multiple places */
+.text-red {
+  color: #eb0000;
+  font-weight: 500;
+}
+
+/* -------------------------------
               Box 2: Profile Styling
            --------------------------------*/
-            .bento-box__title {
-            font-size: 24px;
-            font-weight: 700;
-            color: #333;
-            margin: 0;
-            padding: 0;
-        }
-        
-        .bento-box__header-flex {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 5px; /* Space below the main header row */
-        }
-        
-        .bento-box__link {
-            font-size: 14px;
-            color: #555;
-            text-decoration: none;
-        }
-        
-        /* ALL CTA used in multiple places */
-        .text-red {
-            color: #4E0303;
-            font-weight: 500;
-        }
+.bento-box__title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
 
-        .text-viewAll {
-          color: #eb0000;
-            font-weight: 500;
-        }
+.bento-box__header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px; /* Space below the main header row */
+}
 
-        /* -------------------------------
+.bento-box__link {
+  font-size: 14px;
+  color: #555;
+  text-decoration: none;
+}
+
+/* ALL CTA used in multiple places */
+.text-red {
+  color: #4e0303;
+  font-weight: 500;
+}
+
+.text-viewAll {
+  color: #eb0000;
+  font-weight: 500;
+}
+
+/* -------------------------------
               Box 2: Profile Styling
            --------------------------------*/
-        .bento-box--profile {
-            gap: 5px; /* Closer gap for profile details */
-          
-        }
-        
-        .bento-box--profile .header-group {
-            display: flex;
-            justify-content: space-between;
-            align-items: first baseline;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 15px;
-            margin-bottom: 10px;
-            
-        }
-        
-        .bento-box--profile .title-wrapper{
-          display: flex;
-          flex-direction: column;
-          gap: 2px;
-        }
-        .bento-box__subtitle {
-            font-size: 16px;
-            color: #9fa7a1;
-            margin-bottom: 0px;
-        }
-        
-        .bento-box__link--block {
-            display: block;
-            margin-bottom: 10px;
-            font-size: 16px;
-        }
-        
-        .bento-box__cta {
-            display: inline-block;
-            background-color: #f7f7f7;
-            border-color: none;
-            color: #EB0000;
-            border: none;
-            stroke: 2px;
-            padding: 8px 12px;
-            border-radius: 4px;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            margin-top: 15px;
-            margin-bottom: 15px;
-        }
+.bento-box--profile {
+  gap: 5px; /* Closer gap for profile details */
+}
 
-        
-        /* -------------------------------
+.bento-box--profile .header-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: first baseline;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 15px;
+  margin-bottom: 10px;
+}
+
+.bento-box--profile .title-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.bento-box__subtitle {
+  font-size: 16px;
+  color: #9fa7a1;
+  margin-bottom: 0px;
+}
+
+.bento-box__link--block {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.bento-box__cta {
+  display: inline-block;
+  background-color: #f7f7f7;
+  border-color: none;
+  color: #eb0000;
+  border: none;
+  stroke: 2px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+/* -------------------------------
               Box 3 & 4: List/Metric Styling
            --------------------------------*/
-       .bento-box__list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            line-height: 2.2; 
-        }
-        .bento-box__list li {
-            font-size: 14px;
-            color: #333;
-        }
-        .bento-box__list li::before {
-            content: "•";
-            color: #A79F9F;
-            font-weight: bold;
-            display: inline-block;
-            width: 1em;
-            margin-left: -1em;
-        }
+.bento-box__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  line-height: 2.2;
+}
+.bento-box__list li {
+  font-size: 14px;
+  color: #333;
+}
+.bento-box__list li::before {
+  content: "•";
+  color: #a79f9f;
+  font-weight: bold;
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
+}
 
-          
-        /* -------------------------------
+/* -------------------------------
               Box 5 & 6: Item List Styling
            --------------------------------*/
 
-            /* -------------------------------
+/* -------------------------------
               Box 5 & 6: Item List Styling
            --------------------------------*/
-        .bento-box__list-item-wrapper {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
+.bento-box__list-item-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
 
-        .bento-box__item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            gap: 10px;
-        }
-        
-        /* The gray block on the left of applicant name */
-        .bento-box__item-thumbnail {
-            width: 40px;
-            height: 40px;
-            background-color: #E0E0E0;
-            border-radius: 4px;
-            flex-shrink: 0;
-        }
+.bento-box__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  gap: 10px;
+}
 
-        .bento-box__item-details {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
+/* The gray block on the left of applicant name */
+.bento-box__item-thumbnail {
+  width: 40px;
+  height: 40px;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
 
-        .bento-box__item-name {
-            font-size: 16px;
-            font-weight: 600;
-            color: #333;
-            margin: 0;
-        }
-        .bento-box__item-info {
-            font-size: 14px;
-            color: #A79F9F;
-            margin: 0;
-        }
-        
-        /* Red 'view' link style next to items */
-        .bento-box__item a.bento-box__link {
-            flex-shrink: 0;
-            text-decoration: none;
-            font-weight: 500;
-            padding: 5px 0;
-            font-size: 16px;
-        }
+.bento-box__item-details {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
 
+.bento-box__item-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+.bento-box__item-info {
+  font-size: 14px;
+  color: #a79f9f;
+  margin: 0;
+}
 
+/* Red 'view' link style next to items */
+.bento-box__item a.bento-box__link {
+  flex-shrink: 0;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 5px 0;
+  font-size: 16px;
+}
 
+/*--CONTACT CARD */
 
+/* --- Card Container Styles (Fixed Width) --- */
+.contact-card-container {
+  /* Fixed width for non-responsive look */
+  width: 650px;
+  max-width: 95%; /* Still keeps it usable on very small screens */
+  margin: 40px auto;
+  background-color: white;
+  border-radius: 16px;
+  /* Shadow converted from Tailwind shadow-2xl */
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+}
 
+.card-content-wrapper {
+  display: flex;
+  /* Ensures the layout remains fixed side-by-side */
+}
+
+/* --- Left Header/Branding Side --- */
+.card-header-left {
+  padding: 40px;
+  width: 33.3333%; /* 1/3 width */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #a57668; /* indigo-600 */
+  color: white;
+  box-sizing: border-box;
+}
+
+.header-icon {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 16px;
+}
+
+.header-title {
+  font-size: 1.5rem; /* 2xl */
+  font-weight: 700; /* bold */
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.header-subtitle {
+  color: #ffffff; /* indigo-200 */
+  text-align: center;
+  font-size: 0.875rem; /* sm */
+}
+
+.contact-info-block {
+  margin-top: 24px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.875rem; /* sm */
+}
+
+.contact-detail {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.detail-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+}
+
+/* --- Right Form Side --- */
+.card-form-right {
+  padding: 40px;
+  width: 66.6667%; /* 2/3 width */
+  box-sizing: border-box;
+}
+
+.form-title {
+  color: #290000; /* gray-900 */
+  font-weight: 600; /* semibold */
+  font-size: 1.25rem; /* xl */
+  margin-bottom: 24px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e5e7eb; /* border-b */
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px; /* space-y-6 */
+}
+
+.contact-card-container .form-label {
+  display: block;
+  font-size: 0.875rem; /* sm */
+  font-weight: 500; /* medium */
+  color: #290000; /* gray-700 */
+  margin-bottom: 4px; /* mb-1 */
+}
+
+.contact-card-container .form-input,
+.contact-card-container .form-textarea {
+  width: 100%;
+  padding: 10px 16px; /* px-4 py-2 */
+  border: 1px solid #a57668; /* border-gray-300 */
+  border-radius: 8px; /* rounded-lg */
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
+  transition: border-color 0.15s, box-shadow 0.15s;
+  box-sizing: border-box;
+  resize: none; /* Prevents vertical resizing of textarea */
+}
+
+/* Focus styles matching the original Tailwind focus ring */
+.contact-card-container .form-input:focus,
+.contact-card-container .form-textarea:focus {
+  outline: none;
+  border-color: #a57668; /* indigo-600 */
+  box-shadow: 0 0 0 3px #a57668; /* focus:ring-2 focus:ring-indigo-500 */
+}
+
+/* --- Submit Button --- */
+.contact-card-container .submit-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px; /* px-6 py-3 */
+  border: none;
+  font-size: 1rem; /* base */
+  font-weight: 500; /* medium */
+  border-radius: 8px; /* rounded-lg */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -2px rgba(0, 0, 0, 0.1); /* shadow-md */
+  color: white;
+  background-color: #eb0000; /* indigo-600 */
+  cursor: pointer;
+  transition: background-color 0.15s, transform 0.15s;
+}
+
+.contact-card-container .submit-button:hover {
+  background-color: #be0202; /* indigo-700 */
+  transform: scale(1.01);
+}
+
+.contact-card-container .submit-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px #a5b4fc, 0 0 0 6px #eb0000; /* focus ring */
+}
+
+.contact-card-container .button-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+}
+
+/* --- Success Message --- */
+.contact-card-container .success-message {
+  margin-top: 24px;
+  padding: 16px;
+  background-color: #d1fae5; /* green-100 */
+  color: #065f46; /* green-700 */
+  border-radius: 8px;
+  border: 1px solid #a7f3d0; /* green-200 */
+}
+.contact-card-container .success-text {
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+
+/* Utility to hide the element */
+.contact-card-container .hidden {
+  display: none !important;
+}
 /* ===========================
    About Us Card (custom only)
    =========================== */
@@ -3347,7 +3518,7 @@ a:focus {
   margin-top: 1.5rem;
   margin-bottom: 0.5rem;
   color: #290000;
-   padding: 2rem;
+  padding: 2rem;
   padding: 2rem;
 }
 
@@ -3355,7 +3526,7 @@ a:focus {
   margin-bottom: 1rem;
   color: var(--text-color, #290000);
 }
- main
+main
 
 /* ===========================
    Job Detail Page (HTML+CSS)

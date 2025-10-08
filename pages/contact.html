@@ -51,51 +51,78 @@
           <a class="site-header__signup muted" href="createAccount.html"
             >Signup</a
           >
-          <a class="btn btn-primary site-header__login-btn" href="#">Login</a>
+          <a class="btn btn-primary site-header__login-btn" href="signin.html">Login</a>
         </div>
       </div>
     </header>
 
     <!-- Main Content -->
     <main>
-      <section class="py-5">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-8 mx-auto">
-              <h1 class="mb-4">Contact Us</h1>
-              <p class="lead">Get in touch with our team.</p>
-
-              <form class="mt-4">
-                <div class="mb-3">
-                  <label for="name" class="form-label">Name</label>
-                  <input type="text" class="form-control" id="name" required />
+     <!-- Main Container -->
+    <div class="contact-card-container">
+        <div class="card-content-wrapper">
+            <!-- Left Side (Branding/Header Info) -->
+            <div class="card-header-left">
+                <!-- Using a simple text icon since we can't reliably style lucide icons without Tailwind, but we'll include the script anyway -->
+                <i data-lucide="mail-open" class="header-icon"></i>
+                <h2 class="header-title">Get In Touch</h2>
+                <p class="header-subtitle">
+                    We'd love to hear from you! Fill out the form to send us a message.
+                </p>
+                <!-- Static Contact Info -->
+                <div class="contact-info-block">
+                  
                 </div>
-                <div class="mb-3">
-                  <label for="email" class="form-label">Email</label>
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="email"
-                    required
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="message" class="form-label">Message</label>
-                  <textarea
-                    class="form-control"
-                    id="message"
-                    rows="5"
-                    required
-                  ></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">
-                  Send Message
-                </button>
-              </form>
             </div>
-          </div>
+
+            <!-- Right Side (Form Fields) -->
+            <div class="card-form-right">
+                <h3 class="form-title">
+                    Send Us a Message
+                </h3>
+
+                <!-- The Actual Contact Form -->
+                <form id="contactForm" class="contact-form">
+                    <!-- Name Input -->
+                    <div class="form-group">
+                        <label for="name" class="form-label">Full Name</label>
+                        <input type="text" id="name" name="name" placeholder="Your name" required
+                               class="form-input">
+                    </div>
+
+                    <!-- Email Input -->
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input type="email" id="email" name="email" placeholder="you@example.com" required
+                               class="form-input">
+                    </div>
+
+                    <!-- Message Textarea -->
+                    <div class="form-group">
+                        <label for="message" class="form-label">Your Message</label>
+                        <textarea id="message" name="message" rows="4" placeholder="Type your message here..." required
+                                  class="form-textarea"></textarea>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="submit-button">
+                        <i data-lucide="send" class="button-icon"></i>
+                        Send Message
+                    </button>
+                </form>
+
+                <!-- Confirmation Message Box (Hidden by default) -->
+                <div id="successMessage" class="success-message hidden">
+                    <p class="success-text">
+                        <i data-lucide="check-circle" class="button-icon"></i>
+                        Message sent successfully! We will get back to you shortly.
+                    </p>
+                </div>
+            </div>
         </div>
-      </section>
+    </div>
+
+
     </main>
 
     <!-- Footer -->

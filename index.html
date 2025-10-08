@@ -97,14 +97,15 @@
       <!-- Job Board (card panel centered) -->
       <section id="jobs" class="section-padding">
         <div class="container">
+          <h2 class="section-title sr-only">Job Listings</h2>
           <div class="flex-center">
             <div class="job-panel feature-card w-760">
               <ul class="job-list">
                 <li class="job-item job-panel__item">
                   <div class="job-details">
-                    <h4 class="feature-card__title job-panel__title">
+                    <h3 class="feature-card__title job-panel__title">
                       Mechanic — Ground Support (Haneda)
-                    </h4>
+                    </h3>
                     <p class="muted feature-card__desc">
                       Haneda Airport — Tokyo
                     </p>
@@ -120,9 +121,9 @@
 
                 <li class="job-item job-panel__item">
                   <div class="job-details">
-                    <h4 class="job-panel__title">
+                    <h3 class="job-panel__title">
                       Cleaner — Facilities Maintenance
-                    </h4>
+                    </h3>
                     <p class="muted job-panel__meta">
                       Office Facilities — Tokyo
                     </p>
@@ -138,9 +139,9 @@
 
                 <li class="job-item job-panel__item">
                   <div class="job-details">
-                    <h4 class="job-panel__title">
+                    <h3 class="job-panel__title">
                       Construction Worker — Site Support
-                    </h4>
+                    </h3>
                     <p class="muted job-panel__meta">Contractor — Saitama</p>
                   </div>
                   <div class="job-actions">
@@ -154,7 +155,7 @@
 
                 <li class="job-item job-panel__item">
                   <div class="job-details">
-                    <h4 class="job-panel__title">Server — Hospitality</h4>
+                    <h3 class="job-panel__title">Server — Hospitality</h3>
                     <p class="muted job-panel__meta">Restaurant — Tokyo</p>
                   </div>
                   <div class="job-actions">
@@ -169,7 +170,7 @@
                 <!-- Inserted job: Ward Nursing Support (from pages/jobs/job.html) -->
                 <li class="job-item job-panel__item">
                   <div class="job-details">
-                    <h4 class="job-panel__title">Ward Nursing Support</h4>
+                    <h3 class="job-panel__title">Ward Nursing Support</h3>
                     <p class="muted job-panel__meta">
                       Jhesperus Japan Co., Ltd. — Tokyo
                     </p>
@@ -538,12 +539,19 @@
             inbox.
           </p>
           <div class="flex-center gap-05">
+            <label for="newsletter-email" class="sr-only"
+              >Email address for job alerts</label
+            >
             <input
               type="email"
+              id="newsletter-email"
               class="form-control"
               placeholder="Your email address"
+              aria-label="Email address for job alerts"
             />
-            <button class="btn btn-dark disabled">Sign Up Demo</button>
+            <button class="btn btn-dark disabled" aria-disabled="true">
+              Sign Up Demo
+            </button>
           </div>
         </div>
       </section>
