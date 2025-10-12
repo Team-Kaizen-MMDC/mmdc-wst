@@ -43,6 +43,58 @@ class App {
       offcanvasEl.addEventListener("hidden.bs.offcanvas", () => {
         if (toggler) toggler.focus();
       });
+      // Ensure links inside the offcanvas navigate after it finishes hiding.
+      // This prevents Bootstrap's offcanvas backdrop/overflow from blocking
+      // normal navigation (especially when using history or smooth scroll).
+      offcanvasEl.addEventListener("click", (e) => {
+        const anchor = e.target.closest && e.target.closest("a");
+        if (!anchor) return;
+
+        const href = anchor.getAttribute("href");
+        if (!href || href.trim() === "") return;
+
+        // Only defer navigation when it's an in-page anchor or the element
+        // is intended to dismiss the offcanvas. Otherwise, let the browser
+        // handle navigation immediately (avoid unnecessary preventDefault).
+        const shouldDefer =
+          href.startsWith("#") || anchor.hasAttribute("data-bs-dismiss");
+        if (!shouldDefer) return; // allow default navigation
+
+        // If offcanvas isn't actually visible, just navigate immediately.
+        if (!offcanvasEl.classList.contains("show")) {
+          if (href.startsWith("#")) {
+            if (history.pushState) history.pushState(null, null, href);
+            else window.location.hash = href;
+          } else {
+            window.location.href = href;
+          }
+          return;
+        }
+
+        // Prevent default navigation; navigate after offcanvas hides.
+        e.preventDefault();
+
+        const doNavigate = () => {
+          if (href.startsWith("#")) {
+            if (history.pushState) history.pushState(null, null, href);
+            else window.location.hash = href;
+          } else {
+            window.location.href = href;
+          }
+        };
+
+        const onHidden = () => {
+          doNavigate();
+          offcanvasEl.removeEventListener("hidden.bs.offcanvas", onHidden);
+        };
+
+        offcanvasEl.addEventListener("hidden.bs.offcanvas", onHidden);
+        // If the link does not have data-bs-dismiss, trigger hide now.
+        if (!anchor.hasAttribute("data-bs-dismiss")) {
+          const bsOff = bootstrap.Offcanvas.getInstance(offcanvasEl);
+          if (bsOff) bsOff.hide();
+        }
+      });
     }
 
     // Log successful initialization

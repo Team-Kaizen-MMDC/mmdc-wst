@@ -37,25 +37,44 @@ export class SmoothScroll {
     if (targetElement) {
       e.preventDefault();
 
-      // Calculate scroll position with header offset
-      const targetPosition =
-        targetElement.getBoundingClientRect().top + window.pageYOffset;
-      const offsetPosition = targetPosition - this.headerHeight - 20; // 20px extra padding
+      const doScroll = () => {
+        // Calculate scroll position with header offset
+        const targetPosition =
+          targetElement.getBoundingClientRect().top + window.pageYOffset;
+        const offsetPosition = targetPosition - this.headerHeight - 20; // 20px extra padding
 
-      // Smooth scroll to position
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
+        // Smooth scroll to position
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth",
+        });
 
-      // Update URL hash without jumping
-      if (history.pushState) {
-        history.pushState(null, null, `#${targetId}`);
+        // Update URL hash without jumping
+        if (history.pushState) {
+          history.pushState(null, null, `#${targetId}`);
+        }
+
+        // Set focus to target element for accessibility
+        targetElement.setAttribute("tabindex", "-1");
+        targetElement.focus({ preventScroll: true });
+      };
+
+      // If an offcanvas is currently open, wait until it is hidden
+      // before attempting to scroll (Bootstrap hides offcanvas with animation
+      // and sets body overflow which can block scroll attempts).
+      const openOffcanvas =
+        document.querySelector(".offcanvas.show") ||
+        e.currentTarget.closest(".offcanvas");
+      if (openOffcanvas && openOffcanvas.classList.contains("show")) {
+        const handler = () => {
+          doScroll();
+          openOffcanvas.removeEventListener("hidden.bs.offcanvas", handler);
+        };
+        openOffcanvas.addEventListener("hidden.bs.offcanvas", handler);
+        // allow Bootstrap to handle the closing (data-bs-dismiss on the link)
+      } else {
+        doScroll();
       }
-
-      // Set focus to target element for accessibility
-      targetElement.setAttribute("tabindex", "-1");
-      targetElement.focus({ preventScroll: true });
     }
   }
 
