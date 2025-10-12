@@ -80,11 +80,20 @@ export class I18n {
       return this.defaultTexts[key] || key;
     }
 
-    return (
-      (this.translations[this.current] &&
-        this.translations[this.current][key]) ||
-      key
-    );
+    // Prefer the loaded translation for the current language. If the
+    // translations are missing (locale failed to load) or the specific key
+    // is not present, fall back to the captured default English text so the
+    // page shows readable content instead of exposing the i18n key itself.
+    const langMap = this.translations[this.current];
+    if (langMap && typeof langMap[key] !== "undefined") {
+      return langMap[key];
+    }
+
+    // fallback to original English text if available
+    if (this.defaultTexts[key]) return this.defaultTexts[key];
+
+    // last resort: return the key so callers still get a string
+    return key;
   }
 
   updatePageContent() {
