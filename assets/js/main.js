@@ -34,6 +34,17 @@ class App {
     // Initialize smooth scrolling for anchor links
     new SmoothScroll();
 
+    // Accessibility: return focus to toggler after offcanvas closes (if present)
+    const offcanvasEl = document.getElementById("siteOffcanvas");
+    if (offcanvasEl) {
+      const toggler = document.querySelector(
+        '[data-bs-toggle="offcanvas"][data-bs-target="#siteOffcanvas"]'
+      );
+      offcanvasEl.addEventListener("hidden.bs.offcanvas", () => {
+        if (toggler) toggler.focus();
+      });
+    }
+
     // Log successful initialization
     console.log("✅ All features initialized successfully");
   }

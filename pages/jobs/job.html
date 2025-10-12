@@ -30,7 +30,7 @@
     />
   </head>
   <body>
-    <!-- Shared Header -->
+    <!-- Shared Header (offcanvas mobile nav) -->
     <header class="site-header">
       <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light">
@@ -38,19 +38,20 @@
             >Japan SSW</a
           >
 
+          <!-- Offcanvas toggler for mobile -->
           <button
-            class="navbar-toggler"
+            class="btn btn-outline-secondary d-lg-none"
             type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarMain"
-            aria-controls="navbarMain"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#siteOffcanvas"
+            aria-controls="siteOffcanvas"
+            aria-label="Open menu"
           >
             <span class="navbar-toggler-icon"></span>
           </button>
 
-          <div class="collapse navbar-collapse" id="navbarMain">
+          <!-- Desktop nav (visible on lg+) -->
+          <div class="collapse navbar-collapse d-none d-lg-flex" id="navbarNav">
             <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
               <li class="nav-item">
                 <a
@@ -89,6 +90,77 @@
             </div>
           </div>
         </nav>
+      </div>
+
+      <!-- Offcanvas (mobile) -->
+      <div
+        class="offcanvas offcanvas-start"
+        tabindex="-1"
+        id="siteOffcanvas"
+        aria-labelledby="siteOffcanvasLabel"
+      >
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="siteOffcanvasLabel">Menu</h5>
+          <button
+            type="button"
+            class="btn-close text-reset"
+            data-bs-dismiss="offcanvas"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="offcanvas-body d-flex flex-column">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a
+                class="nav-link py-3"
+                href="../../index.html#jobs"
+                data-bs-dismiss="offcanvas"
+                >Jobs</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link py-3"
+                href="../../index.html#companies"
+                data-bs-dismiss="offcanvas"
+                >Companies</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link py-3"
+                href="../agency.html"
+                data-bs-dismiss="offcanvas"
+                >Agency</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link py-3"
+                href="../about.html"
+                data-bs-dismiss="offcanvas"
+                >About</a
+              >
+            </li>
+          </ul>
+
+          <div
+            class="mt-auto d-flex justify-content-between align-items-center pt-3 border-top"
+          >
+            <a
+              class="btn btn-outline-secondary"
+              href="../createAccount.html"
+              data-bs-dismiss="offcanvas"
+              >Signup</a
+            >
+            <a
+              class="btn btn-danger"
+              href="../signin.html"
+              data-bs-dismiss="offcanvas"
+              >Login</a
+            >
+          </div>
+        </div>
       </div>
     </header>
 

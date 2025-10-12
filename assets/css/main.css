@@ -372,26 +372,90 @@ button {
 
 /* Mobile menu styling */
 @media (max-width: 991.98px) {
+  /* Make the collapsed navbar behave like a full-width panel */
   .site-header .navbar-collapse {
-    margin-top: 1rem;
-    padding-top: 1rem;
+    margin-top: 0.75rem;
+    padding: 0.75rem 0;
     border-top: 1px solid var(--ui-color);
+    background: var(--light-color);
+    width: 100%;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
   }
 
+  /* Stack nav items vertically and stretch to full width */
   .site-header .navbar-nav {
-    gap: 0.25rem;
-  }
-
-  .site-header .nav-link {
-    padding: 0.5rem 0;
-  }
-
-  .site-header .site-header__actions {
-    margin-top: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--ui-color);
+    gap: 0;
+    flex-direction: column;
+    margin: 0;
     width: 100%;
   }
+
+  /* Larger, left-aligned tap targets for mobile */
+  .site-header .nav-link {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-size: 1.0625rem; /* slightly larger for touch */
+    color: var(--dark-color);
+  }
+
+  /* subtle divider between items to improve readability */
+  .site-header .nav-link + .nav-link {
+    border-top: 1px solid rgba(0, 0, 0, 0.03);
+  }
+
+  /* Auth actions should sit inside the panel and align to the right; signup pushed left */
+  .site-header .site-header__actions {
+    margin-top: 0.5rem;
+    padding: 0.75rem 1rem;
+    border-top: 1px solid var(--ui-color);
+    width: 100%;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  /* Make signup appear to the left and login to the right */
+  .site-header__signup {
+    margin-right: auto;
+    padding-left: 0;
+    font-size: 1rem;
+  }
+
+  .site-header__login-btn {
+    padding: 0.5rem 0.75rem;
+  }
+
+  /* Keep toggler compact */
+  .navbar-toggler {
+    border: 1px solid var(--ui-color);
+    padding: 0.35rem 0.5rem;
+  }
+}
+
+/* Offcanvas tweaks for Phase 2 mobile panel */
+.offcanvas.offcanvas-start {
+  width: 85%; /* nearly full width on small devices */
+  max-width: 360px; /* keep a sane max width on larger small screens */
+  background: var(--light-color);
+}
+
+.offcanvas .nav-link {
+  font-size: 1.125rem; /* larger tap target */
+  padding-left: 1rem;
+}
+
+.offcanvas .mt-auto {
+  padding-top: 1rem;
+}
+
+.offcanvas .btn-close {
+  filter: brightness(0.25);
+}
+
+/* ensure offcanvas body scrolls when content overflows */
+.offcanvas-body {
+  overflow-y: auto;
 }
 
 /* Desktop menu alignment */
