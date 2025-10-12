@@ -41,7 +41,10 @@
     <header class="site-header">
       <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light">
-          <a class="navbar-brand site-header__brand" href="index.html"
+          <a
+            class="navbar-brand site-header__brand"
+            href="index.html"
+            data-i18n="site.brand"
             >Japan SSW</a
           >
 
@@ -61,10 +64,18 @@
           <div class="collapse navbar-collapse d-none d-lg-flex" id="navbarNav">
             <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link site-header__nav-link" href="#jobs">Jobs</a>
+                <a
+                  class="nav-link site-header__nav-link"
+                  href="#jobs"
+                  data-i18n="nav.jobs"
+                  >Jobs</a
+                >
               </li>
               <li class="nav-item">
-                <a class="nav-link site-header__nav-link" href="#companies"
+                <a
+                  class="nav-link site-header__nav-link"
+                  href="#companies"
+                  data-i18n="nav.services"
                   >Companies</a
                 >
               </li>
@@ -72,6 +83,7 @@
                 <a
                   class="nav-link site-header__nav-link"
                   href="pages/agency.html"
+                  data-i18n="nav.agency"
                   >Agency</a
                 >
               </li>
@@ -79,6 +91,7 @@
                 <a
                   class="nav-link site-header__nav-link"
                   href="pages/about.html"
+                  data-i18n="nav.about"
                   >About</a
                 >
               </li>
@@ -89,11 +102,13 @@
               <a
                 class="site-header__signup muted text-decoration-none"
                 href="pages/createAccount.html"
+                data-i18n="nav.signup"
                 >Signup</a
               >
               <a
                 class="btn btn-primary site-header__login-btn"
                 href="pages/signin.html"
+                data-i18n="nav.login"
                 >Login</a
               >
             </div>
@@ -157,12 +172,14 @@
               class="btn btn-outline-secondary"
               href="pages/createAccount.html"
               data-bs-dismiss="offcanvas"
+              data-i18n="nav.signup"
               >Signup</a
             >
             <a
               class="btn btn-danger"
               href="pages/signin.html"
               data-bs-dismiss="offcanvas"
+              data-i18n="nav.login"
               >Login</a
             >
           </div>
@@ -194,8 +211,10 @@
           </video>
 
           <div class="hero-content">
-            <h1 class="hero-title">Specified Skilled Worker Jobs in Japan</h1>
-            <p class="muted mt-xs">
+            <h1 class="hero-title" data-i18n="hero.title">
+              Specified Skilled Worker Jobs in Japan
+            </h1>
+            <p class="muted mt-xs" data-i18n="hero.lead">
               Your one-stop destination for job matching, visa assistance, and
               essential community resources.
             </p>
@@ -223,6 +242,7 @@
                     <a
                       class="btn btn-primary"
                       href="pages/jobs/mechanic-ground-support-haneda.html"
+                      data-i18n="btn.apply"
                       >Apply</a
                     >
                   </div>
@@ -241,6 +261,7 @@
                     <a
                       class="btn btn-primary"
                       href="pages/jobs/cleaner-facilities-maintenance.html"
+                      data-i18n="btn.apply"
                       >Apply</a
                     >
                   </div>
@@ -257,6 +278,7 @@
                     <a
                       class="btn btn-primary"
                       href="pages/jobs/construction-worker-site-support.html"
+                      data-i18n="btn.apply"
                       >Apply</a
                     >
                   </div>
@@ -271,6 +293,7 @@
                     <a
                       class="btn btn-primary"
                       href="pages/jobs/server-hospitality.html"
+                      data-i18n="btn.apply"
                       >Apply</a
                     >
                   </div>
@@ -285,7 +308,10 @@
                     </p>
                   </div>
                   <div class="job-actions">
-                    <a class="btn btn-primary" href="pages/jobs/job.html"
+                    <a
+                      class="btn btn-primary"
+                      href="pages/jobs/job.html"
+                      data-i18n="btn.apply"
                       >Apply</a
                     >
                   </div>
@@ -295,7 +321,9 @@
           </div>
 
           <div class="text-center mt-md">
-            <a class="btn btn-primary" href="#jobs">Search SSW jobs</a>
+            <a class="btn btn-primary" href="#jobs" data-i18n="btn.search_jobs"
+              >Search SSW jobs</a
+            >
           </div>
         </div>
       </section>
@@ -303,7 +331,9 @@
       <!-- Top Company grid -->
       <section id="companies" class="features" aria-label="Top companies">
         <div class="container">
-          <h2 class="section-title">Top Company</h2>
+          <h2 class="section-title" data-i18n="section.top_companies">
+            Top Company
+          </h2>
           <div class="company-grid mt-md">
             <!-- Clean, well-formed 3x3 grid of company cards -->
             <div class="company-card feature-card">
@@ -541,7 +571,9 @@
       <!-- Registered Support Organization RSO (wide card) -->
       <section class="section-padding">
         <div class="container">
-          <h2 class="section-title">Registered Support Organization</h2>
+          <h2 class="section-title" data-i18n="section.registered_support_org">
+            Registered Support Organization
+          </h2>
           <div class="flex-center mt-sm">
             <div class="feature-card feature-wide">
               <picture>
@@ -573,7 +605,7 @@
                   services — including programmes that support foreign workers
                   and mobility in the region.
                 </p>
-                <p class="muted feature-card__desc">
+                <p class="muted feature-card__desc" data-i18n="support.lead">
                   Learn more at the ASEAN+3 site for regional initiatives and
                   support services.
                 </p>
@@ -581,6 +613,7 @@
                   <a
                     class="btn btn-primary feature-card__cta"
                     href="pages/agency.html"
+                    data-i18n="btn.search_agency"
                     >Search Agency</a
                   >
                 </p>
@@ -593,7 +626,7 @@
       <!-- About Us card -->
       <section class="features">
         <div class="container">
-          <h2 class="section-title">About Us</h2>
+          <h2 class="section-title" data-i18n="about.title">About Us</h2>
           <div class="flex-center mt-sm">
             <div class="feature-card feature-two-col">
               <picture>
@@ -617,19 +650,22 @@
                 />
               </picture>
               <div>
-                <p class="fw-600">
+                <p class="fw-600" data-i18n="about.lead_bold">
                   JapanSSW is your one-stop platform for skilled trade job
                   seekers under the Specified Skilled Worker (SSW) visa in
                   Japan.
                 </p>
-                <p class="muted">
+                <p class="muted" data-i18n="about.lead">
                   Founded in 2024 by Juan Angelo, JapanSSW provides job
                   matching, visa guidance, and community resources to help
                   foreign workers find stable employment and build better
                   futures in Japan.
                 </p>
                 <p class="mt-xs">
-                  <a class="btn btn-primary" href="pages/about.html"
+                  <a
+                    class="btn btn-primary"
+                    href="pages/about.html"
+                    data-i18n="btn.learn_more"
                     >Learn more</a
                   >
                 </p>
@@ -642,8 +678,8 @@
       <!-- Job Alerts Band (red) -->
       <section class="alerts-band">
         <div class="container text-center">
-          <h3>Get Job Matches</h3>
-          <p>
+          <h3 data-i18n="alerts.heading">Get Job Matches</h3>
+          <p data-i18n="alerts.lead">
             Stay updated with the latest Japan job opportunities — right in your
             inbox.
           </p>
@@ -658,7 +694,11 @@
               placeholder="Your email address"
               aria-label="Email address for job alerts"
             />
-            <button class="btn btn-dark disabled" aria-disabled="true">
+            <button
+              class="btn btn-dark disabled"
+              aria-disabled="true"
+              data-i18n="btn.signup_demo"
+            >
               Sign Up Demo
             </button>
           </div>
@@ -670,13 +710,15 @@
         <div class="container">
           <div class="feature-card feature-cta">
             <div>
-              <h3>Want to post jobs?</h3>
-              <p class="muted">
+              <h3 data-i18n="cta.post_job.title">Want to post jobs?</h3>
+              <p class="muted" data-i18n="cta.post_job.lead">
                 Reach qualified engineers and designers in Japan.
               </p>
             </div>
             <div>
-              <a class="btn btn-primary" href="#">Post a Job</a>
+              <a class="btn btn-primary" href="#" data-i18n="btn.post_job"
+                >Post a Job</a
+              >
             </div>
           </div>
         </div>
@@ -691,8 +733,12 @@
             Reach qualified candidates under the SSW programme.
           </p>
           <div class="footer-cta-actions site-footer__cta-actions">
-            <a class="btn btn-secondary" href="#">Employer Login</a>
-            <a class="btn btn-primary" href="#">Post a Job</a>
+            <a class="btn btn-secondary" href="#" data-i18n="nav.employer_login"
+              >Employer Login</a
+            >
+            <a class="btn btn-primary" href="#" data-i18n="btn.post_job"
+              >Post a Job</a
+            >
           </div>
         </div>
 
@@ -725,7 +771,9 @@
       </div>
       <div class="container footer-legal site-footer__legal">
         <div class="legal-inner site-footer__legal-inner">
-          <small>&copy; 2025 Japan SSW. All rights reserved.</small>
+          <small data-i18n="footer.copyright"
+            >&copy; 2025 Japan SSW. All rights reserved.</small
+          >
           <nav aria-label="Footer legal">
             <a href="pages/terms.html">Terms</a>
             <a href="pages/privacy.html">Privacy</a>
