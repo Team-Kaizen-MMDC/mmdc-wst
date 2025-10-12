@@ -1338,6 +1338,21 @@ p {
   transition: var(--transition);
 }
 
+/* Ensure the site header and mobile toggler sit above overlays (offcanvas/backdrops)
+   This prevents invisible overlays or stacked elements from blocking clicks on
+   the hamburger button on mobile company pages. */
+.site-header {
+  position: relative;
+  z-index: 2000; /* above most content but below modals if used */
+}
+
+.site-header .btn,
+.site-header .navbar-toggler-icon,
+button[aria-label="Open menu"] {
+  pointer-events: auto; /* ensure the toggler is interactive */
+  z-index: 2001; /* slightly above header to ensure it's clickable */
+}
+
 .navbar-brand {
   font-weight: 700;
   font-size: 1.5rem;
