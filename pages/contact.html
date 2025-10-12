@@ -21,6 +21,14 @@
       rel="stylesheet"
     />
 
+    <!-- Bootstrap CSS 5.3.3 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../assets/css/main.css" />
 
@@ -37,92 +45,221 @@
   </head>
   <body>
     <header class="site-header">
-      <div class="container site-header__inner">
-        <a class="site-header__brand" href="../">Japan SSW</a>
-        <nav class="site-header__nav" aria-label="Main navigation">
-          <a class="site-header__nav-link" href="../index.html#jobs">Jobs</a>
-          <a class="site-header__nav-link" href="../index.html#companies"
-            >Companies</a
+      <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <a class="navbar-brand site-header__brand" href="../index.html"
+            >Japan SSW</a
           >
-          <a class="site-header__nav-link" href="agency.html">Agency</a>
-          <a class="site-header__nav-link" href="about.html">About</a>
+
+          <!-- Offcanvas toggler for mobile -->
+          <button
+            class="btn btn-outline-secondary d-lg-none"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#siteOffcanvas"
+            aria-controls="siteOffcanvas"
+            aria-label="Open menu"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <!-- Desktop nav (visible on lg+) -->
+          <div class="collapse navbar-collapse d-none d-lg-flex" id="navbarNav">
+            <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a
+                  class="nav-link site-header__nav-link"
+                  href="../index.html#jobs"
+                  >Jobs</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link site-header__nav-link"
+                  href="../index.html#companies"
+                  >Companies</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link site-header__nav-link" href="agency.html"
+                  >Agency</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link site-header__nav-link" href="about.html"
+                  >About</a
+                >
+              </li>
+            </ul>
+
+            <div class="d-flex align-items-center gap-2 site-header__actions">
+              <a
+                class="site-header__signup muted text-decoration-none"
+                href="createAccount.html"
+                >Signup</a
+              >
+              <a
+                class="btn btn-primary site-header__login-btn"
+                href="signin.html"
+                >Login</a
+              >
+            </div>
+          </div>
         </nav>
-        <div class="site-header__actions">
-          <a class="site-header__signup muted" href="createAccount.html"
-            >Signup</a
+      </div>
+
+      <!-- Offcanvas (mobile) -->
+      <div
+        class="offcanvas offcanvas-start"
+        tabindex="-1"
+        id="siteOffcanvas"
+        aria-labelledby="siteOffcanvasLabel"
+      >
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="siteOffcanvasLabel">Menu</h5>
+          <button
+            type="button"
+            class="btn-close text-reset"
+            data-bs-dismiss="offcanvas"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="offcanvas-body d-flex flex-column">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a
+                class="nav-link py-3"
+                href="../index.html#jobs"
+                data-bs-dismiss="offcanvas"
+                >Jobs</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link py-3"
+                href="../index.html#companies"
+                data-bs-dismiss="offcanvas"
+                >Companies</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link py-3"
+                href="agency.html"
+                data-bs-dismiss="offcanvas"
+                >Agency</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link py-3"
+                href="about.html"
+                data-bs-dismiss="offcanvas"
+                >About</a
+              >
+            </li>
+          </ul>
+
+          <div
+            class="mt-auto d-flex justify-content-between align-items-center pt-3 border-top"
           >
-          <a class="btn btn-primary site-header__login-btn" href="signin.html">Login</a>
+            <a
+              class="btn btn-outline-secondary"
+              href="createAccount.html"
+              data-bs-dismiss="offcanvas"
+              >Signup</a
+            >
+            <a
+              class="btn btn-danger"
+              href="signin.html"
+              data-bs-dismiss="offcanvas"
+              >Login</a
+            >
+          </div>
         </div>
       </div>
     </header>
 
     <!-- Main Content -->
     <main>
-     <!-- Main Container -->
-    <div class="contact-card-container">
+      <!-- Main Container -->
+      <div class="contact-card-container">
         <div class="card-content-wrapper">
-            <!-- Left Side (Branding/Header Info) -->
-            <div class="card-header-left">
-                <!-- Using a simple text icon since we can't reliably style lucide icons without Tailwind, but we'll include the script anyway -->
-                <i data-lucide="mail-open" class="header-icon"></i>
-                <h2 class="header-title">Get In Touch</h2>
-                <p class="header-subtitle">
-                    We'd love to hear from you! Fill out the form to send us a message.
-                </p>
-                <!-- Static Contact Info -->
-                <div class="contact-info-block">
-                  
-                </div>
+          <!-- Left Side (Branding/Header Info) -->
+          <div class="card-header-left">
+            <!-- Using a simple text icon since we can't reliably style lucide icons without Tailwind, but we'll include the script anyway -->
+            <i data-lucide="mail-open" class="header-icon"></i>
+            <h2 class="header-title">Get In Touch</h2>
+            <p class="header-subtitle">
+              We'd love to hear from you! Fill out the form to send us a
+              message.
+            </p>
+            <!-- Static Contact Info -->
+            <div class="contact-info-block"></div>
+          </div>
+
+          <!-- Right Side (Form Fields) -->
+          <div class="card-form-right">
+            <h3 class="form-title">Send Us a Message</h3>
+
+            <!-- The Actual Contact Form -->
+            <form id="contactForm" class="contact-form">
+              <!-- Name Input -->
+              <div class="form-group">
+                <label for="name" class="form-label">Full Name</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  placeholder="Your name"
+                  required
+                  class="form-input"
+                />
+              </div>
+
+              <!-- Email Input -->
+              <div class="form-group">
+                <label for="email" class="form-label">Email Address</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="you@example.com"
+                  required
+                  class="form-input"
+                />
+              </div>
+
+              <!-- Message Textarea -->
+              <div class="form-group">
+                <label for="message" class="form-label">Your Message</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="4"
+                  placeholder="Type your message here..."
+                  required
+                  class="form-textarea"
+                ></textarea>
+              </div>
+
+              <!-- Submit Button -->
+              <button type="submit" class="submit-button">
+                <i data-lucide="send" class="button-icon"></i>
+                Send Message
+              </button>
+            </form>
+
+            <!-- Confirmation Message Box (Hidden by default) -->
+            <div id="successMessage" class="success-message hidden">
+              <p class="success-text">
+                <i data-lucide="check-circle" class="button-icon"></i>
+                Message sent successfully! We will get back to you shortly.
+              </p>
             </div>
-
-            <!-- Right Side (Form Fields) -->
-            <div class="card-form-right">
-                <h3 class="form-title">
-                    Send Us a Message
-                </h3>
-
-                <!-- The Actual Contact Form -->
-                <form id="contactForm" class="contact-form">
-                    <!-- Name Input -->
-                    <div class="form-group">
-                        <label for="name" class="form-label">Full Name</label>
-                        <input type="text" id="name" name="name" placeholder="Your name" required
-                               class="form-input">
-                    </div>
-
-                    <!-- Email Input -->
-                    <div class="form-group">
-                        <label for="email" class="form-label">Email Address</label>
-                        <input type="email" id="email" name="email" placeholder="you@example.com" required
-                               class="form-input">
-                    </div>
-
-                    <!-- Message Textarea -->
-                    <div class="form-group">
-                        <label for="message" class="form-label">Your Message</label>
-                        <textarea id="message" name="message" rows="4" placeholder="Type your message here..." required
-                                  class="form-textarea"></textarea>
-                    </div>
-
-                    <!-- Submit Button -->
-                    <button type="submit" class="submit-button">
-                        <i data-lucide="send" class="button-icon"></i>
-                        Send Message
-                    </button>
-                </form>
-
-                <!-- Confirmation Message Box (Hidden by default) -->
-                <div id="successMessage" class="success-message hidden">
-                    <p class="success-text">
-                        <i data-lucide="check-circle" class="button-icon"></i>
-                        Message sent successfully! We will get back to you shortly.
-                    </p>
-                </div>
-            </div>
+          </div>
         </div>
-    </div>
-
-
+      </div>
     </main>
 
     <!-- Footer -->
@@ -179,13 +316,14 @@
       </div>
     </footer>
 
-    <!-- Custom JS (if required) -->
-    <!-- Phase 2 placeholder: Bootstrap JS bundle & site JavaScript
+    <!-- Bootstrap JS Bundle -->
     <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
-    -->
+
+    <!-- Site JS module -->
+    <script type="module" src="../assets/js/main.js"></script>
   </body>
 </html>
