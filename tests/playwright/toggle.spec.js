@@ -1,27 +1,43 @@
 const { test, expect } = require("@playwright/test");
 
-test("company page hamburger opens offcanvas", async ({ page }) => {
-  // mobile viewport
-  await page.setViewportSize({ width: 375, height: 812 });
+const COMPANY_PAGES = [
+  "/pages/companies/prince-hotels.html",
+  "/pages/companies/ana-intercontinental.html",
+  "/pages/companies/daikin.html",
+  "/pages/companies/nissan.html",
+];
 
-  // collect console messages to help debug JS errors
-  const logs = [];
-  page.on("console", (msg) => logs.push(`${msg.type()}: ${msg.text()}`));
+test.describe("mobile offcanvas behavior", () => {
+  for (const path of COMPANY_PAGES) {
+    test(`hamburger opens offcanvas on ${path}`, async ({ page }) => {
+      // run in a mobile viewport so toggler is visible across projects
+      await page.setViewportSize({ width: 375, height: 812 });
 
-  await page.goto("/pages/companies/prince-hotels.html");
+      // collect console messages to help debug JS errors
+      const logs = [];
+      page.on("console", (msg) => logs.push(`${msg.type()}: ${msg.text()}`));
 
-  const toggler = page.locator('button[aria-label="Open menu"]');
-  await expect(toggler).toBeVisible();
+      await page.goto(path);
 
-  await toggler.click();
+      const toggler = page.locator('button[aria-label="Open menu"]');
+      await expect(toggler).toBeVisible();
 
-  const offcanvas = page.locator("#siteOffcanvas");
-  // offcanvas should get the 'show' class when opened
-  await expect(offcanvas).toHaveClass(/show/);
+      await toggler.click();
 
-  // if there were console errors, fail the test with the logs attached
-  const errors = logs.filter(
-    (l) => l.startsWith("error") || l.startsWith("pageerror")
-  );
-  expect(errors.length, "no console errors during toggler open").toBe(0);
+      const offcanvas = page.locator("#siteOffcanvas");
+      // wait for the 'show' class and ensure it's visible
+      await offcanvas.waitFor({ state: "visible" });
+      await expect(offcanvas).toHaveClass(/show/);
+
+      // ensure Signup and Login action buttons exist inside offcanvas
+      await expect(offcanvas.locator("a", { hasText: "Signup" })).toBeVisible();
+      await expect(offcanvas.locator("a", { hasText: "Login" })).toBeVisible();
+
+      // fail fast on console errors
+      const errors = logs.filter(
+        (l) => l.startsWith("error") || l.startsWith("pageerror")
+      );
+      expect(errors.length, `no console errors for ${path}`).toBe(0);
+    });
+  }
 });

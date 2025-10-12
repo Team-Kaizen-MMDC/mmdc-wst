@@ -18,5 +18,7 @@ module.exports = {
   projects: [
     { name: "chromium", use: { ...devices["Desktop Chrome"] } },
     { name: "firefox", use: { ...devices["Desktop Firefox"] } },
+    // Add a mobile profile to catch viewport-specific regressions
+    { name: "webkit-mobile", use: { ...devices["iPhone 12"] } },
   ],
 };
