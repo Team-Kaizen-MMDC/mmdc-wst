@@ -4,47 +4,178 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Profile Dashboard</title>
+    <!-- Bootstrap CSS 5.3.3 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
     <link rel="stylesheet" href="../assets/css/main.css" />
   </head>
   <body class="profile-dashboard">
-    <!-- Site Header -->
+    <!-- Site Header (canonical: matches index.html) -->
     <header class="site-header">
-      <div class="container site-header__inner">
-        <a class="site-header__brand" href="../index.html">Japan SSW</a>
-        <nav class="site-header__nav" aria-label="Main navigation">
-          <a class="site-header__nav-link" href="../index.html#jobs">Jobs</a>
-          <a class="site-header__nav-link" href="../index.html#companies"
-            >Companies</a
+      <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <a
+            class="navbar-brand site-header__brand"
+            href="../index.html"
+            data-i18n="site.brand"
+            >Japan SSW</a
           >
-          <a class="site-header__nav-link" href="agency.html">Agency</a>
-          <a class="site-header__nav-link" href="about.html">About</a>
-        </nav>
 
-        <div class="site-header__actions">
-          <div class="site-header__user-menu">
-            <a
-              id="user-menu-btn"
-              class="btn btn-secondary site-header__user-menu-btn"
-              href="#"
-              >Juan</a
-            >
+          <!-- Offcanvas toggler for mobile -->
+          <button
+            class="btn btn-outline-secondary d-lg-none"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#siteOffcanvas"
+            aria-controls="siteOffcanvas"
+            aria-label="Open menu"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
 
-            <!-- User Menu Dropdown -->
-            <div id="user-menu-dropdown" class="user-menu-dropdown">
-              <h4 class="user-menu-dropdown__greeting">Welcome Back!</h4>
-              <h3 class="user-menu-dropdown__userName">Juan Dela Cruz</h3>
-              <a href="#" class="user-menu-dropdown__link">View Profile</a>
-              <a href="#" class="user-menu-dropdown__link">Message</a>
-              <!-- Divider -->
-              <hr class="user-menu-dropdown__divider" />
+          <!-- Desktop nav (visible on lg+) -->
+          <div class="collapse navbar-collapse d-none d-lg-flex" id="navbarNav">
+            <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a
+                  class="nav-link site-header__nav-link"
+                  href="../index.html#jobs"
+                  data-i18n="nav.jobs"
+                  >Jobs</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link site-header__nav-link"
+                  href="../index.html#companies"
+                  data-i18n="nav.services"
+                  >Companies</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link site-header__nav-link"
+                  href="agency.html"
+                  data-i18n="nav.agency"
+                  >Agency</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link site-header__nav-link"
+                  href="about.html"
+                  data-i18n="nav.about"
+                  >About</a
+                >
+              </li>
+            </ul>
 
-              <a href="#" class="user-menu-dropdown__link">Language</a>
-              <a href="#" class="user-menu-dropdown__link">Help</a>
-              <a href="#" class="user-menu-dropdown__link">Settings</a>
-              <button type="button" class="user-menu-dropdown__link">
-                Sign out
-              </button>
+            <!-- Actions (user menu for logged-in users) -->
+            <div class="d-flex align-items-center gap-2 site-header__actions">
+              <div class="site-header__user-menu">
+                <a
+                  id="user-menu-btn"
+                  class="btn btn-secondary site-header__user-menu-btn"
+                  href="#"
+                  >Juan</a
+                >
+
+                <!-- User Menu Dropdown (non-Bootstrap custom dropdown) -->
+                <div
+                  id="user-menu-dropdown"
+                  class="user-menu-dropdown"
+                  aria-hidden="true"
+                >
+                  <h4 class="user-menu-dropdown__greeting">Welcome Back!</h4>
+                  <h3 class="user-menu-dropdown__userName">Juan Dela Cruz</h3>
+                  <a href="#" class="user-menu-dropdown__link">View Profile</a>
+                  <a href="#" class="user-menu-dropdown__link">Message</a>
+                  <hr class="user-menu-dropdown__divider" />
+                  <a href="#" class="user-menu-dropdown__link">Language</a>
+                  <a href="#" class="user-menu-dropdown__link">Help</a>
+                  <a href="#" class="user-menu-dropdown__link">Settings</a>
+                  <button type="button" class="user-menu-dropdown__link">
+                    Sign out
+                  </button>
+                </div>
+              </div>
             </div>
+          </div>
+        </nav>
+      </div>
+
+      <!-- Offcanvas (mobile) -->
+      <div
+        class="offcanvas offcanvas-start"
+        tabindex="-1"
+        id="siteOffcanvas"
+        aria-labelledby="siteOffcanvasLabel"
+      >
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="siteOffcanvasLabel">Menu</h5>
+          <button
+            type="button"
+            class="btn-close text-reset"
+            data-bs-dismiss="offcanvas"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="offcanvas-body d-flex flex-column">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a
+                class="nav-link py-3"
+                href="../index.html#jobs"
+                data-bs-dismiss="offcanvas"
+                data-i18n="nav.jobs"
+                >Jobs</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link py-3"
+                href="../index.html#companies"
+                data-bs-dismiss="offcanvas"
+                data-i18n="nav.services"
+                >Companies</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link py-3"
+                href="agency.html"
+                data-bs-dismiss="offcanvas"
+                data-i18n="nav.agency"
+                >Agency</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link py-3"
+                href="about.html"
+                data-bs-dismiss="offcanvas"
+                data-i18n="nav.about"
+                >About</a
+              >
+            </li>
+          </ul>
+
+          <div
+            class="mt-auto d-flex justify-content-between align-items-center pt-3 border-top"
+          >
+            <a
+              class="btn btn-outline-secondary"
+              href="#"
+              data-bs-dismiss="offcanvas"
+              >Profile</a
+            >
+            <a class="btn btn-danger" href="#" data-bs-dismiss="offcanvas"
+              >Sign out</a
+            >
           </div>
         </div>
       </div>
@@ -157,10 +288,9 @@
             <div class="bento-box__row bento-box__row--title">
               <div class="bento-box__title">Experience</div>
               <div class="bento-box__add">
-                  <a href="addEdit/experience.html">Add</a>
-             </div>
+                <a href="addEdit/experience.html">Add</a>
+              </div>
             </div>
-         
 
             <!-- bottom content row: left = image + details, right = edit -->
             <div class="bento-box__row bento-box__row--content">
@@ -195,7 +325,7 @@
             <div class="bento-box__row bento-box__row--title">
               <div class="bento-box__title">Skills</div>
               <div class="bento-box__add">
-                 <a href="addEdit/skill.html">Add</a>
+                <a href="addEdit/skill.html">Add</a>
               </div>
             </div>
 
@@ -219,7 +349,7 @@
             <div class="bento-box__row bento-box__row--title">
               <div class="bento-box__title">Education</div>
               <div class="bento-box__add">
-                 <a href="addEdit/education.html">Add</a>
+                <a href="addEdit/education.html">Add</a>
               </div>
             </div>
 
@@ -306,5 +436,14 @@
         });
       })();
     </script>
+    <!-- Bootstrap JS Bundle (includes Popper) -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Site JavaScript (ES Module) -->
+    <script type="module" src="../assets/js/main.js"></script>
   </body>
 </html>

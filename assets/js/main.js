@@ -109,8 +109,30 @@ class App {
 
   ensureLanguageToggle() {
     // Add an accessible language switch (form-switch) to header actions
-    const headerActions = document.querySelector(".site-header__actions");
-    if (!headerActions) return;
+    // If a page doesn't include the `.site-header__actions` container (some
+    // legacy pages omitted it), create one so the language toggle can be
+    // appended. This makes the toggle resilient across pages that load the
+    // `assets/js/main.js` module.
+    let headerActions = document.querySelector(".site-header__actions");
+    if (!headerActions) {
+      const header = document.querySelector(".site-header");
+      if (header) {
+        // Create a minimal actions container matching the header contract
+        headerActions = document.createElement("div");
+        headerActions.className =
+          "d-flex align-items-center gap-2 site-header__actions";
+
+        // Prefer appending into the navbar if present so layout is consistent
+        const navbar = header.querySelector(".navbar") || header;
+        navbar.appendChild(headerActions);
+        console.log(
+          "ℹ️ Created missing .site-header__actions container for language toggle"
+        );
+      } else {
+        // No header found; nothing we can do
+        return;
+      }
+    }
 
     if (document.getElementById("lang-toggle")) return; // already present
 

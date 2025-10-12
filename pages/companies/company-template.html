@@ -20,7 +20,7 @@
       <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light">
           <a class="navbar-brand site-header__brand" href="../../index.html"
-            >Japan SSW</a
+            data-i18n="site.brand">Japan SSW</a
           >
 
           <!-- Offcanvas toggler for mobile -->
@@ -42,6 +42,7 @@
                 <a
                   class="nav-link site-header__nav-link"
                   href="../../index.html#jobs"
+                  data-i18n="nav.jobs"
                   >Jobs</a
                 >
               </li>
@@ -49,6 +50,7 @@
                 <a
                   class="nav-link site-header__nav-link"
                   href="../../index.html#companies"
+                  data-i18n="nav.services"
                   >Companies</a
                 >
               </li>
@@ -68,11 +70,13 @@
               <a
                 class="site-header__signup muted text-decoration-none"
                 href="../createAccount.html"
+                data-i18n="nav.signup"
                 >Signup</a
               >
               <a
                 class="btn btn-primary site-header__login-btn"
                 href="../signin.html"
+                data-i18n="nav.login"
                 >Login</a
               >
             </div>
@@ -103,6 +107,7 @@
                 class="nav-link py-3"
                 href="../../index.html#jobs"
                 data-bs-dismiss="offcanvas"
+                data-i18n="nav.jobs"
                 >Jobs</a
               >
             </li>
@@ -139,12 +144,14 @@
               class="btn btn-outline-secondary"
               href="../createAccount.html"
               data-bs-dismiss="offcanvas"
+              data-i18n="nav.signup"
               >Signup</a
             >
             <a
               class="btn btn-danger"
               href="../signin.html"
               data-bs-dismiss="offcanvas"
+              data-i18n="nav.login"
               >Login</a
             >
           </div>
@@ -231,5 +238,7 @@
         </div>
       </div>
     </footer>
+    <!-- Site JavaScript (ES Module) -->
+    <script type="module" src="../../assets/js/main.js"></script>
   </body>
 </html>
