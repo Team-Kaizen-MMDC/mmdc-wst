@@ -29,7 +29,25 @@ export class I18n {
     if (this.translations[lang]) return this.translations[lang];
 
     try {
-      const res = await fetch(`/locales/${lang}.json`);
+      // Resolve locale path relative to this module so the loader works when
+      // the site is hosted from a subpath (GitHub Pages project pages).
+      // Example: if the site is served at /mmdc-wst/, an absolute '/locales'
+      // would incorrectly request '/locales/...'. Using import.meta.url keeps
+      // the request relative to the bundled JS location.
+      let res = null;
+      try {
+        const url = new URL(`../../locales/${lang}.json`, import.meta.url);
+        res = await fetch(url.href);
+      } catch (e) {
+        // If import.meta.url isn't available or the URL failed, fall back to
+        // the absolute `/locales/...` path as a last resort.
+        try {
+          res = await fetch(`/locales/${lang}.json`);
+        } catch (err) {
+          console.warn("i18n: fallback locale fetch also failed", err);
+          return null;
+        }
+      }
       if (!res.ok) {
         console.warn(`i18n: locale ${lang} not found (HTTP ${res.status})`);
         return null;
