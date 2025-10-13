@@ -755,30 +755,63 @@
           </div>
         </div>
 
-        <div class="footer-links site-footer__links">
+        <div class="footer-links site-footer__links" id="footerAccordion">
           <div class="link-col site-footer__link-col">
-            <h4>Company</h4>
-            <ul>
-              <li><a href="index.html">Home</a></li>
-              <li><a href="pages/about.html">About</a></li>
-              <li><a href="pages/contact.html">Contact</a></li>
-            </ul>
+            <!-- Mobile-only toggle, desktop shows heading normally -->
+            <div class="d-flex d-md-none w-100 justify-content-between align-items-center">
+              <h4 class="m-0">Company</h4>
+              <button class="btn btn-link footer-collapse-toggle p-0 ms-2" type="button"
+                data-bs-toggle="collapse" data-bs-target="#footer-links-company" aria-expanded="false"
+                aria-controls="footer-links-company">
+                <span class="visually-hidden">Toggle Company links</span>
+                <span aria-hidden="true">▾</span>
+              </button>
+            </div>
+            <div id="footer-links-company" class="collapse d-md-block" data-bs-parent="#footerAccordion">
+              <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="pages/about.html">About</a></li>
+                <li><a href="pages/contact.html">Contact</a></li>
+              </ul>
+            </div>
           </div>
+
           <div class="link-col site-footer__link-col">
-            <h4>Jobs</h4>
-            <ul>
-              <li><a href="#jobs">Search Jobs</a></li>
-              <li><a href="#companies">Companies</a></li>
-              <li><a href="#post-job">Post a Job</a></li>
-            </ul>
+            <div class="d-flex d-md-none w-100 justify-content-between align-items-center">
+              <h4 class="m-0">Jobs</h4>
+              <button class="btn btn-link footer-collapse-toggle p-0 ms-2" type="button"
+                data-bs-toggle="collapse" data-bs-target="#footer-links-jobs" aria-expanded="false"
+                aria-controls="footer-links-jobs">
+                <span class="visually-hidden">Toggle Jobs links</span>
+                <span aria-hidden="true">▾</span>
+              </button>
+            </div>
+            <div id="footer-links-jobs" class="collapse d-md-block" data-bs-parent="#footerAccordion">
+              <ul>
+                <li><a href="#jobs">Search Jobs</a></li>
+                <li><a href="#companies">Companies</a></li>
+                <li><a href="#post-job">Post a Job</a></li>
+              </ul>
+            </div>
           </div>
+
           <div class="link-col site-footer__link-col">
-            <h4>Resources</h4>
-            <ul>
-              <li><a href="pages/visaGuidance.html">Visa Guidance</a></li>
-              <li><a href="#">Employer Hub</a></li>
-              <li><a href="pages/privacy.html">Privacy</a></li>
-            </ul>
+            <div class="d-flex d-md-none w-100 justify-content-between align-items-center">
+              <h4 class="m-0">Resources</h4>
+              <button class="btn btn-link footer-collapse-toggle p-0 ms-2" type="button"
+                data-bs-toggle="collapse" data-bs-target="#footer-links-resources" aria-expanded="false"
+                aria-controls="footer-links-resources">
+                <span class="visually-hidden">Toggle Resources links</span>
+                <span aria-hidden="true">▾</span>
+              </button>
+            </div>
+            <div id="footer-links-resources" class="collapse d-md-block" data-bs-parent="#footerAccordion">
+              <ul>
+                <li><a href="pages/visaGuidance.html">Visa Guidance</a></li>
+                <li><a href="#">Employer Hub</a></li>
+                <li><a href="pages/privacy.html">Privacy</a></li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>

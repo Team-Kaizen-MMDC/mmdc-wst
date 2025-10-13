@@ -1152,6 +1152,32 @@ user-menu-dropdown__divider {
   text-decoration: none;
 }
 
+/* Mobile collapse toggle button for footer link columns */
+.footer-collapse-toggle {
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 600;
+  text-decoration: none;
+  background: transparent;
+  border: none;
+}
+.footer-collapse-toggle:focus {
+  outline: 3px solid rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+}
+
+/* Smooth reveal for collapsed lists on mobile */
+.site-footer__link-col .collapse {
+  transition: height 220ms ease-in-out, opacity 200ms ease-in-out;
+}
+
+/* Increase touch target for link lists on mobile */
+@media (max-width: 768px) {
+  .site-footer__link-col ul li a {
+    display: inline-block;
+    padding: 6px 4px;
+  }
+}
+
 /* Desktop: lay out the footer link columns horizontally in three columns.
    On narrow screens this will be overridden by the mobile media query. */
 .site-footer__links {
