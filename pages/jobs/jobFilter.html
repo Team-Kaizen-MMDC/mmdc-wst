@@ -1,0 +1,381 @@
+<!-- Moved from pages/jobFilter.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Job Filter</title>
+
+    <!-- Fonts (same as other pages) -->
+    <link rel="preconnect" href="../../fonts.googleapis.com" />
+    <link rel="preconnect" href="../../fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap CSS 5.3.3 (Phase 2) -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <!-- Project CSS -->
+    <link rel="stylesheet" href="../../assets/css/main.css" />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="../../assets/icons/favicon.ico"
+    />
+  </head>
+  <body>
+    <!-- Shared Header (offcanvas mobile nav) -->
+    <header class="site-header">
+      <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <a
+            class="navbar-brand site-header__brand"
+            href="../../index.html"
+            data-i18n="site.brand"
+            >Japan SSW</a
+          >
+
+          <!-- Offcanvas toggler for mobile -->
+          <button
+            class="btn btn-outline-secondary d-lg-none"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#siteOffcanvas"
+            aria-controls="siteOffcanvas"
+            aria-label="Open menu"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <!-- Desktop nav (visible on lg+) -->
+          <div class="collapse navbar-collapse d-none d-lg-flex" id="navbarNav">
+            <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a
+                  class="nav-link site-header__nav-link"
+                  href="../../index.html#jobs"
+                  data-i18n="nav.jobs"
+                  >Jobs</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link site-header__nav-link"
+                  href="../../index.html#companies"
+                  data-i18n="nav.services"
+                  >Companies</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link site-header__nav-link"
+                  href="../agency.html"
+                  data-i18n="nav.agency"
+                  >Agency</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link site-header__nav-link"
+                  href="../about.html"
+                  data-i18n="nav.about"
+                  >About</a
+                >
+              </li>
+            </ul>
+            <div class="d-flex align-items-center gap-2 site-header__actions">
+              <a
+                class="site-header__signup muted"
+                href="../createAccount.html"
+                data-i18n="nav.signup"
+                >Signup</a
+              >
+              <a
+                class="btn btn-primary site-header__login-btn"
+                href="../signin.html"
+                data-i18n="nav.login"
+                >Login</a
+              >
+            </div>
+          </div>
+        </nav>
+      </div>
+
+      <!-- Offcanvas (mobile) -->
+      <div
+        class="offcanvas offcanvas-start"
+        tabindex="-1"
+        id="siteOffcanvas"
+        aria-labelledby="siteOffcanvasLabel"
+      >
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="siteOffcanvasLabel">Menu</h5>
+          <button
+            type="button"
+            class="btn-close text-reset"
+            data-bs-dismiss="offcanvas"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="offcanvas-body d-flex flex-column">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a
+                class="nav-link py-3"
+                href="../../index.html#jobs"
+                data-bs-dismiss="offcanvas"
+                data-i18n="nav.jobs"
+                >Jobs</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link py-3"
+                href="../../index.html#companies"
+                data-bs-dismiss="offcanvas"
+                data-i18n="nav.services"
+                >Companies</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link py-3"
+                href="../agency.html"
+                data-bs-dismiss="offcanvas"
+                data-i18n="nav.agency"
+                >Agency</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link py-3"
+                href="../about.html"
+                data-bs-dismiss="offcanvas"
+                data-i18n="nav.about"
+                >About</a
+              >
+            </li>
+          </ul>
+
+          <div
+            class="mt-auto d-flex justify-content-between align-items-center pt-3 border-top"
+          >
+            <a
+              class="btn btn-outline-secondary"
+              href="../createAccount.html"
+              data-bs-dismiss="offcanvas"
+              data-i18n="nav.signup"
+              >Signup</a
+            >
+            <a
+              class="btn btn-danger"
+              href="../signin.html"
+              data-bs-dismiss="offcanvas"
+              data-i18n="nav.login"
+              >Login</a
+            >
+          </div>
+        </div>
+      </div>
+    </header>
+
+<main class="container-xxl ">
+    <div class="pt-5 mb-5 text-center" >
+ <h1 class="display-5 fw-bold text-dark mb-2">Find Your Next Opportunity in Japan</h1>
+    <p class="text-secondary lead mb-4">Select multiple options below to find the perfect job.</p>
+    </div>
+   
+    <!-- Main Grid Layout -->
+    <div class="row g-4">
+
+        <!-- Column 1: Filter Panel (Now 33% on large screens) -->
+        <div class="col-lg-12">
+            <h4 class="h5 fw-semibold text-secondary mb-3">FILTERS</h4>
+            <div id="job-filter-component" class="card shadow-lg border-0 rounded-3 filter-card-sticky">
+                <div class="card-body p-4">
+
+                    <!-- 1. Search Filter (100% width, remains separate) -->
+                    <div class="mb-4">
+                        <label for="search-input" class="form-label fw-bold text-secondary mb-2">Search Job Listings</label>
+                        <input type="text" id="search-input" placeholder="e.g., engineer, Osaka, N2" 
+                                class="form-control rounded-2 form-control-sm">
+                    </div>
+
+                    <hr class="mb-4 mt-0 text-light">
+
+                    <!-- 2. Main Filter Grid: 5 items arranged in 2 columns (3 rows deep) on medium screens and up -->
+                    <div class="row g-3">
+                        
+                        <!-- Filter 1: SUPPORT ORGANIZATION (col 1, row 1) -->
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold text-secondary mb-2">SUPPORT ORGANIZATION</label>
+                            <div id="support-org-filter" data-filter-group="supportOrg" class="d-flex flex-wrap gap-2">
+                                <button data-filter-value="All" data-default="true" class="filter-button active">All</button>
+                                <button data-filter-value="Yes" class="filter-button">YES</button>
+                                <button data-filter-value="No" class="filter-button">NO</button>
+                            </div>
+                        </div>
+
+                        <!-- Filter 2: JAPANESE LEVEL (col 2, row 1) -->
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold text-secondary mb-2">JAPANESE LEVEL</label>
+                            <div id="japanese-level-filter" data-filter-group="japaneseLevel" class="d-flex flex-wrap gap-2">
+                                <button data-filter-value="All" data-default="true" class="filter-button active">Any</button>
+                                <button data-filter-value="N5" class="filter-button">Beginner / N5</button>
+                                <button data-filter-value="N4" class="filter-button">Basic / N4</button>
+                                <button data-filter-value="N3" class="filter-button">Conversational / N3</button>
+                                <button data-filter-value="N2" class="filter-button">Business / N2</button>
+                                <button data-filter-value="N1" class="filter-button">Fluent / N1</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Filter 3: WORK LOCATION (col 1, row 2) -->
+                        <div class="col-md-6 mt-4">
+                            <label class="form-label fw-bold text-secondary mb-2">WORK LOCATION</label>
+                            <div id="location-filter" data-filter-group="workLocation" class="d-flex flex-wrap gap-2">
+                                <button data-filter-value="All" data-default="true" class="filter-button active">All Regions</button>
+                                <button data-filter-value="Tokyo" class="filter-button">Tokyo</button>
+                                <button data-filter-value="Osaka" class="filter-button">Osaka</button>
+                                <button data-filter-value="Kyoto" class="filter-button">Kyoto</button>
+                                <button data-filter-value="Fukuoka" class="filter-button">Fukuoka</button>
+                                <button data-filter-value="Kanagawa" class="filter-button">Kanagawa</button>
+                                <button data-filter-value="Nagoya" class="filter-button">Nagoya</button>
+                                <button data-filter-value="Sapporo" class="filter-button">Sapporo</button>
+                                <button data-filter-value="Okinawa" class="filter-button">Okinawa</button>
+                            </div>
+                        </div>
+
+
+                        <!-- Filter 4: INDUSTRY (col 2, row 2) -->
+                        <div class="col-md-6 mt-4">
+                            <label class="form-label fw-bold text-secondary mb-2">INDUSTRY</label>
+                            <div id="industry-filter" data-filter-group="industry" class="d-flex flex-wrap gap-2">
+                                <button data-filter-value="All" data-default="true" class="filter-button active">All Industries</button>
+                                <button data-filter-value="Care Worker" class="filter-button">Nursing Care</button>
+                                <button data-filter-value="Food Service" class="filter-button">Food Service</button>
+                                <button data-filter-value="Engineering" class="filter-button">Software Engineering</button>
+                                <button data-filter-value="Education" class="filter-button">Education</button>
+                                <button data-filter-value="Cleaning" class="filter-button">Building Cleaning</button>
+                                <button data-filter-value="Manufacturing" class="filter-button">Manufacturing</button>
+                                <button data-filter-value="Construction" class="filter-button">Construction</button>
+                                <button data-filter-value="Automobile" class="filter-button">Automobile Maint.</button>
+                            </div>
+                        </div>
+
+                        <!-- Filter 5: MINIMUM SALARY (col 1, row 3) -->
+                        <div class="col-md-6 mt-4">
+                            <label class="form-label fw-bold text-secondary mb-2">MINIMUM SALARY (Monthly)</label>
+                            <div id="salary-filter" data-filter-group="minSalary" class="d-flex flex-wrap gap-2">
+                                <button data-filter-value="All" data-default="true" class="filter-button active">Any Salary</button>
+                                <button data-filter-value="Has Range" class="filter-button">Has Range</button>
+                                <button data-filter-value="200000" class="filter-button">Over ¥200k</button>
+                                <button data-filter-value="250000" class="filter-button">Over ¥250k</button>
+                                <button data-filter-value="300000" class="filter-button">Over ¥300k</button>
+                            </div>
+                            <!-- Note for salary filter, slightly adjusted margin -->
+                            <p class="form-text text-muted fst-italic small salary-note">When multiple minimums are selected, the highest value is used.</p>
+                        </div>
+                        
+                        <!-- Empty column for consistent 2-column look on row 3 -->
+                        <div class="col-md-6 mt-4 d-none d-md-block">
+                            <!-- This empty column ensures the last filter group aligns left on desktop -->
+                        </div>
+                    </div> <!-- End of Main Filter Grid Row -->
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Column 2: Job Listings (66% on large screens) -->
+        <div class="col-lg-8">
+            <h4 id="job-count-header" class="h5 fw-semibold text-secondary mb-3"></h4>
+            <div id="job-listing-container" class="d-grid gap-4">
+                <!-- Job cards will be injected here by JavaScript -->
+            </div>
+        </div>
+    </div>
+</main>
+
+
+  <!-- Sticky Apply CTA (visible on mobile / small screens) -->
+    <div class="job-sticky-cta">
+      <div class="job-sticky-cta__inner container">
+        <a
+          id="apply"
+          class="job-sticky-cta__btn btn btn-primary"
+          href="../signin.html"
+          >Show Filter</a
+        >
+      </div>
+    </div>
+
+    <!-- Shared Footer -->
+    <footer class="site-footer site-footer--dark">
+      <div class="container footer-grid site-footer__grid">
+        <div class="footer-cta site-footer__cta">
+          <h2>Want to post jobs on JapanSSW?</h2>
+          <p class="muted site-footer__cta-muted">
+            Reach qualified candidates under the SSW programme.
+          </p>
+          <div class="footer-cta-actions site-footer__cta-actions">
+            <a class="btn btn-secondary" href="../../">Employer Login</a>
+            <a class="btn btn-primary" href="../../index.html#post-job"
+              >Post a Job</a
+            >
+          </div>
+        </div>
+        <div class="footer-links site-footer__links">
+          <div class="link-col site-footer__link-col">
+            <h3>Company</h3>
+            <ul>
+              <li><a href="../../index.html">Home</a></li>
+              <li><a href="../about.html">About</a></li>
+              <li><a href="../contact.html">Contact</a></li>
+            </ul>
+          </div>
+          <div class="link-col site-footer__link-col">
+            <h3>Jobs</h3>
+            <ul>
+              <li><a href="../../index.html#jobs">Search Jobs</a></li>
+              <li><a href="../../index.html#companies">Companies</a></li>
+              <li><a href="../../index.html#post-job">Post a Job</a></li>
+            </ul>
+          </div>
+          <div class="link-col site-footer__link-col">
+            <h3>Resources</h3>
+            <ul>
+              <li><a href="../visaGuidance.html">Visa Guidance</a></li>
+              <li><a href="#">Employer Hub</a></li>
+              <li><a href="../privacy.html">Privacy</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="container footer-legal site-footer__legal">
+        <div class="legal-inner site-footer__legal-inner">
+          <small>&copy; 2025 Japan SSW. All rights reserved.</small>
+          <nav aria-label="Footer legal">
+            <a href="../terms.html">Terms</a>
+            <a href="../privacy.html">Privacy</a>
+          </nav>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle 5.3.3 (Phase 2) -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Custom JS Module (Phase 2) -->
+    <script type="module" src="../../assets/js/main.js"></script>
+  </body>
+</html>
