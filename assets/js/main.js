@@ -59,11 +59,10 @@ class App {
         const href = anchor.getAttribute("href");
         if (!href || href.trim() === "") return;
 
-        // Only defer navigation when it's an in-page anchor or the element
-        // is intended to dismiss the offcanvas. Otherwise, let the browser
-        // handle navigation immediately (avoid unnecessary preventDefault).
-        const shouldDefer =
-          href.startsWith("#") || anchor.hasAttribute("data-bs-dismiss");
+        // Only defer navigation for in-page anchors (hash links).
+        // External links (including those with data-bs-dismiss) should
+        // navigate immediately so native navigation works as expected.
+        const shouldDefer = href.startsWith("#");
         if (!shouldDefer) return; // allow default navigation
 
         // If offcanvas isn't actually visible, just navigate immediately.
@@ -95,10 +94,23 @@ class App {
         };
 
         offcanvasEl.addEventListener("hidden.bs.offcanvas", onHidden);
-        // If the link does not have data-bs-dismiss, trigger hide now.
-        if (!anchor.hasAttribute("data-bs-dismiss")) {
-          const bsOff = bootstrap.Offcanvas.getInstance(offcanvasEl);
-          if (bsOff) bsOff.hide();
+
+        // Ensure the offcanvas is hidden. Calling hide() explicitly is
+        // necessary because we've prevented the default click action which
+        // would normally trigger Bootstrap's dismissal when
+        // data-bs-dismiss is present.
+        try {
+          const bsOff =
+            bootstrap.Offcanvas.getInstance(offcanvasEl) ||
+            new bootstrap.Offcanvas(offcanvasEl);
+          bsOff.hide();
+        } catch (err) {
+          // If bootstrap isn't available for some reason, fallback to
+          // removing the 'show' class so tests/behaviour don't hang.
+          offcanvasEl.classList.remove("show");
+          // Trigger the hidden event synchronously as a best-effort fallback
+          const ev = new Event("hidden.bs.offcanvas");
+          offcanvasEl.dispatchEvent(ev);
         }
       });
     }
@@ -249,93 +261,102 @@ class App {
 // Start the application
 new App();
 
-
 // This script handles client-side validation and the simulation of a form submission.
 
-document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('contactForm');
-    const successMessage = document.getElementById('successMessage');
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("contactForm");
+  const successMessage = document.getElementById("successMessage");
 
-    /**
-     * Performs client-side validation using Bootstrap's built-in validation feedback.
-     * Note: We rely on the 'form-control' class in the HTML being present.
-     * @param {HTMLFormElement} formElement - The form to validate.
-     * @returns {boolean} - True if the form is valid, false otherwise.
-     */
-    function validateForm(formElement) {
-        let isValid = true;
-        
-        // Clear all previous validation states
-        formElement.querySelectorAll('.form-control, .form-select').forEach(input => {
-            input.classList.remove('is-invalid');
-            input.classList.remove('is-valid');
-        });
-        
-        // Iterate through all required fields
-        formElement.querySelectorAll('[required]').forEach(input => {
-            const value = input.value.trim();
-            let fieldValid = true;
+  /**
+   * Performs client-side validation using Bootstrap's built-in validation feedback.
+   * Note: We rely on the 'form-control' class in the HTML being present.
+   * @param {HTMLFormElement} formElement - The form to validate.
+   * @returns {boolean} - True if the form is valid, false otherwise.
+   */
+  function validateForm(formElement) {
+    let isValid = true;
 
-            if (!value) {
-                fieldValid = false;
-            } else if (input.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-                 // Basic email format validation
-                fieldValid = false;
-            }
-            
-            if (!fieldValid) {
-                input.classList.add('is-invalid');
-                isValid = false;
-            } else {
-                input.classList.add('is-valid');
-            }
-        });
+    // Clear all previous validation states
+    formElement
+      .querySelectorAll(".form-control, .form-select")
+      .forEach((input) => {
+        input.classList.remove("is-invalid");
+        input.classList.remove("is-valid");
+      });
 
-        return isValid;
+    // Iterate through all required fields
+    formElement.querySelectorAll("[required]").forEach((input) => {
+      const value = input.value.trim();
+      let fieldValid = true;
+
+      if (!value) {
+        fieldValid = false;
+      } else if (
+        input.type === "email" &&
+        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
+      ) {
+        // Basic email format validation
+        fieldValid = false;
+      }
+
+      if (!fieldValid) {
+        input.classList.add("is-invalid");
+        isValid = false;
+      } else {
+        input.classList.add("is-valid");
+      }
+    });
+
+    return isValid;
+  }
+
+  // Event listener for form submission
+  form.addEventListener("submit", function (event) {
+    event.preventDefault(); // Stop default form submission
+    event.stopPropagation();
+
+    if (validateForm(this)) {
+      // Form is valid: Simulate successful submission
+
+      // 1. Hide the form
+      form.style.display = "none";
+
+      // 2. Show the success message (with a nice fade effect)
+      successMessage.style.opacity = "0";
+      successMessage.style.display = "block";
+
+      setTimeout(() => {
+        successMessage.style.opacity = "1";
+      }, 10); // Small delay to trigger transition
+
+      console.log("Form submitted successfully (simulated)!");
+    } else {
+      // Form is invalid: Display error messages
+      console.log(
+        "Validation failed. Please fill out all required fields correctly."
+      );
     }
+  });
 
-    // Event listener for form submission
-    form.addEventListener('submit', function (event) {
-        event.preventDefault(); // Stop default form submission
-        event.stopPropagation();
+  // Add real-time validation feedback on input change (optional but good UX)
+  form.querySelectorAll(".form-control, .form-select").forEach((input) => {
+    input.addEventListener("blur", (e) => {
+      const target = e.target;
 
-        if (validateForm(this)) {
-            // Form is valid: Simulate successful submission
-            
-            // 1. Hide the form
-            form.style.display = 'none';
+      target.classList.remove("is-invalid");
+      target.classList.remove("is-valid");
 
-            // 2. Show the success message (with a nice fade effect)
-            successMessage.style.opacity = '0';
-            successMessage.style.display = 'block';
-
-            setTimeout(() => {
-                successMessage.style.opacity = '1';
-            }, 10); // Small delay to trigger transition
-
-            console.log('Form submitted successfully (simulated)!');
-            
+      if (target.value.trim()) {
+        if (
+          !target.checkValidity() ||
+          (target.type === "email" &&
+            !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(target.value))
+        ) {
+          target.classList.add("is-invalid");
         } else {
-            // Form is invalid: Display error messages
-            console.log('Validation failed. Please fill out all required fields correctly.');
+          target.classList.add("is-valid");
         }
+      }
     });
-    
-    // Add real-time validation feedback on input change (optional but good UX)
-    form.querySelectorAll('.form-control, .form-select').forEach(input => {
-        input.addEventListener('blur', (e) => {
-            const target = e.target;
-            
-            target.classList.remove('is-invalid');
-            target.classList.remove('is-valid');
-
-            if (target.value.trim()) {
-                 if (!target.checkValidity() || (target.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(target.value))) {
-                    target.classList.add('is-invalid');
-                } else {
-                    target.classList.add('is-valid');
-                }
-            }
-        });
-    });
+  });
 });

@@ -147,8 +147,8 @@ Detailed test documentation and results are available in `TESTING.md` at the rep
 
 Quick links:
 
- - View the full testing report: `TESTING.md`
- - Playwright smoke tests: `tests/playwright/` (see the "Running tests" section above for commands)
+- View the full testing report: `TESTING.md`
+- Playwright smoke tests: `tests/playwright/` (see the "Running tests" section above for commands)
 
 If you'd like, the team can add screenshots into `/docs/testing-screenshots/` and wire automatic test runs into CI.
 
