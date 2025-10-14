@@ -146,9 +146,15 @@ Detailed test documentation and results are available in `TESTING.md` at the rep
 - A summary of fixes applied during testing (with commit references)
 
 Quick links:
+Quick links:
 
 - View the full testing report: `TESTING.md`
 - Playwright smoke tests: `tests/playwright/` (see the "Running tests" section above for commands)
+
+Project management & QA
+
+- [Project board (Management - Asana)](https://app.asana.com/1/1207231382805506/project/1211385026996908/list/1211385050374916)
+- QA & test procedures: `TESTING.md` (detailed test cases, traces, and results)
 
 If you'd like, the team can add screenshots into `/docs/testing-screenshots/` and wire automatic test runs into CI.
 
