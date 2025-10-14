@@ -342,244 +342,203 @@
       </section>
 
       <!-- Top Company grid -->
-      <section id="companies" class="features" aria-label="Top companies">
+     <section id="companies" class="py-5" aria-label="Top companies">
         <div class="container">
-          <h2 class="section-title" data-i18n="section.top_companies">
-            Top Company
-          </h2>
-          <div class="company-grid mt-md">
-            <!-- Clean, well-formed 3x3 grid of company cards -->
-            <div class="company-card feature-card">
-              <div class="company-card__media">
-                <picture>
-                  <source
-                    type="image/webp"
-                    srcset="
-                      assets/images/company-logos/ANA_InterContinental.webp
-                    "
-                  />
-                  <img
-                    src="assets/images/company-logos/ANA_InterContinental.png"
-                    class="img-64 object-contain feature-card__img"
-                    alt="ANA InterContinental logo"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </picture>
-              </div>
-              <div class="company-card__body">
-                <a
-                  class="feature-card__title company-card__title"
-                  href="pages/companies/ana-intercontinental.html"
-                  >ANA InterContinental</a
-                >
-              </div>
-            </div>
+            <h2 class="text-center mb-5 fw-bold" data-i18n="section.top_companies">
+                Top Company
+            </h2>
+            
+            <!-- Bootstrap responsive grid: 1 column on mobile, 2 columns on small/medium, 3 columns on large -->
+            <div class="row g-4 justify-content-center" id="companyGrid">
+                
+                <!-- Card 1: ANA InterContinental -->
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <a href="pages/companies/ana-intercontinental.html" class="text-decoration-none d-block company-link" data-company-name="ANA InterContinental">
+                        <div class="card h-100 shadow-sm rounded-3 p-4 text-center top-company-card">
+                            <div class="card-body d-flex flex-column align-items-center justify-content-center p-0">
+                                <img
+                                    src="assets/images/company-logos/ANA_InterContinental.png"
+                                    class="img-fluid mb-3"
+                                    style="max-height: 80px; width: auto; object-fit: contain;"
+                                    alt="ANA InterContinental logo"
+                                    loading="lazy"
+                                    decoding="async"
+                                    onerror="this.onerror=null; this.src='https://placehold.co/120x80/cccccc/333333?text=Logo';"
+                                />
+                                <h5 class="card-title fw-bold text-dark mt-2 mb-0 fs-6">ANA InterContinental</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
 
-            <div class="company-card feature-card">
-              <div class="company-card__media">
-                <picture>
-                  <source
-                    type="image/webp"
-                    srcset="assets/images/company-logos/Prince_Hotels.webp"
-                  />
-                  <img
-                    src="assets/images/company-logos/Prince_Hotels.png"
-                    class="img-64 object-contain feature-card__img"
-                    alt="Prince Hotels logo"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </picture>
-              </div>
-              <div class="company-card__body">
-                <a
-                  class="feature-card__title company-card__title"
-                  href="pages/companies/prince-hotels.html"
-                  >Prince Hotels</a
-                >
-              </div>
-            </div>
+                <!-- Card 2: Prince Hotels -->
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <a href="pages/companies/prince-hotels.html" class="text-decoration-none d-block company-link" data-company-name="Prince Hotels">
+                        <div class="card h-100 shadow-sm rounded-3 p-4 text-center top-company-card">
+                            <div class="card-body d-flex flex-column align-items-center justify-content-center p-0">
+                                <img
+                                    src="assets/images/company-logos/Prince_Hotels.png"
+                                    class="img-fluid mb-3"
+                                    style="max-height: 80px; width: auto; object-fit: contain;"
+                                    alt="Prince Hotels logo"
+                                    loading="lazy"
+                                    decoding="async"
+                                    onerror="this.onerror=null; this.src='https://placehold.co/120x80/cccccc/333333?text=Logo';"
+                                />
+                                <h5 class="card-title fw-bold text-dark mt-2 mb-0 fs-6">Prince Hotels</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- Card 3: SOMPO Care -->
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <a href="pages/companies/sompo-care.html" class="text-decoration-none d-block company-link" data-company-name="SOMPO Care">
+                        <div class="card h-100 shadow-sm rounded-3 p-4 text-center top-company-card">
+                            <div class="card-body d-flex flex-column align-items-center justify-content-center p-0">
+                                <img
+                                    src="assets/images/company-logos/sompocare.png"
+                                    class="img-fluid mb-3"
+                                    style="max-height: 80px; width: auto; object-fit: contain;"
+                                    alt="SOMPO Care logo"
+                                    loading="lazy"
+                                    decoding="async"
+                                    onerror="this.onerror=null; this.src='https://placehold.co/120x80/cccccc/333333?text=Logo';"
+                                />
+                                <h5 class="card-title fw-bold text-dark mt-2 mb-0 fs-6">SOMPO Care</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
 
-            <div class="company-card feature-card">
-              <div class="company-card__media">
-                <picture>
-                  <source
-                    type="image/webp"
-                    srcset="assets/images/company-logos/sompocare.webp"
-                  />
-                  <img
-                    src="assets/images/company-logos/sompocare.png"
-                    class="img-64 object-contain feature-card__img"
-                    alt="SOMPO Care logo"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </picture>
-              </div>
-              <div class="company-card__body">
-                <a
-                  class="feature-card__title company-card__title"
-                  href="pages/companies/sompo-care.html"
-                  >SOMPO Care</a
-                >
-              </div>
-            </div>
+                <!-- Card 4: Nissan -->
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <a href="pages/companies/nissan.html" class="text-decoration-none d-block company-link" data-company-name="Nissan">
+                        <div class="card h-100 shadow-sm rounded-3 p-4 text-center top-company-card">
+                            <div class="card-body d-flex flex-column align-items-center justify-content-center p-0">
+                                <img
+                                    src="assets/images/company-logos/Nissan.png"
+                                    class="img-fluid mb-3"
+                                    style="max-height: 80px; width: auto; object-fit: contain;"
+                                    alt="Nissan logo"
+                                    loading="lazy"
+                                    decoding="async"
+                                    onerror="this.onerror=null; this.src='https://placehold.co/120x80/cccccc/333333?text=Logo';"
+                                />
+                                <h5 class="card-title fw-bold text-dark mt-2 mb-0 fs-6">Nissan</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
 
-            <div class="company-card feature-card">
-              <div class="company-card__media">
-                <picture>
-                  <source
-                    type="image/webp"
-                    srcset="assets/images/company-logos/Nissan.webp"
-                  />
-                  <img
-                    src="assets/images/company-logos/Nissan.png"
-                    class="img-64 object-contain feature-card__img"
-                    alt="Nissan logo"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </picture>
-              </div>
-              <div class="company-card__body">
-                <a
-                  class="feature-card__title company-card__title"
-                  href="pages/companies/nissan.html"
-                  >Nissan</a
-                >
-              </div>
-            </div>
+                <!-- Card 5: Daikin -->
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <a href="pages/companies/daikin.html" class="text-decoration-none d-block company-link" data-company-name="Daikin">
+                        <div class="card h-100 shadow-sm rounded-3 p-4 text-center top-company-card">
+                            <div class="card-body d-flex flex-column align-items-center justify-content-center p-0">
+                                <img
+                                    src="assets/images/company-logos/Daikin_1.png"
+                                    class="img-fluid mb-3"
+                                    style="max-height: 80px; width: auto; object-fit: contain;"
+                                    alt="Daikin logo"
+                                    loading="lazy"
+                                    decoding="async"
+                                    onerror="this.onerror=null; this.src='https://placehold.co/120x80/cccccc/333333?text=Logo';"
+                                />
+                                <h5 class="card-title fw-bold text-dark mt-2 mb-0 fs-6">Daikin</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
 
-            <div class="company-card feature-card">
-              <div class="company-card__media">
-                <picture>
-                  <source
-                    type="image/webp"
-                    srcset="assets/images/company-logos/Daikin_1.webp"
-                  />
-                  <img
-                    src="assets/images/company-logos/Daikin_1.png"
-                    class="img-64 object-contain feature-card__img"
-                    alt="Daikin logo"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </picture>
-              </div>
-              <div class="company-card__body">
-                <a
-                  class="feature-card__title company-card__title"
-                  href="pages/companies/daikin.html"
-                  >Daikin</a
-                >
-              </div>
-            </div>
+                <!-- Card 6: Kandenko -->
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <a href="pages/companies/kandenko.html" class="text-decoration-none d-block company-link" data-company-name="Kandenko">
+                        <div class="card h-100 shadow-sm rounded-3 p-4 text-center top-company-card">
+                            <div class="card-body d-flex flex-column align-items-center justify-content-center p-0">
+                                <img
+                                    src="assets/images/company-logos/Kandenko.png"
+                                    class="img-fluid mb-3"
+                                    style="max-height: 80px; width: auto; object-fit: contain;"
+                                    alt="Kandenko logo"
+                                    loading="lazy"
+                                    decoding="async"
+                                    onerror="this.onerror=null; this.src='https://placehold.co/120x80/cccccc/333333?text=Logo';"
+                                />
+                                <h5 class="card-title fw-bold text-dark mt-2 mb-0 fs-6">Kandenko</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
 
-            <div class="company-card feature-card">
-              <div class="company-card__media">
-                <picture>
-                  <source
-                    type="image/webp"
-                    srcset="assets/images/company-logos/Kandenko.webp"
-                  />
-                  <img
-                    src="assets/images/company-logos/Kandenko.png"
-                    class="img-64 object-contain feature-card__img"
-                    alt="Kandenko logo"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </picture>
-              </div>
-              <div class="company-card__body">
-                <a
-                  class="feature-card__title company-card__title"
-                  href="pages/companies/kandenko.html"
-                  >Kandenko</a
-                >
-              </div>
-            </div>
+                <!-- Card 7: Yoshinoya -->
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <a href="pages/companies/yoshinoya.html" class="text-decoration-none d-block company-link" data-company-name="Yoshinoya">
+                        <div class="card h-100 shadow-sm rounded-3 p-4 text-center top-company-card">
+                            <div class="card-body d-flex flex-column align-items-center justify-content-center p-0">
+                                <img
+                                    src="assets/images/company-logos/Yoshinoya.png"
+                                    class="img-fluid mb-3"
+                                    style="max-height: 80px; width: auto; object-fit: contain;"
+                                    alt="Yoshinoya logo"
+                                    loading="lazy"
+                                    decoding="async"
+                                    onerror="this.onerror=null; this.src='https://placehold.co/120x80/cccccc/333333?text=Logo';"
+                                />
+                                <h5 class="card-title fw-bold text-dark mt-2 mb-0 fs-6">Yoshinoya</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
 
-            <div class="company-card feature-card">
-              <div class="company-card__media">
-                <picture>
-                  <source
-                    type="image/webp"
-                    srcset="assets/images/company-logos/Yoshinoya.webp"
-                  />
-                  <img
-                    src="assets/images/company-logos/Yoshinoya.png"
-                    class="img-64 object-contain feature-card__img"
-                    alt="Yoshinoya logo"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </picture>
-              </div>
-              <div class="company-card__body">
-                <a
-                  class="feature-card__title company-card__title"
-                  href="pages/companies/yoshinoya.html"
-                  >Yoshinoya</a
-                >
-              </div>
-            </div>
+                <!-- Card 8: ANA -->
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <a href="pages/companies/ana.html" class="text-decoration-none d-block company-link" data-company-name="ANA">
+                        <div class="card h-100 shadow-sm rounded-3 p-4 text-center top-company-card">
+                            <div class="card-body d-flex flex-column align-items-center justify-content-center p-0">
+                                <img
+                                    src="assets/images/company-logos/ANA.png"
+                                    class="img-fluid mb-3"
+                                    style="max-height: 80px; width: auto; object-fit: contain;"
+                                    alt="ANA logo"
+                                    loading="lazy"
+                                    decoding="async"
+                                    onerror="this.onerror=null; this.src='https://placehold.co/120x80/cccccc/333333?text=Logo';"
+                                />
+                                <h5 class="card-title fw-bold text-dark mt-2 mb-0 fs-6">ANA</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
 
-            <div class="company-card feature-card">
-              <div class="company-card__media">
-                <picture>
-                  <source
-                    type="image/webp"
-                    srcset="assets/images/company-logos/ANA.webp"
-                  />
-                  <img
-                    src="assets/images/company-logos/ANA.png"
-                    class="img-64 object-contain feature-card__img"
-                    alt="ANA logo"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </picture>
-              </div>
-              <div class="company-card__body">
-                <a
-                  class="feature-card__title company-card__title"
-                  href="pages/companies/ana.html"
-                  >ANA</a
-                >
-              </div>
+                <!-- Card 9: Mitsubishi Heavy Industries -->
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <a href="pages/companies/mitsubishi-heavy-industries.html" class="text-decoration-none d-block company-link" data-company-name="Mitsubishi Heavy Industries">
+                        <div class="card h-100 shadow-sm rounded-3 p-4 text-center top-company-card">
+                            <div class="card-body d-flex flex-column align-items-center justify-content-center p-0">
+                                <img
+                                    src="assets/images/company-logos/Mitsubishi_Heavy_Industries.png"
+                                    class="img-fluid mb-3"
+                                    style="max-height: 80px; width: auto; object-fit: contain;"
+                                    alt="Mitsubishi Heavy Industries logo"
+                                    loading="lazy"
+                                    decoding="async"
+                                    onerror="this.onerror=null; this.src='https://placehold.co/120x80/cccccc/333333?text=Logo';"
+                                />
+                                <h5 class="card-title fw-bold text-dark mt-2 mb-0 fs-6">Mitsubishi Heavy Industries</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
             </div>
-
-            <div class="company-card feature-card">
-              <div class="company-card__media">
-                <picture>
-                  <source
-                    type="image/webp"
-                    srcset="
-                      assets/images/company-logos/Mitsubishi_Heavy_Industries.webp
-                    "
-                  />
-                  <img
-                    src="assets/images/company-logos/Mitsubishi_Heavy_Industries.png"
-                    class="img-64 object-contain feature-card__img"
-                    alt="Mitsubishi Heavy Industries logo"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </picture>
-              </div>
-              <div class="company-card__body">
-                <a
-                  class="feature-card__title company-card__title"
-                  href="pages/companies/mitsubishi-heavy-industries.html"
-                  >Mitsubishi Heavy Industries</a
-                >
-              </div>
+            
+            <div class="text-center mt-5">
+                <a href="pages/companies.html" class="btn btn-primary rounded-pill px-4" data-i18n="btn.view_all_companies">
+                    View All Companies
+                </a>
             </div>
-          </div>
         </div>
-      </section>
+    </section>
 
       <!-- Registered Support Organization RSO (wide card) -->
       <section class="section-padding">
