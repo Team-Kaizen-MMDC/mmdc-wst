@@ -584,6 +584,7 @@ user-menu-dropdown__divider {
   transition: var(--transition);
   border-radius: var(--border-radius);
   background: #fff;
+  height: 100%;
 }
 
 .card:hover {
