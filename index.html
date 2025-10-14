@@ -637,56 +637,88 @@
       </section>
 
       <!-- About Us card -->
-      <section class="features">
-        <div class="container">
-          <h2 class="section-title" data-i18n="about.title">About Us</h2>
-          <div class="flex-center mt-sm">
-            <div class="feature-card feature-two-col">
-              <picture>
-                <source
-                  type="image/webp"
-                  srcset="
-                    assets/images/aiImages/TokyoDay-800.webp 800w,
-                    assets/images/aiImages/TokyoDay-480.webp 480w
-                  "
-                />
-                <img
-                  src="assets/images/aiImages/TokyoDay-800.png"
-                  srcset="
-                    assets/images/aiImages/TokyoDay-800.png 800w,
-                    assets/images/aiImages/TokyoDay-480.png 480w
-                  "
-                  alt="Tokyo cityscape representing Japan's work opportunities"
-                  class="img-full object-cover"
-                  loading="lazy"
-                  decoding="async"
-                />
-              </picture>
-              <div>
-                <p class="fw-600" data-i18n="about.lead_bold">
-                  JapanSSW is your one-stop platform for skilled trade job
-                  seekers under the Specified Skilled Worker (SSW) visa in
-                  Japan.
-                </p>
-                <p class="muted" data-i18n="about.lead">
-                  Founded in 2024 by Juan Angelo, JapanSSW provides job
-                  matching, visa guidance, and community resources to help
-                  foreign workers find stable employment and build better
-                  futures in Japan.
-                </p>
-                <p class="mt-xs">
-                  <a
-                    class="btn btn-primary"
-                    href="pages/about.html"
-                    data-i18n="btn.learn_more"
-                    >Learn more</a
-                  >
-                </p>
-              </div>
+      <section class="py-5 w-100">
+    <div class="container">
+        <!-- Section Title: Centered and styled with Bootstrap utilities -->
+        <h2 class="text-center mb-5 fs-2 fw-bold" data-i18n="about.title">
+            About Us
+        </h2>
+
+        <!-- Centering the Card and Limiting its Max Width (matching RSO card) -->
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-11 col-xl-10">
+                
+                <!-- The Horizontal Card Component (using RSO styling classes) -->
+                <div class="card mb-3 shadow-lg rounded-4 overflow-hidden rso-card">
+                    
+                    <!-- Row with no gutters (g-0) -->
+                    <div class="row g-0">
+                        
+                        <!-- Image Column: col-md-5, padded, aligned center -->
+                        <div class="col-md-5 min-h-md-100 p-4 d-flex align-items-center">
+                            <!-- Responsive Image using <picture> -->
+                            <picture>
+                                <source
+                                    type="image/webp"
+                                    srcset="
+                                        assets/images/aiImages/TokyoDay-800.webp 800w,
+                                        assets/images/aiImages/TokyoDay-480.webp 480w
+                                    "
+                                />
+                                <img
+                                    src="assets/images/aiImages/TokyoDay-800.png"
+                                    srcset="
+                                        assets/images/aiImages/TokyoDay-800.png 800w,
+                                        assets/images/aiImages/TokyoDay-480.png 480w
+                                    "
+                                    alt="Tokyo cityscape representing Japan's work opportunities"
+                                    class="img-fluid w-100 rounded"
+                                    style="object-fit: cover;"
+                                    loading="lazy"
+                                    decoding="async"
+                                    onerror="this.src='https://placehold.co/800x600/38a169/ffffff?text=About+Us+Image';"
+                                />
+                            </picture>
+                        </div>
+                        
+                        <!-- Content Column: col-md-7 -->
+                        <div class="col-md-7 min-h-md-100">
+                            <div class="card-body p-4 p-lg-5 d-flex flex-column justify-content-center">
+                                <!-- Card Title for About Us content -->
+                                <h5 class="card-title fw-bold fs-4 text-primary-dark mb-3"></h5>
+
+                                <!-- Lead Content -->
+                                <p class="card-text fw-bold text-dark" data-i18n="about.lead_bold">
+                                    JapanSSW is your one-stop platform for skilled trade job
+                                    seekers under the Specified Skilled Worker (SSW) visa in
+                                    Japan.
+                                </p>
+
+                                <!-- Secondary Content -->
+                                <p class="card-text text-secondary mt-2" data-i18n="about.lead">
+                                    Founded in 2024 by Juan Angelo, JapanSSW provides job
+                                    matching, visa guidance, and community resources to help
+                                    foreign workers find stable employment and build better
+                                    futures in Japan.
+                                </p>
+
+                                <!-- Call to Action Button -->
+                                <div class="mt-4">
+                                    <a
+                                        class="btn btn-primary px-4 text-white"
+                                        style="background-color: btn btn-primary; border-color: var(--bs-primary-dark);"
+                                        href="pages/about.html"
+                                        data-i18n="btn.learn_more"
+                                    >Learn more</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </section>
+    </div>
+</section>
 
       <!-- Job Alerts Band (red) -->
       <section class="alerts-band">
