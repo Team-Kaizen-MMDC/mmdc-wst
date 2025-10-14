@@ -3170,15 +3170,48 @@ body.company-dashboard .bento-wrapper {
   min-height: 100vh;
 }
 
-body.company-dashboard .bento-container {
-  width: 100%;
-  max-width: 1185px;
-  background: #ffffff;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-}
-/* -------------------------------
+        body.company-dashboard .bento-wrapper {
+            width: 100%;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+           body.company-dashboard .bento-container {
+            width: 100%;
+            max-width: 1185px; 
+            background: #ffffff; 
+            padding: 30px; 
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            
+            
+          /* CSS GRID */
+          display: grid;
+          gap: 20px;
+
+            /* Define 3 equal columns */
+            grid-template-columns: 2fr 1fr 1fr; 
+
+              /* Placement and spanning */
+            grid-template-areas:
+                "box-1 box-1 box-1"      /* Row 1: Navi spans 3 columns */
+                "box-2 box-3 box-4"      /* Row 2: Boxes 2, 3, and 4 each take 1 column */
+                  "box-5 box-6 box-6"        /* Box 5 (1 Col), Box 6 (1 Col), 1 empty column */
+           }
+
+              /* Area Assignments */
+        body.company-dashboard .bento-box--navi { grid-area: box-1; } 
+        body.company-dashboard .bento-box--profile { grid-area: box-2; } 
+        body.company-dashboard .bento-box--tracking { grid-area: box-3; }
+        body.company-dashboard .bento-box--metric { grid-area: box-4; }
+        body.company-dashboard .bento-box--applicant-list { grid-area: box-5; }
+        body.company-dashboard .bento-box--job-list { grid-area: box-6; }
+
+           
+ /* -------------------------------
               Base Bento Box Styling
            --------------------------------*/
 body.company-dashboard .bento-box {
