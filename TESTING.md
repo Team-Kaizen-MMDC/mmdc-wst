@@ -84,6 +84,22 @@ This document outlines the testing performed on the Japan SSW website, focusing 
    - Color contrast (WCAG AA)
    - Screen reader compatibility
 
+### Non-functional checks (performance & resilience)
+
+While the functional test cases verify correctness, we also run a small set of non-functional checks to ensure the site performs acceptably on realistic connections and devices:
+
+- Performance (Lighthouse synthetic targets):
+  - First Contentful Paint (FCP) < 2.0s on 3G Slow 2G throttling — target: FCP < 2.5s for key hero content
+  - Time to Interactive (TTI) < 5s on typical mobile hardware — target: TTI < 6s
+  - Largest Contentful Paint (LCP) < 2.5s on representative mobile viewport
+- Network resilience:
+  - Verify critical assets (CSS, main JS, hero image) are served with 200 responses and small-sized fallbacks exist (webp/placeholder)
+  - Verify site remains usable when JS fails (progressive enhancement checks)
+- Error monitoring:
+  - Capture console.error events during automated runs and fail a test if there are uncaught exceptions
+
+Notes: these are recorded as measured values in the testing artifacts (Lighthouse JSON traces, Playwright traces). We do not fail the entire suite for one-off transient network spikes but we flag regressions if thresholds are consistently missed across three runs.
+
 ---
 
 ## Test Cases
@@ -674,6 +690,21 @@ offcanvasEl.addEventListener("hidden.bs.offcanvas", () => {
 ---
 
 ## Browser Compatibility
+
+### Cross‑browser & device coverage matrix
+
+The following matrix lists the explicit browser and device combinations we validate during testing. Include both manual and automated smoke runs where possible.
+
+| Device / Form Factor         | Browser                    | Notes                                          |
+| ---------------------------- | -------------------------- | ---------------------------------------------- |
+| Desktop (macOS)              | Chrome (latest)            | Primary automated runs (Playwright - Chromium) |
+| Desktop (macOS)              | Safari (latest)            | Manual verification (critical for macOS users) |
+| Desktop (Windows)            | Firefox (latest)           | Automated + manual smoke runs                  |
+| Mobile (iPhone 14 / 375×812) | Mobile Safari (iOS latest) | Emulated + real device where available         |
+| Mobile (Pixel / 393×852)     | Chrome Mobile              | Emulated via Playwright or DevTools            |
+| Tablet (iPad)                | Safari                     | Emulated / manual checks                       |
+
+Notes: where real devices are not available, use Playwright device emulation and a small sampling of actual devices for sanity checks (at least one iOS device and one Android device per sprint).
 
 | Browser       | Version       | Status  | Notes                        |
 | ------------- | ------------- | ------- | ---------------------------- |
