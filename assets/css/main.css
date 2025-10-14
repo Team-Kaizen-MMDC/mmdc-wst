@@ -1178,6 +1178,26 @@ user-menu-dropdown__divider {
   }
 }
 
+/* Chevron SVG styling & rotation when expanded */
+.footer-chevron {
+  display: inline-block;
+  transition: transform 220ms cubic-bezier(.2,.9,.2,1);
+  transform-origin: 50% 40%;
+}
+
+.footer-collapse-toggle[aria-expanded="true"] .footer-chevron,
+.footer-collapse-toggle[aria-pressed="true"] .footer-chevron {
+  transform: rotate(180deg);
+}
+
+/* Slightly larger hit area for the chevron button on mobile */
+@media (max-width: 768px) {
+  .footer-collapse-toggle {
+    padding: 6px;
+    margin-left: 8px;
+  }
+}
+
 /* Desktop: lay out the footer link columns horizontally in three columns.
    On narrow screens this will be overridden by the mobile media query. */
 .site-footer__links {
