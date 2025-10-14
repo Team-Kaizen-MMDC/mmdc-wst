@@ -1,0 +1,190 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - banner [ref=e2]:
+    - navigation [ref=e4]:
+      - link "Japan SSW" [ref=e5]:
+        - /url: index.html
+      - button "Open menu" [active] [ref=e6] [cursor=pointer]
+  - main [ref=e8]:
+    - generic [ref=e12]:
+      - heading "Specified Skilled Worker Jobs in Japan" [level=1] [ref=e13]
+      - paragraph [ref=e14]: Your one-stop destination for job matching, visa assistance, and essential community resources.
+    - generic [ref=e16]:
+      - heading "Job Listings" [level=2] [ref=e17]
+      - list [ref=e20]:
+        - listitem [ref=e21]:
+          - generic [ref=e22]:
+            - heading "Mechanic — Ground Support (Haneda)" [level=3] [ref=e23]
+            - paragraph [ref=e24]: Haneda Airport — Tokyo
+          - link "Apply" [ref=e26] [cursor=pointer]:
+            - /url: pages/jobs/mechanic-ground-support-haneda.html
+        - listitem [ref=e27]:
+          - generic [ref=e28]:
+            - heading "Cleaner — Facilities Maintenance" [level=3] [ref=e29]
+            - paragraph [ref=e30]: Office Facilities — Tokyo
+          - link "Apply" [ref=e32] [cursor=pointer]:
+            - /url: pages/jobs/cleaner-facilities-maintenance.html
+        - listitem [ref=e33]:
+          - generic [ref=e34]:
+            - heading "Construction Worker — Site Support" [level=3] [ref=e35]
+            - paragraph [ref=e36]: Contractor — Saitama
+          - link "Apply" [ref=e38] [cursor=pointer]:
+            - /url: pages/jobs/construction-worker-site-support.html
+        - listitem [ref=e39]:
+          - generic [ref=e40]:
+            - heading "Server — Hospitality" [level=3] [ref=e41]
+            - paragraph [ref=e42]: Restaurant — Tokyo
+          - link "Apply" [ref=e44] [cursor=pointer]:
+            - /url: pages/jobs/server-hospitality.html
+        - listitem [ref=e45]:
+          - generic [ref=e46]:
+            - heading "Ward Nursing Support" [level=3] [ref=e47]
+            - paragraph [ref=e48]: Jhesperus Japan Co., Ltd. — Tokyo
+          - link "Apply" [ref=e50] [cursor=pointer]:
+            - /url: pages/jobs/ward-nursing-support.html
+      - link "Search SSW jobs" [ref=e52] [cursor=pointer]:
+        - /url: "#jobs"
+    - region "Top companies" [ref=e53]:
+      - generic [ref=e54]:
+        - heading "Top Company" [level=2] [ref=e55]
+        - generic [ref=e56]:
+          - link "ANA InterContinental logo ANA InterContinental" [ref=e58]:
+            - /url: pages/companies/ana-intercontinental.html
+            - generic [ref=e60]:
+              - img "ANA InterContinental logo" [ref=e61]
+              - heading "ANA InterContinental" [level=5] [ref=e62]
+          - link "Prince Hotels logo Prince Hotels" [ref=e64]:
+            - /url: pages/companies/prince-hotels.html
+            - generic [ref=e66]:
+              - img "Prince Hotels logo"
+              - heading "Prince Hotels" [level=5] [ref=e67]
+          - link "SOMPO Care logo SOMPO Care" [ref=e69]:
+            - /url: pages/companies/sompo-care.html
+            - generic [ref=e71]:
+              - img "SOMPO Care logo"
+              - heading "SOMPO Care" [level=5] [ref=e72]
+          - link "Nissan logo Nissan" [ref=e74]:
+            - /url: pages/companies/nissan.html
+            - generic [ref=e76]:
+              - img "Nissan logo"
+              - heading "Nissan" [level=5] [ref=e77]
+          - link "Daikin logo Daikin" [ref=e79]:
+            - /url: pages/companies/daikin.html
+            - generic [ref=e81]:
+              - img "Daikin logo"
+              - heading "Daikin" [level=5] [ref=e82]
+          - link "Kandenko logo Kandenko" [ref=e84]:
+            - /url: pages/companies/kandenko.html
+            - generic [ref=e86]:
+              - img "Kandenko logo"
+              - heading "Kandenko" [level=5] [ref=e87]
+          - link "Yoshinoya logo Yoshinoya" [ref=e89]:
+            - /url: pages/companies/yoshinoya.html
+            - generic [ref=e91]:
+              - img "Yoshinoya logo"
+              - heading "Yoshinoya" [level=5] [ref=e92]
+          - link "ANA logo ANA" [ref=e94]:
+            - /url: pages/companies/ana.html
+            - generic [ref=e96]:
+              - img "ANA logo"
+              - heading "ANA" [level=5] [ref=e97]
+          - link "Mitsubishi Heavy Industries logo Mitsubishi Heavy Industries" [ref=e99]:
+            - /url: pages/companies/mitsubishi-heavy-industries.html
+            - generic [ref=e101]:
+              - img "Mitsubishi Heavy Industries logo"
+              - heading "Mitsubishi Heavy Industries" [level=5] [ref=e102]
+        - link "View All Companies" [ref=e104] [cursor=pointer]:
+          - /url: pages/companies.html
+    - generic [ref=e106]:
+      - heading "Registered Support Organization" [level=2] [ref=e107]
+      - generic [ref=e111]:
+        - generic [ref=e112]:
+          - generic:
+            - img "Receptionist at front desk"
+        - generic [ref=e114]:
+          - heading "ASEAN PLUS" [level=5] [ref=e115]
+          - paragraph [ref=e116]: ASEAN PLUS (ASEAN+3) brings together the 10 ASEAN member states with China, Japan and South Korea to deepen regional cooperation across trade, labour, education and social services — including programmes that support foreign workers and mobility in the region. Learn more at the ASEAN+3 site for regional initiatives and support services. The organization provides resources on worker rights, visa renewal support, and cultural integration programs for SSW candidates.
+          - link "Search Agency" [ref=e118] [cursor=pointer]:
+            - /url: pages/agency.html
+    - generic [ref=e120]:
+      - heading "About Us" [level=2] [ref=e121]
+      - generic [ref=e125]:
+        - generic [ref=e126]:
+          - generic:
+            - img "Tokyo cityscape representing Japan's work opportunities"
+        - generic [ref=e128]:
+          - heading [level=5]
+          - paragraph [ref=e129]: JapanSSW is your one-stop platform for skilled trade job seekers under the Specified Skilled Worker (SSW) visa in Japan.
+          - paragraph [ref=e130]: Founded in 2024 by Juan Angelo, JapanSSW provides job matching, visa guidance, and community resources to help foreign workers find stable employment and build better futures in Japan.
+          - link "Learn more" [ref=e132] [cursor=pointer]:
+            - /url: pages/about.html
+    - generic [ref=e134]:
+      - heading "Get Job Matches" [level=3] [ref=e135]
+      - paragraph [ref=e136]: Stay updated with the latest Japan job opportunities — right in your inbox.
+      - generic [ref=e137]:
+        - generic [ref=e138]: Email address for job alerts
+        - textbox "Email address for job alerts" [ref=e139]
+        - button "Sign Up Demo" [disabled]
+    - generic [ref=e142]:
+      - generic [ref=e143]:
+        - heading "Want to post jobs?" [level=3] [ref=e144]
+        - paragraph [ref=e145]: Reach qualified engineers and designers in Japan.
+      - link "Post a Job" [ref=e147] [cursor=pointer]:
+        - /url: "#"
+  - contentinfo [ref=e148]:
+    - generic [ref=e149]:
+      - generic [ref=e150]:
+        - heading "Want to post jobs on JapanSSW?" [level=3] [ref=e151]
+        - paragraph [ref=e152]: Reach qualified candidates under the SSW programme.
+        - generic [ref=e153]:
+          - link "Employer Login" [ref=e154] [cursor=pointer]:
+            - /url: "#"
+          - link "Post a Job" [ref=e155] [cursor=pointer]:
+            - /url: "#"
+      - generic [ref=e156]:
+        - generic [ref=e157]:
+          - heading "Company" [level=4] [ref=e158]
+          - list [ref=e159]:
+            - listitem [ref=e160]:
+              - link "Home" [ref=e161]:
+                - /url: index.html
+            - listitem [ref=e162]:
+              - link "About" [ref=e163]:
+                - /url: pages/about.html
+            - listitem [ref=e164]:
+              - link "Contact" [ref=e165]:
+                - /url: pages/contact.html
+        - generic [ref=e166]:
+          - heading "Jobs" [level=4] [ref=e167]
+          - list [ref=e168]:
+            - listitem [ref=e169]:
+              - link "Search Jobs" [ref=e170]:
+                - /url: "#jobs"
+            - listitem [ref=e171]:
+              - link "Companies" [ref=e172]:
+                - /url: "#companies"
+            - listitem [ref=e173]:
+              - link "Post a Job" [ref=e174]:
+                - /url: "#post-job"
+        - generic [ref=e175]:
+          - heading "Resources" [level=4] [ref=e176]
+          - list [ref=e177]:
+            - listitem [ref=e178]:
+              - link "Visa Guidance" [ref=e179]:
+                - /url: pages/visaGuidance.html
+            - listitem [ref=e180]:
+              - link "Employer Hub" [ref=e181]:
+                - /url: "#"
+            - listitem [ref=e182]:
+              - link "Privacy" [ref=e183]:
+                - /url: pages/privacy.html
+    - generic [ref=e185]:
+      - generic [ref=e186]: © 2025 Japan SSW. All rights reserved.
+      - navigation "Footer legal" [ref=e187]:
+        - link "Terms" [ref=e188]:
+          - /url: pages/terms.html
+        - link "Privacy" [ref=e189]:
+          - /url: pages/privacy.html
+```

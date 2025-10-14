@@ -59,11 +59,28 @@ class App {
         const href = anchor.getAttribute("href");
         if (!href || href.trim() === "") return;
 
-        // Only defer navigation for in-page anchors (hash links).
-        // External links (including those with data-bs-dismiss) should
-        // navigate immediately so native navigation works as expected.
-        const shouldDefer = href.startsWith("#");
-        if (!shouldDefer) return; // allow default navigation
+        // Build an absolute URL for the href so we can reason about
+        // same-origin vs external links. We will defer navigation for
+        // same-origin navigations (including hash anchors and internal
+        // page paths) so that the offcanvas can finish hiding first.
+        // Allow external links (different origin), target=_blank, or
+        // downloads to proceed immediately.
+        let targetUrl;
+        try {
+          targetUrl = new URL(href, window.location.href);
+        } catch (err) {
+          // Malformed URL - don't interfere
+          return;
+        }
+
+        // Respect explicit target attributes like _blank and download links
+        const targetAttr = anchor.getAttribute("target");
+        const hasDownload = anchor.hasAttribute("download");
+        if (targetAttr === "_blank" || hasDownload) return;
+
+        const isSameOrigin = targetUrl.origin === window.location.origin;
+        // Defer navigation only for same-origin navigations (including hashes)
+        if (!isSameOrigin) return; // external link - allow default
 
         // If offcanvas isn't actually visible, just navigate immediately.
         if (!offcanvasEl.classList.contains("show")) {
@@ -79,36 +96,64 @@ class App {
         // Prevent default navigation; navigate after offcanvas hides.
         e.preventDefault();
 
+        // Guard against duplicate navigation for the same click target.
+        // We'll create a unique token on the anchor so subsequent clicks
+        // or re-entrancy won't trigger the same navigation twice.
+        if (anchor._deferredNavFired) {
+          console.debug(
+            "Offcanvas: deferred nav already fired for this anchor",
+            href
+          );
+          return;
+        }
+        anchor._deferredNavFired = true;
+
         const doNavigate = () => {
-          if (href.startsWith("#")) {
-            if (history.pushState) history.pushState(null, null, href);
-            else window.location.hash = href;
+          console.debug(
+            "Offcanvas: performing deferred navigation to",
+            targetUrl.href
+          );
+          // If navigation is a hash-only change on the same page, use pushState
+          if (
+            targetUrl.hash &&
+            targetUrl.pathname === window.location.pathname
+          ) {
+            if (history.pushState)
+              history.pushState(null, null, targetUrl.hash);
+            else window.location.hash = targetUrl.hash;
           } else {
-            window.location.href = href;
+            // Navigate to the internal page URL
+            window.location.href = targetUrl.href;
           }
         };
 
-        const onHidden = () => {
-          doNavigate();
-          offcanvasEl.removeEventListener("hidden.bs.offcanvas", onHidden);
-        };
-
-        offcanvasEl.addEventListener("hidden.bs.offcanvas", onHidden);
+        // Use the once option to ensure the handler runs only once.
+        const onHidden = () => doNavigate();
+        offcanvasEl.addEventListener("hidden.bs.offcanvas", onHidden, {
+          once: true,
+        });
 
         // Ensure the offcanvas is hidden. Calling hide() explicitly is
         // necessary because we've prevented the default click action which
         // would normally trigger Bootstrap's dismissal when
         // data-bs-dismiss is present.
         try {
-          const bsOff =
-            bootstrap.Offcanvas.getInstance(offcanvasEl) ||
-            new bootstrap.Offcanvas(offcanvasEl);
-          bsOff.hide();
+          const existing = bootstrap?.Offcanvas?.getInstance?.(offcanvasEl);
+          const bsOff = existing || new bootstrap.Offcanvas(offcanvasEl);
+          // Only call hide if it's currently shown to avoid re-entrant
+          // behavior that could confuse the hidden event ordering.
+          if (offcanvasEl.classList.contains("show")) bsOff.hide();
+          else {
+            // If it's not shown for some reason, trigger the deferred navigation now
+            doNavigate();
+          }
         } catch (err) {
-          // If bootstrap isn't available for some reason, fallback to
-          // removing the 'show' class so tests/behaviour don't hang.
+          console.warn(
+            "Offcanvas: error while trying to hide offcanvas, triggering navigation fallback",
+            err
+          );
+          // Fallback: remove show and dispatch hidden event synchronously
           offcanvasEl.classList.remove("show");
-          // Trigger the hidden event synchronously as a best-effort fallback
           const ev = new Event("hidden.bs.offcanvas");
           offcanvasEl.dispatchEvent(ev);
         }
