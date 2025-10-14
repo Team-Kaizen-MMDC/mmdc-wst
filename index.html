@@ -582,59 +582,87 @@
       </section>
 
       <!-- Registered Support Organization RSO (wide card) -->
-      <section class="section-padding">
-        <div class="container">
-          <h2 class="section-title" data-i18n="section.registered_support_org">
+    <section class="py-5 w-100">
+    <div class="container">
+        <!-- Section Title: Centered and styled with Bootstrap utilities -->
+        <h2 class="text-center mb-5 fs-2 fw-bold" data-i18n="section.registered_support_org">
             Registered Support Organization
-          </h2>
-          <div class="flex-center mt-sm">
-            <div class="feature-card feature-wide">
-              <picture>
-                <source
-                  type="image/webp"
-                  srcset="
-                    assets/images/aiImages/Receptionist1-640.webp 640w,
-                    assets/images/aiImages/Receptionist1-320.webp 320w
-                  "
-                />
-                <img
-                  src="assets/images/aiImages/Receptionist1.jpg"
-                  srcset="
-                    assets/images/aiImages/Receptionist1.jpg 320w,
-                    assets/images/aiImages/Receptionist1.jpg 640w
-                  "
-                  alt="Receptionist at front desk"
-                  class="img-320 object-cover feature-card__img"
-                  loading="lazy"
-                  decoding="async"
-                />
-              </picture>
-              <div>
-                <h3 class="feature-card__title">ASEAN PLUS</h3>
-                <p class="muted feature-card__desc">
-                  ASEAN PLUS (ASEAN+3) brings together the 10 ASEAN member
-                  states with China, Japan and South Korea to deepen regional
-                  cooperation across trade, labour, education and social
-                  services — including programmes that support foreign workers
-                  and mobility in the region.
-                </p>
-                <p class="muted feature-card__desc" data-i18n="support.lead">
-                  Learn more at the ASEAN+3 site for regional initiatives and
-                  support services.
-                </p>
-                <p class="mt-xs">
-                  <a
-                    class="btn btn-primary feature-card__cta"
-                    href="pages/agency.html"
-                    data-i18n="btn.search_agency"
-                    >Search Agency</a
-                  >
-                </p>
-              </div>
+        </h2>
+        
+        <!-- Centering the Card and Limiting its Max Width -->
+        <div class="row justify-content-center">
+            <!-- Increased overall card width from col-xl-8 to col-xl-10 -->
+            <div class="col-12 col-lg-11 col-xl-10">
+                
+                <!-- The Horizontal Card Component -->
+                <!-- shadow-lg, rounded-4, overflow-hidden for aesthetics, plus custom class for hover -->
+                <div class="card mb-3 shadow-lg rounded-4 overflow-hidden rso-card" id="rsoCard">
+                    
+                    <!-- Row with no gutters (g-0). Removed h-100 to allow image to scale naturally based on content. -->
+                    <div class="row g-0">
+                        
+                        <!-- Image Column: Increased width from col-md-4 to col-md-5 -->
+                        <!-- Added min-h-md-100 for height matching on desktop/tablet, p-4 padding -->
+                        <div class="col-md-5 min-h-md-100 p-4 d-flex align-items-center">
+                            <!-- Responsive Image using <picture> -->
+                            <picture>
+                                <source
+                                    type="image/webp"
+                                    srcset="
+                                        assets/images/aiImages/Receptionist1-640.webp 640w,
+                                        assets/images/aiImages/Receptionist1-320.webp 320w
+                                    "
+                                />
+                                <img
+                                    src="assets/images/aiImages/Receptionist1.jpg"
+                                    srcset="
+                                        assets/images/aiImages/Receptionist1.jpg 320w,
+                                        assets/images/aiImages/Receptionist1.jpg 640w
+                                    "
+                                    alt="Receptionist at front desk"
+                                    class="img-fluid w-100 rounded"
+                                    style="object-fit: cover;"
+                                    loading="lazy"
+                                    decoding="async"
+                                    onerror="this.src='https://placehold.co/800x600/1e3a8a/ffffff?text=Image+Load+Failed';"
+                                />
+                            </picture>
+                        </div>
+                        
+                        <!-- Content Column: Reduced width from col-md-8 to col-md-7 -->
+                        <!-- Added min-h-md-100 for height matching on desktop/tablet -->
+                        <div class="col-md-7 min-h-md-100">
+                            <div class="card-body p-4 p-lg-5">
+                                <h5 class="card-title fw-bold fs-4 text-primary-dark">ASEAN PLUS</h5>
+                                
+                                <!-- Full description content -->
+                                <p class="card-text text-secondary mt-3">
+                                    ASEAN PLUS (ASEAN+3) brings together the 10 ASEAN member
+                                    states with China, Japan and South Korea to deepen regional
+                                    cooperation across trade, labour, education and social
+                                    services — including programmes that support foreign workers
+                                    and mobility in the region. Learn more at the ASEAN+3 site for regional initiatives and
+                                    support services. The organization provides resources on worker rights, visa renewal support, and cultural integration programs for SSW candidates.
+                                </p>
+
+                                <div class="mt-4 d-flex flex-wrap gap-3 align-items-center">
+                                    <!-- Primary action button -->
+                                    <!-- Added text-white to ensure button text is visible -->
+                                    <a
+                                        class="btn btn-primary px-4 text-white"
+                                        style="background-color: btn btn-primary; border-color: var(--bs-primary-dark);"
+                                        href="pages/agency.html"
+                                        data-i18n="btn.search_agency"
+                                    >Search Agency</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </section>
+    </div>
+</section>
 
       <!-- About Us card -->
       <section class="features">
@@ -736,6 +764,8 @@
           </div>
         </div>
       </section>
+
+      
     </main>
 
     <footer class="site-footer site-footer--dark" role="contentinfo">
