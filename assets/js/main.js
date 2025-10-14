@@ -59,12 +59,28 @@ class App {
         const href = anchor.getAttribute("href");
         if (!href || href.trim() === "") return;
 
-        // Only defer navigation when it's an in-page anchor or the element
-        // is intended to dismiss the offcanvas. Otherwise, let the browser
-        // handle navigation immediately (avoid unnecessary preventDefault).
-        const shouldDefer =
-          href.startsWith("#") || anchor.hasAttribute("data-bs-dismiss");
-        if (!shouldDefer) return; // allow default navigation
+        // Build an absolute URL for the href so we can reason about
+        // same-origin vs external links. We will defer navigation for
+        // same-origin navigations (including hash anchors and internal
+        // page paths) so that the offcanvas can finish hiding first.
+        // Allow external links (different origin), target=_blank, or
+        // downloads to proceed immediately.
+        let targetUrl;
+        try {
+          targetUrl = new URL(href, window.location.href);
+        } catch (err) {
+          // Malformed URL - don't interfere
+          return;
+        }
+
+        // Respect explicit target attributes like _blank and download links
+        const targetAttr = anchor.getAttribute("target");
+        const hasDownload = anchor.hasAttribute("download");
+        if (targetAttr === "_blank" || hasDownload) return;
+
+        const isSameOrigin = targetUrl.origin === window.location.origin;
+        // Defer navigation only for same-origin navigations (including hashes)
+        if (!isSameOrigin) return; // external link - allow default
 
         // If offcanvas isn't actually visible, just navigate immediately.
         if (!offcanvasEl.classList.contains("show")) {
@@ -80,25 +96,66 @@ class App {
         // Prevent default navigation; navigate after offcanvas hides.
         e.preventDefault();
 
+        // Guard against duplicate navigation for the same click target.
+        // We'll create a unique token on the anchor so subsequent clicks
+        // or re-entrancy won't trigger the same navigation twice.
+        if (anchor._deferredNavFired) {
+          console.debug(
+            "Offcanvas: deferred nav already fired for this anchor",
+            href
+          );
+          return;
+        }
+        anchor._deferredNavFired = true;
+
         const doNavigate = () => {
-          if (href.startsWith("#")) {
-            if (history.pushState) history.pushState(null, null, href);
-            else window.location.hash = href;
+          console.debug(
+            "Offcanvas: performing deferred navigation to",
+            targetUrl.href
+          );
+          // If navigation is a hash-only change on the same page, use pushState
+          if (
+            targetUrl.hash &&
+            targetUrl.pathname === window.location.pathname
+          ) {
+            if (history.pushState)
+              history.pushState(null, null, targetUrl.hash);
+            else window.location.hash = targetUrl.hash;
           } else {
-            window.location.href = href;
+            // Navigate to the internal page URL
+            window.location.href = targetUrl.href;
           }
         };
 
-        const onHidden = () => {
-          doNavigate();
-          offcanvasEl.removeEventListener("hidden.bs.offcanvas", onHidden);
-        };
+        // Use the once option to ensure the handler runs only once.
+        const onHidden = () => doNavigate();
+        offcanvasEl.addEventListener("hidden.bs.offcanvas", onHidden, {
+          once: true,
+        });
 
-        offcanvasEl.addEventListener("hidden.bs.offcanvas", onHidden);
-        // If the link does not have data-bs-dismiss, trigger hide now.
-        if (!anchor.hasAttribute("data-bs-dismiss")) {
-          const bsOff = bootstrap.Offcanvas.getInstance(offcanvasEl);
-          if (bsOff) bsOff.hide();
+        // Ensure the offcanvas is hidden. Calling hide() explicitly is
+        // necessary because we've prevented the default click action which
+        // would normally trigger Bootstrap's dismissal when
+        // data-bs-dismiss is present.
+        try {
+          const existing = bootstrap?.Offcanvas?.getInstance?.(offcanvasEl);
+          const bsOff = existing || new bootstrap.Offcanvas(offcanvasEl);
+          // Only call hide if it's currently shown to avoid re-entrant
+          // behavior that could confuse the hidden event ordering.
+          if (offcanvasEl.classList.contains("show")) bsOff.hide();
+          else {
+            // If it's not shown for some reason, trigger the deferred navigation now
+            doNavigate();
+          }
+        } catch (err) {
+          console.warn(
+            "Offcanvas: error while trying to hide offcanvas, triggering navigation fallback",
+            err
+          );
+          // Fallback: remove show and dispatch hidden event synchronously
+          offcanvasEl.classList.remove("show");
+          const ev = new Event("hidden.bs.offcanvas");
+          offcanvasEl.dispatchEvent(ev);
         }
       });
     }
@@ -249,93 +306,102 @@ class App {
 // Start the application
 new App();
 
-
 // This script handles client-side validation and the simulation of a form submission.
 
-document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('contactForm');
-    const successMessage = document.getElementById('successMessage');
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("contactForm");
+  const successMessage = document.getElementById("successMessage");
 
-    /**
-     * Performs client-side validation using Bootstrap's built-in validation feedback.
-     * Note: We rely on the 'form-control' class in the HTML being present.
-     * @param {HTMLFormElement} formElement - The form to validate.
-     * @returns {boolean} - True if the form is valid, false otherwise.
-     */
-    function validateForm(formElement) {
-        let isValid = true;
-        
-        // Clear all previous validation states
-        formElement.querySelectorAll('.form-control, .form-select').forEach(input => {
-            input.classList.remove('is-invalid');
-            input.classList.remove('is-valid');
-        });
-        
-        // Iterate through all required fields
-        formElement.querySelectorAll('[required]').forEach(input => {
-            const value = input.value.trim();
-            let fieldValid = true;
+  /**
+   * Performs client-side validation using Bootstrap's built-in validation feedback.
+   * Note: We rely on the 'form-control' class in the HTML being present.
+   * @param {HTMLFormElement} formElement - The form to validate.
+   * @returns {boolean} - True if the form is valid, false otherwise.
+   */
+  function validateForm(formElement) {
+    let isValid = true;
 
-            if (!value) {
-                fieldValid = false;
-            } else if (input.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-                 // Basic email format validation
-                fieldValid = false;
-            }
-            
-            if (!fieldValid) {
-                input.classList.add('is-invalid');
-                isValid = false;
-            } else {
-                input.classList.add('is-valid');
-            }
-        });
+    // Clear all previous validation states
+    formElement
+      .querySelectorAll(".form-control, .form-select")
+      .forEach((input) => {
+        input.classList.remove("is-invalid");
+        input.classList.remove("is-valid");
+      });
 
-        return isValid;
+    // Iterate through all required fields
+    formElement.querySelectorAll("[required]").forEach((input) => {
+      const value = input.value.trim();
+      let fieldValid = true;
+
+      if (!value) {
+        fieldValid = false;
+      } else if (
+        input.type === "email" &&
+        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
+      ) {
+        // Basic email format validation
+        fieldValid = false;
+      }
+
+      if (!fieldValid) {
+        input.classList.add("is-invalid");
+        isValid = false;
+      } else {
+        input.classList.add("is-valid");
+      }
+    });
+
+    return isValid;
+  }
+
+  // Event listener for form submission
+  form.addEventListener("submit", function (event) {
+    event.preventDefault(); // Stop default form submission
+    event.stopPropagation();
+
+    if (validateForm(this)) {
+      // Form is valid: Simulate successful submission
+
+      // 1. Hide the form
+      form.style.display = "none";
+
+      // 2. Show the success message (with a nice fade effect)
+      successMessage.style.opacity = "0";
+      successMessage.style.display = "block";
+
+      setTimeout(() => {
+        successMessage.style.opacity = "1";
+      }, 10); // Small delay to trigger transition
+
+      console.log("Form submitted successfully (simulated)!");
+    } else {
+      // Form is invalid: Display error messages
+      console.log(
+        "Validation failed. Please fill out all required fields correctly."
+      );
     }
+  });
 
-    // Event listener for form submission
-    form.addEventListener('submit', function (event) {
-        event.preventDefault(); // Stop default form submission
-        event.stopPropagation();
+  // Add real-time validation feedback on input change (optional but good UX)
+  form.querySelectorAll(".form-control, .form-select").forEach((input) => {
+    input.addEventListener("blur", (e) => {
+      const target = e.target;
 
-        if (validateForm(this)) {
-            // Form is valid: Simulate successful submission
-            
-            // 1. Hide the form
-            form.style.display = 'none';
+      target.classList.remove("is-invalid");
+      target.classList.remove("is-valid");
 
-            // 2. Show the success message (with a nice fade effect)
-            successMessage.style.opacity = '0';
-            successMessage.style.display = 'block';
-
-            setTimeout(() => {
-                successMessage.style.opacity = '1';
-            }, 10); // Small delay to trigger transition
-
-            console.log('Form submitted successfully (simulated)!');
-            
+      if (target.value.trim()) {
+        if (
+          !target.checkValidity() ||
+          (target.type === "email" &&
+            !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(target.value))
+        ) {
+          target.classList.add("is-invalid");
         } else {
-            // Form is invalid: Display error messages
-            console.log('Validation failed. Please fill out all required fields correctly.');
+          target.classList.add("is-valid");
         }
+      }
     });
-    
-    // Add real-time validation feedback on input change (optional but good UX)
-    form.querySelectorAll('.form-control, .form-select').forEach(input => {
-        input.addEventListener('blur', (e) => {
-            const target = e.target;
-            
-            target.classList.remove('is-invalid');
-            target.classList.remove('is-valid');
-
-            if (target.value.trim()) {
-                 if (!target.checkValidity() || (target.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(target.value))) {
-                    target.classList.add('is-invalid');
-                } else {
-                    target.classList.add('is-valid');
-                }
-            }
-        });
-    });
+  });
 });

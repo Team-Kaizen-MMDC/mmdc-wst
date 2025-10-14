@@ -1,0 +1,198 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - banner [ref=e2]:
+    - navigation [ref=e4]:
+      - link "Japan SSW" [ref=e5] [cursor=pointer]:
+        - /url: index.html
+      - button "Open menu" [active] [ref=e6] [cursor=pointer]
+    - link "Jobs" [ref=e8] [cursor=pointer]:
+      - /url: "#jobs"
+    - link "Companies" [ref=e9] [cursor=pointer]:
+      - /url: "#companies"
+    - link "Agency" [ref=e10] [cursor=pointer]:
+      - /url: pages/agency.html
+    - link "About" [ref=e11] [cursor=pointer]:
+      - /url: pages/about.html
+    - link "Signup" [ref=e12] [cursor=pointer]:
+      - /url: pages/createAccount.html
+    - link "Login" [ref=e13] [cursor=pointer]:
+      - /url: pages/signin.html
+  - main [ref=e14]:
+    - generic [ref=e18]:
+      - heading "Specified Skilled Worker Jobs in Japan" [level=1] [ref=e19]
+      - paragraph [ref=e20]: Your one-stop destination for job matching, visa assistance, and essential community resources.
+    - generic [ref=e22]:
+      - heading "Job Listings" [level=2] [ref=e23]
+      - list [ref=e26]:
+        - listitem [ref=e27]:
+          - generic [ref=e28]:
+            - heading "Mechanic — Ground Support (Haneda)" [level=3] [ref=e29]
+            - paragraph [ref=e30]: Haneda Airport — Tokyo
+          - link "Apply" [ref=e32] [cursor=pointer]:
+            - /url: pages/jobs/mechanic-ground-support-haneda.html
+        - listitem [ref=e33]:
+          - generic [ref=e34]:
+            - heading "Cleaner — Facilities Maintenance" [level=3] [ref=e35]
+            - paragraph [ref=e36]: Office Facilities — Tokyo
+          - link "Apply" [ref=e38] [cursor=pointer]:
+            - /url: pages/jobs/cleaner-facilities-maintenance.html
+        - listitem [ref=e39]:
+          - generic [ref=e40]:
+            - heading "Construction Worker — Site Support" [level=3] [ref=e41]
+            - paragraph [ref=e42]: Contractor — Saitama
+          - link "Apply" [ref=e44] [cursor=pointer]:
+            - /url: pages/jobs/construction-worker-site-support.html
+        - listitem [ref=e45]:
+          - generic [ref=e46]:
+            - heading "Server — Hospitality" [level=3] [ref=e47]
+            - paragraph [ref=e48]: Restaurant — Tokyo
+          - link "Apply" [ref=e50] [cursor=pointer]:
+            - /url: pages/jobs/server-hospitality.html
+        - listitem [ref=e51]:
+          - generic [ref=e52]:
+            - heading "Ward Nursing Support" [level=3] [ref=e53]
+            - paragraph [ref=e54]: Jhesperus Japan Co., Ltd. — Tokyo
+          - link "Apply" [ref=e56] [cursor=pointer]:
+            - /url: pages/jobs/ward-nursing-support.html
+      - link "Search SSW jobs" [ref=e58] [cursor=pointer]:
+        - /url: "#jobs"
+    - region "Top companies" [ref=e59]:
+      - generic [ref=e60]:
+        - heading "Top Company" [level=2] [ref=e61]
+        - generic [ref=e62]:
+          - link "ANA InterContinental logo ANA InterContinental" [ref=e64] [cursor=pointer]:
+            - /url: pages/companies/ana-intercontinental.html
+            - generic [ref=e66] [cursor=pointer]:
+              - img "ANA InterContinental logo" [ref=e67] [cursor=pointer]
+              - heading "ANA InterContinental" [level=5] [ref=e68] [cursor=pointer]
+          - link "Prince Hotels logo Prince Hotels" [ref=e70] [cursor=pointer]:
+            - /url: pages/companies/prince-hotels.html
+            - generic [ref=e72] [cursor=pointer]:
+              - img "Prince Hotels logo" [ref=e73] [cursor=pointer]
+              - heading "Prince Hotels" [level=5] [ref=e74] [cursor=pointer]
+          - link "SOMPO Care logo SOMPO Care" [ref=e76] [cursor=pointer]:
+            - /url: pages/companies/sompo-care.html
+            - generic [ref=e78] [cursor=pointer]:
+              - img "SOMPO Care logo" [ref=e79] [cursor=pointer]
+              - heading "SOMPO Care" [level=5] [ref=e80] [cursor=pointer]
+          - link "Nissan logo Nissan" [ref=e82] [cursor=pointer]:
+            - /url: pages/companies/nissan.html
+            - generic [ref=e84] [cursor=pointer]:
+              - img "Nissan logo" [ref=e85] [cursor=pointer]
+              - heading "Nissan" [level=5] [ref=e86] [cursor=pointer]
+          - link "Daikin logo Daikin" [ref=e88] [cursor=pointer]:
+            - /url: pages/companies/daikin.html
+            - generic [ref=e90] [cursor=pointer]:
+              - img "Daikin logo" [ref=e91] [cursor=pointer]
+              - heading "Daikin" [level=5] [ref=e92] [cursor=pointer]
+          - link "Kandenko logo Kandenko" [ref=e94] [cursor=pointer]:
+            - /url: pages/companies/kandenko.html
+            - generic [ref=e96] [cursor=pointer]:
+              - img "Kandenko logo" [ref=e97] [cursor=pointer]
+              - heading "Kandenko" [level=5] [ref=e98] [cursor=pointer]
+          - link "Yoshinoya logo Yoshinoya" [ref=e100] [cursor=pointer]:
+            - /url: pages/companies/yoshinoya.html
+            - generic [ref=e102] [cursor=pointer]:
+              - img "Yoshinoya logo" [ref=e103] [cursor=pointer]
+              - heading "Yoshinoya" [level=5] [ref=e104] [cursor=pointer]
+          - link "ANA logo ANA" [ref=e106] [cursor=pointer]:
+            - /url: pages/companies/ana.html
+            - generic [ref=e108] [cursor=pointer]:
+              - img "ANA logo" [ref=e109] [cursor=pointer]
+              - heading "ANA" [level=5] [ref=e110] [cursor=pointer]
+          - link "Mitsubishi Heavy Industries logo Mitsubishi Heavy Industries" [ref=e112] [cursor=pointer]:
+            - /url: pages/companies/mitsubishi-heavy-industries.html
+            - generic [ref=e114] [cursor=pointer]:
+              - img "Mitsubishi Heavy Industries logo" [ref=e115] [cursor=pointer]
+              - heading "Mitsubishi Heavy Industries" [level=5] [ref=e116] [cursor=pointer]
+        - link "View All Companies" [ref=e118] [cursor=pointer]:
+          - /url: pages/companies.html
+    - generic [ref=e120]:
+      - heading "Registered Support Organization" [level=2] [ref=e121]
+      - generic [ref=e125]:
+        - img "Receptionist at front desk" [ref=e128]
+        - generic [ref=e130]:
+          - heading "ASEAN PLUS" [level=5] [ref=e131]
+          - paragraph [ref=e132]: ASEAN PLUS (ASEAN+3) brings together the 10 ASEAN member states with China, Japan and South Korea to deepen regional cooperation across trade, labour, education and social services — including programmes that support foreign workers and mobility in the region. Learn more at the ASEAN+3 site for regional initiatives and support services. The organization provides resources on worker rights, visa renewal support, and cultural integration programs for SSW candidates.
+          - link "Search Agency" [ref=e134] [cursor=pointer]:
+            - /url: pages/agency.html
+    - generic [ref=e136]:
+      - heading "About Us" [level=2] [ref=e137]
+      - generic [ref=e141]:
+        - img "Tokyo cityscape representing Japan's work opportunities" [ref=e144]
+        - generic [ref=e146]:
+          - heading [level=5]
+          - paragraph [ref=e147]: JapanSSW is your one-stop platform for skilled trade job seekers under the Specified Skilled Worker (SSW) visa in Japan.
+          - paragraph [ref=e148]: Founded in 2024 by Juan Angelo, JapanSSW provides job matching, visa guidance, and community resources to help foreign workers find stable employment and build better futures in Japan.
+          - link "Learn more" [ref=e150] [cursor=pointer]:
+            - /url: pages/about.html
+    - generic [ref=e152]:
+      - heading "Get Job Matches" [level=3] [ref=e153]
+      - paragraph [ref=e154]: Stay updated with the latest Japan job opportunities — right in your inbox.
+      - generic [ref=e155]:
+        - generic [ref=e156]: Email address for job alerts
+        - textbox "Email address for job alerts" [ref=e157]
+        - button "Sign Up Demo" [disabled]
+    - generic [ref=e160]:
+      - generic [ref=e161]:
+        - heading "Want to post jobs?" [level=3] [ref=e162]
+        - paragraph [ref=e163]: Reach qualified engineers and designers in Japan.
+      - link "Post a Job" [ref=e165] [cursor=pointer]:
+        - /url: "#"
+  - contentinfo [ref=e166]:
+    - generic [ref=e167]:
+      - generic [ref=e168]:
+        - heading "Want to post jobs on JapanSSW?" [level=3] [ref=e169]
+        - paragraph [ref=e170]: Reach qualified candidates under the SSW programme.
+        - generic [ref=e171]:
+          - link "Employer Login" [ref=e172] [cursor=pointer]:
+            - /url: "#"
+          - link "Post a Job" [ref=e173] [cursor=pointer]:
+            - /url: "#"
+      - generic [ref=e174]:
+        - generic [ref=e175]:
+          - heading "Company" [level=4] [ref=e176]
+          - list [ref=e177]:
+            - listitem [ref=e178]:
+              - link "Home" [ref=e179] [cursor=pointer]:
+                - /url: index.html
+            - listitem [ref=e180]:
+              - link "About" [ref=e181] [cursor=pointer]:
+                - /url: pages/about.html
+            - listitem [ref=e182]:
+              - link "Contact" [ref=e183] [cursor=pointer]:
+                - /url: pages/contact.html
+        - generic [ref=e184]:
+          - heading "Jobs" [level=4] [ref=e185]
+          - list [ref=e186]:
+            - listitem [ref=e187]:
+              - link "Search Jobs" [ref=e188] [cursor=pointer]:
+                - /url: "#jobs"
+            - listitem [ref=e189]:
+              - link "Companies" [ref=e190] [cursor=pointer]:
+                - /url: "#companies"
+            - listitem [ref=e191]:
+              - link "Post a Job" [ref=e192] [cursor=pointer]:
+                - /url: "#post-job"
+        - generic [ref=e193]:
+          - heading "Resources" [level=4] [ref=e194]
+          - list [ref=e195]:
+            - listitem [ref=e196]:
+              - link "Visa Guidance" [ref=e197] [cursor=pointer]:
+                - /url: pages/visaGuidance.html
+            - listitem [ref=e198]:
+              - link "Employer Hub" [ref=e199] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e200]:
+              - link "Privacy" [ref=e201] [cursor=pointer]:
+                - /url: pages/privacy.html
+    - generic [ref=e203]:
+      - generic [ref=e204]: © 2025 Japan SSW. All rights reserved.
+      - navigation "Footer legal" [ref=e205]:
+        - link "Terms" [ref=e206] [cursor=pointer]:
+          - /url: pages/terms.html
+        - link "Privacy" [ref=e207] [cursor=pointer]:
+          - /url: pages/privacy.html
+```

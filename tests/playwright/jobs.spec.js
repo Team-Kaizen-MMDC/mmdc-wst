@@ -22,7 +22,8 @@ test.describe("Jobs pages", () => {
   test("job detail shows sticky apply CTA linking to signin", async ({
     page,
   }) => {
-    await page.goto("/pages/jobs/job.html");
+    // job.html was replaced by ward-nursing-support.html — use that canonical page
+    await page.goto("/pages/jobs/ward-nursing-support.html");
     const applyBtn = page.locator("a.job-sticky-cta__btn#apply");
     await expect(applyBtn).toBeVisible();
     // the CTA links to signin page
