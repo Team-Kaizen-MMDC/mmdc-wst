@@ -431,3 +431,67 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         });
+
+
+        //Application Tracker Profile Dashboard
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+import {
+  getAuth,
+  signInAnonymously,
+  signInWithCustomToken,
+  onAuthStateChanged,
+} from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+// --- Global Variables (injected by environment) ---
+const appId = typeof __app_id !== "undefined" ? __app_id : "default-app-id";
+const firebaseConfig =
+  typeof __firebase_config !== "undefined" ? JSON.parse(__firebase_config) : {};
+const initialAuthToken =
+  typeof __initial_auth_token !== "undefined" ? __initial_auth_token : null;
+
+// --- DOM Ready Handler ---
+document.addEventListener("DOMContentLoaded", async () => {
+  const authStatusEl = document.getElementById("auth-status");
+  const userInfoEl = document.getElementById("user-info");
+
+  try {
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+
+    // Monitor Auth State
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        authStatusEl.textContent = `User ID: ${user.uid}`;
+        authStatusEl.classList.replace("text-muted", "text-success");
+        userInfoEl.textContent = "Authenticated successfully.";
+      } else {
+        // Try custom token sign-in first, fallback to anonymous
+        try {
+          if (initialAuthToken) {
+            await signInWithCustomToken(auth, initialAuthToken);
+            authStatusEl.textContent = `User ID: ${auth.currentUser.uid} (Custom)`;
+          } else {
+            await signInAnonymously(auth);
+            authStatusEl.textContent = `User ID: ${auth.currentUser.uid} (Anonymous)`;
+          }
+          authStatusEl.classList.replace("text-muted", "text-success");
+        } catch (error) {
+          console.error("Authentication error:", error);
+          authStatusEl.textContent = "Authentication failed.";
+          authStatusEl.classList.add("text-danger");
+        }
+      }
+    });
+
+    // Optional UI adjustment after header loads
+    document.querySelector("main").style.paddingTop = "60px";
+  } catch (err) {
+    console.error("Firebase initialization failed:", err);
+    authStatusEl.textContent = "Firebase init error.";
+    authStatusEl.classList.add("text-danger");
+  }
+});
