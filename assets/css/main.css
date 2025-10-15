@@ -3843,3 +3843,42 @@ main
   padding: 0.7rem 1.25rem;
   border-radius: 999px;
 }
+
+/* --- Filter Components --- */
+ /* Base styles */
+      
+
+        /* Make the filter panel sticky on larger screens (equivalent to the old Tailwind sticky class) */
+        .filter-card-sticky {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 2rem; 
+        }
+
+        /* --- Custom Toggle Button Styles (Adapted from original look) --- */
+        .filter-button {
+            transition: all 0.2s ease-in-out;
+            background-color: #e9ecef; /* Lighter grey */
+            color: #495057; /* Darker grey text */
+            border: 1px solid #ced4da;
+            padding: 0.25rem 0.75rem; /* px-3 py-1 */
+            font-size: 0.75rem; /* text-xs */
+            border-radius: 50rem !important; /* rounded-pill */
+            line-height: 1; 
+            margin: 0.125rem;
+        }
+
+        .filter-button:hover:not(.active) {
+            background-color: #dee2e6;
+            cursor: pointer;
+        }
+
+        .filter-button.active {
+            background-color: #0d6efd; /* Bootstrap Blue (primary) */
+            color: white;
+            font-weight: 600;
+            border-color: #0b5ed7; 
+            box-shadow: 0 0.5rem 1rem rgba(13, 110, 253, 0.2); /* Blue shadow */
+            transform: scale(1.02);
+            z-index: 10;
+        }
