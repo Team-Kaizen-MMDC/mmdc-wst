@@ -3821,25 +3821,4 @@ main
   text-decoration: underline;
 }
 
-/* Sticky bottom CTA (follows comp) */
-.job-sticky-cta {
-  position: sticky;
-  bottom: 0;
-  z-index: 30;
-  background: linear-gradient(
-    to top,
-    rgba(255, 255, 255, 1),
-    rgba(255, 255, 255, 0.92)
-  );
-  border-top: 1px solid rgba(0, 0, 0, 0.06);
-  padding: 0.6rem 0;
-}
-.job-sticky-cta__inner {
-  display: flex;
-  justify-content: center;
-}
 
-.job-sticky-cta__btn {
-  padding: 0.7rem 1.25rem;
-  border-radius: 999px;
-}
