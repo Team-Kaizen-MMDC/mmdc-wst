@@ -352,351 +352,370 @@
 </section>
 
       <!-- Top Company grid -->
-      <section id="companies" class="features" aria-label="Top companies">
+     <section id="companies" class="py-5" aria-label="Top companies">
         <div class="container">
-          <h2 class="section-title" data-i18n="section.top_companies">
-            Top Company
-          </h2>
-          <div class="company-grid mt-md">
-            <!-- Clean, well-formed 3x3 grid of company cards -->
-            <div class="company-card feature-card">
-              <div class="company-card__media">
-                <picture>
-                  <source
-                    type="image/webp"
-                    srcset="
-                      assets/images/company-logos/ANA_InterContinental.webp
-                    "
-                  />
-                  <img
-                    src="assets/images/company-logos/ANA_InterContinental.png"
-                    class="img-64 object-contain feature-card__img"
-                    alt="ANA InterContinental logo"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </picture>
-              </div>
-              <div class="company-card__body">
-                <a
-                  class="feature-card__title company-card__title"
-                  href="pages/companies/ana-intercontinental.html"
-                  >ANA InterContinental</a
-                >
-              </div>
-            </div>
+            <h2 class="text-center mb-5 fw-bold" data-i18n="section.top_companies">
+                Top Company
+            </h2>
+            
+            <!-- Bootstrap responsive grid: 1 column on mobile, 2 columns on small/medium, 3 columns on large -->
+            <div class="row g-4 justify-content-center" id="companyGrid">
+                
+                <!-- Card 1: ANA InterContinental -->
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <a href="pages/companies/ana-intercontinental.html" class="text-decoration-none d-block company-link" data-company-name="ANA InterContinental">
+                        <div class="card h-100 shadow-sm rounded-3 p-4 text-center top-company-card">
+                            <div class="card-body d-flex flex-column align-items-center justify-content-center p-0">
+                                <img
+                                    src="assets/images/company-logos/ANA_InterContinental.png"
+                                    class="img-fluid mb-3"
+                                    style="max-height: 80px; width: auto; object-fit: contain;"
+                                    alt="ANA InterContinental logo"
+                                    loading="lazy"
+                                    decoding="async"
+                                    onerror="this.onerror=null; this.src='https://placehold.co/120x80/cccccc/333333?text=Logo';"
+                                />
+                                <h5 class="card-title fw-bold text-dark mt-2 mb-0 fs-6">ANA InterContinental</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
 
-            <div class="company-card feature-card">
-              <div class="company-card__media">
-                <picture>
-                  <source
-                    type="image/webp"
-                    srcset="assets/images/company-logos/Prince_Hotels.webp"
-                  />
-                  <img
-                    src="assets/images/company-logos/Prince_Hotels.png"
-                    class="img-64 object-contain feature-card__img"
-                    alt="Prince Hotels logo"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </picture>
-              </div>
-              <div class="company-card__body">
-                <a
-                  class="feature-card__title company-card__title"
-                  href="pages/companies/prince-hotels.html"
-                  >Prince Hotels</a
-                >
-              </div>
-            </div>
+                <!-- Card 2: Prince Hotels -->
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <a href="pages/companies/prince-hotels.html" class="text-decoration-none d-block company-link" data-company-name="Prince Hotels">
+                        <div class="card h-100 shadow-sm rounded-3 p-4 text-center top-company-card">
+                            <div class="card-body d-flex flex-column align-items-center justify-content-center p-0">
+                                <img
+                                    src="assets/images/company-logos/Prince_Hotels.png"
+                                    class="img-fluid mb-3"
+                                    style="max-height: 80px; width: auto; object-fit: contain;"
+                                    alt="Prince Hotels logo"
+                                    loading="lazy"
+                                    decoding="async"
+                                    onerror="this.onerror=null; this.src='https://placehold.co/120x80/cccccc/333333?text=Logo';"
+                                />
+                                <h5 class="card-title fw-bold text-dark mt-2 mb-0 fs-6">Prince Hotels</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- Card 3: SOMPO Care -->
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <a href="pages/companies/sompo-care.html" class="text-decoration-none d-block company-link" data-company-name="SOMPO Care">
+                        <div class="card h-100 shadow-sm rounded-3 p-4 text-center top-company-card">
+                            <div class="card-body d-flex flex-column align-items-center justify-content-center p-0">
+                                <img
+                                    src="assets/images/company-logos/sompocare.png"
+                                    class="img-fluid mb-3"
+                                    style="max-height: 80px; width: auto; object-fit: contain;"
+                                    alt="SOMPO Care logo"
+                                    loading="lazy"
+                                    decoding="async"
+                                    onerror="this.onerror=null; this.src='https://placehold.co/120x80/cccccc/333333?text=Logo';"
+                                />
+                                <h5 class="card-title fw-bold text-dark mt-2 mb-0 fs-6">SOMPO Care</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
 
-            <div class="company-card feature-card">
-              <div class="company-card__media">
-                <picture>
-                  <source
-                    type="image/webp"
-                    srcset="assets/images/company-logos/sompocare.webp"
-                  />
-                  <img
-                    src="assets/images/company-logos/sompocare.png"
-                    class="img-64 object-contain feature-card__img"
-                    alt="SOMPO Care logo"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </picture>
-              </div>
-              <div class="company-card__body">
-                <a
-                  class="feature-card__title company-card__title"
-                  href="pages/companies/sompo-care.html"
-                  >SOMPO Care</a
-                >
-              </div>
-            </div>
+                <!-- Card 4: Nissan -->
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <a href="pages/companies/nissan.html" class="text-decoration-none d-block company-link" data-company-name="Nissan">
+                        <div class="card h-100 shadow-sm rounded-3 p-4 text-center top-company-card">
+                            <div class="card-body d-flex flex-column align-items-center justify-content-center p-0">
+                                <img
+                                    src="assets/images/company-logos/Nissan.png"
+                                    class="img-fluid mb-3"
+                                    style="max-height: 80px; width: auto; object-fit: contain;"
+                                    alt="Nissan logo"
+                                    loading="lazy"
+                                    decoding="async"
+                                    onerror="this.onerror=null; this.src='https://placehold.co/120x80/cccccc/333333?text=Logo';"
+                                />
+                                <h5 class="card-title fw-bold text-dark mt-2 mb-0 fs-6">Nissan</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
 
-            <div class="company-card feature-card">
-              <div class="company-card__media">
-                <picture>
-                  <source
-                    type="image/webp"
-                    srcset="assets/images/company-logos/Nissan.webp"
-                  />
-                  <img
-                    src="assets/images/company-logos/Nissan.png"
-                    class="img-64 object-contain feature-card__img"
-                    alt="Nissan logo"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </picture>
-              </div>
-              <div class="company-card__body">
-                <a
-                  class="feature-card__title company-card__title"
-                  href="pages/companies/nissan.html"
-                  >Nissan</a
-                >
-              </div>
-            </div>
+                <!-- Card 5: Daikin -->
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <a href="pages/companies/daikin.html" class="text-decoration-none d-block company-link" data-company-name="Daikin">
+                        <div class="card h-100 shadow-sm rounded-3 p-4 text-center top-company-card">
+                            <div class="card-body d-flex flex-column align-items-center justify-content-center p-0">
+                                <img
+                                    src="assets/images/company-logos/Daikin_1.png"
+                                    class="img-fluid mb-3"
+                                    style="max-height: 80px; width: auto; object-fit: contain;"
+                                    alt="Daikin logo"
+                                    loading="lazy"
+                                    decoding="async"
+                                    onerror="this.onerror=null; this.src='https://placehold.co/120x80/cccccc/333333?text=Logo';"
+                                />
+                                <h5 class="card-title fw-bold text-dark mt-2 mb-0 fs-6">Daikin</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
 
-            <div class="company-card feature-card">
-              <div class="company-card__media">
-                <picture>
-                  <source
-                    type="image/webp"
-                    srcset="assets/images/company-logos/Daikin_1.webp"
-                  />
-                  <img
-                    src="assets/images/company-logos/Daikin_1.png"
-                    class="img-64 object-contain feature-card__img"
-                    alt="Daikin logo"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </picture>
-              </div>
-              <div class="company-card__body">
-                <a
-                  class="feature-card__title company-card__title"
-                  href="pages/companies/daikin.html"
-                  >Daikin</a
-                >
-              </div>
-            </div>
+                <!-- Card 6: Kandenko -->
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <a href="pages/companies/kandenko.html" class="text-decoration-none d-block company-link" data-company-name="Kandenko">
+                        <div class="card h-100 shadow-sm rounded-3 p-4 text-center top-company-card">
+                            <div class="card-body d-flex flex-column align-items-center justify-content-center p-0">
+                                <img
+                                    src="assets/images/company-logos/Kandenko.png"
+                                    class="img-fluid mb-3"
+                                    style="max-height: 80px; width: auto; object-fit: contain;"
+                                    alt="Kandenko logo"
+                                    loading="lazy"
+                                    decoding="async"
+                                    onerror="this.onerror=null; this.src='https://placehold.co/120x80/cccccc/333333?text=Logo';"
+                                />
+                                <h5 class="card-title fw-bold text-dark mt-2 mb-0 fs-6">Kandenko</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
 
-            <div class="company-card feature-card">
-              <div class="company-card__media">
-                <picture>
-                  <source
-                    type="image/webp"
-                    srcset="assets/images/company-logos/Kandenko.webp"
-                  />
-                  <img
-                    src="assets/images/company-logos/Kandenko.png"
-                    class="img-64 object-contain feature-card__img"
-                    alt="Kandenko logo"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </picture>
-              </div>
-              <div class="company-card__body">
-                <a
-                  class="feature-card__title company-card__title"
-                  href="pages/companies/kandenko.html"
-                  >Kandenko</a
-                >
-              </div>
-            </div>
+                <!-- Card 7: Yoshinoya -->
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <a href="pages/companies/yoshinoya.html" class="text-decoration-none d-block company-link" data-company-name="Yoshinoya">
+                        <div class="card h-100 shadow-sm rounded-3 p-4 text-center top-company-card">
+                            <div class="card-body d-flex flex-column align-items-center justify-content-center p-0">
+                                <img
+                                    src="assets/images/company-logos/Yoshinoya.png"
+                                    class="img-fluid mb-3"
+                                    style="max-height: 80px; width: auto; object-fit: contain;"
+                                    alt="Yoshinoya logo"
+                                    loading="lazy"
+                                    decoding="async"
+                                    onerror="this.onerror=null; this.src='https://placehold.co/120x80/cccccc/333333?text=Logo';"
+                                />
+                                <h5 class="card-title fw-bold text-dark mt-2 mb-0 fs-6">Yoshinoya</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
 
-            <div class="company-card feature-card">
-              <div class="company-card__media">
-                <picture>
-                  <source
-                    type="image/webp"
-                    srcset="assets/images/company-logos/Yoshinoya.webp"
-                  />
-                  <img
-                    src="assets/images/company-logos/Yoshinoya.png"
-                    class="img-64 object-contain feature-card__img"
-                    alt="Yoshinoya logo"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </picture>
-              </div>
-              <div class="company-card__body">
-                <a
-                  class="feature-card__title company-card__title"
-                  href="pages/companies/yoshinoya.html"
-                  >Yoshinoya</a
-                >
-              </div>
-            </div>
+                <!-- Card 8: ANA -->
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <a href="pages/companies/ana.html" class="text-decoration-none d-block company-link" data-company-name="ANA">
+                        <div class="card h-100 shadow-sm rounded-3 p-4 text-center top-company-card">
+                            <div class="card-body d-flex flex-column align-items-center justify-content-center p-0">
+                                <img
+                                    src="assets/images/company-logos/ANA.png"
+                                    class="img-fluid mb-3"
+                                    style="max-height: 80px; width: auto; object-fit: contain;"
+                                    alt="ANA logo"
+                                    loading="lazy"
+                                    decoding="async"
+                                    onerror="this.onerror=null; this.src='https://placehold.co/120x80/cccccc/333333?text=Logo';"
+                                />
+                                <h5 class="card-title fw-bold text-dark mt-2 mb-0 fs-6">ANA</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
 
-            <div class="company-card feature-card">
-              <div class="company-card__media">
-                <picture>
-                  <source
-                    type="image/webp"
-                    srcset="assets/images/company-logos/ANA.webp"
-                  />
-                  <img
-                    src="assets/images/company-logos/ANA.png"
-                    class="img-64 object-contain feature-card__img"
-                    alt="ANA logo"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </picture>
-              </div>
-              <div class="company-card__body">
-                <a
-                  class="feature-card__title company-card__title"
-                  href="pages/companies/ana.html"
-                  >ANA</a
-                >
-              </div>
+                <!-- Card 9: Mitsubishi Heavy Industries -->
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <a href="pages/companies/mitsubishi-heavy-industries.html" class="text-decoration-none d-block company-link" data-company-name="Mitsubishi Heavy Industries">
+                        <div class="card h-100 shadow-sm rounded-3 p-4 text-center top-company-card">
+                            <div class="card-body d-flex flex-column align-items-center justify-content-center p-0">
+                                <img
+                                    src="assets/images/company-logos/Mitsubishi_Heavy_Industries.png"
+                                    class="img-fluid mb-3"
+                                    style="max-height: 80px; width: auto; object-fit: contain;"
+                                    alt="Mitsubishi Heavy Industries logo"
+                                    loading="lazy"
+                                    decoding="async"
+                                    onerror="this.onerror=null; this.src='https://placehold.co/120x80/cccccc/333333?text=Logo';"
+                                />
+                                <h5 class="card-title fw-bold text-dark mt-2 mb-0 fs-6">Mitsubishi Heavy Industries</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
             </div>
-
-            <div class="company-card feature-card">
-              <div class="company-card__media">
-                <picture>
-                  <source
-                    type="image/webp"
-                    srcset="
-                      assets/images/company-logos/Mitsubishi_Heavy_Industries.webp
-                    "
-                  />
-                  <img
-                    src="assets/images/company-logos/Mitsubishi_Heavy_Industries.png"
-                    class="img-64 object-contain feature-card__img"
-                    alt="Mitsubishi Heavy Industries logo"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </picture>
-              </div>
-              <div class="company-card__body">
-                <a
-                  class="feature-card__title company-card__title"
-                  href="pages/companies/mitsubishi-heavy-industries.html"
-                  >Mitsubishi Heavy Industries</a
-                >
-              </div>
+            
+            <div class="text-center mt-5">
+                <a href="pages/companies.html" class="btn btn-primary rounded-pill px-4" data-i18n="btn.view_all_companies">
+                    View All Companies
+                </a>
             </div>
-          </div>
         </div>
-      </section>
+    </section>
 
       <!-- Registered Support Organization RSO (wide card) -->
-      <section class="section-padding">
-        <div class="container">
-          <h2 class="section-title" data-i18n="section.registered_support_org">
+    <section class="py-5 w-100">
+    <div class="container">
+        <!-- Section Title: Centered and styled with Bootstrap utilities -->
+        <h2 class="text-center mb-5 fs-2 fw-bold" data-i18n="section.registered_support_org">
             Registered Support Organization
-          </h2>
-          <div class="flex-center mt-sm">
-            <div class="feature-card feature-wide">
-              <picture>
-                <source
-                  type="image/webp"
-                  srcset="
-                    assets/images/aiImages/Receptionist1-640.webp 640w,
-                    assets/images/aiImages/Receptionist1-320.webp 320w
-                  "
-                />
-                <img
-                  src="assets/images/aiImages/Receptionist1.jpg"
-                  srcset="
-                    assets/images/aiImages/Receptionist1.jpg 320w,
-                    assets/images/aiImages/Receptionist1.jpg 640w
-                  "
-                  alt="Receptionist at front desk"
-                  class="img-320 object-cover feature-card__img"
-                  loading="lazy"
-                  decoding="async"
-                />
-              </picture>
-              <div>
-                <h3 class="feature-card__title">ASEAN PLUS</h3>
-                <p class="muted feature-card__desc">
-                  ASEAN PLUS (ASEAN+3) brings together the 10 ASEAN member
-                  states with China, Japan and South Korea to deepen regional
-                  cooperation across trade, labour, education and social
-                  services — including programmes that support foreign workers
-                  and mobility in the region.
-                </p>
-                <p class="muted feature-card__desc" data-i18n="support.lead">
-                  Learn more at the ASEAN+3 site for regional initiatives and
-                  support services.
-                </p>
-                <p class="mt-xs">
-                  <a
-                    class="btn btn-primary feature-card__cta"
-                    href="pages/agency.html"
-                    data-i18n="btn.search_agency"
-                    >Search Agency</a
-                  >
-                </p>
-              </div>
+        </h2>
+        
+        <!-- Centering the Card and Limiting its Max Width -->
+        <div class="row justify-content-center">
+            <!-- Increased overall card width from col-xl-8 to col-xl-10 -->
+            <div class="col-12 col-lg-11 col-xl-10">
+                
+                <!-- The Horizontal Card Component -->
+                <!-- shadow-lg, rounded-4, overflow-hidden for aesthetics, plus custom class for hover -->
+                <div class="card mb-3 shadow-lg rounded-4 overflow-hidden rso-card" id="rsoCard">
+                    
+                    <!-- Row with no gutters (g-0). Removed h-100 to allow image to scale naturally based on content. -->
+                    <div class="row g-0">
+                        
+                        <!-- Image Column: Increased width from col-md-4 to col-md-5 -->
+                        <!-- Added min-h-md-100 for height matching on desktop/tablet, p-4 padding -->
+                        <div class="col-md-5 min-h-md-100 p-4 d-flex align-items-center">
+                            <!-- Responsive Image using <picture> -->
+                            <picture>
+                                <source
+                                    type="image/webp"
+                                    srcset="
+                                        assets/images/aiImages/Receptionist1-640.webp 640w,
+                                        assets/images/aiImages/Receptionist1-320.webp 320w
+                                    "
+                                />
+                                <img
+                                    src="assets/images/aiImages/Receptionist1.jpg"
+                                    srcset="
+                                        assets/images/aiImages/Receptionist1.jpg 320w,
+                                        assets/images/aiImages/Receptionist1.jpg 640w
+                                    "
+                                    alt="Receptionist at front desk"
+                                    class="img-fluid w-100 rounded"
+                                    style="object-fit: cover;"
+                                    loading="lazy"
+                                    decoding="async"
+                                    onerror="this.src='https://placehold.co/800x600/1e3a8a/ffffff?text=Image+Load+Failed';"
+                                />
+                            </picture>
+                        </div>
+                        
+                        <!-- Content Column: Reduced width from col-md-8 to col-md-7 -->
+                        <!-- Added min-h-md-100 for height matching on desktop/tablet -->
+                        <div class="col-md-7 min-h-md-100">
+                            <div class="card-body p-4 p-lg-5">
+                                <h5 class="card-title fw-bold fs-4 text-primary-dark">ASEAN PLUS</h5>
+                                
+                                <!-- Full description content -->
+                                <p class="card-text text-secondary mt-3">
+                                    ASEAN PLUS (ASEAN+3) brings together the 10 ASEAN member
+                                    states with China, Japan and South Korea to deepen regional
+                                    cooperation across trade, labour, education and social
+                                    services — including programmes that support foreign workers
+                                    and mobility in the region. Learn more at the ASEAN+3 site for regional initiatives and
+                                    support services. The organization provides resources on worker rights, visa renewal support, and cultural integration programs for SSW candidates.
+                                </p>
+
+                                <div class="mt-4 d-flex flex-wrap gap-3 align-items-center">
+                                    <!-- Primary action button -->
+                                    <!-- Added text-white to ensure button text is visible -->
+                                    <a
+                                        class="btn btn-primary px-4 text-white"
+                                        style="background-color: btn btn-primary; border-color: var(--bs-primary-dark);"
+                                        href="pages/agency.html"
+                                        data-i18n="btn.search_agency"
+                                    >Search Agency</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </section>
+    </div>
+</section>
 
       <!-- About Us card -->
-      <section class="features">
-        <div class="container">
-          <h2 class="section-title" data-i18n="about.title">About Us</h2>
-          <div class="flex-center mt-sm">
-            <div class="feature-card feature-two-col">
-              <picture>
-                <source
-                  type="image/webp"
-                  srcset="
-                    assets/images/aiImages/TokyoDay-800.webp 800w,
-                    assets/images/aiImages/TokyoDay-480.webp 480w
-                  "
-                />
-                <img
-                  src="assets/images/aiImages/TokyoDay-800.png"
-                  srcset="
-                    assets/images/aiImages/TokyoDay-800.png 800w,
-                    assets/images/aiImages/TokyoDay-480.png 480w
-                  "
-                  alt="Tokyo cityscape representing Japan's work opportunities"
-                  class="img-full object-cover"
-                  loading="lazy"
-                  decoding="async"
-                />
-              </picture>
-              <div>
-                <p class="fw-600" data-i18n="about.lead_bold">
-                  JapanSSW is your one-stop platform for skilled trade job
-                  seekers under the Specified Skilled Worker (SSW) visa in
-                  Japan.
-                </p>
-                <p class="muted" data-i18n="about.lead">
-                  Founded in 2024 by Juan Angelo, JapanSSW provides job
-                  matching, visa guidance, and community resources to help
-                  foreign workers find stable employment and build better
-                  futures in Japan.
-                </p>
-                <p class="mt-xs">
-                  <a
-                    class="btn btn-primary"
-                    href="pages/about.html"
-                    data-i18n="btn.learn_more"
-                    >Learn more</a
-                  >
-                </p>
-              </div>
+      <section class="py-5 w-100">
+    <div class="container">
+        <!-- Section Title: Centered and styled with Bootstrap utilities -->
+        <h2 class="text-center mb-5 fs-2 fw-bold" data-i18n="about.title">
+            About Us
+        </h2>
+
+        <!-- Centering the Card and Limiting its Max Width (matching RSO card) -->
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-11 col-xl-10">
+                
+                <!-- The Horizontal Card Component (using RSO styling classes) -->
+                <div class="card mb-3 shadow-lg rounded-4 overflow-hidden rso-card">
+                    
+                    <!-- Row with no gutters (g-0) -->
+                    <div class="row g-0">
+                        
+                        <!-- Image Column: col-md-5, padded, aligned center -->
+                        <div class="col-md-5 min-h-md-100 p-4 d-flex align-items-center">
+                            <!-- Responsive Image using <picture> -->
+                            <picture>
+                                <source
+                                    type="image/webp"
+                                    srcset="
+                                        assets/images/aiImages/TokyoDay-800.webp 800w,
+                                        assets/images/aiImages/TokyoDay-480.webp 480w
+                                    "
+                                />
+                                <img
+                                    src="assets/images/aiImages/TokyoDay-800.png"
+                                    srcset="
+                                        assets/images/aiImages/TokyoDay-800.png 800w,
+                                        assets/images/aiImages/TokyoDay-480.png 480w
+                                    "
+                                    alt="Tokyo cityscape representing Japan's work opportunities"
+                                    class="img-fluid w-100 rounded"
+                                    style="object-fit: cover;"
+                                    loading="lazy"
+                                    decoding="async"
+                                    onerror="this.src='https://placehold.co/800x600/38a169/ffffff?text=About+Us+Image';"
+                                />
+                            </picture>
+                        </div>
+                        
+                        <!-- Content Column: col-md-7 -->
+                        <div class="col-md-7 min-h-md-100">
+                            <div class="card-body p-4 p-lg-5 d-flex flex-column justify-content-center">
+                                <!-- Card Title for About Us content -->
+                                <h5 class="card-title fw-bold fs-4 text-primary-dark mb-3"></h5>
+
+                                <!-- Lead Content -->
+                                <p class="card-text fw-bold text-dark" data-i18n="about.lead_bold">
+                                    JapanSSW is your one-stop platform for skilled trade job
+                                    seekers under the Specified Skilled Worker (SSW) visa in
+                                    Japan.
+                                </p>
+
+                                <!-- Secondary Content -->
+                                <p class="card-text text-secondary mt-2" data-i18n="about.lead">
+                                    Founded in 2024 by Juan Angelo, JapanSSW provides job
+                                    matching, visa guidance, and community resources to help
+                                    foreign workers find stable employment and build better
+                                    futures in Japan.
+                                </p>
+
+                                <!-- Call to Action Button -->
+                                <div class="mt-4">
+                                    <a
+                                        class="btn btn-primary px-4 text-white"
+                                        style="background-color: btn btn-primary; border-color: var(--bs-primary-dark);"
+                                        href="pages/about.html"
+                                        data-i18n="btn.learn_more"
+                                    >Learn more</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </section>
+    </div>
+</section>
 
       <!-- Job Alerts Band (red) -->
       <section class="alerts-band">
@@ -746,6 +765,8 @@
           </div>
         </div>
       </section>
+
+      
     </main>
 
     <footer class="site-footer site-footer--dark" role="contentinfo">

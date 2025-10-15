@@ -17,6 +17,7 @@ features and optional Bootstrap utilities.
 - Technologies
 - Getting Started
 - Development
+- Testing
 - File Structure
 - Best Practices
 - Code & Design Guide
@@ -134,6 +135,28 @@ Notes:
 - If Playwright reports "Cannot navigate to invalid URL" for goto(`/`), make sure you pass the Playwright config (it provides baseURL) or use the convenience script above.
 - The Python static server can show BrokenPipe/ConnectionReset noise when Playwright runs many workers; this is expected for that server under concurrent load. Use `npx http-server` or a small Node static server for quieter logs if desired.
 - If npm scripts surface shell startup errors (for example from `.zshrc`), guard optional tool initializations in your rc file (for example `if command -v jenv >/dev/null; then jenv init; fi`).
+
+## Testing documentation
+
+Detailed test documentation and results are available in `TESTING.md` at the repository root. That document contains:
+
+- A list of test cases (functional, mobile/offcanvas, i18n, accessibility)
+- Test environment and browsers used
+- Evidence and notes for each test (network checks, ARIA, WCAG contrast)
+- A summary of fixes applied during testing (with commit references)
+
+Quick links:
+Quick links:
+
+- View the full testing report: `TESTING.md`
+- Playwright smoke tests: `tests/playwright/` (see the "Running tests" section above for commands)
+
+Project management & QA
+
+- [Project board (Management - Asana)](https://app.asana.com/1/1207231382805506/project/1211385026996908/list/1211385050374916)
+- QA & test procedures: `TESTING.md` (detailed test cases, traces, and results)
+
+If you'd like, the team can add screenshots into `/docs/testing-screenshots/` and wire automatic test runs into CI.
 
 ## File Structure
 
