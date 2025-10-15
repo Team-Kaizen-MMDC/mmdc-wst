@@ -244,7 +244,27 @@
                 <div class="col-6 small">Nationality</div>
                 <div class="col-6 small">Experience</div>
               </div>
-              <a href="#" class="d-block mt-3 text-primary fw-semibold">View Resume →</a>
+              
+             
+           
+
+
+        <div id="resume-container">
+            <!-- Hidden File Input for upload resume -->
+        <input type="file" id="resumeUpload" accept="image/*" style="display: none;">
+
+        <a href="#" class="d-block mt-3 text-secondary fw-semibold" 
+        onclick="document.getElementById('resumeUpload').click(); return false;"
+        >Upload Resume →</a>
+
+        <div id="view-section" style="display: none; margin-top: 10px;">
+        <a id="view-link" href="#" target="_blank">View Resume →</a>
+        <button id="remove-button" style="margin-left: 10px;">X</button>
+        </div>
+
+        <input type="hidden" id="file-path">
+</div>
+            
             </div>
           </div>
         </div>
