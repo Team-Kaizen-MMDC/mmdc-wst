@@ -181,261 +181,162 @@
       </div>
     </header>
 
-    <main>
-      <div class="bento-wrapper">
-        <div class="bento-container">
-          <!-- Box 1: Profile -->
-          <div class="bento-box bento-box--profile">
-            <div class="bento-box__small-circle"></div>
-            <div class="bento-box__profile-image"></div>
-            <div class="bento-box__completion-text">
-              Profile Completion 0% - Complete it to get more job matches
+ <!-- MAIN CONTENT --> 
+   <main class="container my-5">
+      <div class="row g-4">
+
+        <!-- PROFILE -->
+      <div class="col-12 col-md-6">
+  <div class="card shadow-sm position-relative" style="min-height: 150px;">
+    
+    <div 
+      class="rounded-circle bg-secondary position-absolute border border-white border-3" 
+      style="width:100px; height:100px; top: 70px; left: 1rem; z-index: 10;">
+    </div>
+
+    <div class="card-body d-flex flex-column h-100">
+      
+      <div style="height: 50px;"></div> 
+      
+      <div class="mt-auto pt1 text-end">
+        <p class="text-muted mb-1">Profile Completion: <strong>55%</strong></p>
+        <button class="btn btn-outline-primary btn-sm">Complete Profile</button>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+        <!-- PERMANENT RESIDENCY -->
+        <div class="col-12 col-md-6">
+          <div class="card shadow-sm h-100">
+            <div class="card-body">
+              <h5 class="card-title d-flex align-items-center justify-content-between">
+                Permanent Residency Points
+                <button
+                  class="btn btn-sm btn-outline-secondary"
+                  type="button"
+                  id="pr-points-btn"
+                >
+                  edit
+                </button>
+              </h5>
+              <p class="card-text">Write your appeal to get noticed by employers!</p>
             </div>
           </div>
+        </div>
 
-          <!-- Box 2 -->
-          <div class="bento-box bento-box--text">
-            <div class="bento-box__title">
-              Permanent Residency Points
-              <button
-                type="button"
-                class="info-btn"
-                id="pr-points-btn"
-                aria-describedby="pr-points-tooltip"
-                aria-controls="pr-points-tooltip"
-                aria-expanded="false"
-                aria-label="What are Japan Permanent Residency points?"
-              >
-                i
-              </button>
-
-              <div
-                id="pr-points-tooltip"
-                class="tooltip-bubble"
-                role="tooltip"
-                aria-hidden="true"
-              >
-                Japan PR points are awarded for employment history, education,
-                language ability, and other measurable factors. Earning the
-                required points can make you eligible to apply for Permanent
-                Residency in Japan.
+        <!-- BASIC INFO -->
+        <div class="col-12 col-md-6">
+          <div class="card shadow-sm h-100">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <h5 class="card-title mb-0">Dela Cruz Juan</h5>
+                <a href="#" class="text-decoration-none">Edit</a>
               </div>
-            </div>
-            <div class="bento-box__paragraph">
-              Write your appeal to get notice by employer!
+              <p class="text-muted">Osaka, Japan</p>
+              <hr />
+              <div class="row">
+                <div class="col-6 small">Visa: Engineering</div>
+                <div class="col-6 small">Valid until 2026/05</div>
+                <div class="col-6 small">Age: 31</div>
+                <div class="col-6 small">Gender: Male</div>
+                <div class="col-6 small">Nationality</div>
+                <div class="col-6 small">Experience</div>
+              </div>
+              <a href="#" class="d-block mt-3 text-primary fw-semibold">View Resume →</a>
             </div>
           </div>
+        </div>
 
-          <!-- Box 3 -->
-          <div class="bento-box bento-box--action">
-            <!-- Header row -->
-            <div class="bento-box__row bento-box__row--title">
-              <div class="bento-box__name">Dela Cruz Juan</div>
-              <div class="bento-box__edit">edit</div>
-            </div>
-
-            <!-- Subtitle -->
-            <div class="bento-box__subtitle">Osaka Japan</div>
-
-            <!-- Divider -->
-            <hr class="bento-box__divider" />
-
-            <!-- Info Grid -->
-            <div class="bento-box__grid">
-              <div>Engineering Visa</div>
-              <div>valid until 2026/05</div>
-
-              <div>31 years old</div>
-              <div>Male</div>
-
-              <div>Nationality</div>
-              <div>Experience</div>
-
-              <div>Skill Certificate</div>
-              <div>Skills Certificate</div>
-            </div>
-
-            <!-- Bottom CTA -->
-            <div class="bento-box__resume">View Resume →</div>
-          </div>
-
-          <!-- Box 4: Split -->
-          <div class="bento-box bento-box--split">
-            <div class="bento-box__inner bento-box--text">
-              <div class="bento-box__title">Application Tracking</div>
-              <div class="bento-box__paragraph">Applied: 5</div>
-              <div class="bento-box__paragraph">Pending: 2</div>
-              <div class="bento-box__paragraph">Interview:1</div>
-              <div class="bento-box__paragraph">Rejected: 2</div>
-            </div>
-            <div class="bento-box__inner bento-box--text">
-              <div class="bento-box__title">Notifications</div>
-              <div class="bento-box__paragraph">
-                Interview Date: September 12, 2025 (10:00 am) XYZ Care Services
-                (OSAKA)
-              </div>
-              <div class="bento-box__paragraph">
-                Interview Date: September 19, 2025 (11:00 am) AB Day Care
-                (TOKYO)
-              </div>
-            </div>
-          </div>
-
-          <!-- Boxes 5 -->
-          <!-- Box 5: Experience  -->
-          <div class="bento-box bento-box--experience">
-            <!-- header: left title + right Add -->
-            <div class="bento-box__row bento-box__row--title">
-              <div class="bento-box__title">Experience</div>
-              <div class="bento-box__add">
-                <a href="addEdit/experience.html">Add</a>
-              </div>
-            </div>
-
-            <!-- bottom content row: left = image + details, right = edit -->
-            <div class="bento-box__row bento-box__row--content">
-              <div class="bento-box__job-info">
-                <div class="bento-box__image"></div>
-
-                <div class="bento-box__job-details">
-                  <div class="bento-box__job-title">Graphic Designer</div>
-
-                  <!-- separate company and status -->
-                  <div class="bento-box__company-status">
-                    <span class="bento-box__company">Facebook</span>
-                    <span class="bento-box__status">Part-time</span>
-                  </div>
-
-                  <!-- separate start / end dates -->
-                  <div class="bento-box__date">
-                    <span class="bento-box__date-start">2023</span> -
-                    <span class="bento-box__date-end">2028</span>
-                  </div>
+        <!-- APPLICATION + NOTIFICATIONS -->
+        <div class="col-12 col-md-6">
+          <div class="card shadow-sm h-100">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6 border-end">
+                  <h6 class="fw-bold">Application Tracking</h6>
+                  <p class="mb-0">Applied: 5</p>
+                  <p class="mb-0">Pending: 2</p>
+                  <p class="mb-0">Interview: 1</p>
+                  <p class="mb-0">Rejected: 2</p>
+                </div>
+                <div class="col-md-6 mt-3 mt-md-0" >
+                  <h6 class="fw-bold">Notifications</h6>
+                  <p class="small mb-1">Interview: Sep 12, 2025 – XYZ Care (OSAKA)</p>
+                  <p class="small">Interview: Sep 19, 2025 – AB Day Care (TOKYO)</p>
                 </div>
               </div>
-
-              <div class="bento-box__edit">edit</div>
             </div>
           </div>
+        </div>
 
-          <!-- Boxes 6 -->
-
-          <div class="bento-box bento-box--skills">
-            <!-- header: left title + right Add -->
-            <div class="bento-box__row bento-box__row--title">
-              <div class="bento-box__title">Skills</div>
-              <div class="bento-box__add">
-                <a href="addEdit/skill.html">Add</a>
-              </div>
+        <!-- EXPERIENCE -->
+        <div class="col-12 col-md-6">
+          <div class="card shadow-sm">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <h6 class="mb-0">Experience</h6>
+              <a href="addEdit/experience.html" class="small">Add</a>
             </div>
-
-            <!-- bottom content row: left = image + details, right = edit -->
-            <div class="bento-box__row bento-box__row--content">
-              <div class="bento-box__skill-info">
-                <div class="bento-box__image" aria-hidden="true"></div>
-
-                <div class="bento-box__skills-details">
-                  <div class="bento-box__skill-title">Web Design</div>
-                </div>
-
-                <div class="bento-box__edit">edit</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Boxes 7 -->
-          <div class="bento-box bento-box--education">
-            <!-- header: left title + right Add -->
-            <div class="bento-box__row bento-box__row--title">
-              <div class="bento-box__title">Education</div>
-              <div class="bento-box__add">
-                <a href="addEdit/education.html">Add</a>
-              </div>
-            </div>
-
-            <!-- bottom content row: left = image + details, right = edit -->
-            <div class="bento-box__row bento-box__row--content">
-              <div class="bento-box__education-info">
-                <div class="bento-box__image" aria-hidden="true"></div>
-
-                <div class="bento-box__education-details">
-                  <div class="bento-box__education-title">
-                    Mapua Malayan Digital College
-                  </div>
-
-                  <!-- separate course and major -->
-                  <div class="bento-box__course-major">
-                    <span class="bento-box__course"
-                      >Bachelor of Science IT</span
-                    >
-                    <span class="bento-box__major">Software Development</span>
-                  </div>
-
-                  <!-- separate start / end dates -->
-                  <div class="bento-box__date">
-                    <span class="bento-box__date-start">2023</span> -
-                    <span class="bento-box__date-end">2028</span>
-                  </div>
+            <div class="card-body d-flex align-items-center justify-content-between">
+              <div class="d-flex align-items-center">
+                <div class="rounded bg-secondary me-3" style="width:50px;height:50px;"></div>
+                <div>
+                  <div class="fw-semibold">Graphic Designer</div>
+                  <div class="text-muted small">Facebook • Part-time</div>
+                  <div class="small">2023 – 2028</div>
                 </div>
               </div>
-
-              <div class="bento-box__edit">edit</div>
+              <a href="#" class="small">Edit</a>
             </div>
           </div>
+        </div>
 
-          <!-- Boxes 8-->
-
-          <div class="bento-box bento-box--availability-preferences">
-            <!-- header: left title  -->
-            <div class="bento-box__row bento-box__row--title">
-              <div class="bento-box__title">Availability / Preferences</div>
+        <!-- SKILLS -->
+        <div class="col-12 col-md-6">
+          <div class="card shadow-sm">
+            <div class="card-header d-flex justify-content-between">
+              <h6 class="mb-0">Skills</h6>
+              <a href="addEdit/skill.html" class="small">Add</a>
             </div>
+            <div class="card-body d-flex justify-content-between align-items-center">
+              <div class="fw-semibold">Web Design</div>
+              <a href="#" class="small">Edit</a>
+            </div>
+          </div>
+        </div>
 
-            <!-- bottom content row: left = image + details, right = edit -->
-            <div class="bento-box__cta">
-              <span class="bento-box__cta-text">[Add Preferences]</span>
-              <span class="bento-box__cta-small"
-                >(add Preferences to get more job matches)</span
-              >
+        <!-- EDUCATION -->
+        <div class="col-12 col-md-6">
+          <div class="card shadow-sm">
+            <div class="card-header d-flex justify-content-between">
+              <h6 class="mb-0">Education</h6>
+              <a href="addEdit/education.html" class="small">Add</a>
+            </div>
+            <div class="card-body d-flex justify-content-between align-items-center">
+              <div>
+                <div class="fw-semibold">Mapua Malayan Digital College</div>
+                <div class="text-muted small">B.S. IT – Software Development</div>
+                <div class="small">2023 – 2028</div>
+              </div>
+              <a href="#" class="small">Edit</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- AVAILABILITY -->
+        <div class="col-12 col-md-6">
+          <div class="card shadow-sm text-left">
+            <div class="card-body">
+              <h6 class="card-title">Availability / Preferences</h6>
+              <p class="small text-muted mb-0">[Add Preferences]</p>
+              <p class="small text-muted">(add preferences to get more job matches)</p>
             </div>
           </div>
         </div>
       </div>
     </main>
-    <!-- tooltip styles moved into assets/css/main.css -->
-    <script>
-      // Lightweight tooltip toggle for accessibility
-      (function () {
-        const btn = document.getElementById("pr-points-btn");
-        const tip = document.getElementById("pr-points-tooltip");
-        if (!btn || !tip) return;
 
-        function show() {
-          tip.setAttribute("aria-hidden", "false");
-          btn.setAttribute("aria-expanded", "true");
-          tip.classList.add("tooltip-bubble--visible");
-        }
-        function hide() {
-          tip.setAttribute("aria-hidden", "true");
-          btn.setAttribute("aria-expanded", "false");
-          tip.classList.remove("tooltip-bubble--visible");
-        }
-
-        btn.addEventListener("focus", show);
-        btn.addEventListener("blur", hide);
-        btn.addEventListener("mouseenter", show);
-        btn.addEventListener("mouseleave", hide);
-        btn.addEventListener("keydown", (e) => {
-          if (e.key === "Escape" || e.key === "Esc") hide();
-          if (e.key === "Enter" || e.key === " ") {
-            // toggle on Enter or Space
-            if (btn.getAttribute("aria-expanded") === "true") hide();
-            else show();
-            e.preventDefault();
-          }
-        });
-      })();
-    </script>
     <!-- Bootstrap JS Bundle (includes Popper) -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
