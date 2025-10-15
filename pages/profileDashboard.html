@@ -310,22 +310,28 @@
           </div>
         </div>
 
-        <!-- APPLICATION + NOTIFICATIONS -->
+            <!-- APPLICATION + NOTIFICATIONS -->
         <div class="col-12 col-md-6">
           <div class="card shadow-sm h-100">
             <div class="card-body">
               <div class="row">
-                <div class="col-md-6 border-end">
-                  <h6 class="fw-bold">Application Tracking</h6>
+                <div class="col-md-6 border-md-end mb-3 mb-md-0">
+                  <h6 class="fw-bold d-flex justify-content-between align-items-center mb-3">
+                    Application Tracking
+                   <!-- NEW BUTTON to trigger the Bootstrap Modal -->
+                    <button class="btn btn-secondary btn-primary px-2 shadow-sm" data-bs-toggle="modal" data-bs-target="#applicationDetailModal">
+                        ->
+                    </button>
+                    </h6>
                   <p class="mb-0">Applied: 5</p>
                   <p class="mb-0">Pending: 2</p>
                   <p class="mb-0">Interview: 1</p>
                   <p class="mb-0">Rejected: 2</p>
                 </div>
-                <div class="col-md-6 mt-3 mt-md-0" >
+                 <div class="col-md-6 ps-md-4 mt-md-2">
                   <h6 class="fw-bold">Notifications</h6>
-                  <p class="small mb-1">Interview: Sep 12, 2025 – XYZ Care (OSAKA)</p>
-                  <p class="small">Interview: Sep 19, 2025 – AB Day Care (TOKYO)</p>
+                  <p class="small mb-1 text-info">Interview: Oct 20, 2025 – XYZ Care (OSAKA)</p>
+                  <p class="small text-secondary">Interview: Nov 1, 2025 – AB Day Care (TOKYO)</p>
                 </div>
               </div>
             </div>
@@ -398,12 +404,135 @@
       </div>
     </main>
 
+       <!-- APPLICATION DETAIL MODAL -->
+    <div class="modal fade" id="applicationDetailModal" tabindex="-1" aria-labelledby="applicationDetailModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content rounded-4 shadow-lg">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold text-primary" id="applicationDetailModalLabel">Full Application History</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body pt-0">
+                    <p class="text-muted small mb-4">Detailed tracking of all job applications submitted through Japan SSW.</p>
+                    <div class="table-responsive">
+                        <table class="table table-striped align-middle">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Job Title / Company</th>
+                                    <th scope="col">Location</th>
+                                    <th scope="col">Date Applied</th>
+                                    <th scope="col">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><div class="fw-semibold">Caregiver</div><div class="small text-muted">XYZ Care Solutions</div></td>
+                                    <td>Osaka</td>
+                                    <td>2025/09/01</td>
+                                    <td><span class="badge bg-info-subtle text-info border border-info-subtle">Interview Scheduled</span></td>
+                                </tr>
+                                <tr>
+                                    <td><div class="fw-semibold">Hotel Desk Staff</div><div class="small text-muted">Kyoto Grand Inn</div></td>
+                                    <td>Kyoto</td>
+                                    <td>2025/08/15</td>
+                                    <td><span class="badge bg-warning-subtle text-warning border border-warning-subtle">Under Review</span></td>
+                                </tr>
+                                <tr>
+                                    <td><div class="fw-semibold">Ground Handling</div><div class="small text-muted">Japan Airline</div></td>
+                                    <td>Tokyo</td>
+                                    <td>2025/08/01</td>
+                                    <td><span class="badge bg-danger-subtle text-danger border border-danger-subtle">Rejected</span></td>
+                                </tr>
+                                <tr>
+                                    <td><div class="fw-semibold">Food Processor</div><div class="small text-muted">AgriFoods Japan</div></td>
+                                    <td>Hokkaido</td>
+                                    <td>2025/07/20</td>
+                                    <td><span class="badge bg-success-subtle text-success border border-success-subtle">Applied</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Download Report</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Bootstrap JS Bundle (includes Popper) -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
+
+    <!-- Site JavaScript (ES Module) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        
+        // --- Global Variables (Provided by Canvas Environment) ---
+        // Note: We are using the provided global variables to connect to Firebase services.
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        let db;
+        let auth;
+        let userId = null;
+
+        // --- Firebase Initialization and Authentication ---
+
+        window.onload = function() {
+            // Initialize and Authenticate Firebase
+            try {
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+
+                onAuthStateChanged(auth, async (user) => {
+                    const authStatusEl = document.getElementById('auth-status');
+                    
+                    if (user) {
+                        userId = user.uid;
+                        authStatusEl.textContent = `User ID: ${userId}`;
+                        authStatusEl.classList.remove('text-danger');
+                        authStatusEl.classList.add('text-success');
+                    } else {
+                        // Attempt token sign-in first if available
+                        if (initialAuthToken) {
+                            try {
+                                await signInWithCustomToken(auth, initialAuthToken);
+                                userId = auth.currentUser.uid;
+                                authStatusEl.textContent = `User ID: ${userId} (Custom Sign-in)`;
+                                authStatusEl.classList.remove('text-danger');
+                                authStatusEl.classList.add('text-success');
+                            } catch (error) {
+                                console.error("Custom token failed. Signing in anonymously.", error);
+                                await signInAnonymously(auth);
+                                userId = auth.currentUser.uid;
+                                authStatusEl.textContent = `User ID: ${userId} (Anon Fallback)`;
+                            }
+                        } else {
+                            // Anonymous sign-in if no token provided
+                            await signInAnonymously(auth);
+                            userId = auth.currentUser.uid;
+                            authStatusEl.textContent = `User ID: ${userId} (Anonymous)`;
+                        }
+                    }
+                    // Optional: Fade in the main content if using a loader, but here we just ensure the header is offset.
+                    document.querySelector('main').style.paddingTop = '60px'; // Adjust main content padding after header load
+                });
+
+            } catch (e) {
+                console.error("Firebase initialization failed:", e);
+                document.getElementById('auth-status').textContent = "Auth Error: Check console.";
+            }
+        };
+    </script>
 
     <!-- Site JavaScript (ES Module) -->
     <script type="module" src="../assets/js/main.js"></script>
