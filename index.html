@@ -236,110 +236,120 @@
       </section>
 
       <!-- Job Board (card panel centered) -->
-      <section id="jobs" class="section-padding">
-        <div class="container">
-          <h2 class="section-title sr-only">Job Listings</h2>
-          <div class="flex-center">
-            <div class="job-panel feature-card w-760">
-              <ul class="job-list">
-                <li class="job-item job-panel__item">
-                  <div class="job-details">
-                    <h3 class="feature-card__title job-panel__title">
-                      Mechanic — Ground Support (Haneda)
-                    </h3>
-                    <p class="muted feature-card__desc">
-                      Haneda Airport — Tokyo
-                    </p>
-                  </div>
-                  <div class="job-actions">
-                    <a
-                      class="btn btn-primary"
-                      href="pages/jobs/mechanic-ground-support-haneda.html"
-                      data-i18n="btn.apply"
-                      >Apply</a
-                    >
-                  </div>
-                </li>
+     <section id="jobs" class="py-5 w-100">
+    <div class="container">
+        <!-- Section Title: Centered and styled with Bootstrap utilities -->
+        <h2 class="text-center mb-5 fs-2 fw-bold" data-i18n="section.job_listings">
+            Latest Job Listings
+        </h2>
 
-                <li class="job-item job-panel__item">
-                  <div class="job-details">
-                    <h3 class="job-panel__title">
-                      Cleaner — Facilities Maintenance
-                    </h3>
-                    <p class="muted job-panel__meta">
-                      Office Facilities — Tokyo
-                    </p>
-                  </div>
-                  <div class="job-actions">
-                    <a
-                      class="btn btn-primary"
-                      href="pages/jobs/cleaner-facilities-maintenance.html"
-                      data-i18n="btn.apply"
-                      >Apply</a
-                    >
-                  </div>
-                </li>
+        <!-- Centering the Card and Limiting its Max Width (matching RSO card) -->
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-11 col-xl-10">
+                
+                <!-- Main Job Panel Card -->
+                <div class="card shadow-lg rounded-4 overflow-hidden">
+                    <!-- Flush List Group for Job Items -->
+                    <ul class="list-group list-group-flush">
+                        
+                        <!-- Job Item 1: Mechanic -->
+                        <!-- list-group-item-action adds hover effect, d-flex for alignment -->
+                        <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5">
+                            <div class="job-details me-auto">
+                                <h5 class="h5 mb-1 fw-bold text-primary-dark">
+                                    Mechanic — Ground Support (Haneda)
+                                </h5>
+                                <p class="text-secondary small mb-0">
+                                    Haneda Airport — Tokyo
+                                </p>
+                            </div>
+                            <a
+                                class="btn btn-primary rounded-pill px-3"
+                                style="border-color: btn btn-primary; color: #fff;"
+                                href="pages/jobs/mechanic-ground-support-haneda.html"
+                                data-i18n="btn.apply"
+                            >Apply</a>
+                        </li>
 
-                <li class="job-item job-panel__item">
-                  <div class="job-details">
-                    <h3 class="job-panel__title">
-                      Construction Worker — Site Support
-                    </h3>
-                    <p class="muted job-panel__meta">Contractor — Saitama</p>
-                  </div>
-                  <div class="job-actions">
-                    <a
-                      class="btn btn-primary"
-                      href="pages/jobs/construction-worker-site-support.html"
-                      data-i18n="btn.apply"
-                      >Apply</a
-                    >
-                  </div>
-                </li>
+                        <!-- Job Item 2: Cleaner -->
+                        <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5">
+                            <div class="job-details me-auto">
+                                <h5 class="h5 mb-1 fw-bold text-primary-dark">
+                                    Cleaner — Facilities Maintenance
+                                </h5>
+                                <p class="text-secondary small mb-0">
+                                    Office Facilities — Tokyo
+                                </p>
+                            </div>
+                            <a
+                                class="btn btn-primary btn-outline-primary rounded-pill px-3"
+                                style="border-color: var(--bs-primary-dark); color:  #fff;"
+                                href="pages/jobs/cleaner-facilities-maintenance.html"
+                                data-i18n="btn.apply"
+                            >Apply</a>
+                        </li>
 
-                <li class="job-item job-panel__item">
-                  <div class="job-details">
-                    <h3 class="job-panel__title">Server — Hospitality</h3>
-                    <p class="muted job-panel__meta">Restaurant — Tokyo</p>
-                  </div>
-                  <div class="job-actions">
-                    <a
-                      class="btn btn-primary"
-                      href="pages/jobs/server-hospitality.html"
-                      data-i18n="btn.apply"
-                      >Apply</a
-                    >
-                  </div>
-                </li>
+                        <!-- Job Item 3: Construction Worker -->
+                        <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5">
+                            <div class="job-details me-auto">
+                                <h5 class="h5 mb-1 fw-bold text-primary-dark">
+                                    Construction Worker — Site Support
+                                </h5>
+                                <p class="text-secondary small mb-0">Contractor — Saitama</p>
+                            </div>
+                            <a
+                                class="btn btn-primary btn-outline-primary rounded-pill px-3"
+                                style="border-color: var(--bs-primary-dark); color:  #fff;"
+                                href="pages/jobs/construction-worker-site-support.html"
+                                data-i18n="btn.apply"
+                            >Apply</a>
+                        </li>
 
-                <!-- Inserted job: Ward Nursing Support (from pages/jobs/job.html) -->
-                <li class="job-item job-panel__item">
-                  <div class="job-details">
-                    <h3 class="job-panel__title">Ward Nursing Support</h3>
-                    <p class="muted job-panel__meta">
-                      Jhesperus Japan Co., Ltd. — Tokyo
-                    </p>
-                  </div>
-                  <div class="job-actions">
-                    <a
-                      class="btn btn-primary"
-                      href="pages/jobs/ward-nursing-support.html"
-                      data-i18n="btn.apply"
-                      >Apply</a
-                    >
-                  </div>
-                </li>
-              </ul>
+                        <!-- Job Item 4: Server -->
+                        <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5">
+                            <div class="job-details me-auto">
+                                <h5 class="h5 mb-1 fw-bold text-primary-dark">Server — Hospitality</h5>
+                                <p class="text-secondary small mb-0">Restaurant — Tokyo</p>
+                            </div>
+                            <a
+                                class="btn btn-primary btn-outline-primary rounded-pill px-3"
+                                style="border-color: var(--bs-primary-dark); color:  #fff;"
+                                href="pages/jobs/server-hospitality.html"
+                                data-i18n="btn.apply"
+                            >Apply</a>
+                        </li>
+
+                        <!-- Job Item 5: Ward Nursing Support (Nursing/Care Sector) -->
+                        <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5">
+                            <div class="job-details me-auto">
+                                <h5 class="h5 mb-1 fw-bold text-primary-dark">Ward Nursing Support</h5>
+                                <p class="text-secondary small mb-0">
+                                    Jhesperus Japan Co., Ltd. — Tokyo
+                                </p>
+                            </div>
+                            <a
+                                class="btn btn-primary btn-outline-primary rounded-pill px-3"
+                                style="border-color: var(--bs-primary-dark); color:  #fff;"
+                                href="pages/jobs/job.html"
+                                data-i18n="btn.apply"
+                            >Apply</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-          </div>
-
-          <div class="text-center mt-md">
-            <a class="btn btn-primary" href="#jobs" data-i18n="btn.search_jobs"
-              >Search SSW jobs</a
-            >
-          </div>
         </div>
-      </section>
+        
+        <!-- General Action Button (Moved outside the card) -->
+        <div class="text-center mt-5">
+            <a 
+                class="btn btn-primary px-5 text-white shadow-sm" 
+                style="background-color: btn btn-primary; border-color: var(--bs-primary-dark);"
+                href="#jobs" 
+                data-i18n="btn.search_jobs"
+            >Search SSW jobs</a>
+        </div>
+    </div>
+</section>
 
       <!-- Top Company grid -->
      <section id="companies" class="py-5" aria-label="Top companies">
