@@ -14,6 +14,22 @@
             crossorigin="anonymous"
         />
         <link rel="stylesheet" href="../assets/css/main.css" />
+        <style>
+        .form-control.is-invalid {
+            border-color: #dc3545 !important; /* Red border for errors */
+            padding-right: calc(1.5em + 0.75rem);
+            background-image: none !important; 
+        }
+        .form-control.is-valid {
+            border-color: #198754 !important; /* Green border for success */
+            padding-right: calc(1.5em + 0.75rem);
+            background-image: none !important;
+        }
+        .invalid-feedback {
+            font-size: 0.875em;
+            margin-top: 0.25rem;
+        }
+        </style>
 </head>
 <body class="bg-white">
 
@@ -36,16 +52,21 @@
         <div class="flex flex-col items-center justify-center w-full md:w-1/2 p-8">
             <div class="w-full max-w-sm">
                 <h2 class="text-4xl font-Helvetica text-gray-800 mb-14 text-center">Welcome Back</h2>
-                
-                <form action="profileDashboard.html" method="GET">
+                <form id="loginForm" action="profileDashboard.html" method="GET" novalidate>
                     <div class="my-6">
                         <label for="email" class="block text-sm font-bold text-gray-700">Email</label>
-                        <input id="email" name="email" type="email" autocomplete="email" required class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm" placeholder="juandlc@mail.com">
+                        <input id="email" name="email" type="email" autocomplete="email" required class="form-control mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm" placeholder="juandlc@mail.com">
+                        <div class="invalid-feedback">
+                            Please enter a valid email address.
+                        </div>
                     </div>
                     
                     <div class="mt-6 mb-1">
                         <label for="password" class="block text-sm font-bold text-gray-700">Password</label>
-                        <input id="password" name="password" type="password" autocomplete="current-password" required class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm">
+                        <input id="password" name="password" type="password" autocomplete="current-password" required class="form-control mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm">
+                        <div class="invalid-feedback">
+                            Password is required and must be at least 8 characters long.
+                        </div>
                     </div>
 
                     <div class="flex items-center justify-between">
@@ -62,6 +83,10 @@
                         </button>
                     </div>
                 </form>
+                <p class="mt-4 text-center text-sm text-gray-600">
+                    Don't have an account? 
+                    <a href="signup.html" class="font-medium text-red-600 hover:text-red-500">Sign up here</a>
+                </p>
             </div>
         </div>
     </div>
@@ -122,6 +147,13 @@
                     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
                     crossorigin="anonymous"
                 ></script>
+
+                <script type="module">
+                    import { initializeLoginValidation } from '../assets/js/modules/forms.js';
+                    window.addEventListener('DOMContentLoaded', () => {
+                    initializeLoginValidation();
+                    });
+                </script>
 
                 <!-- Site JS module -->
                 <script type="module" src="../assets/js/main.js"></script>
