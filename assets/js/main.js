@@ -9,6 +9,18 @@ import { MobileNav } from "./features/navigation/MobileNav.js";
 import { SmoothScroll } from "./features/navigation/SmoothScroll.js";
 import I18n from "./i18n.js";
 
+/* Ensure Bootstrap Icons CSS is loaded globally (MK) */
+(function ensureBootstrapIcons() {
+  if (!document.querySelector('link[href*="bootstrap-icons"]')) {
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href =
+      "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css";
+    document.head.appendChild(link);
+    console.log("✅ Bootstrap Icons loaded dynamically");
+  }
+})();
+
 /**
  * Initialize application
  */
@@ -521,3 +533,86 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         });
+
+// Inject and handle Dark/Light Mode Toggle (Desktop + Mobile)
+// Author: MK
+document.addEventListener("DOMContentLoaded", function () {
+  const html = document.documentElement;
+  const savedTheme = localStorage.getItem("theme") || "light";
+  html.setAttribute("data-bs-theme", savedTheme);
+
+  const updateTheme = (isDark) => {
+    const newTheme = isDark ? "dark" : "light";
+    html.setAttribute("data-bs-theme", newTheme);
+    localStorage.setItem("theme", newTheme);
+
+    // Sync both toggles
+    const headerIcon = document.querySelector("#theme-toggle-label i");
+    const offIcon = document.querySelector("#theme-toggle-label-off i");
+    if (headerIcon) headerIcon.className = isDark ? "bi bi-moon" : "bi bi-sun";
+    if (offIcon) offIcon.className = isDark ? "bi bi-moon" : "bi bi-sun";
+
+    const headerInput = document.getElementById("theme-toggle");
+    const offInput = document.getElementById("theme-toggle-off");
+    if (headerInput) headerInput.checked = isDark;
+    if (offInput) offInput.checked = isDark;
+
+    // Update navbar classes for consistent theme contrast
+    const navbar = document.querySelector(".navbar");
+    if (navbar) {
+      navbar.classList.toggle("navbar-dark", isDark);
+      navbar.classList.toggle("navbar-light", !isDark);
+    }
+  };
+
+  const createToggle = (idSuffix = "") => {
+    const wrapper = document.createElement("div");
+    wrapper.className =
+      "form-check form-switch m-0 d-flex align-items-center gap-2 theme-toggle-switch";
+    wrapper.style.marginLeft = "0.75rem";
+
+    const input = document.createElement("input");
+    input.type = "checkbox";
+    input.className = "form-check-input";
+    input.id = `theme-toggle${idSuffix}`;
+    input.checked = savedTheme === "dark";
+
+    const label = document.createElement("label");
+    label.className = "form-check-label mb-0";
+    label.setAttribute("for", `theme-toggle${idSuffix}`);
+    label.id = `theme-toggle-label${idSuffix}`;
+    label.innerHTML = `<i class="bi ${savedTheme === "dark" ? "bi-moon" : "bi-sun"}"></i>`;
+
+    wrapper.appendChild(input);
+    wrapper.appendChild(label);
+    return { wrapper, input };
+  };
+
+  // ----- Desktop toggle -----
+  const headerActions = document.querySelector(".site-header__actions");
+  if (headerActions && !document.getElementById("theme-toggle")) {
+    const { wrapper, input } = createToggle();
+    const langToggle = document.getElementById("lang-toggle");
+    if (langToggle) {
+      langToggle.closest(".form-check")?.insertAdjacentElement("afterend", wrapper);
+    } else {
+      headerActions.appendChild(wrapper);
+    }
+    input.addEventListener("change", () => updateTheme(input.checked));
+  }
+
+  // ----- Mobile toggle -----
+  const offcanvas = document.getElementById("siteOffcanvas");
+  if (offcanvas && !document.getElementById("theme-toggle-off")) {
+    const bottomRow =
+      offcanvas.querySelector(".mt-auto.d-flex") ||
+      offcanvas.querySelector(".offcanvas-body");
+    if (bottomRow) {
+      const { wrapper, input } = createToggle("-off");
+      const offLogin = bottomRow.querySelector(".btn-danger");
+      if (offLogin) offLogin.insertAdjacentElement("afterend", wrapper);
+      else bottomRow.appendChild(wrapper);
+      input.addEventListener("change", () => updateTheme(input.checked));
+    }
+  }
+});
