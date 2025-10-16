@@ -185,171 +185,118 @@
       </div>
     </header>
 
-<!-- Main -->
-    <main class="container-xxl py-5">
+    <!-- Main -->
+    <main class="container py-5">
+
+      <!-- Page header -->
       <div class="text-center mb-5">
-        <h1 class="display-6 fw-bold text-dark mb-2">
-          Find Your Next Opportunity in Japan
-        </h1>
-        <p class="text-secondary fs-5">Select multiple options below to find the perfect job.</p>
-      </div>
-
-     <!-- Filter Section -->
-<div class="card shadow-sm border-0 mb-5 sticky-top" style="top:2rem;">
-  <div class="card-body p-4">
-
-    <!-- Search -->
-    <div class="mb-4">
-      <label class="form-label fw-semibold text-secondary">Search Job Listings</label>
-      <input type="text" class="form-control form-control-sm" placeholder="e.g., engineer, Osaka, N2" />
-    </div>
-
-    <hr class="my-4">
-
-    <div class="row g-4">
-      <!-- Filter 1: Support Organization -->
-      <div class="col-md-6">
-        <label class="form-label fw-semibold text-secondary">Support Organization</label>
-        <div class="d-flex flex-wrap gap-2">
-          <button class="btn btn-outline-secondary btn-sm active">All</button>
-          <button class="btn btn-outline-secondary btn-sm">Yes</button>
-          <button class="btn btn-outline-secondary btn-sm">No</button>
-        </div>
-      </div>
-
-      <!-- Filter 2: Japanese Level -->
-      <div class="col-md-6">
-        <label class="form-label fw-semibold text-secondary">Japanese Level</label>
-        <div class="d-flex flex-wrap gap-2">
-          <button class="btn btn-outline-secondary btn-sm active">Any</button>
-          <button class="btn btn-outline-secondary btn-sm">N5</button>
-          <button class="btn btn-outline-secondary btn-sm">N4</button>
-          <button class="btn btn-outline-secondary btn-sm">N3</button>
-          <button class="btn btn-outline-secondary btn-sm">N2</button>
-          <button class="btn btn-outline-secondary btn-sm">N1</button>
-        </div>
-      </div>
-
-      <!-- Filter 3: Work Location -->
-      <div class="col-md-6">
-        <label class="form-label fw-semibold text-secondary">Work Location</label>
-        <div class="d-flex flex-wrap gap-2">
-          <button class="btn btn-outline-secondary btn-sm active">All Regions</button>
-          <button class="btn btn-outline-secondary btn-sm">Tokyo</button>
-          <button class="btn btn-outline-secondary btn-sm">Osaka</button>
-          <button class="btn btn-outline-secondary btn-sm">Kyoto</button>
-          <button class="btn btn-outline-secondary btn-sm">Fukuoka</button>
-          <button class="btn btn-outline-secondary btn-sm">Kanagawa</button>
-          <button class="btn btn-outline-secondary btn-sm">Nagoya</button>
-          <button class="btn btn-outline-secondary btn-sm">Sapporo</button>
-          <button class="btn btn-outline-secondary btn-sm">Okinawa</button>
-        </div>
-      </div>
-
-      <!-- Filter 4: Industry -->
-      <div class="col-md-6">
-        <label class="form-label fw-semibold text-secondary">Industry</label>
-        <div class="d-flex flex-wrap gap-2">
-          <button class="btn btn-outline-secondary btn-sm active">All Industries</button>
-          <button class="btn btn-outline-secondary btn-sm">Nursing Care</button>
-          <button class="btn btn-outline-secondary btn-sm">Food Service</button>
-          <button class="btn btn-outline-secondary btn-sm">Software Engineering</button>
-          <button class="btn btn-outline-secondary btn-sm">Education</button>
-          <button class="btn btn-outline-secondary btn-sm">Building Cleaning</button>
-          <button class="btn btn-outline-secondary btn-sm">Manufacturing</button>
-          <button class="btn btn-outline-secondary btn-sm">Construction</button>
-          <button class="btn btn-outline-secondary btn-sm">Automobile Maint.</button>
-        </div>
-      </div>
-
-      <!-- Filter 5: Minimum Salary -->
-      <div class="col-md-6">
-        <label class="form-label fw-semibold text-secondary">Minimum Salary (Monthly)</label>
-        <div class="d-flex flex-wrap gap-2">
-          <button class="btn btn-outline-secondary btn-sm active">Any Salary</button>
-          <button class="btn btn-outline-secondary btn-sm">Has Range</button>
-          <button class="btn btn-outline-secondary btn-sm">Over ¥200k</button>
-          <button class="btn btn-outline-secondary btn-sm">Over ¥250k</button>
-          <button class="btn btn-outline-secondary btn-sm">Over ¥300k</button>
-        </div>
-        <p class="form-text text-muted small fst-italic mt-2">
-          When multiple minimums are selected, the highest value is used.
+        <h1 class="display-5 fw-bold mb-2">Find Your Next Opportunity in Japan</h1>
+        <p class="text-muted fs-6">
+          Filter through <span id="resultCount" class="text-primary fw-semibold">0</span> job listings to find your perfect match
         </p>
       </div>
 
-    
-      <!-- Job Listing -->
-      <section>
-        <h4 class="fw-semibold text-secondary mb-4">Job Listings</h4>
-        <div id="job-listing-container" class="row row-cols-1 row-cols-md-2 g-4">
-          <!-- Example job card -->
-          <div class="col">
-            <div class="card shadow-sm h-100 border-0">
-              <div class="card-body">
-                <span class="badge bg-secondary mb-2">Visa support</span>
-                <h5 class="card-title fw-bold text-dark mb-1">Mechanic Ground Support (Haneda)</h5>
-                <p class="card-text text-muted mb-2">Kaisha • Tokyo • Aviation</p>
-                <p class="small text-secondary mb-1">Salary: ¥220,000–¥250,000</p>
-                <p class="small text-secondary mb-3">Language: Basic Japanese / N4</p>
-                <a href="pages/jobs/mechanic-ground-support-haneda.html" class="btn btn-primary w-25">Apply</a>
+      <div class="row">
+        <!-- FILTERS (left column on large screens) -->
+        <aside class="col-lg-4 mb-4">
+          <div class="card filter-sticky shadow-sm">
+            <div class="card-body">
+              <!-- Search -->
+              <div class="mb-4">
+                <label class="form-label fw-semibold text-secondary">Search Job Listings</label>
+                <input id="searchInput" type="text" class="form-control" placeholder="e.g., engineer, Osaka, N2" />
+              </div>
+
+              <hr />
+
+              <!-- Support -->
+              <div class="mb-3">
+                <label class="form-label fw-semibold text-secondary">Support</label>
+                <div data-filter-group="support" class="d-flex flex-wrap">
+                  <button class="btn btn-sm btn-outline-primary rounded-pill me-2 mb-2 active" data-value="all">All</button>
+                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="yes">Yes</button>
+                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="no">No</button>
+                </div>
+              </div>
+
+              <!-- Japanese Level -->
+              <div class="mb-3">
+                <label class="form-label fw-semibold text-secondary">Japanese Level</label>
+                <div data-filter-group="japaneseLevel" class="d-flex flex-wrap">
+                  <button class="btn btn-sm btn-outline-primary rounded-pill me-2 mb-2 active" data-value="any">Any</button>
+                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="n5">Beginner / N5</button>
+                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="n4">Basic / N4</button>
+                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="n3">Conversational / N3</button>
+                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="n2">Business / N2</button>
+                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="n1">Fluent / N1</button>
+                </div>
+              </div>
+
+              <!-- Location -->
+              <div class="mb-3">
+                <label class="form-label fw-semibold text-secondary">Work Location</label>
+                <div data-filter-group="location" class="d-flex flex-wrap">
+                  <button class="btn btn-sm btn-outline-primary rounded-pill me-2 mb-2 active" data-value="all">All</button>
+                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="tokyo">Tokyo</button>
+                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="osaka">Osaka</button>
+                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="kyoto">Kyoto</button>
+                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="fukuoka">Fukuoka</button>
+                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="kanagawa">Kanagawa</button>
+                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="nagoya">Nagoya</button>
+                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="okinawa">Okinawa</button>
+                </div>
+              </div>
+
+              <!-- Industry -->
+              <div class="mb-3">
+                <label class="form-label fw-semibold text-secondary">Industry</label>
+                <div data-filter-group="industry" class="d-flex flex-wrap">
+                  <button class="btn btn-sm btn-outline-primary rounded-pill me-2 mb-2 active" data-value="all">All</button>
+                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="aviation">Aviation</button>
+                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="nursing care">Nursing Care</button>
+                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="food service">Food Service</button>
+                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="software engineering">Agriculture</button>
+                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="education">Fishery</button>
+                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="building cleaning">Building Cleaning</button>
+                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="manufacturing">Manufacturing</button>
+                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="construction">Construction</button>
+                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="automobile maint.">Automotive</button>
+                </div>
+              </div>
+
+              <!-- Min Salary -->
+              <div class="mb-3">
+                <label class="form-label fw-semibold text-secondary">Min Salary (Monthly)</label>
+                <div data-filter-group="minSalary" class="d-flex flex-wrap">
+                  <button class="btn btn-sm btn-outline-primary rounded-pill me-2 mb-2 active" data-value="0" data-salary="0">Any</button>
+                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="200000" data-salary="200000">¥200k+</button>
+                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="250000" data-salary="250000">¥250k+</button>
+                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="300000" data-salary="300000">¥300k+</button>
+                </div>
+              </div>
+
+              <div class="text-center mt-3">
+                <button id="clearFilters" class="btn btn-light text-decoration-none">Clear All Filters</button>
               </div>
             </div>
           </div>
-          <div class="col">
-            <div class="card shadow-sm h-100 border-0">
-              <div class="card-body">
-                <span class="badge bg-secondary mb-2">New</span>
-                <h5 class="card-title fw-bold text-dark mb-1">server hospitality</h5>
-                <p class="card-text text-muted mb-2">Kaisha • Tokyo • food Service</p>
-                <p class="small text-secondary mb-1">Salary: ¥220,000</p>
-                <p class="small text-secondary mb-3">Language: Basic Japanese / N4</p>
-                <a href="pages/jobs/mechanic-ground-support-haneda.html" class="btn btn-primary w-25">Apply</a>
-              </div>
-            </div>
+        </aside>
+
+        <!-- RESULTS (right column) -->
+        <section class="col-lg-8">
+          <div id="jobListings" class="row g-4"></div>
+
+          <div id="noResults" class="text-center py-5 d-none">
+            <svg class="mx-auto mb-3" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <h4 class="text-muted fw-semibold mb-2">No jobs found</h4>
+            <p class="text-secondary">Try adjusting your filters or search criteria</p>
           </div>
-
-           <div class="col">
-            <div class="card shadow-sm h-100 border-0">
-              <div class="card-body">
-                <span class="badge bg-secondary mb-2">No support</span>
-                <h5 class="card-title fw-bold text-dark mb-1">cleaner facilities maintenance</h5>
-                <p class="card-text text-muted mb-2">Kaisha • saitama • building cleaning</p>
-                <p class="small text-secondary mb-1">Salary: ¥200,000</p>
-                <p class="small text-secondary mb-3">Language: Basic Japanese / N4</p>
-                <a href="pages/jobs/mechanic-ground-support-haneda.html" class="btn btn-primary w-25">Apply</a>
-              </div>
-            </div>
-          </div>
-
-             <div class="col">
-            <div class="card shadow-sm h-100 border-0">
-              <div class="card-body">
-                <span class="badge bg-secondary mb-2">all support</span>
-                <h5 class="card-title fw-bold text-dark mb-1">construction worker site</h5>
-                <p class="card-text text-muted mb-2">Kaisha • kyoto • construction</p>
-                <p class="small text-secondary mb-1">Salary: ¥200,000</p>
-                <p class="small text-secondary mb-3">Language: Basic Japanese / N4</p>
-                <a href="pages/jobs/mechanic-ground-support-haneda.html" class="btn btn-primary w-25">Apply</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      
-    </main>
-
-  <!-- Sticky Apply CTA (visible on mobile / small screens) -->
-    <div class="job-sticky-cta">
-      <div class="job-sticky-cta__inner container">
-        <a
-          id="apply"
-          class="job-sticky-cta__btn btn btn-primary"
-          href="../signin.html"
-          >Show Filter</a
-        >
+        </section>
       </div>
-    </div>
+    </main>
+  
 
     <!-- Shared Footer -->
     <footer class="site-footer site-footer--dark">
@@ -411,6 +358,7 @@
       crossorigin="anonymous"
     ></script>
 
+    
     <!-- Custom JS Module (Phase 2) -->
     <script type="module" src="../../assets/js/main.js"></script>
   </body>
