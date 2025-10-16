@@ -406,6 +406,96 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+       // --- Profile Summary Inline Edit Logic ---
+function initializeApp() {
+    console.log("main.js script loaded successfully from assets/js/ - Initializing Dashboard Logic.");
+
+    // --- DOM Element References ---
+    const readDisplay = document.getElementById('read-display');
+    const textContent = document.getElementById('text-content');
+    const editInput = document.getElementById('edit-input'); // This is the textarea element
+    const charCount = document.getElementById('char-count');
+    const editBtn = document.getElementById('edit-btn');
+    const saveBtn = document.getElementById('save-btn');
+
+    // Ensure all required elements exist before proceeding
+    if (!readDisplay || !textContent || !editInput || !charCount || !editBtn || !saveBtn) {
+        console.error("One or more required profile dashboard elements are missing. Aborting initialization.");
+        return;
+    }
+
+    // Get max length property
+    const maxLength = editInput.getAttribute('maxlength'); 
+
+    /**
+     * Updates the character count display.
+     */
+    const updateCount = () => {
+        const currentLength = editInput.value.length;
+        charCount.textContent = `${currentLength} / ${maxLength} characters`;
+    };
+
+    // Attach listener and perform initial count update
+    editInput.addEventListener('input', updateCount);
+    updateCount();
+
+    /**
+     * Toggles the editor between read mode and edit mode.
+     * This function is attached to the window object so it can be called 
+     * directly from the HTML 'onclick' attributes.
+     * @param {boolean} isEditing - True to enter edit mode, false to enter read mode (save).
+     */
+    window.toggleEditMode = function(isEditing) {
+        if (isEditing) {
+            // --- SWITCH TO EDIT MODE ---
+
+            // 1. Transfer current text from read-only display to the textarea input
+            editInput.value = textContent.textContent.trim();
+
+            // 2. Toggle Visibility (Hide read, Show edit & character count)
+            readDisplay.classList.add('d-none');
+            editInput.classList.remove('d-none');
+            charCount.classList.remove('d-none');
+            
+            // Re-update the count to reflect the text we just loaded into the input
+            updateCount(); 
+
+            // 3. Toggle Buttons (Hide edit button, Show save button)
+            editBtn.classList.add('d-none');
+            saveBtn.classList.remove('d-none'); 
+
+            // 4. Focus on the textarea and move the cursor to the end
+            editInput.focus();
+            editInput.setSelectionRange(
+                editInput.value.length,
+                editInput.value.length
+            );
+        } else {
+            // --- SWITCH TO READ/SAVE MODE ---
+
+            // 1. Get the new content from the textarea
+            const newContent = editInput.value.trim();
+
+            // 2. Update the read-only display with the new content
+            textContent.textContent = newContent;
+
+            // 3. Toggle Visibility (Show read, Hide edit & character count)
+            editInput.classList.add('d-none');
+            readDisplay.classList.remove('d-none');
+            charCount.classList.add('d-none');
+
+            // 4. Toggle Buttons (Show edit button, Hide save button)
+            saveBtn.classList.add('d-none');
+            editBtn.classList.remove('d-none');
+
+            console.log('Content Saved:', newContent);
+            // NOTE: Add your Firestore update logic here in a real app.
+        }
+    }
+}
+
+// Listen for the DOMContentLoaded event to safely run the initialization function
+document.addEventListener('DOMContentLoaded', initializeApp);
 
 //userMenu dropdown
 document.addEventListener('DOMContentLoaded', () => {
@@ -431,67 +521,3 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         });
-
-
-        //Application Tracker Profile Dashboard
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-import {
-  getAuth,
-  signInAnonymously,
-  signInWithCustomToken,
-  onAuthStateChanged,
-} from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-// --- Global Variables (injected by environment) ---
-const appId = typeof __app_id !== "undefined" ? __app_id : "default-app-id";
-const firebaseConfig =
-  typeof __firebase_config !== "undefined" ? JSON.parse(__firebase_config) : {};
-const initialAuthToken =
-  typeof __initial_auth_token !== "undefined" ? __initial_auth_token : null;
-
-// --- DOM Ready Handler ---
-document.addEventListener("DOMContentLoaded", async () => {
-  const authStatusEl = document.getElementById("auth-status");
-  const userInfoEl = document.getElementById("user-info");
-
-  try {
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const auth = getAuth(app);
-
-    // Monitor Auth State
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        authStatusEl.textContent = `User ID: ${user.uid}`;
-        authStatusEl.classList.replace("text-muted", "text-success");
-        userInfoEl.textContent = "Authenticated successfully.";
-      } else {
-        // Try custom token sign-in first, fallback to anonymous
-        try {
-          if (initialAuthToken) {
-            await signInWithCustomToken(auth, initialAuthToken);
-            authStatusEl.textContent = `User ID: ${auth.currentUser.uid} (Custom)`;
-          } else {
-            await signInAnonymously(auth);
-            authStatusEl.textContent = `User ID: ${auth.currentUser.uid} (Anonymous)`;
-          }
-          authStatusEl.classList.replace("text-muted", "text-success");
-        } catch (error) {
-          console.error("Authentication error:", error);
-          authStatusEl.textContent = "Authentication failed.";
-          authStatusEl.classList.add("text-danger");
-        }
-      }
-    });
-
-    // Optional UI adjustment after header loads
-    document.querySelector("main").style.paddingTop = "60px";
-  } catch (err) {
-    console.error("Firebase initialization failed:", err);
-    authStatusEl.textContent = "Firebase init error.";
-    authStatusEl.classList.add("text-danger");
-  }
-});

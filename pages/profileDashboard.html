@@ -248,21 +248,50 @@
   </div>
 </div>
 
-        <!-- PERMANENT RESIDENCY -->
+        <!-- Profile Summary-->
         <div class="col-12 col-md-6">
-          <div class="card shadow-sm h-100">
+          <div class="card shadow-sm h-100 rounded-4">
+            <div class="card-header bg-white">
+                  <div class="d-flex justify-content-between">
+
+                <h6 class="card-title mb-0">Profile Summary</h6>
+                     <!-- Edit Button (Initially visible) -->
+                       <a href="#" class="text-decoration-none"
+                          id="edit-btn"
+                          onclick="toggleEditMode(true)"
+                          >Edit</a>
+
+                        <!-- Save Button (Initially hidden) -->
+                          <a href="#" class="text-decoration-none d-none"
+                            id="save-btn"
+                             onclick="toggleEditMode(false)"
+                            >Save</a>
+              </div>
+            </div>
+           
             <div class="card-body">
-              <h5 class="card-title d-flex align-items-center justify-content-between">
-                Permanent Residency Points
-                <button
-                  class="btn btn-sm btn-outline-secondary"
-                  type="button"
-                  id="pr-points-btn"
-                >
-                  edit
-                </button>
-              </h5>
-              <p class="card-text">Write your appeal to get noticed by employers!</p>
+                <!-- The main container for the text and controls (using Bootstrap flex and gap) -->
+                <div class="d-flex flex-column gap-3">
+                    <!-- Read-Only Display Area -->
+                    <div id="read-display" 
+                    class="p-3 bg-white rounded-3 text-secondary lh-base border shadow-inset"
+                      style="min-height: 100px;">
+                        <p id="text-content" class="mb-0">
+                            This is the default profile description. Click 'Edit' to make changes.  
+                        </p>
+                    </div>
+
+                    <!-- Editable Textarea (Initially hidden) -->
+                    <textarea
+                        id="edit-input"
+                        class="form-control p-3 bg-light text-secondary lh-base border rounded-3 shadow-inset d-none resize-y"
+                        rows="3"
+                        maxlength="170"
+                    >This is the default profile description. Click 'Edit' to make changes.</textarea>
+                      <small id="char-count" class="text-muted d-none">
+                      0 / 170 characters
+                        </small>
+                </div>  
             </div>
           </div>
         </div>
@@ -536,5 +565,6 @@
 
     <!-- Site JavaScript (ES Module) -->
     <script type="module" src="../assets/js/main.js"></script>
+    
   </body>
 </html>
