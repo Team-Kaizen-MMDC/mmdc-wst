@@ -3821,103 +3821,71 @@ main
   text-decoration: underline;
 }
 
-/* ===========================
-   Dark/Light Mode Styles
-   Author: MK
-   =========================== */
-.theme-toggle-switch .form-check-input {
-  width: 2.3em;
-  height: 1.2em;
-  cursor: pointer;
-}
+/* =====================================================
+   DARK/LIGHT MODE — CLEANED & OPTIMIZED VERSION
+   Author: MK & Maria
+   ===================================================== */
 
-.theme-toggle-switch i {
-  font-size: 1.1rem;
-  color: var(--bs-body-color);
-}
-
-/* Dark mode colors */
-:root[data-bs-theme="dark"] {
-  --bs-body-bg: #151515;
-  --bs-body-color: #e0e0e0;
-  --bs-navbar-bg: #111111;
-}
-
-[data-bs-theme="dark"] body {
-  background-color: var(--bs-body-bg);
-  color: var(--bs-body-color);
-}
-
-[data-bs-theme="dark"] .navbar {
-  background-color: var(--bs-navbar-bg);
-}
-
-[data-bs-theme="dark"] footer {
-  background-color: #111;
-  color: #aaa;
-}
-/* Navbar color in dark mode */
-:root[data-bs-theme="dark"] .site-header,
-:root[data-bs-theme="dark"] .navbar {
-  background-color: #1a1a1a !important;
-  color: #e0e0e0 !important;
-}
-
-:root[data-bs-theme="dark"] .navbar a,
-:root[data-bs-theme="dark"] .navbar-brand,
-:root[data-bs-theme="dark"] .navbar-nav .nav-link {
-  color: #f1f1f1 !important;
-}
-
-:root[data-bs-theme="dark"] .navbar-nav .nav-link:hover {
-  color: #ff5555 !important;
-}
-
-/* Dark/Light Mode Enhancement (Bootstrap + Custom Harmony) Author: MK & Maria */
-
-/* Smooth theme transition */
+/* -------------------------------------
+   Base Transition (Smooth Theme Switch)
+-------------------------------------- */
 :root,
 [data-bs-theme="dark"] {
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
-/* Default Light Theme Variables */
+/* -------------------------------------
+   Light Theme Variables
+-------------------------------------- */
 :root[data-bs-theme="light"] {
   --bs-body-bg: #ffffff;
   --bs-body-color: #212529;
   --bs-card-bg: #ffffff;
   --bs-border-color: #dee2e6;
   --bs-btn-bg: var(--primary-color);
-  --bs-btn-color: #fff;
+  --bs-btn-color: #ffffff;
 }
 
-/* Dark Theme Variables (Bootstrap Auto Contrast) */
+/* -------------------------------------
+   Dark Theme Variables
+-------------------------------------- */
 :root[data-bs-theme="dark"] {
-  --bs-body-bg: #0d1117;
+  --bs-body-bg: #1c2128;
   --bs-body-color: #e6edf3;
-  --bs-card-bg: #161b22;
-  --bs-border-color: #30363d;
-  --bs-btn-bg: #1f6feb;
-  --bs-btn-color: #f0f6fc;
-  --bs-link-color: #58a6ff;
-  --bs-link-hover-color: #79c0ff;
+  --bs-card-bg: #242b33;
+  --bs-border-color: #3c434d;
+  --bs-btn-bg: #2b6fe3;
+  --bs-btn-color: #f8f9fa;
+  --bs-link-color: #7cb4ff;
+  --bs-link-hover-color: #9bd0ff;
 
-  /* Project custom colors */
   --primary-color: #58a6ff;
   --secondary-color: #8b949e;
   --light-color: #21262d;
 }
 
-/* Body + Layout */
+/* -------------------------------------
+   Brand Color (Red)
+-------------------------------------- */
+:root {
+  --brand-red: #eb0000;
+  --brand-red-hover: #d40000;
+}
+
+/* =====================================================
+   GLOBAL ELEMENTS
+===================================================== */
+
+/* Body */
 [data-bs-theme="dark"] body {
   background-color: var(--bs-body-bg);
   color: var(--bs-body-color);
 }
 
-/* Navbar + Header */
+/* Navbar & Header */
 [data-bs-theme="dark"] .navbar,
 [data-bs-theme="dark"] .site-header {
-  background-color: #161b22 !important;
+  background-color: #1f242b !important;
   color: var(--bs-body-color);
   border-bottom: 1px solid var(--bs-border-color);
 }
@@ -3929,34 +3897,50 @@ main
 }
 
 [data-bs-theme="dark"] .navbar-nav .nav-link:hover {
-  color: var(--bs-link-hover-color) !important;
+  color: #ff5555 !important; /* Brand hover accent */
 }
 
-/* Cards + Sections */
+/* Footer */
+[data-bs-theme="dark"] footer {
+  background-color: #1f242b !important;
+  color: #8b949e !important;
+  border-top: 1px solid var(--bs-border-color);
+}
+
+/* Cards & Sections */
 [data-bs-theme="dark"] .card,
-[data-bs-theme="dark"] .card-feature,
-[data-bs-theme="dark"] .card-testimonial,
+[data-bs-theme="dark"] .card-body,
+[data-bs-theme="dark"] .card-header,
+[data-bs-theme="dark"] .modal-content,
 [data-bs-theme="dark"] .feature-card,
 [data-bs-theme="dark"] .company-card,
 [data-bs-theme="dark"] .bento-box {
-  background-color: var(--bs-card-bg);
-  color: var(--bs-body-color);
-  border-color: var(--bs-border-color);
+  background-color: var(--bs-card-bg) !important;
+  color: var(--bs-body-color) !important;
+  border-color: var(--bs-border-color) !important;
 }
 
 /* Buttons */
-[data-bs-theme="dark"] .btn,
-[data-bs-theme="dark"] .btn-outline-custom {
-  background-color: var(--bs-btn-bg);
-  color: var(--bs-btn-color);
-  border-color: var(--bs-btn-bg);
+.btn-primary,
+[data-bs-theme="dark"] .btn-primary,
+[data-bs-theme="dark"] .btn-danger,
+[data-bs-theme="dark"] .btn-brand {
+  background-color: var(--brand-red) !important;
+  border-color: var(--brand-red) !important;
+  color: #fff !important;
 }
 
-[data-bs-theme="dark"] .btn:hover,
-[data-bs-theme="dark"] .btn-outline-custom:hover {
-  background-color: var(--bs-link-hover-color);
-  border-color: var(--bs-link-hover-color);
-  color: #fff;
+.btn-primary:hover,
+[data-bs-theme="dark"] .btn-primary:hover,
+[data-bs-theme="dark"] .btn-danger:hover,
+[data-bs-theme="dark"] .btn-brand:hover {
+  background-color: var(--brand-red-hover) !important;
+  border-color: var(--brand-red-hover) !important;
+}
+
+.btn-primary:focus,
+[data-bs-theme="dark"] .btn-primary:focus {
+  box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.35) !important;
 }
 
 /* Alerts + Badges */
@@ -3974,9 +3958,9 @@ main
 /* Forms */
 [data-bs-theme="dark"] .form-control,
 [data-bs-theme="dark"] .form-select {
-  background-color: #0d1117;
-  color: var(--bs-body-color);
-  border-color: var(--bs-border-color);
+  background-color: #2a3038 !important;
+  color: #f2f3f5 !important;
+  border-color: #3d434d !important;
 }
 
 [data-bs-theme="dark"] .form-control:focus,
@@ -3986,105 +3970,38 @@ main
   color: #fff;
 }
 
-/* Footer */
-[data-bs-theme="dark"] footer {
-  background-color: #161b22;
-  color: #8b949e;
-  border-top: 1px solid var(--bs-border-color);
-}
-
-/* Utilities Harmonization */
-[data-bs-theme="dark"] .bg-gradient-primary,
-[data-bs-theme="dark"] .bg-gradient-secondary {
-  background: linear-gradient(135deg, #1f6feb, #0d419d);
-}
-
+/* Shadows + Gradients */
 [data-bs-theme="dark"] .shadow-custom,
 [data-bs-theme="dark"] .shadow-lg-custom {
   box-shadow: 0 0 10px rgba(56, 139, 253, 0.2);
 }
 
-/* Optional: ensure smooth icon transition */
-.theme-toggle-switch i {
-  transition: color 0.3s ease, transform 0.2s ease;
+[data-bs-theme="dark"] .bg-gradient-primary,
+[data-bs-theme="dark"] .bg-gradient-secondary {
+  background: linear-gradient(135deg, #1f6feb, #0d419d);
 }
 
-/* Brand Color Preservation for Primary Buttons (Red) */
-
-:root {
-  --brand-red: #eb0000; /* your existing primary red */
-  --brand-red-hover: #d40000; /* darker hover for accessibility */
-}
-
-/* Keep red buttons red in both light and dark themes */
-.btn-primary,
-[data-bs-theme="dark"] .btn-primary,
-[data-bs-theme="dark"] .btn-danger,
-[data-bs-theme="dark"] .btn-brand {
-  background-color: var(--brand-red) !important;
-  border-color: var(--brand-red) !important;
-  color: #fff !important;
-}
-
-/* Hover and active states */
-.btn-primary:hover,
-[data-bs-theme="dark"] .btn-primary:hover,
-[data-bs-theme="dark"] .btn-danger:hover,
-[data-bs-theme="dark"] .btn-brand:hover {
-  background-color: var(--brand-red-hover) !important;
-  border-color: var(--brand-red-hover) !important;
-}
-
-/* Focus ring */
-.btn-primary:focus,
-[data-bs-theme="dark"] .btn-primary:focus {
-  box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.35) !important;
-}
-
-/* Brand Consistency for Alerts, Headings & CTA Sections */
-/* Headings: strong readable contrast in dark mode */
+/* Headings */
+[data-bs-theme="dark"] h1,
+[data-bs-theme="dark"] h2,
+[data-bs-theme="dark"] h3,
+[data-bs-theme="dark"] h4,
 [data-bs-theme="dark"] h5,
 [data-bs-theme="dark"] h6 {
-  color: #ffffff !important; /* or use var(--bs-body-color) for softer tone */
+  color: #ffffff !important;
 }
 
-/* Slightly softer headings in light mode for balance */
-:root[data-bs-theme="light"] h1,
-:root[data-bs-theme="light"] h2,
-:root[data-bs-theme="light"] h3,
-:root[data-bs-theme="light"] h4,
 :root[data-bs-theme="light"] h5,
 :root[data-bs-theme="light"] h6 {
   color: #111111 !important;
 }
 
-/* Alerts: keep them branded red */
-.alert,
-[data-bs-theme="dark"] .alert {
-  background-color: var(--brand-red) !important;
-  border-color: var(--brand-red-hover) !important;
-  color: #fff !important;
-}
-
-[data-bs-theme="dark"] .alert a {
-  color: #fff !important;
-  text-decoration: underline;
-}
-
-/* “Alerts Band” section (Job Match CTA banner) */
-.alerts-band {
-  background-color: var(--brand-red) !important;
-  color: #fff !important;
-}
-
+/* -------------------------------------
+   Alerts Band (CTA Banner)
+-------------------------------------- */
+.alerts-band,
 [data-bs-theme="dark"] .alerts-band {
   background-color: var(--brand-red) !important;
-  color: #fff !important;
-}
-
-/* Adjust inner elements for clarity */
-[data-bs-theme="dark"] .alerts-band h3,
-[data-bs-theme="dark"] .alerts-band p {
   color: #fff !important;
 }
 
@@ -4100,15 +4017,17 @@ main
   border-color: var(--brand-red-hover) !important;
 }
 
-/* Targeted Dark Mode Adjustments (for profile & about cards) */
-/* Card headers (white backgrounds in dark mode) */
+/* -------------------------------------
+   Specific Page Fixes
+-------------------------------------- */
+
+/* Profile & About Cards */
 [data-bs-theme="dark"] .card-header.bg-white {
   background-color: #2b2b2b !important;
-  color: #ffffff !important;
+  color: #fff !important;
   border-color: #3a3a3a !important;
 }
 
-/* Read-Display box inside profile summary */
 [data-bs-theme="dark"] #read-display,
 [data-bs-theme="dark"] #read-display.bg-white {
   background-color: #1f1f1f !important;
@@ -4116,108 +4035,20 @@ main
   color: #e0e0e0 !important;
 }
 
-/* Bold dark text inside about cards */
 [data-bs-theme="dark"] .card-text.fw-bold.text-dark {
   color: #f1f1f1 !important;
 }
 
-/* ==========================================================
-   FINAL OVERRIDES — Brighter Dimmed Dark Mode
-   ========================================================== */
-:root[data-bs-theme="dark"] {
-  --bs-body-bg: #1c2128 !important;       /* lighter gray background */
-  --bs-body-color: #e6edf3 !important;    /* readable off-white text */
-  --bs-card-bg: #242b33 !important;       /* lighter card shade */
-  --bs-border-color: #3c434d !important;  /* visible but subtle border */
-  --bs-btn-bg: #2b6fe3 !important;
-  --bs-btn-color: #f8f9fa !important;
-  --bs-link-color: #7cb4ff !important;
-  --bs-link-hover-color: #9bd0ff !important;
-}
-
-/* Softer cards and panel tone */
-[data-bs-theme="dark"] .card,
-[data-bs-theme="dark"] .card-body,
-[data-bs-theme="dark"] .card-header,
-[data-bs-theme="dark"] .modal-content {
-  background-color: #242b33 !important;
-  border-color: #3c434d !important;
-  color: #f0f2f5 !important;
-}
-
-/* Navbar + Footer adjustment */
-[data-bs-theme="dark"] .navbar,
-[data-bs-theme="dark"] footer {
-  background-color: #1f242b !important;
-  color: #e6edf3 !important;
-}
-
-/* Form elements — better readability */
-[data-bs-theme="dark"] .form-control,
-[data-bs-theme="dark"] .form-select {
-  background-color: #2a3038 !important;
-  color: #f2f3f5 !important;
-  border-color: #3d434d !important;
-}
-
-/* Keep brand reds consistent */
-[data-bs-theme="dark"] .btn-primary,
-[data-bs-theme="dark"] .btn-danger,
-[data-bs-theme="dark"] .alerts-band {
-  background-color: var(--brand-red) !important;
-  border-color: var(--brand-red) !important;
-  color: #fff !important;
-}
-/* ===============================
-   Fix: Job Detail Card (Dark Mode)
-   =============================== */
-[data-bs-theme="dark"] .job-card-wrap,
-[data-bs-theme="dark"] .job-card-wrap section,
-[data-bs-theme="dark"] .job-card-wrap .card {
-  background-color: #242b33 !important;
-  color: #e6edf3 !important;
-  border-color: #3c434d !important;
-}
-
-/* Ensure nested text and highlights remain visible */
-[data-bs-theme="dark"] .job-card-wrap p,
-[data-bs-theme="dark"] .job-card-wrap h1,
-[data-bs-theme="dark"] .job-card-wrap h2,
-[data-bs-theme="dark"] .job-card-wrap h3,
-[data-bs-theme="dark"] .job-card-wrap h4,
-[data-bs-theme="dark"] .job-card-wrap h5,
-[data-bs-theme="dark"] .job-card-wrap h6,
-[data-bs-theme="dark"] .job-card-wrap span {
-  color: #f0f2f5 !important;
-}
-
-/* Optional — light background boxes inside */
-[data-bs-theme="dark"] .job-card-wrap .card,
-[data-bs-theme="dark"] .job-card-wrap .card-body {
-  background-color: #2b3038 !important;
-}
-
-/* Fix subtle red highlight box (e.g. “Relocation to Japan”) */
-[data-bs-theme="dark"] .job-card-wrap .bg-light,
-[data-bs-theme="dark"] .job-card-wrap .alert-light {
-  background-color: rgba(255, 85, 85, 0.1) !important;
-  border-color: #ff5555 !important;
-  color: #ff9999 !important;
-}
-/* ============================================
-   Fix: Ward Job Detail Page (Dark Mode)
-   ============================================ */
-
-/* Outer wrapper and article */
+/* Job Card Pages */
 [data-bs-theme="dark"] .job-card-wrap,
 [data-bs-theme="dark"] .job-card,
 [data-bs-theme="dark"] .job-card-wrap section {
-  background-color: #242b33 !important;
-  color: #e6edf3 !important;
-  border-color: #3c434d !important;
+  background-color: var(--bs-card-bg) !important;
+  color: var(--bs-body-color) !important;
+  border-color: var(--bs-border-color) !important;
 }
 
-/* Fix light cards inside (like condition, requirement boxes) */
+/* Inside Job Detail Cards */
 [data-bs-theme="dark"] .job-card .card,
 [data-bs-theme="dark"] .job-card .card-body,
 [data-bs-theme="dark"] .job-card .card-header {
@@ -4226,15 +4057,23 @@ main
   color: #f0f2f5 !important;
 }
 
-/* Fix small tags / badges like “Kaisha” */
-[data-bs-theme="dark"] .job-card .badge,
-[data-bs-theme="dark"] .job-card .badge.bg-light {
-  background-color: rgba(255, 255, 255, 0.1) !important;
+/* Job Pills & Metadata */
+[data-bs-theme="dark"] .job-card .job-pill,
+[data-bs-theme="dark"] .job-card li.job-pill,
+[data-bs-theme="dark"] .job-card ul.job-pills li {
+  background-color: #2b3038 !important;
   color: #e6edf3 !important;
   border: 1px solid #3c434d !important;
+  border-radius: 6px;
 }
 
-/* Fix the pink “Relocation to Japan” box */
+[data-bs-theme="dark"] .job-card .job-pill:hover {
+  background-color: #353c45 !important;
+  color: #fff !important;
+  border-color: #4a515b !important;
+}
+
+/* Relocation Box Highlight */
 [data-bs-theme="dark"] .job-card .alert-light,
 [data-bs-theme="dark"] .job-card .bg-light {
   background-color: rgba(255, 85, 85, 0.08) !important;
@@ -4242,40 +4081,161 @@ main
   color: #ffaaaa !important;
 }
 
-/* Make headings readable */
-[data-bs-theme="dark"] .job-card h1,
-[data-bs-theme="dark"] .job-card h2,
-[data-bs-theme="dark"] .job-card h3,
-[data-bs-theme="dark"] .job-card h4,
-[data-bs-theme="dark"] .job-card h5 {
-  color: #ffffff !important;
+/* Kaisha Badge */
+[data-bs-theme="dark"] .job-card .badge,
+[data-bs-theme="dark"] .job-card .badge.bg-light {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  color: #e6edf3 !important;
+  border: 1px solid #3c434d !important;
+}
+/* ===========================================
+   Fix: Paragraph Text Colors in Dark Mode
+   =========================================== */
+[data-bs-theme="dark"] p,
+[data-bs-theme="dark"] span,
+[data-bs-theme="dark"] li,
+[data-bs-theme="dark"] label,
+[data-bs-theme="dark"] small {
+  color: var(--bs-body-color) !important;
+  opacity: 0.95;
 }
 
-/* Apply now button — keep brand red */
-[data-bs-theme="dark"] .job-card .btn-primary {
+/* Optional — slightly dim secondary text (metadata, muted text) */
+[data-bs-theme="dark"] .text-muted,
+[data-bs-theme="dark"] .text-secondary {
+  color: #9ca3af !important;
+}
+
+/* Fix text inside cards and sections that stay light */
+[data-bs-theme="dark"] .card p,
+[data-bs-theme="dark"] .card-body p,
+[data-bs-theme="dark"] .section p {
+  color: var(--bs-body-color) !important;
+}
+
+
+/* ============================================
+   Fix: Sign-in / Login Page (Dark Mode)
+   ============================================ */
+[data-bs-theme="dark"] .bg-white,
+[data-bs-theme="dark"] .bg-gray-100,
+[data-bs-theme="dark"] .bg-gray-200 {
+  background-color: #1c2128 !important;
+  color: var(--bs-body-color) !important;
+}
+
+/* Login form panel background */
+[data-bs-theme="dark"] .flex.w-full.max-w-6xl {
+  background-color: #242b33 !important;
+  color: var(--bs-body-color) !important;
+  border-color: var(--bs-border-color) !important;
+}
+
+/* Left image panel */
+[data-bs-theme="dark"] .md\:flex.relative.items-center.justify-center.w-1\/2 {
+  background-color: #1f242b !important;
+  border-color: #3c434d !important;
+}
+
+/* Form area (right panel) */
+[data-bs-theme="dark"] .flex.flex-col.items-center.justify-center.w-full.md\:w-1\/2 {
+  background-color: #242b33 !important;
+  color: var(--bs-body-color) !important;
+}
+
+/* Headings + Labels */
+[data-bs-theme="dark"] h2,
+[data-bs-theme="dark"] label,
+[data-bs-theme="dark"] a,
+[data-bs-theme="dark"] p {
+  color: var(--bs-body-color) !important;
+}
+
+/* Input fields */
+[data-bs-theme="dark"] input.form-control,
+[data-bs-theme="dark"] input[type="email"],
+[data-bs-theme="dark"] input[type="password"],
+[data-bs-theme="dark"] input[type="text"] {
+  background-color: #2a3038 !important;
+  border: 1px solid #3d434d !important;
+  color: #f0f2f5 !important;
+}
+
+[data-bs-theme="dark"] input::placeholder {
+  color: #9ca3af !important;
+  opacity: 0.8;
+}
+
+/* Checkbox + links */
+[data-bs-theme="dark"] label[for="remember-me"],
+[data-bs-theme="dark"] a {
+  color: #c9d1d9 !important;
+}
+
+[data-bs-theme="dark"] a:hover {
+  color: var(--brand-red-hover) !important;
+}
+
+/* Button */
+[data-bs-theme="dark"] button[type="submit"] {
   background-color: var(--brand-red) !important;
   border-color: var(--brand-red) !important;
   color: #fff !important;
 }
-[data-bs-theme="dark"] .job-card .btn-primary:hover {
+
+[data-bs-theme="dark"] button[type="submit"]:hover {
   background-color: var(--brand-red-hover) !important;
   border-color: var(--brand-red-hover) !important;
 }
-/* ============================================
-   Fix: Job Pills & Metadata Tags (Dark Mode)
-   ============================================ */
-[data-bs-theme="dark"] .job-card .job-pill,
-[data-bs-theme="dark"] .job-card li.job-pill,
-[data-bs-theme="dark"] .job-card ul.job-pills li {
-  background-color: #2b3038 !important;   /* subtle dark gray */
-  color: #e6edf3 !important;              /* light readable text */
-  border: 1px solid #3c434d !important;   /* slight outline */
-  border-radius: 6px;
+
+/* Error / Valid feedback text */
+[data-bs-theme="dark"] .invalid-feedback,
+[data-bs-theme="dark"] .valid-feedback {
+  color: #ffaaaa !important;
 }
 
-/* Optional hover for nice polish */
-[data-bs-theme="dark"] .job-card .job-pill:hover {
-  background-color: #353c45 !important;
-  color: #ffffff !important;
-  border-color: #4a515b !important;
+/* Footer dark mode */
+[data-bs-theme="dark"] footer {
+  background-color: #1f242b !important;
+  color: #e6edf3 !important;
 }
+/* ============================================
+   Fix: Profile Dashboard User Menu (Dark Mode)
+   ============================================ */
+[data-bs-theme="dark"] #user-menu-btn,
+[data-bs-theme="dark"] .site-header__user-menu-btn,
+[data-bs-theme="dark"] a#user-menu-btn.btn.btn-secondary {
+  background-color: #2b3038 !important;
+  border: 1px solid #3c434d !important;
+  color: #f0f2f5 !important;
+}
+
+/* Hover state for user menu button */
+[data-bs-theme="dark"] #user-menu-btn:hover,
+[data-bs-theme="dark"] .site-header__user-menu-btn:hover,
+[data-bs-theme="dark"] a#user-menu-btn.btn.btn-secondary:hover {
+  background-color: #353c45 !important;
+  border-color: #4a515b !important;
+  color: #ffffff !important;
+}
+/* ============================================
+   Fix: Company Dashboard (Bento Layout, Dark Mode)
+   ============================================ */
+[data-bs-theme="dark"] .bento-container {
+  background-color: #1f242b !important;
+  color: #e6edf3 !important;
+  border-color: #3c434d !important;
+}
+/* ============================================
+   Fix: Bento Box CTA Links (Dark Mode)
+   ============================================ */
+[data-bs-theme="dark"] .bento-box__cta,
+[data-bs-theme="dark"] a.bento-box__cta {
+  background-color: #2b3038 !important; 
+  border: 1px solid #3c434d !important;
+  padding: 8px 12px !important;
+  border-radius: 6px !important;
+  display: inline-block;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+

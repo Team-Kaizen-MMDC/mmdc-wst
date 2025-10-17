@@ -588,6 +588,16 @@ document.addEventListener("DOMContentLoaded", function () {
     return { wrapper, input };
   };
 
+  // ----- Show toggle only if logged in -----
+  const isLoggedIn =
+    localStorage.getItem("isLoggedIn") === "true" ||
+    sessionStorage.getItem("isLoggedIn") === "true";
+
+  if (!isLoggedIn) {
+    console.log("Dark/Light toggle hidden — user not logged in");
+    return; // exit early, skip toggle injection entirely
+  }
+
   // ----- Desktop toggle -----
   const headerActions = document.querySelector(".site-header__actions");
   if (headerActions && !document.getElementById("theme-toggle")) {
@@ -616,3 +626,25 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 });
+// Logout Button Handler (Global) | Author: MK
+document.addEventListener("DOMContentLoaded", function () {
+  const logoutBtn = document.querySelector(".logout-btn");
+
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", (e) => {
+      e.preventDefault(); // prevent accidental navigation
+
+      // Remove login-related data
+      localStorage.removeItem("isLoggedIn");
+      sessionStorage.removeItem("isLoggedIn");
+      localStorage.removeItem("userEmail");
+
+      console.log("User logged out — clearing session and redirecting.");
+
+      // Optional: Add a small delay for a smoother UX
+      setTimeout(() => {
+        window.location.href = "login.html";
+      }, 300);
+    });
+  }
+});                                                                                                                                                                                      
