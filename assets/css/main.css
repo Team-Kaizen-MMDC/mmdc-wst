@@ -872,6 +872,7 @@ user-menu-dropdown__divider {
 .btn-secondary:hover {
   background: rgba(0, 0, 0, 0.02);
   border-color: rgba(0, 0, 0, 0.12);
+  transform: translateY(-1px); /* Slight lift on hover */
 }
 
 .btn-dark {
@@ -3934,12 +3935,32 @@ main
 [data-bs-theme="dark"] .btn-primary:hover,
 [data-bs-theme="dark"] .btn-danger:hover,
 [data-bs-theme="dark"] .btn-brand:hover {
-  background-color: var(--brand-red-hover) !important;
-  border-color: var(--brand-red-hover) !important;
+  color: var(--bs-white) !important;
 }
 
 .btn-primary:focus,
 [data-bs-theme="dark"] .btn-primary:focus {
+  box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.35) !important;
+}
+
+.btn-secondary,
+[data-bs-theme="dark"] .btn-secondary,
+[data-bs-theme="dark"] .btn-danger,
+[data-bs-theme="dark"] .btn-brand {
+  background-color: var(--brand-red) !important;
+  border-color: var(--brand-red) !important;
+  color: #fff !important;
+}
+
+.btn-secondary:hover,
+[data-bs-theme="dark"] .btn-secondary:hover,
+[data-bs-theme="dark"] .btn-danger:hover,
+[data-bs-theme="dark"] .btn-brand:hover {
+  color: var(--bs-white) !important;
+}
+
+.btn-secondary:focus,
+[data-bs-theme="dark"] .btn-secondary:focus {
   box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.35) !important;
 }
 
@@ -4237,5 +4258,29 @@ main
   border-radius: 6px !important;
   display: inline-block;
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+/* =====================================================
+   About Page Fix (Dark Mode)
+   ===================================================== */
+
+[data-bs-theme="dark"] .about-card {
+  background-color: var(--bs-card-bg) !important;
+  color: var(--bs-body-color) !important;
+  border-color: var(--bs-border-color-translucent) !important;
+  box-shadow: var(--bs-box-shadow-lg) !important;
+}
+
+/* Headings inside About card */
+[data-bs-theme="dark"] .about-card h1,
+[data-bs-theme="dark"] .about-card h2,
+[data-bs-theme="dark"] .about-card h3 {
+  color: var(--bs-emphasis-color) !important;
+}
+
+/* Paragraph and subtitle text */
+[data-bs-theme="dark"] .about-card p,
+[data-bs-theme="dark"] .about-card .about-card__text,
+[data-bs-theme="dark"] .about-card .about-card__subtitle {
+  color: var(--bs-secondary-color) !important;
 }
 
