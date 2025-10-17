@@ -406,118 +406,188 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-       // --- Profile Summary Inline Edit Logic ---
+// --- Profile Summary Inline Edit Logic ---
 function initializeApp() {
-    console.log("main.js script loaded successfully from assets/js/ - Initializing Dashboard Logic.");
+  console.log(
+    "main.js script loaded successfully from assets/js/ - Initializing Dashboard Logic."
+  );
 
-    // --- DOM Element References ---
-    const readDisplay = document.getElementById('read-display');
-    const textContent = document.getElementById('text-content');
-    const editInput = document.getElementById('edit-input'); // This is the textarea element
-    const charCount = document.getElementById('char-count');
-    const editBtn = document.getElementById('edit-btn');
-    const saveBtn = document.getElementById('save-btn');
+  // --- DOM Element References ---
+  const readDisplay = document.getElementById("read-display");
+  const textContent = document.getElementById("text-content");
+  const editInput = document.getElementById("edit-input"); // This is the textarea element
+  const charCount = document.getElementById("char-count");
+  const editBtn = document.getElementById("edit-btn");
+  const saveBtn = document.getElementById("save-btn");
 
-    // Ensure all required elements exist before proceeding
-    if (!readDisplay || !textContent || !editInput || !charCount || !editBtn || !saveBtn) {
-        console.error("One or more required profile dashboard elements are missing. Aborting initialization.");
-        return;
+  // Ensure all required elements exist before proceeding
+  if (
+    !readDisplay ||
+    !textContent ||
+    !editInput ||
+    !charCount ||
+    !editBtn ||
+    !saveBtn
+  ) {
+    console.error(
+      "One or more required profile dashboard elements are missing. Aborting initialization."
+    );
+    return;
+  }
+
+  // Get max length property
+  const maxLength = editInput.getAttribute("maxlength");
+
+  /**
+   * Updates the character count display.
+   */
+  const updateCount = () => {
+    const currentLength = editInput.value.length;
+    charCount.textContent = `${currentLength} / ${maxLength} characters`;
+  };
+
+  // Attach listener and perform initial count update
+  editInput.addEventListener("input", updateCount);
+  updateCount();
+
+  /**
+   * Toggles the editor between read mode and edit mode.
+   * This function is attached to the window object so it can be called
+   * directly from the HTML 'onclick' attributes.
+   * @param {boolean} isEditing - True to enter edit mode, false to enter read mode (save).
+   */
+  window.toggleEditMode = function (isEditing) {
+    if (isEditing) {
+      // --- SWITCH TO EDIT MODE ---
+
+      // 1. Transfer current text from read-only display to the textarea input
+      editInput.value = textContent.textContent.trim();
+
+      // 2. Toggle Visibility (Hide read, Show edit & character count)
+      readDisplay.classList.add("d-none");
+      editInput.classList.remove("d-none");
+      charCount.classList.remove("d-none");
+
+      // Re-update the count to reflect the text we just loaded into the input
+      updateCount();
+
+      // 3. Toggle Buttons (Hide edit button, Show save button)
+      editBtn.classList.add("d-none");
+      saveBtn.classList.remove("d-none");
+
+      // 4. Focus on the textarea and move the cursor to the end
+      editInput.focus();
+      editInput.setSelectionRange(
+        editInput.value.length,
+        editInput.value.length
+      );
+    } else {
+      // --- SWITCH TO READ/SAVE MODE ---
+
+      // 1. Get the new content from the textarea
+      const newContent = editInput.value.trim();
+
+      // 2. Update the read-only display with the new content
+      textContent.textContent = newContent;
+
+      // 3. Toggle Visibility (Show read, Hide edit & character count)
+      editInput.classList.add("d-none");
+      readDisplay.classList.remove("d-none");
+      charCount.classList.add("d-none");
+
+      // 4. Toggle Buttons (Show edit button, Hide save button)
+      saveBtn.classList.add("d-none");
+      editBtn.classList.remove("d-none");
+
+      console.log("Content Saved:", newContent);
+      // NOTE: Add your Firestore update logic here in a real app.
     }
-
-    // Get max length property
-    const maxLength = editInput.getAttribute('maxlength'); 
-
-    /**
-     * Updates the character count display.
-     */
-    const updateCount = () => {
-        const currentLength = editInput.value.length;
-        charCount.textContent = `${currentLength} / ${maxLength} characters`;
-    };
-
-    // Attach listener and perform initial count update
-    editInput.addEventListener('input', updateCount);
-    updateCount();
-
-    /**
-     * Toggles the editor between read mode and edit mode.
-     * This function is attached to the window object so it can be called 
-     * directly from the HTML 'onclick' attributes.
-     * @param {boolean} isEditing - True to enter edit mode, false to enter read mode (save).
-     */
-    window.toggleEditMode = function(isEditing) {
-        if (isEditing) {
-            // --- SWITCH TO EDIT MODE ---
-
-            // 1. Transfer current text from read-only display to the textarea input
-            editInput.value = textContent.textContent.trim();
-
-            // 2. Toggle Visibility (Hide read, Show edit & character count)
-            readDisplay.classList.add('d-none');
-            editInput.classList.remove('d-none');
-            charCount.classList.remove('d-none');
-            
-            // Re-update the count to reflect the text we just loaded into the input
-            updateCount(); 
-
-            // 3. Toggle Buttons (Hide edit button, Show save button)
-            editBtn.classList.add('d-none');
-            saveBtn.classList.remove('d-none'); 
-
-            // 4. Focus on the textarea and move the cursor to the end
-            editInput.focus();
-            editInput.setSelectionRange(
-                editInput.value.length,
-                editInput.value.length
-            );
-        } else {
-            // --- SWITCH TO READ/SAVE MODE ---
-
-            // 1. Get the new content from the textarea
-            const newContent = editInput.value.trim();
-
-            // 2. Update the read-only display with the new content
-            textContent.textContent = newContent;
-
-            // 3. Toggle Visibility (Show read, Hide edit & character count)
-            editInput.classList.add('d-none');
-            readDisplay.classList.remove('d-none');
-            charCount.classList.add('d-none');
-
-            // 4. Toggle Buttons (Show edit button, Hide save button)
-            saveBtn.classList.add('d-none');
-            editBtn.classList.remove('d-none');
-
-            console.log('Content Saved:', newContent);
-            // NOTE: Add your Firestore update logic here in a real app.
-        }
-    }
+  };
 }
 
 // Listen for the DOMContentLoaded event to safely run the initialization function
-document.addEventListener('DOMContentLoaded', initializeApp);
+document.addEventListener("DOMContentLoaded", initializeApp);
 
 //userMenu dropdown
-document.addEventListener('DOMContentLoaded', () => {
-            const userMenuBtn = document.getElementById('user-menu-btn');
-            const userMenuDropdown = document.getElementById('user-menu-dropdown');
+document.addEventListener("DOMContentLoaded", () => {
+  const userMenuBtn = document.getElementById("user-menu-btn");
+  const userMenuDropdown = document.getElementById("user-menu-dropdown");
 
-            // Function to toggle the menu's visibility
-            function toggleMenu() {
-                userMenuDropdown.classList.toggle('is-active');
-            }
+  // Function to toggle the menu's visibility
+  function toggleMenu() {
+    userMenuDropdown.classList.toggle("is-active");
+  }
 
-            // Event listener to open/close the menu when the button is clicked
-            userMenuBtn.addEventListener('click', (e) => {
-                e.preventDefault(); // Prevents the link from navigating
-                e.stopPropagation(); // Prevents the click from bubbling up to the document
-                toggleMenu();
-            });
+  // Event listener to open/close the menu when the button is clicked
+  userMenuBtn.addEventListener("click", (e) => {
+    e.preventDefault(); // Prevents the link from navigating
+    e.stopPropagation(); // Prevents the click from bubbling up to the document
+    toggleMenu();
+  });
 
-            // Event listener to close the menu when clicking anywhere else on the page
-            document.addEventListener('click', (e) => {
-                if (!userMenuDropdown.contains(e.target) && e.target !== userMenuBtn) {
-                    userMenuDropdown.classList.remove('is-active');
-                }
-            });
+  // Event listener to close the menu when clicking anywhere else on the page
+  document.addEventListener("click", (e) => {
+    if (!userMenuDropdown.contains(e.target) && e.target !== userMenuBtn) {
+      userMenuDropdown.classList.remove("is-active");
+    }
+  });
+});
+
+// Entrance animation for the new hero (accessible + prefers-reduced-motion aware)
+(function heroEntrance() {
+  const prefersReduced =
+    window.matchMedia &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (prefersReduced) return; // skip animations for users who prefer reduced motion
+
+  const run = () => {
+    try {
+      const title = document.querySelector(".hero-title");
+      const lead = document.querySelector(".hero-lead");
+      const img = document.querySelector(".hero-img");
+      if (!title && !lead && !img) return;
+
+      // Prepare initial states
+      const setInitial = (el) => {
+        if (!el) return;
+        el.style.opacity = "0";
+        el.style.transform = "translateY(12px)";
+        el.style.transition =
+          "opacity 560ms ease, transform 640ms cubic-bezier(.2,.9,.2,1)";
+        el.style.willChange = "opacity, transform";
+      };
+
+      setInitial(title);
+      setInitial(lead);
+      setInitial(img);
+
+      // Staggered reveal using requestAnimationFrame double-tick to ensure transitions
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          if (title) {
+            title.style.transitionDelay = "80ms";
+            title.style.opacity = "1";
+            title.style.transform = "none";
+          }
+          if (lead) {
+            lead.style.transitionDelay = "160ms";
+            lead.style.opacity = "1";
+            lead.style.transform = "none";
+          }
+          if (img) {
+            img.style.transitionDelay = "260ms";
+            img.style.opacity = "1";
+            img.style.transform = "none";
+          }
         });
+      });
+    } catch (err) {
+      // silent fail - animation is enhancement only
+      console.debug("Hero animation failed", err);
+    }
+  };
+
+  if (document.readyState === "complete") run();
+  else window.addEventListener("load", run, { once: true, passive: true });
+})();

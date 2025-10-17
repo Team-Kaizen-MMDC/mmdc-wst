@@ -573,6 +573,136 @@ user-menu-dropdown__divider {
   color: rgba(0, 0, 0, 0.75);
 }
 
+/* New split hero styles (Bootstrap structural classes used for layout) */
+.hero--split {
+  background: linear-gradient(180deg, #ffffff 0%, #fbfbfc 100%);
+  padding-top: 3.5rem;
+  padding-bottom: 3.5rem;
+}
+.hero-inner {
+  /* preserve existing grid semantics but allow flex layout */
+  align-items: center;
+}
+.hero-copy {
+  background: linear-gradient(180deg, #ffffff 0%, #fbfbfc 100%);
+  padding-top: 3.5rem;
+  padding-bottom: 3.5rem;
+  position: relative; /* for overlay */
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  line-height: 1.05;
+  margin-bottom: 0.5rem;
+  .hero-title {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: clamp(1.6rem, 4vw, 2.6rem);
+    line-height: 1.05;
+    margin-bottom: 0.5rem;
+    color: #fff;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+  }
+  .hero-lead {
+    font-size: clamp(1rem, 2.2vw, 1.125rem);
+    color: rgba(255, 255, 255, 0.87);
+  }
+  font-size: clamp(1rem, 2.2vw, 1.125rem);
+  .hero-trust {
+    color: rgba(255, 255, 255, 0.75);
+  }
+  .hero-media {
+    max-width: 420px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .hero-img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(2, 6, 23, 0.06);
+    transition: transform 0.6s cubic-bezier(0.2, 0.9, 0.2, 1);
+  }
+
+  /* Left-to-right overlay so copy remains legible over colored backgrounds */
+  .hero--split::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 60%;
+    background: linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.62) 0%,
+      rgba(0, 0, 0, 0.45) 35%,
+      rgba(0, 0, 0, 0.12) 60%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Bring content above overlay */
+  .hero-inner > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Make primary CTA high-contrast on dark overlay (white background, brand color text) */
+  .hero-ctas .btn.btn-primary {
+    background: #fff;
+    color: var(--primary-color);
+    border: 0;
+    box-shadow: 0 6px 18px rgba(2, 6, 23, 0.06);
+  }
+  .hero-ctas .btn.btn-outline-secondary {
+    color: rgba(255, 255, 255, 0.9);
+    border-color: rgba(255, 255, 255, 0.18);
+    background: transparent;
+  }
+  padding: 0.75rem 1.25rem;
+}
+.hero-trust {
+  color: rgba(0, 0, 0, 0.55);
+}
+.hero-media {
+  max-width: 520px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.hero-img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(2, 6, 23, 0.06);
+  transition: transform 0.6s cubic-bezier(0.2, 0.9, 0.2, 1);
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .hero-media:hover .hero-img {
+    transform: translateY(-6px);
+  }
+}
+@media (max-width: 991px) {
+  .hero--split {
+    padding-top: 2.25rem;
+    padding-bottom: 2.25rem;
+  }
+  .hero-inner {
+    flex-direction: column-reverse;
+    text-align: center;
+  }
+  .hero-copy {
+    max-width: 100%;
+  }
+  .hero-media {
+    margin-bottom: 1rem;
+  }
+}
+
 /* ===================================================================
    Card System (Consolidated) - All card components in one section
    =================================================================== */
@@ -757,6 +887,20 @@ user-menu-dropdown__divider {
   }
   .job-panel {
     width: 92% !important;
+
+    @media (max-width: 640px) {
+      /* Reduce overlay width on small screens so imagery and text breathe */
+      .hero--split::before {
+        width: 100%;
+        opacity: 0.9;
+      }
+      .hero-title {
+        font-size: clamp(1.4rem, 6vw, 1.8rem);
+      }
+      .hero-media {
+        max-width: 320px;
+      }
+    }
   }
 }
 
@@ -3170,48 +3314,58 @@ body.company-dashboard .bento-wrapper {
   min-height: 100vh;
 }
 
-        body.company-dashboard .bento-wrapper {
-            width: 100%;
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            padding: 40px 20px;
-            min-height: 100vh;
-        }
+body.company-dashboard .bento-wrapper {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 40px 20px;
+  min-height: 100vh;
+}
 
-           body.company-dashboard .bento-container {
-            width: 100%;
-            max-width: 1185px; 
-            background: #ffffff; 
-            padding: 30px; 
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            
-            
-          /* CSS GRID */
-          display: grid;
-          gap: 20px;
+body.company-dashboard .bento-container {
+  width: 100%;
+  max-width: 1185px;
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 
-            /* Define 3 equal columns */
-            grid-template-columns: 2fr 1fr 1fr; 
+  /* CSS GRID */
+  display: grid;
+  gap: 20px;
 
-              /* Placement and spanning */
-            grid-template-areas:
-                "box-1 box-1 box-1"      /* Row 1: Navi spans 3 columns */
-                "box-2 box-3 box-4"      /* Row 2: Boxes 2, 3, and 4 each take 1 column */
-                  "box-5 box-6 box-6"        /* Box 5 (1 Col), Box 6 (1 Col), 1 empty column */
-           }
+  /* Define 3 equal columns */
+  grid-template-columns: 2fr 1fr 1fr;
 
-              /* Area Assignments */
-        body.company-dashboard .bento-box--navi { grid-area: box-1; } 
-        body.company-dashboard .bento-box--profile { grid-area: box-2; } 
-        body.company-dashboard .bento-box--tracking { grid-area: box-3; }
-        body.company-dashboard .bento-box--metric { grid-area: box-4; }
-        body.company-dashboard .bento-box--applicant-list { grid-area: box-5; }
-        body.company-dashboard .bento-box--job-list { grid-area: box-6; }
+  /* Placement and spanning */
+  grid-template-areas:
+    "box-1 box-1 box-1" /* Row 1: Navi spans 3 columns */
+    "box-2 box-3 box-4" /* Row 2: Boxes 2, 3, and 4 each take 1 column */
+    "box-5 box-6 box-6"; /* Box 5 (1 Col), Box 6 (1 Col), 1 empty column */
+}
 
-           
- /* -------------------------------
+/* Area Assignments */
+body.company-dashboard .bento-box--navi {
+  grid-area: box-1;
+}
+body.company-dashboard .bento-box--profile {
+  grid-area: box-2;
+}
+body.company-dashboard .bento-box--tracking {
+  grid-area: box-3;
+}
+body.company-dashboard .bento-box--metric {
+  grid-area: box-4;
+}
+body.company-dashboard .bento-box--applicant-list {
+  grid-area: box-5;
+}
+body.company-dashboard .bento-box--job-list {
+  grid-area: box-6;
+}
+
+/* -------------------------------
               Base Bento Box Styling
            --------------------------------*/
 body.company-dashboard .bento-box {
@@ -3819,4 +3973,110 @@ main
 .job-link {
   color: var(--accent-color);
   text-decoration: underline;
+}
+
+/* ----------------------------------
+   Clean hero overrides (applied last)
+   - Ensures reliable overlay, vignette, CTA contrast and sizing
+   - Use the CSS variables below to tune quickly
+   ---------------------------------- */
+:root {
+  --hero-left-overlay: rgba(0, 0, 0, 0.62);
+  --hero-mid-overlay: rgba(0, 0, 0, 0.45);
+  --hero-fade-overlay: rgba(0, 0, 0, 0.12);
+  --hero-overlay-width-desktop: 60%;
+  --hero-overlay-width-mobile: 100%;
+  --hero-vignette-opacity: 0.08;
+}
+
+.hero--split {
+  position: relative !important;
+  background: linear-gradient(180deg, #ffffff 0%, #fbfbfc 100%) !important;
+}
+
+.hero--split::before {
+  content: "" !important;
+  position: absolute !important;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: var(--hero-overlay-width-desktop);
+  background: linear-gradient(
+    90deg,
+    var(--hero-left-overlay) 0%,
+    var(--hero-mid-overlay) 35%,
+    var(--hero-fade-overlay) 60%,
+    rgba(0, 0, 0, 0) 100%
+  ) !important;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Ensure hero content sits above overlay */
+.hero-inner > * {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-copy .hero-title,
+.hero-copy .hero-lead,
+.hero-copy .hero-trust {
+  color: #fff !important;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+/* CTA: white box, brand text for high contrast */
+.hero-ctas .btn.btn-primary {
+  background: #fff !important;
+  color: var(--primary-color) !important;
+  border: 0 !important;
+}
+.hero-ctas .btn.btn-outline-secondary {
+  color: rgba(255, 255, 255, 0.9) !important;
+  border-color: rgba(255, 255, 255, 0.18) !important;
+}
+
+/* Slightly smaller media to balance layout and avoid overpowering copy */
+.hero-media {
+  max-width: 420px !important;
+}
+.hero-img {
+  border-radius: 12px;
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Add vignette overlay on media to darken edges slightly */
+.hero-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 0) 40%,
+    rgba(0, 0, 0, var(--hero-vignette-opacity)) 100%
+  );
+  z-index: 1; /* sits above image but below text */
+}
+
+@media (max-width: 991px) {
+  .hero--split::before {
+    width: calc(var(--hero-overlay-width-desktop) * 0.9);
+  }
+  .hero-media {
+    max-width: 360px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero--split::before {
+    width: var(--hero-overlay-width-mobile);
+    opacity: 0.92;
+  }
+  .hero-media {
+    max-width: 300px !important;
+  }
 }
