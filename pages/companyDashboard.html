@@ -181,90 +181,173 @@
       </div>
 
 
-      <body>
-  <div class="container py-4">
+      <main class="container py-4">
     <!-- Navigation Tabs -->
-    <ul class="nav nav-tabs justify-content-center bg-white p-3 rounded shadow-sm mb-4">
-      <li class="nav-item">
-        <a class="nav-link text-secondary fw-bold active" href="#">Dashboard</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link text-secondary" href="#">Job Management</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link text-secondary" href="#">Applicant Tracking</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link text-secondary" href="#">Company Profile</a>
-      </li>
-    </ul>
+    <ul class="nav nav-tabs justify-content-center bg-white p-3 rounded shadow-sm mb-4" 
+    id="dashboardTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+       <button
+            class="nav-link text-danger active fw-bold"
+            id="dashboard-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#dashboard-pane"
+            type="button"
+            role="tab"
+            aria-controls="dashboard-pane"
+            aria-selected="true"
+          >
+            Dashboard
+          </button>
+        </li>
+        
+      <li class="nav-item" role="presentation">
+       <button 
+        class="nav-link btn-secondary" 
+        id="job-tab"
+        data-bs-toggle="tab"
+        data-bs-target="#job-pane"
+        type="button"
+        role="tab"
+        aria-controls="job-pane"
+        aria-selected="false"
+        >
+        Job Management
+      </button>
+  </li>
 
-    <!-- Dashboard Grid -->
+ <li class="nav-item" role="presentation">
+       <button 
+        class="nav-link btn-secondary" 
+        id="applicant-tab"
+        data-bs-toggle="tab"
+        data-bs-target="#applicant-pane"
+        type="button"
+        role="tab"
+        aria-controls="applicant-pane"
+        aria-selected="false"
+        >
+        Applicant Tracking
+      </button>
+  </li>
+ <li class="nav-item" role="presentation">
+       <button 
+        class="nav-link btn-secondary" 
+        id="company-tab"
+        data-bs-toggle="tab"
+        data-bs-target="#company-pane"
+        type="button"
+        role="tab"
+        aria-controls="company-pane"
+        aria-selected="false"
+        >
+        Company Profile
+      </button>
+    </li>
+  </ul>
+<div class="tab-content">
+ 
+  
+       <!-- Tab Content -->
+        <div class="tab-content" id="dashboardTabContent">
+        <!-- Dashboard Tab Pane -->
+      <div class="tab-pane  fade show active" 
+      id="dashboard-pane" role="tabpanel" 
+      aria-labelledby="dashboard-tab" 
+      tabindex="0">
     <div class="row g-4">
       <!-- Profile -->
       <div class="col-lg-6 col-md-6">
-        <div class="card p-3 h-100">
-          <div class="d-flex justify-content-between align-items-start mb-2">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+          <div class="d-flex justify-content-between 
+          align-items-start mb-3">
             <div>
-              <h6 class="fw-bold mb-0">Sanchez Miguel</h6>
-              <small class="text-muted">Admin</small>
+              <h6 class="card-title fw-bold mb-1">
+                Sanchez Miguel</h6>
+              <p class="text-muted small mb-0">
+                Admin</p>
             </div>
-            <a href="#" class="text-red small fw-semibold">Edit</a>
+            <a href="#" class="text-danger small
+             fw-semibold text-decoration-non">Edit</a>
           </div>
           <hr />
+          <div class="d-grid gap 2">
               <button class="btn btn-outline-danger">Post New Job</button>
                   <button class="btn btn-outline-danger">View All Applicant</button>
                       <button class="btn btn-outline-danger">View Posted Job</button>
-
+         </div>
+         </div>
         </div>
       </div>
 
-      <!-- Applicant Tracking -->
+      <!-- Applicant Tracking Card-->
       <div class="col-lg-3 col-md-6">
-        <div class="card p-3 h-100">
-          <h6 class="fw-bold mb-3">Applicant Tracking</h6>
-          <ul class="list-unstyled small mb-0">
-            <li>Applicant: 200</li>
-            <li>Reviewed: 122</li>
-            <li>Interview: 22</li>
-            <li>Hired: 10</li>
-            <li>Reject: 55</li>
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h6 class="card-title fw-bold mb-3">
+              Applicant Tracking</h6>
+              <ul class="list-unstyled small mb-0">
+            <li class="mb-2">
+              <span class="fw-semibold">
+              Applicant:</span>200</li>
+            <li class="mb-2">
+              <span class="fw-semibold">
+              Reviewed:</span> 122</li>
+            <li class="mb-2">
+              <span class="fw-semibold">
+                Interview:</span> 22</li>
+            <li class="mb-2">
+              <span class="fw-semibold">
+                Hired:</span> 10</li>
+            <li class="mb-2">
+              <span class="fw-semibold">
+                Reject:</span> 55</li>
           </ul>
         </div>
-      </div>
-
-      <!-- Job Metric -->
-      <div class="col-lg-3 col-md-6">
-        <div class="card p-3 h-100">
-          <h6 class="fw-bold mb-3">Job Metric</h6>
-          <ul class="list-unstyled small mb-0">
-            <li>Active: 5</li>
-            <li>Pending: 2</li>
-            <li>Expired: 2</li>
-          </ul>
         </div>
       </div>
+
+      <!-- Job Metric Card-->
+       <div class="col-lg-3 col-md-6">
+              <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                  <h6 class="card-title fw-bold mb-3">Job Metric</h6>
+                  <ul class="list-unstyled small mb-0">
+                    <li class="mb-2"><span class="fw-semibold">Active:</span> 5</li>
+                    <li class="mb-2"><span class="fw-semibold">Pending:</span> 2</li>
+                    <li class="mb-2"><span class="fw-semibold">Expired:</span> 2</li>
+                  </ul>
+                </div>
+              </div>
+              </div>
 
       <!-- Applicant List -->
       <div class="col-lg-6 col-md-6">
-        <div class="card p-3 h-100">
-          <div class="d-flex justify-content-between align-items-center mb-3">
-            <h6 class="fw-bold mb-0">Applicant List</h6>
-            <a href="#" class="text-red small fw-semibold">View All</a>
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <div class="d-flex justify-content-between 
+            align-items-center mb-3">
+            <h6 class="card-title fw-bold mb-0">Applicant List</h6>
+            <a href="#" class="text-danger small 
+            fw-semibold">View All</a>
           </div>
-
-          <div class="d-flex align-items-center mb-3">
-            <div class="item-thumb me-3"></div>
-            <div class="flex-grow-1">
+          
+          <div class="list-group list-group-flush">
+            <div class="list-group-item px-0 py-3">
+              <div class="d-flex align-items-center mb-3">
+               <div class="bg-light rounded me-3" style="width: 40px; height: 40px;"></div>
+                 <div class="flex-grow-1">
               <p class="mb-0 fw-semibold small">Dela Cruz Juan</p>
               <small class="text-muted d-block">Kitchen Restaurant - Food Service</small>
               <small class="text-muted">JLPT N3</small>
+               </div>
+                <a href="#" class="text-red small ms-2 ">view</a>
+              </div>
             </div>
-            <a href="#" class="text-red small ms-2">view</a>
-          </div>
-
+          
+          <div class="list-group-item px-0 py-3">
           <div class="d-flex align-items-center">
-            <div class="item-thumb me-3"></div>
+           <div class="bg-light rounded me-3" style="width: 40px; height: 40px;"></div>
             <div class="flex-grow-1">
               <p class="mb-0 fw-semibold small">Dela Cruz Juan</p>
               <small class="text-muted d-block">Assemble Line - Automotive</small>
@@ -273,28 +356,39 @@
             <a href="#" class="text-red small ms-2">view</a>
           </div>
         </div>
+
       </div>
+      </div>
+        </div>
+         </div>
 
-      <!-- Job List -->
+      <!-- Job List Card-->
       <div class="col-lg-6 col-md-6">
-        <div class="card p-3 h-100">
-          <div class="d-flex justify-content-between align-items-center mb-3">
-            <h6 class="fw-bold mb-0">Job List</h6>
-            <a href="#" class="text-red small fw-semibold">View All</a>
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+          <div class="d-flex justify-content-between 
+          lign-items-center mb-3">
+            <h6 class="card-title fw-bold mb-0">Job List</h6>
+            <a href="#" class="text-danger small 
+            fw-semibold">View All</a>
           </div>
 
-          <div class="d-flex align-items-center mb-3">
-            <div class="item-thumb me-3"></div>
-            <div class="flex-grow-1">
-              <p class="mb-0 fw-semibold small">Cook and Customer Service</p>
-              <small class="text-muted d-block">Tokyo - Food Service</small>
-              <small class="text-muted">250,000 yen</small>
-            </div>
-            <a href="#" class="text-red small ms-2">view</a>
-          </div>
+            <div class="list-group list-group-flush">
+              <div class="list-group-item px-0 py-3">
+                <div class="d-flex align-items-center">
+                  <div class="bg-light rounded me-3" style="width: 40px; height: 40px;"></div>
+                 <div class="flex-grow-1">
+                  <p class="mb-0 fw-semibold small">Cook and Customer Service</p>
+                   <small class="text-muted d-block">Tokyo - Food Service</small>
+                  <small class="text-muted">250,000 yen</small>
+                </div>
+                <a href="#" class="text-red small ms-2">view</a>
+               </div>
+              </div>
 
-          <div class="d-flex align-items-center">
-            <div class="item-thumb me-3"></div>
+          <div class="list-group-item px-0 py-3">
+             <div class="d-flex align-items-center">
+           <div class="bg-light rounded me-3" style="width: 40px; height: 40px;"></div>
             <div class="flex-grow-1">
               <p class="mb-0 fw-semibold small">Machine Operate</p>
               <small class="text-muted d-block">Chiba - Automotive</small>
@@ -304,9 +398,42 @@
           </div>
         </div>
       </div>
+      </div>
+       </div>
     </div>
-  </div>
+</div>
+</div>
 
+  <!-- Job Management Tab Pane -->
+  <div class="tab-pane fade" id="job-pane" role="tabpanel" 
+  aria-labelledby="job-tab" tabindex="0">
+ <div class="alert alert-secondary shadow-sm" role="alert">
+            <h5 class="alert-heading fw-bold">Job Management</h5>
+            <p class="mb-3">This section is for managing job postings, create and updating details, and show job list with analytics.</p>
+            <button class="btn btn-primary">Create New Post</button>
+ </div>
+</div>
+
+    <!-- Job Management Tab Pane -->
+  <div class="tab-pane" id="applicant-pane" role="tabpanel" 
+  aria-labelledby="applicant-tab" tabindex="0">
+  <div class="alert alert-secondary shadow-sm" role="alert">
+            <h5 class="alert-heading fw-bold">Applicant List</h5>
+            <p class="mb-3">This section is  filter table, can view applicant set interview and show metric, review, and change the status of all applicants across your job posting.</p>
+            <button class="btn btn-primary">Create New Post</button>
+ </div>
+</div>
+<!-- Company Profile Tab Pane -->
+  <div class="tab-pane" id="company-pane" role="tabpanel" 
+  aria-labelledby="company-tab" tabindex="0">
+    <div class="alert alert-secondary shadow-sm" role="alert">
+            <h5 class="alert-heading fw-bold">Applicant List</h5>
+            <p class="mb-3">Update your company details, logo, contact information, and public facing description here..</p>
+            <button class="btn btn-primary">Create New Post</button>
+ </div>
+
+</div>
+</main>
     
     <footer class="site-footer site-footer--dark" role="contentinfo">
       <div class="container footer-grid site-footer__grid">
