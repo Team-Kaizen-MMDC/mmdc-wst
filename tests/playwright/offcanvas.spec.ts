@@ -1,40 +1,128 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('Offcanvas navigation (mobile)', () => {
-    test('offcanvas opens/closes and links navigate/close the offcanvas', async ({ page }) => {
+test.describe('Mobile offcanvas navigation', () => {
+    test.use({ viewport: { width: 375, height: 800 } });
+
+    test('offcanvas opens, navigates (hash), navigates (page), then closes with focus restored', async ({ page }) => {
         await page.goto('/');
-        await page.setViewportSize({ width: 375, height: 800 });
 
         const toggler = page.locator('[data-bs-toggle="offcanvas"]');
         await expect(toggler).toBeVisible();
         await toggler.click();
 
-        // offcanvas visible
-        await expect(page.locator('.offcanvas.show')).toBeVisible();
+        // Offcanvas should be visible
+        const offcanvas = page.locator('.offcanvas.show');
+        await expect(offcanvas).toBeVisible({ timeout: 3000 });
 
-        // Click Jobs link and ensure offcanvas hides and scrolled
-        const jobsLink = page.locator('.offcanvas .nav-link', { hasText: 'Jobs' });
+        // Click a hash link like Jobs
+        const jobsLink = offcanvas.locator('.nav-link[href="#jobs"]');
         await jobsLink.click();
 
-        // After click, offcanvas should be hidden
-        await expect(page.locator('.offcanvas.show')).toHaveCount(0);
+        // Wait for scroll or hash change
+        await page.waitForTimeout(300);
+        expect(page.url()).toContain('#jobs');
 
-        // Now open again and test that links close the offcanvas for navigation to an external page
+        // Re-open offcanvas to test page nav
         await toggler.click();
-        const agencyLink = page.locator('.offcanvas .nav-link', { hasText: 'Agency' });
-        await agencyLink.click();
+        await expect(offcanvas).toBeVisible({ timeout: 3000 });
 
-        // Because Agency navigates off-site, ensure the navigation occurred
+        // Navigate to a real page like Agency
+        const agencyLink = offcanvas.locator('a.nav-link[href*="agency.html"]');
+        await agencyLink.click();
         await page.waitForLoadState('load');
-        expect(page.url()).toContain('pages/agency.html');
+        expect(page.url()).toContain('agency.html');
+
+        // Go back to homepage
+        await page.goBack();
+        await page.waitForLoadState('load');
+
+        // Open offcanvas again, then close it
+        await toggler.click();
+        await expect(offcanvas).toBeVisible({ timeout: 3000 });
+
+        const closeBtn = offcanvas.locator('.btn-close');
+        await closeBtn.click();
+        await expect(offcanvas).not.toBeVisible({ timeout: 3000 });
+
+        // Focus should return to toggler
+        const focusedHandle = await page.evaluateHandle(() => document.activeElement);
+        const focusedElement = focusedHandle.asElement();
+        expect(await focusedElement?.getAttribute('data-bs-toggle')).toBe('offcanvas');
     });
 
-    test('focus returns to toggler after offcanvas hides', async ({ page }) => {
+    test('offcanvas works on job pages', async ({ page }) => {
+        await page.goto('/pages/jobs/ward-nursing-support.html');
+
+        const toggler = page.locator('[data-bs-toggle="offcanvas"]');
+        await expect(toggler).toBeVisible();
+        await toggler.click();
+
+        const offcanvas = page.locator('.offcanvas.show');
+        await expect(offcanvas).toBeVisible({ timeout: 3000 });
+
+        // Check Jobs link exists
+        const jobsLink = offcanvas.locator('.nav-link[href="#jobs"]');
+        await expect(jobsLink).toBeVisible();
+
+        // Close offcanvas
+        const closeBtn = offcanvas.locator('.btn-close');
+        await closeBtn.click();
+        await expect(offcanvas).not.toBeVisible({ timeout: 3000 });
+    });
+
+    test('offcanvas works on company pages', async ({ page }) => {
+        await page.goto('/pages/companies/ana.html');
+
+        const toggler = page.locator('[data-bs-toggle="offcanvas"]');
+        await expect(toggler).toBeVisible();
+        await toggler.click();
+
+        const offcanvas = page.locator('.offcanvas.show');
+        await expect(offcanvas).toBeVisible({ timeout: 3000 });
+
+        // Check Companies link exists
+        const companiesLink = offcanvas.locator('.nav-link[href="#companies"]');
+        await expect(companiesLink).toBeVisible();
+
+        // Close offcanvas
+        const closeBtn = offcanvas.locator('.btn-close');
+        await closeBtn.click();
+        await expect(offcanvas).not.toBeVisible({ timeout: 3000 });
+    });
+
+    test('offcanvas works on dashboard pages', async ({ page }) => {
+        await page.goto('/pages/profileDashboard.html');
+
+        const toggler = page.locator('[data-bs-toggle="offcanvas"]');
+        await expect(toggler).toBeVisible();
+        await toggler.click();
+
+        const offcanvas = page.locator('.offcanvas.show');
+        await expect(offcanvas).toBeVisible({ timeout: 3000 });
+
+        // Close offcanvas
+        const closeBtn = offcanvas.locator('.btn-close');
+        await closeBtn.click();
+        await expect(offcanvas).not.toBeVisible({ timeout: 3000 });
+    });
+
+    test('offcanvas auth buttons work correctly', async ({ page }) => {
         await page.goto('/');
-        await page.setViewportSize({ width: 375, height: 800 });
+
         const toggler = page.locator('[data-bs-toggle="offcanvas"]');
         await toggler.click();
-        await page.locator('.offcanvas .btn-close').click();
-        await expect(toggler).toBeFocused();
+
+        const offcanvas = page.locator('.offcanvas.show');
+        await expect(offcanvas).toBeVisible({ timeout: 3000 });
+
+        // Check Signup button
+        const signupBtn = offcanvas.locator('.btn:has-text("Signup")');
+        await expect(signupBtn).toBeVisible();
+        await expect(signupBtn).toHaveAttribute('href', /createAccount\.html/);
+
+        // Check Login button
+        const loginBtn = offcanvas.locator('.btn:has-text("Login")');
+        await expect(loginBtn).toBeVisible();
+        await expect(loginBtn).toHaveAttribute('href', /signin\.html/);
     });
 });

@@ -50,4 +50,52 @@ test.describe('i18n and language toggle', () => {
         expect(headerText).not.toContain('nav.jobs');
         expect(headerText).toContain('Jobs');
     });
+
+    test('language toggle works on job detail pages', async ({ page }) => {
+        await page.goto('/pages/jobs/ward-nursing-support.html');
+        const headerToggle = page.locator('#lang-toggle');
+        await expect(headerToggle).toBeVisible();
+
+        await headerToggle.check();
+        await page.waitForTimeout(200);
+
+        // Desktop nav should translate
+        await expect(page.locator('a.site-header__nav-link', { hasText: '求人' })).toBeVisible();
+    });
+
+    test('language toggle works on company pages', async ({ page }) => {
+        await page.goto('/pages/companies/ana.html');
+        const headerToggle = page.locator('#lang-toggle');
+        await expect(headerToggle).toBeVisible();
+
+        await headerToggle.check();
+        await page.waitForTimeout(200);
+
+        // Desktop nav should translate
+        await expect(page.locator('a.site-header__nav-link', { hasText: '求人' })).toBeVisible();
+    });
+
+    test('language toggle works on dashboard pages', async ({ page }) => {
+        await page.goto('/pages/profileDashboard.html');
+        const headerToggle = page.locator('#lang-toggle');
+        await expect(headerToggle).toBeVisible();
+
+        await headerToggle.check();
+        await page.waitForTimeout(200);
+
+        // Desktop nav should translate
+        await expect(page.locator('a.site-header__nav-link', { hasText: '求人' })).toBeVisible();
+    });
+
+    test('language toggle works on info pages', async ({ page }) => {
+        await page.goto('/pages/about.html');
+        const headerToggle = page.locator('#lang-toggle');
+        await expect(headerToggle).toBeVisible();
+
+        await headerToggle.check();
+        await page.waitForTimeout(200);
+
+        // Desktop nav should translate
+        await expect(page.locator('a.site-header__nav-link', { hasText: '求人' })).toBeVisible();
+    });
 });

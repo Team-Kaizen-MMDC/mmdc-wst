@@ -29,4 +29,59 @@ test.describe("Jobs pages", () => {
     // the CTA links to signin page
     await expect(applyBtn).toHaveAttribute("href", /signin.html$/);
   });
+
+  test("all job pages load correctly", async ({ page }) => {
+    const jobPages = [
+      "/pages/jobs/ward-nursing-support.html",
+      "/pages/jobs/mechanic-ground-support-haneda.html",
+      "/pages/jobs/cleaner-facilities-maintenance.html",
+      "/pages/jobs/construction-worker-site-support.html",
+      "/pages/jobs/server-hospitality.html",
+    ];
+
+    for (const jobPage of jobPages) {
+      await page.goto(jobPage);
+      // Each job page should have a title
+      await expect(page.locator("h1#job-title")).toBeVisible();
+      // Each should have an apply button
+      await expect(
+        page.locator("a#apply, a.btn:has-text('Apply')")
+      ).toBeVisible();
+    }
+  });
+
+  test("job filter page loads and has filter elements", async ({ page }) => {
+    await page.goto("/pages/jobs/jobFilter.html");
+
+    // Job filter page should load
+    const mainContent = page.locator("main, .container").first();
+    await expect(mainContent).toBeVisible();
+
+    // Should have filter controls or job listings
+    const filterOrJobs = page
+      .locator('[class*="filter"], [class*="job"], form, .card')
+      .first();
+    await expect(filterOrJobs).toBeVisible({ timeout: 5000 });
+  });
+
+  test("navigating between job pages maintains header/footer", async ({
+    page,
+  }) => {
+    const jobPages = [
+      "/pages/jobs/ward-nursing-support.html",
+      "/pages/jobs/server-hospitality.html",
+    ];
+
+    for (const jobPage of jobPages) {
+      await page.goto(jobPage);
+
+      // Header should be present
+      const header = page.locator(".site-header");
+      await expect(header).toBeVisible();
+
+      // Footer should be present
+      const footer = page.locator(".site-footer");
+      await expect(footer).toBeVisible();
+    }
+  });
 });
