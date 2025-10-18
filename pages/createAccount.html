@@ -13,6 +13,7 @@
         crossorigin="anonymous"
     />
     <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
         .is-invalid {
             border-color: #dc2626 !important; 
@@ -72,32 +73,45 @@
                             <div id="emailFeedback" class="invalid-feedback"></div>
                         </div>
                         
-                        <div class="mt-6">
-                            <label for="password" class="block text-sm font-bold text-gray-700">Password</label>
+                        <!-- Password Field -->
+                        <div class="mt-6 relative"> <label for="password" class="block text-sm font-bold text-gray-700">Password</label>
                             <input 
                                 id="password" 
                                 name="password" 
                                 type="password" 
                                 autocomplete="new-password" 
                                 required 
-                                class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm form-control"
-                            >
-                            <!-- Feedback element for password strength -->
+                                class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm form-control pr-10" 
+                                >
+
+                            <button type="button" id="togglePassword" 
+                                    class="absolute right-0 top-8 flex items-center pr-3 cursor-pointer" 
+                                    aria-label="Toggle password visibility">
+                            <i id="eye-icon-password" class="bi bi-eye-slash text-gray-500 text-lg"></i>
+                            </button>
+                        
                             <div id="passwordFeedback" class="invalid-feedback"></div>
                         </div>
 
-                        <!-- Password Field -->
-                        <div class="mt-6 mb-1">
+                        <!-- Confirm Password Field -->
+                            <div class="mt-6 relative"> 
                             <label for="passwordConfirm" class="block text-sm font-bold text-gray-700">Confirm Password</label>
+                            
                             <input 
                                 id="passwordConfirm" 
                                 name="passwordConfirm" 
                                 type="password" 
                                 autocomplete="new-password" 
                                 required 
-                                class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm form-control"
+                                class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm form-control pr-10" 
                             >
-                             <!-- Feedback element for password match -->
+                            
+                            <button type="button" id="togglePasswordConfirm" 
+                                    class="absolute right-0 top-8 flex items-center pr-3 cursor-pointer" 
+                                    aria-label="Toggle password visibility">
+                                <i id="eye-icon-passwordConfirm" class="bi bi-eye-slash text-gray-500 text-lg"></i>
+                            </button>
+                        
                             <div id="passwordConfirmFeedback" class="invalid-feedback"></div>
                         </div>
 
@@ -188,6 +202,8 @@
             window.getCookie = getCookie; 
             console.log('getCookie is temporarily available in the console for testing.');
         });
+
+        
     </script>
 
     

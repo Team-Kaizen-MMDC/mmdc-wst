@@ -185,17 +185,14 @@ export const initializeSignupValidation = () => {
         if (checkFormValidity(inputElements)) { 
             console.log('Sign-up validation successful. Saving cookies and redirecting...');
             
-            // --- COOKIE SAVING LOGIC ---
+            // --- COOKIE SAVING ---
             setCookie("email", inputElements.email.value);
             setCookie("password", inputElements.password.value);
             console.log("Cookies saved successfully.");
-            // ---------------------------
             
-            // Redirect after a short delay (to ensure cookies write)
             window.location.href = "addEdit/profile.html";
 
         } else {
-            // Validation failed. Errors are now displayed by checkFormValidity()
             console.log('Sign-up validation failed. Errors displayed. Staying on page.');
         }
     };
@@ -220,7 +217,14 @@ export const initializeSignupValidation = () => {
     inputElements.privacyPolicy.addEventListener('change', () => validatePrivacyPolicy(inputElements));
 
     console.log('Sign-up Module: Per-field validation listeners successfully attached.');
+
+    // --- Password Visibility Toggle Setup ---
+    setupPasswordToggle('password', 'togglePassword', 'eye-icon-password');
+    setupPasswordToggle('passwordConfirm', 'togglePasswordConfirm', 'eye-icon-passwordConfirm'); 
+
+    console.log('Sign-up Module: Per-field validation listeners successfully attached.');
 };
+
 
 
 
@@ -249,12 +253,12 @@ export const initializeLoginValidation = () => {
 
         let formValid = true;
 
-        // 1. Email Check: Must be present and valid format (checked via checkValidity)
+        // Email Check
         const isEmailValid = inputElements.email.value.trim() !== '' && inputElements.email.checkValidity();
         setValidationState(inputElements.email, isEmailValid);
         if (!isEmailValid) formValid = false;
 
-        // 2. Password Check: Simple minimum length check for LOGIN
+        // Password Check
         const isPasswordValid = inputElements.password.value.length >= 8; 
         setValidationState(inputElements.password, isPasswordValid);
         if (!isPasswordValid) formValid = false;
@@ -272,4 +276,36 @@ export const initializeLoginValidation = () => {
     // Main event listener to the form submission
     form.addEventListener('submit', handleSubmit, false);
     console.log('Login Module: Validation listener successfully attached to loginForm.');
+
+    // PASSWORD TOGGLE FUNCTION 
+    setupPasswordToggle('password', 'togglePassword', 'eye-icon-password'); 
+
+    console.log('Login Module: Validation listener successfully attached to loginForm.');
+};
+
+// ===================================================================
+// Show/Hide Password Toggle Logic
+// ===================================================================
+
+const setupPasswordToggle = (inputId, toggleButtonId, iconId) => {
+    const passwordInput = document.getElementById(inputId);
+    const toggleButton = document.getElementById(toggleButtonId);
+    const icon = document.getElementById(iconId);
+
+    if (passwordInput && toggleButton && icon) {
+        toggleButton.addEventListener('click', function() {
+            const isPassword = passwordInput.getAttribute('type') === 'password';
+            const newType = isPassword ? 'text' : 'password';
+            passwordInput.setAttribute('type', newType);
+
+            //Toggle the icon class for visual clarity (bi-eye <-> bi-eye-slash)
+            if (isPassword) {
+                icon.classList.remove('bi-eye-slash', 'text-gray-500'); 
+                icon.classList.add('bi-eye', 'text-red-600'); 
+            } else {
+                icon.classList.remove('bi-eye', 'text-red-600');
+                icon.classList.add('bi-eye-slash', 'text-gray-500');
+            }
+        });
+    }
 };
