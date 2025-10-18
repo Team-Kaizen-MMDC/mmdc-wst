@@ -261,6 +261,8 @@ export const initializeLoginValidation = () => {
 
         if (formValid) {
             console.log('Login validation successful. Proceeding to server/redirect.');
+            // Mark user as logged in for Dark/Light toggle visibility | Author: MK
+            sessionStorage.setItem("isLoggedIn", "true");
             form.submit();
         } else {
             console.log('Login validation failed. Errors displayed.');
