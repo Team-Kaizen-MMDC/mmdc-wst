@@ -590,7 +590,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // ----- Show toggle only if logged in -----
   const isLoggedIn =
-    localStorage.getItem("isLoggedIn") === "true" ||
     sessionStorage.getItem("isLoggedIn") === "true";
 
   if (!isLoggedIn) {
