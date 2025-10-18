@@ -1,163 +1,380 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Company Dashboard</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile Dashboard</title>
+    <!-- Bootstrap CSS 5.3.3 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
     <link rel="stylesheet" href="../assets/css/main.css" />
-</head>
-<body class="company-dashboard">
-    <!--Site Header-->
+  </head>
+  <body class="profile-dashboard">
+    <!-- Site Header (canonical: matches index.html) -->
     <header class="site-header">
-      <div class="container site-header__inner">
-        <a class="site-header__brand" href="../index.html">Japan SSW</a>
-        <nav class="site-header__nav" aria-label="Main navigation">
-          <a class="site-header__nav-link" href="../index.html#jobs">Jobs</a>
-          <a class="site-header__nav-link" href="../index.html#companies"
-            >Companies</a
+      <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <a
+            class="navbar-brand site-header__brand"
+            href="../index.html"
+            data-i18n="site.brand"
+            >Japan SSW</a
           >
-          <a class="site-header__nav-link" href="agency.html">Agency</a>
-          <a class="site-header__nav-link" href="about.html">About</a>
+
+          <!-- Offcanvas toggler for mobile -->
+          <button
+            class="btn btn-outline-secondary d-lg-none"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#siteOffcanvas"
+            aria-controls="siteOffcanvas"
+            aria-label="Open menu"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <!-- Desktop nav (visible on lg+) -->
+          <div class="collapse navbar-collapse d-none d-lg-flex" id="navbarNav">
+            <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a
+                  class="nav-link site-header__nav-link"
+                  href="../index.html#jobs"
+                  data-i18n="nav.jobs"
+                  >Jobs</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link site-header__nav-link"
+                  href="../index.html#companies"
+                  data-i18n="nav.services"
+                  >Companies</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link site-header__nav-link"
+                  href="agency.html"
+                  data-i18n="nav.agency"
+                  >Agency</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link site-header__nav-link"
+                  href="about.html"
+                  data-i18n="nav.about"
+                  >About</a
+                >
+              </li>
+            </ul>
+
+            <!-- Actions (user menu for logged-in users) -->
+            <div class="d-flex align-items-center gap-2 site-header__actions">
+              <div class="site-header__user-menu">
+                <a
+                  id="user-menu-btn"
+                  class="btn btn-secondary site-header__user-menu-btn"
+                  href="#"
+                  >Juan</a
+                >
+
+                <!-- User Menu Dropdown (non-Bootstrap custom dropdown) -->
+                <div
+                  id="user-menu-dropdown"
+                  class="user-menu-dropdown"
+                  aria-hidden="true"
+                >
+                  <h4 class="user-menu-dropdown__greeting">Welcome Back!</h4>
+                  <h3 class="user-menu-dropdown__userName">Juan Dela Cruz</h3>
+                  <a href="#" class="user-menu-dropdown__link">View Profile</a>
+                  <a href="#" class="user-menu-dropdown__link">Message</a>
+                  <hr class="user-menu-dropdown__divider" />
+                  <a href="#" class="user-menu-dropdown__link">Language</a>
+                  <a href="#" class="user-menu-dropdown__link">Help</a>
+                  <a href="#" class="user-menu-dropdown__link">Settings</a>
+                  <button type="button" class="user-menu-dropdown__link">
+                    Sign out
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </nav>
       </div>
-    </header>
 
-    <main>
-        <div class="bento-wrapper">
-            <div class="bento-container">
-          
-                        
-               <!-- Box 1: NAVI HEADER (box-1) -->
-                  <div class="bento-box bento-box--navi">
-                    <a href="#" class="bento-box__navi-item bento-box__navi-item--active">Dashboard</a>
-                    <a href="#" class="bento-box__navi-item">Job Management</a>
-                    <a href="#" class="bento-box__navi-item">Applicant Tracking</a>
-                    <a href="#" class="bento-box__navi-item">Company Profile</a>
-                </div>
+      <!-- Offcanvas (mobile) -->
+      <div
+        class="offcanvas offcanvas-start"
+        tabindex="-1"
+        id="siteOffcanvas"
+        aria-labelledby="siteOffcanvasLabel"
+      >
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="siteOffcanvasLabel">Menu</h5>
+          <button
+            type="button"
+            class="btn-close text-reset"
+            data-bs-dismiss="offcanvas"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="offcanvas-body d-flex flex-column">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a
+                class="nav-link py-3"
+                href="../index.html#jobs"
+                data-bs-dismiss="offcanvas"
+                data-i18n="nav.jobs"
+                >Jobs</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link py-3"
+                href="../index.html#companies"
+                data-bs-dismiss="offcanvas"
+                data-i18n="nav.services"
+                >Companies</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link py-3"
+                href="agency.html"
+                data-bs-dismiss="offcanvas"
+                data-i18n="nav.agency"
+                >Agency</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link py-3"
+                href="about.html"
+                data-bs-dismiss="offcanvas"
+                data-i18n="nav.about"
+                >About</a
+              >
+            </li>
+          </ul>
 
-                <!-- Box 2: Profile (box-2) -->
-                <div class="bento-box bento-box--profile">
-                    <div class="header-group">
-                        <!--wrapper title and subtitle-->
-                        <div class="title-wrapper">   
-                            <h2 class="bento-box__title">Sanchez Miguel</h2>
-                            <p class="bento-box__subtitle">Admin</p>
-                        </div>
-                        <a href="#" class="bento-box__link text-red">Edit</a>
-                       
-                    </div>
-                    
-                    <a href="#" class="bento-box__cta">Post New Job</a>
-                    <a href="#" class="bento-box__link bento-box__link--block">View All Applicant</a>
-                    <a href="#" class="bento-box__link bento-box__link--block">View Posted Job</a>
-                </div>
-                   
-        
-
-               <!-- Box 3: Applicant Tracking (box-3) -->
-                <div class="bento-box bento-box--tracking">
-                    <h2 class="bento-box__title">Applicant Tracking</h2>
-                    <ul class="bento-box__list">
-                        <li>Applicant: 200</li>
-                        <li>Reviewed: 122</li>
-                        <li>Interview: 22</li>
-                        <li>Hired: 10</li>
-                        <li>Reject: 55</li>
-                    </ul>
-                </div>
-                
-
-                <!-- Box 4: Job Metric (box-4) -->
-                <div class="bento-box bento-box--metric">
-                    <h2 class="bento-box__title">Job Metric</h2>
-                    <ul class="bento-box__list">
-                        <li>Active: 5</li>
-                        <li>Pending: 2</li>
-                        <li>Expired: 2</li>
-                    </ul>
-                </div>
-
-                <!-- Box 5: Applicant List (box-5) -->
-                <div class="bento-box bento-box--applicant-list">
-                    <div class="bento-box__header-flex">
-                        <h2 class="bento-box__title">Applicant List</h2>
-                        <a href="#" class="bento-box__link text-viewAll">View All</a>
-                     </div>
-                
-                 <div class="bento-box__list-item-wrapper">
-                        <!-- Applicant Item 1 -->
-                        <div class="bento-box__item">
-                            <div class="bento-box__item-thumbnail"></div>
-                            <div class="bento-box__item-details">
-                                <p class="bento-box__item-name">Dela Cruz Juan</p>
-                                <p class="bento-box__item-info">Kitchen Restaurant - Food Service</p>
-                                <p class="bento-box__item-info">JLPT N3</p>
-                            </div>
-                            <a href="#" class="bento-box__link text-red">view</a>
-                        </div>
-                        <!-- Applicant Item 2 -->
-                        <div class="bento-box__item">
-                            <div class="bento-box__item-thumbnail"></div>
-                            <div class="bento-box__item-details">
-                                <p class="bento-box__item-name">Dela Cruz Juan</p>
-                                <p class="bento-box__item-info">Assemble Line - Automotive</p>
-                                <p class="bento-box__item-info">JLPT N3</p>
-                            </div>
-                            <a href="#" class="bento-box__link text-red">view</a>
-                        </div>
-                    </div>
-                </div>
+          <div
+            class="mt-auto d-flex justify-content-between align-items-center pt-3 border-top"
+          >
+            <a
+              class="btn btn-outline-secondary"
+              href="#"
+              data-bs-dismiss="offcanvas"
+              >Profile</a
+            >
+            <a class="btn btn-danger" href="#" data-bs-dismiss="offcanvas"
+              >Sign out</a
+            >
+          </div>
+        </div>
+      </div>
 
 
+      <body>
+  <div class="container py-4">
+    <!-- Navigation Tabs -->
+    <ul class="nav nav-tabs justify-content-center bg-white p-3 rounded shadow-sm mb-4">
+      <li class="nav-item">
+        <a class="nav-link text-secondary fw-bold active" href="#">Dashboard</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-secondary" href="#">Job Management</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-secondary" href="#">Applicant Tracking</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-secondary" href="#">Company Profile</a>
+      </li>
+    </ul>
 
-
-                <!-- Box 6: Job List (box-6) -->
-                <div class="bento-box bento-box--job-list">
-                    <div class="bento-box__header-flex">
-                        <h2 class="bento-box__title">Job List</h2>
-                        <a href="#" class="bento-box__link text-viewAll">View All</a>
-                    </div>
-                    <div class="bento-box__list-item-wrapper">
-                        <!-- Job Item 1 -->
-                        <div class="bento-box__item">
-                             <div class="bento-box__item-thumbnail"></div>
-                            <div class="bento-box__item-details">
-                                <p class="bento-box__item-name">Cook and Customer Service</p>
-                                <p class="bento-box__item-info">Tokyo - Food Service</p>
-                                <p class="bento-box__item-info">250,000 yen</p>
-                            </div>
-                            <a href="#" class="bento-box__link text-red">view</a>
-                        </div>
-                        <!-- Job Item 2 -->
-                        <div class="bento-box__item">
-                            <div class="bento-box__item-thumbnail"></div>
-                            <div class="bento-box__item-details">
-                                <p class="bento-box__item-name">Machine Operate</p>
-                                <p class="bento-box__item-info">Chiba - Automotive</p>
-                                <p class="bento-box__item-info">JLPT N3</p>
-                            </div>
-                            <a href="#" class="bento-box__link text-red">view</a>
-                        </div>
-                    </div>
-                </div>
-                </div>
-
-
-
-
-                  
-              
-
-                  
-
-                 
+    <!-- Dashboard Grid -->
+    <div class="row g-4">
+      <!-- Profile -->
+      <div class="col-lg-6 col-md-6">
+        <div class="card p-3 h-100">
+          <div class="d-flex justify-content-between align-items-start mb-2">
+            <div>
+              <h6 class="fw-bold mb-0">Sanchez Miguel</h6>
+              <small class="text-muted">Admin</small>
             </div>
+            <a href="#" class="text-red small fw-semibold">Edit</a>
+          </div>
+          <hr />
+              <button class="btn btn-outline-danger">Post New Job</button>
+                  <button class="btn btn-outline-danger">View All Applicant</button>
+                      <button class="btn btn-outline-danger">View Posted Job</button>
 
         </div>
+      </div>
 
-    </main>
+      <!-- Applicant Tracking -->
+      <div class="col-lg-3 col-md-6">
+        <div class="card p-3 h-100">
+          <h6 class="fw-bold mb-3">Applicant Tracking</h6>
+          <ul class="list-unstyled small mb-0">
+            <li>Applicant: 200</li>
+            <li>Reviewed: 122</li>
+            <li>Interview: 22</li>
+            <li>Hired: 10</li>
+            <li>Reject: 55</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Job Metric -->
+      <div class="col-lg-3 col-md-6">
+        <div class="card p-3 h-100">
+          <h6 class="fw-bold mb-3">Job Metric</h6>
+          <ul class="list-unstyled small mb-0">
+            <li>Active: 5</li>
+            <li>Pending: 2</li>
+            <li>Expired: 2</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Applicant List -->
+      <div class="col-lg-6 col-md-6">
+        <div class="card p-3 h-100">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h6 class="fw-bold mb-0">Applicant List</h6>
+            <a href="#" class="text-red small fw-semibold">View All</a>
+          </div>
+
+          <div class="d-flex align-items-center mb-3">
+            <div class="item-thumb me-3"></div>
+            <div class="flex-grow-1">
+              <p class="mb-0 fw-semibold small">Dela Cruz Juan</p>
+              <small class="text-muted d-block">Kitchen Restaurant - Food Service</small>
+              <small class="text-muted">JLPT N3</small>
+            </div>
+            <a href="#" class="text-red small ms-2">view</a>
+          </div>
+
+          <div class="d-flex align-items-center">
+            <div class="item-thumb me-3"></div>
+            <div class="flex-grow-1">
+              <p class="mb-0 fw-semibold small">Dela Cruz Juan</p>
+              <small class="text-muted d-block">Assemble Line - Automotive</small>
+              <small class="text-muted">JLPT N3</small>
+            </div>
+            <a href="#" class="text-red small ms-2">view</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Job List -->
+      <div class="col-lg-6 col-md-6">
+        <div class="card p-3 h-100">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h6 class="fw-bold mb-0">Job List</h6>
+            <a href="#" class="text-red small fw-semibold">View All</a>
+          </div>
+
+          <div class="d-flex align-items-center mb-3">
+            <div class="item-thumb me-3"></div>
+            <div class="flex-grow-1">
+              <p class="mb-0 fw-semibold small">Cook and Customer Service</p>
+              <small class="text-muted d-block">Tokyo - Food Service</small>
+              <small class="text-muted">250,000 yen</small>
+            </div>
+            <a href="#" class="text-red small ms-2">view</a>
+          </div>
+
+          <div class="d-flex align-items-center">
+            <div class="item-thumb me-3"></div>
+            <div class="flex-grow-1">
+              <p class="mb-0 fw-semibold small">Machine Operate</p>
+              <small class="text-muted d-block">Chiba - Automotive</small>
+              <small class="text-muted">JLPT N3</small>
+            </div>
+            <a href="#" class="text-red small ms-2">view</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
     
+    <footer class="site-footer site-footer--dark" role="contentinfo">
+      <div class="container footer-grid site-footer__grid">
+        <div class="footer-cta site-footer__cta">
+          <h3>Want to post jobs on JapanSSW?</h3>
+          <p class="muted site-footer__cta-muted">
+            Reach qualified candidates under the SSW programme.
+          </p>
+          <div class="footer-cta-actions site-footer__cta-actions">
+            <a class="btn btn-secondary" href="#" data-i18n="nav.employer_login"
+              >Employer Login</a
+            >
+            <a class="btn btn-primary" href="#" data-i18n="btn.post_job"
+              >Post a Job</a
+            >
+          </div>
+        </div>
+
+        <div class="footer-links site-footer__links">
+          <div class="link-col site-footer__link-col">
+            <h4>Company</h4>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="pages/about.html">About</a></li>
+              <li><a href="pages/contact.html">Contact</a></li>
+            </ul>
+          </div>
+          <div class="link-col site-footer__link-col">
+            <h4>Jobs</h4>
+            <ul>
+              <li><a href="#jobs">Search Jobs</a></li>
+              <li><a href="#companies">Companies</a></li>
+              <li><a href="#post-job">Post a Job</a></li>
+            </ul>
+          </div>
+          <div class="link-col site-footer__link-col">
+            <h4>Resources</h4>
+            <ul>
+              <li><a href="pages/visaGuidance.html">Visa Guidance</a></li>
+              <li><a href="#">Employer Hub</a></li>
+              <li><a href="pages/privacy.html">Privacy</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="container footer-legal site-footer__legal">
+        <div class="legal-inner site-footer__legal-inner">
+          <small data-i18n="footer.copyright"
+            >&copy; 2025 Japan SSW. All rights reserved.</small
+          >
+          <nav aria-label="Footer legal">
+            <a href="pages/terms.html">Terms</a>
+            <a href="pages/privacy.html">Privacy</a>
+          </nav>
+        </div>
+      </div>
+    </footer>
+                                                                                                                                                                
+    <!-- Bootstrap JS Bundle (includes Popper) -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+
+
     <!-- Site JavaScript (ES Module) -->
     <script type="module" src="../assets/js/main.js"></script>
-</body>
+    
+  </body>
 </html>
