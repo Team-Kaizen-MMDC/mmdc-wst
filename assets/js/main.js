@@ -534,6 +534,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
+<<<<<<< HEAD
 // Inject and handle Dark/Light Mode Toggle (Desktop + Mobile)
 // Author: MK
 document.addEventListener("DOMContentLoaded", function () {
@@ -648,3 +649,260 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });                                                                                                                                                                                      
+=======
+      // --- FilterData (normalized) Job listed ---
+      const jobData = [
+        { id: 1, title: "Mechanic Ground Support", company: "Japan Airline", location: "tokyo", industry: "aviation", salary: 220000, japaneseLevel: "n4", support: "yes" },
+        { id: 2, title: "Construction Worker", company: "Mitsubishi Heavy Industries", location: "kyoto", salary: 200000, industry: "construction", japaneseLevel: "n5", support: "yes" },
+        { id: 3, title: "Food Service Staff", company: "Local Ramen Shop", location: "osaka", salary: 200000, industry: "food service", japaneseLevel: "n5", support: "yes" },
+        { id: 4, title: "Nursing Care Assistant", company: "Harmony Home", location: "kanagawa", salary: 220000, industry: "nursing care", japaneseLevel: "n3", support: "yes" }
+      ];
+
+      // --- State (use lowercase tokens consistently) ---
+      const state = {
+        search: '',
+        support: ['all'],
+        japaneseLevel: ['any'],
+        location: ['all'],
+        industry: ['all'],
+        minSalary: [0]
+      };
+
+      // DOM refs
+      const jobListings = document.getElementById('jobListings');
+      const noResults = document.getElementById('noResults');
+      const resultCountEl = document.getElementById('resultCount');
+      const filters = document.querySelectorAll('[data-filter-group]');
+      const searchInput = document.getElementById('searchInput');
+      const clearBtn = document.getElementById('clearFilters');
+
+      // helper: render jobs
+      function renderJobs(jobs) {
+        jobListings.innerHTML = '';
+        resultCountEl.textContent = jobs.length;
+
+        if (!jobs.length) {
+          noResults.classList.remove('d-none');
+          return;
+        }
+        noResults.classList.add('d-none');
+
+        jobs.forEach(job => {
+          const col = document.createElement('div');
+          col.className = 'col-md-6 col-lg-6';
+          col.innerHTML = `
+            <div class="card h-100 shadow-sm border-0 job-card">
+              <div class="card-body">
+                <div class="d-flex justify-content-between">
+                  <h5 class="fw-bold mb-1">${escapeHtml(job.title)}</h5>
+           
+                </div>
+                <p class="text-muted mb-2">${escapeHtml(job.company)} · ${capitalize(job.location)}</p>
+                <p class="small mb-1"><strong>Industry:</strong> ${capitalize(job.industry)}</p>
+                <p class="small mb-1"><strong>Salary:</strong> ¥${job.salary.toLocaleString()}</p>
+                     <p class="small mb-1"><strong>Industry:</strong> ${capitalize(job.japaneseLevel)}</p>
+                <p class="small mb-1"><strong>Visa Support:</strong> ${capitalize(job.support)}</p>
+              </div>
+              <div class="card-footer bg-transparent border-0">
+                <button class="btn btn-primary w-100">View Details</button>
+              </div>
+            </div>
+          `;
+          jobListings.appendChild(col);
+        });
+      }
+
+      // helpers
+      function capitalize(str) {
+        if (!str) return '';
+        return str.charAt(0).toUpperCase() + str.slice(1);
+      }
+      function escapeHtml(unsafe) {
+        return unsafe.replace(/[&<"'>]/g, function(m) { return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[m]); });
+      }
+
+      // update button styles for a group
+      function updateButtons(groupKey) {
+        const container = document.querySelector(`[data-filter-group="${groupKey}"]`);
+        if (!container) return;
+        container.querySelectorAll('button[data-value]').forEach(btn => {
+          const val = String(btn.dataset.value).toLowerCase();
+          const salary = parseInt(btn.dataset.salary || '0', 10);
+          const active = groupKey === 'minSalary'
+            ? state[groupKey].includes(salary)
+            : state[groupKey].includes(val);
+          if (active) {
+            btn.classList.remove('btn-outline-secondary');
+            btn.classList.add('btn-outline-secondary', 'active');
+       
+          } else {
+            btn.classList.remove('btn-primary', 'btn-outline-primary', 'active');
+            btn.classList.add('btn-outline-secondary');
+            btn.classList.remove('btn-secondary');
+          }
+        });
+      }
+
+      // main filter function
+      function filterJobs() {
+        const search = state.search;
+        const isSupportAll = state.support.includes('all');
+        const isJapaneseAny = state.japaneseLevel.includes('any');
+        const isLocationAll = state.location.includes('all');
+        const isIndustryAll = state.industry.includes('all');
+        const minSalaryValue = Math.max(...state.minSalary);
+
+        const filtered = jobData.filter(job => {
+          // search (title, company, location, japaneseLevel)
+          if (search) {
+            const hay = (job.title + ' ' + job.company + ' ' + job.location + ' ' + job.japaneseLevel).toLowerCase();
+            if (!hay.includes(search)) return false;
+          }
+
+          // support
+          if (!isSupportAll && !state.support.includes(job.support)) return false;
+
+          // japanese level
+          if (!isJapaneseAny && !state.japaneseLevel.includes(job.japaneseLevel)) return false;
+
+          // location
+          if (!isLocationAll && !state.location.includes(job.location)) return false;
+
+          // industry
+          if (!isIndustryAll && !state.industry.includes(job.industry)) return false;
+
+          // salary
+          if (job.salary < minSalaryValue) return false;
+
+          return true;
+        });
+
+        renderJobs(filtered);
+      }
+
+      // wire up filter buttons (delegated per group)
+      filters.forEach(groupEl => {
+        const groupKey = groupEl.dataset.filterGroup;
+        groupEl.addEventListener('click', e => {
+          const btn = e.target.closest('button[data-value]');
+          if (!btn) return;
+
+          const rawVal = btn.dataset.value;
+          const val = String(rawVal).toLowerCase();
+          const salary = parseInt(btn.dataset.salary || '0', 10);
+
+          // determine key and whether clicked is reset/all option
+          const isMinSalary = groupKey === 'minSalary';
+          const isReset = (
+            val === 'all' || val === 'any' || (!isMinSalary && val === '') || (isMinSalary && salary === 0)
+          );
+
+          const key = isMinSalary ? salary : val;
+
+          // toggle selection
+          if (state[groupKey].includes(key)) {
+            // if more than 1 selected, remove; else keep (prevent empty)
+            if (state[groupKey].length > 1) {
+              state[groupKey] = state[groupKey].filter(v => v !== key);
+            }
+          } else {
+            // add new selection
+            state[groupKey].push(key);
+          }
+
+          // if reset/all clicked and is now selected -> set alone
+          if (isReset && state[groupKey].includes(key)) {
+            state[groupKey] = [key];
+          }
+
+          // when non-reset selected, remove any 'all' default
+          if (!isReset && state[groupKey].length > 1) {
+            state[groupKey] = state[groupKey].filter(v => {
+              return !(v === 'all' || v === 'any' || v === 0);
+            });
+          }
+
+          // ensure at least one default remains
+          if (state[groupKey].length === 0) {
+            if (groupKey === 'support') state[groupKey] = ['all'];
+            if (groupKey === 'japaneseLevel') state[groupKey] = ['any'];
+            if (groupKey === 'location') state[groupKey] = ['all'];
+            if (groupKey === 'industry') state[groupKey] = ['all'];
+            if (groupKey === 'minSalary') state[groupKey] = [0];
+          }
+
+          updateButtons(groupKey);
+          filterJobs();
+        });
+      });
+
+      // search input
+      searchInput.addEventListener('input', () => {
+        state.search = searchInput.value.toLowerCase().trim();
+        filterJobs();
+      });
+
+      // clear filters
+      clearBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        state.support = ['all'];
+        state.japaneseLevel = ['any'];
+        state.location = ['all'];
+        state.industry = ['all'];
+        state.minSalary = [0];
+
+        // update all button groups visually
+        ['support','japaneseLevel','location','industry','minSalary'].forEach(k => updateButtons(k));
+        searchInput.value = '';
+        state.search = '';
+        filterJobs();
+      });
+
+      // initial render
+      window.addEventListener('DOMContentLoaded', () => {
+        // ensure all groups reflect initial active button styles
+        ['support','japaneseLevel','location','industry','minSalary'].forEach(k => updateButtons(k));
+        filterJobs();
+      });
+    //  JOB ALERT 
+    document.addEventListener('DOMContentLoaded', () => {
+        // 1. Get references to the elements
+        const emailInput = document.getElementById('newsletter-email');
+        const signupButton = document.getElementById('signup-button');
+        const jobAlertToastEl = document.getElementById('jobAlertToast');
+
+        // 2. Initialize the Bootstrap Toast component
+        // Note: bootstrap is available globally since the bundle script is loaded above
+        const jobAlertToast = new bootstrap.Toast(jobAlertToastEl, {
+            autohide: true,
+            delay: 5000 // Toast will hide after 5 seconds
+        });
+
+        // 3. Function to update the button state
+        const updateButtonState = () => {
+            // Check for a non-empty value and basic email format (containing '@')
+            const isValid = emailInput.value.trim() !== '' && emailInput.value.includes('@');
+       
+        };
+
+        // 4. Enable/Disable the button based on input
+        emailInput.addEventListener('input', updateButtonState);
+
+        // Run once on load in case the browser pre-fills the input
+        updateButtonState();
+
+        // 5. Show the Toast on button click (Demo action)
+        signupButton.addEventListener('click', (event) => {
+            event.preventDefault(); // Prevent default form submission behavior (though this isn't a form, it's good practice)
+
+            if (!signupButton.disabled) {
+                //DEMO ACTION: Show the success Toast
+                jobAlertToast.show();
+
+                //DEMO ACTION: Clear the input field and disable the button after "signing up"
+                emailInput.value = '';
+                updateButtonState();
+            }
+        });
+    });
+>>>>>>> origin/main

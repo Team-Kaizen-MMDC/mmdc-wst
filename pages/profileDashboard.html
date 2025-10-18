@@ -92,10 +92,8 @@
                 >
                   <h4 class="user-menu-dropdown__greeting">Welcome Back!</h4>
                   <h3 class="user-menu-dropdown__userName">Juan Dela Cruz</h3>
-                  <a href="#" class="user-menu-dropdown__link">View Profile</a>
-                  <a href="#" class="user-menu-dropdown__link">Message</a>
+                  <a href="#" class="user-menu-dropdown__link">Profile</a>
                   <hr class="user-menu-dropdown__divider" />
-                  <a href="#" class="user-menu-dropdown__link">Language</a>
                   <a href="#" class="user-menu-dropdown__link">Help</a>
                   <a href="#" class="user-menu-dropdown__link">Settings</a>
                   <button type="button" class="user-menu-dropdown__link">
@@ -512,25 +510,25 @@
           <div class="link-col site-footer__link-col">
             <h4>Company</h4>
             <ul>
-              <li><a href="index.html">Home</a></li>
-              <li><a href="pages/about.html">About</a></li>
-              <li><a href="pages/contact.html">Contact</a></li>
+              <li><a href="../index.html">Home</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="contact.html">Contact</a></li>
             </ul>
           </div>
           <div class="link-col site-footer__link-col">
             <h4>Jobs</h4>
             <ul>
               <li><a href="#jobs">Search Jobs</a></li>
-              <li><a href="#companies">Companies</a></li>
+              <li><a href="companies/company-list.html">Companies</a></li>
               <li><a href="#post-job">Post a Job</a></li>
             </ul>
           </div>
           <div class="link-col site-footer__link-col">
             <h4>Resources</h4>
             <ul>
-              <li><a href="pages/visaGuidance.html">Visa Guidance</a></li>
+              <li><a href="visaGuidance.html">Visa Guidance</a></li>
               <li><a href="#">Employer Hub</a></li>
-              <li><a href="pages/privacy.html">Privacy</a></li>
+              <li><a href="privacy.html">Privacy</a></li>
             </ul>
           </div>
         </div>
@@ -541,8 +539,8 @@
             >&copy; 2025 Japan SSW. All rights reserved.</small
           >
           <nav aria-label="Footer legal">
-            <a href="pages/terms.html">Terms</a>
-            <a href="pages/privacy.html">Privacy</a>
+            <a href="terms.html">Terms</a>
+            <a href="privacy.html">Privacy</a>
           </nav>
         </div>
       </div>
@@ -554,72 +552,7 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
-
-    <!-- Site JavaScript (ES Module) -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-        
-        // --- Global Variables (Provided by Canvas Environment) ---
-        // Note: We are using the provided global variables to connect to Firebase services.
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
-        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-
-        let db;
-        let auth;
-        let userId = null;
-
-        // --- Firebase Initialization and Authentication ---
-
-        window.onload = function() {
-            // Initialize and Authenticate Firebase
-            try {
-                const app = initializeApp(firebaseConfig);
-                db = getFirestore(app);
-                auth = getAuth(app);
-
-                onAuthStateChanged(auth, async (user) => {
-                    const authStatusEl = document.getElementById('auth-status');
-                    
-                    if (user) {
-                        userId = user.uid;
-                        authStatusEl.textContent = `User ID: ${userId}`;
-                        authStatusEl.classList.remove('text-danger');
-                        authStatusEl.classList.add('text-success');
-                    } else {
-                        // Attempt token sign-in first if available
-                        if (initialAuthToken) {
-                            try {
-                                await signInWithCustomToken(auth, initialAuthToken);
-                                userId = auth.currentUser.uid;
-                                authStatusEl.textContent = `User ID: ${userId} (Custom Sign-in)`;
-                                authStatusEl.classList.remove('text-danger');
-                                authStatusEl.classList.add('text-success');
-                            } catch (error) {
-                                console.error("Custom token failed. Signing in anonymously.", error);
-                                await signInAnonymously(auth);
-                                userId = auth.currentUser.uid;
-                                authStatusEl.textContent = `User ID: ${userId} (Anon Fallback)`;
-                            }
-                        } else {
-                            // Anonymous sign-in if no token provided
-                            await signInAnonymously(auth);
-                            userId = auth.currentUser.uid;
-                            authStatusEl.textContent = `User ID: ${userId} (Anonymous)`;
-                        }
-                    }
-                    // Optional: Fade in the main content if using a loader, but here we just ensure the header is offset.
-                    document.querySelector('main').style.paddingTop = '60px'; // Adjust main content padding after header load
-                });
-
-            } catch (e) {
-                console.error("Firebase initialization failed:", e);
-                document.getElementById('auth-status').textContent = "Auth Error: Check console.";
-            }
-        };
-    </script>
+    
 
     <!-- Site JavaScript (ES Module) -->
     <script type="module" src="../assets/js/main.js"></script>

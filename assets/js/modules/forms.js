@@ -13,7 +13,7 @@
 
 /* Moved to archive/assets-js/modules/forms.js on 2025-09-17 */
 
-
+import { setCookie } from './storage.js';
 
 const setValidationState = (element, isValid, feedbackId = null, message = null) => {
     // Apply is-valid/is-invalid classes to the input element itself
@@ -183,25 +183,31 @@ export const initializeSignupValidation = () => {
 
         // Run FULL form validation on submit
         if (checkFormValidity(inputElements)) { 
-            console.log('Sign-up validation successful. Redirecting...');
+            console.log('Sign-up validation successful. Saving cookies and redirecting...');
             
-            // Redirect to the dashboard
-            const emailValue = encodeURIComponent(inputElements.email.value);
-            window.location.href = `addEdit/profile.html?email=${emailValue}`;
+            // --- COOKIE SAVING LOGIC ---
+            setCookie("email", inputElements.email.value);
+            setCookie("password", inputElements.password.value);
+            console.log("Cookies saved successfully.");
+            // ---------------------------
+            
+            // Redirect after a short delay (to ensure cookies write)
+            window.location.href = "addEdit/profile.html";
+
         } else {
             // Validation failed. Errors are now displayed by checkFormValidity()
             console.log('Sign-up validation failed. Errors displayed. Staying on page.');
         }
     };
 
-    // Attach form submission listener
+    // Form submission listener
     form.addEventListener('submit', handleSubmit, false);
 
     // --- Per-Field Real-Time Validation ---
     // Email: Check validity when user types
     inputElements.email.addEventListener('input', () => validateEmail(inputElements));
 
-    // Password: Check validity when user types. Also update confirmation field.
+    // Password: Check validity when user types
     inputElements.password.addEventListener('input', () => {
         validatePassword(inputElements);
         validatePasswordConfirm(inputElements); 

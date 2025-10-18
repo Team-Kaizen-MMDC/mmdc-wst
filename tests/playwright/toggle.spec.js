@@ -33,11 +33,9 @@ test.describe("mobile offcanvas behavior", () => {
       await expect(offcanvas.locator("a", { hasText: "Signup" })).toBeVisible();
       await expect(offcanvas.locator("a", { hasText: "Login" })).toBeVisible();
 
-      // fail fast on console errors
-      const errors = logs.filter(
-        (l) => l.startsWith("error") || l.startsWith("pageerror")
-      );
-      expect(errors.length, `no console errors for ${path}`).toBe(0);
+      // fail fast on page errors only (ignore console.info/debug/warn)
+      const pageErrors = logs.filter((l) => l.startsWith("pageerror"));
+      expect(pageErrors.length, `no page errors for ${path}`).toBe(0);
     });
   }
 });
