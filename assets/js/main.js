@@ -521,3 +521,45 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         });
+
+    //  JOB ALERT 
+    document.addEventListener('DOMContentLoaded', () => {
+        // 1. Get references to the elements
+        const emailInput = document.getElementById('newsletter-email');
+        const signupButton = document.getElementById('signup-button');
+        const jobAlertToastEl = document.getElementById('jobAlertToast');
+
+        // 2. Initialize the Bootstrap Toast component
+        // Note: bootstrap is available globally since the bundle script is loaded above
+        const jobAlertToast = new bootstrap.Toast(jobAlertToastEl, {
+            autohide: true,
+            delay: 5000 // Toast will hide after 5 seconds
+        });
+
+        // 3. Function to update the button state
+        const updateButtonState = () => {
+            // Check for a non-empty value and basic email format (containing '@')
+            const isValid = emailInput.value.trim() !== '' && emailInput.value.includes('@');
+       
+        };
+
+        // 4. Enable/Disable the button based on input
+        emailInput.addEventListener('input', updateButtonState);
+
+        // Run once on load in case the browser pre-fills the input
+        updateButtonState();
+
+        // 5. Show the Toast on button click (Demo action)
+        signupButton.addEventListener('click', (event) => {
+            event.preventDefault(); // Prevent default form submission behavior (though this isn't a form, it's good practice)
+
+            if (!signupButton.disabled) {
+                //DEMO ACTION: Show the success Toast
+                jobAlertToast.show();
+
+                //DEMO ACTION: Clear the input field and disable the button after "signing up"
+                emailInput.value = '';
+                updateButtonState();
+            }
+        });
+    });
