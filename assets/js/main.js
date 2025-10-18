@@ -534,7 +534,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-<<<<<<< HEAD
 // Inject and handle Dark/Light Mode Toggle (Desktop + Mobile)
 // Author: MK
 document.addEventListener("DOMContentLoaded", function () {
@@ -649,7 +648,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });                                                                                                                                                                                      
-=======
       // --- FilterData (normalized) Job listed ---
       const jobData = [
         { id: 1, title: "Mechanic Ground Support", company: "Japan Airline", location: "tokyo", industry: "aviation", salary: 220000, japaneseLevel: "n4", support: "yes" },
@@ -905,4 +903,3 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
->>>>>>> origin/main
