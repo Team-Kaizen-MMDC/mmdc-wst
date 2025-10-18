@@ -235,3 +235,39 @@
             transform: scale(1.02);
             z-index: 10;
         }
+
+        /* --- Form-specific Layout and Typography Overrides --- */
+        /* --- Add/Edit forms Styles --- */
+        .form-container {
+          /* w-100 is handled by Bootstrap utility class, but max-width is custom */
+          max-width: 650px;
+          min-width: 500px;
+        }
+        
+        .form-container .h3 {
+          /* Override for h3 elements inside the form-container */
+          font-size: 20px !important;
+        }
+        
+        /* --- Custom Button Component --- */
+        
+        .btn-custom-red {
+          /* Base styles for the custom red button */
+          background-color: #ef4444;
+          border-color: #ef4444;
+          color: white !important;
+          transition: background-color 0.15s ease-in-out;
+        }
+        
+        .btn-custom-red:hover {
+          /* Hover state for the custom red button */
+          background-color: #b91c1c;
+          border-color: #b91c1c;
+          color: white !important;
+        }
+
+
+
+
+
+
