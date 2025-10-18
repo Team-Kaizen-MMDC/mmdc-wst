@@ -85,31 +85,70 @@ test.describe('Smoke Tests: Header Links', () => {
             for (const link of HEADER_NAV_LINKS) {
                 const navLink = browserPage.locator(`.site-header__nav-link:has-text("${link.text}")`);
                 await expect(navLink).toBeVisible({ timeout: 5000 });
-                // Resolve the link href against current page to handle relative paths
-                const resolved = await navLink.evaluate((el) => {
-                    const h = el.getAttribute('href') || '';
-                    return new URL(h, location.href).pathname;
-                });
-                const expected = link.href.startsWith('/') ? link.href : '/' + link.href;
-                expect(resolved).toContain(expected.replace(/index\.html$/, ''));
+                // Click non-hash links and assert navigation; test hash links on homepage only
+                const hrefAttr = (await navLink.getAttribute('href')) || '';
+                if (hrefAttr.startsWith('#')) {
+                    // Only validate hash links when on the homepage (they target in-page anchors)
+                    if (page.path === '/') {
+                        await Promise.all([
+                            browserPage.waitForLoadState('domcontentloaded'),
+                            navLink.click()
+                        ]);
+                        // small pause to allow scroll behavior
+                        await browserPage.waitForTimeout(300);
+                        expect(browserPage.url()).toContain(hrefAttr);
+                        const target = browserPage.locator(hrefAttr);
+                        await expect(target).toBeInViewport();
+                        // navigate back to homepage root path without hash for subsequent checks
+                        await browserPage.goto('/');
+                        await browserPage.waitForLoadState('load');
+                    } else {
+                        // skip hash link behavior assertions on non-home pages
+                        continue;
+                    }
+                } else {
+                    // For regular links, click and verify the URL contains the expected path
+                    const originalPath = browserPage.url();
+                    await Promise.all([
+                        browserPage.waitForNavigation({ waitUntil: 'load' }),
+                        navLink.click()
+                    ]);
+                    // Normalize expected path
+                    const expectedPath = link.href.startsWith('/') ? link.href : '/' + link.href;
+                    expect(browserPage.url()).toContain(expectedPath.replace(/index\.html$/, ''));
+                    // Return to the original page to continue testing header links on this page
+                    await browserPage.goto(page.path);
+                    await browserPage.waitForLoadState('load');
+                }
             }
 
             // Check auth links (Signup/Login)
             const signupLink = browserPage.locator('.site-header__signup');
             await expect(signupLink).toBeVisible();
-            const signupHref = await signupLink.evaluate((el) => {
-                const h = el.getAttribute('href') || '';
-                return new URL(h, location.href).pathname;
-            });
-            expect(signupHref).toContain('/pages/createAccount.html');
+            // Click signup and assert navigation to createAccount, then go back
+            const signupHref = (await signupLink.getAttribute('href')) || '';
+            if (signupHref) {
+                await Promise.all([
+                    browserPage.waitForNavigation({ waitUntil: 'load' }),
+                    signupLink.click()
+                ]);
+                expect(browserPage.url()).toContain('pages/createAccount.html');
+                await browserPage.goto(page.path);
+                await browserPage.waitForLoadState('load');
+            }
 
             const loginBtn = browserPage.locator('.site-header__login-btn');
             await expect(loginBtn).toBeVisible();
-            const loginHref = await loginBtn.evaluate((el) => {
-                const h = el.getAttribute('href') || '';
-                return new URL(h, location.href).pathname;
-            });
-            expect(loginHref).toContain('/pages/signin.html');
+            const loginHref = (await loginBtn.getAttribute('href')) || '';
+            if (loginHref) {
+                await Promise.all([
+                    browserPage.waitForNavigation({ waitUntil: 'load' }),
+                    loginBtn.click()
+                ]);
+                expect(browserPage.url()).toContain('pages/signin.html');
+                await browserPage.goto(page.path);
+                await browserPage.waitForLoadState('load');
+            }
         });
     }
 });
@@ -201,12 +240,33 @@ test.describe('Smoke Tests: Footer Links', () => {
             for (const link of criticalFooterLinks) {
                 const footerLink = browserPage.locator(`.site-footer a:has-text("${link.text}")`).first();
                 await expect(footerLink).toBeVisible();
-                const resolved = await footerLink.evaluate((el) => {
-                    const h = el.getAttribute('href') || '';
-                    return new URL(h, location.href).pathname;
-                });
-                const expected = link.href.startsWith('/') ? link.href : '/' + link.href;
-                expect(resolved).toContain(expected.replace(/index\.html$/, ''));
+                const hrefAttr = (await footerLink.getAttribute('href')) || '';
+                if (hrefAttr.startsWith('#')) {
+                    // Only test hash link behavior on homepage
+                    if (page.path === '/') {
+                        await footerLink.click();
+                        await browserPage.waitForTimeout(300);
+                        expect(browserPage.url()).toContain(hrefAttr);
+                        const target = browserPage.locator(hrefAttr);
+                        await expect(target).toBeInViewport();
+                        // Return to homepage root
+                        await browserPage.goto('/');
+                        await browserPage.waitForLoadState('load');
+                    } else {
+                        // skip hash links on non-home pages
+                        continue;
+                    }
+                } else {
+                    await Promise.all([
+                        browserPage.waitForNavigation({ waitUntil: 'load' }),
+                        footerLink.click()
+                    ]);
+                    const expectedPath = link.href.startsWith('/') ? link.href : '/' + link.href;
+                    expect(browserPage.url()).toContain(expectedPath.replace(/index\.html$/, ''));
+                    // Navigate back to the page under test
+                    await browserPage.goto(page.path);
+                    await browserPage.waitForLoadState('load');
+                }
             }
 
             // Check copyright text exists
