@@ -284,7 +284,8 @@
     <script type="module" src="../../assets/js/modules/storage.js"></script>
     <script type="module">
       import { setCookie, getCookie } from '../../assets/js/modules/storage.js';
-      
+      import { checkAuthAndRedirect } from '../../assets/js/modules/auth.js';
+
       // Get the form by its ID
       const form = document.getElementById('profileForm');
       
@@ -400,6 +401,7 @@
 
       // INITIALIZATION
       window.addEventListener('DOMContentLoaded', () => {
+        checkAuthAndRedirect();
         populateNationalitySelect();
         
         loadProfileData(); 
