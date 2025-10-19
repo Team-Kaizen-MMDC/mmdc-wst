@@ -426,12 +426,257 @@
 <!-- Company Profile Tab Pane -->
   <div class="tab-pane" id="company-pane" role="tabpanel" 
   aria-labelledby="company-tab" tabindex="0">
-    <div class="alert alert-secondary shadow-sm" role="alert">
-            <h5 class="alert-heading fw-bold">Applicant List</h5>
-            <p class="mb-3">Update your company details, logo, contact information, and public facing description here..</p>
-            <button class="btn btn-primary">Create New Post</button>
+       <!-- MAIN CONTENT --> 
+   <div class="container my-5">
+      <div class="row g-4">
+        
+        <!-- PROFILE -->
+      <div class="col-12 col-md-6">
+     <div class="card shadow-sm position-relative" style="min-height: 150px;">
+    
+         
+            <!-- Hidden File Input for Cover Image -->
+            <input type="file" id="coverImageUpload" accept="image/*" style="display: none;">
+            <input type="file" id="avatarImageUpload" accept="image/*" style="display: none;">
+
+            <!-- Cover Image-->
+            <img
+                id="profileCoverImage"
+                src="https://placehold.co/1000x120/1e3a8a/ffffff?text=Cityscape+Cover"
+                alt="Profile cover image"
+                class="w-100 h-100 object-fit-cover position-absolute top-0 start-0 rounded-4"
+                style="object-fit: cover; z-index: 1;"
+                onerror="this.src='https://placehold.co/1000x120/1e3a8a/ffffff?text=Cover+Image+Fallback'"
+            />
+            
+             <!-- Layer 3: Completion Status + Upload Button (NEW) - Z-INDEX: 10 -->
+            <a href="#" 
+               class="profile-cta-link position-absolute top-0 end-0 p-3 d-flex align-items-center justify-content-end gap-2 text-end text-decoration-none" 
+               style="z-index: 10;"
+               onclick="document.getElementById('coverImageUpload').click(); return false;"
+            >
+                <p class="text-white mb-0 small">Profile Completion: <strong class="text-info">55%</strong></p>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-camera" viewBox="0 0 16 16">
+                        <path d="M15 12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h1.172a3 3 0 0 0 2.12-.879l.83-.828A1 1 0 0 1 6.827 3h2.344a1 1 0 0 1 .707.293l.828.828A3 3 0 0 0 12.828 5H14a1 1 0 0 1 1 1zM2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4z"/>
+                        <path d="M8 11a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5m0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7M3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0"/>
+                    </svg>
+            </a>
+
+            <!-- Dark Overlay for contrast -->
+            <div 
+                class="position-absolute w-100 h-100 top-0 start-0 z-index-2" 
+                style="background: rgba(0, 0, 0, 0.4); border-radius: 0.5rem;"
+            ></div>
+
+   <!-- Profile Avatar (Overlapping) - Adjusted left position to 1rem -->
+             <a href="#" 
+               class="profile-cta-link rounded-circle position-absolute border border-white border-4 shadow-smtext-decoration-none" 
+               style="z-index: 10;"
+               onclick="document.getElementById('avatarImageUpload').click(); return false;"
+            >
+             <img
+                src="https://placehold.co/100x100/fecaca/991b1b?text=JD"
+                alt="Profile picture"
+                class="rounded-circle position-absolute border border-white border-4 shadow-sm"
+                style="width:100px; height:100px; top: 80px; left: 1rem; object-fit: cover; z-index: 10;"
+                onerror="this.src='https://placehold.co/100x100/fecaca/991b1b?text=Avatar+Fallback'"
+            />
+            </a>
+
+    <div class="card-body d-flex flex-column h-100">
+      
+      <div style="height: 50px;"></div> 
+      
+     
+      
+    </div>
+  </div>
+</div>
+
+        <!-- Profile Summary-->
+        <div class="col-12 col-md-6">
+          <div class="card shadow-sm h-100 rounded-4">
+            <div class="card-header bg-white">
+                  <div class="d-flex justify-content-between">
+
+                <h6 class="card-title mb-0">Company Overview</h6>
+                     <!-- Edit Button (Initially visible) -->
+                       <a href="#" class="link-danger link-offset-2 
+                       link-underline-opacity-25 link-underline-opacity-100-hover text-decoration-none"
+                          id="edit-btn"
+                          onclick="toggleEditMode(true)"
+                          >Edit</a>
+
+                        <!-- Save Button (Initially hidden) -->
+                          <a href="#" class="text-decoration-none d-none"
+                            id="save-btn"
+                             onclick="toggleEditMode(false)"
+                            >Save</a>
+              </div>
+            </div>
+           
+            <div class="card-body">
+                <!-- The main container for the text and controls (using Bootstrap flex and gap) -->
+                <div class="d-flex flex-column gap-3">
+                    <!-- Read-Only Display Area -->
+                    <div id="read-display" 
+                    class="p-3 bg-white rounded-3 text-secondary lh-base border shadow-inset"
+                      style="min-height: 100px;">
+                        <p id="text-content" class="mb-0">
+                            This is the default profile description. Click 'Edit' to make changes.  
+                        </p>
+                    </div>
+
+                    <!-- Editable Textarea (Initially hidden) -->
+                    <textarea
+                        id="edit-input"
+                        class="form-control p-3 bg-light text-secondary lh-base border rounded-3 shadow-inset d-none resize-y"
+                        rows="3"
+                        maxlength="170"
+                    >This is the default profile description. Click 'Edit' to make changes.</textarea>
+                      <small id="char-count" class="text-muted d-none">
+                      0 / 170 characters
+                        </small>
+                </div>  
+            </div>
+          </div>
+        </div>
+
+        <!-- BASIC INFO -->
+        <div class="col-12 col-md-6">
+          <div class="card shadow-sm h-100">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <h5 class="card-title mb-0">Company template Inc</h5>
+                <p><a href="#" class="link-danger link-offset-2 
+                  link-underline-opacity-25 link-underline-opacity-100-hover">
+                  Edit</a></p>
+              </div>
+              <p class="text-muted">Powering the future of construction</p>
+              <p class="text-muted">Osaka, Japan</p>
+              <hr />
+              <div class="row">
+                <div class="col-6 small"><span class="fw-bold">Industry:</span> Construction, Real Estate</div>
+                <div class="col-6 small"><span class="fw-bold">Founded:</span> 2013</div>
+                <div class="col-6 small"><span class="fw-bold">headquater:</span> Minato, Tokyo</div>
+              </div>       
+             <div id="website">
+         <p><a class="link-opacity-75-hover d-block mt-3" href="#">www.company-template.com</a></p>
+        </div>
+            
+            </div>
+          </div>
+        </div>
+
+            <!-- APPLICATION + NOTIFICATIONS -->
+        <div class="col-12 col-md-6">
+          <div class="card shadow-sm h-100">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6 border-md-end mb-3 mb-md-0">
+                  <h6 class="fw-bold d-flex justify-content-between align-items-center mb-3">
+                    Data
+                   <!-- NEW BUTTON to trigger the Bootstrap Modal -->
+                    <button class="btn btn-outline-danger px-2 shadow-sm" data-bs-toggle="modal" data-bs-target="#applicationDetailModal">
+                        ->
+                    </button>
+                    </h6>
+                  <p class="mb-0"><span class="fw-bold">Year in Business: </span> 12 years</p>
+                  <p class="mb-0"><span class="fw-bold">Number of Employees: </span>200</p>
+                  <p class="mb-0"><span class="fw-bold">Office: </span> 5</p>
+                  <p class="mb-0"><span class="fw-bold">Project: </span>25</p>
+                </div>
+                 <div class="col-md-6 ps-md-4 mt-md-2">
+                  <h6 class="fw-bold">Contact</h6>
+                  <p><a class="link-opacity-75-hover" href="#">Facebook</a></p>
+                  <p><a class="link-opacity-75-hover" href="#">Instagram</a></p>
+                  <p><a class="link-opacity-75-hover" href="#">company@template.com</a></p>
+                  <p><a class="link-opacity-75-hover" href="#">+81 080 4123 1123</a></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- About US -->
+        <div class="col-12 col-md-12">
+          <div class="card shadow-sm">
+            <div class="card-header d-flex justify-content-between">
+              <h6 class="mb-0">About Us</h6>
+              <a href="addEdit/skill.html" class="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover small">Edit</a>
+            </div>
+            <div class="card-body d-flex justify-content-between align-items-center">
+              <p>Lorem ipsum dolor sit amet consectetur. At libero morbi tempor porta diam euismod. Sed sed eget at dui adipiscing amet massa diam. Rutrum urna elit vitae fames lorem blandit. Posuere metus adipiscing pharetra aliquet pellentesque. Velit vulputate varius mauris est scelerisque volutpat. 
+                
+                Magna amet felis sed eget massa et mauris. In bibendum tellus quisque gravida id tincidunt elementum urna vel.
+
+              Eu lacinia adipiscing vitae erat nisl quis urna nunc. In cursus venenatis eu tellus id mauris pharetra pretium vel. Egestas vulputate sit nunc cursus pharetra velit. Nunc at lectus vel egestas. Ac volutpat augue accumsan tellus sed. Leo vitae id elementum massa. Amet condimentum sit porttitor lectus aliquam sit tristique eget praesent.
+              </p>
+      
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+
+       <!-- APPLICATION DETAIL MODAL -->
+    <div class="modal fade" id="applicationDetailModal" tabindex="-1" aria-labelledby="applicationDetailModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content rounded-4 shadow-lg">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold text-primary" id="applicationDetailModalLabel">Full Application History</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body pt-0">
+                    <p class="text-muted small mb-4">Detailed tracking of all job applications submitted through Japan SSW.</p>
+                    <div class="table-responsive">
+                        <table class="table table-striped align-middle">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Job Title / Company</th>
+                                    <th scope="col">Location</th>
+                                    <th scope="col">Date Applied</th>
+                                    <th scope="col">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><div class="fw-semibold">Caregiver</div><div class="small text-muted">XYZ Care Solutions</div></td>
+                                    <td>Osaka</td>
+                                    <td>2025/09/01</td>
+                                    <td><span class="badge bg-info-subtle text-info border border-info-subtle">Interview Scheduled</span></td>
+                                </tr>
+                                <tr>
+                                    <td><div class="fw-semibold">Hotel Desk Staff</div><div class="small text-muted">Kyoto Grand Inn</div></td>
+                                    <td>Kyoto</td>
+                                    <td>2025/08/15</td>
+                                    <td><span class="badge bg-warning-subtle text-warning border border-warning-subtle">Under Review</span></td>
+                                </tr>
+                                <tr>
+                                    <td><div class="fw-semibold">Ground Handling</div><div class="small text-muted">Japan Airline</div></td>
+                                    <td>Tokyo</td>
+                                    <td>2025/08/01</td>
+                                    <td><span class="badge bg-danger-subtle text-danger border border-danger-subtle">Rejected</span></td>
+                                </tr>
+                                <tr>
+                                    <td><div class="fw-semibold">Food Processor</div><div class="small text-muted">AgriFoods Japan</div></td>
+                                    <td>Hokkaido</td>
+                                    <td>2025/07/20</td>
+                                    <td><span class="badge bg-success-subtle text-success border border-success-subtle">Applied</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Download Report</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
   </div>
 </main>
     
