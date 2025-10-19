@@ -415,14 +415,115 @@
 </div>
 
     <!-- Job Management Tab Pane -->
-  <div class="tab-pane" id="applicant-pane" role="tabpanel" 
+
+  <!-- Applicant Tracking Tab Pane -->
+  <div class="tab-pane fade p-0" id="applicant-pane" role="tabpanel" 
   aria-labelledby="applicant-tab" tabindex="0">
-  <div class="alert alert-secondary shadow-sm" role="alert">
-            <h5 class="alert-heading fw-bold">Applicant List</h5>
-            <p class="mb-3">This section is  filter table, can view applicant set interview and show metric, review, and change the status of all applicants across your job posting.</p>
-            <button class="btn btn-primary">Create New Post</button>
+ <div class="card p-4 shadow-sm">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="fw-bold mb-0">Applicant List</h4>
+    <!--Modal function metric pop-->
+    <button class="btn btn-danger fw-bold">View Applicant Metric</button>
+  </div>
+      <!--Responsive Table Container-->
+      <div class="table-responsive">
+        <table class="table table-striped table-hover
+        table-group-divider align-middle">
+          <thead class="table-light">
+            <tr>
+              <th scope="col" style="width: 20%;">Name</th>
+              <th scope="col" style="width: 20%;">Position</th>
+              <th scope="col" style="width: 20%;">Location</th>
+              <th scope="col" style="width: 15%;">Applied</th>
+              <th scope="col" style="width: 10%;">Status</th>
+              <th scope="col" style="width: 15%;">Action</th>
+          </tr>
+        </thead>  
+         <tbody>
+          <!--Row 1-->
+          <tr>
+            <td>
+                 <!--scalable to Profile Image-->
+              <p class="FullName fw-semibold mb-0">Dela Cruz, Juan</p>
+            </td>
+            <td class="location">Server Restaurant</td>
+            <td class="text-left">Quezon City, Philippines</td>
+             <td class="text-left">Oct 10, 2025</td>
+             <!--Review, Interview Scheduled, Final Stage,Hired, Rejected-->
+             <td><span class="badge text-bg-light">Review</span></td>
+            <td>
+              <button class="btn btn-sm btn-outline-primary me-2">View Profile</button> 
+            </td>
+          </tr>
+          <!--Row 2-->
+          <tr>
+            <td>
+                 <!--scalable to Profile Image-->
+              <p class="FullName fw-semibold mb-0">John Doe, Lenon</p>
+            </td>
+            <td class="location">House Construction</td>
+            <td class="text-left">Yokohama, Kanagawa</td>
+             <td class="text-left">Sept 24, 2025</td>
+             <!--Review, Interview Scheduled, Final Stage,Hired, Rejected-->
+             <td><span class="badge text-bg-dark">Interview Scheduled</span></td>
+            <td>
+              <button class="btn btn-sm btn-outline-primary me-2">View Profile</button> 
+            </td>
+          </tr>
+          <!--Row 3-->
+          <tr>
+            <td>
+                 <!--scalable to Profile Image-->
+              <p class="FullName fw-semibold mb-0">Levi, Cabalon</p>
+            </td>
+            <td class="location">Mechanic Ground Support</td>
+            <td class="text-left">Haneda, Tokyo</td>
+             <td class="text-left">Sept 24, 2025</td>
+             <!--Review, Interview Scheduled, Final Stage,Hired, Rejected-->
+             <td><span class="badge text-bg-warning">Final Stage</span></td>
+            <td>
+              <button class="btn btn-sm btn-outline-primary me-2">View Profile</button> 
+            </td>
+          </tr>
+           <!--Row 4-->
+          <tr>
+            <td>
+                 <!--scalable to Profile Image-->
+              <p class="FullName fw-semibold mb-0">Mellisa, Sebastian</p>
+            </td>
+            <td class="location">Ward Nursing</td>
+            <td class="text-left">Shibuya, Tokyo</td>
+             <td class="text-left">Sept 02, 2025</td>
+             <!--Review, Interview Scheduled, Final Stage,Hired, Rejected-->
+             <td><span class="badge text-bg-success">Hired</span></td>
+            <td>
+              <button class="btn btn-sm btn-outline-primary me-2">View Profile</button> 
+            </td>
+          </tr>
+            <!--Row 4-->
+          <tr>
+            <td>
+                 <!--scalable to Profile Image-->
+              <p class="FullName fw-semibold mb-0">Mendez, Castillo</p>
+            </td>
+            <td class="location">Machine Operator</td>
+            <td class="text-left">Iwata, Shizuoka</td>
+             <td class="text-left">Oct 15, 2025</td>
+             <!--Review, Interview Scheduled, Final Stage,Hired, Rejected-->
+             <td><span class="badge text-bg-secondary">Rejected</span></td>
+            <td>
+              <button class="btn btn-sm btn-outline-primary me-2">View Profile</button> 
+            </td>
+          </tr>
+
+
+         </tbody> 
+        
+        </table>
+      </div>
  </div>
 </div>
+
 <!-- Company Profile Tab Pane -->
   <div class="tab-pane" id="company-pane" role="tabpanel" 
   aria-labelledby="company-tab" tabindex="0">
