@@ -904,23 +904,21 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
         //  NAV TAB color ling when ACTIVE
-   document.addEventListener('DOMContentLoaded', () => {     
-  // Get all nav tab buttons
-  const tabButtons = document.querySelectorAll('#dashboardTabs button[data-bs-toggle="tab"]');
+        document.addEventListener('DOMContentLoaded', () => { 
+         const tabButtons = document.querySelectorAll('#dashboardTabs button[data-bs-toggle="tab"]');
 
-
-  // Add event listener using Bootstrap's tab event
+ 
   tabButtons.forEach(button => {
-    button.addEventListener('shown.bs.tab', function(event){
+    button.addEventListener('click', function() {
       // Remove active colors from all tabs
       tabButtons.forEach(btn => {
-        btn.classList.remove('text-danger', 'fw-bold');
+        btn.classList.remove('text-danger', 'active', 'fw-bold');
         btn.classList.add('text-secondary');
       });
 
       // Add active colors to clicked tab
       this.classList.remove('text-secondary');
-      this.classList.add('text-danger', 'fw-bold');
+      this.classList.add('text-danger', 'active', 'fw-bold');
     });
   });
-}); 
+   });
