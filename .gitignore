@@ -143,3 +143,17 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 # Ignore only Copilot instructions file in .github
 .github/copilot_instructions.md
+
+# Playwright test artifacts
+test-results/
+tests/playwright/results/
+
+# Nested Playwright results (some runs generate a nested `tests/playwright/tests/playwright/results` tree)
+tests/playwright/tests/playwright/results/
+tests/playwright/tests/playwright/results/data/**
+
+# Temporary server logs created by run-tests.sh
+/tmp/mmdc-wst-server-*.log
+
+# Local Playwright report folder
+tests/playwright/report/
