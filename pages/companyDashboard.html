@@ -405,16 +405,112 @@
 </div>
 
   <!-- Job Management Tab Pane -->
-  <div class="tab-pane fade" id="job-pane" role="tabpanel" 
+  <div class="tab-pane fade p-0" id="job-pane" role="tabpanel" 
   aria-labelledby="job-tab" tabindex="0">
- <div class="alert alert-secondary shadow-sm" role="alert">
-            <h5 class="alert-heading fw-bold">Job Management</h5>
-            <p class="mb-3">This section is for managing job postings, create and updating details, and show job list with analytics.</p>
-            <button class="btn btn-primary">Create New Post</button>
+ <div class="card p-4 shadow-sm">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="fw-bold mb-0">Job List</h4>
+    <button class="btn btn-danger fw-bold">Post New Job</button>
+  </div>
+      <!--Responsive Table Container-->
+      <div class="table-responsive">
+        <table class="table table-striped table-hover
+        table-group-divider align-middle">
+          <thead class="table-light">
+            <tr>
+              <th scope="col" style="width: 30%;">Job Title</th>
+              <th scope="col" style="width: 30%;">Location</th>
+              <th scope="col" style="width: 10%;">applicants</th>
+              <th scope="col" style="width: 10%;">Status</th>
+              <th scope="col" style="width: 20%;">Action</th>
+          </tr>
+        </thead>  
+         <tbody>
+          <!--Row 1-->
+          <tr>
+            <td>
+              <p class="jobType fw-semibold mb-0">Machine Operator</p>
+              <small class="industry text-muted">Machinery</small>
+            </td>
+            <td class="location">Hamamatsu, Shizuoka</td>
+            <td class="text-center">25</td>
+             <td><span class="badge text-bg-success">Active</span></td>
+            <td>
+              <button class="btn btn-sm btn-outline-primary me-2">Edit</button>
+              <small><span>|</span></small>
+              <button class="btn btn-sm btn-outline-danger">Remove</button>
+            </td>
+          </tr>
+
+            <!--Row 2-->
+           <tr>
+            <td>
+              <p class="jobType fw-semibold mb-0">Mechanic Ground Support</p>
+              <small class="industry text-muted">Aviation</small>
+            </td>
+            <td class="location">Handeda, Tokyo</td>
+            <td class="text-center">12</td>
+             <td><span class="badge text-bg-secondary">Expired</span></td>
+            <td>
+              <button class="btn btn-sm btn-outline-primary me-2 ">Edit</button>
+                 <small><span>|</span></small>
+              <button class="btn btn-sm btn-outline-danger">Remove</button>
+            </td>
+          </tr>  
+               <!--Row 3-->
+           <tr>
+            <td>
+              <p class="jobType fw-semibold mb-0">Ward Nursing Support</p>
+              <small class="industry text-muted">Caregiver</small>
+            </td>
+            <td class="location">Yokohama, Kanagawa</td>
+            <td class="text-center">35</td>
+             <td><span class="badge text-bg-warning">Pending</span></td>
+            <td>
+              <button class="btn btn-sm btn-outline-primary me-2 ">Edit</button>
+                 <small><span>|</span></small>
+              <button class="btn btn-sm btn-outline-danger">Remove</button>
+            </td>
+          </tr> 
+                  <!--Row 4-->
+           <tr>
+            <td>
+              <p class="jobType fw-semibold mb-0">Server</p>
+              <small class="industry text-muted">Food Service</small>
+            </td>
+            <td class="location">Disneyland, Chiba</td>
+            <td class="text-center">100</td>
+             <td><span class="badge text-bg-success">Active</span></td>
+            <td>
+              <button class="btn btn-sm btn-outline-primary me-2 ">Edit</button>
+                 <small><span>|</span></small>
+              <button class="btn btn-sm btn-outline-danger">Remove</button>
+            </td>
+          </tr> 
+           <!--Row 4-->
+           <tr>
+            <td>
+              <p class="jobType fw-semibold mb-0">Home Construction</p>
+              <small class="industry text-muted">Constructor</small>
+            </td>
+            <td class="location">Namba, Osaka</td>
+            <td class="text-center">45</td>
+             <td><span class="badge text-bg-secondary">expired</span></td>
+            <td>
+              <button class="btn btn-sm btn-outline-primary me-2 ">Edit</button>
+                 <small><span>|</span></small>
+              <button class="btn btn-sm btn-outline-danger">Remove</button>
+            </td>
+          </tr>
+
+         </tbody> 
+        
+        </table>
+      </div>
  </div>
 </div>
 
-    <!-- Job Management Tab Pane -->
+    <!-- Applicant Tracking Tab Pane -->
   <div class="tab-pane" id="applicant-pane" role="tabpanel" 
   aria-labelledby="applicant-tab" tabindex="0">
   <div class="alert alert-secondary shadow-sm" role="alert">
