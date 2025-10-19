@@ -429,15 +429,27 @@
           </div>
         </div>
 
+         
+
         <!-- AVAILABILITY -->
         <div class="col-12 col-md-6">
-          <div class="card shadow-sm text-left">
-            <div class="card-body">
-              <h6 class="card-title">Availability / Preferences</h6>
-              <p class="small text-muted mb-0">[Add Preferences]</p>
-              <p class="small text-muted">(add preferences to get more job matches)</p>
+               <div class="card shadow-sm">
+            <div class="card-header d-flex justify-content-between">
+              <h6 class="mb-0">Availability / Preferences</h6>
+                <a href="addEdit/availability.html" class="small">Add</a>
+             
             </div>
-          </div>
+                     <div class="card-body d-flex justify-content-between align-items-center">
+                     
+                        <div id="availability-read-view">
+                           <p class="mb-0 small"><span class="fw-semibold">Status:</span> Kitchen</p>
+                            <p class="mb-1 small"><span class="fw-semibold">Location:</span> Tokyo</p>
+                            <p class="mb-1 small"><span class="fw-semibold">Work Preferences:</span> Full-time</p>
+                      
+                        </div>
+                         <a href="#" class="small" data-bs-toggle="modal" data-bs-target="#availabilityModal">Edit</a>
+                    </div>
+                </div>
         </div>
       </div>
     </main>
@@ -518,8 +530,8 @@
 
                           </div>
                              <div class="d-flex justify-content-end mt-3">
-                            <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                            <button type="button" class="btn btn-outline-secondary border me-2" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
                           </div>
                    </form>
                </div>
@@ -527,6 +539,48 @@
           </div>
         </div>
       </div>
+
+       <!-- Availability Modal -->
+    <div class="modal fade" id="availabilityModal" tabindex="-1" aria-labelledby="availabilityModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content rounded-4">
+                <div class="modal-header bg-light text-white rounded-top-4">
+                    <h5 class="modal-title" id="availabilityModalLabel">Availability & Preferences</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form onsubmit="saveAvailability(); return false;">
+                        <!-- Availability Edit View -->
+                          <div class="mb-3">
+                        <label class="form-label small fw-semibold">Status</label>
+                        <input type="text" class="form-control" value="Kitchen" required>
+                      </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-semibold">Preferred Location</label>
+                            <select class="form-select">
+                                <option selected>Tokyo</option>
+                                <option>Osaka</option>
+                                <option>Kyoto</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-semibold">Job Type</label>
+                            <select class="form-select">
+                                <option selected>Full-time</option>
+                                <option>Part-time</option>
+                                <option>Contract</option>
+                            </select>
+                        </div>
+                       
+                        <div class="d-flex justify-content-end mt-3">
+                            <button type="button" class="btn btn-outline-secondary border me-2" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
        <!-- APPLICATION DETAIL MODAL -->
     <div class="modal fade" id="applicationDetailModal" tabindex="-1" aria-labelledby="applicationDetailModalLabel" aria-hidden="true">
