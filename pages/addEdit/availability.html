@@ -106,5 +106,16 @@
       xintegrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
+    
+<script type="module">
+    import { checkAuthAndRedirect } from '../../assets/js/modules/auth.js'; 
+    import { initializeAvailabilityValidation } from '../../assets/js/modules/validation.js'; 
+
+    window.addEventListener('DOMContentLoaded', () => {
+        checkAuthAndRedirect();
+        initializeAvailabilityValidation(); 
+    });
+</script>
+
   </body>
 </html>

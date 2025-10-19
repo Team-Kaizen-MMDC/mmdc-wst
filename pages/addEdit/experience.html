@@ -76,32 +76,14 @@
           />
         </div>
 
-        <!-- Currently working checkbox -->
-        <div class="flex items-start">
-          <div class="flex items-center h-5">
-            <input
-              id="currentWork"
-              name="currentWork"
-              type="checkbox"
-              class="focus:ring-red-500 h-4 w-4 text-red-600 border-gray-300 rounded"
-            />
-          </div>
-          <div class="ml-2 text-sm">
-            <label for="currentWork" class="font-medium text-gray-700"
-              >Currently working</label
-            >
-          </div>
-        </div>
-
         <!-- Start Date -->
-        <div class="space-y-2">
-          <label class="block text-sm font-medium text-gray-700"
-            >Start Date*</label
-          >
-          <div class="flex space-x-4">
+    <div class="flex-grow-1"> 
+        <label for="startMonth" class="block text-sm font-medium text-gray-700">Start Date*</label>
+        
+        <div class="flex space-x-4"> 
             <select
-              id="startMonth"
-              class="block w-1/2 px-4 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
+                id="startMonth"
+                class="block w-1/2 px-4 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
             >
               <option value="">Month</option>
               <option>January</option>
@@ -117,6 +99,7 @@
               <option>November</option>
               <option>December</option>
             </select>
+
             <select
               id="startYear"
               class="block w-1/2 px-4 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
@@ -162,11 +145,11 @@
         </div>
 
         <!-- End Date -->
-        <div class="space-y-2">
-          <label class="block text-sm font-medium text-gray-700"
-            >End Date*</label
-          >
-          <div class="flex space-x-4">
+   <!--     <div class="space-y-2"> -->
+<div class="flex-grow-1" id="endDateWrapper"> 
+        <label class="block text-sm font-medium text-gray-700">End Date*</label>
+        
+        <div class="flex space-x-4" id="endDateSelects"> 
             <select
               id="endMonth"
               class="block w-1/2 px-4 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
@@ -185,6 +168,7 @@
               <option>November</option>
               <option>December</option>
             </select>
+            
             <select
               id="endYear"
               class="block w-1/2 px-4 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
@@ -228,6 +212,18 @@
             </select>
           </div>
         </div>
+
+
+        <div class="d-flex align-items-center mt-3">
+    <input 
+        id="currentlyWorking" 
+        type="checkbox" 
+        class="form-check-input me-2"
+    />
+    <label for="currentlyWorking" class="form-check-label text-sm font-medium text-gray-700">
+        I currently work here
+    </label>
+</div>
 
         <!-- Location -->
         <div>
@@ -279,5 +275,16 @@
         </div>
       </form>
     </div>
+
+    <script type="module">
+    import { checkAuthAndRedirect } from '../../assets/js/modules/auth.js'; 
+    import { initializeExperienceValidation } from '../../assets/js/modules/validation.js'; 
+
+    window.addEventListener('DOMContentLoaded', () => {
+        checkAuthAndRedirect();
+        initializeExperienceValidation(); 
+    });
+</script>
+
   </body>
 </html>

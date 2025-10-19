@@ -103,5 +103,16 @@
         </div>
       </form>
     </div>
+
+    <script type="module">
+    import { checkAuthAndRedirect } from '../../assets/js/modules/auth.js'; 
+    import { initializeContactValidation } from '../../assets/js/modules/validation.js'; 
+
+    window.addEventListener('DOMContentLoaded', () => {
+        checkAuthAndRedirect();
+        initializeContactValidation(); 
+    });
+</script>
+
   </body>
 </html>

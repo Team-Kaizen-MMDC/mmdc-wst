@@ -274,5 +274,16 @@
         </div>
       </form>
     </div>
+
+<script type="module">
+    import { checkAuthAndRedirect } from '../../assets/js/modules/auth.js'; 
+    import { initializeEducationValidation } from '../../assets/js/modules/validation.js'; 
+
+    window.addEventListener('DOMContentLoaded', () => {
+        checkAuthAndRedirect();
+        initializeEducationValidation(); 
+    });
+</script>
+
   </body>
 </html>

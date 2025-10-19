@@ -74,5 +74,16 @@
         </div>
       </form>
     </div>
+
+    <script type="module">
+    import { checkAuthAndRedirect } from '../../assets/js/modules/auth.js'; 
+    import { initializeSkillValidation } from '../../assets/js/modules/validation.js'; 
+
+    window.addEventListener('DOMContentLoaded', () => {
+        checkAuthAndRedirect();
+        initializeSkillValidation(); 
+    });
+</script>
+
   </body>
 </html>
