@@ -427,7 +427,7 @@
                 <div class="text-muted small">B.S. IT – Software Development</div>
                 <div class="small">2023 – 2028</div>
               </div>
-              <a href="#" class="small">Edit</a>
+              <a href="#" class="small" data-bs-toggle="modal" data-bs-target="#educationModal">Edit</a>
             </div>
           </div>
         </div>
@@ -714,6 +714,140 @@
             </div>
         </div>
     </div>
+
+       <!-- Education Modal -->
+            <div class="modal fade" id="educationModal" tabindex="-1" aria-labelledby="educationModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content rounded-4">
+                  
+                  <!-- Header -->
+                  <div class="modal-header bg-light text-white rounded-top-4">
+                    <h5 class="modal-title" id="experienceModalLabel">Education</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+
+                  <!-- Body -->
+                  <div class="modal-body p-4">
+                    <form onsubmit="saveEducation(); return false;">
+                      <h6 class="fw-bold mb-4 text-light">Edit Existing Entry</h6>
+
+                      <!-- Education Entry -->
+                      <div class="p-3 mb-4 border rounded-4 bg-light shadow-sm">
+                        <!-- School Title -->
+                        <div class="mb-3">
+                          <label class="form-label small fw-semibold">School</label>
+                          <input type="text" class="form-control rounded-md" value="Mapua Malayan Digital College" required />
+                        </div>
+
+                        <!-- Degree -->
+                        <div class="mb-3">
+                          <label class="form-label small fw-semibold">Degree</label>
+                          <input type="text" class="form-control rounded-md" value="B.S. IT" required />
+                        </div>
+
+                            <!-- Field of Study -->
+                        <div class="mb-3">
+                          <label class="form-label small fw-semibold">Software Development</label>
+                          <input type="text" class="form-control rounded-md" value="Software Development" required />
+                        </div>
+
+                        <!-- Start / End Dates -->
+                        <div class="row">
+                          <!-- Start Date -->
+                          <div class="col-md-6 mb-3">
+                            <label class="form-label small fw-semibold">Start Date*</label>
+                            <div class="row g-2">
+                              <div class="col">
+                                <select id="startMonth" class="form-select rounded-md">
+                                  <option value="">Month</option>
+                                  <option>January</option>
+                                  <option>February</option>
+                                  <option>March</option>
+                                  <option>April</option>
+                                  <option>May</option>
+                                  <option>June</option>
+                                  <option>July</option>
+                                  <option>August</option>
+                                  <option>September</option>
+                                  <option>October</option>
+                                  <option>November</option>
+                                  <option>December</option>
+                                </select>
+                              </div>
+                              <div class="col">
+                                <select id="startYear" class="form-select rounded-md">
+                                  <option value="">Year</option>
+                                  <option>2024</option>
+                                  <option>2023</option>
+                                  <option>2022</option>
+                                  <option>2021</option>
+                                  <option>2020</option>
+                                  <option>2019</option>
+                                  <option>2018</option>
+                                  <option>2017</option>
+                                  <option>2016</option>
+                                  <option>2015</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+
+                          <!-- End Date -->
+                          <div class="col-md-6 mb-3">
+                            <label class="form-label small fw-semibold">End Date*</label>
+                            <div class="row g-2">
+                              <div class="col">
+                                <select id="endMonth" class="form-select rounded-md">
+                                  <option value="">Month</option>
+                                  <option>January</option>
+                                  <option>February</option>
+                                  <option>March</option>
+                                  <option>April</option>
+                                  <option>May</option>
+                                  <option>June</option>
+                                  <option>July</option>
+                                  <option>August</option>
+                                  <option>September</option>
+                                  <option>October</option>
+                                  <option>November</option>
+                                  <option>December</option>
+                                </select>
+                              </div>
+                              <div class="col">
+                                <select id="endYear" class="form-select rounded-md">
+                                  <option value="">Year</option>
+                                  <option>2024</option>
+                                  <option>2023</option>
+                                  <option>2022</option>
+                                  <option>2021</option>
+                                  <option>2020</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Remove Entry Button -->
+                        <div class="text-start">
+                          <button type="button" class="btn btn-sm btn-outline-danger rounded-md">
+                            <i class="bi bi-trash me-1"></i> Remove Entry
+                          </button>
+                        </div>
+                      </div>
+
+                      <hr class="my-3" />
+
+                      <!-- Modal Footer Buttons -->
+                      <div class="d-flex justify-content-end mt-3">
+                        <button type="button" class="btn btn-outline-secondary me-2 rounded-md" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-danger rounded-md">Save</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
        <!-- Availability Modal -->
     <div class="modal fade" id="availabilityModal" tabindex="-1" aria-labelledby="availabilityModalLabel" aria-hidden="true">
         <div class="modal-dialog">
