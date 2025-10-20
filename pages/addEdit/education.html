@@ -1,54 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Add/Edit Education</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="../../assets/css/main.css" />
-  </head>
-  <body class="bg-gray-100 flex items-center justify-center min-h-screen">
-    <div class="w-full max-w-2xl bg-white p-8 rounded-xl shadow-lg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Add/Edit Education</title>
+
+  <!-- Bootstrap 5.3.3 -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="../../assets/css/main.css" />
+</head>
+
+<body class="bg-light py-5">
+
+  <div class="container" style="max-width: 740px;">
+    <div class="bg-white p-4 rounded-4 shadow-lg"
+          style="width: 100%; max-width: 672px;">
+      
       <!-- Header -->
-      <div class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-bold text-gray-800">Education</h1>
-        <a
-          href="../../index.html"
-          class="text-gray-500 hover:text-gray-700 font-bold"
-        >
-          close
-        </a>
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h4 fw-bold text-dark mb-0">Education</h1>
+        <a href="../../index.html" class="text-secondary fw-semibold text-decoration-none">Close</a>
       </div>
 
       <!-- Form -->
-      <form class="space-y-6" action="experience.html" method="GET">
+      <form id="educationForm" action="experience.html" method="GET" novalidate>
+        
         <!-- School -->
-        <div>
-          <label for="school" class="block text-sm font-medium text-gray-700"
-            >School*</label
-          >
-          <input
+        <div class="mb-3">
+          <label for="school" class="form-label">School*</label>
+          <input 
             id="school"
             name="school"
             type="text"
             placeholder="Ex: Mapua University"
             required
-            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
+            class="form-control"
           />
         </div>
 
         <!-- Degree -->
-        <div>
-          <label for="degree" class="block text-sm font-medium text-gray-700"
-            >Degree*</label
-          >
-          <select
-            id="degree"
-            name="degree"
-            required
-            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
-          >
-            <option>Please Select</option>
+        <div class="mb-3">
+          <label for="degree" class="form-label">Degree*</label>
+          <select id="degree" name="degree" class="form-select" required>
+            <option value="">Please Select</option>
             <option>Associate Degree</option>
             <option>Bachelor's Degree</option>
             <option>Master's Degree</option>
@@ -58,221 +55,127 @@
         </div>
 
         <!-- Field of Study -->
-        <div>
-          <label for="field" class="block text-sm font-medium text-gray-700"
-            >Field of study*</label
-          >
+        <div class="mb-3">
+          <label for="field" class="form-label">Field of study*</label>
           <input
             id="field"
             name="field"
             type="text"
-            placeholder="Ex: Software Developmemt"
+            placeholder="Ex: Software Development"
             required
-            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
+            class="form-control"
           />
         </div>
 
         <!-- Start Date -->
-        <div class="space-y-2">
-          <label class="block text-sm font-medium text-gray-700"
-            >Start Date*</label
-          >
-          <div class="flex space-x-4">
-            <select
-              id="startMonth"
-              class="block w-1/2 px-4 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
-            >
-              <option value="">Month</option>
-              <option>January</option>
-              <option>February</option>
-              <option>March</option>
-              <option>April</option>
-              <option>May</option>
-              <option>June</option>
-              <option>July</option>
-              <option>August</option>
-              <option>September</option>
-              <option>October</option>
-              <option>November</option>
-              <option>December</option>
-            </select>
-            <select
-              id="startYear"
-              class="block w-1/2 px-4 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
-            >
-              <option value="">Year</option>
-              <option value="2024">2024</option>
-              <option value="2023">2023</option>
-              <option value="2022">2022</option>
-              <option value="2021">2021</option>
-              <option value="2020">2020</option>
-              <option value="2019">2019</option>
-              <option value="2018">2018</option>
-              <option value="2017">2017</option>
-              <option value="2016">2016</option>
-              <option value="2015">2015</option>
-              <option value="2014">2014</option>
-              <option value="2013">2013</option>
-              <option value="2012">2012</option>
-              <option value="2011">2011</option>
-              <option value="2010">2010</option>
-              <option value="2009">2009</option>
-              <option value="2008">2008</option>
-              <option value="2007">2007</option>
-              <option value="2006">2006</option>
-              <option value="2005">2005</option>
-              <option value="2004">2004</option>
-              <option value="2003">2003</option>
-              <option value="2002">2002</option>
-              <option value="2001">2001</option>
-              <option value="2000">2000</option>
-              <option value="1999">1999</option>
-              <option value="1998">1998</option>
-              <option value="1997">1997</option>
-              <option value="1996">1996</option>
-              <option value="1995">1995</option>
-              <option value="1994">1994</option>
-              <option value="1993">1993</option>
-              <option value="1992">1992</option>
-              <option value="1991">1991</option>
-              <option value="1990">1990</option>
-            </select>
+        <div class="mb-4">
+          <label for="startMonth" class="form-label">Start Date*</label>
+          <div class="row g-2">
+            <div class="col">
+              <select id="startMonth" name="startMonth" class="form-select" required>
+                <option value="">Month</option>
+              </select>
+            </div>
+            <div class="col">
+              <select id="startYear" name="startYear" class="form-select" required>
+                <option value="">Year</option>
+              </select>
+            </div>
           </div>
+          <div id="startMonthFeedback" class="invalid-feedback d-block mt-1" style="display:none;"></div>
         </div>
 
         <!-- End Date -->
-        <div class="space-y-2">
-          <label class="block text-sm font-medium text-gray-700"
-            >End Date*</label
-          >
-          <div class="flex space-x-4">
-            <select
-              id="endMonth"
-              class="block w-1/2 px-4 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
-            >
-              <option value="">Month</option>
-              <option>January</option>
-              <option>February</option>
-              <option>March</option>
-              <option>April</option>
-              <option>May</option>
-              <option>June</option>
-              <option>July</option>
-              <option>August</option>
-              <option>September</option>
-              <option>October</option>
-              <option>November</option>
-              <option>December</option>
-            </select>
-            <select
-              id="endYear"
-              class="block w-1/2 px-4 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
-            >
-              <option value="">Year</option>
-              <option value="2024">2024</option>
-              <option value="2023">2023</option>
-              <option value="2022">2022</option>
-              <option value="2021">2021</option>
-              <option value="2020">2020</option>
-              <option value="2019">2019</option>
-              <option value="2018">2018</option>
-              <option value="2017">2017</option>
-              <option value="2016">2016</option>
-              <option value="2015">2015</option>
-              <option value="2014">2014</option>
-              <option value="2013">2013</option>
-              <option value="2012">2012</option>
-              <option value="2011">2011</option>
-              <option value="2010">2010</option>
-              <option value="2009">2009</option>
-              <option value="2008">2008</option>
-              <option value="2007">2007</option>
-              <option value="2006">2006</option>
-              <option value="2005">2005</option>
-              <option value="2004">2004</option>
-              <option value="2003">2003</option>
-              <option value="2002">2002</option>
-              <option value="2001">2001</option>
-              <option value="2000">2000</option>
-              <option value="1999">1999</option>
-              <option value="1998">1998</option>
-              <option value="1997">1997</option>
-              <option value="1996">1996</option>
-              <option value="1995">1995</option>
-              <option value="1994">1994</option>
-              <option value="1993">1993</option>
-              <option value="1992">1992</option>
-              <option value="1991">1991</option>
-              <option value="1990">1990</option>
-            </select>
+        <div class="mb-4" id="endDateWrapper">
+          <label for="endMonth" class="form-label">End Date*</label>
+          <div class="row g-2" id="endDateSelects">
+            <div class="col">
+              <select id="endMonth" name="endMonth" class="form-select">
+                <option value="">Month</option>
+              </select>
+            </div>
+            <div class="col">
+              <select id="endYear" name="endYear" class="form-select">
+                <option value="">Year</option>
+              </select>
+            </div>
           </div>
+          <input
+            id="currentDateField"
+            type="text"
+            value="Current"
+            disabled
+            class="form-control bg-light text-secondary mt-2"
+            style="display:none;"
+          />
+        </div>
+
+        <!-- Checkbox -->
+        <div class="form-check mb-4">
+          <input class="form-check-input" type="checkbox" id="CurrentlyStudying" name="CurrentlyStudying">
+          <label class="form-check-label" for="CurrentlyStudying">
+            I currently study here
+          </label>
         </div>
 
         <!-- Grades -->
-        <div>
-          <label for="grades" class="block text-sm font-medium text-gray-700"
-            >Grades</label
-          >
+        <div class="mb-3">
+          <label for="grades" class="form-label">Grades</label>
           <input
             id="grades"
             name="grades"
             type="text"
             placeholder="Ex: 1.5"
-            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
+            class="form-control"
           />
         </div>
 
         <!-- Activities -->
-        <div>
-          <label
-            for="activities"
-            class="block text-sm font-medium text-gray-700"
-            >Activities</label
-          >
+        <div class="mb-3">
+          <label for="activities" class="form-label">Activities</label>
           <input
             id="activities"
             name="activities"
             type="text"
             placeholder="Ex: Tennis Omega"
-            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
+            class="form-control"
           />
         </div>
 
         <!-- Description -->
-        <div>
-          <label
-            for="description"
-            class="block text-sm font-medium text-gray-700"
-            >Description</label
-          >
+        <div class="mb-4">
+          <label for="description" class="form-label">Description</label>
           <textarea
             id="description"
             name="description"
             rows="4"
             placeholder="List your duties and responsibilities"
-            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
+            class="form-control"
           ></textarea>
         </div>
 
-        <!-- Buttons Section -->
-        <div class="flex flex-col items-center space-y-4 pt-4">
-          <!-- Skip Button (Above Save Button) -->
-          <a
-            href="experience.html"
-            class="text-sm font-medium text-gray-500 underline hover:text-red-600 focus:outline-none"
-          >
-            Skip
-          </a>
-
-          <!-- Save Button -->
-          <button
-            type="submit"
-            class="w-40 flex justify-center py-2 px-4 border border-transparent rounded-3xl shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-150 ease-in-out"
-          >
-            Save
-          </button>
+        <!-- Buttons -->
+        <div class="text-center">
+          <a href="experience.html" class="text-secondary text-decoration-underline d-block mb-3">Skip</a>
+          <button type="submit" class="btn btn-danger px-5 rounded-pill shadow-sm">Save</button>
         </div>
       </form>
     </div>
-  </body>
+  </div>
+
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Validation JS -->
+  <script type="module">
+    import { checkAuthAndRedirect } from '../../assets/js/modules/auth.js';
+    import { initializeEducationValidation } from '../../assets/js/modules/validation.js';
+
+    window.addEventListener('DOMContentLoaded', () => {
+      checkAuthAndRedirect();
+      initializeEducationValidation();
+    });
+  </script>
+
+</body>
 </html>

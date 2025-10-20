@@ -240,8 +240,8 @@
         /* --- Add/Edit forms Styles --- */
         .form-container {
           /* w-100 is handled by Bootstrap utility class, but max-width is custom */
-          max-width: 650px;
-          min-width: 500px;
+          max-width: 740px;
+          min-width: 530px;
         }
         
         .form-container .h3 {
