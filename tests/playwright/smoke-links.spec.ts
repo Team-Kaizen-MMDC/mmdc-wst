@@ -95,6 +95,14 @@ test.describe('Smoke Tests: Header Links', () => {
                     continue;
                 }
                 await expect(navLink).toBeVisible({ timeout: 5000 });
+                // Check href path style: if href exists and is not an external URL or hash,
+                // ensure it does not start with a leading '/pages/' which breaks on some hosts.
+                const rawHref = (await navLink.getAttribute('href')) || '';
+                if (rawHref && !rawHref.startsWith('#') && !/^https?:\/\//.test(rawHref)) {
+                    if (rawHref.startsWith('/pages/')) {
+                        throw new Error(`Found link using leading '/pages/' on ${page.path} for ${link.text}: ${rawHref}. Use 'pages/...' instead.`);
+                    }
+                }
                 // Click non-hash links and assert navigation; test hash links on homepage only
                 const hrefAttr = (await navLink.getAttribute('href')) || '';
                 // Treat links that include a hash (#) as hash links even when they use an absolute or
@@ -262,6 +270,11 @@ test.describe('Smoke Tests: Footer Links', () => {
                 const footerLink = browserPage.locator(`.site-footer a:has-text("${link.text}")`).first();
                 await expect(footerLink).toBeVisible();
                 const hrefAttr = (await footerLink.getAttribute('href')) || '';
+                if (hrefAttr && !hrefAttr.startsWith('#') && !/^https?:\/\//.test(hrefAttr)) {
+                    if (hrefAttr.startsWith('/pages/')) {
+                        throw new Error(`Footer link uses leading '/pages/' on ${page.path}: ${hrefAttr}. Use relative 'pages/...'`);
+                    }
+                }
                 if (hrefAttr.startsWith('#')) {
                     // Only test hash link behavior on homepage
                     if (page.path === '/') {

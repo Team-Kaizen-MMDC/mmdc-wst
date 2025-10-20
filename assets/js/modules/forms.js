@@ -188,8 +188,9 @@ export const initializeSignupValidation = () => {
             // --- COOKIE SAVING ---
             setCookie("email", inputElements.email.value);
             setCookie("password", inputElements.password.value);
-            console.log("Cookies saved successfully.");
-            
+            // --- LOGGED-IN COOKIE ---
+            setCookie('isLoggedIn', 'true', 1); // Sets the cookie for 1 day
+            console.log("Cookies saved successfully. Logged-in status set.");            
             window.location.href = "addEdit/profile.html";
 
         } else {
@@ -199,6 +200,8 @@ export const initializeSignupValidation = () => {
 
     // Form submission listener
     form.addEventListener('submit', handleSubmit, false);
+
+    
 
     // --- Per-Field Real-Time Validation ---
     // Email: Check validity when user types
@@ -266,6 +269,7 @@ export const initializeLoginValidation = () => {
         if (formValid) {
             console.log('Login validation successful. Proceeding to server/redirect.');
             // Mark user as logged in for Dark/Light toggle visibility | Author: MK
+            setCookie('isLoggedIn', 'true', 1); // Sets the persistent cookie for 1 day            form.submit();
             sessionStorage.setItem("isLoggedIn", "true");
             form.submit();
         } else {

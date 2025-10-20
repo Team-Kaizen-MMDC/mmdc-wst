@@ -11,7 +11,12 @@ module.exports = {
   reporter: [["list"], ["html", { outputFolder: "tests/playwright/results" }]],
   use: {
     headless: true,
-    baseURL: "http://localhost:8000",
+    // Allow overriding the base URL via environment variable so tests can run
+    // against a deployed site (e.g. GitHub Pages) without changing test code.
+    baseURL:
+      process.env.PLAYWRIGHT_BASE_URL ||
+      process.env.BASE_URL ||
+      "http://localhost:8000",
     trace: "on-first-retry",
     screenshot: "only-on-failure",
   },
