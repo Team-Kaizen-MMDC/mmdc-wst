@@ -744,13 +744,10 @@
             <div class="card-body">
               <div class="d-flex justify-content-between">
                 <h5 class="card-title mb-0">Company template Inc</h5>
-                <p><a href="#" class="link-danger link-offset-2 
-                  link-underline-opacity-25 link-underline-opacity-100-hover">
-                  Edit</a></p>
-              </div>
+             <a href="#" class="text-decoration-none"  data-bs-toggle="modal" data-bs-target="#basicInfoModal">Edit</a>
+            </div>
               <p class="text-muted">Powering the future of construction</p>
-              <p class="text-muted">Osaka, Japan</p>
-              <hr />
+              <p class="small text-muted">Osaka, Japan</p><hr />
               <div class="row">
                 <div class="col-6 small"><span class="fw-bold">Industry:</span> Construction, Real Estate</div>
                 <div class="col-6 small"><span class="fw-bold">Founded:</span> 2013</div>
@@ -814,6 +811,71 @@
         </div>
       </div>
     </div>
+
+        <!-- ========================================================================= -->
+    <!-- MODAL DEFINITIONS -->
+    <!-- ========================================================================= -->
+
+            <!-- Basic Information Modal -->
+              <!-- Basic Information Modal -->
+      <div class="modal fade" id="basicInfoModal" tabindex="-1" aria-labelledby="basicInfoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content rounded-4">
+            <div class="modal-header bg-light text-white rounded-top-4">
+            <h5 class="modal-title" id="basicInfoModalLabel">Basic Information</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="close">
+            </button>
+            </div>
+            <div class="modal-body">
+                  <!-- Basic Info Edit View (Moved from original inline HTML) -->
+                   <form onsubmit="saveBasicInfo(); return false;">
+                    <div class="mb-3">
+                      <label class="form-label small fw-semibold">Company</label>
+                      <input type="text" class="form-control" value="Company template Inc" required>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label small fw-semibold">Tagline</label>
+                      <input type="text" class="form-control" value="Power of Future!" required>
+                    </div>
+                     <div class="mb-3">
+                      <label class="form-label small fw-semibold">Location</label>
+                      <input type="text" class="form-control" value="Osaka, Japan" required>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label small fw-semibold">Headquarter</label>
+                      <input type="text" class="form-control" value="Minato, Tokyo" required>
+                    </div>
+                  <div class="row">
+                    <div class="col-6 mb-3">
+                                <label class="form-label small fw-semibold">Industry</label>
+                                  <select class="form-select">
+                                    <option selected>Food Service</option>
+                                    <option>Aviation</option>
+                                    <option>Caregiver</option>  
+                                    <option>Automotive</option>
+                                  <option>Other</option>    
+                                </select>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <label class="form-label small fw-semibold">Founded</label>
+                                <input type="number" class="form-control" value="2017" />
+                            </div>
+                             <div class="col-6 mb-3">
+                                <label class="form-label small fw-semibold">Website</label>
+                                <input type="text" class="form-control" value="www.company-template.com" required>
+                            </div>
+
+                          </div>
+                             <div class="d-flex justify-content-end mt-3">
+                            <button type="button" class="btn btn-outline-secondary border me-2" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                          </div>
+                   </form>
+               </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
        <!-- APPLICATION DETAIL MODAL -->
     <div class="modal fade" id="applicationDetailModal" tabindex="-1" aria-labelledby="applicationDetailModalLabel" aria-hidden="true">
