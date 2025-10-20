@@ -796,16 +796,16 @@
           <div class="card shadow-sm">
             <div class="card-header d-flex justify-content-between">
               <h6 class="mb-0">About Us</h6>
-              <a href="addEdit/skill.html" class="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover small">Edit</a>
+              <a href="#" class="text-decoration-none"  data-bs-toggle="modal" data-bs-target="#aboutDetailModal">Edit</a>
             </div>
             <div class="card-body d-flex justify-content-between align-items-center">
-              <p>Lorem ipsum dolor sit amet consectetur. At libero morbi tempor porta diam euismod. Sed sed eget at dui adipiscing amet massa diam. Rutrum urna elit vitae fames lorem blandit. Posuere metus adipiscing pharetra aliquet pellentesque. Velit vulputate varius mauris est scelerisque volutpat. 
-                
-                Magna amet felis sed eget massa et mauris. In bibendum tellus quisque gravida id tincidunt elementum urna vel.
+              <p>
+  Company Template Inc. is a forward-thinking construction technology company committed to transforming how buildings are designed, managed, and built. <br><br>
+  With a diverse team of engineers, project managers, and technology specialists, we combine decades of industry experience with modern data-driven tools. <br><br>
+  We take pride in building strong partnerships with our clients and communities. <br><br>
+  Looking ahead, Company Template Inc. continues to push boundaries in sustainable construction and workforce development.
+</p>
 
-              Eu lacinia adipiscing vitae erat nisl quis urna nunc. In cursus venenatis eu tellus id mauris pharetra pretium vel. Egestas vulputate sit nunc cursus pharetra velit. Nunc at lectus vel egestas. Ac volutpat augue accumsan tellus sed. Leo vitae id elementum massa. Amet condimentum sit porttitor lectus aliquam sit tristique eget praesent.
-              </p>
-      
             </div>
           </div>
         </div>
@@ -876,6 +876,41 @@
           </div>
         </div>
       </div>
+
+             <!-- ABOUT DETAIL MODAL -->
+                 <div class="modal fade" id="aboutDetailModal" tabindex="-1" aria-labelledby="aboutDetailModalLabel" aria-hidden="true">
+                   <div class="modal-dialog modal-lg">
+                     <div class="modal-content rounded-4">
+                       <div class="modal-header bg-light text-white rounded-top-4">
+                        <h5 class="modal-title" id="aboutDetailModalLabel">About Us</h5>
+                          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="close">
+                        </button>
+                       </div>
+                        <div class="modal-body">
+                           <!-- about us info -->
+                <div class="mb-3">
+                    <label for="about-us" class="form-label fw-semibold">Tell the world</label>
+                    <textarea
+                        id="about-us"
+                        name="about-us"
+                        rows="10"
+                        placeholder="Describe the company history and business. provide mission and vision and goal..."
+                        required
+                        class="form-control"
+                    ></textarea>
+                    <div class="invalid-feedback">A detailed about us is required.  
+                   </div>
+                </div>
+                     <div class="d-flex justify-content-end mt-3">
+                            <button type="button" class="btn btn-outline-secondary border me-2" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                          </div>
+                        </div>
+
+                     </div>
+
+                   </div>
+                 </div>
 
        <!-- APPLICATION DETAIL MODAL -->
     <div class="modal fade" id="applicationDetailModal" tabindex="-1" aria-labelledby="applicationDetailModalLabel" aria-hidden="true">
