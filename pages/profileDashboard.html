@@ -543,192 +543,143 @@
         </div>
       </div>
 
-       <!-- Experience Modal -->
-    <div class="modal fade" id="experienceModal" tabindex="-1" aria-labelledby="experienceModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content rounded-4">
-                <div class="modal-header bg-light text-white rounded-top-4">
+            <!-- Experience Modal -->
+            <div class="modal fade" id="experienceModal" tabindex="-1" aria-labelledby="experienceModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content rounded-4">
+                  
+                  <!-- Header -->
+                  <div class="modal-header bg-light text-white rounded-top-4">
                     <h5 class="modal-title" id="experienceModalLabel">Manage Experience</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
+                  </div>
+
+                  <!-- Body -->
+                  <div class="modal-body p-4">
                     <form onsubmit="saveExperience(); return false;">
-                        <h6 class="fw-bold mb-3">Edit Existing Entry</h6>
-                        <!-- Experience Edit View (Example for one entry) -->
-                        <div class="p-3 mb-3 border rounded-3 bg-light">
-                            <div class="mb-3">
-                                <label class="form-label small fw-semibold">Job Title</label>
-                                <input type="text" class="form-control" value="Service Crew" required />
+                      <h6 class="fw-bold mb-4 text-light">Edit Existing Entry</h6>
+
+                      <!-- Experience Entry -->
+                      <div class="p-3 mb-4 border rounded-4 bg-light shadow-sm">
+                        <!-- Job Title -->
+                        <div class="mb-3">
+                          <label class="form-label small fw-semibold">Job Title</label>
+                          <input type="text" class="form-control rounded-md" value="Service Crew" required />
+                        </div>
+
+                        <!-- Company -->
+                        <div class="mb-3">
+                          <label class="form-label small fw-semibold">Company</label>
+                          <input type="text" class="form-control rounded-md" value="McDonald's" required />
+                        </div>
+
+                        <!-- Start / End Dates -->
+                        <div class="row">
+                          <!-- Start Date -->
+                          <div class="col-md-6 mb-3">
+                            <label class="form-label small fw-semibold">Start Date*</label>
+                            <div class="row g-2">
+                              <div class="col">
+                                <select id="startMonth" class="form-select rounded-md">
+                                  <option value="">Month</option>
+                                  <option>January</option>
+                                  <option>February</option>
+                                  <option>March</option>
+                                  <option>April</option>
+                                  <option>May</option>
+                                  <option>June</option>
+                                  <option>July</option>
+                                  <option>August</option>
+                                  <option>September</option>
+                                  <option>October</option>
+                                  <option>November</option>
+                                  <option>December</option>
+                                </select>
+                              </div>
+                              <div class="col">
+                                <select id="startYear" class="form-select rounded-md">
+                                  <option value="">Year</option>
+                                  <option>2024</option>
+                                  <option>2023</option>
+                                  <option>2022</option>
+                                  <option>2021</option>
+                                  <option>2020</option>
+                                  <option>2019</option>
+                                  <option>2018</option>
+                                  <option>2017</option>
+                                  <option>2016</option>
+                                  <option>2015</option>
+                                </select>
+                              </div>
                             </div>
-                            <div class="mb-3">
-                                <label class="form-label small fw-semibold">Company</label>
-                                <input type="text" class="form-control" value="Mcdonald" required />
+                          </div>
+
+                          <!-- End Date -->
+                          <div class="col-md-6 mb-3">
+                            <label class="form-label small fw-semibold">End Date*</label>
+                            <div class="row g-2">
+                              <div class="col">
+                                <select id="endMonth" class="form-select rounded-md">
+                                  <option value="">Month</option>
+                                  <option>January</option>
+                                  <option>February</option>
+                                  <option>March</option>
+                                  <option>April</option>
+                                  <option>May</option>
+                                  <option>June</option>
+                                  <option>July</option>
+                                  <option>August</option>
+                                  <option>September</option>
+                                  <option>October</option>
+                                  <option>November</option>
+                                  <option>December</option>
+                                </select>
+                              </div>
+                              <div class="col">
+                                <select id="endYear" class="form-select rounded-md">
+                                  <option value="">Year</option>
+                                  <option>2024</option>
+                                  <option>2023</option>
+                                  <option>2022</option>
+                                  <option>2021</option>
+                                  <option>2020</option>
+                                </select>
+                              </div>
                             </div>
-                       
-      <div class="row">
-                  
-            <!-- Start Date -->
-        <div class="space-y-2">
-          <label class="Form-label small fw-semibold"
-            >Start Date*</label
-          >
-          <div class="flex space-x-4">
-            <select
-              id="startMonth"
-              class="block w-1/2 px-4 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
-            >
-              <option value="">Month</option>
-              <option>January</option>
-              <option>February</option>
-              <option>March</option>
-              <option>April</option>
-              <option>May</option>
-              <option>June</option>
-              <option>July</option>
-              <option>August</option>
-              <option>September</option>
-              <option>October</option>
-              <option>November</option>
-              <option>December</option>
-            </select>
-            <select
-              id="startYear"
-              class="block w-1/2 px-4 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
-            >
-              <option value="">Year</option>
-              <option value="2024">2024</option>
-              <option value="2023">2023</option>
-              <option value="2022">2022</option>
-              <option value="2021">2021</option>
-              <option value="2020">2020</option>
-              <option value="2019">2019</option>
-              <option value="2018">2018</option>
-              <option value="2017">2017</option>
-              <option value="2016">2016</option>
-              <option value="2015">2015</option>
-              <option value="2014">2014</option>
-              <option value="2013">2013</option>
-              <option value="2012">2012</option>
-              <option value="2011">2011</option>
-              <option value="2010">2010</option>
-              <option value="2009">2009</option>
-              <option value="2008">2008</option>
-              <option value="2007">2007</option>
-              <option value="2006">2006</option>
-              <option value="2005">2005</option>
-              <option value="2004">2004</option>
-              <option value="2003">2003</option>
-              <option value="2002">2002</option>
-              <option value="2001">2001</option>
-              <option value="2000">2000</option>
-              <option value="1999">1999</option>
-              <option value="1998">1998</option>
-              <option value="1997">1997</option>
-              <option value="1996">1996</option>
-              <option value="1995">1995</option>
-              <option value="1994">1994</option>
-              <option value="1993">1993</option>
-              <option value="1992">1992</option>
-              <option value="1991">1991</option>
-              <option value="1990">1990</option>
-            </select>
-          </div>
-        </div>
+                          </div>
+                        </div>
 
-        <!-- End Date -->
-        <div class="space-y-2">
-          <label class="form-label small fw-semibold"
-            >End Date*</label
-          >
-          <div class="flex space-x-4">
-            <select
-              id="endMonth"
-              class="block w-1/2 px-4 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
-            >
-              <option value="">Month</option>
-              <option>January</option>
-              <option>February</option>
-              <option>March</option>
-              <option>April</option>
-              <option>May</option>
-              <option>June</option>
-              <option>July</option>
-              <option>August</option>
-              <option>September</option>
-              <option>October</option>
-              <option>November</option>
-              <option>December</option>
-            </select>
-            <select
-              id="endYear"
-              class="block w-1/2 px-4 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
-            >
-              <option value="">Year</option>
-              <option value="2024">2024</option>
-              <option value="2023">2023</option>
-              <option value="2022">2022</option>
-              <option value="2021">2021</option>
-              <option value="2020">2020</option>
-              <option value="2019">2019</option>
-              <option value="2018">2018</option>
-              <option value="2017">2017</option>
-              <option value="2016">2016</option>
-              <option value="2015">2015</option>
-              <option value="2014">2014</option>
-              <option value="2013">2013</option>
-              <option value="2012">2012</option>
-              <option value="2011">2011</option>
-              <option value="2010">2010</option>
-              <option value="2009">2009</option>
-              <option value="2008">2008</option>
-              <option value="2007">2007</option>
-              <option value="2006">2006</option>
-              <option value="2005">2005</option>
-              <option value="2004">2004</option>
-              <option value="2003">2003</option>
-              <option value="2002">2002</option>
-              <option value="2001">2001</option>
-              <option value="2000">2000</option>
-              <option value="1999">1999</option>
-              <option value="1998">1998</option>
-              <option value="1997">1997</option>
-              <option value="1996">1996</option>
-              <option value="1995">1995</option>
-              <option value="1994">1994</option>
-              <option value="1993">1993</option>
-              <option value="1992">1992</option>
-              <option value="1991">1991</option>
-              <option value="1990">1990</option>
-            </select>
-          </div>
-        </div>
-        <div class="col-6 mb-3">
-                                    <label class="form-label small fw-semibold">Employment Type</label>
-                                    <select class="form-select">
-                                        <option selected>Part-time</option>
-                                        <option>Full-time</option>
-                                        <option>Contract</option>
-                                    </select>
-                                </div>
-      </div>
-            
+                        <!-- Employment Type -->
+                        <div class="mb-3">
+                          <label class="form-label small fw-semibold">Employment Type</label>
+                          <select class="form-select rounded-md">
+                            <option selected>Part-time</option>
+                            <option>Full-time</option>
+                            <option>Contract</option>
+                          </select>
+                        </div>
 
-            <button type="button" class="btn btn-sm btn-outline-danger">
-              <i class="bi bi-trash me-1"></i> Remove Entry
-            </button>
-          </div>
+                        <!-- Remove Entry Button -->
+                        <div class="text-start">
+                          <button type="button" class="btn btn-sm btn-outline-danger rounded-md">
+                            <i class="bi bi-trash me-1"></i> Remove Entry
+                          </button>
+                        </div>
+                      </div>
 
-          <hr class="my-3" />
+                      <hr class="my-3" />
 
-          <div class="d-flex justify-content-end mt-3">
-            <button type="button" class="btn btn-outline-secondary me-2" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-danger">Save</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
+                      <!-- Modal Footer Buttons -->
+                      <div class="d-flex justify-content-end mt-3">
+                        <button type="button" class="btn btn-outline-secondary me-2 rounded-md" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-danger rounded-md">Save</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
 
         <!-- Skills Modal (Simplified) -->
     <div class="modal fade" id="skillsModal" tabindex="-1" aria-labelledby="skillsModalLabel" aria-hidden="true">
