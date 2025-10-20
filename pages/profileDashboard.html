@@ -184,64 +184,79 @@
       <div class="row g-4">
         
         <!-- PROFILE -->
-      <div class="col-12 col-md-6">
-     <div class="card shadow-sm position-relative" style="min-height: 150px;">
-    
-         
-            <!-- Hidden File Input for Cover Image -->
-            <input type="file" id="coverImageUpload" accept="image/*" style="display: none;">
-            <input type="file" id="avatarImageUpload" accept="image/*" style="display: none;">
+    <div class="col-12 col-md-6">
+  <div class="card shadow-sm border-0 overflow-hidden">
+    <!-- Cover Section -->
+    <div class="position-relative">
+     <picture>
+       <!-- WebP Sources -->
+        <source
+          type="image/webp"
+          srcset="../assets/images/aiImages/TokyoDay-640.webp 640w,
+                  ../assets/images/aiImages/TokyoDay-320.webp 320w"
+        />
+        <!-- Fallback JPG -->
+       <img
+          id="profileCoverImage"
+          src="../assets/images/aiImages/TokyoDay.jpg"
+          alt="Profile cover"
+          class="w-100 rounded-0"
+          style="height: 150px; object-fit: cover; object-position: center;"
+          loading="lazy"
+          onerror="this.src='https://placehold.co/1000x200/0d6efd/ffffff?text=Cover+Image';"
+        />
+     </picture>
 
-            <!-- Cover Image-->
+      <!-- Camera icon for cover upload -->
+      <button
+        type="button"
+        class="btn btn-sm btn-light position-absolute top-0 end-0 m-2"
+        onclick="document.getElementById('coverImageUpload').click();"
+        title="Change cover photo"
+      >
+        <i class="bi bi-camera"></i>
+      </button>
+
+      <!-- Avatar Overlap -->
+      <div
+        class="position-absolute start-0 ms-4"
+        style="bottom: -50px; z-index: 10;"
+      >
+        <a
+          href="#"
+          class="d-inline-block rounded-circle border border-4 border-white shadow-sm overflow-hidden text-decoration-none"
+          onclick="document.getElementById('avatarImageUpload').click(); return false;"
+        >
+          <picture>
+            <!-- WebP format for optimized loading -->
+              <source
+                type="image/webp"
+                srcset="../assets/images/aiImages/Applying1-640.webp 640w,
+                        ../assets/images/aiImages/Applying1-320.webp 320w"
+              />
             <img
-                id="profileCoverImage"
-                src="https://placehold.co/1000x120/1e3a8a/ffffff?text=Cityscape+Cover"
-                alt="Profile cover image"
-                class="w-100 h-100 object-fit-cover position-absolute top-0 start-0 rounded-4"
-                style="object-fit: cover; z-index: 1;"
-                onerror="this.src='https://placehold.co/1000x120/1e3a8a/ffffff?text=Cover+Image+Fallback'"
+              src="../assets/images/aiImages/Applying1.jpg"
+              alt="User Avatar"
+              class="rounded-circle"
+              style="width: 100px; height: 100px; object-fit: cover; object-position: center;"
+                  loading="lazy"
+                onerror="this.src='https://placehold.co/100x100/fecaca/991b1b?text=JD';"
             />
-            
-             <!-- Layer 3: Completion Status + Upload Button (NEW) - Z-INDEX: 10 -->
-            <a href="#" 
-               class="profile-cta-link position-absolute top-0 end-0 p-3 d-flex align-items-center justify-content-end gap-2 text-end text-decoration-none" 
-               style="z-index: 10;"
-               onclick="document.getElementById('coverImageUpload').click(); return false;"
-            >
-                <p class="text-white mb-0 small">Profile Completion: <strong class="text-info">55%</strong></p>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-camera" viewBox="0 0 16 16">
-                        <path d="M15 12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h1.172a3 3 0 0 0 2.12-.879l.83-.828A1 1 0 0 1 6.827 3h2.344a1 1 0 0 1 .707.293l.828.828A3 3 0 0 0 12.828 5H14a1 1 0 0 1 1 1zM2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4z"/>
-                        <path d="M8 11a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5m0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7M3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0"/>
-                    </svg>
-            </a>
+          </picture>
+         
+        </a>
+      </div>
+    </div>
 
-            <!-- Dark Overlay for contrast -->
-            <div 
-                class="position-absolute w-100 h-100 top-0 start-0 z-index-2" 
-                style="background: rgba(0, 0, 0, 0.4); border-radius: 0.5rem;"
-            ></div>
+    <!-- Hidden file inputs -->
+    <input type="file" id="coverImageUpload" accept="image/*" hidden>
+    <input type="file" id="avatarImageUpload" accept="image/*" hidden>
 
-   <!-- Profile Avatar (Overlapping) - Adjusted left position to 1rem -->
-             <a href="#" 
-               class="profile-cta-link rounded-circle position-absolute border border-white border-4 shadow-smtext-decoration-none" 
-               style="z-index: 10;"
-               onclick="document.getElementById('avatarImageUpload').click(); return false;"
-            >
-             <img
-                src="https://placehold.co/100x100/fecaca/991b1b?text=JD"
-                alt="Profile picture"
-                class="rounded-circle position-absolute border border-white border-4 shadow-sm"
-                style="width:100px; height:100px; top: 80px; left: 1rem; object-fit: cover; z-index: 10;"
-                onerror="this.src='https://placehold.co/100x100/fecaca/991b1b?text=Avatar+Fallback'"
-            />
-            </a>
-
-    <div class="card-body d-flex flex-column h-100">
-      
-      <div style="height: 50px;"></div> 
-      
-     
-      
+    <!-- Card Body -->
+    <div class="card-body d-flex align-items-center mt-1">
+    <!-- Spacer to match avatar space -->
+      <div style="width: 180px;"></div>
+     <small class="text-muted mb-1">Profile <span class="text-info">80% </span>complete — finish to boost matches.</small>
     </div>
   </div>
 </div>
@@ -300,23 +315,19 @@
             <div class="card-body">
               <div class="d-flex justify-content-between">
                 <h5 class="card-title mb-0">Dela Cruz Juan</h5>
-                <a href="#" class="text-decoration-none">Edit</a>
+                <a href="#" class="text-decoration-none"  data-bs-toggle="modal" data-bs-target="#basicInfoModal">Edit</a>
               </div>
               <p class="text-muted">Osaka, Japan</p>
               <hr />
-              <div class="row">
-                <div class="col-6 small">Visa: Engineering</div>
-                <div class="col-6 small">Valid until 2026/05</div>
-                <div class="col-6 small">Age: 31</div>
-                <div class="col-6 small">Gender: Male</div>
-                <div class="col-6 small">Nationality</div>
-                <div class="col-6 small">Experience</div>
+              <div class="row small">
+                <div class="col-6 mb-2"><span class="fw-semibold">Visa:</span> Special Skill Worker 1</div>
+                            <div class="col-6 mb-2"><span class="fw-semibold">Valid until:</span> 2026/05</div>
+                            <div class="col-6 mb-2"><span class="fw-semibold">Industry:</span> Food Service</div>
+                            <div class="col-6 mb-2"><span class="fw-semibold">Japanese:</span> Beginner / N5</div>
+                            <div class="col-6 mb-2"><span class="fw-semibold">Nationality:</span> Filipino</div>
+                            <div class="col-6 mb-2"><span class="fw-semibold">Age:</span> 31</div>
               </div>
               
-             
-           
-
-
         <div id="resume-container">
             <!-- Hidden File Input for upload resume -->
         <input type="file" id="resumeUpload" accept="image/*" style="display: none;">
@@ -437,6 +448,92 @@
         </div>
       </div>
     </main>
+
+        <!-- ========================================================================= -->
+    <!-- MODAL DEFINITIONS -->
+    <!-- ========================================================================= -->
+
+       <!-- Basic Information Modal -->
+      <div class="modal fade" id="basicInfoModal" tabindex="-1" aria-labelledby="basicInfoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content rounded-4">
+            <div class="modal-header bg-light text-white rounded-top-4">
+            <h5 class="modal-title" id="basicInfoModalLabel">Basic Information</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="close">
+            </button>
+            </div>
+            <div class="modal-body">
+                  <!-- Basic Info Edit View (Moved from original inline HTML) -->
+                   <form onsubmit="saveBasicInfo(); return false;">
+                    <div class="mb-3">
+                      <label class="form-label small fw-semibold">Full Name</label>
+                      <input type="text" class="form-control" value="Dela Cruz Juan" required>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label small fw-semibold">Location</label>
+                      <input type="text" class="form-control" value="Osaka, Japan" required>
+                    </div>
+                  <div class="row">
+                    <div class="col-6 mb-3">
+                      <label class="form-label small fw-semibold">Visa Type</label>
+                      <select class="form-select">
+                        <option selected>Special Skilled Worker 1</option>
+                        <option>Special Skilled Worker 2</option>
+                        <option>Student</option>  
+                        <option>Designated Visa</option>
+                       <option>Other</option>    
+                     </select>
+                    </div>
+                    <div class="col-6 mb-3">
+                     <label class="form-label small fw-semibold">Valid Until</label>
+                     <input type="month" class="form-control" value="2026-05" />   
+                    </div>
+                    <div class="col-6 mb-3">
+                                <label class="form-label small fw-semibold">Industry</label>
+                                  <select class="form-select">
+                                    <option selected>Food Service</option>
+                                    <option>Aviation</option>
+                                    <option>Caregiver</option>  
+                                    <option>Automotive</option>
+                                  <option>Other</option>    
+                                </select>
+                            </div>
+                             <div class="col-6 mb-3">
+                                <label class="form-label small fw-semibold">Japanese</label>
+                                  <select class="form-select">
+                                    <option selected>Beginner / N5</option>
+                                    <option>Basic / N4</option>
+                                    <option>Conversational / N3</option>  
+                                    <option>Business / N2</option>
+                                  <option>Fluent / N1</option>    
+                                </select>
+                            </div>
+                               <div class="col-6 mb-3">
+                                <label class="form-label small fw-semibold">Nationality</label>
+                                  <select class="form-select">
+                                    <option selected>Filipino</option>
+                                    <option>Indonesian</option>
+                                    <option>Vietnamese</option>  
+                                    <option>Thailand</option>
+                                  <option>Nepalese</option>    
+                                </select>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <label class="form-label small fw-semibold">Age</label>
+                                <input type="number" class="form-control" value="31" />
+                            </div>
+
+                          </div>
+                             <div class="d-flex justify-content-end mt-3">
+                            <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                          </div>
+                   </form>
+               </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
        <!-- APPLICATION DETAIL MODAL -->
     <div class="modal fade" id="applicationDetailModal" tabindex="-1" aria-labelledby="applicationDetailModalLabel" aria-hidden="true">
@@ -564,5 +661,89 @@
     <!-- Site JavaScript (ES Module) -->
     <script type="module" src="../assets/js/main.js"></script>
     
+      <script>
+        // --- Profile Summary Toggle (Preserved as requested) ---
+        function toggleEditMode(isEditing) {
+            const readView = document.getElementById('summary-read-view');
+            const editView = document.getElementById('summary-edit-view');
+            const editBtn = document.getElementById('edit-btn');
+            const saveBtn = document.getElementById('save-btn');
+
+            if (isEditing) {
+                readView.classList.add('d-none');
+                editView.classList.remove('d-none');
+                editBtn.classList.add('d-none');
+                saveBtn.classList.remove('d-none');
+            } else {
+                // In a real app, logic to save content would go here
+                editView.classList.add('d-none');
+                readView.classList.remove('d-none');
+                saveBtn.classList.add('d-none');
+                editBtn.classList.remove('d-none');
+                console.log('Profile summary saved.');
+            }
+        }
+
+        // --- Modal Save/Add Placeholder Functions ---
+        // These functions simulate saving and close the modal (handled by form submit + data-bs-dismiss="modal" or JS)
+
+        function saveBasicInfo() {
+            // Placeholder: Logic to save Basic Info fields via API call
+            console.log('Basic Information saved via Modal.');
+            // Manually hide modal if not using data-bs-dismiss
+            const modalElement = document.getElementById('basicInfoModal');
+            const modal = bootstrap.Modal.getInstance(modalElement);
+            if (modal) modal.hide();
+        }
+
+        function saveExperience() {
+            // Placeholder: Logic to save all Experience entries
+            console.log('Experience entries saved via Modal.');
+            const modalElement = document.getElementById('experienceModal');
+            const modal = bootstrap.Modal.getInstance(modalElement);
+            if (modal) modal.hide();
+        }
+
+        function saveSkills() {
+            // Placeholder: Logic to save Skills entries
+            console.log('Skills saved via Modal.');
+            const modalElement = document.getElementById('skillsModal');
+            const modal = bootstrap.Modal.getInstance(modalElement);
+            if (modal) modal.hide();
+        }
+
+        function saveEducation() {
+            // Placeholder: Logic to save Education entries
+            console.log('Education entries saved via Modal.');
+            const modalElement = document.getElementById('educationModal');
+            const modal = bootstrap.Modal.getInstance(modalElement);
+            if (modal) modal.hide();
+        }
+
+        function saveAvailability() {
+            // Placeholder: Logic to save Availability/Preferences
+            console.log('Availability/Preferences saved via Modal.');
+            const modalElement = document.getElementById('availabilityModal');
+            const modal = bootstrap.Modal.getInstance(modalElement);
+            if (modal) modal.hide();
+        }
+
+        // Additional Add placeholders for console logging
+        function addNewExperience() {
+            console.log('Preparing modal to add new experience...');
+        }
+        function addNewExperienceEntry() {
+            console.log('New experience entry added to form (client-side)');
+        }
+        function addNewSkill() {
+            console.log('Preparing modal to add new skill...');
+        }
+        function addNewEducation() {
+            console.log('Preparing modal to add new education...');
+        }
+        function addNewEducationEntry() {
+            console.log('New education entry added to form (client-side)');
+        }
+    </script>
   </body>
 </html>
