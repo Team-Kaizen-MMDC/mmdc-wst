@@ -58,12 +58,18 @@
                 >
               </li>
               <li class="nav-item">
-                <a class="nav-link site-header__nav-link" href="../agency.html"
+                <a
+                  class="nav-link site-header__nav-link"
+                  href="../agency.html"
+                  data-i18n="nav.agency"
                   >Agency</a
                 >
               </li>
               <li class="nav-item">
-                <a class="nav-link site-header__nav-link" href="../about.html"
+                <a
+                  class="nav-link site-header__nav-link"
+                  href="../about.html"
+                  data-i18n="nav.about"
                   >About</a
                 >
               </li>
@@ -95,7 +101,13 @@
         aria-labelledby="siteOffcanvasLabel"
       >
         <div class="offcanvas-header">
-          <h5 class="offcanvas-title" id="siteOffcanvasLabel">Menu</h5>
+          <h5
+            class="offcanvas-title"
+            id="siteOffcanvasLabel"
+            data-i18n="nav.menu"
+          >
+            Menu
+          </h5>
           <button
             type="button"
             class="btn-close text-reset"
@@ -119,6 +131,7 @@
                 class="nav-link py-3"
                 href="../../index.html#companies"
                 data-bs-dismiss="offcanvas"
+                data-i18n="nav.services"
                 >Companies</a
               >
             </li>
@@ -127,6 +140,7 @@
                 class="nav-link py-3"
                 href="../agency.html"
                 data-bs-dismiss="offcanvas"
+                data-i18n="nav.agency"
                 >Agency</a
               >
             </li>
@@ -135,6 +149,7 @@
                 class="nav-link py-3"
                 href="../about.html"
                 data-bs-dismiss="offcanvas"
+                data-i18n="nav.about"
                 >About</a
               >
             </li>
@@ -161,100 +176,126 @@
         </div>
       </div>
     </header>
-<main class="py-5">
-  <div class="container">
-    <h1 class="fw-bold text-dark mb-4 border-bottom border-3 border-primary pb-2 text-center">
-      Featured Companies
-    </h1>
+    <main class="py-5">
+      <div class="container">
+        <h1
+          class="fw-bold text-dark mb-4 border-bottom border-3 border-primary pb-2 text-center"
+        >
+          Featured Companies
+        </h1>
 
-    <div class="row g-4 justify-content-center">
-      
-      <!-- Company Card 1 -->
-      <div class="col-12 col-md-6 col-lg-4">
-        <div class="feature-card bg-white p-4 rounded-4 shadow-sm h-100">
-          <div class="d-flex flex-column flex-md-row align-items-center align-items-md-start gap-4">
-            <div class="flex-shrink-0">
-              <img
-                src="../../assets/images/company-logos/company-placeholder.png"
-                alt="Company logo"
-                class="img-fluid"
-                style="width: 100px; height: 100px; object-fit: contain;"
-                onerror="this.onerror=null; this.src='https://placehold.co/100x100/cccccc/000000?text=Logo';"
-              />
+        <div class="row g-4 justify-content-center">
+          <!-- Company Card 1 -->
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="feature-card bg-white p-4 rounded-4 shadow-sm h-100">
+              <div
+                class="d-flex flex-column flex-md-row align-items-center align-items-md-start gap-4"
+              >
+                <div class="flex-shrink-0">
+                  <img
+                    src="../../assets/images/company-logos/company-placeholder.png"
+                    alt="Company logo"
+                    class="img-fluid"
+                    style="width: 100px; height: 100px; object-fit: contain"
+                    onerror="this.onerror=null; this.src='https://placehold.co/100x100/cccccc/000000?text=Logo';"
+                  />
+                </div>
+                <div class="flex-grow-1 text-center text-md-start">
+                  <h2 class="h6 fw-bold mb-2">Company Name</h2>
+                  <p class="text-muted small mb-3">
+                    Short description about the company, what they do, and what
+                    kinds of roles they recruit for.
+                  </p>
+                  <div
+                    class="d-flex flex-column flex-sm-row justify-content-center justify-content-md-start gap-2"
+                  >
+                    <a
+                      href="../createAccount.html"
+                      class="btn btn-outline-primary btn-sm"
+                      >View Company</a
+                    >
+                    <a
+                      href="../../index.html#companies"
+                      class="btn btn-outline-dark btn-sm"
+                      >5+ Jobs</a
+                    >
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="flex-grow-1 text-center text-md-start">
-              <h2 class="h6 fw-bold mb-2">Company Name</h2>
-              <p class="text-muted small mb-3">
-                Short description about the company, what they do, and what kinds of roles they recruit for.
-              </p>
-              <div class="d-flex flex-column flex-sm-row justify-content-center justify-content-md-start gap-2">
-                <a href="../createAccount.html" class="btn btn-outline-primary btn-sm">View Company</a>
-                <a href="../../index.html#companies" class="btn btn-outline-dark btn-sm">5+ Jobs</a>
+          </div>
+
+          <!-- Company Card 2 -->
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="feature-card bg-white p-4 rounded-4 shadow-sm h-100">
+              <div
+                class="d-flex flex-column flex-md-row align-items-center align-items-md-start gap-4"
+              >
+                <div class="flex-shrink-0">
+                  <img
+                    src="../../assets/images/company-logos/company-placeholder.png"
+                    alt="Company logo"
+                    class="img-fluid"
+                    style="width: 100px; height: 100px; object-fit: contain"
+                    onerror="this.onerror=null; this.src='https://placehold.co/100x100/cccccc/000000?text=Logo';"
+                  />
+                </div>
+                <div class="flex-grow-1 text-center text-md-start">
+                  <h2 class="h6 fw-bold mb-2">Another Company</h2>
+                  <p class="text-muted small mb-3">
+                    Example description about the company’s services and job
+                    roles.
+                  </p>
+                  <div
+                    class="d-flex flex-column flex-sm-row justify-content-center justify-content-md-start gap-2"
+                  >
+                    <a href="#" class="btn btn-outline-primary btn-sm"
+                      >View Company</a
+                    >
+                    <a href="#" class="btn btn-outline-dark btn-sm">3 Jobs</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Company Card 3 -->
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="feature-card bg-white p-4 rounded-4 shadow-sm h-100">
+              <div
+                class="d-flex flex-column flex-md-row align-items-center align-items-md-start gap-4"
+              >
+                <div class="flex-shrink-0">
+                  <img
+                    src="../../assets/images/company-logos/company-placeholder.png"
+                    alt="Company logo"
+                    class="img-fluid"
+                    style="width: 100px; height: 100px; object-fit: contain"
+                    onerror="this.onerror=null; this.src='https://placehold.co/100x100/cccccc/000000?text=Logo';"
+                  />
+                </div>
+                <div class="flex-grow-1 text-center text-md-start">
+                  <h2 class="h6 fw-bold mb-2">Third Company</h2>
+                  <p class="text-muted small mb-3">
+                    Another company info section goes here for testing layout.
+                  </p>
+                  <div
+                    class="d-flex flex-column flex-sm-row justify-content-center justify-content-md-start gap-2"
+                  >
+                    <a href="#" class="btn btn-outline-primary btn-sm"
+                      >View Company</a
+                    >
+                    <a href="#" class="btn btn-outline-dark btn-sm">2 Jobs</a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
+        <!-- End Row -->
       </div>
-
-      <!-- Company Card 2 -->
-      <div class="col-12 col-md-6 col-lg-4">
-        <div class="feature-card bg-white p-4 rounded-4 shadow-sm h-100">
-          <div class="d-flex flex-column flex-md-row align-items-center align-items-md-start gap-4">
-            <div class="flex-shrink-0">
-              <img
-             src="../../assets/images/company-logos/company-placeholder.png"
-                alt="Company logo"
-                class="img-fluid"
-                style="width: 100px; height: 100px; object-fit: contain;"
-                onerror="this.onerror=null; this.src='https://placehold.co/100x100/cccccc/000000?text=Logo';"
-              />
-            </div>
-            <div class="flex-grow-1 text-center text-md-start">
-              <h2 class="h6 fw-bold mb-2">Another Company</h2>
-              <p class="text-muted small mb-3">
-                Example description about the company’s services and job roles.
-              </p>
-              <div class="d-flex flex-column flex-sm-row justify-content-center justify-content-md-start gap-2">
-                <a href="#" class="btn btn-outline-primary btn-sm">View Company</a>
-                <a href="#" class="btn btn-outline-dark btn-sm">3 Jobs</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Company Card 3 -->
-      <div class="col-12 col-md-6 col-lg-4">
-        <div class="feature-card bg-white p-4 rounded-4 shadow-sm h-100">
-          <div class="d-flex flex-column flex-md-row align-items-center align-items-md-start gap-4">
-            <div class="flex-shrink-0">
-              <img
-                src="../../assets/images/company-logos/company-placeholder.png"
-                alt="Company logo"
-                class="img-fluid"
-                style="width: 100px; height: 100px; object-fit: contain;"
-                onerror="this.onerror=null; this.src='https://placehold.co/100x100/cccccc/000000?text=Logo';"
-              />
-            </div>
-            <div class="flex-grow-1 text-center text-md-start">
-              <h2 class="h6 fw-bold mb-2">Third Company</h2>
-              <p class="text-muted small mb-3">
-                Another company info section goes here for testing layout.
-              </p>
-              <div class="d-flex flex-column flex-sm-row justify-content-center justify-content-md-start gap-2">
-                <a href="#" class="btn btn-outline-primary btn-sm">View Company</a>
-                <a href="#" class="btn btn-outline-dark btn-sm">2 Jobs</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div> <!-- End Row -->
-  </div> <!-- End Container -->
-</main>
-
-
+      <!-- End Container -->
+    </main>
 
     <footer class="site-footer site-footer--dark">
       <div class="container footer-grid site-footer__grid">
