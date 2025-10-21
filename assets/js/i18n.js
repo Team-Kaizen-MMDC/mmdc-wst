@@ -29,29 +29,51 @@ export class I18n {
     if (this.translations[lang]) return this.translations[lang];
 
     try {
-      // Resolve locale path relative to this module so the loader works when
-      // the site is hosted from a subpath (GitHub Pages project pages).
-      // Example: if the site is served at /mmdc-wst/, an absolute '/locales'
-      // would incorrectly request '/locales/...'. Using import.meta.url keeps
-      // the request relative to the bundled JS location.
+      // Try a few likely relative locations for locale files. Some pages
+      // are nested under `pages/` and some locale files were placed under
+      // `locales/` while others are under `i18n/` (historical). Try both.
+      const candidates = [
+        `../../locales/${lang}.json`,
+        `../../i18n/${lang}.json`,
+        `./locales/${lang}.json`,
+        `./i18n/${lang}.json`,
+      ];
+
       let res = null;
-      try {
-        const url = new URL(`../../locales/${lang}.json`, import.meta.url);
-        res = await fetch(url.href);
-      } catch (e) {
-        // If import.meta.url isn't available or the URL failed, fall back to
-        // the absolute `/locales/...` path as a last resort.
+      for (const candidate of candidates) {
         try {
-          res = await fetch(`/locales/${lang}.json`);
-        } catch (err) {
-          console.warn("i18n: fallback locale fetch also failed", err);
-          return null;
+          const url = new URL(candidate, import.meta.url);
+          res = await fetch(url.href);
+          if (res && res.ok) break;
+        } catch (e) {
+          // ignore and try next
         }
       }
-      if (!res.ok) {
-        console.warn(`i18n: locale ${lang} not found (HTTP ${res.status})`);
+
+      // Last-resort: try absolute paths (project root). These will only work
+      // if the site is served from the repository root (not a subpath).
+      if ((!res || !res.ok) && typeof location !== "undefined") {
+        const absCandidates = [`/locales/${lang}.json`, `/i18n/${lang}.json`];
+        for (const c of absCandidates) {
+          try {
+            const r = await fetch(c);
+            if (r && r.ok) {
+              res = r;
+              break;
+            }
+          } catch (e) {
+            // ignore
+          }
+        }
+      }
+
+      if (!res || !res.ok) {
+        console.warn(
+          `i18n: locale ${lang} not found (tried multiple locations)`
+        );
         return null;
       }
+
       const json = await res.json();
       this.translations[lang] = json;
       return json;

@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { setTestAuth } from './helpers/auth';
 
 /**
  * End-to-End Navigation Tests
@@ -258,6 +259,10 @@ test.describe('E2E: Profile Dashboard Flow', () => {
 });
 
 test.describe('E2E: Add/Edit Forms Flow', () => {
+    // Use the shared test helper to simulate an authenticated user.
+    test.beforeEach(async ({ page }) => {
+        await setTestAuth(page.context());
+    });
     test('User can access profile edit form', async ({ page }) => {
         await page.goto('/pages/addEdit/profile.html');
 
