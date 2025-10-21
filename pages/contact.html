@@ -47,7 +47,10 @@
     <header class="site-header">
       <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light">
-          <a class="navbar-brand site-header__brand" href="../index.html"
+          <a
+            class="navbar-brand site-header__brand"
+            href="../index.html"
+            data-i18n="site.brand"
             >Japan SSW</a
           >
 
@@ -70,6 +73,7 @@
                 <a
                   class="nav-link site-header__nav-link"
                   href="../index.html#jobs"
+                  data-i18n="nav.jobs"
                   >Jobs</a
                 >
               </li>
@@ -77,11 +81,15 @@
                 <a
                   class="nav-link site-header__nav-link"
                   href="../index.html#companies"
+                  data-i18n="nav.services"
                   >Companies</a
                 >
               </li>
               <li class="nav-item">
-                <a class="nav-link site-header__nav-link" href="agency.html"
+                <a
+                  class="nav-link site-header__nav-link"
+                  href="agency.html"
+                  data-i18n="nav.agency"
                   >Agency</a
                 >
               </li>
@@ -96,11 +104,13 @@
               <a
                 class="site-header__signup muted text-decoration-none"
                 href="createAccount.html"
+                data-i18n="nav.signup"
                 >Signup</a
               >
               <a
                 class="btn btn-primary site-header__login-btn"
                 href="signin.html"
+                data-i18n="nav.login"
                 >Login</a
               >
             </div>
@@ -180,119 +190,131 @@
       </div>
     </header>
 
-       <!-- Main Content -->
+    <!-- Main Content -->
     <main class="py-5">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-10 col-xl-9">
-                    <div class="card shadow-lg border-0 rounded-4 contact-card transition">
-                        <div class="card-body p-0">
-                            <div class="row g-0">
-                                
-                                <!-- Left Side (Branding/Header Info) -->
-                                <div class="col-lg-5 p-4 p-md-5 d-flex flex-column card-header-left">
-                                    <div class="mb-4">
-                                        <i class="bi bi-send-check-fill text-info" style="font-size: 3rem;"></i>
-                                        <h2 class="header-title mt-3">Get In Touch</h2>
-                                        <p class="header-subtitle lead fw-light">
-                                            We'd love to hear from you! Fill out the form to send us a message about jobs, partnerships, or visa guidance.
-                                        </p>
-                                    </div>
-
-                                    <!-- Static Contact Info -->
-                                    <div class="contact-info-block mt-auto pt-4">
-                                        <div class="contact-info-item">
-                                            <i class="bi bi-geo-alt-fill"></i>
-                                            <span>Shinjuku, Tokyo, Japan 160-0022</span>
-                                        </div>
-                                        <div class="contact-info-item">
-                                            <i class="bi bi-envelope-fill"></i>
-                                            <span>support@japanssw.com</span>
-                                        </div>
-                                        <div class="contact-info-item">
-                                            <i class="bi bi-clock-fill"></i>
-                                            <span>Mon - Fri: 9:00 - 18:00 JST</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Right Side (Form Fields) -->
-                                <div class="col-lg-7 p-4 p-md-5 card-form-right">
-                                    <h3 class="form-title">Send Us a Message</h3>
-
-                                    <!-- Confirmation Message Box (Hidden by default, shown by JS) -->
-                                    <div id="successMessage" class="success-message">
-                                        <p class="success-text">
-                                            <i class="bi bi-check-circle-fill"></i>
-                                            Message sent successfully! We will get back to you shortly.
-                                        </p>
-                                    </div>
-                                    
-                                    <!-- The Actual Contact Form -->
-                                    <form id="contactForm" class="contact-form" novalidate>
-                                        
-                                        <!-- Name Input -->
-                                        <div class="mb-3">
-                                            <label for="name" class="form-label fw-bold">Full Name</label>
-                                            <input
-                                                type="text"
-                                                id="name"
-                                                name="name"
-                                                placeholder="Your full name"
-                                                required
-                                                class="form-control rounded-3"
-                                            />
-                                            <div class="invalid-feedback">
-                                                Please enter your full name.
-                                            </div>
-                                        </div>
-
-                                        <!-- Email Input -->
-                                        <div class="mb-3">
-                                            <label for="email" class="form-label fw-bold">Email Address</label>
-                                            <input
-                                                type="email"
-                                                id="email"
-                                                name="email"
-                                                placeholder="you@example.com"
-                                                required
-                                                class="form-control rounded-3"
-                                            />
-                                            <div class="invalid-feedback">
-                                                Please enter a valid email address.
-                                            </div>
-                                        </div>
-                                        
-                                        <!-- Message Textarea -->
-                                        <div class="mb-4">
-                                            <label for="message" class="form-label fw-bold">Your Message</label>
-                                            <textarea
-                                                id="message"
-                                                name="message"
-                                                rows="4"
-                                                placeholder="Type your detailed message here..."
-                                                required
-                                                class="form-control rounded-3"
-                                            ></textarea>
-                                            <div class="invalid-feedback">
-                                                Please enter your message.
-                                            </div>
-                                        </div>
-
-                                        <!-- Submit Button -->
-                                        <button type="submit" class="submit-button">
-                                            <i class="bi bi-envelope-fill me-2"></i>
-                                            Send Message
-                                        </button>
-                                    </form>
-
-                                </div>
-                            </div>
-                        </div>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-10 col-xl-9">
+            <div
+              class="card shadow-lg border-0 rounded-4 contact-card transition"
+            >
+              <div class="card-body p-0">
+                <div class="row g-0">
+                  <!-- Left Side (Branding/Header Info) -->
+                  <div
+                    class="col-lg-5 p-4 p-md-5 d-flex flex-column card-header-left"
+                  >
+                    <div class="mb-4">
+                      <i
+                        class="bi bi-send-check-fill text-info"
+                        style="font-size: 3rem"
+                      ></i>
+                      <h2 class="header-title mt-3">Get In Touch</h2>
+                      <p class="header-subtitle lead fw-light">
+                        We'd love to hear from you! Fill out the form to send us
+                        a message about jobs, partnerships, or visa guidance.
+                      </p>
                     </div>
+
+                    <!-- Static Contact Info -->
+                    <div class="contact-info-block mt-auto pt-4">
+                      <div class="contact-info-item">
+                        <i class="bi bi-geo-alt-fill"></i>
+                        <span>Shinjuku, Tokyo, Japan 160-0022</span>
+                      </div>
+                      <div class="contact-info-item">
+                        <i class="bi bi-envelope-fill"></i>
+                        <span>support@japanssw.com</span>
+                      </div>
+                      <div class="contact-info-item">
+                        <i class="bi bi-clock-fill"></i>
+                        <span>Mon - Fri: 9:00 - 18:00 JST</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Right Side (Form Fields) -->
+                  <div class="col-lg-7 p-4 p-md-5 card-form-right">
+                    <h3 class="form-title">Send Us a Message</h3>
+
+                    <!-- Confirmation Message Box (Hidden by default, shown by JS) -->
+                    <div id="successMessage" class="success-message">
+                      <p class="success-text">
+                        <i class="bi bi-check-circle-fill"></i>
+                        Message sent successfully! We will get back to you
+                        shortly.
+                      </p>
+                    </div>
+
+                    <!-- The Actual Contact Form -->
+                    <form id="contactForm" class="contact-form" novalidate>
+                      <!-- Name Input -->
+                      <div class="mb-3">
+                        <label for="name" class="form-label fw-bold"
+                          >Full Name</label
+                        >
+                        <input
+                          type="text"
+                          id="name"
+                          name="name"
+                          placeholder="Your full name"
+                          required
+                          class="form-control rounded-3"
+                        />
+                        <div class="invalid-feedback">
+                          Please enter your full name.
+                        </div>
+                      </div>
+
+                      <!-- Email Input -->
+                      <div class="mb-3">
+                        <label for="email" class="form-label fw-bold"
+                          >Email Address</label
+                        >
+                        <input
+                          type="email"
+                          id="email"
+                          name="email"
+                          placeholder="you@example.com"
+                          required
+                          class="form-control rounded-3"
+                        />
+                        <div class="invalid-feedback">
+                          Please enter a valid email address.
+                        </div>
+                      </div>
+
+                      <!-- Message Textarea -->
+                      <div class="mb-4">
+                        <label for="message" class="form-label fw-bold"
+                          >Your Message</label
+                        >
+                        <textarea
+                          id="message"
+                          name="message"
+                          rows="4"
+                          placeholder="Type your detailed message here..."
+                          required
+                          class="form-control rounded-3"
+                        ></textarea>
+                        <div class="invalid-feedback">
+                          Please enter your message.
+                        </div>
+                      </div>
+
+                      <!-- Submit Button -->
+                      <button type="submit" class="submit-button">
+                        <i class="bi bi-envelope-fill me-2"></i>
+                        Send Message
+                      </button>
+                    </form>
+                  </div>
                 </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </main>
 
     <!-- Footer -->

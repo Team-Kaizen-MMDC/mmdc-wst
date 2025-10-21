@@ -187,12 +187,15 @@
 
     <!-- Main -->
     <main class="container py-5">
-
       <!-- Page header -->
       <div class="text-center mb-5">
-        <h1 class="display-5 fw-bold mb-2">Find Your Next Opportunity in Japan</h1>
+        <h1 class="display-5 fw-bold mb-2">
+          Find Your Next Opportunity in Japan
+        </h1>
         <p class="text-muted fs-6">
-          Filter through <span id="resultCount" class="text-primary fw-semibold">0</span> job listings to find your perfect match
+          Filter through
+          <span id="resultCount" class="text-primary fw-semibold">0</span> job
+          listings to find your perfect match
         </p>
       </div>
 
@@ -203,80 +206,261 @@
             <div class="card-body">
               <!-- Search -->
               <div class="mb-4">
-                <label class="form-label fw-semibold text-secondary">Search Job Listings</label>
-                <input id="searchInput" type="text" class="form-control" placeholder="e.g., engineer, Osaka, N2" />
+                <label class="form-label fw-semibold text-secondary"
+                  >Search Job Listings</label
+                >
+                <input
+                  id="searchInput"
+                  type="text"
+                  class="form-control"
+                  placeholder="e.g., engineer, Osaka, N2"
+                />
               </div>
 
               <hr />
 
               <!-- Support -->
               <div class="mb-3">
-                <label class="form-label fw-semibold text-secondary">Support</label>
+                <label class="form-label fw-semibold text-secondary"
+                  >Support</label
+                >
                 <div data-filter-group="support" class="d-flex flex-wrap">
-                  <button class="btn btn-sm btn-outline-primary rounded-pill me-2 mb-2 active" data-value="all">All</button>
-                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="yes">Yes</button>
-                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="no">No</button>
+                  <button
+                    class="btn btn-sm btn-outline-primary rounded-pill me-2 mb-2 active"
+                    data-value="all"
+                  >
+                    All
+                  </button>
+                  <button
+                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
+                    data-value="yes"
+                  >
+                    Yes
+                  </button>
+                  <button
+                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
+                    data-value="no"
+                  >
+                    No
+                  </button>
                 </div>
               </div>
 
               <!-- Japanese Level -->
               <div class="mb-3">
-                <label class="form-label fw-semibold text-secondary">Japanese Level</label>
+                <label class="form-label fw-semibold text-secondary"
+                  >Japanese Level</label
+                >
                 <div data-filter-group="japaneseLevel" class="d-flex flex-wrap">
-                  <button class="btn btn-sm btn-outline-primary rounded-pill me-2 mb-2 active" data-value="any">Any</button>
-                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="n5">Beginner / N5</button>
-                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="n4">Basic / N4</button>
-                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="n3">Conversational / N3</button>
-                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="n2">Business / N2</button>
-                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="n1">Fluent / N1</button>
+                  <button
+                    class="btn btn-sm btn-outline-primary rounded-pill me-2 mb-2 active"
+                    data-value="any"
+                  >
+                    Any
+                  </button>
+                  <button
+                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
+                    data-value="n5"
+                  >
+                    Beginner / N5
+                  </button>
+                  <button
+                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
+                    data-value="n4"
+                  >
+                    Basic / N4
+                  </button>
+                  <button
+                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
+                    data-value="n3"
+                  >
+                    Conversational / N3
+                  </button>
+                  <button
+                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
+                    data-value="n2"
+                  >
+                    Business / N2
+                  </button>
+                  <button
+                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
+                    data-value="n1"
+                  >
+                    Fluent / N1
+                  </button>
                 </div>
               </div>
 
               <!-- Location -->
               <div class="mb-3">
-                <label class="form-label fw-semibold text-secondary">Work Location</label>
+                <label class="form-label fw-semibold text-secondary"
+                  >Work Location</label
+                >
                 <div data-filter-group="location" class="d-flex flex-wrap">
-                  <button class="btn btn-sm btn-outline-primary rounded-pill me-2 mb-2 active" data-value="all">All</button>
-                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="tokyo">Tokyo</button>
-                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="osaka">Osaka</button>
-                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="kyoto">Kyoto</button>
-                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="fukuoka">Fukuoka</button>
-                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="kanagawa">Kanagawa</button>
-                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="nagoya">Nagoya</button>
-                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="okinawa">Okinawa</button>
+                  <button
+                    class="btn btn-sm btn-outline-primary rounded-pill me-2 mb-2 active"
+                    data-value="all"
+                  >
+                    All
+                  </button>
+                  <button
+                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
+                    data-value="tokyo"
+                  >
+                    Tokyo
+                  </button>
+                  <button
+                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
+                    data-value="osaka"
+                  >
+                    Osaka
+                  </button>
+                  <button
+                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
+                    data-value="kyoto"
+                  >
+                    Kyoto
+                  </button>
+                  <button
+                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
+                    data-value="fukuoka"
+                  >
+                    Fukuoka
+                  </button>
+                  <button
+                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
+                    data-value="kanagawa"
+                  >
+                    Kanagawa
+                  </button>
+                  <button
+                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
+                    data-value="nagoya"
+                  >
+                    Nagoya
+                  </button>
+                  <button
+                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
+                    data-value="okinawa"
+                  >
+                    Okinawa
+                  </button>
                 </div>
               </div>
 
               <!-- Industry -->
               <div class="mb-3">
-                <label class="form-label fw-semibold text-secondary">Industry</label>
+                <label class="form-label fw-semibold text-secondary"
+                  >Industry</label
+                >
                 <div data-filter-group="industry" class="d-flex flex-wrap">
-                  <button class="btn btn-sm btn-outline-primary rounded-pill me-2 mb-2 active" data-value="all">All</button>
-                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="aviation">Aviation</button>
-                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="nursing care">Nursing Care</button>
-                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="food service">Food Service</button>
-                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="software engineering">Agriculture</button>
-                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="education">Fishery</button>
-                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="building cleaning">Building Cleaning</button>
-                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="manufacturing">Manufacturing</button>
-                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="construction">Construction</button>
-                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="automobile maint.">Automotive</button>
+                  <button
+                    class="btn btn-sm btn-outline-primary rounded-pill me-2 mb-2 active"
+                    data-value="all"
+                  >
+                    All
+                  </button>
+                  <button
+                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
+                    data-value="aviation"
+                  >
+                    Aviation
+                  </button>
+                  <button
+                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
+                    data-value="nursing care"
+                  >
+                    Nursing Care
+                  </button>
+                  <button
+                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
+                    data-value="food service"
+                  >
+                    Food Service
+                  </button>
+                  <button
+                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
+                    data-value="software engineering"
+                  >
+                    Agriculture
+                  </button>
+                  <button
+                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
+                    data-value="education"
+                  >
+                    Fishery
+                  </button>
+                  <button
+                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
+                    data-value="building cleaning"
+                  >
+                    Building Cleaning
+                  </button>
+                  <button
+                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
+                    data-value="manufacturing"
+                  >
+                    Manufacturing
+                  </button>
+                  <button
+                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
+                    data-value="construction"
+                  >
+                    Construction
+                  </button>
+                  <button
+                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
+                    data-value="automobile maint."
+                  >
+                    Automotive
+                  </button>
                 </div>
               </div>
 
               <!-- Min Salary -->
               <div class="mb-3">
-                <label class="form-label fw-semibold text-secondary">Min Salary (Monthly)</label>
+                <label class="form-label fw-semibold text-secondary"
+                  >Min Salary (Monthly)</label
+                >
                 <div data-filter-group="minSalary" class="d-flex flex-wrap">
-                  <button class="btn btn-sm btn-outline-primary rounded-pill me-2 mb-2 active" data-value="0" data-salary="0">Any</button>
-                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="200000" data-salary="200000">¥200k+</button>
-                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="250000" data-salary="250000">¥250k+</button>
-                  <button class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="300000" data-salary="300000">¥300k+</button>
+                  <button
+                    class="btn btn-sm btn-outline-primary rounded-pill me-2 mb-2 active"
+                    data-value="0"
+                    data-salary="0"
+                  >
+                    Any
+                  </button>
+                  <button
+                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
+                    data-value="200000"
+                    data-salary="200000"
+                  >
+                    ¥200k+
+                  </button>
+                  <button
+                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
+                    data-value="250000"
+                    data-salary="250000"
+                  >
+                    ¥250k+
+                  </button>
+                  <button
+                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
+                    data-value="300000"
+                    data-salary="300000"
+                  >
+                    ¥300k+
+                  </button>
                 </div>
               </div>
 
               <div class="text-center mt-3">
-                <button id="clearFilters" class="btn btn-light text-decoration-none">Clear All Filters</button>
+                <button
+                  id="clearFilters"
+                  class="btn btn-light text-decoration-none"
+                >
+                  Clear All Filters
+                </button>
               </div>
             </div>
           </div>
@@ -287,16 +471,29 @@
           <div id="jobListings" class="row g-4"></div>
 
           <div id="noResults" class="text-center py-5 d-none">
-            <svg class="mx-auto mb-3" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            <svg
+              class="mx-auto mb-3"
+              width="80"
+              height="80"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
             </svg>
             <h4 class="text-muted fw-semibold mb-2">No jobs found</h4>
-            <p class="text-secondary">Try adjusting your filters or search criteria</p>
+            <p class="text-secondary">
+              Try adjusting your filters or search criteria
+            </p>
           </div>
         </section>
       </div>
     </main>
-  
 
     <!-- Shared Footer -->
     <footer class="site-footer site-footer--dark">
@@ -358,7 +555,6 @@
       crossorigin="anonymous"
     ></script>
 
-    
     <!-- Custom JS Module (Phase 2) -->
     <script type="module" src="../../assets/js/main.js"></script>
   </body>
