@@ -44,9 +44,10 @@ jobs:
         run: |
           npm ci
 
-      - name: Install Playwright browsers
+      - name: Install Playwright browsers (Chromium only)
         run: |
-          npx playwright install --with-deps
+          # install only Chromium to speed up the workflow
+          npx playwright install chromium
 
       - name: Start static server
         run: |
@@ -60,7 +61,8 @@ jobs:
           set -e
           # Capture Playwright output to a log so we can extract a concise summary
           echo "Running smoke tests and teeing output to /tmp/playwright-run.log"
-          ./run-tests.sh smoke chromium --no-server 2>&1 | tee /tmp/playwright-run.log || true
+          # Emit a machine-readable JSON reporter alongside the regular logs
+          ./run-tests.sh smoke chromium --no-server --reporter=json 2>&1 | tee /tmp/playwright-run.log || true
         continue-on-error: true
 
       - name: Upload Playwright results
@@ -70,6 +72,8 @@ jobs:
           name: playwright-results
           path: |
             tests/playwright/tests/playwright/results/**
+            # include any Playwright JSON report files so CI can parse exact counts
+            tests/playwright/tests/playwright/results/**/*.json
             test-results/**
             tests/playwright/**/trace.zip
             tests/playwright/**/screenshots/**
@@ -82,79 +86,109 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const { execSync } = require('child_process');
             const fs = require('fs');
+            const path = require('path');
 
-            function safeRead(path) {
-              try { return fs.readFileSync(path, 'utf8'); } catch (e) { return null; }
+            function safeRead(p) {
+              try { return fs.readFileSync(p, 'utf8'); } catch (e) { return null; }
             }
 
-            // Try to read Playwright's HTML summary (if produced)
-            const reportPath = 'tests/playwright/tests/playwright/results/index.html';
-            const reportExists = fs.existsSync(reportPath);
+            const summaryLines = [];
+            summaryLines.push('Playwright smoke tests (Chromium) run on this pull request.');
+            summaryLines.push('');
 
-            const summary = [];
-            summary.push('Playwright smoke tests (Chromium) run on this pull request.');
-            summary.push('');
-            if (reportExists) {
-              summary.push(`HTML report was generated and uploaded as part of the 'playwright-results' artifact.`);
-            } else {
-              summary.push('No HTML report was generated. Raw Playwright artifacts were uploaded (trace/screenshot).');
-            }
+            // Prefer parsing Playwright JSON report files if present for exact counts
+            const resultsDir = path.join(process.cwd(), 'tests', 'playwright', 'tests', 'playwright', 'results');
+            let parsed = false;
+            let total = 0, passed = 0, failed = 0, skipped = 0, flaky = 0;
 
-            // Try to include a short textual summary from the test runner log
-            const logPaths = ['/tmp/mmdc-wst-http.log','/tmp/playwright-run.log'];
-            let tail = '';
-            for (const p of logPaths) {
-              const v = safeRead(p);
-              if (v) { tail += `\n--- ${p} (tail) ---\n` + v.split('\n').slice(-200).join('\n'); }
-            }
-
-            // Try to extract short PASS/FAIL summary from the Playwright run log
-            let passed = 0, failed = 0, flaky = 0, total = 0;
             try {
-              const runLog = safeRead('/tmp/playwright-run.log') || '';
-              // Look for lines like: "103 passed (21.6s)" or "1 failed, 102 passed"
-              const passMatch = runLog.match(/(\d+)\s+passed/);
-              const failMatch = runLog.match(/(\d+)\s+failed/);
-              const totalMatch = runLog.match(/Running\s+(\d+)\s+tests/);
-              if (passMatch) passed = parseInt(passMatch[1],10);
-              if (failMatch) failed = parseInt(failMatch[1],10);
-              if (totalMatch) total = parseInt(totalMatch[1],10);
-              // Fallback: try to infer total as passed+failed
-              if (!total && (passed || failed)) total = passed + failed;
+              if (fs.existsSync(resultsDir)) {
+                const files = fs.readdirSync(resultsDir);
+                // Find any JSON files produced by Playwright
+                const jsonFiles = files.filter(f => f.endsWith('.json'));
+                for (const jf of jsonFiles) {
+                  try {
+                    const data = JSON.parse(fs.readFileSync(path.join(resultsDir, jf), 'utf8'));
+                    // Playwright JSON reporter emits 'suites' and 'entries' with results
+                    if (data && Array.isArray(data.suites)) {
+                      // Walk suites to gather counts
+                      const walk = (node) => {
+                        if (!node) return;
+                        if (Array.isArray(node.suites)) node.suites.forEach(walk);
+                        if (Array.isArray(node.tests)) {
+                          node.tests.forEach(t => {
+                            total += 1;
+                            const status = (t.outcome || t.result || t.status || '').toLowerCase();
+                            if (status === 'passed' || status === 'ok' ) passed += 1;
+                            else if (status === 'failed' || status === 'error') failed += 1;
+                            else if (status === 'skipped' || status === 'skipped') skipped += 1;
+                            else if (status === 'flaky') flaky += 1;
+                          });
+                        }
+                      };
+                      data.suites.forEach(walk);
+                      parsed = true;
+                      break;
+                    }
+                    // Some reporters emit a top-level array of tests
+                    if (Array.isArray(data)) {
+                      data.forEach(t => {
+                        total += 1;
+                        const status = (t.outcome || t.status || '').toLowerCase();
+                        if (status === 'passed') passed += 1;
+                        else if (status === 'failed') failed += 1;
+                        else if (status === 'skipped') skipped += 1;
+                        else if (status === 'flaky') flaky += 1;
+                      });
+                      parsed = true;
+                      break;
+                    }
+                  } catch (e) {
+                    // ignore JSON parse errors for individual files
+                  }
+                }
+              }
             } catch (e) {
-              console.log('Failed to parse playwright-run.log:', e.message || e);
+              console.log('Error while reading Playwright JSON reports:', e.message || e);
             }
 
-            const statusLine = (typeof total === 'number' && total > 0)
-              ? `Test summary: ${total} total, ${passed} passed, ${failed} failed.`
-              : 'Test summary: Could not determine counts from run log.';
+            if (parsed) {
+              summaryLines.push(`Test summary: ${total} total, ${passed} passed, ${failed} failed, ${skipped} skipped, ${flaky} flaky.`);
+            } else {
+              // Fallback: include a tail of the run log
+              const logPaths = ['/tmp/mmdc-wst-http.log','/tmp/playwright-run.log'];
+              let tail = '';
+              for (const p of logPaths) {
+                const v = safeRead(p);
+                if (v) { tail += `\n--- ${p} (tail) ---\n` + v.split('\n').slice(-200).join('\n'); }
+              }
+              summaryLines.push('Test summary: Could not find Playwright JSON report; falling back to run logs.');
+              if (tail) summaryLines.push('');
+              if (tail) summaryLines.push(tail);
+            }
 
             // Try to find the uploaded artifact for this run and include a download URL
-            const runId = context.runId;
             let artifactUrl = null;
             try {
               const resp = await github.actions.listWorkflowRunArtifacts({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                run_id: runId,
+                run_id: context.runId,
               });
               const artifacts = resp.data && resp.data.artifacts ? resp.data.artifacts : [];
               const found = artifacts.find(a => a.name === 'playwright-results');
-              if (found) {
-                artifactUrl = found.archive_download_url;
-              }
+              if (found) artifactUrl = found.archive_download_url;
             } catch (e) {
               console.log('Failed to list artifacts for run:', e.message || e);
             }
 
-            let body = summary.join('\n') + '\n\n' + statusLine + '\n\n' + (tail || 'No runner logs available.');
             if (artifactUrl) {
-              body += `\n\nDownload artifacts (requires repository access): ${artifactUrl}`;
-            } else {
-              body += `\n\nNo 'playwright-results' artifact was found in this run.`;
+              summaryLines.push('');
+              summaryLines.push(`Download artifacts (requires repository access): ${artifactUrl}`);
             }
+
+            const body = summaryLines.join('\n');
 
             // Post comment on the PR
             const prNumber = context.payload.pull_request && context.payload.pull_request.number;
