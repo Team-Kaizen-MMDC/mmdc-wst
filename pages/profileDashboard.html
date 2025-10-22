@@ -309,44 +309,44 @@
           </div>
         </div>
 
-        <!-- BASIC INFO -->
-        <div class="col-12 col-md-6">
-          <div class="card shadow-sm h-100">
-            <div class="card-body">
-              <div class="d-flex justify-content-between">
-                <h5 class="card-title mb-0">Dela Cruz Juan</h5>
-                <a href="#" class="text-decoration-none"  data-bs-toggle="modal" data-bs-target="#basicInfoModal">Edit</a>
-              </div>
-              <p class="text-muted">Osaka, Japan</p>
-              <hr />
-              <div class="row small">
-                <div class="col-6 mb-2"><span class="fw-semibold">Visa:</span> Special Skill Worker 1</div>
-                            <div class="col-6 mb-2"><span class="fw-semibold">Valid until:</span> 2026/05</div>
-                            <div class="col-6 mb-2"><span class="fw-semibold">Industry:</span> Food Service</div>
-                            <div class="col-6 mb-2"><span class="fw-semibold">Japanese:</span> Beginner / N5</div>
-                            <div class="col-6 mb-2"><span class="fw-semibold">Nationality:</span> Filipino</div>
-                            <div class="col-6 mb-2"><span class="fw-semibold">Age:</span> 31</div>
-              </div>
+          <!-- BASIC INFO -->
+          <div class="col-12 col-md-6">
+            <div class="card shadow-sm h-100">
+              <div class="card-body">
+                <div class="d-flex justify-content-between">
+                  <h5 class="card-title mb-0" id="info-name"></h5>
+                  <a href="#" class="text-decoration-none"  data-bs-toggle="modal" data-bs-target="#basicInfoModal">Edit</a>
+                </div>
+                <p class="text-muted" id="info-location"></p>
+                <hr />
+                <div class="row small">
+                              <div class="col-6 mb-2"><span class="fw-semibold">Visa:</span> <span id="info-visa"></span></div>
+                              <div class="col-6 mb-2"><span class="fw-semibold">Valid until:</span> <span id="info-validity"></span></div>
+                              <div class="col-6 mb-2"><span class="fw-semibold">Industry:</span> <span id="info-industry"></span></div>
+                              <div class="col-6 mb-2"><span class="fw-semibold">Japanese:</span> <span id="info-japanese"></span></div>
+                              <div class="col-6 mb-2"><span class="fw-semibold">Nationality:</span> <span id="info-nationality"></span></div>
+                              <div class="col-6 mb-2"><span class="fw-semibold">Age:</span> <span id="info-age"></span></div>
+                </div>
+                
+          <div id="resume-container">
+              <!-- Hidden File Input for upload resume -->
+          <input type="file" id="resumeUpload" accept="image/*" style="display: none;">
+
+          <a href="#" class="d-block mt-3 text-secondary fw-semibold" 
+          onclick="document.getElementById('resumeUpload').click(); return false;"
+          >Upload Resume →</a>
+
+          <div id="view-section" style="display: none; margin-top: 10px;">
+          <a id="view-link" href="#" target="_blank">View Resume →</a>
+          <button id="remove-button" style="margin-left: 10px;">X</button>
+          </div>
+
+          <input type="hidden" id="file-path">
+  </div>
               
-        <div id="resume-container">
-            <!-- Hidden File Input for upload resume -->
-        <input type="file" id="resumeUpload" accept="image/*" style="display: none;">
-
-        <a href="#" class="d-block mt-3 text-secondary fw-semibold" 
-        onclick="document.getElementById('resumeUpload').click(); return false;"
-        >Upload Resume →</a>
-
-        <div id="view-section" style="display: none; margin-top: 10px;">
-        <a id="view-link" href="#" target="_blank">View Resume →</a>
-        <button id="remove-button" style="margin-left: 10px;">X</button>
-        </div>
-
-        <input type="hidden" id="file-path">
-</div>
-            
+              </div>
             </div>
           </div>
-        </div>
 
             <!-- APPLICATION + NOTIFICATIONS -->
         <div class="col-12 col-md-6">
@@ -492,16 +492,16 @@
                    <form onsubmit="saveBasicInfo(); return false;">
                     <div class="mb-3">
                       <label class="form-label small fw-semibold">Full Name</label>
-                      <input type="text" class="form-control" value="Dela Cruz Juan" required>
+                      <input type="text" id="modal-name" class="form-control" value="Dela Cruz Juan" required>
                     </div>
                     <div class="mb-3">
                       <label class="form-label small fw-semibold">Location</label>
-                      <input type="text" class="form-control" value="Osaka, Japan" required>
+                      <input type="text" id="modal-location" class="form-control" value="Osaka, Japan" required>
                     </div>
                   <div class="row">
                     <div class="col-6 mb-3">
                       <label class="form-label small fw-semibold">Visa Type</label>
-                      <select class="form-select">
+                      <select id="modal-visa" class="form-select">
                         <option selected>Special Skilled Worker 1</option>
                         <option>Special Skilled Worker 2</option>
                         <option>Student</option>  
@@ -511,11 +511,11 @@
                     </div>
                     <div class="col-6 mb-3">
                      <label class="form-label small fw-semibold">Valid Until</label>
-                     <input type="month" class="form-control" value="2026-05" />   
+                     <input type="month" id="modal-validity" class="form-control" value="2026-05" />   
                     </div>
                     <div class="col-6 mb-3">
                                 <label class="form-label small fw-semibold">Industry</label>
-                                  <select class="form-select">
+                                  <select id="modal-industry" class="form-select">
                                     <option selected>Food Service</option>
                                     <option>Aviation</option>
                                     <option>Caregiver</option>  
@@ -525,7 +525,7 @@
                             </div>
                              <div class="col-6 mb-3">
                                 <label class="form-label small fw-semibold">Japanese</label>
-                                  <select class="form-select">
+                                  <select id="modal-japanese" class="form-select">
                                     <option selected>Beginner / N5</option>
                                     <option>Basic / N4</option>
                                     <option>Conversational / N3</option>  
@@ -535,7 +535,7 @@
                             </div>
                                <div class="col-6 mb-3">
                                 <label class="form-label small fw-semibold">Nationality</label>
-                                  <select class="form-select">
+                                  <select id="modal-nationality" class="form-select">
                                     <option selected>Filipino</option>
                                     <option>Indonesian</option>
                                     <option>Vietnamese</option>  
@@ -545,7 +545,7 @@
                             </div>
                             <div class="col-6 mb-3">
                                 <label class="form-label small fw-semibold">Age</label>
-                                <input type="number" class="form-control" value="31" />
+                                <input type="number" id="modal-age" class="form-control" value="31" />
                             </div>
 
                           </div>
@@ -1117,5 +1117,134 @@
             console.log('New education entry added to form (client-side)');
         }
     </script>
+
+    <script>
+      // Ensure Bootstrap's Modal class is accessible (defined in the bundle linked above)
+    const { Modal } = bootstrap;
+    
+    // Define the default data structure for reference
+    const DEFAULT_BASIC_INFO = {
+        name: "Dela Cruz Juan",
+        location: "Osaka, Japan",
+        visa: "Special Skill Worker 1",
+        validity: "2026-05", // YYYY-MM format for input type="month"
+        industry: "Food Service",
+        japanese: "Beginner / N5",
+        nationality: "Filipino",
+        age: "31"
+    };
+
+    // ------------------------------------------------------------------
+    // DYNAMIC BASIC INFO LOGIC
+    // ------------------------------------------------------------------
+
+    // --- 1. Load data from localStorage or default ---
+    function initializeBasicInfo() {
+        let storedData = localStorage.getItem('basicInfoData');
+        let data = storedData ? JSON.parse(storedData) : DEFAULT_BASIC_INFO;
+
+        // Ensure the validity is in the YYYY-MM format for the modal, but display differently
+        
+        // Update Display Fields
+        document.getElementById('info-name').textContent = data.name;
+        document.getElementById('info-location').textContent = data.location;
+        document.getElementById('info-visa').textContent = data.visa;
+        document.getElementById('info-validity').textContent = data.validity.replace('-', '/'); // Convert YYYY-MM to YYYY/MM for display
+        document.getElementById('info-industry').textContent = data.industry;
+        document.getElementById('info-japanese').textContent = data.japanese;
+        document.getElementById('info-nationality').textContent = data.nationality;
+        document.getElementById('info-age').textContent = data.age;
+
+        console.log('Basic Info initialized from local storage.');
+    }
+
+    // --- 2. Load current display data into modal fields ---
+    function loadBasicInfoToModal() {
+        // Read current values from the displayed profile
+        const currentData = {
+            name: document.getElementById('info-name').textContent,
+            location: document.getElementById('info-location').textContent,
+            visa: document.getElementById('info-visa').textContent,
+            // Convert YYYY/MM display format back to YYYY-MM for the input type="month"
+            validity: document.getElementById('info-validity').textContent.replace('/', '-'),
+            industry: document.getElementById('info-industry').textContent,
+            japanese: document.getElementById('info-japanese').textContent,
+            nationality: document.getElementById('info-nationality').textContent,
+            age: document.getElementById('info-age').textContent
+        };
+
+        // Populate modal fields
+        document.getElementById('modal-name').value = currentData.name;
+        document.getElementById('modal-location').value = currentData.location;
+        document.getElementById('modal-visa').value = currentData.visa;
+        document.getElementById('modal-validity').value = currentData.validity;
+        document.getElementById('modal-industry').value = currentData.industry;
+        document.getElementById('modal-japanese').value = currentData.japanese;
+        document.getElementById('modal-nationality').value = currentData.nationality;
+        document.getElementById('modal-age').value = currentData.age;
+
+        console.log('Basic Info Modal loaded with current profile data.');
+    }
+
+    // --- 3. Save data from modal fields to display and localStorage ---
+    function saveBasicInfo() {
+        // 1. Collect new data from modal inputs
+        const newData = {
+            name: document.getElementById('modal-name').value,
+            location: document.getElementById('modal-location').value,
+            visa: document.getElementById('modal-visa').value,
+            validity: document.getElementById('modal-validity').value, // This is YYYY-MM
+            industry: document.getElementById('modal-industry').value,
+            japanese: document.getElementById('modal-japanese').value,
+            nationality: document.getElementById('modal-nationality').value,
+            age: document.getElementById('modal-age').value
+        };
+
+        // 2. Update the main profile display (uses initialize function logic)
+        // Store the data in localStorage
+        localStorage.setItem('basicInfoData', JSON.stringify(newData));
+        
+        // Re-run the initialization function to update the DOM
+        initializeBasicInfo();
+
+        console.log('Basic Information saved and display updated.');
+
+       // 3. Close the modal
+        const modalElement = document.getElementById('basicInfoModal');
+        const modal = Modal.getInstance(modalElement);
+        if (modal) modal.hide();
+    }
+    
+    // ------------------------------------------------------------------
+    // PLACEHOLDER FUNCTIONS (Kept for other modals)
+    // ------------------------------------------------------------------
+    function saveExperience() { /* ... logic ... */ }
+    function saveSkills() { /* ... logic ... */ }
+    function saveEducation() { /* ... logic ... */ }
+    function saveAvailability() { /* ... logic ... */ }
+    
+    // ... other addNew placeholders ...
+
+    // ------------------------------------------------------------------
+    // INITIALIZATION & EVENT LISTENERS
+    // ------------------------------------------------------------------
+    document.addEventListener('DOMContentLoaded', () => {
+        // Run once on page load to set initial data
+        initializeBasicInfo();
+
+        // Attach event listener to load data into modal just before it's displayed
+        const basicInfoModal = document.getElementById('basicInfoModal');
+        if (basicInfoModal) {
+            basicInfoModal.addEventListener('show.bs.modal', loadBasicInfoToModal);
+        }
+        
+        // --- NOTE: Add other DOmContentLoaded listeners here if needed ---
+    });
+
+    // NOTE: If you are moving all JS to an external file, ensure the 
+    // saveBasicInfo function is globally accessible.
+    // The previous saveBasicInfo() placeholder is replaced by this function.
+
+</script>
   </body>
 </html>
