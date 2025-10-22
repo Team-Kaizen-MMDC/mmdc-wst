@@ -432,22 +432,25 @@
         </div>
 
         <!-- EDUCATION -->
-        <div class="col-12 col-md-6">
-          <div class="card shadow-sm">
-            <div class="card-header d-flex justify-content-between">
-              <h6 class="mb-0">Education</h6>
-              <a href="addEdit/education.html" class="small">Add</a>
-            </div>
-            <div class="card-body d-flex justify-content-between align-items-center">
-              <div>
-                <div class="fw-semibold">Mapua Malayan Digital College</div>
-                <div class="text-muted small">B.S. IT – Software Development</div>
-                <div class="small">2023 – 2028</div>
-              </div>
-              <a href="#" class="small" data-bs-toggle="modal" data-bs-target="#educationModal">Edit</a>
-            </div>
-          </div>
-        </div>
+       <div class="col-12 col-md-6">
+                        <div class="card shadow-sm">
+                            <div class="card-header d-flex justify-content-between bg-white">
+                                <h6 class="mb-0 fw-bold text-primary">Education</h6>
+                                <!-- ADD button is always visible and opens the modal for a NEW entry (-1 index) -->
+                                <a href="#" class="small text-decoration-none fw-semibold" 
+                                   data-bs-toggle="modal" data-bs-target="#educationModal"
+                                   onclick="openEducationModal(-1)">Add
+                                </a>
+                            </div>
+                            
+                            <!-- Container for the dynamically injected list of education entries -->
+                            <!-- Note: The p-0 is added to remove card body padding, allowing the list items' internal padding (p-3) to control spacing -->
+                            <div class="card-body p-0" id="education-list-container">
+                                <!-- Entries will be dynamically injected here by renderEducationSection() -->
+                                <div class="p-3 text-muted small">Loading education entries...</div>
+                            </div>
+                        </div>
+                    </div>
 
          
 
@@ -466,10 +469,10 @@
                             <p class="mb-1 small"><span class="fw-semibold">Location:</span> Tokyo</p>
                             <p class="mb-1 small"><span class="fw-semibold">Work Preferences:</span> Full-time</p>
                       
-                        </div>
+                           </div>
                          <a href="#" class="small" data-bs-toggle="modal" data-bs-target="#availabilityModal">Edit</a>
-                    </div>
-                </div>
+                           </div>
+                        </div>
         </div>
       </div>
     </main>
@@ -688,8 +691,13 @@
 
                       <!-- Modal Footer Buttons -->
                       <div class="d-flex justify-content-end mt-3">
-                        <button type="button" class="btn btn-outline-secondary me-2 rounded-md" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-danger rounded-md">Save</button>
+                        
+                        <div class="ms-auto">
+                         <button type="button" class="btn btn-outline-secondary me-2 rounded-md" 
+                          data-bs-dismiss="modal">Close</button>
+                          <button type="submit" class="btn btn-primary px-4 rounded-md shadow-sm"
+                          >Save</button>
+                       </div>
                       </div>
                     </form>
                   </div>
@@ -733,137 +741,133 @@
     </div>
 
        <!-- Education Modal -->
-            <div class="modal fade" id="educationModal" tabindex="-1" aria-labelledby="educationModalLabel" aria-hidden="true">
+            <div class="modal fade" id="educationModal" tabindex="-1" 
+            aria-labelledby="educationModalLabel" aria-hidden="true">
               <div class="modal-dialog modal-lg">
                 <div class="modal-content rounded-4">
                   
                   <!-- Header -->
                   <div class="modal-header bg-light text-white rounded-top-4">
-                    <h5 class="modal-title" id="experienceModalLabel">Education</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title" id="educationModalLabel">Education</h5>
+                    <button type="button" class="btn-close btn-close-white" 
+                    data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
 
                   <!-- Body -->
                   <div class="modal-body p-4">
-                    <form onsubmit="saveEducation(); return false;">
-                      <h6 class="fw-bold mb-4 text-light">Edit Existing Entry</h6>
-
+                    <form id="educationForm" onsubmit="saveEducationEntry(); 
+                     return false;" novalidate>
+                      <input type="hidden" id="editingIndex" value="-1" />
                       <!-- Education Entry -->
                       <div class="p-3 mb-4 border rounded-4 bg-light shadow-sm">
                         <!-- School Title -->
                         <div class="mb-3">
-                          <label class="form-label small fw-semibold">School</label>
-                          <input type="text" class="form-control rounded-md" value="Mapua Malayan Digital College" required />
+                          <label for="school" class="form-label small fw-semibold">School*</label>
+                          <input  
+                            id="school"
+                            name="school"
+                            type="text"
+                            placeholder="Ex: Mapua University"
+                            required
+                            class="form-control"
+                          />
                         </div>
 
                         <!-- Degree -->
                         <div class="mb-3">
-                          <label class="form-label small fw-semibold">Degree</label>
-                          <input type="text" class="form-control rounded-md" value="B.S. IT" required />
+                          <label for="degree" class="form-label small fw-semibold">Degree*</label>
+                          <select id="degree" name="degree" class="form-select" required>
+                            <option value="">Please Select</option>
+                            <option>Associate Degree</option>
+                            <option>Bachelor's Degree</option>
+                            <option>Master's Degree</option>
+                            <option>Doctoral Degree</option>
+                            <option>High School Diploma or Equivalent</option>
+                          </select>
                         </div>
 
                             <!-- Field of Study -->
                         <div class="mb-3">
-                          <label class="form-label small fw-semibold">Software Development</label>
-                          <input type="text" class="form-control rounded-md" value="Software Development" required />
+                          <label for="field" class="form-label small fw-semibold">Field of Study*</label>
+                         <input
+                            id="field"
+                            name="field"
+                            type="text"
+                            placeholder="Ex: Software Development"
+                            required
+                            class="form-control"
+                         />
                         </div>
 
-                        <!-- Start / End Dates -->
-                        <div class="row">
-                          <!-- Start Date -->
-                          <div class="col-md-6 mb-3">
-                            <label class="form-label small fw-semibold">Start Date*</label>
-                            <div class="row g-2">
-                              <div class="col">
-                                <select id="startMonth" class="form-select rounded-md">
-                                  <option value="">Month</option>
-                                  <option>January</option>
-                                  <option>February</option>
-                                  <option>March</option>
-                                  <option>April</option>
-                                  <option>May</option>
-                                  <option>June</option>
-                                  <option>July</option>
-                                  <option>August</option>
-                                  <option>September</option>
-                                  <option>October</option>
-                                  <option>November</option>
-                                  <option>December</option>
-                                </select>
-                              </div>
-                              <div class="col">
-                                <select id="startYear" class="form-select rounded-md">
-                                  <option value="">Year</option>
-                                  <option>2024</option>
-                                  <option>2023</option>
-                                  <option>2022</option>
-                                  <option>2021</option>
-                                  <option>2020</option>
-                                  <option>2019</option>
-                                  <option>2018</option>
-                                  <option>2017</option>
-                                  <option>2016</option>
-                                  <option>2015</option>
-                                </select>
-                              </div>
+                       <div class="mb-4">
+                        <label for="eduStartMonth" class="form-label">Start Date*</label>
+                        <div class="row g-2">
+                            <div class="col">
+                                <select id="eduStartMonth" name="eduStartMonth" class="form-select" required>
+                                    <option value="">Month</option>
+                                    </select>
                             </div>
-                          </div>
-
-                          <!-- End Date -->
-                          <div class="col-md-6 mb-3">
-                            <label class="form-label small fw-semibold">End Date*</label>
-                            <div class="row g-2">
-                              <div class="col">
-                                <select id="endMonth" class="form-select rounded-md">
-                                  <option value="">Month</option>
-                                  <option>January</option>
-                                  <option>February</option>
-                                  <option>March</option>
-                                  <option>April</option>
-                                  <option>May</option>
-                                  <option>June</option>
-                                  <option>July</option>
-                                  <option>August</option>
-                                  <option>September</option>
-                                  <option>October</option>
-                                  <option>November</option>
-                                  <option>December</option>
-                                </select>
-                              </div>
-                              <div class="col">
-                                <select id="endYear" class="form-select rounded-md">
-                                  <option value="">Year</option>
-                                  <option>2024</option>
-                                  <option>2023</option>
-                                  <option>2022</option>
-                                  <option>2021</option>
-                                  <option>2020</option>
-                                </select>
-                              </div>
+                            <div class="col">
+                                <select id="eduStartYear" name="eduStartYear" class="form-select" required>
+                                    <option value="">Year</option>
+                                    </select>
                             </div>
+                        </div>
+                    </div>
+
+                                        <div class="mb-4" id="endDateWrapper">
+                          <label for="eduEndMonth" class="form-label">End Date*</label>
+                          <div class="row g-2" id="endDateSelects">
+                              <div class="col">
+                                  <select id="eduEndMonth" name="eduEndMonth" class="form-select" required> 
+                                      <option value="">Month</option>
+                                  </select>
+                              </div>
+                              <div class="col">
+                                  <select id="eduEndYear" name="eduEndYear" class="form-select" required> 
+                                      <option value="">Year</option>
+                                  </select>
+                              </div>
                           </div>
+                          <div 
+  id="date-error-message" 
+  class="small text-danger mt-2 mb-3 d-none"
+>
+  </div>
+                          </div>
+    
+                        <input
+                            id="currentDateField"
+                            type="text"
+                            value="Present"
+                            disabled
+                            class="form-control bg-light text-secondary mt-2"
+                            style="display:none;"
+                        />
+                    </div>
+
+                    <div class="form-check mb-4">
+                        <input class="form-check-input" type="checkbox" id="currentlyStudyingCheckbox" name="currentlyStudyingCheckbox">
+                        <label class="form-check-label" for="currentlyStudyingCheckbox">
+                            I currently study here
+                        </label>
+                    </div>
+                    <div class="d-flex justify-content-between mt-4">
+                            <button type="button" class="btn btn-outline-danger me-2 rounded-md" 
+                                id="deleteEducationBtn" style="display:none;">Delete Entry</button>
+                            
+                            <div class="ms-auto d-flex">
+                                <button type="button" class="btn btn-outline-secondary me-2 rounded-md" 
+                                data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary px-4 rounded-md shadow-sm"
+                                >Save</button>
+                            </div>
                         </div>
-
-                        <!-- Remove Entry Button -->
-                        <div class="text-start">
-                          <button type="button" class="btn btn-sm btn-outline-danger rounded-md">
-                            <i class="bi bi-trash me-1"></i> Remove Entry
-                          </button>
-                        </div>
-                      </div>
-
-                      <hr class="my-3" />
-
-                      <!-- Modal Footer Buttons -->
-                      <div class="d-flex justify-content-end mt-3">
-                        <button type="button" class="btn btn-outline-secondary me-2 rounded-md" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-danger rounded-md">Save</button>
-                      </div>
                     </form>
-                  </div>
-                </div>
               </div>
-            </div>
+          </div>
+      </div>
+    </div>
 
        <!-- Availability Modal -->
     <div class="modal fade" id="availabilityModal" tabindex="-1" aria-labelledby="availabilityModalLabel" aria-hidden="true">
@@ -1117,5 +1121,348 @@
             console.log('New education entry added to form (client-side)');
         }
     </script>
+
+     <script>
+    const EDUCATION_STORAGE_KEY = 'educationData';
+    const EDUCATION_MODAL_ID = 'educationModal';
+    const Modal = bootstrap.Modal;
+    
+    const MONTH_NAMES = [
+        "January", "February", "March", "April", "May", "June", 
+        "July", "August", "September", "October", "November", "December"
+    ];
+
+    /**
+     * Helper to retrieve the array of education data from localStorage.
+     */
+    function getEducationData() {
+        const storedData = localStorage.getItem(EDUCATION_STORAGE_KEY);
+        try {
+            const data = storedData ? JSON.parse(storedData) : [];
+            return Array.isArray(data) ? data : [];
+        } catch (e) {
+            console.error("Error parsing education data from localStorage:", e);
+            return [];
+        }
+    }
+    
+    /**
+     * Fills the Month and Year dropdowns dynamically.
+     */
+    function populateDateSelects() {
+        const monthSelects = document.querySelectorAll('#eduStartMonth, #eduEndMonth');
+        monthSelects.forEach(select => {
+            if (select.options.length <= 1) {
+                MONTH_NAMES.forEach(month => {
+                    const option = document.createElement('option');
+                    option.value = month;
+                    option.textContent = month;
+                    select.appendChild(option);
+                });
+            }
+        });
+
+        const currentYear = new Date().getFullYear();
+        const yearSelects = document.querySelectorAll('#eduStartYear, #eduEndYear');
+
+        yearSelects.forEach(select => {
+            if (select.options.length <= 1) {
+                const maxYear = currentYear + 10; 
+                const minYear = currentYear - 50; 
+                
+                for (let year = maxYear; year >= minYear; year--) {
+                    const option = document.createElement('option');
+                    option.value = year.toString();
+                    option.textContent = year.toString();
+                    select.appendChild(option);
+                }
+            }
+        });
+    }
+
+    /**
+     * Toggles the visibility of the End Date fields.
+     */
+    function toggleCurrentlyStudying() {
+        const checkbox = document.getElementById('currentlyStudyingCheckbox');
+        const endDateSelects = document.getElementById('endDateSelects');
+        const currentDateField = document.getElementById('currentDateField');
+        const endMonthSelect = document.getElementById('eduEndMonth');
+        const endYearSelect = document.getElementById('eduEndYear');
+        const dateErrorDiv = document.getElementById('date-error-message');
+
+        dateErrorDiv.classList.add('d-none');
+        
+        if (checkbox.checked) {
+            endDateSelects.style.display = 'none';
+            currentDateField.style.display = 'block';
+            endMonthSelect.removeAttribute('required');
+            endYearSelect.removeAttribute('required');
+            endMonthSelect.classList.remove('is-invalid');
+            endYearSelect.classList.remove('is-invalid');
+        } else {
+            endDateSelects.style.display = 'flex';
+            currentDateField.style.display = 'none';
+            endMonthSelect.setAttribute('required', 'required');
+            endYearSelect.setAttribute('required', 'required');
+        }
+    }
+
+    /**
+     * Validates that end date is after start date.
+     */
+    function validateDates() {
+        const isCurrent = document.getElementById('currentlyStudyingCheckbox').checked;
+        const errorDiv = document.getElementById('date-error-message');
+        errorDiv.classList.add('d-none');
+
+        if (isCurrent) {
+            return true; 
+        }
+
+        const startMonth = document.getElementById('eduStartMonth').value;
+        const startYear = parseInt(document.getElementById('eduStartYear').value);
+        const endMonth = document.getElementById('eduEndMonth').value;
+        const endYear = parseInt(document.getElementById('eduEndYear').value);
+        
+        if (startMonth && startYear && endMonth && endYear) {
+            const startMonthIndex = MONTH_NAMES.indexOf(startMonth);
+            const endMonthIndex = MONTH_NAMES.indexOf(endMonth);
+            
+            if (startYear > endYear || 
+                (startYear === endYear && startMonthIndex > endMonthIndex)) {
+                
+                errorDiv.textContent = 'End date must be the same as or after the start date.';
+                errorDiv.classList.remove('d-none');
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Opens the education modal for adding or editing.
+     * @param {number} index - Entry index to edit, or -1 for new entry
+     */
+    function openEducationModal(index = -1) {
+        const dataArray = getEducationData();
+        const form = document.getElementById('educationForm');
+        const modalTitle = document.getElementById('educationModalLabel');
+        const deleteBtn = document.getElementById('deleteEducationBtn');
+        const dateErrorDiv = document.getElementById('date-error-message');
+        
+        // Reset form
+        form.reset();
+        form.classList.remove('was-validated');
+        dateErrorDiv.classList.add('d-none');
+        
+        // Store which entry we're editing
+        document.getElementById('editingIndex').value = index;
+
+        if (index >= 0 && index < dataArray.length) {
+            // EDIT MODE
+            const data = dataArray[index];
+            modalTitle.textContent = 'Edit Education Entry';
+            deleteBtn.style.display = 'block';
+
+            // Populate form
+            document.getElementById('school').value = data.school || '';
+            document.getElementById('degree').value = data.degree || '';
+            document.getElementById('field').value = data.field || '';
+            
+            const checkbox = document.getElementById('currentlyStudyingCheckbox');
+            checkbox.checked = data.isCurrent || false;
+            
+            document.getElementById('eduStartMonth').value = data.startMonth || '';
+            document.getElementById('eduStartYear').value = data.startYear || '';
+            document.getElementById('eduEndMonth').value = data.endMonth === 'N/A' ? '' : data.endMonth || '';
+            document.getElementById('eduEndYear').value = data.endYear === 'N/A' ? '' : data.endYear || '';
+
+        } else {
+            // ADD MODE
+            modalTitle.textContent = 'Add New Education Entry';
+            deleteBtn.style.display = 'none';
+            document.getElementById('currentlyStudyingCheckbox').checked = false;
+        }
+        
+        toggleCurrentlyStudying();
+    }
+    
+    // Make function globally accessible
+    window.openEducationModal = openEducationModal;
+
+    /**
+     * Saves education entry (add or edit).
+     */
+    function saveEducationEntry() {
+        const form = document.getElementById('educationForm');
+        form.classList.remove('was-validated');
+
+        if (!form.checkValidity() || !validateDates()) {
+            form.classList.add('was-validated');
+            return;
+        }
+        
+        const index = parseInt(document.getElementById('editingIndex').value, 10);
+        const checkbox = document.getElementById('currentlyStudyingCheckbox');
+        let dataArray = getEducationData();
+
+        // Collect form data
+        const newData = {
+            school: document.getElementById('school').value,
+            degree: document.getElementById('degree').value,
+            field: document.getElementById('field').value,
+            startMonth: document.getElementById('eduStartMonth').value,
+            startYear: document.getElementById('eduStartYear').value,
+            isCurrent: checkbox.checked,
+            endMonth: checkbox.checked ? 'N/A' : document.getElementById('eduEndMonth').value,
+            endYear: checkbox.checked ? 'N/A' : document.getElementById('eduEndYear').value,
+        };
+
+        // Add or update
+        if (index === -1) {
+            // Adding new entry
+            dataArray.push(newData);
+        } else if (index >= 0 && index < dataArray.length) {
+            // Editing existing entry
+            dataArray[index] = newData;
+        }
+
+        // Save and update UI
+        localStorage.setItem(EDUCATION_STORAGE_KEY, JSON.stringify(dataArray));
+        renderEducationSection();
+
+        // Close modal
+        const modalElement = document.getElementById(EDUCATION_MODAL_ID);
+        const modal = Modal.getInstance(modalElement);
+        if (modal) modal.hide();
+        
+        form.classList.remove('was-validated');
+    }
+
+    
+   /**
+ * Renders ALL education entries using the simple Array.map method.
+ * This function handles all list creation automatically.
+ */
+function renderEducationSection() {
+    const dataArray = getEducationData();
+    const displayContainer = document.getElementById('education-list-container');
+
+    if (dataArray.length === 0) {
+        // Simple empty state message
+        displayContainer.innerHTML = `
+            <div class="text-muted small p-3">
+                No education entries yet. Click "Add" above to create your first entry.
+            </div>
+        `;
+        return;
+    }
+
+    // 1. Convert each data object into a complete HTML string (the 'map' loop)
+    const educationHTML = dataArray.map((data, index) => {
+        // Logic for dates (same as before)
+        const endDateText = data.isCurrent ? 'Present' : `${data.endMonth} ${data.endYear}`;
+        const datesText = `${data.startMonth} ${data.startYear} – ${endDateText}`;
+        const dateClass = data.isCurrent ? 'text-success fw-semibold' : '';
+
+        // Generate the HTML row
+        return `
+            <div class="d-flex justify-content-between align-items-start py-3 px-3 border-bottom education-entry-row">
+                <div class="flex-grow-1">
+                    <div class="fw-semibold">${data.school}</div>
+                    <div class="text-muted small">${data.degree} – ${data.field}</div>
+                    <div class="small ${dateClass}">${datesText}</div>
+                </div>
+                <a href="#" 
+                    class="small text-decoration-none ms-3 flex-shrink-0" 
+                    onclick="openEducationModal(${index}); return false;"
+                    data-bs-toggle="modal" 
+                    data-bs-target="#educationModal">
+                    Edit
+                </a>
+            </div>
+        `;
+    }).join(''); // 2. Join all the HTML strings together
+
+    // 3. Insert the entire combined HTML string into the container at once
+    displayContainer.innerHTML = educationHTML;
+
+    // Optional: Remove border-bottom from last entry
+    const lastEntry = displayContainer.querySelector('.education-entry-row:last-child');
+    if (lastEntry) {
+        lastEntry.classList.remove('border-bottom');
+    }
+}
+    /**
+     * Deletes the currently edited education entry.
+     */
+    function deleteEducationEntry() {
+        const index = parseInt(document.getElementById('editingIndex').value, 10);
+        let dataArray = getEducationData();
+        
+        if (index >= 0 && index < dataArray.length) {
+            // Confirm deletion
+            if (!confirm('Are you sure you want to delete this education entry?')) {
+                return;
+            }
+            
+            // Remove entry
+            dataArray.splice(index, 1);
+            
+            // Save and update
+            localStorage.setItem(EDUCATION_STORAGE_KEY, JSON.stringify(dataArray));
+            renderEducationSection();
+            
+            // Close modal
+            const modalElement = document.getElementById(EDUCATION_MODAL_ID);
+            const modal = Modal.getInstance(modalElement);
+            if (modal) modal.hide();
+            
+            console.log(`Education entry at index ${index} deleted.`);
+        }
+    }
+    
+    // ------------------------------------------------------------------
+    // INITIALIZATION
+    // ------------------------------------------------------------------
+    document.addEventListener('DOMContentLoaded', () => {
+        populateDateSelects();
+        renderEducationSection();
+
+        const checkbox = document.getElementById('currentlyStudyingCheckbox');
+        if (checkbox) {
+            checkbox.addEventListener('change', toggleCurrentlyStudying);
+        }
+
+        // Handle "Add" button click
+        const addLink = document.getElementById('education-action-link');
+        if (addLink) {
+            addLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                openEducationModal(-1); // -1 means new entry
+            });
+        }
+
+        // Handle delete button
+        const deleteBtn = document.getElementById('deleteEducationBtn');
+        if (deleteBtn) {
+            deleteBtn.addEventListener('click', deleteEducationEntry);
+        }
+
+        // Handle modal events
+        const educationModal = document.getElementById(EDUCATION_MODAL_ID);
+        if (educationModal) {
+            educationModal.addEventListener('hidden.bs.modal', () => {
+                // Reset form when modal closes
+                const form = document.getElementById('educationForm');
+                form.reset();
+                form.classList.remove('was-validated');
+            });
+        }
+    });
+</script>
+  
   </body>
 </html>
