@@ -269,16 +269,15 @@
 
                 <h6 class="card-title mb-0">Profile Summary</h6>
                      <!-- Edit Button (Initially visible) -->
-                       <a href="#" class="text-decoration-none"
-                          id="edit-btn"
-                          onclick="toggleEditMode(true)"
-                          >Edit</a>
-
+                        <button type="button" class="btn btn-link 
+                        text-red small ms-2 p-0 shadow-none" 
+                        id="edit-btn" onclick="toggleEditMode(true)">Edit
+                      </button>
                         <!-- Save Button (Initially hidden) -->
-                          <a href="#" class="text-decoration-none d-none"
-                            id="save-btn"
-                             onclick="toggleEditMode(false)"
-                            >Save</a>
+                          <button type="button" class="btn btn-link 
+                          text-red small ms-2 d-none p-0 shadow-none" 
+                          id="save-btn" onclick="toggleEditMode(false)">Save
+                        </button>
               </div>
             </div>
            
@@ -315,7 +314,7 @@
             <div class="card-body">
               <div class="d-flex justify-content-between">
                 <h5 class="card-title mb-0">Dela Cruz Juan</h5>
-                <a href="#" class="text-decoration-none"  data-bs-toggle="modal" data-bs-target="#basicInfoModal">Edit</a>
+                <a href="#" class="text-red small ms-2"  data-bs-toggle="modal" data-bs-target="#basicInfoModal">Edit</a>
               </div>
               <p class="text-muted">Osaka, Japan</p>
               <hr />
@@ -398,7 +397,7 @@
           <div class="card shadow-sm">
             <div class="card-header d-flex justify-content-between align-items-center">
               <h6 class="mb-0">Experience</h6>
-              <a href="addEdit/experience.html" class="small">Add</a>
+              <a href="addEdit/experience.html" class="text-danger small ms-2">Add</a>
             </div>
             <div class="card-body d-flex align-items-center justify-content-between">
               <div class="d-flex align-items-center">
@@ -409,7 +408,7 @@
                   <div class="small">2023 – 2027</div>
                 </div>
               </div>
-              <a href="#" class="small" data-bs-toggle="modal" data-bs-target="#experienceModal">Edit</a>
+              <a href="#" class="text-red small ms-2" data-bs-toggle="modal" data-bs-target="#experienceModal">Edit</a>
             </div>
           </div>
         </div>
@@ -419,14 +418,14 @@
           <div class="card shadow-sm">
             <div class="card-header d-flex justify-content-between">
               <h6 class="mb-0">Skills</h6>
-              <a href="addEdit/skill.html" class="small">Add</a>
+              <a href="addEdit/skill.html" class="text-danger small ms-2">Add</a>
             </div>
             <div class="card-body d-flex justify-content-between align-items-center">
               <div class="fw-semibold">Communication</div>
                  <div class="fw-semibold">Customer Service</div>
                     <div class="fw-semibold">Prepping</div>
                        <div class="fw-semibold">knife</div>
-             <a href="#" class="text-decoration-none"  data-bs-toggle="modal" data-bs-target="#skillsModal">Edit</a>
+             <a href="#" class="text-red small ms-2"  data-bs-toggle="modal" data-bs-target="#skillsModal">Edit</a>
             </div>
           </div>
         </div>
@@ -436,7 +435,7 @@
           <div class="card shadow-sm">
             <div class="card-header d-flex justify-content-between">
               <h6 class="mb-0">Education</h6>
-              <a href="addEdit/education.html" class="small">Add</a>
+              <a href="addEdit/education.html" class="text-danger small ms-2">Add</a>
             </div>
             <div class="card-body d-flex justify-content-between align-items-center">
               <div>
@@ -444,7 +443,7 @@
                 <div class="text-muted small">B.S. IT – Software Development</div>
                 <div class="small">2023 – 2028</div>
               </div>
-              <a href="#" class="small" data-bs-toggle="modal" data-bs-target="#educationModal">Edit</a>
+              <a href="#" class="text-red small ms-2" data-bs-toggle="modal" data-bs-target="#educationModal">Edit</a>
             </div>
           </div>
         </div>
@@ -456,7 +455,7 @@
                <div class="card shadow-sm">
             <div class="card-header d-flex justify-content-between">
               <h6 class="mb-0">Availability / Preferences</h6>
-                <a href="addEdit/availability.html" class="small">Add</a>
+                <a href="addEdit/availability.html" class="text-danger small ms-2">Add</a>
              
             </div>
                      <div class="card-body d-flex justify-content-between align-items-center">
@@ -467,7 +466,7 @@
                             <p class="mb-1 small"><span class="fw-semibold">Work Preferences:</span> Full-time</p>
                       
                         </div>
-                         <a href="#" class="small" data-bs-toggle="modal" data-bs-target="#availabilityModal">Edit</a>
+                         <a href="#" class="text-red small ms-2" data-bs-toggle="modal" data-bs-target="#availabilityModal">Edit</a>
                     </div>
                 </div>
         </div>
@@ -566,7 +565,7 @@
                 <div class="modal-content rounded-4">
                   
                   <!-- Header -->
-                  <div class="modal-header bg-light text-white rounded-top-4">
+                  <div class="modal-header bg-light rounded-top-4">
                     <h5 class="modal-title" id="experienceModalLabel">Manage Experience</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
@@ -702,7 +701,7 @@
     <div class="modal fade" id="skillsModal" tabindex="-1" aria-labelledby="skillsModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content rounded-4">
-                <div class="modal-header bg-light text-white rounded-top-4">
+                <div class="modal-header bg-light rounded-top-4">
                     <h5 class="modal-title" id="skillsModalLabel">Skills or Certificate</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -738,7 +737,7 @@
                 <div class="modal-content rounded-4">
                   
                   <!-- Header -->
-                  <div class="modal-header bg-light text-white rounded-top-4">
+                  <div class="modal-header bg-light rounded-top-4">
                     <h5 class="modal-title" id="experienceModalLabel">Education</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
@@ -869,7 +868,7 @@
     <div class="modal fade" id="availabilityModal" tabindex="-1" aria-labelledby="availabilityModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content rounded-4">
-                <div class="modal-header bg-light text-white rounded-top-4">
+                <div class="modal-header bg-light rounded-top-4">
                     <h5 class="modal-title" id="availabilityModalLabel">Availability & Preferences</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
