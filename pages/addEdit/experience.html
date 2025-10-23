@@ -11,6 +11,15 @@
   rel="stylesheet"
 />
 <link rel="stylesheet" href="../../assets/css/main.css" />
+<style>
+        .form-control.is-valid,
+        .form-select.is-valid,
+        .form-control.is-invalid,
+        .form-select.is-invalid {
+            background-image: none !important; 
+            padding-right: 0.75rem !important; 
+        }
+    </style>
 </head>
 <body class="bg-light py-5">
 
@@ -53,6 +62,7 @@
           <option>Internship</option>
           <option>Apprenticeship</option>
         </select>
+        <div id="employmentTypeFeedback" class="invalid-feedback d-block mt-1" style="display:none;"></div>
       </div>
 
       <!-- Company -->
