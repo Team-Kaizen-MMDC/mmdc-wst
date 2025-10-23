@@ -171,8 +171,41 @@ const initializeFormValidation = (formId, validationFn) => {
 // ===================================================================
 
 // Master function for profile.html
+
+function validateRequiredSelect(selectId, feedbackId, errorMessage) {
+    // 1. Get the elements
+    const selectElement = document.getElementById(selectId);
+    const feedbackElement = document.getElementById(feedbackId);
+
+    // Basic check for element existence (good practice)
+    if (!selectElement || !feedbackElement) {
+        console.error(`Element not found: Select ID: ${selectId}, Feedback ID: ${feedbackId}`);
+        return false; // Return false or true depending on desired fail-safe
+    }
+
+    // 2. Determine the selected value
+    const selectedValue = selectElement.value;
+
+    // 3. Validation Logic
+    // We check if the value is '0' or an empty string '', as these are common
+    // values for default/placeholder options in <select> elements.
+    if (selectedValue === '' || selectedValue === '0') {
+        // Validation FAILED: Show error
+        feedbackElement.textContent = errorMessage; // Set the error message
+        feedbackElement.style.display = 'block';   // Make the feedback visible (if it was hidden)
+        selectElement.classList.add('is-invalid'); // Add a class for visual styling (e.g., Bootstrap)
+        return false;
+    } else {
+        // Validation PASSED: Clear error
+        feedbackElement.textContent = '';          // Clear the error message
+        feedbackElement.style.display = 'none';    // Hide the feedback (optional, depends on your CSS/framework)
+        selectElement.classList.remove('is-invalid'); // Remove error styling
+        return true;
+    }
+}
+
 const validateProfileForm = (form) => {
-    let formValid = true;
+    let isValid = true;
     
     if (!validateRequiredText('firstName', 'First Name is required.')) formValid = false;
     if (!validateRequiredText('lastName', 'Last Name is required.')) formValid = false;
@@ -191,7 +224,6 @@ const validateProfileForm = (form) => {
         ) && isValid;
     }
 
-    return formValid;
     return isValid;
 };
 
@@ -212,12 +244,12 @@ const validateEducationForm = (form) => {
     if (!validateRequiredText('school', 'School name is required.')) formValid = false;
     if (!validateRequiredText('degree', 'Degree/Course is required.')) formValid = false;
 
-    isValid &= validateRequiredSelect('startMonth', 'startMonthFeedback', 'Start date is required.');
-    isValid &= validateRequiredSelect('startYear', 'startMonthFeedback', 'Start date is required.');
-    isValid &= validateFutureDate('startMonth', 'startYear', 'startMonthFeedback', 'Start date cannot be in the future.');
+    formValid &= validateRequiredSelect('startMonth', 'startMonthFeedback', 'Start date is required.');
+    formValid &= validateRequiredSelect('startYear', 'startMonthFeedback', 'Start date is required.');
+    formValid &= validateFutureDate('startMonth', 'startYear', 'startMonthFeedback', 'Start date cannot be in the future.');
 
     return formValid;
-    return isValid;
+  
 };
 
 // Master function for experience.html
