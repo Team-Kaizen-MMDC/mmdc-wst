@@ -16,19 +16,18 @@
 
   </head>
 
-  <body class="d-flex align-items-center justify-content-center min-vh-100">
-    <div
-        class="form-container bg-white rounded-3 shadow-lg p-4 my-4 mx-auto"
-              aria-label="Availability and Preferences Form" 
-              style="width: 100%; max-width: 672px;"
-        >
+  <body class="bg-light d-flex align-items-center justify-content-center min-vh-100">
+
+  <div class="container" style="max-width: 740px;"> 
+    <div class="bg-white p-4 rounded-4 shadow-lg"
+          style="width: 100%; max-width: 672px;">
 
 
       <!-- Header -->
       <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h4 fw-bold text-dark">Availability / Preferences</h1>
         <a
-          href="../../index.html"
+          href="../profileDashboard.html"
           class="text-secondary fw-bold text-decoration-none"
           aria-label="Close"
         >
@@ -37,7 +36,7 @@
       </div>
 
       <!-- Form -->
-      <form class="g-3" action="../signin.html" method="GET">
+      <form class="g-3" action="../profileDashboard.html" method="GET">
         <!-- Status -->
         <div class="mb-3">
           <label for="status" class="form-label">Status</label>
@@ -46,7 +45,6 @@
             name="status"
             type="text"
             placeholder="Ex: Assistant Store Manager"
-            required
             class="form-control"
           />
         </div>
@@ -59,7 +57,6 @@
             name="location"
             type="text"
             placeholder="Ex: Shinigawa, Tokyo"
-            required
             class="form-control"
           />
         </div>
@@ -72,7 +69,6 @@
             name="workPreferences"
             type="text"
             placeholder="Ex: full-time / shift-based / overtime OK"
-            required
             class="form-control"
           />
         </div>
