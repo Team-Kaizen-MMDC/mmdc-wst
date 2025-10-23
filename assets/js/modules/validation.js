@@ -255,6 +255,9 @@ const validateEducationForm = (form) => {
 // Master function for experience.html
 const validateExperienceForm = (form) => {
     let formValid = true;
+    if (!validateRequiredSelect('employmentType', 'employmentTypeFeedback', 'Employment Type is required.')) {
+        formValid = false;
+    }
     
     if (!validateRequiredText('title', 'Job Title is required.')) formValid = false;
     if (!validateRequiredText('company', 'Company name is required.')) formValid = false;
@@ -276,8 +279,8 @@ const validateSkillForm = (form) => {
 const validateAvailabilityForm = (form) => {
     let formValid = true;
     
-    if (!validateRequiredText('preferredLocation', 'Preferred Location is required.')) formValid = false;
-    if (!validateRequiredText('workPreferences', 'Work Preferences are required.')) formValid = false;
+    //if (!validateRequiredText('preferredLocation', 'Preferred Location is required.')) formValid = false;
+    //if (!validateRequiredText('workPreferences', 'Work Preferences are required.')) formValid = false;
 
     return formValid;
 };
