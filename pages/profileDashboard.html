@@ -269,16 +269,15 @@
 
                 <h6 class="card-title mb-0">Profile Summary</h6>
                      <!-- Edit Button (Initially visible) -->
-                       <a href="#" class="text-decoration-none"
-                          id="edit-btn"
-                          onclick="toggleEditMode(true)"
-                          >Edit</a>
-
+                        <button type="button" class="btn btn-link 
+                        text-red small ms-2 p-0 shadow-none" 
+                        id="edit-btn" onclick="toggleEditMode(true)">Edit
+                      </button>
                         <!-- Save Button (Initially hidden) -->
-                          <a href="#" class="text-decoration-none d-none"
-                            id="save-btn"
-                             onclick="toggleEditMode(false)"
-                            >Save</a>
+                          <button type="button" class="btn btn-link 
+                          text-red small ms-2 d-none p-0 shadow-none" 
+                          id="save-btn" onclick="toggleEditMode(false)">Save
+                        </button>
               </div>
             </div>
            
@@ -309,40 +308,40 @@
           </div>
         </div>
 
-          <!-- BASIC INFO -->
-          <div class="col-12 col-md-6">
-            <div class="card shadow-sm h-100">
-              <div class="card-body">
-                <div class="d-flex justify-content-between">
-                  <h5 class="card-title mb-0" id="info-name"></h5>
-                  <a href="#" class="text-decoration-none"  data-bs-toggle="modal" data-bs-target="#basicInfoModal">Edit</a>
+        <!-- BASIC INFO -->
+        <div class="col-12 col-md-6">
+          <div class="card shadow-sm h-100">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <h5 class="card-title mb-0" id="info-name"></h5>
+                <a href="#" class="text-red small ms-2" data-bs-toggle="modal" data-bs-target="#basicInfoModal">Edit</a>
+              </div>
+              <p class="text-muted" id="info-location"></p>
+              <hr />
+              <div class="row small">
+                <div class="col-6 mb-2"><span class="fw-semibold">Visa:</span> <span id="info-visa"></span></div>
+                <div class="col-6 mb-2"><span class="fw-semibold">Valid until:</span> <span id="info-validity"></span></div>
+                <div class="col-6 mb-2"><span class="fw-semibold">Industry:</span> <span id="info-industry"></span></div>
+                <div class="col-6 mb-2"><span class="fw-semibold">Japanese:</span> <span id="info-japanese"></span></div>
+                <div class="col-6 mb-2"><span class="fw-semibold">Nationality:</span> <span id="info-nationality"></span></div>
+                <div class="col-6 mb-2"><span class="fw-semibold">Age:</span> <span id="info-age"></span></div>
+              </div>
+              
+              <div id="resume-container">
+                <!-- Hidden File Input for upload resume -->
+                <input type="file" id="resumeUpload" accept="image/*" style="display: none;">
+
+                <a href="#" class="d-block mt-3 text-secondary fw-semibold" 
+                   onclick="document.getElementById('resumeUpload').click(); return false;"
+                   >Upload Resume →</a>
+
+                <div id="view-section" style="display: none; margin-top: 10px;">
+                  <a id="view-link" href="#" target="_blank">View Resume →</a>
+                  <button id="remove-button" style="margin-left: 10px;">X</button>
                 </div>
-                <p class="text-muted" id="info-location"></p>
-                <hr />
-                <div class="row small">
-                              <div class="col-6 mb-2"><span class="fw-semibold">Visa:</span> <span id="info-visa"></span></div>
-                              <div class="col-6 mb-2"><span class="fw-semibold">Valid until:</span> <span id="info-validity"></span></div>
-                              <div class="col-6 mb-2"><span class="fw-semibold">Industry:</span> <span id="info-industry"></span></div>
-                              <div class="col-6 mb-2"><span class="fw-semibold">Japanese:</span> <span id="info-japanese"></span></div>
-                              <div class="col-6 mb-2"><span class="fw-semibold">Nationality:</span> <span id="info-nationality"></span></div>
-                              <div class="col-6 mb-2"><span class="fw-semibold">Age:</span> <span id="info-age"></span></div>
-                </div>
-                
-          <div id="resume-container">
-              <!-- Hidden File Input for upload resume -->
-          <input type="file" id="resumeUpload" accept="image/*" style="display: none;">
 
-          <a href="#" class="d-block mt-3 text-secondary fw-semibold" 
-          onclick="document.getElementById('resumeUpload').click(); return false;"
-          >Upload Resume →</a>
-
-          <div id="view-section" style="display: none; margin-top: 10px;">
-          <a id="view-link" href="#" target="_blank">View Resume →</a>
-          <button id="remove-button" style="margin-left: 10px;">X</button>
-          </div>
-
-          <input type="hidden" id="file-path">
-  </div>
+                <input type="hidden" id="file-path">
+              </div>
               
               </div>
             </div>
@@ -398,7 +397,7 @@
           <div class="card shadow-sm">
             <div class="card-header d-flex justify-content-between align-items-center">
               <h6 class="mb-0">Experience</h6>
-              <a href="addEdit/experience.html" class="small">Add</a>
+              <a href="addEdit/experience.html" class="text-danger small ms-2">Add</a>
             </div>
             <div class="card-body d-flex align-items-center justify-content-between">
               <div class="d-flex align-items-center">
@@ -409,7 +408,7 @@
                   <div class="small">2023 – 2027</div>
                 </div>
               </div>
-              <a href="#" class="small" data-bs-toggle="modal" data-bs-target="#experienceModal">Edit</a>
+              <a href="#" class="text-red small ms-2" data-bs-toggle="modal" data-bs-target="#experienceModal">Edit</a>
             </div>
           </div>
         </div>
@@ -419,7 +418,7 @@
           <div class="card shadow-sm">
             <div class="card-header d-flex justify-content-between">
               <h6 class="mb-0">Skills</h6>
-              <a href="addEdit/skill.html" class="small">Add</a>
+              <a href="addEdit/skill.html" class="text-danger small ms-2">Add</a>
             </div>
             <div class="card-body d-flex justify-content-between align-items-center">
               <div class="d-flex flex-wrap gap-3 mb-3">  
@@ -429,7 +428,7 @@
               <span class="badge bg-secondary">Prepping</span>
               
             </div>
-             <a href="#" class="text-decoration-none"  data-bs-toggle="modal" data-bs-target="#skillsModal">Edit</a>
+             <a href="#" class="text-red small ms-2"  data-bs-toggle="modal" data-bs-target="#skillsModal">Edit</a>
             </div>
           </div>
         </div>
@@ -439,7 +438,7 @@
           <div class="card shadow-sm">
             <div class="card-header d-flex justify-content-between">
               <h6 class="mb-0">Education</h6>
-              <a href="addEdit/education.html" class="small">Add</a>
+              <a href="addEdit/education.html" class="text-danger small ms-2">Add</a>
             </div>
             <div class="card-body d-flex justify-content-between align-items-center">
               <div>
@@ -447,7 +446,7 @@
                 <div class="text-muted small">B.S. IT – Software Development</div>
                 <div class="small">2023 – 2028</div>
               </div>
-              <a href="#" class="small" data-bs-toggle="modal" data-bs-target="#educationModal">Edit</a>
+              <a href="#" class="text-red small ms-2" data-bs-toggle="modal" data-bs-target="#educationModal">Edit</a>
             </div>
           </div>
         </div>
@@ -459,7 +458,7 @@
                <div class="card shadow-sm">
             <div class="card-header d-flex justify-content-between">
               <h6 class="mb-0">Availability / Preferences</h6>
-                <a href="addEdit/availability.html" class="small">Add</a>
+                <a href="addEdit/availability.html" class="text-danger small ms-2">Add</a>
              
             </div>
                      <div class="card-body d-flex justify-content-between align-items-center">
@@ -470,7 +469,7 @@
                             <p class="mb-1 small"><span class="fw-semibold">Work Preferences:</span> Full-time</p>
                       
                         </div>
-                         <a href="#" class="small" data-bs-toggle="modal" data-bs-target="#availabilityModal">Edit</a>
+                         <a href="#" class="text-red small ms-2" data-bs-toggle="modal" data-bs-target="#availabilityModal">Edit</a>
                     </div>
                 </div>
         </div>
@@ -569,7 +568,7 @@
                 <div class="modal-content rounded-4">
                   
                   <!-- Header -->
-                  <div class="modal-header bg-light text-white rounded-top-4">
+                  <div class="modal-header bg-light rounded-top-4">
                     <h5 class="modal-title" id="experienceModalLabel">Manage Experience</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
@@ -705,7 +704,7 @@
     <div class="modal fade" id="skillsModal" tabindex="-1" aria-labelledby="skillsModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content rounded-4">
-                <div class="modal-header bg-light text-white rounded-top-4">
+                <div class="modal-header bg-light rounded-top-4">
                     <h5 class="modal-title" id="skillsModalLabel">Skills or Certificate</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -741,7 +740,7 @@
                 <div class="modal-content rounded-4">
                   
                   <!-- Header -->
-                  <div class="modal-header bg-light text-white rounded-top-4">
+                  <div class="modal-header bg-light rounded-top-4">
                     <h5 class="modal-title" id="experienceModalLabel">Education</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
@@ -872,7 +871,7 @@
     <div class="modal fade" id="availabilityModal" tabindex="-1" aria-labelledby="availabilityModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content rounded-4">
-                <div class="modal-header bg-light text-white rounded-top-4">
+                <div class="modal-header bg-light rounded-top-4">
                     <h5 class="modal-title" id="availabilityModalLabel">Availability & Preferences</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
