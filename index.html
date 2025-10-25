@@ -38,13 +38,17 @@
     <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico" />
   </head>
   <body>
-    <header class="site-header">
+    <!-- Skip to Content Link for Screen Readers -->
+    <a href="#main-content" class="skip-link" data-i18n="accessibility.skipToContent">Skip to main content</a>
+    
+    <header class="site-header" role="banner">
       <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light">
+        <nav class="navbar navbar-expand-lg navbar-light" role="navigation" aria-label="Main navigation">
           <a
             class="navbar-brand site-header__brand"
             href="index.html"
             data-i18n="site.brand"
+            aria-label="Japan SSW - Home"
             >Japan SSW</a
           >
 
@@ -56,59 +60,70 @@
             data-bs-target="#siteOffcanvas"
             aria-controls="siteOffcanvas"
             aria-label="Open menu"
+            aria-expanded="false"
           >
-            <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon" aria-hidden="true"></span>
           </button>
 
           <!-- Desktop nav (visible on lg+) -->
           <div class="collapse navbar-collapse d-none d-lg-flex" id="navbarNav">
-            <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-              <li class="nav-item">
+            <ul class="navbar-nav mx-auto mb-2 mb-lg-0" role="menubar">
+              <li class="nav-item" role="none">
                 <a
                   class="nav-link site-header__nav-link"
                   href="#jobs"
                   data-i18n="nav.jobs"
+                  role="menuitem"
+                  aria-label="Browse available jobs"
                   >Jobs</a
                 >
               </li>
-              <li class="nav-item">
+              <li class="nav-item" role="none">
                 <a
                   class="nav-link site-header__nav-link"
                   href="#companies"
                   data-i18n="nav.services"
+                  role="menuitem"
+                  aria-label="View hiring companies"
                   >Companies</a
                 >
               </li>
-              <li class="nav-item">
+              <li class="nav-item" role="none">
                 <a
                   class="nav-link site-header__nav-link"
                   href="pages/agency.html"
                   data-i18n="nav.agency"
+                  role="menuitem"
+                  aria-label="Find support agencies"
                   >Agency</a
                 >
               </li>
-              <li class="nav-item">
+              <li class="nav-item" role="none">
                 <a
                   class="nav-link site-header__nav-link"
                   href="pages/about.html"
                   data-i18n="nav.about"
+                  role="menuitem"
+                  aria-label="Learn about Japan SSW"
                   >About</a
                 >
               </li>
             </ul>
 
             <!-- Actions (Signup/Login) -->
-            <div class="d-flex align-items-center gap-2 site-header__actions">
+            <div class="d-flex align-items-center gap-2 site-header__actions" role="group" aria-label="User account actions">
               <a
                 class="site-header__signup muted text-decoration-none"
                 href="pages/createAccount.html"
                 data-i18n="nav.signup"
+                aria-label="Create new account"
                 >Signup</a
               >
               <a
                 class="btn btn-primary site-header__login-btn"
                 href="pages/signin.html"
                 data-i18n="nav.login"
+                aria-label="Sign in to your account"
                 >Login</a
               >
             </div>
@@ -139,53 +154,62 @@
           ></button>
         </div>
         <div class="offcanvas-body d-flex flex-column">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a
-                class="nav-link py-3"
-                href="#jobs"
-                data-bs-dismiss="offcanvas"
-                data-i18n="nav.jobs"
-                >Jobs</a
-              >
-            </li>
-            <li class="nav-item">
-              <a
-                class="nav-link py-3"
-                href="#companies"
-                data-bs-dismiss="offcanvas"
-                data-i18n="nav.services"
-                >Companies</a
-              >
-            </li>
-            <li class="nav-item">
-              <a
-                class="nav-link py-3"
-                href="pages/agency.html"
-                data-bs-dismiss="offcanvas"
-                data-i18n="nav.agency"
-                >Agency</a
-              >
-            </li>
-            <li class="nav-item">
-              <a
-                class="nav-link py-3"
-                href="pages/about.html"
-                data-bs-dismiss="offcanvas"
-                data-i18n="nav.about"
-                >About</a
-              >
-            </li>
-          </ul>
+          <nav role="navigation" aria-label="Mobile navigation">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a
+                  class="nav-link py-3"
+                  href="#jobs"
+                  data-bs-dismiss="offcanvas"
+                  data-i18n="nav.jobs"
+                  aria-label="Browse available jobs"
+                  >Jobs</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link py-3"
+                  href="#companies"
+                  data-bs-dismiss="offcanvas"
+                  data-i18n="nav.services"
+                  aria-label="View hiring companies"
+                  >Companies</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link py-3"
+                  href="pages/agency.html"
+                  data-bs-dismiss="offcanvas"
+                  data-i18n="nav.agency"
+                  aria-label="Find support agencies"
+                  >Agency</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link py-3"
+                  href="pages/about.html"
+                  data-bs-dismiss="offcanvas"
+                  data-i18n="nav.about"
+                  aria-label="Learn about Japan SSW"
+                  >About</a
+                >
+              </li>
+            </ul>
+          </nav>
 
           <div
             class="mt-auto d-flex justify-content-between align-items-center pt-3 border-top"
+            role="group"
+            aria-label="User account actions"
           >
             <a
               class="btn btn-outline-secondary"
               href="pages/createAccount.html"
               data-bs-dismiss="offcanvas"
               data-i18n="nav.signup"
+              aria-label="Create new account"
               >Signup</a
             >
             <a
@@ -193,6 +217,7 @@
               href="pages/signin.html"
               data-bs-dismiss="offcanvas"
               data-i18n="nav.login"
+              aria-label="Sign in to your account"
               >Login</a
             >
           </div>
@@ -200,9 +225,9 @@
       </div>
     </header>
 
-    <main>
+    <main id="main-content" role="main">
       <!-- Hero -->
-      <section class="hero hero-centered">
+      <section class="hero hero-centered" aria-label="Welcome to Japan SSW"">
         <div class="container">
           <!-- Animated background image (current) -->
           <div class="hero__bg" aria-hidden="true"></div>
@@ -236,10 +261,11 @@
       </section>
 
       <!-- Job Board (card panel centered) -->
-      <section id="jobs" class="py-5 w-100">
+      <section id="jobs" class="py-5 w-100" aria-labelledby="jobs-heading">
         <div class="container">
           <!-- Section Title: Centered and styled with Bootstrap utilities -->
           <h2
+            id="jobs-heading"
             class="text-center mb-5 fs-2 fw-bold"
             data-i18n="section.job_listings"
           >
@@ -675,10 +701,11 @@
       </section>
 
       <!-- Registered Support Organization RSO (wide card) -->
-      <section class="py-5 w-100">
+      <section class="py-5 w-100" aria-labelledby="rso-heading">
         <div class="container">
           <!-- Section Title: Centered and styled with Bootstrap utilities -->
           <h2
+            id="rso-heading"
             class="text-center mb-5 fs-2 fw-bold"
             data-i18n="section.registered_support_org"
           >
@@ -780,10 +807,10 @@
       </section>
 
       <!-- About Us card -->
-      <section class="py-5 w-100">
+      <section class="py-5 w-100" aria-labelledby="about-heading">
         <div class="container">
           <!-- Section Title: Centered and styled with Bootstrap utilities -->
-          <h2 class="text-center mb-5 fs-2 fw-bold" data-i18n="about.title">
+          <h2 id="about-heading" class="text-center mb-5 fs-2 fw-bold" data-i18n="about.title">
             About Us
           </h2>
 

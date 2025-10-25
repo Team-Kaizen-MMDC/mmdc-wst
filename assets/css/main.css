@@ -102,6 +102,13 @@
   --border-radius: 0.375rem;
   --box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
   --transition: all 0.2s ease;
+
+  /* Accessibility tokens */
+  --focus-color: #0066cc;
+  --focus-outline-width: 2px;
+  --focus-outline-offset: 2px;
+  --skip-link-bg: #000;
+  --skip-link-color: #fff;
 }
 
 /* Base styles */
@@ -920,12 +927,98 @@ user-menu-dropdown__divider {
   margin-right: 0.5rem;
 }
 
-/* Focus states for all buttons */
+/* ===================================================================
+   Accessibility Enhancements - Phase 2.1
+   =================================================================== */
+
+/* Skip to Content Link */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: var(--skip-link-bg);
+  color: var(--skip-link-color);
+  padding: 8px 12px;
+  text-decoration: none;
+  z-index: 9999;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 6px;
+  outline: var(--focus-outline-width) solid var(--focus-color);
+  outline-offset: var(--focus-outline-offset);
+}
+
+/* Enhanced Focus States for Interactive Elements */
 .btn:focus,
 .site-header__login-btn:focus,
-.login-btn:focus {
-  outline: 2px solid var(--primary-color);
-  outline-offset: 2px;
+.login-btn:focus,
+.nav-link:focus,
+.site-header__nav-link:focus,
+.form-control:focus,
+input:focus,
+textarea:focus,
+select:focus,
+button:focus,
+a:focus {
+  outline: var(--focus-outline-width) solid var(--focus-color);
+  outline-offset: var(--focus-outline-offset);
+  box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.1);
+}
+
+/* Specific focus styles for different element types */
+.form-control:focus {
+  border-color: var(--focus-color);
+  outline: var(--focus-outline-width) solid var(--focus-color);
+  outline-offset: 0;
+}
+
+/* Enhanced button focus states */
+.btn:focus {
+  transform: translateY(-1px);
+  box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.1), 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Navigation focus states */
+.nav-link:focus,
+.site-header__nav-link:focus {
+  background-color: rgba(0, 102, 204, 0.05);
+  border-radius: 4px;
+}
+
+/* Card and link focus states */
+.feature-card:focus-within,
+.company-card:focus-within {
+  outline: var(--focus-outline-width) solid var(--focus-color);
+  outline-offset: var(--focus-outline-offset);
+}
+
+/* Remove default focus outline for elements with custom focus styles */
+.btn:focus,
+.nav-link:focus,
+.form-control:focus {
+  outline: var(--focus-outline-width) solid var(--focus-color);
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .skip-link {
+    background: #000;
+    color: #fff;
+    border: 2px solid #fff;
+  }
+
+  .btn:focus,
+  .nav-link:focus,
+  .form-control:focus,
+  a:focus {
+    outline: 3px solid #000;
+    outline-offset: 2px;
+  }
 }
 
 /* Button spacing utilities */
@@ -1308,9 +1401,7 @@ user-menu-dropdown__divider {
   border: 1px solid #d0d0d0;
   padding: 0.5rem 0.75rem;
 }
-.form-control:focus {
-  outline: 3px solid rgba(235, 0, 0, 0.15);
-}
+/* Form control focus handled in Accessibility section above */
 
 /* Spacing utilities consolidated below */
 
@@ -3171,48 +3262,58 @@ body.company-dashboard .bento-wrapper {
   min-height: 100vh;
 }
 
-        body.company-dashboard .bento-wrapper {
-            width: 100%;
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            padding: 40px 20px;
-            min-height: 100vh;
-        }
+body.company-dashboard .bento-wrapper {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 40px 20px;
+  min-height: 100vh;
+}
 
-           body.company-dashboard .bento-container {
-            width: 100%;
-            max-width: 1185px; 
-            background: #ffffff; 
-            padding: 30px; 
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            
-            
-          /* CSS GRID */
-          display: grid;
-          gap: 20px;
+body.company-dashboard .bento-container {
+  width: 100%;
+  max-width: 1185px;
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 
-            /* Define 3 equal columns */
-            grid-template-columns: 2fr 1fr 1fr; 
+  /* CSS GRID */
+  display: grid;
+  gap: 20px;
 
-              /* Placement and spanning */
-            grid-template-areas:
-                "box-1 box-1 box-1"      /* Row 1: Navi spans 3 columns */
-                "box-2 box-3 box-4"      /* Row 2: Boxes 2, 3, and 4 each take 1 column */
-                  "box-5 box-6 box-6"        /* Box 5 (1 Col), Box 6 (1 Col), 1 empty column */
-           }
+  /* Define 3 equal columns */
+  grid-template-columns: 2fr 1fr 1fr;
 
-              /* Area Assignments */
-        body.company-dashboard .bento-box--navi { grid-area: box-1; } 
-        body.company-dashboard .bento-box--profile { grid-area: box-2; } 
-        body.company-dashboard .bento-box--tracking { grid-area: box-3; }
-        body.company-dashboard .bento-box--metric { grid-area: box-4; }
-        body.company-dashboard .bento-box--applicant-list { grid-area: box-5; }
-        body.company-dashboard .bento-box--job-list { grid-area: box-6; }
+  /* Placement and spanning */
+  grid-template-areas:
+    "box-1 box-1 box-1" /* Row 1: Navi spans 3 columns */
+    "box-2 box-3 box-4" /* Row 2: Boxes 2, 3, and 4 each take 1 column */
+    "box-5 box-6 box-6"; /* Box 5 (1 Col), Box 6 (1 Col), 1 empty column */
+}
 
-           
- /* -------------------------------
+/* Area Assignments */
+body.company-dashboard .bento-box--navi {
+  grid-area: box-1;
+}
+body.company-dashboard .bento-box--profile {
+  grid-area: box-2;
+}
+body.company-dashboard .bento-box--tracking {
+  grid-area: box-3;
+}
+body.company-dashboard .bento-box--metric {
+  grid-area: box-4;
+}
+body.company-dashboard .bento-box--applicant-list {
+  grid-area: box-5;
+}
+body.company-dashboard .bento-box--job-list {
+  grid-area: box-6;
+}
+
+/* -------------------------------
               Base Bento Box Styling
            --------------------------------*/
 body.company-dashboard .bento-box {
@@ -3832,7 +3933,8 @@ main
 -------------------------------------- */
 :root,
 [data-bs-theme="dark"] {
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease,
+    border-color 0.3s ease;
 }
 
 /* -------------------------------------
@@ -4134,7 +4236,6 @@ main
   color: var(--bs-body-color) !important;
 }
 
-
 /* ============================================
    Fix: Sign-in / Login Page (Dark Mode)
    ============================================ */
@@ -4159,7 +4260,8 @@ main
 }
 
 /* Form area (right panel) */
-[data-bs-theme="dark"] .flex.flex-col.items-center.justify-center.w-full.md\:w-1\/2 {
+[data-bs-theme="dark"]
+  .flex.flex-col.items-center.justify-center.w-full.md\:w-1\/2 {
   background-color: #242b33 !important;
   color: var(--bs-body-color) !important;
 }
@@ -4252,12 +4354,13 @@ main
    ============================================ */
 [data-bs-theme="dark"] .bento-box__cta,
 [data-bs-theme="dark"] a.bento-box__cta {
-  background-color: #2b3038 !important; 
+  background-color: #2b3038 !important;
   border: 1px solid #3c434d !important;
   padding: 8px 12px !important;
   border-radius: 6px !important;
   display: inline-block;
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease,
+    border-color 0.3s ease;
 }
 /* =====================================================
    About Page Fix (Dark Mode)
@@ -4283,4 +4386,3 @@ main
 [data-bs-theme="dark"] .about-card .about-card__subtitle {
   color: var(--bs-secondary-color) !important;
 }
-
