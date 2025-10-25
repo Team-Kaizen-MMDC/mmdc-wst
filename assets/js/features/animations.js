@@ -6,10 +6,10 @@
 (function () {
   "use strict";
 
-  // Configuration
+  // Configuration - Enhanced for more noticeable animations
   const CONFIG = {
-    threshold: 0.1, // Trigger when 10% of element is visible
-    rootMargin: "0px 0px -50px 0px", // Trigger slightly before element enters viewport
+    threshold: 0.15, // Trigger when 15% of element is visible
+    rootMargin: "0px 0px -10% 0px", // Trigger slightly before element enters viewport
   };
 
   /**
@@ -24,8 +24,9 @@
     if (prefersReducedMotion) {
       // Make all elements visible immediately
       document.querySelectorAll(".animate-on-scroll").forEach((el) => {
-        el.classList.add("animated");
+        el.classList.add("animate-active");
         el.style.opacity = "1";
+        el.style.transform = "none";
       });
       return;
     }
@@ -34,8 +35,8 @@
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          // Add animated class when element enters viewport
-          entry.target.classList.add("animated");
+          // Add animate-active class when element enters viewport
+          entry.target.classList.add("animate-active");
 
           // Optionally unobserve after animation (one-time animation)
           observer.unobserve(entry.target);
@@ -53,19 +54,19 @@
    * Add staggered animations to child elements
    * @param {string} containerSelector - CSS selector for container
    * @param {string} childSelector - CSS selector for children to animate
-   * @param {number} delayIncrement - Delay increment in ms (default: 100)
+   * @param {number} delayIncrement - Delay increment in ms (default: 120)
    */
   function addStaggeredAnimation(
     containerSelector,
     childSelector,
-    delayIncrement = 100
+    delayIncrement = 120
   ) {
     const container = document.querySelector(containerSelector);
     if (!container) return;
 
     const children = container.querySelectorAll(childSelector);
     children.forEach((child, index) => {
-      child.style.animationDelay = `${index * delayIncrement}ms`;
+      child.style.transitionDelay = `${index * delayIncrement}ms`;
     });
   }
 
@@ -82,8 +83,8 @@
 
     // Apply staggered animations to specific sections
     window.addEventListener("load", () => {
-      // Stagger company cards
-      addStaggeredAnimation("#companyGrid", ".col-12", 80);
+      // Stagger company cards - increased delay for more noticeable effect
+      addStaggeredAnimation("#companyGrid", ".col-12", 120);
 
       // Stagger job listings
       addStaggeredAnimation("#jobs .list-group", ".list-group-item", 100);
