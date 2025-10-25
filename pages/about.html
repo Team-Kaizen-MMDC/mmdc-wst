@@ -37,7 +37,15 @@
     <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.ico" />
   </head>
   <body>
-    <header class="site-header">
+    <!-- Skip to Content Link for Screen Readers -->
+    <a
+      href="#main-content"
+      class="skip-link"
+      data-i18n="accessibility.skipToContent"
+      >Skip to main content</a
+    >
+
+    <header class="site-header" role="banner">
       <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light">
           <a class="navbar-brand site-header__brand" href="../index.html"
@@ -188,7 +196,7 @@
       </div>
     </header>
 
-    <main>
+    <main id="main-content" role="main">
       <!-- About US (wireframe content) -->
       <div class="about-us-wrapper">
         <div class="about-card">
