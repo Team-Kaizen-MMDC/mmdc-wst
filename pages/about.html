@@ -199,7 +199,7 @@
     <main id="main-content" role="main">
       <!-- About US (wireframe content) -->
       <div class="about-us-wrapper">
-        <div class="about-card">
+        <div class="about-card animate-fade-in-up animate-on-scroll">
           <h1 class="about-card__title">About Us</h1>
           <p class="about-card__text">
             JapanSSW is a comprehensive platform dedicated to empowering foreign
@@ -237,7 +237,9 @@
       <!-- CTA -->
       <section class="cta-band">
         <div class="container">
-          <div class="feature-card feature-cta">
+          <div
+            class="feature-card feature-cta animate-scale-up animate-on-scroll animate-hover-lift"
+          >
             <div>
               <h2 class="m-0 feature-card__title">Want to work with us?</h2>
               <p class="muted mt-xxs feature-card__desc">
@@ -247,7 +249,7 @@
             </div>
             <div>
               <a
-                class="btn btn-primary feature-card__cta"
+                class="btn btn-primary feature-card__cta animate-hover-scale"
                 href="../index.html#post-job"
                 >Contact Us</a
               >
@@ -318,5 +320,8 @@
 
     <!-- Custom JS Module (Phase 2) -->
     <script type="module" src="../assets/js/main.js"></script>
+
+    <!-- Animation Controller -->
+    <script src="../assets/js/features/animations.js"></script>
   </body>
 </html>
