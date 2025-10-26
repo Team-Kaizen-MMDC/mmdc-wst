@@ -3,7 +3,7 @@
   Handles client-side validation and submission flows for the multi-step profile forms.
 */
 
-import { setCookie } from './storage.js';
+import { setCookie, getCookie } from './storage.js';
 
 // ===================================================================
 // VALIDATION FUNCTIONS (SHARED)
@@ -15,9 +15,6 @@ const TODAY = new Date();
 const CURRENT_YEAR = TODAY.getFullYear();
 const CURRENT_MONTH = TODAY.getMonth() + 1; // Note: Month is 1-based (January=1, December=12)
 
-
-// Applies Bootstrap classes and custom feedback messages to an element
-// Apply is-valid/is-invalid classes to the input element itself
 const setValidationState = (element, isValid, feedbackId = null, message = null) => {
     if (element) {
         element.classList.remove('is-valid', 'is-invalid');
@@ -122,15 +119,38 @@ const initializeFormValidation = (formId, validationFn) => {
         return;
     }
 
-    // 1. LOAD DATA LOGIC (Moved here for clean separation from HTML)
+    // 1. LOAD DATA LOGIC
     const loadFormData = () => {
         const formControls = form.querySelectorAll('input, select, textarea');
         formControls.forEach(element => {
-          if (element.id) {
-
-          }
+            if (element.id) {
+                const savedValue = getCookie(element.id);
+                
+                if (savedValue) {
+                    if (element.type === 'checkbox') {
+                        // Handle checkboxes (like 'currentlyWorking'/'CurrentlyStudying')
+                        if (savedValue === 'on') {
+                            element.checked = true;
+                            
+                            // Manually trigger the toggle function on load to show/hide end dates
+                            if (element.id === 'currentlyWorking' && typeof setupCurrentlyWorkingToggle === 'function') {
+                                setupCurrentlyWorkingToggle();
+                            }
+                            if (element.id === 'CurrentlyStudying' && typeof setupCurrentlyStudyingToggle === 'function') {
+                                setupCurrentlyStudyingToggle();
+                            }
+                        }
+                    } else {
+                        // Standard input/select/textarea handling
+                        element.value = savedValue;
+                    }
+                }
+            }
         });
     };
+    
+    loadFormData();
+
 
     // 2. SAVE & SUBMIT LOGIC
     const handleSubmit = (event) => {
@@ -173,27 +193,24 @@ const initializeFormValidation = (formId, validationFn) => {
 // Master function for profile.html
 
 function validateRequiredSelect(selectId, feedbackId, errorMessage) {
-    // 1. Get the elements
     const selectElement = document.getElementById(selectId);
     const feedbackElement = document.getElementById(feedbackId);
 
-    // Basic check for element existence (good practice)
     if (!selectElement || !feedbackElement) {
         console.error(`Element not found: Select ID: ${selectId}, Feedback ID: ${feedbackId}`);
-        return false; // Return false or true depending on desired fail-safe
+        return false;
     }
 
-    // 2. Determine the selected value
     const selectedValue = selectElement.value;
 
-    // 3. Validation Logic
+    // Validation Logic
     // We check if the value is '0' or an empty string '', as these are common
     // values for default/placeholder options in <select> elements.
     if (selectedValue === '' || selectedValue === '0') {
         // Validation FAILED: Show error
         feedbackElement.textContent = errorMessage; // Set the error message
         feedbackElement.style.display = 'block';   // Make the feedback visible (if it was hidden)
-        selectElement.classList.add('is-invalid'); // Add a class for visual styling (e.g., Bootstrap)
+        selectElement.classList.add('is-invalid'); // Add a class for visual styling
         return false;
     } else {
         // Validation PASSED: Clear error
