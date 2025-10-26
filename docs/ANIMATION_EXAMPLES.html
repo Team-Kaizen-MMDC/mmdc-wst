@@ -1,0 +1,203 @@
+<!-- 
+  EXAMPLE: How to add animations to index.html sections
+  Copy these examples and replace the corresponding sections in index.html
+-->
+
+<!-- 1. JOB LISTINGS SECTION -->
+<section id="jobs" class="py-5 w-100" aria-labelledby="jobs-heading">
+  <div class="container">
+    <!-- Animated heading -->
+    <h2
+      id="jobs-heading"
+      class="text-center mb-5 fs-2 fw-bold animate-fade-in-down animate-on-scroll"
+      data-i18n="section.job_listings"
+    >
+      Latest Job Listings
+    </h2>
+
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-11 col-xl-10">
+        <!-- Animated card with scroll trigger -->
+        <div
+          class="card shadow-lg rounded-4 overflow-hidden animate-fade-in-up animate-on-scroll"
+        >
+          <ul class="list-group list-group-flush">
+            <!-- Add hover lift to each job item -->
+            <li
+              class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5 animate-hover-lift"
+            >
+              <!-- Job content here -->
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Animated button -->
+    <div class="text-center mt-5">
+      <a
+        class="btn btn-primary px-5 text-white shadow-sm animate-scale-up animate-on-scroll animate-hover-scale"
+        href="pages/jobs/jobFilter.html"
+        data-i18n="btn.search_jobs"
+      >
+        Search SSW jobs
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- 2. COMPANY GRID SECTION -->
+<section id="companies" class="py-5" aria-label="Top companies">
+  <div class="container">
+    <!-- Animated heading -->
+    <h2
+      class="text-center mb-5 fw-bold animate-fade-in-down animate-on-scroll"
+      data-i18n="section.top_companies"
+    >
+      Top Company
+    </h2>
+
+    <!-- Company grid - staggered animation handled by animations.js -->
+    <div class="row g-4 justify-content-center" id="companyGrid">
+      <!-- Each card gets fade-in-up + on-scroll + hover-lift -->
+      <div
+        class="col-12 col-sm-6 col-lg-4 animate-fade-in-up animate-on-scroll animate-both"
+      >
+        <a
+          href="pages/companies/ana-intercontinental.html"
+          class="text-decoration-none d-block company-link"
+        >
+          <div
+            class="card h-100 shadow-sm rounded-3 p-4 text-center top-company-card animate-hover-lift"
+          >
+            <!-- Card content -->
+          </div>
+        </a>
+      </div>
+      <!-- Repeat for all company cards -->
+    </div>
+
+    <!-- Animated button -->
+    <div class="text-center mt-5">
+      <a
+        href="pages/companies/company-list.html"
+        class="btn btn-primary rounded-pill px-4 animate-scale-up animate-on-scroll animate-hover-scale"
+        data-i18n="btn.view_all_companies"
+      >
+        View All Companies
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- 3. RSO SECTION (Horizontal Card) -->
+<section class="py-5 w-100" aria-labelledby="rso-heading">
+  <div class="container">
+    <!-- Animated heading -->
+    <h2
+      id="rso-heading"
+      class="text-center mb-5 fs-2 fw-bold animate-fade-in-down animate-on-scroll"
+      data-i18n="section.registered_support_org"
+    >
+      Registered Support Organization
+    </h2>
+
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-11 col-xl-10">
+        <!-- Slide in from left + hover lift -->
+        <div
+          class="card mb-3 shadow-lg rounded-4 overflow-hidden rso-card animate-slide-in-left animate-on-scroll animate-hover-lift"
+        >
+          <!-- Card content -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. ABOUT US SECTION (Horizontal Card) -->
+<section class="py-5 w-100" aria-labelledby="about-heading">
+  <div class="container">
+    <!-- Animated heading -->
+    <h2
+      id="about-heading"
+      class="text-center mb-5 fs-2 fw-bold animate-fade-in-down animate-on-scroll"
+      data-i18n="about.title"
+    >
+      About Us
+    </h2>
+
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-11 col-xl-10">
+        <!-- Slide in from right + hover lift -->
+        <div
+          class="card mb-3 shadow-lg rounded-4 overflow-hidden rso-card animate-slide-in-right animate-on-scroll animate-hover-lift"
+        >
+          <!-- Card content -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. JOB ALERTS BAND -->
+<section class="alerts-band animate-slide-up animate-on-scroll">
+  <div class="container text-center">
+    <h3 data-i18n="alerts.heading">Get Job Matches</h3>
+    <p data-i18n="alerts.lead">
+      Stay updated with the latest Japan job opportunities — right in your
+      inbox.
+    </p>
+    <div class="flex-center gap-05">
+      <label for="newsletter-email" class="sr-only"
+        >Email address for job alerts</label
+      >
+      <input
+        type="email"
+        id="newsletter-email"
+        class="form-control form-control-custom"
+        placeholder="john@gmail.com"
+        aria-label="Email address for job alerts"
+        required
+      />
+      <button
+        id="signup-button"
+        class="btn btn-light lg animate-hover-scale"
+        aria-disabled="true"
+        data-i18n="btn.signup_demo"
+      >
+        Activate Me
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- 6. POST A JOB CTA -->
+<section id="post-job" class="section-padding">
+  <div class="container">
+    <!-- Scale up entrance + hover lift -->
+    <div
+      class="feature-card feature-cta animate-scale-up animate-on-scroll animate-hover-lift"
+    >
+      <div>
+        <h3 data-i18n="cta.post_job.title">Want to post jobs?</h3>
+        <p class="muted" data-i18n="cta.post_job.lead">
+          Reach qualified engineers and designers in Japan.
+        </p>
+      </div>
+      <div>
+        <a
+          class="btn btn-primary animate-hover-scale"
+          href="#"
+          data-i18n="btn.post_job"
+          >Post a Job</a
+        >
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 
+  DON'T FORGET: Add the animation script before closing </body>
+  <script src="assets/js/features/animations.js"></script>
+-->

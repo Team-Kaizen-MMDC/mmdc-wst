@@ -102,6 +102,13 @@
   --border-radius: 0.375rem;
   --box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
   --transition: all 0.2s ease;
+
+  /* Accessibility tokens */
+  --focus-color: #0066cc;
+  --focus-outline-width: 2px;
+  --focus-outline-offset: 2px;
+  --skip-link-bg: #000;
+  --skip-link-color: #fff;
 }
 
 /* Base styles */
@@ -563,7 +570,27 @@ user-menu-dropdown__divider {
 .hero-centered {
   background: #fbf8f7;
   padding: 2.25rem 0 1rem;
+  position: relative;
+  overflow: hidden;
 }
+
+/* Gradient overlay for better text readability */
+.hero-centered::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.3) 0%,
+    rgba(0, 0, 0, 0.5) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
 .hero-centered h1 {
   font-size: 1.875rem;
   margin: 0 0 0.5rem;
@@ -920,12 +947,98 @@ user-menu-dropdown__divider {
   margin-right: 0.5rem;
 }
 
-/* Focus states for all buttons */
+/* ===================================================================
+   Accessibility Enhancements - Phase 2.1
+   =================================================================== */
+
+/* Skip to Content Link */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: var(--skip-link-bg);
+  color: var(--skip-link-color);
+  padding: 8px 12px;
+  text-decoration: none;
+  z-index: 9999;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 6px;
+  outline: var(--focus-outline-width) solid var(--focus-color);
+  outline-offset: var(--focus-outline-offset);
+}
+
+/* Enhanced Focus States for Interactive Elements */
 .btn:focus,
 .site-header__login-btn:focus,
-.login-btn:focus {
-  outline: 2px solid var(--primary-color);
-  outline-offset: 2px;
+.login-btn:focus,
+.nav-link:focus,
+.site-header__nav-link:focus,
+.form-control:focus,
+input:focus,
+textarea:focus,
+select:focus,
+button:focus,
+a:focus {
+  outline: var(--focus-outline-width) solid var(--focus-color);
+  outline-offset: var(--focus-outline-offset);
+  box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.1);
+}
+
+/* Specific focus styles for different element types */
+.form-control:focus {
+  border-color: var(--focus-color);
+  outline: var(--focus-outline-width) solid var(--focus-color);
+  outline-offset: 0;
+}
+
+/* Enhanced button focus states */
+.btn:focus {
+  transform: translateY(-1px);
+  box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.1), 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Navigation focus states */
+.nav-link:focus,
+.site-header__nav-link:focus {
+  background-color: rgba(0, 102, 204, 0.05);
+  border-radius: 4px;
+}
+
+/* Card and link focus states */
+.feature-card:focus-within,
+.company-card:focus-within {
+  outline: var(--focus-outline-width) solid var(--focus-color);
+  outline-offset: var(--focus-outline-offset);
+}
+
+/* Remove default focus outline for elements with custom focus styles */
+.btn:focus,
+.nav-link:focus,
+.form-control:focus {
+  outline: var(--focus-outline-width) solid var(--focus-color);
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .skip-link {
+    background: #000;
+    color: #fff;
+    border: 2px solid #fff;
+  }
+
+  .btn:focus,
+  .nav-link:focus,
+  .form-control:focus,
+  a:focus {
+    outline: 3px solid #000;
+    outline-offset: 2px;
+  }
 }
 
 /* Button spacing utilities */
@@ -1308,9 +1421,7 @@ user-menu-dropdown__divider {
   border: 1px solid #d0d0d0;
   padding: 0.5rem 0.75rem;
 }
-.form-control:focus {
-  outline: 3px solid rgba(235, 0, 0, 0.15);
-}
+/* Form control focus handled in Accessibility section above */
 
 /* Spacing utilities consolidated below */
 
@@ -1507,7 +1618,8 @@ button[aria-label="Open menu"] {
   background-repeat: no-repeat;
   z-index: 0;
   /* Animation properties */
-  animation: heroBackgroundMove 20s ease-in-out infinite;
+  animation: slideInUp 1.2s ease-out,
+    heroBackgroundMove 20s ease-in-out 1.2s infinite;
   transform: scale(1.05);
 }
 
@@ -1523,12 +1635,16 @@ button[aria-label="Open menu"] {
   will-change: transform;
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
+  /* Slide-in animation */
+  animation: slideInUp 1.2s ease-out;
 }
 
 /* Ensure the hero content is always above the video/background */
 .hero-content {
   position: relative;
   z-index: 2; /* sits above video (z-index:0) and overlay (z-index:1) */
+  /* Fade-in animation with delay */
+  animation: fadeInUp 1s ease-out 0.3s both;
 }
 
 /* A subtle overlay placed above the video but below content to improve
@@ -1547,9 +1663,14 @@ button[aria-label="Open menu"] {
 @media (prefers-reduced-motion: reduce) {
   .hero__video {
     display: none !important;
+    animation: none !important;
   }
   .hero__bg {
     display: block; /* fall back to hero image */
+    animation: none !important;
+  }
+  .hero-content {
+    animation: none !important;
   }
   .hero::before {
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.35));
@@ -1629,6 +1750,30 @@ button[aria-label="Open menu"] {
   }
   50% {
     opacity: 0.8;
+  }
+}
+
+/* Hero slide-in animation */
+@keyframes slideInUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Hero content fade-in animation */
+@keyframes fadeInUp {
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
 }
 
@@ -3171,48 +3316,58 @@ body.company-dashboard .bento-wrapper {
   min-height: 100vh;
 }
 
-        body.company-dashboard .bento-wrapper {
-            width: 100%;
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            padding: 40px 20px;
-            min-height: 100vh;
-        }
+body.company-dashboard .bento-wrapper {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 40px 20px;
+  min-height: 100vh;
+}
 
-           body.company-dashboard .bento-container {
-            width: 100%;
-            max-width: 1185px; 
-            background: #ffffff; 
-            padding: 30px; 
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            
-            
-          /* CSS GRID */
-          display: grid;
-          gap: 20px;
+body.company-dashboard .bento-container {
+  width: 100%;
+  max-width: 1185px;
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 
-            /* Define 3 equal columns */
-            grid-template-columns: 2fr 1fr 1fr; 
+  /* CSS GRID */
+  display: grid;
+  gap: 20px;
 
-              /* Placement and spanning */
-            grid-template-areas:
-                "box-1 box-1 box-1"      /* Row 1: Navi spans 3 columns */
-                "box-2 box-3 box-4"      /* Row 2: Boxes 2, 3, and 4 each take 1 column */
-                  "box-5 box-6 box-6"        /* Box 5 (1 Col), Box 6 (1 Col), 1 empty column */
-           }
+  /* Define 3 equal columns */
+  grid-template-columns: 2fr 1fr 1fr;
 
-              /* Area Assignments */
-        body.company-dashboard .bento-box--navi { grid-area: box-1; } 
-        body.company-dashboard .bento-box--profile { grid-area: box-2; } 
-        body.company-dashboard .bento-box--tracking { grid-area: box-3; }
-        body.company-dashboard .bento-box--metric { grid-area: box-4; }
-        body.company-dashboard .bento-box--applicant-list { grid-area: box-5; }
-        body.company-dashboard .bento-box--job-list { grid-area: box-6; }
+  /* Placement and spanning */
+  grid-template-areas:
+    "box-1 box-1 box-1" /* Row 1: Navi spans 3 columns */
+    "box-2 box-3 box-4" /* Row 2: Boxes 2, 3, and 4 each take 1 column */
+    "box-5 box-6 box-6"; /* Box 5 (1 Col), Box 6 (1 Col), 1 empty column */
+}
 
-           
- /* -------------------------------
+/* Area Assignments */
+body.company-dashboard .bento-box--navi {
+  grid-area: box-1;
+}
+body.company-dashboard .bento-box--profile {
+  grid-area: box-2;
+}
+body.company-dashboard .bento-box--tracking {
+  grid-area: box-3;
+}
+body.company-dashboard .bento-box--metric {
+  grid-area: box-4;
+}
+body.company-dashboard .bento-box--applicant-list {
+  grid-area: box-5;
+}
+body.company-dashboard .bento-box--job-list {
+  grid-area: box-6;
+}
+
+/* -------------------------------
               Base Bento Box Styling
            --------------------------------*/
 body.company-dashboard .bento-box {
@@ -3832,7 +3987,8 @@ main
 -------------------------------------- */
 :root,
 [data-bs-theme="dark"] {
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease,
+    border-color 0.3s ease;
 }
 
 /* -------------------------------------
@@ -4134,7 +4290,6 @@ main
   color: var(--bs-body-color) !important;
 }
 
-
 /* ============================================
    Fix: Sign-in / Login Page (Dark Mode)
    ============================================ */
@@ -4159,7 +4314,8 @@ main
 }
 
 /* Form area (right panel) */
-[data-bs-theme="dark"] .flex.flex-col.items-center.justify-center.w-full.md\:w-1\/2 {
+[data-bs-theme="dark"]
+  .flex.flex-col.items-center.justify-center.w-full.md\:w-1\/2 {
   background-color: #242b33 !important;
   color: var(--bs-body-color) !important;
 }
@@ -4252,12 +4408,13 @@ main
    ============================================ */
 [data-bs-theme="dark"] .bento-box__cta,
 [data-bs-theme="dark"] a.bento-box__cta {
-  background-color: #2b3038 !important; 
+  background-color: #2b3038 !important;
   border: 1px solid #3c434d !important;
   padding: 8px 12px !important;
   border-radius: 6px !important;
   display: inline-block;
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease,
+    border-color 0.3s ease;
 }
 /* =====================================================
    About Page Fix (Dark Mode)
@@ -4284,3 +4441,286 @@ main
   color: var(--bs-secondary-color) !important;
 }
 
+/* ============================================
+   Bootstrap-Compatible Animation Utilities
+   ============================================ */
+
+/* Base animation state - elements start hidden/transformed */
+.animate-fade-in,
+.animate-fade-in-up,
+.animate-fade-in-down,
+.animate-fade-in-left,
+.animate-fade-in-right,
+.animate-slide-up,
+.animate-slide-in-left,
+.animate-slide-in-right,
+.animate-scale-up,
+.animate-scale-in {
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+/* Increased translation distances for more noticeable effects */
+.animate-fade-in-up {
+  transform: translateY(60px);
+}
+.animate-fade-in-down {
+  transform: translateY(-60px);
+}
+.animate-fade-in-left {
+  transform: translateX(-80px);
+}
+.animate-fade-in-right {
+  transform: translateX(80px);
+}
+.animate-slide-up {
+  transform: translateY(80px);
+}
+.animate-slide-in-left {
+  transform: translateX(-100px);
+}
+.animate-slide-in-right {
+  transform: translateX(100px);
+}
+.animate-scale-up {
+  transform: scale(0.85);
+}
+.animate-scale-in {
+  transform: scale(0.85);
+}
+
+/* Active state - triggered by Intersection Observer */
+.animate-on-scroll.animate-active {
+  opacity: 1 !important;
+  transform: translate(0, 0) scale(1) !important;
+}
+
+/* Animation transitions with enhanced easing */
+.animate-fade-in.animate-active,
+.animate-fade-in-up.animate-active,
+.animate-fade-in-down.animate-active {
+  transition: opacity 0.8s ease-out,
+    transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.animate-slide-up.animate-active,
+.animate-slide-in-left.animate-active,
+.animate-slide-in-right.animate-active {
+  transition: opacity 0.9s ease-out,
+    transform 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.animate-scale-up.animate-active,
+.animate-scale-in.animate-active {
+  transition: opacity 0.7s ease-out,
+    transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Stagger Delays (for sequential animations) */
+.animate-delay-1 {
+  transition-delay: 0.1s !important;
+}
+.animate-delay-2 {
+  transition-delay: 0.2s !important;
+}
+.animate-delay-3 {
+  transition-delay: 0.3s !important;
+}
+.animate-delay-4 {
+  transition-delay: 0.4s !important;
+}
+.animate-delay-5 {
+  transition-delay: 0.5s !important;
+}
+.animate-delay-6 {
+  transition-delay: 0.6s !important;
+}
+.animate-delay-7 {
+  transition-delay: 0.7s !important;
+}
+.animate-delay-8 {
+  transition-delay: 0.8s !important;
+}
+.animate-delay-9 {
+  transition-delay: 0.9s !important;
+}
+
+/* Animation Fill Modes */
+.animate-both {
+  animation-fill-mode: both;
+}
+.animate-forwards {
+  animation-fill-mode: forwards;
+}
+.animate-backwards {
+  animation-fill-mode: backwards;
+}
+
+/* Animation Durations */
+.animate-fast {
+  animation-duration: 0.4s;
+}
+.animate-fast.animate-active {
+  transition-duration: 0.5s !important;
+}
+.animate-normal {
+  animation-duration: 0.8s;
+}
+.animate-slow {
+  animation-duration: 1.2s;
+}
+.animate-slow.animate-active {
+  transition-duration: 1.2s !important;
+}
+
+/* Hover Animations (interactive elements) */
+.animate-hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.animate-hover-lift:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.animate-hover-scale {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.animate-hover-scale:hover {
+  transform: scale(1.05);
+}
+
+/* Keyframes for Fade Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Keyframes for Scale Animations */
+@keyframes scaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Keyframes for Slide Animations */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Scroll-triggered animation states */
+.animate-on-scroll {
+  opacity: 0;
+}
+
+.animate-on-scroll.animate-active {
+  opacity: 1;
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in,
+  .animate-fade-in-up,
+  .animate-fade-in-down,
+  .animate-fade-in-left,
+  .animate-fade-in-right,
+  .animate-scale-up,
+  .animate-scale-in,
+  .animate-slide-in-left,
+  .animate-slide-in-right,
+  .animate-slide-up,
+  .animate-on-scroll {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .animate-hover-lift:hover,
+  .animate-hover-scale:hover {
+    transform: none !important;
+  }
+}

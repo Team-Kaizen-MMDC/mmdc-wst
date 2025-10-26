@@ -38,13 +38,17 @@
     <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico" />
   </head>
   <body>
-    <header class="site-header">
+    <!-- Skip to Content Link for Screen Readers -->
+    <a href="#main-content" class="skip-link" data-i18n="accessibility.skipToContent">Skip to main content</a>
+    
+    <header class="site-header" role="banner">
       <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light">
+        <nav class="navbar navbar-expand-lg navbar-light" role="navigation" aria-label="Main navigation">
           <a
             class="navbar-brand site-header__brand"
             href="index.html"
             data-i18n="site.brand"
+            aria-label="Japan SSW - Home"
             >Japan SSW</a
           >
 
@@ -56,59 +60,70 @@
             data-bs-target="#siteOffcanvas"
             aria-controls="siteOffcanvas"
             aria-label="Open menu"
+            aria-expanded="false"
           >
-            <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon" aria-hidden="true"></span>
           </button>
 
           <!-- Desktop nav (visible on lg+) -->
           <div class="collapse navbar-collapse d-none d-lg-flex" id="navbarNav">
-            <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-              <li class="nav-item">
+            <ul class="navbar-nav mx-auto mb-2 mb-lg-0" role="menubar">
+              <li class="nav-item" role="none">
                 <a
                   class="nav-link site-header__nav-link"
                   href="#jobs"
                   data-i18n="nav.jobs"
+                  role="menuitem"
+                  aria-label="Browse available jobs"
                   >Jobs</a
                 >
               </li>
-              <li class="nav-item">
+              <li class="nav-item" role="none">
                 <a
                   class="nav-link site-header__nav-link"
                   href="#companies"
                   data-i18n="nav.services"
+                  role="menuitem"
+                  aria-label="View hiring companies"
                   >Companies</a
                 >
               </li>
-              <li class="nav-item">
+              <li class="nav-item" role="none">
                 <a
                   class="nav-link site-header__nav-link"
                   href="pages/agency.html"
                   data-i18n="nav.agency"
+                  role="menuitem"
+                  aria-label="Find support agencies"
                   >Agency</a
                 >
               </li>
-              <li class="nav-item">
+              <li class="nav-item" role="none">
                 <a
                   class="nav-link site-header__nav-link"
                   href="pages/about.html"
                   data-i18n="nav.about"
+                  role="menuitem"
+                  aria-label="Learn about Japan SSW"
                   >About</a
                 >
               </li>
             </ul>
 
             <!-- Actions (Signup/Login) -->
-            <div class="d-flex align-items-center gap-2 site-header__actions">
+            <div class="d-flex align-items-center gap-2 site-header__actions" role="group" aria-label="User account actions">
               <a
                 class="site-header__signup muted text-decoration-none"
                 href="pages/createAccount.html"
                 data-i18n="nav.signup"
+                aria-label="Create new account"
                 >Signup</a
               >
               <a
                 class="btn btn-primary site-header__login-btn"
                 href="pages/signin.html"
                 data-i18n="nav.login"
+                aria-label="Sign in to your account"
                 >Login</a
               >
             </div>
@@ -139,53 +154,62 @@
           ></button>
         </div>
         <div class="offcanvas-body d-flex flex-column">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a
-                class="nav-link py-3"
-                href="#jobs"
-                data-bs-dismiss="offcanvas"
-                data-i18n="nav.jobs"
-                >Jobs</a
-              >
-            </li>
-            <li class="nav-item">
-              <a
-                class="nav-link py-3"
-                href="#companies"
-                data-bs-dismiss="offcanvas"
-                data-i18n="nav.services"
-                >Companies</a
-              >
-            </li>
-            <li class="nav-item">
-              <a
-                class="nav-link py-3"
-                href="pages/agency.html"
-                data-bs-dismiss="offcanvas"
-                data-i18n="nav.agency"
-                >Agency</a
-              >
-            </li>
-            <li class="nav-item">
-              <a
-                class="nav-link py-3"
-                href="pages/about.html"
-                data-bs-dismiss="offcanvas"
-                data-i18n="nav.about"
-                >About</a
-              >
-            </li>
-          </ul>
+          <nav role="navigation" aria-label="Mobile navigation">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a
+                  class="nav-link py-3"
+                  href="#jobs"
+                  data-bs-dismiss="offcanvas"
+                  data-i18n="nav.jobs"
+                  aria-label="Browse available jobs"
+                  >Jobs</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link py-3"
+                  href="#companies"
+                  data-bs-dismiss="offcanvas"
+                  data-i18n="nav.services"
+                  aria-label="View hiring companies"
+                  >Companies</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link py-3"
+                  href="pages/agency.html"
+                  data-bs-dismiss="offcanvas"
+                  data-i18n="nav.agency"
+                  aria-label="Find support agencies"
+                  >Agency</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link py-3"
+                  href="pages/about.html"
+                  data-bs-dismiss="offcanvas"
+                  data-i18n="nav.about"
+                  aria-label="Learn about Japan SSW"
+                  >About</a
+                >
+              </li>
+            </ul>
+          </nav>
 
           <div
             class="mt-auto d-flex justify-content-between align-items-center pt-3 border-top"
+            role="group"
+            aria-label="User account actions"
           >
             <a
               class="btn btn-outline-secondary"
               href="pages/createAccount.html"
               data-bs-dismiss="offcanvas"
               data-i18n="nav.signup"
+              aria-label="Create new account"
               >Signup</a
             >
             <a
@@ -193,6 +217,7 @@
               href="pages/signin.html"
               data-bs-dismiss="offcanvas"
               data-i18n="nav.login"
+              aria-label="Sign in to your account"
               >Login</a
             >
           </div>
@@ -200,9 +225,9 @@
       </div>
     </header>
 
-    <main>
+    <main id="main-content" role="main">
       <!-- Hero -->
-      <section class="hero hero-centered">
+      <section class="hero hero-centered" aria-label="Welcome to Japan SSW"">
         <div class="container">
           <!-- Animated background image (current) -->
           <div class="hero__bg" aria-hidden="true"></div>
@@ -236,11 +261,12 @@
       </section>
 
       <!-- Job Board (card panel centered) -->
-      <section id="jobs" class="py-5 w-100">
+      <section id="jobs" class="py-5 w-100" aria-labelledby="jobs-heading">
         <div class="container">
           <!-- Section Title: Centered and styled with Bootstrap utilities -->
           <h2
-            class="text-center mb-5 fs-2 fw-bold"
+            id="jobs-heading"
+            class="text-center mb-5 fs-2 fw-bold animate-fade-in-down animate-on-scroll"
             data-i18n="section.job_listings"
           >
             Latest Job Listings
@@ -250,13 +276,13 @@
           <div class="row justify-content-center">
             <div class="col-12 col-lg-11 col-xl-10">
               <!-- Main Job Panel Card -->
-              <div class="card shadow-lg rounded-4 overflow-hidden">
+              <div class="card shadow-lg rounded-4 overflow-hidden animate-fade-in-up animate-on-scroll">
                 <!-- Flush List Group for Job Items -->
                 <ul class="list-group list-group-flush">
                   <!-- Job Item 1: Mechanic -->
                   <!-- list-group-item-action adds hover effect, d-flex for alignment -->
                   <li
-                    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5"
+                    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5 animate-hover-lift"
                   >
                     <div class="job-details me-auto">
                       <h5 class="h5 mb-1 fw-bold text-primary-dark">
@@ -277,7 +303,7 @@
 
                   <!-- Job Item 2: Cleaner -->
                   <li
-                    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5"
+                    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5 animate-hover-lift"
                   >
                     <div class="job-details me-auto">
                       <h5 class="h5 mb-1 fw-bold text-primary-dark">
@@ -298,7 +324,7 @@
 
                   <!-- Job Item 3: Construction Worker -->
                   <li
-                    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5"
+                    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5 animate-hover-lift"
                   >
                     <div class="job-details me-auto">
                       <h5 class="h5 mb-1 fw-bold text-primary-dark">
@@ -319,7 +345,7 @@
 
                   <!-- Job Item 4: Server -->
                   <li
-                    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5"
+                    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5 animate-hover-lift"
                   >
                     <div class="job-details me-auto">
                       <h5 class="h5 mb-1 fw-bold text-primary-dark">
@@ -340,7 +366,7 @@
 
                   <!-- Job Item 5: Ward Nursing Support (Nursing/Care Sector) -->
                   <li
-                    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5"
+                    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5 animate-hover-lift"
                   >
                     <div class="job-details me-auto">
                       <h5 class="h5 mb-1 fw-bold text-primary-dark">
@@ -366,7 +392,7 @@
           <!-- General Action Button (Moved outside the card) -->
           <div class="text-center mt-5">
             <a
-              class="btn btn-primary px-5 text-white shadow-sm"
+              class="btn btn-primary px-5 text-white shadow-sm animate-scale-up animate-on-scroll animate-hover-scale"
               style="
                 background-color: btn btn-primary;
                 border-color: var(--bs-primary-dark);
@@ -383,7 +409,7 @@
       <section id="companies" class="py-5" aria-label="Top companies">
         <div class="container">
           <h2
-            class="text-center mb-5 fw-bold"
+            class="text-center mb-5 fw-bold animate-fade-in-down animate-on-scroll"
             data-i18n="section.top_companies"
           >
             Top Company
@@ -392,14 +418,14 @@
           <!-- Bootstrap responsive grid: 1 column on mobile, 2 columns on small/medium, 3 columns on large -->
           <div class="row g-4 justify-content-center" id="companyGrid">
             <!-- Card 1: ANA InterContinental -->
-            <div class="col-12 col-sm-6 col-lg-4">
+            <div class="col-12 col-sm-6 col-lg-4 animate-fade-in-up animate-on-scroll animate-both">
               <a
                 href="pages/companies/ana-intercontinental.html"
                 class="text-decoration-none d-block company-link"
                 data-company-name="ANA InterContinental"
               >
                 <div
-                  class="card h-100 shadow-sm rounded-3 p-4 text-center top-company-card"
+                  class="card h-100 shadow-sm rounded-3 p-4 text-center top-company-card animate-hover-lift"
                 >
                   <div
                     class="card-body d-flex flex-column align-items-center justify-content-center p-0"
@@ -422,14 +448,14 @@
             </div>
 
             <!-- Card 2: Prince Hotels -->
-            <div class="col-12 col-sm-6 col-lg-4">
+            <div class="col-12 col-sm-6 col-lg-4 animate-fade-in-up animate-on-scroll animate-both">
               <a
                 href="pages/companies/prince-hotels.html"
                 class="text-decoration-none d-block company-link"
                 data-company-name="Prince Hotels"
               >
                 <div
-                  class="card h-100 shadow-sm rounded-3 p-4 text-center top-company-card"
+                  class="card h-100 shadow-sm rounded-3 p-4 text-center top-company-card animate-hover-lift"
                 >
                   <div
                     class="card-body d-flex flex-column align-items-center justify-content-center p-0"
@@ -452,14 +478,14 @@
             </div>
 
             <!-- Card 3: SOMPO Care -->
-            <div class="col-12 col-sm-6 col-lg-4">
+            <div class="col-12 col-sm-6 col-lg-4 animate-fade-in-up animate-on-scroll animate-both">
               <a
                 href="pages/companies/sompo-care.html"
                 class="text-decoration-none d-block company-link"
                 data-company-name="SOMPO Care"
               >
                 <div
-                  class="card h-100 shadow-sm rounded-3 p-4 text-center top-company-card"
+                  class="card h-100 shadow-sm rounded-3 p-4 text-center top-company-card animate-hover-lift"
                 >
                   <div
                     class="card-body d-flex flex-column align-items-center justify-content-center p-0"
@@ -482,14 +508,14 @@
             </div>
 
             <!-- Card 4: Nissan -->
-            <div class="col-12 col-sm-6 col-lg-4">
+            <div class="col-12 col-sm-6 col-lg-4 animate-fade-in-up animate-on-scroll animate-both">
               <a
                 href="pages/companies/nissan.html"
                 class="text-decoration-none d-block company-link"
                 data-company-name="Nissan"
               >
                 <div
-                  class="card h-100 shadow-sm rounded-3 p-4 text-center top-company-card"
+                  class="card h-100 shadow-sm rounded-3 p-4 text-center top-company-card animate-hover-lift"
                 >
                   <div
                     class="card-body d-flex flex-column align-items-center justify-content-center p-0"
@@ -512,14 +538,14 @@
             </div>
 
             <!-- Card 5: Daikin -->
-            <div class="col-12 col-sm-6 col-lg-4">
+            <div class="col-12 col-sm-6 col-lg-4 animate-fade-in-up animate-on-scroll animate-both">
               <a
                 href="pages/companies/daikin.html"
                 class="text-decoration-none d-block company-link"
                 data-company-name="Daikin"
               >
                 <div
-                  class="card h-100 shadow-sm rounded-3 p-4 text-center top-company-card"
+                  class="card h-100 shadow-sm rounded-3 p-4 text-center top-company-card animate-hover-lift"
                 >
                   <div
                     class="card-body d-flex flex-column align-items-center justify-content-center p-0"
@@ -542,14 +568,14 @@
             </div>
 
             <!-- Card 6: Kandenko -->
-            <div class="col-12 col-sm-6 col-lg-4">
+            <div class="col-12 col-sm-6 col-lg-4 animate-fade-in-up animate-on-scroll animate-both">
               <a
                 href="pages/companies/kandenko.html"
                 class="text-decoration-none d-block company-link"
                 data-company-name="Kandenko"
               >
                 <div
-                  class="card h-100 shadow-sm rounded-3 p-4 text-center top-company-card"
+                  class="card h-100 shadow-sm rounded-3 p-4 text-center top-company-card animate-hover-lift"
                 >
                   <div
                     class="card-body d-flex flex-column align-items-center justify-content-center p-0"
@@ -572,14 +598,14 @@
             </div>
 
             <!-- Card 7: Yoshinoya -->
-            <div class="col-12 col-sm-6 col-lg-4">
+            <div class="col-12 col-sm-6 col-lg-4 animate-fade-in-up animate-on-scroll animate-both">
               <a
                 href="pages/companies/yoshinoya.html"
                 class="text-decoration-none d-block company-link"
                 data-company-name="Yoshinoya"
               >
                 <div
-                  class="card h-100 shadow-sm rounded-3 p-4 text-center top-company-card"
+                  class="card h-100 shadow-sm rounded-3 p-4 text-center top-company-card animate-hover-lift"
                 >
                   <div
                     class="card-body d-flex flex-column align-items-center justify-content-center p-0"
@@ -602,14 +628,14 @@
             </div>
 
             <!-- Card 8: ANA -->
-            <div class="col-12 col-sm-6 col-lg-4">
+            <div class="col-12 col-sm-6 col-lg-4 animate-fade-in-up animate-on-scroll animate-both">
               <a
                 href="pages/companies/ana.html"
                 class="text-decoration-none d-block company-link"
                 data-company-name="ANA"
               >
                 <div
-                  class="card h-100 shadow-sm rounded-3 p-4 text-center top-company-card"
+                  class="card h-100 shadow-sm rounded-3 p-4 text-center top-company-card animate-hover-lift"
                 >
                   <div
                     class="card-body d-flex flex-column align-items-center justify-content-center p-0"
@@ -632,14 +658,14 @@
             </div>
 
             <!-- Card 9: Mitsubishi Heavy Industries -->
-            <div class="col-12 col-sm-6 col-lg-4">
+            <div class="col-12 col-sm-6 col-lg-4 animate-fade-in-up animate-on-scroll animate-both">
               <a
                 href="pages/companies/mitsubishi-heavy-industries.html"
                 class="text-decoration-none d-block company-link"
                 data-company-name="Mitsubishi Heavy Industries"
               >
                 <div
-                  class="card h-100 shadow-sm rounded-3 p-4 text-center top-company-card"
+                  class="card h-100 shadow-sm rounded-3 p-4 text-center top-company-card animate-hover-lift"
                 >
                   <div
                     class="card-body d-flex flex-column align-items-center justify-content-center p-0"
@@ -665,7 +691,7 @@
           <div class="text-center mt-5">
             <a
               href="pages/companies/company-list.html"
-              class="btn btn-primary rounded-pill px-4"
+              class="btn btn-primary rounded-pill px-4 animate-scale-up animate-on-scroll animate-hover-scale"
               data-i18n="btn.view_all_companies"
             >
               View All Companies
@@ -675,11 +701,12 @@
       </section>
 
       <!-- Registered Support Organization RSO (wide card) -->
-      <section class="py-5 w-100">
+      <section class="py-5 w-100" aria-labelledby="rso-heading">
         <div class="container">
           <!-- Section Title: Centered and styled with Bootstrap utilities -->
           <h2
-            class="text-center mb-5 fs-2 fw-bold"
+            id="rso-heading"
+            class="text-center mb-5 fs-2 fw-bold animate-fade-in-down animate-on-scroll"
             data-i18n="section.registered_support_org"
           >
             Registered Support Organization
@@ -692,7 +719,7 @@
               <!-- The Horizontal Card Component -->
               <!-- shadow-lg, rounded-4, overflow-hidden for aesthetics, plus custom class for hover -->
               <div
-                class="card mb-3 shadow-lg rounded-4 overflow-hidden rso-card"
+                class="card mb-3 shadow-lg rounded-4 overflow-hidden rso-card animate-slide-in-left animate-on-scroll animate-hover-lift"
                 id="rsoCard"
               >
                 <!-- Row with no gutters (g-0). Removed h-100 to allow image to scale naturally based on content. -->
@@ -760,7 +787,7 @@
                         <!-- Primary action button -->
                         <!-- Added text-white to ensure button text is visible -->
                         <a
-                          class="btn btn-primary px-4 text-white"
+                          class="btn btn-primary px-4 text-white animate-hover-scale"
                           style="
                             background-color: btn btn-primary;
                             border-color: var(--bs-primary-dark);
@@ -780,10 +807,10 @@
       </section>
 
       <!-- About Us card -->
-      <section class="py-5 w-100">
+      <section class="py-5 w-100" aria-labelledby="about-heading">
         <div class="container">
           <!-- Section Title: Centered and styled with Bootstrap utilities -->
-          <h2 class="text-center mb-5 fs-2 fw-bold" data-i18n="about.title">
+          <h2 id="about-heading" class="text-center mb-5 fs-2 fw-bold animate-fade-in-down animate-on-scroll" data-i18n="about.title">
             About Us
           </h2>
 
@@ -792,7 +819,7 @@
             <div class="col-12 col-lg-11 col-xl-10">
               <!-- The Horizontal Card Component (using RSO styling classes) -->
               <div
-                class="card mb-3 shadow-lg rounded-4 overflow-hidden rso-card"
+                class="card mb-3 shadow-lg rounded-4 overflow-hidden rso-card animate-slide-in-right animate-on-scroll animate-hover-lift"
               >
                 <!-- Row with no gutters (g-0) -->
                 <div class="row g-0">
@@ -859,7 +886,7 @@
                       <!-- Call to Action Button -->
                       <div class="mt-4">
                         <a
-                          class="btn btn-primary px-4 text-white"
+                          class="btn btn-primary px-4 text-white animate-hover-scale"
                           style="
                             background-color: btn btn-primary;
                             border-color: var(--bs-primary-dark);
@@ -879,7 +906,7 @@
       </section>
 
       <!-- Job Alerts Band (red) -->
-      <section class="alerts-band">
+      <section class="alerts-band animate-slide-up animate-on-scroll">
         <div class="container text-center">
           <h3 data-i18n="alerts.heading">Get Job Matches</h3>
           <p data-i18n="alerts.lead">
@@ -900,7 +927,7 @@
             />
             <button
               id="signup-button"
-              class="btn btn-light lg"
+              class="btn btn-light lg animate-hover-scale"
               aria-disabled="true"
               data-i18n="btn.signup_demo"
             >
@@ -913,7 +940,7 @@
       <!-- Post a Job CTA -->
       <section id="post-job" class="section-padding">
         <div class="container">
-          <div class="feature-card feature-cta">
+          <div class="feature-card feature-cta animate-scale-up animate-on-scroll animate-hover-lift">
             <div>
               <h3 data-i18n="cta.post_job.title">Want to post jobs?</h3>
               <p class="muted" data-i18n="cta.post_job.lead">
@@ -921,7 +948,7 @@
               </p>
             </div>
             <div>
-              <a class="btn btn-primary" href="#" data-i18n="btn.post_job"
+              <a class="btn btn-primary animate-hover-scale" href="#" data-i18n="btn.post_job"
                 >Post a Job</a
               >
             </div>
@@ -1085,5 +1112,8 @@
 
     <!-- Site JavaScript (ES Module) -->
     <script type="module" src="assets/js/main.js"></script>
+    
+    <!-- Animation Controller -->
+    <script src="assets/js/features/animations.js"></script>
   </body>
 </html>
