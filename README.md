@@ -31,6 +31,12 @@ Japan SSW is a frontend-first static site scaffold used as the Phase‑1 deliver
 
 This repository holds the wireframe-driven static pages and a stylesheet (`assets/css/main.css`) that defines the design tokens (colors, spacing, typography) and header contract used across pages.
 
+### Website overview — topic, goal, audience
+
+- Topic: job listings and employer information focused on Specified Skilled Worker (SSW) opportunities in Japan. The site aggregates hiring companies, agency contacts, and helpful guidance for candidates exploring SSW employment.
+- Goal: provide an accessible, easy-to-scan public-facing hub where job seekers can discover current listings, learn about hiring companies, and find agency or contact information needed to apply. The scaffold also demonstrates reusable components for future development (cards, hero, offcanvas mobile navigation, and animated entrance utilities).
+- Audience: prospective SSW job seekers (domestic and international), employers and partner agencies looking to advertise opportunities, and internal stakeholders who need a lightweight, maintainable frontend scaffold for marketing and outreach.
+
 ## Features (Phase 1)
 
 - Responsive, mobile-first layout using CSS Grid and Flexbox
@@ -43,6 +49,45 @@ Phase 2 roadmap (planned):
 - Add progressive JavaScript features (forms, interactivity)
 - Optionally enable Bootstrap utilities for faster UI components
 - Add unit/integration tests and CI checks
+
+## Site Features (detailed)
+
+Below is a concise description of the site's implemented features and UI building blocks, gathered directly from the repository so you can quickly understand what the scaffold provides today.
+
+- Hero (above the fold)
+
+  - Large, centered hero sections using the `.hero` / `.hero-centered` classes. Headings and CTAs are styled for emphasis and accessibility (see `index.html` and `assets/css/main.css`).
+
+- Header & offcanvas (mobile)
+
+  - A reusable `.site-header` pattern provides the brand, primary navigation links (`.site-header__nav-link`) and an actions region (`.site-header__actions`) with Signup/Login CTAs.
+  - Mobile navigation uses a Bootstrap-compatible offcanvas (`.offcanvas`, `#siteOffcanvas`) toggled with `[data-bs-toggle="offcanvas"]`. Tests exercise opening/closing and link focus restoration.
+
+- Scroll-triggered entrance animations
+
+  - Lightweight utility classes (for example: `animate-fade-in-up`, `animate-slide-in-left`, `animate-scale-up`) are applied across pages to animate cards, section titles, and CTAs when they enter the viewport.
+  - A small IntersectionObserver controller lives at `assets/js/features/animations.js` and toggles `.animate-active` and per-element transition delays to produce staggered entrance effects. The docs include `docs/ANIMATION_EXAMPLES.html` demonstrating usage.
+
+- Responsive components & cards
+
+  - Reusable card and grid patterns (feature cards, agency/company lists, job list items) use utility classes and responsive column classes to adapt across breakpoints. Many pages use classes like `feature-card`, `agency-item`, and Bootstrap-like utility classes for spacing and layout.
+
+- Internationalization (i18n) and language toggle
+
+  - A client-side i18n helper (`assets/js/i18n.js`) loads translations; base translation files live in `i18n/en.json` and `locales/ja.json`.
+  - Tests mock/route the locale JSON to validate translated labels (see `tests/playwright/i18n.spec.ts`).
+
+- Accessibility and semantic markup
+
+  - Pages follow semantic HTML patterns and include ARIA attributes where appropriate (for example: nav roles and aria-labels for header links). The repo contains accessibility results (axe/pa11y JSON under `tests/accessibility/results/`) used to guide fixes.
+
+- Automated testing & QA
+
+  - Playwright-based smoke and E2E tests live under `tests/playwright/` (examples: `smoke-links.spec.ts`, `e2e-navigation.spec.ts`). The Playwright config uses `http://localhost:8000` as the default `baseURL` so tests run against a locally served static site.
+  - A small collection of accessibility test results and scripts exist in `tests/accessibility/results/` and `TESTING.md` documents the QA procedures.
+
+- Progressive enhancement and graceful fallback
+  - The site is designed to work without JavaScript for basic content and navigation. JavaScript is layered on for progressive features (animations, i18n toggles, enhanced interactions).
 
 ## Wireframe Summary
 
@@ -60,15 +105,67 @@ Notes:
 - The contact form is a Phase‑2 enhancement — the Phase‑1 wireframe uses a static contact page with mailto links or simple instructions.
 - Typography and spacing come from the `:root` tokens in `assets/css/main.css`, enabling consistent sizing across breakpoints.
 
+## How to use this site — Visitor guide
+
+This short guide explains the common flows an end user will follow on the site. It is written for non-technical visitors and mirrors the primary journeys we expect on the public site.
+
+- Browsing jobs
+
+  1. Open the home page (`index.html`) to view the hero and the latest job listings.
+  1. Use the Jobs anchor (`#jobs`) or the header navigation link labelled "Jobs" to jump to the job list.
+  1. Click a job card to open the job detail page (for example: `pages/jobs/mechanic-ground-support-haneda.html`) and review responsibilities, location, and employer information.
+
+- Searching & filtering
+
+  - The site includes a basic job filter page (`pages/jobs/jobFilter.html`) where visitors can narrow results by category or keyword. Use the search fields and click "Search" to update the listing.
+
+- Registering / creating an account
+
+  - Use the Signup link in the header (or inside the mobile offcanvas) to open the registration flow (`pages/createAccount.html`). Fill in the required fields and follow the instructions on-screen. If email verification is required, check the provided email and follow the verification link.
+
+- Applying for a job
+
+  1. From a job detail page click the Apply button (or follow the "Apply" CTAs inside listings).
+  1. Depending on the job, the site may either: (a) provide a link to an external application portal, (b) open an application form, or (c) provide contact instructions (mailto or phone). Follow the instructions shown on the job page.
+
+- Contacting companies or agencies
+
+  - Company pages (under `pages/companies/`) and the Agency page (`pages/agency.html`) contain contact information and agency listings. Use the links or contact methods there to reach out directly.
+
+- Language toggle (i18n)
+
+  - Use the language control in the header (or in the mobile offcanvas) to switch between English and Japanese. The site will load translated labels from the locale files and update visible UI text.
+
+- Accessibility & preferences
+
+  - Keyboard: the header and offcanvas navigation support keyboard access; use Tab to move through links and Enter to activate.
+  - Reduced motion: if your system preference is set to reduced motion, the site respects that and minimizes animations.
+  - Contrast & readability: there are design tokens in `assets/css/main.css` for accessible font sizes and colors; if you encounter low contrast, please open an issue in the repo so we can address it.
+
+- Help & reporting issues
+  - For problems with content, broken links, or account issues, use the Contact page (`pages/contact.html`) or open an issue in this repository with a descriptive title and steps to reproduce.
+
+If you'd like, I can add a printable quick-start card (a small HTML snippet) for site ambassadors to hand to visitors, or add microcopy on key pages that surfaces these steps inline.
+
 ## Technologies
 
 - HTML5
 - CSS3 (variables, Grid, Flexbox)
-- JavaScript will be introduced in Phase 2 (ES6 modules)
+- JavaScript (ES6) for progressive enhancement and optional site features
+- Node.js (used for test tooling and local npm scripts)
+- Playwright (end-to-end testing framework used for smoke and E2E tests)
+- Python 3 (recommended for a simple local static server during development)
+- npm (package scripts to run tests and tooling)
 
-Note: Bootstrap and site JavaScript are intentionally disabled in Phase 1.
-HTML files contain commented placeholders where Bootstrap/JS includes can be
-uncommented during Phase 2.
+Notes:
+
+- The Phase‑1 site is built primarily with static HTML and CSS. JavaScript is introduced in Phase‑2 for progressive enhancements and optional features.
+
+- Playwright tests (under `tests/playwright/`) require Node.js and are executed via npm scripts. The README includes recommended npm commands to run tests.
+
+- Python 3 is a simple way to serve files locally for development (e.g., `python -m http.server 8000`).
+
+- Bootstrap is optional and can be enabled during Phase‑2 if desired; HTML files include commented placeholders where Bootstrap/JS includes can be added.
 
 ## Getting Started
 
@@ -124,7 +221,7 @@ python3 -m http.server 8000
 npx playwright test --config=tests/playwright/playwright.config.js
 ```
 
-2. Use the convenience npm script (starts server, runs Playwright, then stops the server):
+1. Use the convenience npm script (starts server, runs Playwright, then stops the server):
 
 ```bash
 npm run test:playwright:with-server
@@ -160,24 +257,91 @@ If you'd like, the team can add screenshots into `/docs/testing-screenshots/` an
 
 ## File Structure
 
+Below is an updated view of the repository layout (top-level folders and important files). Paths are relative to the repository root.
+
 ```text
-japan-ssw/
+mmdc-wst/
 ├── index.html
-├── pages/
-│   ├── about.html
-│   ├── services.html
-│   └── contact.html
- │   └── jobs/
- │       ├── job.html
- │       ├── mechanic-ground-support-haneda.html
- │       └── cleaner-facilities-maintenance.html
+├── file.html
+├── Makefile
+├── package.json
+├── README.md
+├── STYLE.css
+├── run-tests.sh
+├── STRUCTURE.md
+├── TESTING.md
+├── Web Systems and Technology.code-workspace
 ├── assets/
 │   ├── css/
-│   ├── js/
+│   │   ├── main.css            # primary stylesheet
+│   │   ├── components.css
+│   │   └── utilities.css
+│   ├── icons/
 │   ├── images/
-│   └── icons/
-├── components/
-└── .github/
+│   │   ├── aiImages/
+│   │   ├── company-logos/
+│   │   └── team/
+│   ├── js/
+│   │   ├── main.js
+│   │   ├── i18n.js
+│   │   └── features/
+│   │       └── animations.js    # scroll-trigger controller
+│   └── videos/
+├── pages/
+│   ├── about.html
+│   ├── agency.html
+│   ├── companyDashboard.html
+│   ├── contact.html
+│   ├── createAccount.html
+│   ├── profileDashboard.html
+│   ├── services.html
+│   ├── signin.html
+│   ├── terms.html
+│   ├── visaGuidance.html
+│   ├── privacy.html
+│   ├── addEdit/
+│   │   ├── availability.html
+│   │   ├── contact.html
+│   │   ├── education.html
+│   │   ├── experience.html
+│   │   ├── job-post.html
+│   │   ├── profile.html
+│   │   └── skill.html
+│   ├── companies/
+│   │   ├── ana-intercontinental.html
+│   │   ├── ana.html
+│   │   ├── company-list.html
+│   │   ├── company-template.html
+│   │   ├── daikin.html
+│   │   ├── kandenko.html
+│   │   ├── mitsubishi-heavy-industries.html
+│   │   ├── nissan.html
+│   │   ├── prince-hotels.html
+│   │   ├── sompo-care.html
+│   │   └── yoshinoya.html
+│   └── jobs/
+│       ├── cleaner-facilities-maintenance.html
+│       ├── construction-worker-site-support.html
+│       ├── jobFilter.html
+│       ├── mechanic-ground-support-haneda.html
+│       ├── server-hospitality.html
+│       └── ward-nursing-support.html
+├── assets-js/                   # legacy/archive JS used in project archive
+├── docs/
+│   ├── ACCESSIBILITY_CHECKLIST.md
+│   ├── ANIMATION_EXAMPLES.html
+│   ├── CODE_AND_DESIGN_GUIDE.md
+│   └── CSS_MAIN_GUIDE.md
+├── i18n/
+│   └── en.json
+├── locales/
+│   └── ja.json
+├── tests/
+│   └── playwright/
+│       ├── smoke-links.spec.ts
+│       ├── e2e-navigation.spec.ts
+│       └── playwright.config.js
+└── test-results/
 ```
 
 ## Best Practices
