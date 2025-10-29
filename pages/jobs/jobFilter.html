@@ -349,6 +349,35 @@
 
     <!-- Custom JS Module (Phase 2) -->
     <script type="module" src="../../assets/js/main.js"></script>
+    <script>
+      // Accessibility: ensure heading levels in job listings do not skip levels.
+      // Promote any h5 inside #jobListings to h3 to avoid heading-level jumps.
+      (function () {
+        function promoteHeadings(root) {
+          const list = (root || document).querySelectorAll('#jobListings h5');
+          list.forEach(h5 => {
+            const h3 = document.createElement('h3');
+            h3.className = h5.className || '';
+            h3.innerHTML = h5.innerHTML;
+            h5.parentNode.replaceChild(h3, h5);
+          });
+        }
+
+        // Run once on DOMContentLoaded
+        window.addEventListener('DOMContentLoaded', () => promoteHeadings(document));
+
+        // Observe dynamic insertions into #jobListings
+        const listings = document.getElementById('jobListings');
+        if (listings && window.MutationObserver) {
+          const mo = new MutationObserver((mutations) => {
+            mutations.forEach((m) => {
+              if (m.addedNodes && m.addedNodes.length) promoteHeadings(document);
+            });
+          });
+          mo.observe(listings, { childList: true, subtree: true });
+        }
+      })();
+    </script>
   
 
 </body></html>
