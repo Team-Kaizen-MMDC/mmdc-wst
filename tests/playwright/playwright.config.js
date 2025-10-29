@@ -9,9 +9,9 @@ module.exports = {
   fullyParallel: true,
   retries: 1,
   reporter: [
-    ["list"], 
+    ["list"],
     ["html", { outputFolder: "tests/playwright/results" }],
-    ["json", { outputFile: "test-results/results.json" }]
+    ["json", { outputFile: "test-results/results.json" }],
   ],
   use: {
     headless: true,

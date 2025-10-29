@@ -101,7 +101,7 @@ jobs:
             const resultsPath = path.join(process.cwd(), 'test-results', 'results.json');
             console.log('Looking for results at:', resultsPath);
             console.log('File exists:', fs.existsSync(resultsPath));
-            
+
             let parsed = false;
             let total = 0, passed = 0, failed = 0, skipped = 0, flaky = 0;
 
@@ -179,7 +179,7 @@ jobs:
             const prNumber = context.payload.pull_request && context.payload.pull_request.number;
             console.log('PR number:', prNumber);
             console.log('Context payload:', JSON.stringify(context.payload, null, 2).substring(0, 500));
-            
+
             if (!prNumber) {
               console.log('No pull request number found in context; skipping comment.');
               console.log('Full context:', JSON.stringify(context, null, 2).substring(0, 1000));
