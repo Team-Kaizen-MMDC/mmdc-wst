@@ -85,7 +85,7 @@
     </style>
   </head>
 
-  <body class="bg-light d-flex align-items-center justify-content-center min-vh-100">
+  <body class="bg-light d-flex align-items-center justify-content-center min-vh-100"><main id="main-content">
 
   <div class="container" style="max-width: 740px;"> 
     <div class="bg-white p-4 rounded-4 shadow-lg" style="width: 100%; max-width: 672px;">
@@ -192,10 +192,13 @@
 </div>
 
     <!-- Bootstrap JS Bundle -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" xintegrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    
 
     <!-- Validation -->
-        <script type="module">
+        
+  
+
+</main><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" xintegrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script><script type="module">
         import { checkAuthAndRedirect } from '../../assets/js/modules/auth.js'; 
         import { initializeAvailabilityValidation } from '../../assets/js/modules/validation.js'; 
 
@@ -203,7 +206,4 @@
             checkAuthAndRedirect();
             initializeAvailabilityValidation(); 
         });
-    </script>
-  
-
-<main id="main-content"></main></body></html>
+    </script></body></html>

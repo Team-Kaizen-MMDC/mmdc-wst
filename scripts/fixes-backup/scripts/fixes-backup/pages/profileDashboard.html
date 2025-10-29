@@ -1,39 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile Dashboard</title>
     <!-- Bootstrap CSS 5.3.3 -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="../assets/css/main.css">
   </head>
   <body class="profile-dashboard">
     <!-- Site Header (canonical: matches index.html) -->
     <header class="site-header">
       <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light">
-          <a
-            class="navbar-brand site-header__brand"
-            href="../index.html"
-            data-i18n="site.brand"
-            >Japan SSW</a
-          >
+          <a class="navbar-brand site-header__brand" href="../index.html" data-i18n="site.brand">Japan SSW</a>
 
           <!-- Offcanvas toggler for mobile -->
-          <button
-            class="btn btn-outline-secondary d-lg-none"
-            type="button"
-            data-bs-toggle="offcanvas"
-            data-bs-target="#siteOffcanvas"
-            aria-controls="siteOffcanvas"
-            aria-label="Open menu"
-          >
+          <button class="btn btn-outline-secondary d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#siteOffcanvas" aria-controls="siteOffcanvas" aria-label="Open menu">
             <span class="navbar-toggler-icon"></span>
           </button>
 
@@ -41,59 +23,30 @@
           <div class="collapse navbar-collapse d-none d-lg-flex" id="navbarNav">
             <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a
-                  class="nav-link site-header__nav-link"
-                  href="../index.html#jobs"
-                  data-i18n="nav.jobs"
-                  >Jobs</a
-                >
+                <a class="nav-link site-header__nav-link" href="../index.html#jobs" data-i18n="nav.jobs">Jobs</a>
               </li>
               <li class="nav-item">
-                <a
-                  class="nav-link site-header__nav-link"
-                  href="../index.html#companies"
-                  data-i18n="nav.services"
-                  >Companies</a
-                >
+                <a class="nav-link site-header__nav-link" href="../index.html#companies" data-i18n="nav.services">Companies</a>
               </li>
               <li class="nav-item">
-                <a
-                  class="nav-link site-header__nav-link"
-                  href="agency.html"
-                  data-i18n="nav.agency"
-                  >Agency</a
-                >
+                <a class="nav-link site-header__nav-link" href="agency.html" data-i18n="nav.agency">Agency</a>
               </li>
               <li class="nav-item">
-                <a
-                  class="nav-link site-header__nav-link"
-                  href="about.html"
-                  data-i18n="nav.about"
-                  >About</a
-                >
+                <a class="nav-link site-header__nav-link" href="about.html" data-i18n="nav.about">About</a>
               </li>
             </ul>
 
             <!-- Actions (user menu for logged-in users) -->
             <div class="d-flex align-items-center gap-2 site-header__actions">
               <div class="site-header__user-menu">
-                <a
-                  id="user-menu-btn"
-                  class="btn btn-secondary site-header__user-menu-btn"
-                  href="#"
-                  >Juan</a
-                >
+                <a id="user-menu-btn" class="btn btn-secondary site-header__user-menu-btn" href="#">Juan</a>
 
                 <!-- User Menu Dropdown (non-Bootstrap custom dropdown) -->
-                <div
-                  id="user-menu-dropdown"
-                  class="user-menu-dropdown"
-                  aria-hidden="true"
-                >
+                <div id="user-menu-dropdown" class="user-menu-dropdown">
                   <h4 class="user-menu-dropdown__greeting">Welcome Back!</h4>
                   <h3 class="user-menu-dropdown__userName">Juan Dela Cruz</h3>
                   <a href="#" class="user-menu-dropdown__link">Profile</a>
-                  <hr class="user-menu-dropdown__divider" />
+                  <hr class="user-menu-dropdown__divider">
                   <a href="#" class="user-menu-dropdown__link">Help</a>
                   <a href="#" class="user-menu-dropdown__link">Settings</a>
                   <button type="button" class="user-menu-dropdown__link">
@@ -107,80 +60,37 @@
       </div>
 
       <!-- Offcanvas (mobile) -->
-      <div
-        class="offcanvas offcanvas-start"
-        tabindex="-1"
-        id="siteOffcanvas"
-        aria-labelledby="siteOffcanvasLabel"
-      >
+      <div class="offcanvas offcanvas-start" tabindex="-1" id="siteOffcanvas" aria-labelledby="siteOffcanvasLabel">
         <div class="offcanvas-header">
           <h5 class="offcanvas-title" id="siteOffcanvasLabel">Menu</h5>
-          <button
-            type="button"
-            class="btn-close text-reset"
-            data-bs-dismiss="offcanvas"
-            aria-label="Close"
-          ></button>
+          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body d-flex flex-column">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a
-                class="nav-link py-3"
-                href="../index.html#jobs"
-                data-bs-dismiss="offcanvas"
-                data-i18n="nav.jobs"
-                >Jobs</a
-              >
+              <a class="nav-link py-3" href="../index.html#jobs" data-bs-dismiss="offcanvas" data-i18n="nav.jobs">Jobs</a>
             </li>
             <li class="nav-item">
-              <a
-                class="nav-link py-3"
-                href="../index.html#companies"
-                data-bs-dismiss="offcanvas"
-                data-i18n="nav.services"
-                >Companies</a
-              >
+              <a class="nav-link py-3" href="../index.html#companies" data-bs-dismiss="offcanvas" data-i18n="nav.services">Companies</a>
             </li>
             <li class="nav-item">
-              <a
-                class="nav-link py-3"
-                href="agency.html"
-                data-bs-dismiss="offcanvas"
-                data-i18n="nav.agency"
-                >Agency</a
-              >
+              <a class="nav-link py-3" href="agency.html" data-bs-dismiss="offcanvas" data-i18n="nav.agency">Agency</a>
             </li>
             <li class="nav-item">
-              <a
-                class="nav-link py-3"
-                href="about.html"
-                data-bs-dismiss="offcanvas"
-                data-i18n="nav.about"
-                >About</a
-              >
+              <a class="nav-link py-3" href="about.html" data-bs-dismiss="offcanvas" data-i18n="nav.about">About</a>
             </li>
           </ul>
 
-          <div
-            class="mt-auto d-flex justify-content-between align-items-center pt-3 border-top"
-          >
-            <a
-              class="btn btn-outline-secondary"
-              href="#"
-              data-bs-dismiss="offcanvas"
-              >Profile</a
-            >
-            <a class="btn btn-danger" href="#" data-bs-dismiss="offcanvas"
-              >Sign out</a
-            >
+          <div class="mt-auto d-flex justify-content-between align-items-center pt-3 border-top">
+            <a class="btn btn-outline-secondary" href="#" data-bs-dismiss="offcanvas">Profile</a>
+            <a class="btn btn-danger" href="#" data-bs-dismiss="offcanvas">Sign out</a>
           </div>
         </div>
       </div>
     </header>
 
  <!-- MAIN CONTENT --> 
-   <main class="container my-5">
+   <main class="container my-5"><h1>profileDashboard</h1>
       <div class="row g-4">
         
         <!-- PROFILE -->
@@ -190,58 +100,25 @@
     <div class="position-relative">
      <picture>
        <!-- WebP Sources -->
-        <source
-          type="image/webp"
-          srcset="../assets/images/aiImages/TokyoDay-640.webp 640w,
-                  ../assets/images/aiImages/TokyoDay-320.webp 320w"
-        />
+        <source type="image/webp" srcset="../assets/images/aiImages/TokyoDay-640.webp 640w,
+                  ../assets/images/aiImages/TokyoDay-320.webp 320w">
         <!-- Fallback JPG -->
-       <img
-          id="profileCoverImage"
-          src="../assets/images/aiImages/TokyoDay.jpg"
-          alt="Profile cover"
-          class="w-100 rounded-0"
-          style="height: 150px; object-fit: cover; object-position: center;"
-          loading="lazy"
-          onerror="this.src='https://placehold.co/1000x200/0d6efd/ffffff?text=Cover+Image';"
-        />
+       <img id="profileCoverImage" src="../assets/images/aiImages/TokyoDay.jpg" alt="Profile cover" class="w-100 rounded-0" style="height: 150px; object-fit: cover; object-position: center;" loading="lazy" onerror="this.src='https://placehold.co/1000x200/0d6efd/ffffff?text=Cover+Image';">
      </picture>
 
       <!-- Camera icon for cover upload -->
-      <button
-        type="button"
-        class="btn btn-sm btn-light position-absolute top-0 end-0 m-2"
-        onclick="document.getElementById('coverImageUpload').click();"
-        title="Change cover photo"
-      >
+      <button type="button" class="btn btn-sm btn-light position-absolute top-0 end-0 m-2" onclick="document.getElementById('coverImageUpload').click();" title="Change cover photo">
         <i class="bi bi-camera"></i>
       </button>
 
       <!-- Avatar Overlap -->
-      <div
-        class="position-absolute start-0 ms-4"
-        style="bottom: -50px; z-index: 10;"
-      >
-        <a
-          href="#"
-          class="d-inline-block rounded-circle border border-4 border-white shadow-sm overflow-hidden text-decoration-none"
-          onclick="document.getElementById('avatarImageUpload').click(); return false;"
-        >
+      <div class="position-absolute start-0 ms-4" style="bottom: -50px; z-index: 10;">
+        <a href="#" class="d-inline-block rounded-circle border border-4 border-white shadow-sm overflow-hidden text-decoration-none" onclick="document.getElementById('avatarImageUpload').click(); return false;">
           <picture>
             <!-- WebP format for optimized loading -->
-              <source
-                type="image/webp"
-                srcset="../assets/images/aiImages/Applying1-640.webp 640w,
-                        ../assets/images/aiImages/Applying1-320.webp 320w"
-              />
-            <img
-              src="../assets/images/aiImages/Applying1.jpg"
-              alt="User Avatar"
-              class="rounded-circle"
-              style="width: 100px; height: 100px; object-fit: cover; object-position: center;"
-                  loading="lazy"
-                onerror="this.src='https://placehold.co/100x100/fecaca/991b1b?text=JD';"
-            />
+              <source type="image/webp" srcset="../assets/images/aiImages/Applying1-640.webp 640w,
+                        ../assets/images/aiImages/Applying1-320.webp 320w">
+            <img src="../assets/images/aiImages/Applying1.jpg" alt="User Avatar" class="rounded-circle" style="width: 100px; height: 100px; object-fit: cover; object-position: center;" loading="lazy" onerror="this.src='https://placehold.co/100x100/fecaca/991b1b?text=JD';">
           </picture>
          
         </a>
@@ -249,8 +126,8 @@
     </div>
 
     <!-- Hidden file inputs -->
-    <input type="file" id="coverImageUpload" accept="image/*" hidden>
-    <input type="file" id="avatarImageUpload" accept="image/*" hidden>
+    <input type="file" id="coverImageUpload" accept="image/*" hidden="">
+    <input type="file" id="avatarImageUpload" accept="image/*" hidden="">
 
     <!-- Card Body -->
     <div class="card-body d-flex align-items-center mt-1">
@@ -270,13 +147,11 @@
                 <h6 class="card-title mb-0">Profile Summary</h6>
                      <!-- Edit Button (Initially visible) -->
                         <button type="button" class="btn btn-link 
-                        text-red small ms-2 p-0 shadow-none" 
-                        id="edit-btn" onclick="toggleEditMode(true)">Edit
+                        text-red small ms-2 p-0 shadow-none" id="edit-btn" onclick="toggleEditMode(true)">Edit
                       </button>
                         <!-- Save Button (Initially hidden) -->
                           <button type="button" class="btn btn-link 
-                          text-red small ms-2 d-none p-0 shadow-none" 
-                          id="save-btn" onclick="toggleEditMode(false)">Save
+                          text-red small ms-2 d-none p-0 shadow-none" id="save-btn" onclick="toggleEditMode(false)">Save
                         </button>
               </div>
             </div>
@@ -285,21 +160,14 @@
                 <!-- The main container for the text and controls (using Bootstrap flex and gap) -->
                 <div class="d-flex flex-column gap-3">
                     <!-- Read-Only Display Area -->
-                    <div id="read-display" 
-                    class="p-3 bg-white rounded-3 text-secondary lh-base border shadow-inset"
-                      style="min-height: 100px;">
+                    <div id="read-display" class="p-3 bg-white rounded-3 text-secondary lh-base border shadow-inset" style="min-height: 100px;">
                         <p id="text-content" class="mb-0">
                             This is the default profile description. Click 'Edit' to make changes.  
                         </p>
                     </div>
 
                     <!-- Editable Textarea (Initially hidden) -->
-                    <textarea
-                        id="edit-input"
-                        class="form-control p-3 bg-light text-secondary lh-base border rounded-3 shadow-inset d-none resize-y"
-                        rows="3"
-                        maxlength="170"
-                    >This is the default profile description. Click 'Edit' to make changes.</textarea>
+                    <textarea id="edit-input" class="form-control p-3 bg-light text-secondary lh-base border rounded-3 shadow-inset d-none resize-y" rows="3" maxlength="170">This is the default profile description. Click 'Edit' to make changes.</textarea>
                       <small id="char-count" class="text-muted d-none">
                       0 / 170 characters
                         </small>
@@ -313,11 +181,11 @@
           <div class="card shadow-sm h-100">
             <div class="card-body">
               <div class="d-flex justify-content-between">
-                <h5 class="card-title mb-0" id="info-name"></h5>
+                <h5 class="card-title mb-0" id="info-name">profileDashboard</h5>
                 <a href="#" class="text-red small ms-2" data-bs-toggle="modal" data-bs-target="#basicInfoModal">Edit</a>
               </div>
               <p class="text-muted" id="info-location"></p>
-              <hr />
+              <hr>
               <div class="row small">
                 <div class="col-6 mb-2"><span class="fw-semibold">Visa:</span> <span id="info-visa"></span></div>
                 <div class="col-6 mb-2"><span class="fw-semibold">Valid until:</span> <span id="info-validity"></span></div>
@@ -331,9 +199,7 @@
                 <!-- Hidden File Input for upload resume -->
                 <input type="file" id="resumeUpload" accept="image/*" style="display: none;">
 
-                <a href="#" class="d-block mt-3 text-secondary fw-semibold" 
-                   onclick="document.getElementById('resumeUpload').click(); return false;"
-                   >Upload Resume →</a>
+                <a href="#" class="d-block mt-3 text-secondary fw-semibold" onclick="document.getElementById('resumeUpload').click(); return false;">Upload Resume →</a>
 
                 <div id="view-section" style="display: none; margin-top: 10px;">
                   <a id="view-link" href="#" target="_blank">View Resume →</a>
@@ -356,13 +222,9 @@
                   <h6 class="fw-bold d-flex justify-content-between align-items-center mb-3">
                     Application Tracking
                    <!--Button ICON -->
-                       <button 
-              class="btn btn-outline-danger btn-sm px-3 shadow-sm d-flex align-items-center gap-1" 
-              data-bs-toggle="modal" 
-              data-bs-target="#applicationDetailModal"
-              aria-label="View application history">
+                       <button class="btn btn-outline-danger btn-sm px-3 shadow-sm d-flex align-items-center gap-1" data-bs-toggle="modal" data-bs-target="#applicationDetailModal" aria-label="View application history">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list-ul" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2m0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2m0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
+                <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2m0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2m0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2"></path>
               </svg>
               <span class="small fw-semibold"></span>
                     </button>
@@ -380,7 +242,7 @@
             <li class="mb-2">
               <span class="fw-semibold">
                 Rejected:</span> 2</li>
-          </ul >
+          </ul>
                 </div>
                  <div class="col-md-6 ps-md-4 mt-md-2">
                   <h6 class="fw-bold">Notifications</h6>
@@ -428,7 +290,7 @@
               <span class="badge bg-secondary">Prepping</span>
               
             </div>
-             <a href="#" class="text-red small ms-2"  data-bs-toggle="modal" data-bs-target="#skillsModal">Edit</a>
+             <a href="#" class="text-red small ms-2" data-bs-toggle="modal" data-bs-target="#skillsModal">Edit</a>
             </div>
           </div>
         </div>
@@ -481,7 +343,7 @@
     <!-- ========================================================================= -->
 
        <!-- Basic Information Modal -->
-      <div class="modal fade" id="basicInfoModal" tabindex="-1" aria-labelledby="basicInfoModalLabel" aria-hidden="true">
+      <div class="modal fade" id="basicInfoModal" tabindex="-1" aria-labelledby="basicInfoModalLabel">
         <div class="modal-dialog modal-lg">
           <div class="modal-content rounded-4">
             <div class="modal-header bg-light text-white rounded-top-4">
@@ -494,17 +356,17 @@
                    <form onsubmit="saveBasicInfo(); return false;">
                     <div class="mb-3">
                       <label class="form-label small fw-semibold">Full Name</label>
-                      <input type="text" id="modal-name" class="form-control" value="Dela Cruz Juan" required>
+                      <input type="text" id="modal-name" class="form-control" value="Dela Cruz Juan" required="">
                     </div>
                     <div class="mb-3">
                       <label class="form-label small fw-semibold">Location</label>
-                      <input type="text" id="modal-location" class="form-control" value="Osaka, Japan" required>
+                      <input type="text" id="modal-location" class="form-control" value="Osaka, Japan" required="">
                     </div>
                   <div class="row">
                     <div class="col-6 mb-3">
-                      <label class="form-label small fw-semibold">Visa Type</label>
+                      <label class="form-label small fw-semibold" for="modal-visa">Visa Type</label>
                       <select id="modal-visa" class="form-select">
-                        <option selected>Special Skilled Worker 1</option>
+                        <option selected="">Special Skilled Worker 1</option>
                         <option>Special Skilled Worker 2</option>
                         <option>Student</option>  
                         <option>Designated Visa</option>
@@ -513,12 +375,12 @@
                     </div>
                     <div class="col-6 mb-3">
                      <label class="form-label small fw-semibold">Valid Until</label>
-                     <input type="month" id="modal-validity" class="form-control" value="2026-05" />   
+                     <input type="month" id="modal-validity" class="form-control" value="2026-05">   
                     </div>
                     <div class="col-6 mb-3">
-                                <label class="form-label small fw-semibold">Industry</label>
+                                <label class="form-label small fw-semibold" for="modal-industry">Industry</label>
                                   <select id="modal-industry" class="form-select">
-                                    <option selected>Food Service</option>
+                                    <option selected="">Food Service</option>
                                     <option>Aviation</option>
                                     <option>Caregiver</option>  
                                     <option>Automotive</option>
@@ -526,9 +388,9 @@
                                 </select>
                             </div>
                              <div class="col-6 mb-3">
-                                <label class="form-label small fw-semibold">Japanese</label>
+                                <label class="form-label small fw-semibold" for="modal-japanese">Japanese</label>
                                   <select id="modal-japanese" class="form-select">
-                                    <option selected>Beginner / N5</option>
+                                    <option selected="">Beginner / N5</option>
                                     <option>Basic / N4</option>
                                     <option>Conversational / N3</option>  
                                     <option>Business / N2</option>
@@ -536,9 +398,9 @@
                                 </select>
                             </div>
                                <div class="col-6 mb-3">
-                                <label class="form-label small fw-semibold">Nationality</label>
+                                <label class="form-label small fw-semibold" for="modal-nationality">Nationality</label>
                                   <select id="modal-nationality" class="form-select">
-                                    <option selected>Filipino</option>
+                                    <option selected="">Filipino</option>
                                     <option>Indonesian</option>
                                     <option>Vietnamese</option>  
                                     <option>Thailand</option>
@@ -547,7 +409,7 @@
                             </div>
                             <div class="col-6 mb-3">
                                 <label class="form-label small fw-semibold">Age</label>
-                                <input type="number" id="modal-age" class="form-control" value="31" />
+                                <input type="number" id="modal-age" class="form-control" value="31">
                             </div>
 
                           </div>
@@ -560,10 +422,10 @@
             </div>
           </div>
         </div>
-      </div>
+      
 
             <!-- Experience Modal -->
-            <div class="modal fade" id="experienceModal" tabindex="-1" aria-labelledby="experienceModalLabel" aria-hidden="true">
+            <div class="modal fade" id="experienceModal" tabindex="-1" aria-labelledby="experienceModalLabel">
               <div class="modal-dialog modal-lg">
                 <div class="modal-content rounded-4">
                   
@@ -583,13 +445,13 @@
                         <!-- Job Title -->
                         <div class="mb-3">
                           <label class="form-label small fw-semibold">Job Title</label>
-                          <input type="text" class="form-control rounded-md" value="Service Crew" required />
+                          <input type="text" class="form-control rounded-md" value="Service Crew" required="">
                         </div>
 
                         <!-- Company -->
                         <div class="mb-3">
                           <label class="form-label small fw-semibold">Company</label>
-                          <input type="text" class="form-control rounded-md" value="McDonald's" required />
+                          <input type="text" class="form-control rounded-md" value="McDonald's" required="">
                         </div>
 
                         <!-- Start / End Dates -->
@@ -599,7 +461,7 @@
                             <label class="form-label small fw-semibold">Start Date*</label>
                             <div class="row g-2">
                               <div class="col">
-                                <select id="startMonth" class="form-select rounded-md">
+                                <select id="startMonth" class="form-select rounded-md" aria-label="profileDashboard select">
                                   <option value="">Month</option>
                                   <option>January</option>
                                   <option>February</option>
@@ -616,7 +478,7 @@
                                 </select>
                               </div>
                               <div class="col">
-                                <select id="startYear" class="form-select rounded-md">
+                                <select id="startYear" class="form-select rounded-md" aria-label="profileDashboard select">
                                   <option value="">Year</option>
                                   <option>2024</option>
                                   <option>2023</option>
@@ -638,7 +500,7 @@
                             <label class="form-label small fw-semibold">End Date*</label>
                             <div class="row g-2">
                               <div class="col">
-                                <select id="endMonth" class="form-select rounded-md">
+                                <select id="endMonth" class="form-select rounded-md" aria-label="profileDashboard select">
                                   <option value="">Month</option>
                                   <option>January</option>
                                   <option>February</option>
@@ -655,7 +517,7 @@
                                 </select>
                               </div>
                               <div class="col">
-                                <select id="endYear" class="form-select rounded-md">
+                                <select id="endYear" class="form-select rounded-md" aria-label="profileDashboard select">
                                   <option value="">Year</option>
                                   <option>2024</option>
                                   <option>2023</option>
@@ -670,9 +532,9 @@
 
                         <!-- Employment Type -->
                         <div class="mb-3">
-                          <label class="form-label small fw-semibold">Employment Type</label>
-                          <select class="form-select rounded-md">
-                            <option selected>Part-time</option>
+                          <label class="form-label small fw-semibold" for="auto-select-1">Employment Type</label>
+                          <select class="form-select rounded-md" id="auto-select-1">
+                            <option selected="">Part-time</option>
                             <option>Full-time</option>
                             <option>Contract</option>
                           </select>
@@ -686,16 +548,14 @@
                         </div>
                       </div>
 
-                      <hr class="my-3" />
+                      <hr class="my-3">
 
                       <!-- Modal Footer Buttons -->
                       <div class="d-flex justify-content-end mt-3">
                         
                         <div class="ms-auto">
-                         <button type="button" class="btn btn-outline-secondary me-2 rounded-md" 
-                          data-bs-dismiss="modal">Close</button>
-                          <button type="submit" class="btn btn-primary px-4 rounded-md shadow-sm"
-                          >Save</button>
+                         <button type="button" class="btn btn-outline-secondary me-2 rounded-md" data-bs-dismiss="modal">Close</button>
+                          <button type="submit" class="btn btn-primary px-4 rounded-md shadow-sm">Save</button>
                        </div>
                       </div>
                     </form>
@@ -706,7 +566,7 @@
 
 
         <!-- Skills Modal (Simplified) -->
-    <div class="modal fade" id="skillsModal" tabindex="-1" aria-labelledby="skillsModalLabel" aria-hidden="true">
+    <div class="modal fade" id="skillsModal" tabindex="-1" aria-labelledby="skillsModalLabel">
         <div class="modal-dialog">
             <div class="modal-content rounded-4">
                 <div class="modal-header bg-light rounded-top-4">
@@ -718,16 +578,16 @@
                         <!-- Skills Edit View (Moved from original inline HTML) -->
                         <div class="mb-2"> 
                             <label class="form-label small fw-semibold">Existing Skills (Edit or remove)</label>
-                            <input type="text" class="form-control mb-2" value="Communication" />
-                            <input type="text" class="form-control mb-2" value="Customer Service" />
-                            <input type="text" class="form-control mb-2" value="Prepping" />
-                            <input type="text" class="form-control mb-2" value="knife" />
+                            <input type="text" class="form-control mb-2" value="Communication">
+                            <input type="text" class="form-control mb-2" value="Customer Service">
+                            <input type="text" class="form-control mb-2" value="Prepping">
+                            <input type="text" class="form-control mb-2" value="knife">
                                 
                         </div>
-                        <hr/>
+                        <hr>
                         <div class="mb-3">
                              <label class="form-label small fw-semibold">Add New Skill</label>
-                             <input type="text" class="form-control" placeholder="Enter new skill..." />
+                             <input type="text" class="form-control" placeholder="Enter new skill...">
                         </div>
                         <div class="d-flex justify-content-end mt-3">
                             <button type="button" class="btn btn-outline-secondary border me-2" data-bs-dismiss="modal">Cancel</button>
@@ -740,41 +600,33 @@
     </div>
 
        <!-- Education Modal -->
-            <div class="modal fade" id="educationModal" tabindex="-1" 
-            aria-labelledby="educationModalLabel" aria-hidden="true">
+            <div class="modal fade" id="educationModal" tabindex="-1" aria-labelledby="educationModalLabel">
               <div class="modal-dialog modal-lg">
                 <div class="modal-content rounded-4">
                   
                   <!-- Header -->
                   <div class="modal-header bg-light rounded-top-4">
-                    <h5 class="modal-title" id="experienceModalLabel">Education</h5>
+                    <h5 class="modal-title" id="experienceModalLabel-2">Education</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
 
                   <!-- Body -->
                   <div class="modal-body p-4">
                     <form id="educationForm" onsubmit="saveEducationEntry(); 
-                     return false;" novalidate>
-                      <input type="hidden" id="editingIndex" value="-1" />
+                     return false;" novalidate="">
+                      <input type="hidden" id="editingIndex" value="-1">
                       <!-- Education Entry -->
                       <div class="p-3 mb-4 border rounded-4 bg-light shadow-sm">
                         <!-- School Title -->
                         <div class="mb-3">
                           <label for="school" class="form-label small fw-semibold">School*</label>
-                          <input  
-                            id="school"
-                            name="school"
-                            type="text"
-                            placeholder="Ex: Mapua University"
-                            required
-                            class="form-control"
-                          />
+                          <input id="school" name="school" type="text" placeholder="Ex: Mapua University" required="" class="form-control">
                         </div>
 
                         <!-- Degree -->
                         <div class="mb-3">
                           <label for="degree" class="form-label small fw-semibold">Degree*</label>
-                          <select id="degree" name="degree" class="form-select" required>
+                          <select id="degree" name="degree" class="form-select" required="">
                             <option value="">Please Select</option>
                             <option>Associate Degree</option>
                             <option>Bachelor's Degree</option>
@@ -787,26 +639,19 @@
                             <!-- Field of Study -->
                         <div class="mb-3">
                           <label for="field" class="form-label small fw-semibold">Field of Study*</label>
-                         <input
-                            id="field"
-                            name="field"
-                            type="text"
-                            placeholder="Ex: Software Development"
-                            required
-                            class="form-control"
-                         />
+                         <input id="field" name="field" type="text" placeholder="Ex: Software Development" required="" class="form-control">
                         </div>
 
                        <div class="mb-4">
                         <label for="eduStartMonth" class="form-label">Start Date*</label>
                         <div class="row g-2">
                             <div class="col">
-                                <select id="eduStartMonth" name="eduStartMonth" class="form-select" required>
+                                <select id="eduStartMonth" name="eduStartMonth" class="form-select" required="">
                                     <option value="">Month</option>
                                     </select>
                             </div>
                             <div class="col">
-                                <select id="eduStartYear" name="eduStartYear" class="form-select" required>
+                                <select id="eduStartYear" name="eduStartYear" class="form-select" required="" aria-label="profileDashboard select">
                                     <option value="">Year</option>
                                     </select>
                             </div>
@@ -817,31 +662,21 @@
                           <label for="eduEndMonth" class="form-label">End Date*</label>
                           <div class="row g-2" id="endDateSelects">
                               <div class="col">
-                                  <select id="eduEndMonth" name="eduEndMonth" class="form-select" required> 
+                                  <select id="eduEndMonth" name="eduEndMonth" class="form-select" required=""> 
                                       <option value="">Month</option>
                                   </select>
                               </div>
                               <div class="col">
-                                  <select id="eduEndYear" name="eduEndYear" class="form-select" required> 
+                                  <select id="eduEndYear" name="eduEndYear" class="form-select" required="" aria-label="profileDashboard select"> 
                                       <option value="">Year</option>
                                   </select>
                               </div>
                           </div>
-                          <div 
-  id="date-error-message" 
-  class="small text-danger mt-2 mb-3 d-none"
->
+                          <div id="date-error-message" class="small text-danger mt-2 mb-3 d-none">
   </div>
                           </div>
     
-                        <input
-                            id="currentDateField"
-                            type="text"
-                            value="Present"
-                            disabled
-                            class="form-control bg-light text-secondary mt-2"
-                            style="display:none;"
-                        />
+                        <input id="currentDateField" type="text" value="Present" disabled="" class="form-control bg-light text-secondary mt-2" style="display:none;">
                     </div>
 
                     <div class="form-check mb-4">
@@ -851,14 +686,11 @@
                         </label>
                     </div>
                     <div class="d-flex justify-content-between mt-4">
-                            <button type="button" class="btn btn-outline-danger me-2 rounded-md" 
-                                id="deleteEducationBtn" style="display:none;">Delete Entry</button>
+                            <button type="button" class="btn btn-outline-danger me-2 rounded-md" id="deleteEducationBtn" style="display:none;">Delete Entry</button>
                             
                             <div class="ms-auto d-flex">
-                                <button type="button" class="btn btn-outline-secondary me-2 rounded-md" 
-                                data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary px-4 rounded-md shadow-sm"
-                                >Save</button>
+                                <button type="button" class="btn btn-outline-secondary me-2 rounded-md" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary px-4 rounded-md shadow-sm">Save</button>
                             </div>
                         </div>
                     </form>
@@ -868,11 +700,11 @@
     </div>
 
        <!-- Availability Modal -->
-    <div class="modal fade" id="availabilityModal" tabindex="-1" aria-labelledby="availabilityModalLabel" aria-hidden="true">
+    <div class="modal fade" id="availabilityModal" tabindex="-1" aria-labelledby="availabilityModalLabel">
         <div class="modal-dialog">
             <div class="modal-content rounded-4">
                 <div class="modal-header bg-light rounded-top-4">
-                    <h5 class="modal-title" id="availabilityModalLabel">Availability & Preferences</h5>
+                    <h5 class="modal-title" id="availabilityModalLabel">Availability &amp; Preferences</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -880,20 +712,20 @@
                         <!-- Availability Edit View -->
                           <div class="mb-3">
                         <label class="form-label small fw-semibold">Status</label>
-                        <input type="text" class="form-control" value="Kitchen" required>
+                        <input type="text" class="form-control" value="Kitchen" required="">
                       </div>
                         <div class="mb-3">
-                            <label class="form-label small fw-semibold">Preferred Location</label>
-                            <select class="form-select">
-                                <option selected>Tokyo</option>
+                            <label class="form-label small fw-semibold" for="auto-select-2">Preferred Location</label>
+                            <select class="form-select" id="auto-select-2">
+                                <option selected="">Tokyo</option>
                                 <option>Osaka</option>
                                 <option>Kyoto</option>
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label small fw-semibold">Job Type</label>
-                            <select class="form-select">
-                                <option selected>Full-time</option>
+                            <label class="form-label small fw-semibold" for="auto-select-3">Job Type</label>
+                            <select class="form-select" id="auto-select-3">
+                                <option selected="">Full-time</option>
                                 <option>Part-time</option>
                                 <option>Contract</option>
                             </select>
@@ -910,7 +742,7 @@
     </div>
 
        <!-- APPLICATION DETAIL MODAL -->
-    <div class="modal fade" id="applicationDetailModal" tabindex="-1" aria-labelledby="applicationDetailModalLabel" aria-hidden="true">
+    <div class="modal fade" id="applicationDetailModal" tabindex="-1" aria-labelledby="applicationDetailModalLabel">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content rounded-4 shadow-lg">
                 <div class="modal-header border-0 pb-0">
@@ -975,12 +807,8 @@
             Reach qualified candidates under the SSW programme.
           </p>
           <div class="footer-cta-actions site-footer__cta-actions">
-            <a class="btn btn-secondary" href="#" data-i18n="nav.employer_login"
-              >Employer Login</a
-            >
-            <a class="btn btn-primary" href="#" data-i18n="btn.post_job"
-              >Post a Job</a
-            >
+            <a class="btn btn-secondary" href="#" data-i18n="nav.employer_login">Employer Login</a>
+            <a class="btn btn-primary" href="#" data-i18n="btn.post_job">Post a Job</a>
           </div>
         </div>
 
@@ -1013,9 +841,7 @@
       </div>
       <div class="container footer-legal site-footer__legal">
         <div class="legal-inner site-footer__legal-inner">
-          <small data-i18n="footer.copyright"
-            >&copy; 2025 Japan SSW. All rights reserved.</small
-          >
+          <small data-i18n="footer.copyright">© 2025 Japan SSW. All rights reserved.</small>
           <nav aria-label="Footer legal">
             <a href="terms.html">Terms</a>
             <a href="privacy.html">Privacy</a>
@@ -1025,11 +851,7 @@
     </footer>
                                                                                                                                                                 
     <!-- Bootstrap JS Bundle (includes Popper) -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-      crossorigin="anonymous"
-    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     
 
     <!-- Site JavaScript (ES Module) -->
@@ -1590,5 +1412,6 @@ function renderEducationSection() {
     // The previous saveBasicInfo() placeholder is replaced by this function.
 
 </script>
-  </body>
-</html>
+  
+
+</body></html>

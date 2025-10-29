@@ -42,7 +42,7 @@
                 <a id="user-menu-btn" class="btn btn-secondary site-header__user-menu-btn" href="#">Juan</a>
 
                 <!-- User Menu Dropdown (non-Bootstrap custom dropdown) -->
-                <div id="user-menu-dropdown" class="user-menu-dropdown">
+                <div id="user-menu-dropdown" class="user-menu-dropdown" aria-hidden="true">
                   <h4 class="user-menu-dropdown__greeting">Welcome Back!</h4>
                   <h3 class="user-menu-dropdown__userName">Juan Dela Cruz</h3>
                   <a href="#" class="user-menu-dropdown__link">Profile</a>
@@ -90,7 +90,7 @@
     </header>
 
  <!-- MAIN CONTENT --> 
-   <main class="container my-5"><h1>profileDashboard</h1>
+   <main class="container my-5">
       <div class="row g-4">
         
         <!-- PROFILE -->
@@ -343,7 +343,7 @@
     <!-- ========================================================================= -->
 
        <!-- Basic Information Modal -->
-      <div class="modal fade" id="basicInfoModal" tabindex="-1" aria-labelledby="basicInfoModalLabel">
+      <div class="modal fade" id="basicInfoModal" tabindex="-1" aria-labelledby="basicInfoModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
           <div class="modal-content rounded-4">
             <div class="modal-header bg-light text-white rounded-top-4">
@@ -364,7 +364,7 @@
                     </div>
                   <div class="row">
                     <div class="col-6 mb-3">
-                      <label class="form-label small fw-semibold" for="modal-visa">Visa Type</label>
+                      <label class="form-label small fw-semibold">Visa Type</label>
                       <select id="modal-visa" class="form-select">
                         <option selected="">Special Skilled Worker 1</option>
                         <option>Special Skilled Worker 2</option>
@@ -378,7 +378,7 @@
                      <input type="month" id="modal-validity" class="form-control" value="2026-05">   
                     </div>
                     <div class="col-6 mb-3">
-                                <label class="form-label small fw-semibold" for="modal-industry">Industry</label>
+                                <label class="form-label small fw-semibold">Industry</label>
                                   <select id="modal-industry" class="form-select">
                                     <option selected="">Food Service</option>
                                     <option>Aviation</option>
@@ -388,7 +388,7 @@
                                 </select>
                             </div>
                              <div class="col-6 mb-3">
-                                <label class="form-label small fw-semibold" for="modal-japanese">Japanese</label>
+                                <label class="form-label small fw-semibold">Japanese</label>
                                   <select id="modal-japanese" class="form-select">
                                     <option selected="">Beginner / N5</option>
                                     <option>Basic / N4</option>
@@ -398,7 +398,7 @@
                                 </select>
                             </div>
                                <div class="col-6 mb-3">
-                                <label class="form-label small fw-semibold" for="modal-nationality">Nationality</label>
+                                <label class="form-label small fw-semibold">Nationality</label>
                                   <select id="modal-nationality" class="form-select">
                                     <option selected="">Filipino</option>
                                     <option>Indonesian</option>
@@ -425,7 +425,7 @@
       
 
             <!-- Experience Modal -->
-            <div class="modal fade" id="experienceModal" tabindex="-1" aria-labelledby="experienceModalLabel">
+            <div class="modal fade" id="experienceModal" tabindex="-1" aria-labelledby="experienceModalLabel" aria-hidden="true">
               <div class="modal-dialog modal-lg">
                 <div class="modal-content rounded-4">
                   
@@ -461,7 +461,7 @@
                             <label class="form-label small fw-semibold">Start Date*</label>
                             <div class="row g-2">
                               <div class="col">
-                                <select id="startMonth" class="form-select rounded-md" aria-label="profileDashboard select">
+                                <select id="startMonth" class="form-select rounded-md">
                                   <option value="">Month</option>
                                   <option>January</option>
                                   <option>February</option>
@@ -478,7 +478,7 @@
                                 </select>
                               </div>
                               <div class="col">
-                                <select id="startYear" class="form-select rounded-md" aria-label="profileDashboard select">
+                                <select id="startYear" class="form-select rounded-md">
                                   <option value="">Year</option>
                                   <option>2024</option>
                                   <option>2023</option>
@@ -500,7 +500,7 @@
                             <label class="form-label small fw-semibold">End Date*</label>
                             <div class="row g-2">
                               <div class="col">
-                                <select id="endMonth" class="form-select rounded-md" aria-label="profileDashboard select">
+                                <select id="endMonth" class="form-select rounded-md">
                                   <option value="">Month</option>
                                   <option>January</option>
                                   <option>February</option>
@@ -517,7 +517,7 @@
                                 </select>
                               </div>
                               <div class="col">
-                                <select id="endYear" class="form-select rounded-md" aria-label="profileDashboard select">
+                                <select id="endYear" class="form-select rounded-md">
                                   <option value="">Year</option>
                                   <option>2024</option>
                                   <option>2023</option>
@@ -532,8 +532,8 @@
 
                         <!-- Employment Type -->
                         <div class="mb-3">
-                          <label class="form-label small fw-semibold" for="auto-select-1">Employment Type</label>
-                          <select class="form-select rounded-md" id="auto-select-1">
+                          <label class="form-label small fw-semibold">Employment Type</label>
+                          <select class="form-select rounded-md">
                             <option selected="">Part-time</option>
                             <option>Full-time</option>
                             <option>Contract</option>
@@ -566,7 +566,7 @@
 
 
         <!-- Skills Modal (Simplified) -->
-    <div class="modal fade" id="skillsModal" tabindex="-1" aria-labelledby="skillsModalLabel">
+    <div class="modal fade" id="skillsModal" tabindex="-1" aria-labelledby="skillsModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content rounded-4">
                 <div class="modal-header bg-light rounded-top-4">
@@ -600,7 +600,7 @@
     </div>
 
        <!-- Education Modal -->
-            <div class="modal fade" id="educationModal" tabindex="-1" aria-labelledby="educationModalLabel">
+            <div class="modal fade" id="educationModal" tabindex="-1" aria-labelledby="educationModalLabel" aria-hidden="true">
               <div class="modal-dialog modal-lg">
                 <div class="modal-content rounded-4">
                   
@@ -651,7 +651,7 @@
                                     </select>
                             </div>
                             <div class="col">
-                                <select id="eduStartYear" name="eduStartYear" class="form-select" required="" aria-label="profileDashboard select">
+                                <select id="eduStartYear" name="eduStartYear" class="form-select" required="">
                                     <option value="">Year</option>
                                     </select>
                             </div>
@@ -667,7 +667,7 @@
                                   </select>
                               </div>
                               <div class="col">
-                                  <select id="eduEndYear" name="eduEndYear" class="form-select" required="" aria-label="profileDashboard select"> 
+                                  <select id="eduEndYear" name="eduEndYear" class="form-select" required=""> 
                                       <option value="">Year</option>
                                   </select>
                               </div>
@@ -700,7 +700,7 @@
     </div>
 
        <!-- Availability Modal -->
-    <div class="modal fade" id="availabilityModal" tabindex="-1" aria-labelledby="availabilityModalLabel">
+    <div class="modal fade" id="availabilityModal" tabindex="-1" aria-labelledby="availabilityModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content rounded-4">
                 <div class="modal-header bg-light rounded-top-4">
@@ -715,16 +715,16 @@
                         <input type="text" class="form-control" value="Kitchen" required="">
                       </div>
                         <div class="mb-3">
-                            <label class="form-label small fw-semibold" for="auto-select-2">Preferred Location</label>
-                            <select class="form-select" id="auto-select-2">
+                            <label class="form-label small fw-semibold">Preferred Location</label>
+                            <select class="form-select">
                                 <option selected="">Tokyo</option>
                                 <option>Osaka</option>
                                 <option>Kyoto</option>
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label small fw-semibold" for="auto-select-3">Job Type</label>
-                            <select class="form-select" id="auto-select-3">
+                            <label class="form-label small fw-semibold">Job Type</label>
+                            <select class="form-select">
                                 <option selected="">Full-time</option>
                                 <option>Part-time</option>
                                 <option>Contract</option>
@@ -742,7 +742,7 @@
     </div>
 
        <!-- APPLICATION DETAIL MODAL -->
-    <div class="modal fade" id="applicationDetailModal" tabindex="-1" aria-labelledby="applicationDetailModalLabel">
+    <div class="modal fade" id="applicationDetailModal" tabindex="-1" aria-labelledby="applicationDetailModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content rounded-4 shadow-lg">
                 <div class="modal-header border-0 pb-0">

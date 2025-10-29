@@ -1,16 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Add/Edit Experience</title>
 
 <!-- Bootstrap 5.3.3 -->
-<link
-  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-  rel="stylesheet"
-/>
-<link rel="stylesheet" href="../../assets/css/main.css" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/main.css">
 
 <style>
         .stepper-new {
@@ -98,9 +94,7 @@
 
 <body class="bg-light py-5">
   <div class="container" style="max-width: 740px;">
-    <div class="bg-white p-4 rounded-4 shadow-lg"
-          style="width: 100%; max-width: 672px;"
-  >
+    <div class="bg-white p-4 rounded-4 shadow-lg" style="width: 100%; max-width: 672px;">
     
     <!-- Header: Back Button and Close Button -->
     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -172,24 +166,17 @@
     <h1 class="h4 fw-bold text-dark mb-4 text-center">Experience</h1>
 
     <!-- Form -->
-    <form id="experienceForm" action="skill.html" method="GET" novalidate>
+    <form id="experienceForm" action="skill.html" method="GET" novalidate="">
       <!-- Title -->
       <div class="mb-3">
         <label for="title" class="form-label">Title*</label>
-        <input
-          id="title"
-          name="title"
-          type="text"
-          class="form-control"
-          placeholder="Ex: Assistant Store Manager"
-          required
-        />
+        <input id="title" name="title" type="text" class="form-control" placeholder="Ex: Assistant Store Manager" required="">
       </div>
 
       <!-- Employment Type -->
       <div class="mb-3">
         <label for="employmentType" class="form-label">Employment Type*</label>
-        <select id="employmentType" name="employmentType" class="form-select" required>
+        <select id="employmentType" name="employmentType" class="form-select" required="">
           <option value="">Please Select</option>
           <option>Full-time</option>
           <option>Part-time</option>
@@ -205,14 +192,7 @@
       <!-- Company -->
       <div class="mb-3">
         <label for="company" class="form-label">Company*</label>
-        <input
-          id="company"
-          name="company"
-          type="text"
-          class="form-control"
-          placeholder="Ex: Sukiya"
-          required
-        />
+        <input id="company" name="company" type="text" class="form-control" placeholder="Ex: Sukiya" required="">
       </div>
 
       <!-- Start Date -->
@@ -220,12 +200,12 @@
         <label for="startMonth" class="form-label">Start Date*</label>
         <div class="row g-2">
           <div class="col">
-            <select id="startMonth" name="startMonth" class="form-select" required>
+            <select id="startMonth" name="startMonth" class="form-select" required="">
               <option value="">Month</option>
             </select>
           </div>
           <div class="col">
-            <select id="startYear" name="startYear" class="form-select" required>
+            <select id="startYear" name="startYear" class="form-select" required="" aria-label="Experience select">
               <option value="">Year</option>
             </select>
           </div>
@@ -243,19 +223,12 @@
             </select>
           </div>
           <div class="col">
-            <select id="endYear" name="endYear" class="form-select">
+            <select id="endYear" name="endYear" class="form-select" aria-label="Experience select">
               <option value="">Year</option>
             </select>
           </div>
         </div>
-        <input
-          id="currentDateField"
-          type="text"
-          value="Current"
-          disabled
-          class="form-control bg-light text-secondary mt-2"
-          style="display:none;"
-        />
+        <input id="currentDateField" type="text" value="Current" disabled="" class="form-control bg-light text-secondary mt-2" style="display:none;">
       </div>
 
       <!-- Checkbox -->
@@ -269,25 +242,13 @@
       <!-- Location -->
       <div class="mb-3">
         <label for="location" class="form-label">Location</label>
-        <input
-          id="location"
-          name="location"
-          type="text"
-          class="form-control"
-          placeholder="Ex: Shinagawa, Tokyo"
-        />
+        <input id="location" name="location" type="text" class="form-control" placeholder="Ex: Shinagawa, Tokyo">
       </div>
 
       <!-- Description -->
       <div class="mb-4">
         <label for="description" class="form-label">Description</label>
-        <textarea
-          id="description"
-          name="description"
-          rows="4"
-          class="form-control"
-          placeholder="List your duties and responsibilities"
-        ></textarea>
+        <textarea id="description" name="description" rows="4" class="form-control" placeholder="List your duties and responsibilities"></textarea>
       </div>
 
       <!-- Buttons -->
@@ -312,5 +273,6 @@ window.addEventListener('DOMContentLoaded', () => {
   initializeExperienceValidation();
 });
 </script>
-</body>
-</html>
+
+
+<main id="main-content"></main></body></html>

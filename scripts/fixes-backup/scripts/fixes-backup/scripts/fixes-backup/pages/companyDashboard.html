@@ -1,22 +1,38 @@
 <!DOCTYPE html>
-<html lang="en"><head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Company Dashboard</title>
     <!-- Bootstrap CSS 5.3.3 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="../assets/css/main.css">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="../assets/css/main.css" />
   </head>
   <body class="company-dashboard">
     <!-- Site Header (canonical: matches index.html) -->
     <header class="site-header">
       <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light">
-          <a class="navbar-brand site-header__brand" href="../index.html" data-i18n="site.brand">Japan SSW
+          <a
+            class="navbar-brand site-header__brand"
+            href="../index.html"
+            data-i18n="site.brand">Japan SSW
           </a>
 
           <!-- Offcanvas toggler for mobile -->
-          <button class="btn btn-outline-secondary d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#siteOffcanvas" aria-controls="siteOffcanvas" aria-label="Open menu">
+          <button
+            class="btn btn-outline-secondary d-lg-none"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#siteOffcanvas"
+            aria-controls="siteOffcanvas"
+            aria-label="Open menu"
+          >
             <span class="navbar-toggler-icon"></span>
           </button>
 
@@ -24,31 +40,60 @@
           <div class="collapse navbar-collapse d-none d-lg-flex" id="navbarNav">
             <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link site-header__nav-link" href="../index.html#jobs" data-i18n="nav.jobs">Jobs</a>
+                <a
+                  class="nav-link site-header__nav-link"
+                  href="../index.html#jobs"
+                  data-i18n="nav.jobs"
+                  >Jobs</a
+                >
               </li>
               <li class="nav-item">
-                <a class="nav-link site-header__nav-link" href="../index.html#companies" data-i18n="nav.services">Companies</a>
+                <a
+                  class="nav-link site-header__nav-link"
+                  href="../index.html#companies"
+                  data-i18n="nav.services"
+                  >Companies</a
+                >
               </li>
               <li class="nav-item">
-                <a class="nav-link site-header__nav-link" href="agency.html" data-i18n="nav.agency">Agency</a>
+                <a
+                  class="nav-link site-header__nav-link"
+                  href="agency.html"
+                  data-i18n="nav.agency"
+                  >Agency</a
+                >
               </li>
               <li class="nav-item">
-                <a class="nav-link site-header__nav-link" href="about.html" data-i18n="nav.about">About</a>
+                <a
+                  class="nav-link site-header__nav-link"
+                  href="about.html"
+                  data-i18n="nav.about"
+                  >About</a
+                >
               </li>
             </ul>
 
             <!-- Actions (user menu for logged-in users) -->
             <div class="d-flex align-items-center gap-2 site-header__actions">
               <div class="site-header__user-menu">
-                <a id="user-menu-btn" class="btn btn-secondary site-header__user-menu-btn" href="#">Juan</a>
+                <a
+                  id="user-menu-btn"
+                  class="btn btn-secondary site-header__user-menu-btn"
+                  href="#"
+                  >Juan</a
+                >
 
                 <!-- User Menu Dropdown (non-Bootstrap custom dropdown) -->
-                <div id="user-menu-dropdown" class="user-menu-dropdown">
+                <div
+                  id="user-menu-dropdown"
+                  class="user-menu-dropdown"
+                  aria-hidden="true"
+                >
                   <h4 class="user-menu-dropdown__greeting">Welcome Back!</h4>
                   <h3 class="user-menu-dropdown__userName">Juan Dela Cruz</h3>
                   <a href="#" class="user-menu-dropdown__link">View Profile</a>
                   <a href="#" class="user-menu-dropdown__link">Message</a>
-                  <hr class="user-menu-dropdown__divider">
+                  <hr class="user-menu-dropdown__divider" />
                   <a href="#" class="user-menu-dropdown__link">Language</a>
                   <a href="#" class="user-menu-dropdown__link">Help</a>
                   <a href="#" class="user-menu-dropdown__link">Settings</a>
@@ -63,57 +108,137 @@
       </div>
 
       <!-- Offcanvas (mobile) -->
-      <div class="offcanvas offcanvas-start" tabindex="-1" id="siteOffcanvas" aria-labelledby="siteOffcanvasLabel">
+      <div
+        class="offcanvas offcanvas-start"
+        tabindex="-1"
+        id="siteOffcanvas"
+        aria-labelledby="siteOffcanvasLabel"
+      >
         <div class="offcanvas-header">
           <h5 class="offcanvas-title" id="siteOffcanvasLabel">Menu</h5>
-          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          <button
+            type="button"
+            class="btn-close text-reset"
+            data-bs-dismiss="offcanvas"
+            aria-label="Close"
+          ></button>
         </div>
         <div class="offcanvas-body d-flex flex-column">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link py-3" href="../index.html#jobs" data-bs-dismiss="offcanvas" data-i18n="nav.jobs">Jobs</a>
+              <a
+                class="nav-link py-3"
+                href="../index.html#jobs"
+                data-bs-dismiss="offcanvas"
+                data-i18n="nav.jobs"
+                >Jobs</a
+              >
             </li>
             <li class="nav-item">
-              <a class="nav-link py-3" href="../index.html#companies" data-bs-dismiss="offcanvas" data-i18n="nav.services">Companies</a>
+              <a
+                class="nav-link py-3"
+                href="../index.html#companies"
+                data-bs-dismiss="offcanvas"
+                data-i18n="nav.services"
+                >Companies</a
+              >
             </li>
             <li class="nav-item">
-              <a class="nav-link py-3" href="agency.html" data-bs-dismiss="offcanvas" data-i18n="nav.agency">Agency</a>
+              <a
+                class="nav-link py-3"
+                href="agency.html"
+                data-bs-dismiss="offcanvas"
+                data-i18n="nav.agency"
+                >Agency</a
+              >
             </li>
             <li class="nav-item">
-              <a class="nav-link py-3" href="about.html" data-bs-dismiss="offcanvas" data-i18n="nav.about">About</a>
+              <a
+                class="nav-link py-3"
+                href="about.html"
+                data-bs-dismiss="offcanvas"
+                data-i18n="nav.about"
+                >About</a
+              >
             </li>
           </ul>
 
-          <div class="mt-auto d-flex justify-content-between align-items-center pt-3 border-top">
-            <a class="btn btn-outline-secondary" href="#" data-bs-dismiss="offcanvas">Profile</a>
-            <a class="btn btn-danger" href="#" data-bs-dismiss="offcanvas">Sign out</a>
+          <div
+            class="mt-auto d-flex justify-content-between align-items-center pt-3 border-top"
+          >
+            <a
+              class="btn btn-outline-secondary"
+              href="#"
+              data-bs-dismiss="offcanvas"
+              >Profile</a
+            >
+            <a class="btn btn-danger" href="#" data-bs-dismiss="offcanvas"
+              >Sign out</a
+            >
           </div>
         </div>
       </div>
     </header>
 
-      <main class="container py-4"><h1>companyDashboard</h1>
+      <main class="container py-4">
     <!-- Navigation Tabs -->
-    <ul class="nav nav-tabs justify-content-center bg-white p-3 rounded shadow-sm mb-4" id="dashboardTabs" role="tablist">
+    <ul class="nav nav-tabs justify-content-center bg-white p-3 rounded shadow-sm mb-4" 
+    id="dashboardTabs" role="tablist">
       <li class="nav-item" role="presentation">
-       <button class="nav-link text-danger active fw-bold" id="dashboard-tab" data-bs-toggle="tab" data-bs-target="#dashboard-pane" type="button" role="tab" aria-controls="dashboard-pane" aria-selected="true">
+       <button
+            class="nav-link text-danger active fw-bold"
+            id="dashboard-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#dashboard-pane"
+            type="button"
+            role="tab"
+            aria-controls="dashboard-pane"
+            aria-selected="true"
+          >
             Dashboard
           </button>
         </li>
         
       <li class="nav-item" role="presentation">
-       <button class="nav-link text-secondary" id="job-tab" data-bs-toggle="tab" data-bs-target="#job-pane" type="button" role="tab" aria-controls="job-pane" aria-selected="false">
+       <button 
+        class="nav-link text-secondary" 
+        id="job-tab"
+        data-bs-toggle="tab"
+        data-bs-target="#job-pane"
+        type="button"
+        role="tab"
+        aria-controls="job-pane"
+        aria-selected="false"
+        >
         Job Management
       </button>
   </li>
 
  <li class="nav-item" role="presentation">
-       <button class="nav-link text-secondary" id="applicant-tab" data-bs-toggle="tab" data-bs-target="#applicant-pane" type="button" role="tab" aria-controls="applicant-pane" aria-selected="false">
+       <button 
+        class="nav-link text-secondary" 
+        id="applicant-tab"
+        data-bs-toggle="tab"
+        data-bs-target="#applicant-pane"
+        type="button"
+        role="tab"
+        aria-controls="applicant-pane"
+        aria-selected="false"
+        >
         Applicant Tracking
       </button>
   </li>
  <li class="nav-item" role="presentation">
-       <button class="nav-link text-secondary" id="company-tab" data-bs-toggle="tab" data-bs-target="#company-pane" type="button" role="tab" aria-controls="company-pane" aria-selected="false">
+       <button 
+        class="nav-link text-secondary" 
+        id="company-tab"
+        data-bs-toggle="tab"
+        data-bs-target="#company-pane"
+        type="button"
+        role="tab"
+        aria-controls="company-pane"
+        aria-selected="false"
+        >
         Company Profile
       </button>
     </li>
@@ -124,7 +249,10 @@
        <!-- Tab Content -->
         <div class="tab-content" id="dashboardTabContent">
         <!-- Dashboard Tab Pane -->
-      <div class="tab-pane  fade show active" id="dashboard-pane" role="tabpanel" aria-labelledby="dashboard-tab" tabindex="0">
+      <div class="tab-pane  fade show active" 
+      id="dashboard-pane" role="tabpanel" 
+      aria-labelledby="dashboard-tab" 
+      tabindex="0">
     <div class="row g-4">
       <!-- Profile -->
       <div class="col-lg-6 col-md-6">
@@ -140,7 +268,7 @@
             </div>
             <a href="#" class="text-red small ms-2">Edit</a>
           </div>
-          <hr>
+          <hr />
           <div class="d-grid gap 2">
             <a href="../pages/addEdit/job-post.html" class="btn btn-outline-danger text-decoration-none" tabindex="-1" role="button" aria-disabled="true">Post New Job</a>
                   <button class="btn btn-outline-danger">View All Applicant</button>
@@ -275,7 +403,8 @@
 </div>
 
   <!-- Job Management Tab Pane -->
-  <div class="tab-pane fade p-0" id="job-pane" role="tabpanel" aria-labelledby="job-tab" tabindex="0">
+  <div class="tab-pane fade p-0" id="job-pane" role="tabpanel" 
+  aria-labelledby="job-tab" tabindex="0">
  <div class="card p-4 shadow-sm">
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h4 class="fw-bold mb-0">Job List</h4>
@@ -382,7 +511,8 @@
 
 
   <!-- Applicant Tracking Tab Pane -->
-  <div class="tab-pane fade p-0" id="applicant-pane" role="tabpanel" aria-labelledby="applicant-tab" tabindex="0">
+  <div class="tab-pane fade p-0" id="applicant-pane" role="tabpanel" 
+  aria-labelledby="applicant-tab" tabindex="0">
  <div class="card p-4 shadow-sm">
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h4 class="fw-bold mb-0">Applicant List</h4>
@@ -489,7 +619,8 @@
 </div>
 
 <!-- Company Profile Tab Pane -->
-  <div class="tab-pane" id="company-pane" role="tabpanel" aria-labelledby="company-tab" tabindex="0">
+  <div class="tab-pane" id="company-pane" role="tabpanel" 
+  aria-labelledby="company-tab" tabindex="0">
        <!-- MAIN CONTENT --> 
    <div class="container my-5">
       <div class="row g-4">
@@ -501,25 +632,58 @@
     <div class="position-relative">
      <picture>
        <!-- WebP Sources -->
-        <source type="image/webp" srcset="../assets/images/aiImages/templegate3-640.webp 640w,
-                  ../assets/images/aiImages/templegate3-320.webp 320w">
+        <source
+          type="image/webp"
+          srcset="../assets/images/aiImages/templegate3-640.webp 640w,
+                  ../assets/images/aiImages/templegate3-320.webp 320w"
+        />
         <!-- Fallback JPG -->
-       <img id="profileCoverImage" src="../assets/images/aiImages/templegate3.png" alt="Profile cover" class="w-100 rounded-0" style="height: 150px; object-fit: cover; object-position: center;" loading="lazy" onerror="this.src='https://placehold.co/1000x200/0d6efd/ffffff?text=Cover+Image';">
+       <img
+          id="profileCoverImage"
+          src="../assets/images/aiImages/templegate3.png"
+          alt="Profile cover"
+          class="w-100 rounded-0"
+          style="height: 150px; object-fit: cover; object-position: center;"
+          loading="lazy"
+          onerror="this.src='https://placehold.co/1000x200/0d6efd/ffffff?text=Cover+Image';"
+        />
      </picture>
 
       <!-- Camera icon for cover upload -->
-      <button type="button" class="btn btn-sm btn-light opacity-75  position-absolute top-0 end-0 m-2 hover-100" onclick="document.getElementById('coverImageUpload').click();" title="Change cover photo">
+      <button
+        type="button"
+        class="btn btn-sm btn-light opacity-75  position-absolute top-0 end-0 m-2 hover-100"
+        onclick="document.getElementById('coverImageUpload').click();"
+        title="Change cover photo"
+      >
         <i class="bi bi-camera"></i>
       </button>
 
       <!-- Avatar Overlap -->
-      <div class="position-absolute start-0 ms-4" style="bottom: -50px; z-index: 10;">
-        <a href="#" class="d-inline-block rounded-circle border border-4 border-white shadow-sm overflow-hidden text-decoration-none" onclick="document.getElementById('avatarImageUpload').click(); return false;">
+      <div
+        class="position-absolute start-0 ms-4"
+        style="bottom: -50px; z-index: 10;"
+      >
+        <a
+          href="#"
+          class="d-inline-block rounded-circle border border-4 border-white shadow-sm overflow-hidden text-decoration-none"
+          onclick="document.getElementById('avatarImageUpload').click(); return false;"
+        >
           <picture>
             <!-- WebP format for optimized loading -->
-              <source type="image/webp" srcset="../assets/images/company-logos/sompocare-640.webp 640w,
-                        ../assets/images/company-logos/sompocare-320.webp 320w">
-            <img src="../assets/images/company-logos/sompocare.png" alt="User Avatar" class="rounded-circle" style="width: 100px; height: 100px; object-fit: cover; object-position: center;" loading="lazy" onerror="this.src='https://placehold.co/100x100/fecaca/991b1b?text=JD';">
+              <source
+                type="image/webp"
+                srcset="../assets/images/company-logos/sompocare-640.webp 640w,
+                        ../assets/images/company-logos/sompocare-320.webp 320w"
+              />
+            <img
+              src="../assets/images/company-logos/sompocare.png"
+              alt="User Avatar"
+              class="rounded-circle"
+              style="width: 100px; height: 100px; object-fit: cover; object-position: center;"
+                  loading="lazy"
+                onerror="this.src='https://placehold.co/100x100/fecaca/991b1b?text=JD';"
+            />
           </picture>
          
         </a>
@@ -527,8 +691,8 @@
     </div>
 
     <!-- Hidden file inputs -->
-    <input type="file" id="coverImageUpload" accept="image/*" hidden="">
-    <input type="file" id="avatarImageUpload" accept="image/*" hidden="">
+    <input type="file" id="coverImageUpload" accept="image/*" hidden>
+    <input type="file" id="avatarImageUpload" accept="image/*" hidden>
 
     <!-- Card Body -->
     <div class="card-body d-flex align-items-center mt-1">
@@ -548,10 +712,16 @@
                 <h6 class="card-title mb-0">Company Overview</h6>
                      <!-- Edit Button (Initially visible) -->
                        <a href="#" class="text-red small ms-2 link-offset-2 
-                       link-underline-opacity-25 link-underline-opacity-100-hove" id="edit-btn" onclick="toggleEditMode(true)">Edit</a>
+                       link-underline-opacity-25 link-underline-opacity-100-hove"
+                          id="edit-btn"
+                          onclick="toggleEditMode(true)"
+                          >Edit</a>
 
                         <!-- Save Button (Initially hidden) -->
-                          <a href="#" class="text-red small ms-2 d-none" id="save-btn" onclick="toggleEditMode(false)">Save</a>
+                          <a href="#" class="text-red small ms-2 d-none"
+                            id="save-btn"
+                             onclick="toggleEditMode(false)"
+                            >Save</a>
               </div>
             </div>
            
@@ -559,14 +729,21 @@
                 <!-- The main container for the text and controls (using Bootstrap flex and gap) -->
                 <div class="d-flex flex-column gap-3">
                     <!-- Read-Only Display Area -->
-                    <div id="read-display" class="p-3 bg-white rounded-3 text-secondary lh-base border shadow-inset" style="min-height: 100px;">
+                    <div id="read-display" 
+                    class="p-3 bg-white rounded-3 text-secondary lh-base border shadow-inset"
+                      style="min-height: 100px;">
                         <p id="text-content" class="mb-0">
                             This is the default profile description. Click 'Edit' to make changes.  
                         </p>
                     </div>
 
                     <!-- Editable Textarea (Initially hidden) -->
-                    <textarea id="edit-input" class="form-control p-3 bg-light text-secondary lh-base border rounded-3 shadow-inset d-none resize-y" rows="3" maxlength="170">This is the default profile description. Click 'Edit' to make changes.</textarea>
+                    <textarea
+                        id="edit-input"
+                        class="form-control p-3 bg-light text-secondary lh-base border rounded-3 shadow-inset d-none resize-y"
+                        rows="3"
+                        maxlength="170"
+                    >This is the default profile description. Click 'Edit' to make changes.</textarea>
                       <small id="char-count" class="text-muted d-none">
                       0 / 170 characters
                         </small>
@@ -581,10 +758,10 @@
             <div class="card-body">
               <div class="d-flex justify-content-between">
                 <h5 class="card-title mb-0">Company template Inc</h5>
-             <a href="#" class="text-red small ms-2" data-bs-toggle="modal" data-bs-target="#basicInfoModal">Edit</a>
+             <a href="#" class="text-red small ms-2"  data-bs-toggle="modal" data-bs-target="#basicInfoModal">Edit</a>
             </div>
               <p class="text-muted">Powering the future of construction</p>
-              <p class="small text-muted">Osaka, Japan</p><hr>
+              <p class="small text-muted">Osaka, Japan</p><hr />
               <div class="row">
                 <div class="col-6 small"><span class="fw-bold">Industry:</span> Construction, Real Estate</div>
                 <div class="col-6 small"><span class="fw-bold">Founded:</span> 2013</div>
@@ -633,7 +810,7 @@
           <div class="card shadow-sm">
             <div class="card-header d-flex justify-content-between">
               <h6 class="mb-0">About Us</h6>
-              <a href="#" class="text-red small ms-2" data-bs-toggle="modal" data-bs-target="#aboutDetailModal">Edit</a>
+              <a href="#" class="text-red small ms-2"  data-bs-toggle="modal" data-bs-target="#aboutDetailModal">Edit</a>
             </div>
             <div class="card-body d-flex justify-content-between align-items-center">
               <p>
@@ -655,7 +832,7 @@
 
             <!-- Basic Information Modal -->
               <!-- Basic Information Modal -->
-      <div class="modal fade" id="basicInfoModal" tabindex="-1" aria-labelledby="basicInfoModalLabel">
+      <div class="modal fade" id="basicInfoModal" tabindex="-1" aria-labelledby="basicInfoModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
           <div class="modal-content rounded-4">
             <div class="modal-header bg-light text-white rounded-top-4">
@@ -668,25 +845,25 @@
                    <form onsubmit="saveBasicInfo(); return false;">
                     <div class="mb-3">
                       <label class="form-label small fw-semibold">Company</label>
-                      <input type="text" class="form-control" value="Company template Inc" required="">
+                      <input type="text" class="form-control" value="Company template Inc" required>
                     </div>
                     <div class="mb-3">
                       <label class="form-label small fw-semibold">Tagline</label>
-                      <input type="text" class="form-control" value="Power of Future!" required="">
+                      <input type="text" class="form-control" value="Power of Future!" required>
                     </div>
                      <div class="mb-3">
                       <label class="form-label small fw-semibold">Location</label>
-                      <input type="text" class="form-control" value="Osaka, Japan" required="">
+                      <input type="text" class="form-control" value="Osaka, Japan" required>
                     </div>
                     <div class="mb-3">
                       <label class="form-label small fw-semibold">Headquarter</label>
-                      <input type="text" class="form-control" value="Minato, Tokyo" required="">
+                      <input type="text" class="form-control" value="Minato, Tokyo" required>
                     </div>
                   <div class="row">
                     <div class="col-6 mb-3">
-                                <label class="form-label small fw-semibold" for="auto-select-1">Industry</label>
-                                  <select class="form-select" id="auto-select-1">
-                                    <option selected="">Food Service</option>
+                                <label class="form-label small fw-semibold">Industry</label>
+                                  <select class="form-select">
+                                    <option selected>Food Service</option>
                                     <option>Aviation</option>
                                     <option>Caregiver</option>  
                                     <option>Automotive</option>
@@ -695,11 +872,11 @@
                             </div>
                             <div class="col-6 mb-3">
                                 <label class="form-label small fw-semibold">Founded</label>
-                                <input type="number" class="form-control" value="2017">
+                                <input type="number" class="form-control" value="2017" />
                             </div>
                              <div class="col-6 mb-3">
                                 <label class="form-label small fw-semibold">Website</label>
-                                <input type="text" class="form-control" value="www.company-template.com" required="">
+                                <input type="text" class="form-control" value="www.company-template.com" required>
                             </div>
 
                           </div>
@@ -715,7 +892,7 @@
       </div>
 
              <!-- ABOUT DETAIL MODAL -->
-                 <div class="modal fade" id="aboutDetailModal" tabindex="-1" aria-labelledby="aboutDetailModalLabel">
+                 <div class="modal fade" id="aboutDetailModal" tabindex="-1" aria-labelledby="aboutDetailModalLabel" aria-hidden="true">
                    <div class="modal-dialog modal-lg">
                      <div class="modal-content rounded-4">
                        <div class="modal-header bg-light text-white rounded-top-4">
@@ -727,7 +904,14 @@
                            <!-- about us info -->
                 <div class="mb-3">
                     <label for="about-us" class="form-label fw-semibold">Tell the world</label>
-                    <textarea id="about-us" name="about-us" rows="10" placeholder="Describe the company history and business. provide mission and vision and goal..." required="" class="form-control"></textarea>
+                    <textarea
+                        id="about-us"
+                        name="about-us"
+                        rows="10"
+                        placeholder="Describe the company history and business. provide mission and vision and goal..."
+                        required
+                        class="form-control"
+                    ></textarea>
                     <div class="invalid-feedback">A detailed about us is required.  
                    </div>
                 </div>
@@ -743,7 +927,7 @@
                  </div>
 
        <!--  Data Contact MODAL -->
-    <div class="modal fade" id="dataContactModal" tabindex="-1" aria-labelledby="dataContactModalLabel">
+    <div class="modal fade" id="dataContactModal" tabindex="-1" aria-labelledby="dataContactModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content rounded-4 shadow-lg">
                 <div class="modal-header border-0 pb-0">
@@ -757,36 +941,36 @@
                             <!--Data content-->
                             <div class="col-6 mb-3">
                                 <label class="form-label small fw-semibold">Year in Business</label>
-                                <input type="number" class="form-control" value="12">
+                                <input type="number" class="form-control" value="12" />
                             </div>
                             <div class="col-6 mb-3">
                                 <label class="form-label small fw-semibold">Number of Employees</label>
-                                <input type="number" class="form-control" value="200">
+                                <input type="number" class="form-control" value="200" />
                             </div>
                               <div class="col-6 mb-3">
                                 <label class="form-label small fw-semibold">Office</label>
-                                <input type="number" class="form-control" value="5">
+                                <input type="number" class="form-control" value="5" />
                             </div>
                             <div class="col-6 mb-3">
                                 <label class="form-label small fw-semibold">Projects</label>
-                                <input type="number" class="form-control" value="25">
+                                <input type="number" class="form-control" value="25" />
                             </div>
                               <!--Contact content-->
                              <div class="col-6 mb-3">
                                 <label class="form-label small fw-semibold">Social Media</label>
-                                <input type="text" class="form-control" value="www.facebook.com" required="">
+                                <input type="text" class="form-control" value="www.facebook.com" required>
                             </div>
                             <div class="col-6 mb-3">
                                 <label class="form-label small fw-semibold">Social Media</label>
-                                <input type="text" class="form-control" value="www.Instagram.com" required="">
+                                <input type="text" class="form-control" value="www.Instagram.com" required>
                             </div>
                              <div class="col-6 mb-3">
                                 <label class="form-label small fw-semibold">Email</label>
-                                <input type="text" class="form-control" value="company@template.com" required="">
+                                <input type="text" class="form-control" value="company@template.com" required>
                             </div>
                             <div class="col-6 mb-3">
                                 <label class="form-label small fw-semibold">Telephone</label>
-                                <input type="text" class="form-control" value="+81 080 4123 1123" required="">
+                                <input type="text" class="form-control" value="+81 080 4123 1123" required>
                             </div>
 
                           </div>
@@ -800,11 +984,11 @@
           </div>
         </div>
       </div>           
-            
-        
-           
-      
-  
+            </div>
+        </div>
+           </div>
+      </div>
+  </div>
 </main>
     
     <footer class="site-footer site-footer--dark" role="contentinfo">
@@ -815,8 +999,12 @@
             Reach qualified candidates under the SSW programme.
           </p>
           <div class="footer-cta-actions site-footer__cta-actions">
-            <a class="btn btn-secondary" href="#" data-i18n="nav.employer_login">Employer Login</a>
-            <a class="btn btn-primary" href="#" data-i18n="btn.post_job">Post a Job</a>
+            <a class="btn btn-secondary" href="#" data-i18n="nav.employer_login"
+              >Employer Login</a
+            >
+            <a class="btn btn-primary" href="#" data-i18n="btn.post_job"
+              >Post a Job</a
+            >
           </div>
         </div>
 
@@ -848,7 +1036,9 @@
       </div>
       <div class="container footer-legal site-footer__legal">
         <div class="legal-inner site-footer__legal-inner">
-          <small data-i18n="footer.copyright">© 2025 Japan SSW. All rights reserved.</small>
+          <small data-i18n="footer.copyright"
+            >&copy; 2025 Japan SSW. All rights reserved.</small
+          >
           <nav aria-label="Footer legal">
             <a href="terms.html">Terms</a>
             <a href="privacy.html">Privacy</a>
@@ -858,12 +1048,14 @@
     </footer>
                                                                                                                                                                 
     <!-- Bootstrap JS Bundle (includes Popper) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"></script>
 
 
     <!-- Site JavaScript (ES Module) -->
     <script type="module" src="../assets/js/main.js"></script>
 
-  
-
-</body></html>
+  </body>
+</html>
