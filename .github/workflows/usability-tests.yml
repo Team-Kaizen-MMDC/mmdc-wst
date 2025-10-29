@@ -97,11 +97,11 @@ jobs:
 
                       // Get PR number from environment or context
                       const prNumber = process.env.PR_NUMBER || context.payload.pull_request?.number;
-                      
+
                       console.log('PR Number from env:', process.env.PR_NUMBER);
                       console.log('PR Number from context:', context.payload.pull_request?.number);
                       console.log('Using PR Number:', prNumber);
-                      
+
                       if (!prNumber) {
                         console.error('ERROR: No PR number found!');
                         console.log('Context keys:', Object.keys(context));

@@ -179,7 +179,7 @@ jobs:
 
             // Get PR number from environment or context
             const prNumber = process.env.PR_NUMBER || context.payload.pull_request?.number;
-            
+
             console.log('PR Number from env:', process.env.PR_NUMBER);
             console.log('PR Number from context:', context.payload.pull_request?.number);
             console.log('Using PR Number:', prNumber);
