@@ -105,10 +105,12 @@
 
   /* Accessibility tokens */
   --focus-color: #0066cc;
-  --focus-outline-width: 2px;
+  --focus-outline-width: 3px;
   --focus-outline-offset: 2px;
   --skip-link-bg: #000;
   --skip-link-color: #fff;
+  --skip-link-focus-bg: #0066cc;
+  --skip-link-focus-color: #fff;
 }
 
 /* Base styles */
@@ -481,11 +483,44 @@ button {
   transition: height 0.35s ease;
 }
 
-/* Active link state */
+/* Active link state - Enhanced for better visibility */
 .site-header .nav-link.active,
-.site-header .nav-link:focus {
+.site-header__nav-link.active {
   color: var(--primary-color);
-  font-weight: 600;
+  font-weight: 700;
+  position: relative;
+  background-color: rgba(235, 0, 0, 0.05);
+  border-radius: 4px;
+}
+
+/* Active indicator - bottom border */
+.site-header .nav-link.active::after,
+.site-header__nav-link.active::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 3px;
+  background-color: var(--primary-color);
+  border-radius: 2px 2px 0 0;
+}
+
+/* Mobile offcanvas active state */
+.offcanvas .nav-link.active {
+  color: var(--primary-color);
+  font-weight: 700;
+  background-color: rgba(235, 0, 0, 0.08);
+  border-left: 4px solid var(--primary-color);
+  padding-left: calc(1rem - 4px);
+}
+
+/* Ensure focus state is visible on active links too */
+.site-header .nav-link.active:focus,
+.site-header__nav-link.active:focus {
+  outline: var(--focus-outline-width) solid var(--focus-color);
+  outline-offset: var(--focus-outline-offset);
 }
 
 /* User menu Dropdown */
@@ -954,26 +989,32 @@ user-menu-dropdown__divider {
 /* Skip to Content Link */
 .skip-link {
   position: absolute;
-  top: -40px;
-  left: 6px;
+  top: -50px;
+  left: 8px;
   background: var(--skip-link-bg);
   color: var(--skip-link-color);
-  padding: 8px 12px;
+  padding: 12px 24px;
   text-decoration: none;
-  z-index: 9999;
+  z-index: 10000;
   border-radius: 4px;
-  font-weight: 600;
-  font-size: 14px;
-  transition: top 0.2s ease;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.5;
+  transition: top 0.2s ease, background 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .skip-link:focus {
-  top: 6px;
-  outline: var(--focus-outline-width) solid var(--focus-color);
+  top: 8px;
+  background: var(--skip-link-focus-bg);
+  color: var(--skip-link-focus-color);
+  outline: var(--focus-outline-width) solid #ffcc00;
   outline-offset: var(--focus-outline-offset);
+  box-shadow: 0 4px 16px rgba(0, 102, 204, 0.4);
 }
 
 /* Enhanced Focus States for Interactive Elements */
+/* Base focus style for all focusable elements */
 .btn:focus,
 .site-header__login-btn:focus,
 .login-btn:focus,
@@ -987,34 +1028,87 @@ button:focus,
 a:focus {
   outline: var(--focus-outline-width) solid var(--focus-color);
   outline-offset: var(--focus-outline-offset);
-  box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.1);
+  box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.15);
+}
+
+/* Enhanced focus visibility using :focus-visible for keyboard users */
+.btn:focus-visible,
+.site-header__login-btn:focus-visible,
+.login-btn:focus-visible,
+.nav-link:focus-visible,
+.site-header__nav-link:focus-visible,
+.form-control:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+button:focus-visible,
+a:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus-color);
+  outline-offset: var(--focus-outline-offset);
+  box-shadow: 0 0 0 5px rgba(0, 102, 204, 0.2);
 }
 
 /* Specific focus styles for different element types */
-.form-control:focus {
+.form-control:focus,
+.form-control:focus-visible {
   border-color: var(--focus-color);
   outline: var(--focus-outline-width) solid var(--focus-color);
   outline-offset: 0;
+  box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.15);
 }
 
 /* Enhanced button focus states */
-.btn:focus {
+.btn:focus,
+.btn:focus-visible {
   transform: translateY(-1px);
-  box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.1), 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.15), 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 /* Navigation focus states */
 .nav-link:focus,
-.site-header__nav-link:focus {
-  background-color: rgba(0, 102, 204, 0.05);
+.site-header__nav-link:focus,
+.nav-link:focus-visible,
+.site-header__nav-link:focus-visible {
+  background-color: rgba(0, 102, 204, 0.08);
   border-radius: 4px;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+/* Footer link focus states (for dark backgrounds) */
+.site-footer--dark a:focus,
+.site-footer--dark a:focus-visible {
+  outline: 3px solid #ffcc00;
+  outline-offset: 2px;
+  background-color: rgba(255, 204, 0, 0.1);
+  border-radius: 2px;
+  text-decoration: underline;
 }
 
 /* Card and link focus states */
 .feature-card:focus-within,
-.company-card:focus-within {
+.company-card:focus-within,
+.top-company-card:focus-within {
   outline: var(--focus-outline-width) solid var(--focus-color);
   outline-offset: var(--focus-outline-offset);
+  box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.1), 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* Company link focus (for cards) */
+.company-link:focus,
+.company-link:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus-color);
+  outline-offset: 2px;
+}
+
+/* List group item focus (for job listings) */
+.list-group-item-action:focus,
+.list-group-item-action:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus-color);
+  outline-offset: -2px;
+  box-shadow: inset 0 0 0 2px var(--focus-color);
+  background-color: rgba(0, 102, 204, 0.05);
 }
 
 /* Remove default focus outline for elements with custom focus styles */

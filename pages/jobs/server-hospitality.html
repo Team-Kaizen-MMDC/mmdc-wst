@@ -30,6 +30,14 @@
     />
   </head>
   <body>
+    <!-- Skip to Content Link for Screen Readers -->
+    <a
+      href="#main-content"
+      class="skip-link"
+      data-i18n="accessibility.skipToContent"
+      >Skip to main content</a
+    >
+
     <!-- Shared Header (offcanvas mobile nav) -->
     <header class="site-header">
       <div class="container">
@@ -53,12 +61,12 @@
             <span class="navbar-toggler-icon"></span>
           </button>
 
-          <!-- Desktop nav (visible on lg+) -->
+          <!-- Desktop nav -->
           <div class="collapse navbar-collapse d-none d-lg-flex" id="navbarNav">
             <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
               <li class="nav-item">
                 <a
-                  class="nav-link site-header__nav-link"
+                  class="nav-link site-header__nav-link active"
                   href="../../index.html#jobs"
                   data-i18n="nav.jobs"
                   >Jobs</a
@@ -66,7 +74,7 @@
               </li>
               <li class="nav-item">
                 <a
-                  class="nav-link site-header__nav-link active"
+                  class="nav-link site-header__nav-link"
                   href="../../index.html#companies"
                   data-i18n="nav.services"
                   >Companies</a
@@ -182,7 +190,7 @@
       </div>
     </header>
 
-    <main>
+    <main id="main-content" role="main">
       <!-- Job Content -->
       <section class="job-card-wrap">
         <div class="container">
@@ -196,7 +204,9 @@
               >
             </header>
 
-            <h1 id="job-title" class="job-card__title">Restaurant Waiter / Waitress</h1>
+            <h1 id="job-title" class="job-card__title">
+              Restaurant Waiter / Waitress
+            </h1>
 
             <p class="job-card__meta muted">
               Sangenjaya Sta. (Tokyo) ・ Food Service ・ Part Time ・ 2025
@@ -213,7 +223,9 @@
                   <li class="job-pill">
                     Working Hours: 9:30–24:00 (3 hours a day or more)
                   </li>
-                  <li class="job-pill">Time Commitment: Less overtime, weekend shift</li>
+                  <li class="job-pill">
+                    Time Commitment: Less overtime, weekend shift
+                  </li>
                   <li class="job-pill">
                     Perks:
                     <ul>
@@ -254,15 +266,15 @@
               <section>
                 <h2>Department Overview</h2>
                 <p>
-                  Located just an 8-minute walk from Sangenjaya Station, we are a
-                  locally renowned ramen chain known for our delicious food and
-                  friendly service. Our team is made up of individuals from
+                  Located just an 8-minute walk from Sangenjaya Station, we are
+                  a locally renowned ramen chain known for our delicious food
+                  and friendly service. Our team is made up of individuals from
                   various backgrounds, including many from Vietnam and Nepal.
                 </p>
                 <p>
-                  We value teamwork, inclusivity, and a supportive atmosphere where
-                  everyone can grow. Hands-on training is provided to help you
-                  succeed, even if you have no prior experience.
+                  We value teamwork, inclusivity, and a supportive atmosphere
+                  where everyone can grow. Hands-on training is provided to help
+                  you succeed, even if you have no prior experience.
                 </p>
               </section>
 

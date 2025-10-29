@@ -36,6 +36,14 @@
     <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.ico" />
   </head>
   <body>
+    <!-- Skip to Content Link for Screen Readers -->
+    <a
+      href="#main-content"
+      class="skip-link"
+      data-i18n="accessibility.skipToContent"
+      >Skip to main content</a
+    >
+
     <header class="site-header">
       <div class="container site-header__inner">
         <a class="site-header__brand" href="../" data-i18n="site.brand"
@@ -82,7 +90,7 @@
     </header>
 
     <!-- Main Content -->
-    <main>
+    <main id="main-content" role="main">
       <section class="py-5">
         <div class="container">
           <div class="row">

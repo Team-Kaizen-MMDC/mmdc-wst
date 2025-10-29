@@ -30,6 +30,14 @@
     />
   </head>
   <body>
+    <!-- Skip to Content Link for Screen Readers -->
+    <a
+      href="#main-content"
+      class="skip-link"
+      data-i18n="accessibility.skipToContent"
+      >Skip to main content</a
+    >
+
     <!-- Header -->
     <header class="site-header">
       <div class="container">
@@ -53,12 +61,12 @@
             <span class="navbar-toggler-icon"></span>
           </button>
 
-          <!-- Desktop nav (visible on lg+) -->
+          <!-- Desktop nav -->
           <div class="collapse navbar-collapse d-none d-lg-flex" id="navbarNav">
             <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
               <li class="nav-item">
                 <a
-                  class="nav-link site-header__nav-link"
+                  class="nav-link site-header__nav-link active"
                   href="../../index.html#jobs"
                   data-i18n="nav.jobs"
                   >Jobs</a
@@ -66,7 +74,7 @@
               </li>
               <li class="nav-item">
                 <a
-                  class="nav-link site-header__nav-link active"
+                  class="nav-link site-header__nav-link"
                   href="../../index.html#companies"
                   data-i18n="nav.services"
                   >Companies</a
@@ -182,7 +190,7 @@
       </div>
     </header>
 
-    <main>
+    <main id="main-content" role="main">
       <!-- Job Content -->
       <section class="job-card-wrap">
         <div class="container">
@@ -196,7 +204,9 @@
               >
             </header>
 
-            <h1 id="job-title" class="job-card__title">Construction Assistant</h1>
+            <h1 id="job-title" class="job-card__title">
+              Construction Assistant
+            </h1>
 
             <p class="job-card__meta muted">
               Daimon Sta. (Tokyo) ・ Construction ・ Part-Time ・ 2025
@@ -209,9 +219,7 @@
                 <ul class="job-spec__list">
                   <li class="job-pill">¥1,400–2,800/hour</li>
                   <li class="job-pill">Daily Wage: ¥13,000–20,000</li>
-                  <li class="job-pill">
-                    Work Location: Daimon Sta. (Tokyo)
-                  </li>
+                  <li class="job-pill">Work Location: Daimon Sta. (Tokyo)</li>
                   <li class="job-pill">
                     Other Locations: Tokyo, Kanagawa, Saitama, Chiba
                   </li>
