@@ -722,15 +722,15 @@
     <script type="module" src="../../assets/js/main.js"></script>
     <script>
       // Accessibility: ensure heading levels in job listings do not skip levels.
-      // Promote any h5 inside #jobListings to h3 to avoid heading-level jumps.
+      // Promote any h5 inside #jobListings to h2 to avoid heading-level jumps.
       (function () {
         function promoteHeadings(root) {
           const list = (root || document).querySelectorAll("#jobListings h5");
           list.forEach((h5) => {
-            const h3 = document.createElement("h3");
-            h3.className = h5.className || "";
-            h3.innerHTML = h5.innerHTML;
-            h5.parentNode.replaceChild(h3, h5);
+            const h2 = document.createElement("h2");
+            h2.className = h5.className || "";
+            h2.innerHTML = h5.innerHTML;
+            h5.parentNode.replaceChild(h2, h5);
           });
         }
 
