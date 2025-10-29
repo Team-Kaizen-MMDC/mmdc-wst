@@ -31,7 +31,16 @@ jobs:
               run: |
                   python3 -m http.server 8000 > /tmp/server.log 2>&1 &
                   echo $! > /tmp/server.pid
-                  sleep 2
+                  sleep 3
+                  # Wait for server to be ready
+                  for i in {1..10}; do
+                    if curl -s http://localhost:8000/ > /dev/null; then
+                      echo "Server is ready"
+                      break
+                    fi
+                    echo "Waiting for server... ($i/10)"
+                    sleep 1
+                  done
 
             - name: Run accessibility tests (axe-core)
               id: axe-tests
@@ -51,7 +60,21 @@ jobs:
             - name: Generate usability summary
               id: summary
               if: always()
-              run: node .github/workflows/scripts/format-usability-summary.js
+              run: |
+                  echo "Generating usability summary..."
+                  node .github/workflows/scripts/format-usability-summary.js
+                  echo "Summary generated, checking file..."
+                  if [ -f usability-summary.md ]; then
+                    echo "✅ Summary file created successfully"
+                    echo "File size: $(wc -c < usability-summary.md) bytes"
+                    echo "--- Preview (first 500 chars) ---"
+                    head -c 500 usability-summary.md
+                    echo ""
+                    echo "--- End preview ---"
+                  else
+                    echo "❌ ERROR: Summary file not created!"
+                    exit 1
+                  fi
 
             - name: Upload test results
               if: always()
