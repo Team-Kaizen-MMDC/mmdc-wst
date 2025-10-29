@@ -406,26 +406,26 @@
       xintegrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
-  <script>
-    // Defensive: fallback close behaviour for the job-post close link
-    (function () {
-      const btn = document.getElementById('jobPostCloseBtn');
-      if (!btn) return;
-      btn.addEventListener('click', function (e) {
-        e.preventDefault();
-        // try history.back(); if not available, navigate to parent dashboard
-        try {
-          if (window.history && window.history.length > 1) {
-            window.history.back();
-            return;
+    <script>
+      // Defensive: fallback close behaviour for the job-post close link
+      (function () {
+        const btn = document.getElementById("jobPostCloseBtn");
+        if (!btn) return;
+        btn.addEventListener("click", function (e) {
+          e.preventDefault();
+          // try history.back(); if not available, navigate to parent dashboard
+          try {
+            if (window.history && window.history.length > 1) {
+              window.history.back();
+              return;
+            }
+          } catch (err) {
+            // ignore
           }
-        } catch (err) {
-          // ignore
-        }
-        // Fallback target: profile dashboard
-        window.location.href = '../profileDashboard.html';
-      });
-    })();
-  </script>
+          // Fallback target: profile dashboard
+          window.location.href = "../profileDashboard.html";
+        });
+      })();
+    </script>
   </body>
 </html>
