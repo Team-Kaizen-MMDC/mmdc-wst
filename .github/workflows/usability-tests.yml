@@ -169,14 +169,4 @@ jobs:
                         console.error('Error details:', error);
                         throw error;
                       }
-                      } else {
-                        console.log('Creating new comment');
-                        // Create new comment
-                        await github.rest.issues.createComment({
-                          owner: context.repo.owner,
-                          repo: context.repo.repo,
-                          issue_number: prNumber,
-                          body: commentBody,
-                        });
-                        console.log('Created new comment');
                       }
