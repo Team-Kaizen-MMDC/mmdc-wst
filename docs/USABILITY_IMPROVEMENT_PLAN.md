@@ -10,6 +10,36 @@ This document tracks the implementation of usability improvements based on revie
 
 > "Usability is developing: navigation and headings are consistent, but key affordances are placeholders; add visible focus states, skip-to-content, active-nav styling, and standardize spacing/type scale; also verify contrast and keyboard traversal on the filter form and footer links."
 
+### Strategic Objectives
+
+**Bootstrap & JavaScript Migration Priority:**
+
+- **Goal:** Migrate custom CSS solutions to Bootstrap utilities and JavaScript functionality wherever applicable
+- **Rationale:** Reduce custom CSS maintenance, leverage Bootstrap's accessibility features, improve consistency
+- **Approach:**
+  - Identify custom CSS that duplicates Bootstrap functionality
+  - Replace custom solutions with Bootstrap classes and utilities
+  - Use Bootstrap JavaScript components for interactive elements
+  - Maintain custom CSS only for brand-specific styling
+  - Document migration decisions in each phase
+
+**Migration Priorities by Phase:**
+
+1. **Phase 1 (Complete):** Enhanced focus states - future migration to Bootstrap focus ring utilities
+2. **Phase 2:** Filter forms - migrate to Bootstrap button groups, form validation JavaScript
+3. **Phase 3:** Footer - use Bootstrap spacing utilities and focus ring classes
+4. **Phase 4:** Spacing & typography - **PRIMARY FOCUS:** replace 95%+ custom CSS with Bootstrap utilities
+5. **Phase 5:** Placeholders - use Bootstrap modals, toasts, tooltips for interactive demos
+6. **Phase 6:** Testing - verify Bootstrap components meet accessibility standards
+7. **Phase 7:** Documentation - document Bootstrap migration and usage patterns
+
+**Success Metrics:**
+
+- ✅ Reduce custom CSS by 60-80% (leverage Bootstrap utilities)
+- ✅ All interactive components use Bootstrap JavaScript where applicable
+- ✅ Zero custom spacing/typography classes (use Bootstrap's system)
+- ✅ Maintain or improve accessibility scores with Bootstrap's built-in ARIA support
+
 ---
 
 ## Current State Analysis
@@ -150,12 +180,31 @@ This document tracks the implementation of usability improvements based on revie
 
 **Next Steps:**
 
-- Test keyboard navigation manually on all pages
-- Run automated accessibility tests (axe, Lighthouse)
+- ✅ Test keyboard navigation manually on all pages
+- ✅ Run automated accessibility tests (axe, Lighthouse)
+- **Future Enhancement:** Migrate active nav to JavaScript solution (currently static HTML with manual class assignment)
+  - Consider using Bootstrap's ScrollSpy or custom JS to auto-detect current page
+  - Would eliminate need to manually add `.active` class to each page
+  - See Phase 1 completion notes for implementation ideas
 - Proceed to Phase 2: Form Accessibility
 
-- [ ] No focus traps detected
-- [ ] Changes documented
+**Test Results Summary (October 29, 2025):**
+
+✅ **Phase 1 Validation: PASSED**
+
+- All Phase 1 objectives working correctly
+- Zero violations detected for skip-links, focus states, active navigation
+- See `docs/ACCESSIBILITY_TEST_RESULTS.md` for full report
+
+⚠️ **New Issues Discovered (Pre-existing, not Phase 1 related):**
+
+- Color contrast violations: 63 nodes across 6 pages (CRITICAL: visaGuidance.html has 36)
+- Heading order issues: index.html, services.html, agency.html
+- Missing H1: agency.html
+- Empty heading: index.html
+- Links not distinguished from text: visaGuidance.html
+
+**Recommendation:** Address color contrast before Phase 2 (see test results for details)
 
 ---
 
@@ -165,53 +214,71 @@ This document tracks the implementation of usability improvements based on revie
 **Timeline:** Week 1 (3-4 days)  
 **Status:** 🔴 Not Started
 
+**Bootstrap/JS Migration Focus:**
+
+- Replace custom filter button logic with Bootstrap button group JavaScript
+- Use Bootstrap form validation classes instead of custom CSS
+- Leverage Bootstrap's built-in accessibility features for forms
+
 ### Tasks
 
-- [ ] **2.1 Filter Form Focus States**
+- [ ] **2.1 Migrate Filter Buttons to Bootstrap Components**
 
-  - [ ] Add visible focus indicators to:
-    - [ ] Search input field (jobFilter.html line 215)
-    - [ ] Support filter button group
-    - [ ] Japanese Level filter buttons
-    - [ ] Location filter buttons
-    - [ ] Industry filter buttons
-    - [ ] Reset button
-    - [ ] Apply/Search button
+  - [ ] Replace custom button group styling with Bootstrap `.btn-group` and `.btn-group-toggle`
+  - [ ] Implement Bootstrap button state management with JavaScript:
+    - [ ] Use `data-bs-toggle="button"` for toggle functionality
+    - [ ] Replace custom active state CSS with Bootstrap's `.active` class management
+  - [ ] Test Bootstrap's built-in keyboard navigation (arrow keys, Enter, Space)
+  - [ ] Verify ARIA attributes are automatically managed by Bootstrap
+
+- [ ] **2.2 Filter Form Focus States & Validation**
+
+  - [ ] Leverage Bootstrap form validation classes:
+    - [ ] `.form-control:focus` (already styled by Bootstrap)
+    - [ ] `.is-valid` and `.is-invalid` states
+  - [ ] Replace custom focus indicators with Bootstrap's default (if acceptable) or extend Bootstrap's focus ring utility
   - [ ] Ensure focus order is logical through filter groups
   - [ ] Test keyboard navigation through all filters
 
-- [ ] **2.2 Color Contrast Verification**
+- [ ] **2.3 Color Contrast Verification**
 
   - [ ] Run automated contrast checks (axe, Lighthouse)
-  - [ ] Check button states against WCAG AA (4.5:1):
+  - [ ] Check Bootstrap button states against WCAG AA (4.5:1):
     - [ ] `.btn-outline-primary` active state
     - [ ] `.btn-outline-primary` inactive state
     - [ ] `.btn-outline-secondary` states
-    - [ ] Form labels
-    - [ ] Placeholder text
+    - [ ] Form labels (Bootstrap's `.form-label`)
+    - [ ] Placeholder text (Bootstrap's `.form-control::placeholder`)
   - [ ] Document any contrast issues found
-  - [ ] Fix all contrast violations
+  - [ ] Fix all contrast violations (using Bootstrap's color utilities where possible)
 
-- [ ] **2.3 Keyboard Navigation Improvements**
+- [ ] **2.4 JavaScript-Powered Filter Interactions**
 
-  - [ ] Ensure all filter buttons are keyboard operable
-  - [ ] Add keyboard shortcuts:
+  - [ ] Implement filter state management with vanilla JavaScript or Bootstrap's API:
+    - [ ] Use Bootstrap's Button plugin for toggle states
+    - [ ] Track selected filters in JavaScript (replace any CSS-only hacks)
+    - [ ] Announce filter changes using ARIA live regions (`aria-live="polite"`)
+  - [ ] Add keyboard shortcuts using JavaScript:
     - [ ] Enter to apply filters
     - [ ] Escape to reset filters
+  - [ ] Implement reset functionality with Bootstrap's `.btn-reset` pattern
   - [ ] Test screen reader announcements for filter changes
-  - [ ] Verify filter state changes are announced
 
-- [ ] **2.4 Form Labels and ARIA**
-  - [ ] Verify all inputs have proper labels
+- [ ] **2.5 Form Labels and ARIA (Bootstrap-Enhanced)**
+  - [ ] Use Bootstrap's form structure:
+    - [ ] `.form-label` for all inputs
+    - [ ] `.form-text` for helper text with automatic `aria-describedby` linking
   - [ ] Add `aria-label` where visual labels are missing
-  - [ ] Add `aria-describedby` for helper text
-  - [ ] Ensure filter button groups have proper grouping labels
+  - [ ] Ensure filter button groups use Bootstrap's `.btn-group` with proper `role="group"` and `aria-label`
   - [ ] Test with screen reader (NVDA/JAWS)
+  - [ ] Verify Bootstrap's automatic ARIA management is working
 
 ### Completion Criteria
 
+- [ ] All custom filter CSS replaced with Bootstrap utilities where possible
+- [ ] Filter interactions managed by Bootstrap JavaScript or vanilla JS (not CSS-only)
 - [ ] All form elements pass contrast requirements
-- [ ] Keyboard navigation works without mouse
+- [ ] Keyboard navigation works without mouse using Bootstrap's built-in features
 - [ ] Screen reader properly announces all elements
 - [ ] Filter interactions are accessible
 - [ ] axe-core shows no violations
@@ -224,41 +291,57 @@ This document tracks the implementation of usability improvements based on revie
 **Timeline:** Week 1-2 (2-3 days)  
 **Status:** 🔴 Not Started
 
+**Bootstrap/JS Migration Focus:**
+
+- Use Bootstrap's focus ring utilities instead of custom focus CSS
+- Implement smooth scroll to footer sections using Bootstrap's ScrollSpy JavaScript
+- Leverage Bootstrap's spacing utilities for footer layout
+
 ### Tasks
 
-- [ ] **3.1 Footer Link Focus States**
+- [ ] **3.1 Footer Link Focus States (Bootstrap-Enhanced)**
 
-  - [ ] Design highly visible focus states for dark background
-  - [ ] Implement focus indicators:
-    - [ ] Bright outline color (yellow, cyan, or white with offset)
-    - [ ] Optional background highlight
-  - [ ] Test contrast ratio for focus indicators
-  - [ ] Apply to all footer links:
+  - [ ] Replace custom focus CSS with Bootstrap's focus ring utilities:
+    - [ ] Use `.focus-ring` class for consistent focus indicators
+    - [ ] Customize focus ring color with `--bs-focus-ring-color` CSS variable
+    - [ ] Test contrast ratio for focus indicators using Bootstrap's color system
+  - [ ] Apply Bootstrap focus classes to all footer links:
     - [ ] Footer navigation links
     - [ ] Legal links (Terms, Privacy)
-    - [ ] CTA buttons (Employer Login, Post a Job)
+    - [ ] CTA buttons (Employer Login, Post a Job) - use `.btn .btn-*` classes
+  - [ ] Remove custom focus CSS that duplicates Bootstrap functionality
 
-- [ ] **3.2 Footer Link Hover States**
+- [ ] **3.2 Footer Layout with Bootstrap Utilities**
 
-  - [ ] Add hover feedback (underline, color shift)
+  - [ ] Replace custom footer spacing CSS with Bootstrap spacing utilities:
+    - [ ] Use `.py-*`, `.px-*`, `.my-*`, `.mx-*` classes
+    - [ ] Use `.gap-*` for flex/grid gaps
+  - [ ] Ensure responsive behavior using Bootstrap's responsive spacing:
+    - [ ] `.py-3 .py-md-4 .py-lg-5` for mobile-first padding
+  - [ ] Remove hardcoded padding/margin values from custom CSS
+
+- [ ] **3.3 Footer Link Hover States (Bootstrap-Enhanced)**
+
+  - [ ] Use Bootstrap's text utilities for hover effects:
+    - [ ] `.text-decoration-underline` on hover
+    - [ ] Color transitions using Bootstrap color utilities
   - [ ] Ensure hover and focus states are distinct but consistent
   - [ ] Test on touch devices (no hover state issues)
 
-- [ ] **3.3 Footer Keyboard Navigation**
+- [ ] **3.4 Footer Keyboard Navigation & ScrollSpy**
 
+  - [ ] Implement smooth scroll to footer with Bootstrap ScrollSpy (optional):
+    - [ ] Add skip-to-footer link if needed
+    - [ ] Use Bootstrap's smooth scroll behavior
   - [ ] Verify tab order through footer columns is logical
   - [ ] Test with screen reader for proper structure
   - [ ] Ensure footer landmarks are properly labeled
-  - [ ] Test skip-to-footer if needed
-
-- [ ] **3.4 Footer Spacing Consistency**
-  - [ ] Review footer padding/margins (currently very tight)
-  - [ ] Ensure touch targets meet minimum size (44x44px mobile)
-  - [ ] Update spacing using spacing tokens
-  - [ ] Test responsive behavior
+  - [ ] Verify touch targets meet minimum size using Bootstrap's `.btn-lg` where applicable
 
 ### Completion Criteria
 
+- [ ] Custom footer focus CSS replaced with Bootstrap utilities
+- [ ] Footer spacing uses Bootstrap's spacing scale
 - [ ] Footer links have highly visible focus states
 - [ ] All footer links meet contrast requirements
 - [ ] Keyboard navigation through footer is smooth
@@ -269,96 +352,114 @@ This document tracks the implementation of usability improvements based on revie
 
 ## PHASE 4: Spacing & Typography Standardization 📐
 
-**Goal:** Create consistent spacing and type scale across the site  
+**Goal:** Migrate to Bootstrap spacing utilities and standardize typography  
 **Timeline:** Week 2-3 (5-7 days)  
 **Status:** 🔴 Not Started
 
+**Bootstrap/JS Migration Focus:**
+
+- **PRIMARY GOAL:** Replace all custom spacing CSS with Bootstrap's spacing utilities (`.m-*`, `.p-*`, `.gap-*`)
+- Use Bootstrap's typography scale and utilities instead of custom font-size declarations
+- Minimize custom CSS by leveraging Bootstrap's built-in design system
+- Keep custom CSS only for brand-specific colors and unique components
+
 ### Tasks
 
-- [ ] **4.1 Audit Current Spacing System**
+- [ ] **4.1 Audit Current Spacing & Identify Bootstrap Equivalents**
 
-  - [ ] Document current tokens:
-    - ✅ `--space-lg: 4rem`
-    - ✅ `--space-md: 2rem`
-    - ✅ `--space-sm: 1rem`
-  - [ ] Identify all hardcoded spacing values
-  - [ ] Create spreadsheet of unique values used
-  - [ ] Categorize by component type
+  - [ ] Document current custom spacing:
+    - ✅ `--space-lg: 4rem` → Bootstrap equivalent: `.p-5` (3rem) or create custom `.p-6` (4rem)
+    - ✅ `--space-md: 2rem` → Bootstrap equivalent: `.p-4` (1.5rem) or `.p-5` (3rem)
+    - ✅ `--space-sm: 1rem` → Bootstrap equivalent: `.p-3` (1rem)
+  - [ ] Identify all hardcoded spacing values in CSS
+  - [ ] Map each custom spacing value to Bootstrap's spacing scale:
+    - [ ] Bootstrap uses 0.25rem increments: 0, 0.25rem, 0.5rem, 1rem, 1.5rem, 3rem
+    - [ ] Create mapping table (custom → Bootstrap class)
+  - [ ] Categorize by component type for systematic replacement
 
-- [ ] **4.2 Expand Spacing Token System**
+- [ ] **4.2 Replace Custom Spacing with Bootstrap Utilities**
 
-  - [ ] Create comprehensive spacing scale in main.css:
-    ```css
-    --space-xs: 0.25rem; /* 4px */
-    --space-sm: 0.5rem; /* 8px */
-    --space-md: 1rem; /* 16px */
-    --space-lg: 1.5rem; /* 24px */
-    --space-xl: 2rem; /* 32px */
-    --space-2xl: 3rem; /* 48px */
-    --space-3xl: 4rem; /* 64px */
-    ```
-  - [ ] Map old values to new scale
-  - [ ] Update CSS custom properties section
-
-- [ ] **4.3 Standardize Typography Scale**
-
-  - [ ] Review current scale:
-    - ✅ H1: 36px/44px
-    - ✅ H2: 32px/36px
-    - ✅ H3: 28px/36px
-    - ✅ Body: 16px/24px
-  - [ ] Audit all font-size declarations
-  - [ ] Convert hardcoded sizes to tokens
-  - [ ] Add missing intermediate sizes if needed:
-    - [ ] H4, H5, H6 sizes
-    - [ ] Small text size
-    - [ ] Caption size
-  - [ ] Document type scale in CSS guide
-
-- [ ] **4.4 Apply to Components Systematically**
-
-  - [ ] High-priority pages:
-    - [ ] index.html
-    - [ ] pages/jobs/jobFilter.html
-    - [ ] pages/about.html
-  - [ ] Update component styles:
-    - [ ] Buttons (all variants)
-    - [ ] Cards (job cards, company cards)
-    - [ ] Forms (inputs, labels, groups)
-    - [ ] Navigation (header, footer)
-  - [ ] Remove hardcoded padding/margin values
+  - [ ] **Phase 4.2a: Critical Pages First**
+    - [ ] index.html: Replace all custom spacing classes with Bootstrap utilities
+    - [ ] pages/jobs/jobFilter.html: Migrate to `.m-*`, `.p-*`, `.gap-*` classes
+    - [ ] pages/about.html: Use Bootstrap spacing throughout
+  - [ ] **Phase 4.2b: Component Replacement**
+    - [ ] Buttons: Remove custom padding, use `.btn` with `.btn-lg`/`.btn-sm` variants
+    - [ ] Cards: Replace custom padding with `.card-body` (built-in 1rem padding)
+    - [ ] Forms: Use `.mb-3` for form groups instead of custom margins
+    - [ ] Navigation: Use Bootstrap's `.navbar` spacing utilities
+    - [ ] Footer: Apply `.py-*`, `.px-*` classes (already planned in Phase 3)
+  - [ ] **Phase 4.2c: Remove Custom Spacing CSS**
+    - [ ] Delete custom spacing classes from main.css
+    - [ ] Remove `--space-*` CSS variables (if fully replaced)
+    - [ ] Keep only brand-specific spacing if absolutely necessary
   - [ ] Test responsive behavior at all breakpoints:
+    - [ ] Use `.m-*-{breakpoint}` responsive utilities (e.g., `.p-3 .p-md-4 .p-lg-5`)
     - [ ] Mobile (320px-767px)
     - [ ] Tablet (768px-1023px)
     - [ ] Desktop (1024px+)
 
-- [ ] **4.5 Create Spacing Utility Classes**
-  - [ ] Generate margin utilities:
-    ```css
-    .mt-xs {
-      margin-top: var(--space-xs);
-    }
-    .mt-sm {
-      margin-top: var(--space-sm);
-    }
-    .mt-md {
-      margin-top: var(--space-md);
-    }
-    /* etc. for all sides and sizes */
-    ```
-  - [ ] Generate padding utilities
-  - [ ] Generate gap utilities for flexbox/grid
-  - [ ] Document utility classes in CSS guide
-  - [ ] Add usage examples
+- [ ] **4.3 Migrate to Bootstrap Typography Scale**
+
+  - [ ] **Phase 4.3a: Map Current Sizes to Bootstrap**
+    - [ ] Review current custom scale:
+      - H1: 36px → Bootstrap `.display-6` (2.5rem/40px) or custom `.fs-1` override
+      - H2: 32px → Bootstrap `.fs-1` (2.5rem/40px) or `.fs-2` (2rem/32px) ✓
+      - H3: 28px → Bootstrap `.fs-2` (2rem) or `.fs-3` (1.75rem/28px) ✓
+      - Body: 16px → Bootstrap default `$font-size-base` ✓
+    - [ ] Decide: override Bootstrap's scale or adapt to Bootstrap's defaults
+  - [ ] **Phase 4.3b: Apply Bootstrap Typography Classes**
+    - [ ] Replace custom font-size in CSS with Bootstrap's `.fs-*` utilities
+    - [ ] Use `.display-*` classes for large headings where appropriate
+    - [ ] Use `.lead` for emphasized paragraphs
+    - [ ] Use `.small` or `.text-muted` for small text
+  - [ ] **Phase 4.3c: Remove Custom Typography CSS**
+    - [ ] Audit all `font-size`, `line-height`, `font-weight` declarations
+    - [ ] Replace with Bootstrap's `.fw-*` (font-weight), `.lh-*` (line-height) utilities
+    - [ ] Delete redundant custom CSS
+  - [ ] Document final type scale in CSS guide (referencing Bootstrap's system)
+
+- [ ] **4.4 Create Spacing/Typography Utility Extensions (If Needed)**
+
+  - [ ] **Only if Bootstrap's scale is insufficient:**
+    - [ ] Extend Bootstrap's spacing scale with additional sizes:
+      ```scss
+      $spacer: 1rem;
+      $spacers: (
+        // Bootstrap defaults: 0, 1, 2, 3, 4, 5
+        6: ($spacer * 4),
+        // 4rem (matches old --space-lg)
+        7: ($spacer * 5),
+        // 5rem
+        8: ($spacer * 6) // 6rem
+      );
+      ```
+    - [ ] Generate utility classes with Bootstrap's API:
+      ```scss
+      @import "bootstrap/scss/utilities/api";
+      ```
+  - [ ] Document any custom extensions in CSS guide
+  - [ ] Minimize custom utilities - prefer adapting to Bootstrap's system
+
+- [ ] **4.5 Cleanup & Documentation**
+  - [ ] Remove all hardcoded spacing values from CSS
+  - [ ] Remove unused custom spacing/typography classes
+  - [ ] Update CSS guide to reference Bootstrap utilities
+  - [ ] Create quick reference for common patterns:
+    - [ ] "Use `.mb-3` for form spacing, not custom margins"
+    - [ ] "Use `.py-5` for section padding, not custom classes"
+  - [ ] Add usage examples with Bootstrap classes
 
 ### Completion Criteria
 
-- [ ] Complete spacing token system implemented
-- [ ] All components use spacing tokens
-- [ ] Typography scale fully documented
-- [ ] No hardcoded spacing values remain
+- [ ] ✅ **95%+ of spacing uses Bootstrap utilities** (custom CSS only for edge cases)
+- [ ] Typography uses Bootstrap's scale and utility classes
+- [ ] All components migrated to Bootstrap spacing
+- [ ] Custom `--space-*` variables removed or minimized
+- [ ] No hardcoded spacing values remain (except brand-specific edge cases)
 - [ ] Visual regression tests pass
-- [ ] Responsive behavior verified
+- [ ] Responsive behavior verified with Bootstrap's responsive utilities
+- [ ] Documentation updated to reference Bootstrap system
 
 ---
 
@@ -368,56 +469,91 @@ This document tracks the implementation of usability improvements based on revie
 **Timeline:** Week 3-4 (3-5 days)  
 **Status:** 🔴 Not Started
 
+**Bootstrap/JS Migration Focus:**
+
+- Use Bootstrap's modal component for interactive demos/coming soon features
+- Implement toast notifications for user feedback on placeholder interactions
+- Use Bootstrap's JavaScript API to manage dynamic placeholder states
+- Leverage Bootstrap's spinner component for loading states
+
 ### Tasks
 
-- [ ] **5.1 Identify All Placeholders**
+- [ ] **5.1 Identify All Placeholders & Plan Bootstrap Replacements**
 
   - [ ] Audit for non-functional elements:
-    - [ ] Demo buttons (e.g., job alerts signup)
-    - [ ] Placeholder links (`href="#"`)
-    - [ ] Disabled CTAs with `aria-disabled="true"`
-    - [ ] "Coming soon" features
-  - [ ] Create comprehensive list with locations
-  - [ ] Document in spreadsheet
+    - [ ] Demo buttons (e.g., job alerts signup) → Replace with Bootstrap modal showing "coming soon"
+    - [ ] Placeholder links (`href="#"`) → Add Bootstrap toast notification on click
+    - [ ] Disabled CTAs with `aria-disabled="true"` → Use Bootstrap's `.disabled` class and JavaScript handler
+    - [ ] "Coming soon" features → Implement Bootstrap tooltips or popovers
+  - [ ] Create comprehensive list with locations and proposed Bootstrap solution
+  - [ ] Document in spreadsheet with Bootstrap component mapping
 
-- [ ] **5.2 Prioritize by User Impact**
+- [ ] **5.2 Prioritize by User Impact & Bootstrap Implementation**
 
-  - [ ] **High Priority** (implement first):
-    - [ ] Primary CTAs (job search, apply buttons)
-    - [ ] Core navigation elements
-    - [ ] Essential form submissions
-  - [ ] **Medium Priority** (implement second):
-    - [ ] Secondary features (job alerts, filters)
-    - [ ] Social sharing buttons
-    - [ ] Newsletter signups
-  - [ ] **Low Priority** (document for future):
-    - [ ] Future features clearly marked "coming soon"
-    - [ ] Advanced filtering options
-    - [ ] Premium features
+  - [ ] **High Priority** (implement with Bootstrap components):
+    - [ ] Primary CTAs (job search, apply buttons) → Use Bootstrap modals for auth/signup flow
+    - [ ] Core navigation elements → Ensure all use Bootstrap's `.nav-link` with proper states
+    - [ ] Essential form submissions → Use Bootstrap form validation JavaScript
+  - [ ] **Medium Priority** (implement with Bootstrap JS):
+    - [ ] Secondary features (job alerts, filters) → Bootstrap modal + toast for feedback
+    - [ ] Social sharing buttons → Bootstrap dropdown for share options
+    - [ ] Newsletter signups → Bootstrap form with JavaScript validation
+  - [ ] **Low Priority** (use Bootstrap utilities to mark):
+    - [ ] Future features → Bootstrap badges (`.badge`) with "coming soon" text
+    - [ ] Advanced filtering → Bootstrap tooltips explaining future availability
+    - [ ] Premium features → Bootstrap cards with `.opacity-50` and disabled state
 
-- [ ] **5.3 Progressive Enhancement Strategy**
+- [ ] **5.3 Implement Placeholder Interactions with Bootstrap JavaScript**
 
-  - [ ] Add visual indicators for placeholder vs. functional:
-    - [ ] "Demo" badges
-    - [ ] Disabled state styling
-    - [ ] Tooltips explaining state
-  - [ ] Add helper text for keyboard users
-  - [ ] Ensure clear user expectations
-  - [ ] Update ARIA labels to reflect state
+  - [ ] **Bootstrap Modal for Demos:**
+    ```javascript
+    // Replace placeholder buttons with modal triggers
+    document.querySelectorAll("[data-demo-feature]").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        const modal = new bootstrap.Modal("#demoModal");
+        modal.show();
+      });
+    });
+    ```
+  - [ ] **Bootstrap Toast for Notifications:**
+    ```javascript
+    // Show toast for placeholder link clicks
+    document.querySelectorAll('a[href="#"]').forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        const toast = new bootstrap.Toast("#comingSoonToast");
+        toast.show();
+      });
+    });
+    ```
+  - [ ] **Bootstrap Tooltip for Inline Hints:**
+    - [ ] Add `data-bs-toggle="tooltip"` to disabled elements
+    - [ ] Initialize tooltips with `const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')`
+  - [ ] Add visual indicators using Bootstrap components:
+    - [ ] Use `.badge .bg-warning` for "Demo" labels
+    - [ ] Use `.btn.disabled` for disabled state styling
+    - [ ] Use `.text-muted` for explanatory text
+  - [ ] Ensure clear user expectations with ARIA:
+    - [ ] `aria-label="Demo feature - not yet functional"`
+    - [ ] `role="button"` with `aria-disabled="true"` for non-link demos
 
-- [ ] **5.4 Document Placeholder State**
-  - [ ] Update feature documentation
-  - [ ] Add roadmap for implementation
-  - [ ] Mark intentional vs. incomplete features
-  - [ ] Create tracking issues for future work
+- [ ] **5.4 Document Placeholder State (Bootstrap-Enhanced)**
+  - [ ] Update feature documentation to reference Bootstrap components used
+  - [ ] Add roadmap for replacing Bootstrap demo modals with real functionality
+  - [ ] Mark intentional vs. incomplete features in documentation
+  - [ ] Create tracking issues for future work with Bootstrap implementation notes
+  - [ ] Document which Bootstrap JavaScript components are in use (Modal, Toast, Tooltip, etc.)
 
 ### Completion Criteria
 
-- [ ] All placeholders identified and documented
-- [ ] High-priority placeholders addressed
-- [ ] Clear visual/semantic distinction for demos
-- [ ] User expectations properly set
-- [ ] Future work tracked in issues
+- [ ] All placeholders identified and documented with Bootstrap solution
+- [ ] High-priority placeholders use Bootstrap modals/toasts for feedback
+- [ ] Bootstrap JavaScript components initialized and working
+- [ ] Clear visual/semantic distinction using Bootstrap utilities (badges, disabled states)
+- [ ] User expectations properly set with Bootstrap tooltips/popovers
+- [ ] Future work tracked with Bootstrap migration path
+- [ ] No custom JavaScript where Bootstrap component exists
 
 ---
 
@@ -572,29 +708,52 @@ Each phase is complete when:
 - **Solution:** Apply more specific selectors, test thoroughly, use `!important` sparingly
 - **Mitigation:** Review Bootstrap docs, test in isolation first
 
-**2. Spacing changes may break layouts**
+**2. Bootstrap migration may introduce breaking changes**
+
+- **Risk:** Replacing custom CSS with Bootstrap utilities could break existing layouts or styling
+- **Solution:** Migrate incrementally, test each page after changes, maintain visual regression testing
+- **Mitigation:**
+  - Use feature branches for each phase
+  - Take before/after screenshots
+  - Test at all breakpoints (mobile, tablet, desktop)
+  - Keep custom CSS temporarily during transition period
+  - Document which Bootstrap components/utilities replace which custom CSS
+
+**3. Spacing changes may break layouts**
 
 - **Risk:** Standardizing spacing could shift designs unexpectedly
 - **Solution:** Phase changes, visual regression testing, designer review
 - **Mitigation:** Take screenshots before/after, test at all breakpoints
 
-**3. Active nav state requires JS**
+**4. Active nav state JavaScript implementation**
 
-- **Risk:** Currently static HTML, may need JS to set active class
-- **Solution:** Can use CSS `:current` pseudo-class or simple JS on page load
-- **Mitigation:** Keep solution lightweight, ensure progressive enhancement
+- **Risk:** Currently static HTML with manual `.active` class, may need JavaScript automation
+- **Solution:**
+  - Short-term: Keep current static approach (works, just requires manual maintenance)
+  - Long-term: Use Bootstrap's ScrollSpy or custom `window.location` JavaScript to auto-detect page
+- **Mitigation:** Keep solution lightweight, ensure progressive enhancement, static fallback
 
-**4. Filter form complexity**
+**5. Filter form complexity**
 
 - **Risk:** Many interactive elements to test thoroughly
-- **Solution:** Break into smaller test chunks, automate where possible
-- **Mitigation:** Create comprehensive test plan, use Playwright for automation
+- **Solution:** Break into smaller test chunks, use Bootstrap's built-in JavaScript where possible
+- **Mitigation:** Create comprehensive test plan, use Playwright for automation, leverage Bootstrap's accessibility features
 
-**5. Browser inconsistencies**
+**6. Browser inconsistencies**
 
 - **Risk:** Focus styles may render differently across browsers
-- **Solution:** Use standardized focus patterns, test extensively
-- **Mitigation:** Document known issues, provide fallbacks
+- **Solution:** Use Bootstrap's standardized focus patterns, test extensively
+- **Mitigation:** Document known issues, provide fallbacks, rely on Bootstrap's cross-browser testing
+
+**7. Over-reliance on JavaScript**
+
+- **Risk:** Too much Bootstrap JavaScript could impact performance or break with JS disabled
+- **Solution:** Use progressive enhancement, ensure core functionality works without JS
+- **Mitigation:**
+  - Critical features should work with HTML/CSS only
+  - JavaScript enhances experience but isn't required
+  - Test with JS disabled in browser
+  - Use Bootstrap's data attributes for automatic initialization (no custom JS needed)
 
 ---
 

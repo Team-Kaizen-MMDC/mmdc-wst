@@ -9,13 +9,13 @@
       "name": "axe"
     },
     "testEnvironment": {
-      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/140.0.7339.186 Safari/537.36",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/140.0.7339.186 Safari/537.36",
       "windowWidth": 1280,
       "windowHeight": 720,
       "orientationAngle": 0,
       "orientationType": "landscape-primary"
     },
-    "timestamp": "2025-10-25T03:15:30.054Z",
+    "timestamp": "2025-10-29T09:37:28.395Z",
     "url": "http://localhost:8000/index.html",
     "toolOptions": {
       "reporter": "v1"
@@ -497,18 +497,6 @@
         "description": "Ensures that server-side image maps are not used",
         "help": "Server-side image maps must not be used",
         "helpUrl": "https://dequeuniversity.com/rules/axe/4.6/server-side-image-map?application=axeAPI",
-        "nodes": []
-      },
-      {
-        "id": "skip-link",
-        "impact": null,
-        "tags": [
-          "cat.keyboard",
-          "best-practice"
-        ],
-        "description": "Ensure all skip links have a focusable target",
-        "help": "The skip-link target should exist and be focusable",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/4.6/skip-link?application=axeAPI",
         "nodes": []
       },
       {
@@ -1194,7 +1182,7 @@
               }
             ],
             "impact": null,
-            "html": "<button id=\"signup-button\" class=\"btn btn-light lg\" aria-disabled=\"true\" data-i18n=\"btn.signup_demo\" disabled=\"\">\n              Activate Me\n            </button>",
+            "html": "<button id=\"signup-button\" class=\"btn btn-light lg animate-hover-scale\" aria-disabled=\"true\" data-i18n=\"btn.signup_demo\" disabled=\"\">\n              Activate Me\n            </button>",
             "target": [
               "#signup-button"
             ]
@@ -3283,7 +3271,7 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<button id=\"signup-button\" class=\"btn btn-light lg\" aria-disabled=\"true\" data-i18n=\"btn.signup_demo\" disabled=\"\">\n              Activate Me\n            </button>",
+            "html": "<button id=\"signup-button\" class=\"btn btn-light lg animate-hover-scale\" aria-disabled=\"true\" data-i18n=\"btn.signup_demo\" disabled=\"\">\n              Activate Me\n            </button>",
             "target": [
               "#signup-button"
             ]
@@ -3635,7 +3623,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<button id=\"signup-button\" class=\"btn btn-light lg\" aria-disabled=\"true\" data-i18n=\"btn.signup_demo\" disabled=\"\">\n              Activate Me\n            </button>",
+            "html": "<button id=\"signup-button\" class=\"btn btn-light lg animate-hover-scale\" aria-disabled=\"true\" data-i18n=\"btn.signup_demo\" disabled=\"\">\n              Activate Me\n            </button>",
             "target": [
               "#signup-button"
             ]
@@ -3700,9 +3688,73 @@
             ],
             "none": [],
             "impact": null,
+            "html": "<li class=\"list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5 animate-hover-lift\" style=\"transition-delay: 0ms;\">",
+            "target": [
+              ".list-group-item.list-group-item-action.py-md-4:nth-child(1)"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "important-letter-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-word-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-line-height",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
+              }
+            ],
+            "none": [],
+            "impact": null,
             "html": "<a class=\"btn btn-primary rounded-pill px-3\" style=\"border-color: btn btn-primary; color: #fff\" href=\"pages/jobs/mechanic-ground-support-haneda.html\" data-i18n=\"btn.apply\">Apply</a>",
             "target": [
               ".list-group-item.list-group-item-action.py-md-4:nth-child(1) > .px-3.rounded-pill[data-i18n=\"btn.apply\"]"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "important-letter-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-word-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-line-height",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<li class=\"list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5 animate-hover-lift\" style=\"transition-delay: 100ms;\">",
+            "target": [
+              ".list-group-item.list-group-item-action.py-md-4:nth-child(2)"
             ]
           },
           {
@@ -3764,9 +3816,73 @@
             ],
             "none": [],
             "impact": null,
+            "html": "<li class=\"list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5 animate-hover-lift\" style=\"transition-delay: 200ms;\">",
+            "target": [
+              ".list-group-item.list-group-item-action.py-md-4:nth-child(3)"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "important-letter-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-word-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-line-height",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
+              }
+            ],
+            "none": [],
+            "impact": null,
             "html": "<a class=\"btn btn-primary btn-outline-primary rounded-pill px-3\" style=\"border-color: var(--bs-primary-dark); color: #fff\" href=\"pages/jobs/construction-worker-site-support.html\" data-i18n=\"btn.apply\">Apply</a>",
             "target": [
               ".list-group-item.list-group-item-action.py-md-4:nth-child(3) > .btn-outline-primary.px-3[data-i18n=\"btn.apply\"]"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "important-letter-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-word-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-line-height",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<li class=\"list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5 animate-hover-lift\" style=\"transition-delay: 300ms;\">",
+            "target": [
+              ".list-group-item.list-group-item-action.py-md-4:nth-child(4)"
             ]
           },
           {
@@ -3828,457 +3944,41 @@
             ],
             "none": [],
             "impact": null,
+            "html": "<li class=\"list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5 animate-hover-lift\" style=\"transition-delay: 400ms;\">",
+            "target": [
+              ".list-group-item.list-group-item-action.py-md-4:nth-child(5)"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "important-letter-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-word-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-line-height",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
+              }
+            ],
+            "none": [],
+            "impact": null,
             "html": "<a class=\"btn btn-primary btn-outline-primary rounded-pill px-3\" style=\"border-color: var(--bs-primary-dark); color: #fff\" href=\"pages/jobs/ward-nursing-support.html\" data-i18n=\"btn.apply\">Apply</a>",
             "target": [
               ".list-group-item.list-group-item-action.py-md-4:nth-child(5) > .btn-outline-primary.px-3[data-i18n=\"btn.apply\"]"
-            ]
-          },
-          {
-            "any": [],
-            "all": [
-              {
-                "id": "important-letter-spacing",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
-              },
-              {
-                "id": "important-word-spacing",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
-              },
-              {
-                "id": "important-line-height",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
-              }
-            ],
-            "none": [],
-            "impact": null,
-            "html": "<a class=\"btn btn-primary px-5 text-white shadow-sm\" style=\"\n                background-color: btn btn-primary;\n                border-color: var(--bs-primary-dark);\n              \" href=\"pages/jobs/jobFilter.html\" data-i18n=\"btn.search_jobs\">Search SSW jobs</a>",
-            "target": [
-              ".px-5"
-            ]
-          },
-          {
-            "any": [],
-            "all": [
-              {
-                "id": "important-letter-spacing",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
-              },
-              {
-                "id": "important-word-spacing",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
-              },
-              {
-                "id": "important-line-height",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
-              }
-            ],
-            "none": [],
-            "impact": null,
-            "html": "<img src=\"assets/images/company-logos/ANA_InterContinental.png\" class=\"img-fluid mb-3\" style=\"max-height: 80px; width: auto; object-fit: contain\" alt=\"ANA InterContinental logo\" loading=\"lazy\" decoding=\"async\" onerror=\"this.onerror=null; this.src='https://placehold.co/120x80/cccccc/333333?text=Logo';\">",
-            "target": [
-              "img[alt=\"ANA InterContinental logo\"]"
-            ]
-          },
-          {
-            "any": [],
-            "all": [
-              {
-                "id": "important-letter-spacing",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
-              },
-              {
-                "id": "important-word-spacing",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
-              },
-              {
-                "id": "important-line-height",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
-              }
-            ],
-            "none": [],
-            "impact": null,
-            "html": "<img src=\"assets/images/company-logos/Prince_Hotels.png\" class=\"img-fluid mb-3\" style=\"max-height: 80px; width: auto; object-fit: contain\" alt=\"Prince Hotels logo\" loading=\"lazy\" decoding=\"async\" onerror=\"this.onerror=null; this.src='https://placehold.co/120x80/cccccc/333333?text=Logo';\">",
-            "target": [
-              "img[alt=\"Prince Hotels logo\"]"
-            ]
-          },
-          {
-            "any": [],
-            "all": [
-              {
-                "id": "important-letter-spacing",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
-              },
-              {
-                "id": "important-word-spacing",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
-              },
-              {
-                "id": "important-line-height",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
-              }
-            ],
-            "none": [],
-            "impact": null,
-            "html": "<img src=\"assets/images/company-logos/sompocare.png\" class=\"img-fluid mb-3\" style=\"max-height: 80px; width: auto; object-fit: contain\" alt=\"SOMPO Care logo\" loading=\"lazy\" decoding=\"async\" onerror=\"this.onerror=null; this.src='https://placehold.co/120x80/cccccc/333333?text=Logo';\">",
-            "target": [
-              "img[alt=\"SOMPO Care logo\"]"
-            ]
-          },
-          {
-            "any": [],
-            "all": [
-              {
-                "id": "important-letter-spacing",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
-              },
-              {
-                "id": "important-word-spacing",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
-              },
-              {
-                "id": "important-line-height",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
-              }
-            ],
-            "none": [],
-            "impact": null,
-            "html": "<img src=\"assets/images/company-logos/Nissan.png\" class=\"img-fluid mb-3\" style=\"max-height: 80px; width: auto; object-fit: contain\" alt=\"Nissan logo\" loading=\"lazy\" decoding=\"async\" onerror=\"this.onerror=null; this.src='https://placehold.co/120x80/cccccc/333333?text=Logo';\">",
-            "target": [
-              "img[alt=\"Nissan logo\"]"
-            ]
-          },
-          {
-            "any": [],
-            "all": [
-              {
-                "id": "important-letter-spacing",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
-              },
-              {
-                "id": "important-word-spacing",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
-              },
-              {
-                "id": "important-line-height",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
-              }
-            ],
-            "none": [],
-            "impact": null,
-            "html": "<img src=\"assets/images/company-logos/Daikin_1.png\" class=\"img-fluid mb-3\" style=\"max-height: 80px; width: auto; object-fit: contain\" alt=\"Daikin logo\" loading=\"lazy\" decoding=\"async\" onerror=\"this.onerror=null; this.src='https://placehold.co/120x80/cccccc/333333?text=Logo';\">",
-            "target": [
-              "img[alt=\"Daikin logo\"]"
-            ]
-          },
-          {
-            "any": [],
-            "all": [
-              {
-                "id": "important-letter-spacing",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
-              },
-              {
-                "id": "important-word-spacing",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
-              },
-              {
-                "id": "important-line-height",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
-              }
-            ],
-            "none": [],
-            "impact": null,
-            "html": "<img src=\"assets/images/company-logos/Kandenko.png\" class=\"img-fluid mb-3\" style=\"max-height: 80px; width: auto; object-fit: contain\" alt=\"Kandenko logo\" loading=\"lazy\" decoding=\"async\" onerror=\"this.onerror=null; this.src='https://placehold.co/120x80/cccccc/333333?text=Logo';\">",
-            "target": [
-              "img[alt=\"Kandenko logo\"]"
-            ]
-          },
-          {
-            "any": [],
-            "all": [
-              {
-                "id": "important-letter-spacing",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
-              },
-              {
-                "id": "important-word-spacing",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
-              },
-              {
-                "id": "important-line-height",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
-              }
-            ],
-            "none": [],
-            "impact": null,
-            "html": "<img src=\"assets/images/company-logos/Yoshinoya.png\" class=\"img-fluid mb-3\" style=\"max-height: 80px; width: auto; object-fit: contain\" alt=\"Yoshinoya logo\" loading=\"lazy\" decoding=\"async\" onerror=\"this.onerror=null; this.src='https://placehold.co/120x80/cccccc/333333?text=Logo';\">",
-            "target": [
-              "img[alt=\"Yoshinoya logo\"]"
-            ]
-          },
-          {
-            "any": [],
-            "all": [
-              {
-                "id": "important-letter-spacing",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
-              },
-              {
-                "id": "important-word-spacing",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
-              },
-              {
-                "id": "important-line-height",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
-              }
-            ],
-            "none": [],
-            "impact": null,
-            "html": "<img src=\"assets/images/company-logos/ANA.png\" class=\"img-fluid mb-3\" style=\"max-height: 80px; width: auto; object-fit: contain\" alt=\"ANA logo\" loading=\"lazy\" decoding=\"async\" onerror=\"this.onerror=null; this.src='https://placehold.co/120x80/cccccc/333333?text=Logo';\">",
-            "target": [
-              "img[alt=\"ANA logo\"]"
-            ]
-          },
-          {
-            "any": [],
-            "all": [
-              {
-                "id": "important-letter-spacing",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
-              },
-              {
-                "id": "important-word-spacing",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
-              },
-              {
-                "id": "important-line-height",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
-              }
-            ],
-            "none": [],
-            "impact": null,
-            "html": "<img src=\"assets/images/company-logos/Mitsubishi_Heavy_Industries.png\" class=\"img-fluid mb-3\" style=\"max-height: 80px; width: auto; object-fit: contain\" alt=\"Mitsubishi Heavy Industries logo\" loading=\"lazy\" decoding=\"async\" onerror=\"this.onerror=null; this.src='https://placehold.co/120x80/cccccc/333333?text=Logo';\">",
-            "target": [
-              "a[data-company-name=\"Mitsubishi Heavy Industries\"] > .h-100.rounded-3.top-company-card > .p-0.card-body.flex-column > img"
-            ]
-          },
-          {
-            "any": [],
-            "all": [
-              {
-                "id": "important-letter-spacing",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
-              },
-              {
-                "id": "important-word-spacing",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
-              },
-              {
-                "id": "important-line-height",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
-              }
-            ],
-            "none": [],
-            "impact": null,
-            "html": "<img src=\"assets/images/aiImages/Receptionist1.jpg\" srcset=\"\n                          assets/images/aiImages/Receptionist1.jpg 320w,\n                          assets/images/aiImages/Receptionist1.jpg 640w\n                        \" alt=\"Receptionist at front desk\" class=\"img-fluid w-100 rounded\" style=\"object-fit: cover\" loading=\"lazy\" decoding=\"async\" onerror=\"this.src='https://placehold.co/800x600/1e3a8a/ffffff?text=Image+Load+Failed';\">",
-            "target": [
-              "img[alt=\"Receptionist at front desk\"]"
-            ]
-          },
-          {
-            "any": [],
-            "all": [
-              {
-                "id": "important-letter-spacing",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
-              },
-              {
-                "id": "important-word-spacing",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
-              },
-              {
-                "id": "important-line-height",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
-              }
-            ],
-            "none": [],
-            "impact": null,
-            "html": "<a class=\"btn btn-primary px-4 text-white\" style=\"\n                            background-color: btn btn-primary;\n                            border-color: var(--bs-primary-dark);\n                          \" href=\"pages/agency.html\" data-i18n=\"btn.search_agency\">Search Agency</a>",
-            "target": [
-              "a[data-i18n=\"btn.search_agency\"]"
-            ]
-          },
-          {
-            "any": [],
-            "all": [
-              {
-                "id": "important-letter-spacing",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
-              },
-              {
-                "id": "important-word-spacing",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
-              },
-              {
-                "id": "important-line-height",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
-              }
-            ],
-            "none": [],
-            "impact": null,
-            "html": "<img src=\"assets/images/aiImages/TokyoDay-800.png\" srcset=\"\n                          assets/images/aiImages/TokyoDay-800.png 800w,\n                          assets/images/aiImages/TokyoDay-480.png 480w\n                        \" alt=\"Tokyo cityscape representing Japan's work opportunities\" class=\"img-fluid w-100 rounded\" style=\"object-fit: cover\" loading=\"lazy\" decoding=\"async\" onerror=\"this.src='https://placehold.co/800x600/38a169/ffffff?text=About+Us+Image';\">",
-            "target": [
-              "section[aria-labelledby=\"about-heading\"] > .container > .row.justify-content-center > .col-lg-11.col-xl-10.col-12 > .rso-card.shadow-lg.rounded-4 > .g-0.row > .col-md-5.min-h-md-100.p-4 > picture > .rounded.w-100"
-            ]
-          },
-          {
-            "any": [],
-            "all": [
-              {
-                "id": "important-letter-spacing",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
-              },
-              {
-                "id": "important-word-spacing",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
-              },
-              {
-                "id": "important-line-height",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
-              }
-            ],
-            "none": [],
-            "impact": null,
-            "html": "<a class=\"btn btn-primary px-4 text-white\" style=\"\n                            background-color: btn btn-primary;\n                            border-color: var(--bs-primary-dark);\n                          \" href=\"pages/about.html\" data-i18n=\"btn.learn_more\">Learn more</a>",
-            "target": [
-              "a[data-i18n=\"btn.learn_more\"]"
             ]
           }
         ]
@@ -4311,7 +4011,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<button id=\"signup-button\" class=\"btn btn-light lg\" aria-disabled=\"true\" data-i18n=\"btn.signup_demo\" disabled=\"\">\n              Activate Me\n            </button>",
+            "html": "<button id=\"signup-button\" class=\"btn btn-light lg animate-hover-scale\" aria-disabled=\"true\" data-i18n=\"btn.signup_demo\" disabled=\"\">\n              Activate Me\n            </button>",
             "target": [
               "#signup-button"
             ]
@@ -4352,31 +4052,31 @@
                     ]
                   },
                   {
-                    "html": "<h2 id=\"jobs-heading\" class=\"text-center mb-5 fs-2 fw-bold\" data-i18n=\"section.job_listings\">\n            Latest Job Listings\n          </h2>",
+                    "html": "<h2 id=\"jobs-heading\" class=\"text-center mb-5 fs-2 fw-bold animate-fade-in-down animate-on-scroll\" data-i18n=\"section.job_listings\">\n            Latest Job Listings\n          </h2>",
                     "target": [
                       "#jobs-heading"
                     ]
                   },
                   {
-                    "html": "<h5 class=\"h5 mb-1 fw-bold text-primary-dark\">\n                        Mechanic — Ground Support (Haneda)\n                      </h5>",
+                    "html": "<h5 class=\"h5 mb-1 fw-bold text-primary-dark\">\n                        Ground Handling Staff\n                      </h5>",
                     "target": [
                       ".list-group-item.list-group-item-action.py-md-4:nth-child(1) > .job-details.me-auto > .h5.mb-1.text-primary-dark"
                     ]
                   },
                   {
-                    "html": "<h5 class=\"h5 mb-1 fw-bold text-primary-dark\">\n                        Cleaner — Facilities Maintenance\n                      </h5>",
+                    "html": "<h5 class=\"h5 mb-1 fw-bold text-primary-dark\">\n                        Cleaning Staff\n                      </h5>",
                     "target": [
                       ".list-group-item.list-group-item-action.py-md-4:nth-child(2) > .job-details.me-auto > .h5.mb-1.text-primary-dark"
                     ]
                   },
                   {
-                    "html": "<h5 class=\"h5 mb-1 fw-bold text-primary-dark\">\n                        Construction Worker — Site Support\n                      </h5>",
+                    "html": "<h5 class=\"h5 mb-1 fw-bold text-primary-dark\">\n                        Construction Assistant\n                      </h5>",
                     "target": [
                       ".list-group-item.list-group-item-action.py-md-4:nth-child(3) > .job-details.me-auto > .h5.mb-1.text-primary-dark"
                     ]
                   },
                   {
-                    "html": "<h5 class=\"h5 mb-1 fw-bold text-primary-dark\">\n                        Server — Hospitality\n                      </h5>",
+                    "html": "<h5 class=\"h5 mb-1 fw-bold text-primary-dark\">\n                        Restaurant Waiter / Waitress\n                      </h5>",
                     "target": [
                       ".list-group-item.list-group-item-action.py-md-4:nth-child(4) > .job-details.me-auto > .h5.mb-1.text-primary-dark"
                     ]
@@ -4388,7 +4088,7 @@
                     ]
                   },
                   {
-                    "html": "<h2 class=\"text-center mb-5 fw-bold\" data-i18n=\"section.top_companies\">\n            Top Company\n          </h2>",
+                    "html": "<h2 class=\"text-center mb-5 fw-bold animate-fade-in-down animate-on-scroll\" data-i18n=\"section.top_companies\">\n            Top Company\n          </h2>",
                     "target": [
                       "h2[data-i18n=\"section.top_companies\"]"
                     ]
@@ -4448,7 +4148,7 @@
                     ]
                   },
                   {
-                    "html": "<h2 id=\"rso-heading\" class=\"text-center mb-5 fs-2 fw-bold\" data-i18n=\"section.registered_support_org\">\n            Registered Support Organization\n          </h2>",
+                    "html": "<h2 id=\"rso-heading\" class=\"text-center mb-5 fs-2 fw-bold animate-fade-in-down animate-on-scroll\" data-i18n=\"section.registered_support_org\">\n            Registered Support Organization\n          </h2>",
                     "target": [
                       "#rso-heading"
                     ]
@@ -4460,7 +4160,7 @@
                     ]
                   },
                   {
-                    "html": "<h2 id=\"about-heading\" class=\"text-center mb-5 fs-2 fw-bold\" data-i18n=\"about.title\">\n            About Us\n          </h2>",
+                    "html": "<h2 id=\"about-heading\" class=\"text-center mb-5 fs-2 fw-bold animate-fade-in-down animate-on-scroll\" data-i18n=\"about.title\">\n            About Us\n          </h2>",
                     "target": [
                       "#about-heading"
                     ]
@@ -4549,31 +4249,6 @@
         "help": "Elements must have sufficient color contrast",
         "helpUrl": "https://dequeuniversity.com/rules/axe/4.6/color-contrast?application=axeAPI",
         "nodes": [
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#ffffff",
-                  "bgColor": "#000000",
-                  "contrastRatio": 21,
-                  "fontSize": "10.5pt (14px)",
-                  "fontWeight": "normal",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 21"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<a href=\"#main-content\" class=\"skip-link\" data-i18n=\"accessibility.skipToContent\">Skip to main content</a>",
-            "target": [
-              ".skip-link"
-            ]
-          },
           {
             "any": [
               {
@@ -4779,31 +4454,6 @@
               {
                 "id": "color-contrast",
                 "data": {
-                  "fgColor": "#290000",
-                  "bgColor": "#ffffff",
-                  "contrastRatio": 19.19,
-                  "fontSize": "24.0pt (32px)",
-                  "fontWeight": "bold",
-                  "expectedContrastRatio": "3:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 19.19"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h2 id=\"jobs-heading\" class=\"text-center mb-5 fs-2 fw-bold\" data-i18n=\"section.job_listings\">\n            Latest Job Listings\n          </h2>",
-            "target": [
-              "#jobs-heading"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
                   "fgColor": "#111111",
                   "bgColor": "#ffffff",
                   "contrastRatio": 18.88,
@@ -4819,7 +4469,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h5 class=\"h5 mb-1 fw-bold text-primary-dark\">\n                        Mechanic — Ground Support (Haneda)\n                      </h5>",
+            "html": "<h5 class=\"h5 mb-1 fw-bold text-primary-dark\">\n                        Ground Handling Staff\n                      </h5>",
             "target": [
               ".list-group-item.list-group-item-action.py-md-4:nth-child(1) > .job-details.me-auto > .h5.mb-1.text-primary-dark"
             ]
@@ -4844,7 +4494,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p class=\"text-secondary small mb-0\">\n                        Haneda Airport — Tokyo\n                      </p>",
+            "html": "<p class=\"text-secondary small mb-0\">\n                        Aviation — Narita City, Chiba Prefecture\n                      </p>",
             "target": [
               ".list-group-item.list-group-item-action.py-md-4:nth-child(1) > .job-details.me-auto > .small.text-secondary"
             ]
@@ -4894,7 +4544,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h5 class=\"h5 mb-1 fw-bold text-primary-dark\">\n                        Cleaner — Facilities Maintenance\n                      </h5>",
+            "html": "<h5 class=\"h5 mb-1 fw-bold text-primary-dark\">\n                        Cleaning Staff\n                      </h5>",
             "target": [
               ".list-group-item.list-group-item-action.py-md-4:nth-child(2) > .job-details.me-auto > .h5.mb-1.text-primary-dark"
             ]
@@ -4919,7 +4569,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p class=\"text-secondary small mb-0\">\n                        Office Facilities — Tokyo\n                      </p>",
+            "html": "<p class=\"text-secondary small mb-0\">\n                        Building Cleaning — Katsuragawa (Kyoto)\n                      </p>",
             "target": [
               ".list-group-item.list-group-item-action.py-md-4:nth-child(2) > .job-details.me-auto > .small.text-secondary"
             ]
@@ -4969,7 +4619,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h5 class=\"h5 mb-1 fw-bold text-primary-dark\">\n                        Construction Worker — Site Support\n                      </h5>",
+            "html": "<h5 class=\"h5 mb-1 fw-bold text-primary-dark\">\n                        Construction Assistant\n                      </h5>",
             "target": [
               ".list-group-item.list-group-item-action.py-md-4:nth-child(3) > .job-details.me-auto > .h5.mb-1.text-primary-dark"
             ]
@@ -4994,7 +4644,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p class=\"text-secondary small mb-0\">\n                        Contractor — Saitama\n                      </p>",
+            "html": "<p class=\"text-secondary small mb-0\">\n                        Construction — Daimon Sta. (Tokyo)\n                      </p>",
             "target": [
               ".list-group-item.list-group-item-action.py-md-4:nth-child(3) > .job-details.me-auto > .small.text-secondary"
             ]
@@ -5044,7 +4694,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h5 class=\"h5 mb-1 fw-bold text-primary-dark\">\n                        Server — Hospitality\n                      </h5>",
+            "html": "<h5 class=\"h5 mb-1 fw-bold text-primary-dark\">\n                        Restaurant Waiter / Waitress\n                      </h5>",
             "target": [
               ".list-group-item.list-group-item-action.py-md-4:nth-child(4) > .job-details.me-auto > .h5.mb-1.text-primary-dark"
             ]
@@ -5069,7 +4719,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p class=\"text-secondary small mb-0\">\n                        Restaurant — Tokyo\n                      </p>",
+            "html": "<p class=\"text-secondary small mb-0\">\n                        Food and Beverages — Sangenjaya Sta. (Tokyo)\n                      </p>",
             "target": [
               ".list-group-item.list-group-item-action.py-md-4:nth-child(4) > .job-details.me-auto > .small.text-secondary"
             ]
@@ -5144,7 +4794,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p class=\"text-secondary small mb-0\">\n                        Jhesperus Japan Co., Ltd. — Tokyo\n                      </p>",
+            "html": "<p class=\"text-secondary small mb-0\">\n                        Nursing Care — Setagaya Ward (Tokyo)\n                      </p>",
             "target": [
               ".list-group-item.list-group-item-action.py-md-4:nth-child(5) > .job-details.me-auto > .small.text-secondary"
             ]
@@ -5179,31 +4829,6 @@
               {
                 "id": "color-contrast",
                 "data": {
-                  "fgColor": "#ffffff",
-                  "bgColor": "#eb0000",
-                  "contrastRatio": 4.63,
-                  "fontSize": "11.3pt (15px)",
-                  "fontWeight": "normal",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 4.63"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<a class=\"btn btn-primary px-5 text-white shadow-sm\" style=\"\n                background-color: btn btn-primary;\n                border-color: var(--bs-primary-dark);\n              \" href=\"pages/jobs/jobFilter.html\" data-i18n=\"btn.search_jobs\">Search SSW jobs</a>",
-            "target": [
-              ".px-5"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
                   "fgColor": "#290000",
                   "bgColor": "#ffffff",
                   "contrastRatio": 19.19,
@@ -5219,7 +4844,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h2 class=\"text-center mb-5 fw-bold\" data-i18n=\"section.top_companies\">\n            Top Company\n          </h2>",
+            "html": "<h2 class=\"text-center mb-5 fw-bold animate-fade-in-down animate-on-scroll\" data-i18n=\"section.top_companies\">\n            Top Company\n          </h2>",
             "target": [
               "h2[data-i18n=\"section.top_companies\"]"
             ]
@@ -5229,256 +4854,6 @@
               {
                 "id": "color-contrast",
                 "data": {
-                  "fgColor": "#111111",
-                  "bgColor": "#ffffff",
-                  "contrastRatio": 18.88,
-                  "fontSize": "12.0pt (16px)",
-                  "fontWeight": "bold",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 18.88"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h5 class=\"card-title fw-bold text-dark mt-2 mb-0 fs-6\">\n                      ANA InterContinental\n                    </h5>",
-            "target": [
-              "a[data-company-name=\"ANA InterContinental\"] > .h-100.rounded-3.top-company-card > .p-0.card-body.flex-column > .fs-6.text-dark.mt-2"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#111111",
-                  "bgColor": "#ffffff",
-                  "contrastRatio": 18.88,
-                  "fontSize": "12.0pt (16px)",
-                  "fontWeight": "bold",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 18.88"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h5 class=\"card-title fw-bold text-dark mt-2 mb-0 fs-6\">\n                      Prince Hotels\n                    </h5>",
-            "target": [
-              "a[data-company-name=\"Prince Hotels\"] > .h-100.rounded-3.top-company-card > .p-0.card-body.flex-column > .fs-6.text-dark.mt-2"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#111111",
-                  "bgColor": "#ffffff",
-                  "contrastRatio": 18.88,
-                  "fontSize": "12.0pt (16px)",
-                  "fontWeight": "bold",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 18.88"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h5 class=\"card-title fw-bold text-dark mt-2 mb-0 fs-6\">\n                      SOMPO Care\n                    </h5>",
-            "target": [
-              "a[data-company-name=\"SOMPO Care\"] > .h-100.rounded-3.top-company-card > .p-0.card-body.flex-column > .fs-6.text-dark.mt-2"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#111111",
-                  "bgColor": "#ffffff",
-                  "contrastRatio": 18.88,
-                  "fontSize": "12.0pt (16px)",
-                  "fontWeight": "bold",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 18.88"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h5 class=\"card-title fw-bold text-dark mt-2 mb-0 fs-6\">\n                      Nissan\n                    </h5>",
-            "target": [
-              "a[href$=\"nissan.html\"] > .h-100.rounded-3.top-company-card > .p-0.card-body.flex-column > .fs-6.text-dark.mt-2"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#111111",
-                  "bgColor": "#ffffff",
-                  "contrastRatio": 18.88,
-                  "fontSize": "12.0pt (16px)",
-                  "fontWeight": "bold",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 18.88"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h5 class=\"card-title fw-bold text-dark mt-2 mb-0 fs-6\">\n                      Daikin\n                    </h5>",
-            "target": [
-              "a[href$=\"daikin.html\"] > .h-100.rounded-3.top-company-card > .p-0.card-body.flex-column > .fs-6.text-dark.mt-2"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#111111",
-                  "bgColor": "#ffffff",
-                  "contrastRatio": 18.88,
-                  "fontSize": "12.0pt (16px)",
-                  "fontWeight": "bold",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 18.88"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h5 class=\"card-title fw-bold text-dark mt-2 mb-0 fs-6\">\n                      Kandenko\n                    </h5>",
-            "target": [
-              "a[href$=\"kandenko.html\"] > .h-100.rounded-3.top-company-card > .p-0.card-body.flex-column > .fs-6.text-dark.mt-2"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#111111",
-                  "bgColor": "#ffffff",
-                  "contrastRatio": 18.88,
-                  "fontSize": "12.0pt (16px)",
-                  "fontWeight": "bold",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 18.88"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h5 class=\"card-title fw-bold text-dark mt-2 mb-0 fs-6\">\n                      Yoshinoya\n                    </h5>",
-            "target": [
-              "a[href$=\"yoshinoya.html\"] > .h-100.rounded-3.top-company-card > .p-0.card-body.flex-column > .fs-6.text-dark.mt-2"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#111111",
-                  "bgColor": "#ffffff",
-                  "contrastRatio": 18.88,
-                  "fontSize": "12.0pt (16px)",
-                  "fontWeight": "bold",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 18.88"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h5 class=\"card-title fw-bold text-dark mt-2 mb-0 fs-6\">\n                      ANA\n                    </h5>",
-            "target": [
-              "a[href$=\"ana.html\"] > .h-100.rounded-3.top-company-card > .p-0.card-body.flex-column > .fs-6.text-dark.mt-2"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#111111",
-                  "bgColor": "#ffffff",
-                  "contrastRatio": 18.88,
-                  "fontSize": "12.0pt (16px)",
-                  "fontWeight": "bold",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 18.88"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h5 class=\"card-title fw-bold text-dark mt-2 mb-0 fs-6\">\n                      Mitsubishi Heavy Industries\n                    </h5>",
-            "target": [
-              "a[data-company-name=\"Mitsubishi Heavy Industries\"] > .h-100.rounded-3.top-company-card > .p-0.card-body.flex-column > .fs-6.text-dark.mt-2"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#ffffff",
-                  "bgColor": "#eb0000",
-                  "contrastRatio": 4.63,
-                  "fontSize": "11.3pt (15px)",
-                  "fontWeight": "normal",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 4.63"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<a href=\"pages/companies/company-list.html\" class=\"btn btn-primary rounded-pill px-4\" data-i18n=\"btn.view_all_companies\">\n              View All Companies\n            </a>",
-            "target": [
-              "a[data-i18n=\"btn.view_all_companies\"]"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
                   "fgColor": "#290000",
                   "bgColor": "#ffffff",
                   "contrastRatio": 19.19,
@@ -5494,7 +4869,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h2 id=\"rso-heading\" class=\"text-center mb-5 fs-2 fw-bold\" data-i18n=\"section.registered_support_org\">\n            Registered Support Organization\n          </h2>",
+            "html": "<h2 id=\"rso-heading\" class=\"text-center mb-5 fs-2 fw-bold animate-fade-in-down animate-on-scroll\" data-i18n=\"section.registered_support_org\">\n            Registered Support Organization\n          </h2>",
             "target": [
               "#rso-heading"
             ]
@@ -5504,81 +4879,6 @@
               {
                 "id": "color-contrast",
                 "data": {
-                  "fgColor": "#111111",
-                  "bgColor": "#ffffff",
-                  "contrastRatio": 18.88,
-                  "fontSize": "18.0pt (24px)",
-                  "fontWeight": "bold",
-                  "expectedContrastRatio": "3:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 18.88"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h5 class=\"card-title fw-bold fs-4 text-primary-dark\" data-i18n=\"rso.title\">\n                        ASEAN PLUS\n                      </h5>",
-            "target": [
-              "h5[data-i18n=\"rso.title\"]"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#6c757d",
-                  "bgColor": "#ffffff",
-                  "contrastRatio": 4.68,
-                  "fontSize": "12.0pt (16px)",
-                  "fontWeight": "normal",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 4.68"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<p class=\"card-text text-secondary mt-3\" data-i18n=\"rso.lead\">",
-            "target": [
-              ".mt-3"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#ffffff",
-                  "bgColor": "#eb0000",
-                  "contrastRatio": 4.63,
-                  "fontSize": "11.3pt (15px)",
-                  "fontWeight": "normal",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 4.63"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<a class=\"btn btn-primary px-4 text-white\" style=\"\n                            background-color: btn btn-primary;\n                            border-color: var(--bs-primary-dark);\n                          \" href=\"pages/agency.html\" data-i18n=\"btn.search_agency\">Search Agency</a>",
-            "target": [
-              "a[data-i18n=\"btn.search_agency\"]"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
                   "fgColor": "#290000",
                   "bgColor": "#ffffff",
                   "contrastRatio": 19.19,
@@ -5594,7 +4894,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h2 id=\"about-heading\" class=\"text-center mb-5 fs-2 fw-bold\" data-i18n=\"about.title\">\n            About Us\n          </h2>",
+            "html": "<h2 id=\"about-heading\" class=\"text-center mb-5 fs-2 fw-bold animate-fade-in-down animate-on-scroll\" data-i18n=\"about.title\">\n            About Us\n          </h2>",
             "target": [
               "#about-heading"
             ]
@@ -5604,141 +4904,11 @@
               {
                 "id": "color-contrast",
                 "data": {
-                  "fgColor": "#212529",
-                  "bgColor": "#ffffff",
-                  "contrastRatio": 15.42,
-                  "fontSize": "12.0pt (16px)",
-                  "fontWeight": "bold",
-                  "expectedContrastRatio": "4.5:1"
+                  "messageKey": "hidden"
                 },
                 "relatedNodes": [],
                 "impact": "serious",
-                "message": "Element has sufficient color contrast of 15.42"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<p class=\"card-text fw-bold text-dark\" data-i18n=\"about.lead_bold\">\n                        JapanSSW is your one-stop platform for skilled trade job\n                        seekers under the Specified Skilled Worker (SSW) visa in\n                        Japan.\n                      </p>",
-            "target": [
-              "p[data-i18n=\"about.lead_bold\"]"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#6c757d",
-                  "bgColor": "#ffffff",
-                  "contrastRatio": 4.68,
-                  "fontSize": "12.0pt (16px)",
-                  "fontWeight": "normal",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 4.68"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<p class=\"card-text text-secondary mt-2\" data-i18n=\"about.lead\">",
-            "target": [
-              "p[data-i18n=\"about.lead\"]"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#ffffff",
-                  "bgColor": "#eb0000",
-                  "contrastRatio": 4.63,
-                  "fontSize": "11.3pt (15px)",
-                  "fontWeight": "normal",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 4.63"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<a class=\"btn btn-primary px-4 text-white\" style=\"\n                            background-color: btn btn-primary;\n                            border-color: var(--bs-primary-dark);\n                          \" href=\"pages/about.html\" data-i18n=\"btn.learn_more\">Learn more</a>",
-            "target": [
-              "a[data-i18n=\"btn.learn_more\"]"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#ffffff",
-                  "bgColor": "#eb0000",
-                  "contrastRatio": 4.63,
-                  "fontSize": "21.0pt (28px)",
-                  "fontWeight": "bold",
-                  "expectedContrastRatio": "3:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 4.63"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h3 data-i18n=\"alerts.heading\">Get Job Matches</h3>",
-            "target": [
-              "h3[data-i18n=\"alerts.heading\"]"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#ffffff",
-                  "bgColor": "#eb0000",
-                  "contrastRatio": 4.63,
-                  "fontSize": "12.0pt (16px)",
-                  "fontWeight": "normal",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 4.63"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<p data-i18n=\"alerts.lead\">\n            Stay updated with the latest Japan job opportunities — right in your\n            inbox.\n          </p>",
-            "target": [
-              "p[data-i18n=\"alerts.lead\"]"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#212529",
-                  "bgColor": "#ffffff",
-                  "contrastRatio": 15.42,
-                  "fontSize": "12.0pt (16px)",
-                  "fontWeight": "normal",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 15.42"
+                "message": "Element is hidden"
               }
             ],
             "all": [],
@@ -5747,81 +4917,6 @@
             "html": "<input type=\"email\" id=\"newsletter-email\" class=\"form-control form-control-custom\" placeholder=\"john@gmail.com\" aria-label=\"Email address for job alerts\" required=\"\">",
             "target": [
               "#newsletter-email"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#290000",
-                  "bgColor": "#ffffff",
-                  "contrastRatio": 19.19,
-                  "fontSize": "21.0pt (28px)",
-                  "fontWeight": "bold",
-                  "expectedContrastRatio": "3:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 19.19"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h3 data-i18n=\"cta.post_job.title\">Want to post jobs?</h3>",
-            "target": [
-              "h3[data-i18n=\"cta.post_job.title\"]"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#595959",
-                  "bgColor": "#ffffff",
-                  "contrastRatio": 7,
-                  "fontSize": "11.4pt (15.2px)",
-                  "fontWeight": "normal",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 7"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<p class=\"muted\" data-i18n=\"cta.post_job.lead\">\n                Reach qualified engineers and designers in Japan.\n              </p>",
-            "target": [
-              "p[data-i18n=\"cta.post_job.lead\"]"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#ffffff",
-                  "bgColor": "#eb0000",
-                  "contrastRatio": 4.63,
-                  "fontSize": "11.3pt (15px)",
-                  "fontWeight": "normal",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 4.63"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<a class=\"btn btn-primary\" href=\"#\" data-i18n=\"btn.post_job\">Post a Job</a>",
-            "target": [
-              "div:nth-child(2) > .btn-primary[data-i18n=\"btn.post_job\"][href=\"#\"]"
             ]
           },
           {
@@ -6431,7 +5526,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h2 id=\"jobs-heading\" class=\"text-center mb-5 fs-2 fw-bold\" data-i18n=\"section.job_listings\">\n            Latest Job Listings\n          </h2>",
+            "html": "<h2 id=\"jobs-heading\" class=\"text-center mb-5 fs-2 fw-bold animate-fade-in-down animate-on-scroll\" data-i18n=\"section.job_listings\">\n            Latest Job Listings\n          </h2>",
             "target": [
               "#jobs-heading"
             ]
@@ -6449,7 +5544,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h2 id=\"rso-heading\" class=\"text-center mb-5 fs-2 fw-bold\" data-i18n=\"section.registered_support_org\">\n            Registered Support Organization\n          </h2>",
+            "html": "<h2 id=\"rso-heading\" class=\"text-center mb-5 fs-2 fw-bold animate-fade-in-down animate-on-scroll\" data-i18n=\"section.registered_support_org\">\n            Registered Support Organization\n          </h2>",
             "target": [
               "#rso-heading"
             ]
@@ -6467,7 +5562,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h2 id=\"about-heading\" class=\"text-center mb-5 fs-2 fw-bold\" data-i18n=\"about.title\">\n            About Us\n          </h2>",
+            "html": "<h2 id=\"about-heading\" class=\"text-center mb-5 fs-2 fw-bold animate-fade-in-down animate-on-scroll\" data-i18n=\"about.title\">\n            About Us\n          </h2>",
             "target": [
               "#about-heading"
             ]
@@ -6643,7 +5738,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"card mb-3 shadow-lg rounded-4 overflow-hidden rso-card\" id=\"rsoCard\">",
+            "html": "<div class=\"card mb-3 shadow-lg rounded-4 overflow-hidden rso-card animate-slide-in-left animate-on-scroll animate-hover-lift\" id=\"rsoCard\">",
             "target": [
               "#rsoCard"
             ]
@@ -6661,7 +5756,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<button id=\"signup-button\" class=\"btn btn-light lg\" aria-disabled=\"true\" data-i18n=\"btn.signup_demo\" disabled=\"\">\n              Activate Me\n            </button>",
+            "html": "<button id=\"signup-button\" class=\"btn btn-light lg animate-hover-scale\" aria-disabled=\"true\" data-i18n=\"btn.signup_demo\" disabled=\"\">\n              Activate Me\n            </button>",
             "target": [
               "#signup-button"
             ]
@@ -6746,7 +5841,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h2 id=\"jobs-heading\" class=\"text-center mb-5 fs-2 fw-bold\" data-i18n=\"section.job_listings\">\n            Latest Job Listings\n          </h2>",
+            "html": "<h2 id=\"jobs-heading\" class=\"text-center mb-5 fs-2 fw-bold animate-fade-in-down animate-on-scroll\" data-i18n=\"section.job_listings\">\n            Latest Job Listings\n          </h2>",
             "target": [
               "#jobs-heading"
             ]
@@ -6764,7 +5859,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h5 class=\"h5 mb-1 fw-bold text-primary-dark\">\n                        Mechanic — Ground Support (Haneda)\n                      </h5>",
+            "html": "<h5 class=\"h5 mb-1 fw-bold text-primary-dark\">\n                        Ground Handling Staff\n                      </h5>",
             "target": [
               ".list-group-item.list-group-item-action.py-md-4:nth-child(1) > .job-details.me-auto > .h5.mb-1.text-primary-dark"
             ]
@@ -6782,7 +5877,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h5 class=\"h5 mb-1 fw-bold text-primary-dark\">\n                        Cleaner — Facilities Maintenance\n                      </h5>",
+            "html": "<h5 class=\"h5 mb-1 fw-bold text-primary-dark\">\n                        Cleaning Staff\n                      </h5>",
             "target": [
               ".list-group-item.list-group-item-action.py-md-4:nth-child(2) > .job-details.me-auto > .h5.mb-1.text-primary-dark"
             ]
@@ -6800,7 +5895,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h5 class=\"h5 mb-1 fw-bold text-primary-dark\">\n                        Construction Worker — Site Support\n                      </h5>",
+            "html": "<h5 class=\"h5 mb-1 fw-bold text-primary-dark\">\n                        Construction Assistant\n                      </h5>",
             "target": [
               ".list-group-item.list-group-item-action.py-md-4:nth-child(3) > .job-details.me-auto > .h5.mb-1.text-primary-dark"
             ]
@@ -6818,7 +5913,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h5 class=\"h5 mb-1 fw-bold text-primary-dark\">\n                        Server — Hospitality\n                      </h5>",
+            "html": "<h5 class=\"h5 mb-1 fw-bold text-primary-dark\">\n                        Restaurant Waiter / Waitress\n                      </h5>",
             "target": [
               ".list-group-item.list-group-item-action.py-md-4:nth-child(4) > .job-details.me-auto > .h5.mb-1.text-primary-dark"
             ]
@@ -6854,7 +5949,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h2 class=\"text-center mb-5 fw-bold\" data-i18n=\"section.top_companies\">\n            Top Company\n          </h2>",
+            "html": "<h2 class=\"text-center mb-5 fw-bold animate-fade-in-down animate-on-scroll\" data-i18n=\"section.top_companies\">\n            Top Company\n          </h2>",
             "target": [
               "h2[data-i18n=\"section.top_companies\"]"
             ]
@@ -7034,7 +6129,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h2 id=\"rso-heading\" class=\"text-center mb-5 fs-2 fw-bold\" data-i18n=\"section.registered_support_org\">\n            Registered Support Organization\n          </h2>",
+            "html": "<h2 id=\"rso-heading\" class=\"text-center mb-5 fs-2 fw-bold animate-fade-in-down animate-on-scroll\" data-i18n=\"section.registered_support_org\">\n            Registered Support Organization\n          </h2>",
             "target": [
               "#rso-heading"
             ]
@@ -7070,7 +6165,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h2 id=\"about-heading\" class=\"text-center mb-5 fs-2 fw-bold\" data-i18n=\"about.title\">\n            About Us\n          </h2>",
+            "html": "<h2 id=\"about-heading\" class=\"text-center mb-5 fs-2 fw-bold animate-fade-in-down animate-on-scroll\" data-i18n=\"about.title\">\n            About Us\n          </h2>",
             "target": [
               "#about-heading"
             ]
@@ -7456,7 +6551,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h2 id=\"jobs-heading\" class=\"text-center mb-5 fs-2 fw-bold\" data-i18n=\"section.job_listings\">\n            Latest Job Listings\n          </h2>",
+            "html": "<h2 id=\"jobs-heading\" class=\"text-center mb-5 fs-2 fw-bold animate-fade-in-down animate-on-scroll\" data-i18n=\"section.job_listings\">\n            Latest Job Listings\n          </h2>",
             "target": [
               "#jobs-heading"
             ]
@@ -7474,7 +6569,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h5 class=\"h5 mb-1 fw-bold text-primary-dark\">\n                        Cleaner — Facilities Maintenance\n                      </h5>",
+            "html": "<h5 class=\"h5 mb-1 fw-bold text-primary-dark\">\n                        Cleaning Staff\n                      </h5>",
             "target": [
               ".list-group-item.list-group-item-action.py-md-4:nth-child(2) > .job-details.me-auto > .h5.mb-1.text-primary-dark"
             ]
@@ -7492,7 +6587,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h5 class=\"h5 mb-1 fw-bold text-primary-dark\">\n                        Construction Worker — Site Support\n                      </h5>",
+            "html": "<h5 class=\"h5 mb-1 fw-bold text-primary-dark\">\n                        Construction Assistant\n                      </h5>",
             "target": [
               ".list-group-item.list-group-item-action.py-md-4:nth-child(3) > .job-details.me-auto > .h5.mb-1.text-primary-dark"
             ]
@@ -7510,7 +6605,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h5 class=\"h5 mb-1 fw-bold text-primary-dark\">\n                        Server — Hospitality\n                      </h5>",
+            "html": "<h5 class=\"h5 mb-1 fw-bold text-primary-dark\">\n                        Restaurant Waiter / Waitress\n                      </h5>",
             "target": [
               ".list-group-item.list-group-item-action.py-md-4:nth-child(4) > .job-details.me-auto > .h5.mb-1.text-primary-dark"
             ]
@@ -7546,7 +6641,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h2 class=\"text-center mb-5 fw-bold\" data-i18n=\"section.top_companies\">\n            Top Company\n          </h2>",
+            "html": "<h2 class=\"text-center mb-5 fw-bold animate-fade-in-down animate-on-scroll\" data-i18n=\"section.top_companies\">\n            Top Company\n          </h2>",
             "target": [
               "h2[data-i18n=\"section.top_companies\"]"
             ]
@@ -7708,7 +6803,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h2 id=\"rso-heading\" class=\"text-center mb-5 fs-2 fw-bold\" data-i18n=\"section.registered_support_org\">\n            Registered Support Organization\n          </h2>",
+            "html": "<h2 id=\"rso-heading\" class=\"text-center mb-5 fs-2 fw-bold animate-fade-in-down animate-on-scroll\" data-i18n=\"section.registered_support_org\">\n            Registered Support Organization\n          </h2>",
             "target": [
               "#rso-heading"
             ]
@@ -7726,7 +6821,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h2 id=\"about-heading\" class=\"text-center mb-5 fs-2 fw-bold\" data-i18n=\"about.title\">\n            About Us\n          </h2>",
+            "html": "<h2 id=\"about-heading\" class=\"text-center mb-5 fs-2 fw-bold animate-fade-in-down animate-on-scroll\" data-i18n=\"about.title\">\n            About Us\n          </h2>",
             "target": [
               "#about-heading"
             ]
@@ -8205,7 +7300,7 @@
             "impact": null,
             "html": "<img src=\"assets/images/aiImages/TokyoDay-800.png\" srcset=\"\n                          assets/images/aiImages/TokyoDay-800.png 800w,\n                          assets/images/aiImages/TokyoDay-480.png 480w\n                        \" alt=\"Tokyo cityscape representing Japan's work opportunities\" class=\"img-fluid w-100 rounded\" style=\"object-fit: cover\" loading=\"lazy\" decoding=\"async\" onerror=\"this.src='https://placehold.co/800x600/38a169/ffffff?text=About+Us+Image';\">",
             "target": [
-              "section[aria-labelledby=\"about-heading\"] > .container > .row.justify-content-center > .col-lg-11.col-xl-10.col-12 > .rso-card.shadow-lg.rounded-4 > .g-0.row > .col-md-5.min-h-md-100.p-4 > picture > .rounded.w-100"
+              ".animate-slide-in-right > .g-0.row > .col-md-5.min-h-md-100.p-4 > picture > .rounded.w-100"
             ]
           }
         ]
@@ -8416,7 +7511,7 @@
             "impact": null,
             "html": "<img src=\"assets/images/aiImages/TokyoDay-800.png\" srcset=\"\n                          assets/images/aiImages/TokyoDay-800.png 800w,\n                          assets/images/aiImages/TokyoDay-480.png 480w\n                        \" alt=\"Tokyo cityscape representing Japan's work opportunities\" class=\"img-fluid w-100 rounded\" style=\"object-fit: cover\" loading=\"lazy\" decoding=\"async\" onerror=\"this.src='https://placehold.co/800x600/38a169/ffffff?text=About+Us+Image';\">",
             "target": [
-              "section[aria-labelledby=\"about-heading\"] > .container > .row.justify-content-center > .col-lg-11.col-xl-10.col-12 > .rso-card.shadow-lg.rounded-4 > .g-0.row > .col-md-5.min-h-md-100.p-4 > picture > .rounded.w-100"
+              ".animate-slide-in-right > .g-0.row > .col-md-5.min-h-md-100.p-4 > picture > .rounded.w-100"
             ]
           }
         ]
@@ -9439,7 +8534,7 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"btn btn-primary px-5 text-white shadow-sm\" style=\"\n                background-color: btn btn-primary;\n                border-color: var(--bs-primary-dark);\n              \" href=\"pages/jobs/jobFilter.html\" data-i18n=\"btn.search_jobs\">Search SSW jobs</a>",
+            "html": "<a class=\"btn btn-primary px-5 text-white shadow-sm animate-scale-up animate-on-scroll animate-hover-scale\" style=\"\n                background-color: btn btn-primary;\n                border-color: var(--bs-primary-dark);\n              \" href=\"pages/jobs/jobFilter.html\" data-i18n=\"btn.search_jobs\">",
             "target": [
               ".px-5"
             ]
@@ -9699,7 +8794,7 @@
               }
             ],
             "impact": null,
-            "html": "<a href=\"pages/companies/company-list.html\" class=\"btn btn-primary rounded-pill px-4\" data-i18n=\"btn.view_all_companies\">\n              View All Companies\n            </a>",
+            "html": "<a href=\"pages/companies/company-list.html\" class=\"btn btn-primary rounded-pill px-4 animate-scale-up animate-on-scroll animate-hover-scale\" data-i18n=\"btn.view_all_companies\">\n              View All Companies\n            </a>",
             "target": [
               "a[data-i18n=\"btn.view_all_companies\"]"
             ]
@@ -9725,7 +8820,7 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"btn btn-primary px-4 text-white\" style=\"\n                            background-color: btn btn-primary;\n                            border-color: var(--bs-primary-dark);\n                          \" href=\"pages/agency.html\" data-i18n=\"btn.search_agency\">Search Agency</a>",
+            "html": "<a class=\"btn btn-primary px-4 text-white animate-hover-scale\" style=\"\n                            background-color: btn btn-primary;\n                            border-color: var(--bs-primary-dark);\n                          \" href=\"pages/agency.html\" data-i18n=\"btn.search_agency\">Search Agency</a>",
             "target": [
               "a[data-i18n=\"btn.search_agency\"]"
             ]
@@ -9751,7 +8846,7 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"btn btn-primary px-4 text-white\" style=\"\n                            background-color: btn btn-primary;\n                            border-color: var(--bs-primary-dark);\n                          \" href=\"pages/about.html\" data-i18n=\"btn.learn_more\">Learn more</a>",
+            "html": "<a class=\"btn btn-primary px-4 text-white animate-hover-scale\" style=\"\n                            background-color: btn btn-primary;\n                            border-color: var(--bs-primary-dark);\n                          \" href=\"pages/about.html\" data-i18n=\"btn.learn_more\">Learn more</a>",
             "target": [
               "a[data-i18n=\"btn.learn_more\"]"
             ]
@@ -9777,9 +8872,9 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"btn btn-primary\" href=\"#\" data-i18n=\"btn.post_job\">Post a Job</a>",
+            "html": "<a class=\"btn btn-primary animate-hover-scale\" href=\"#\" data-i18n=\"btn.post_job\">Post a Job</a>",
             "target": [
-              "div:nth-child(2) > .btn-primary[data-i18n=\"btn.post_job\"][href=\"#\"]"
+              ".animate-hover-scale[data-i18n=\"btn.post_job\"][href=\"#\"]"
             ]
           },
           {
@@ -10233,7 +9328,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5\">",
+            "html": "<li class=\"list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5 animate-hover-lift\" style=\"transition-delay: 0ms;\">",
             "target": [
               ".list-group-item.list-group-item-action.py-md-4:nth-child(1)"
             ]
@@ -10251,7 +9346,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5\">",
+            "html": "<li class=\"list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5 animate-hover-lift\" style=\"transition-delay: 100ms;\">",
             "target": [
               ".list-group-item.list-group-item-action.py-md-4:nth-child(2)"
             ]
@@ -10269,7 +9364,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5\">",
+            "html": "<li class=\"list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5 animate-hover-lift\" style=\"transition-delay: 200ms;\">",
             "target": [
               ".list-group-item.list-group-item-action.py-md-4:nth-child(3)"
             ]
@@ -10287,7 +9382,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5\">",
+            "html": "<li class=\"list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5 animate-hover-lift\" style=\"transition-delay: 300ms;\">",
             "target": [
               ".list-group-item.list-group-item-action.py-md-4:nth-child(4)"
             ]
@@ -10305,7 +9400,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5\">",
+            "html": "<li class=\"list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5 animate-hover-lift\" style=\"transition-delay: 400ms;\">",
             "target": [
               ".list-group-item.list-group-item-action.py-md-4:nth-child(5)"
             ]
@@ -10763,7 +9858,7 @@
             "impact": null,
             "html": "<img src=\"assets/images/aiImages/TokyoDay-800.png\" srcset=\"\n                          assets/images/aiImages/TokyoDay-800.png 800w,\n                          assets/images/aiImages/TokyoDay-480.png 480w\n                        \" alt=\"Tokyo cityscape representing Japan's work opportunities\" class=\"img-fluid w-100 rounded\" style=\"object-fit: cover\" loading=\"lazy\" decoding=\"async\" onerror=\"this.src='https://placehold.co/800x600/38a169/ffffff?text=About+Us+Image';\">",
             "target": [
-              "section[aria-labelledby=\"about-heading\"] > .container > .row.justify-content-center > .col-lg-11.col-xl-10.col-12 > .rso-card.shadow-lg.rounded-4 > .g-0.row > .col-md-5.min-h-md-100.p-4 > picture > .rounded.w-100"
+              ".animate-slide-in-right > .g-0.row > .col-md-5.min-h-md-100.p-4 > picture > .rounded.w-100"
             ]
           },
           {
@@ -10779,7 +9874,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<button id=\"signup-button\" class=\"btn btn-light lg\" aria-disabled=\"true\" data-i18n=\"btn.signup_demo\" disabled=\"\">\n              Activate Me\n            </button>",
+            "html": "<button id=\"signup-button\" class=\"btn btn-light lg animate-hover-scale\" aria-disabled=\"true\" data-i18n=\"btn.signup_demo\" disabled=\"\">\n              Activate Me\n            </button>",
             "target": [
               "#signup-button"
             ]
@@ -11537,7 +10632,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h2 id=\"jobs-heading\" class=\"text-center mb-5 fs-2 fw-bold\" data-i18n=\"section.job_listings\">\n            Latest Job Listings\n          </h2>",
+            "html": "<h2 id=\"jobs-heading\" class=\"text-center mb-5 fs-2 fw-bold animate-fade-in-down animate-on-scroll\" data-i18n=\"section.job_listings\">\n            Latest Job Listings\n          </h2>",
             "target": [
               "#jobs-heading"
             ]
@@ -11597,7 +10692,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"card shadow-lg rounded-4 overflow-hidden\">",
+            "html": "<div class=\"card shadow-lg rounded-4 overflow-hidden animate-fade-in-up animate-on-scroll\">",
             "target": [
               "#jobs > .container > .row.justify-content-center > .col-lg-11.col-xl-10.col-12 > .shadow-lg.rounded-4.overflow-hidden"
             ]
@@ -11637,7 +10732,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5\">",
+            "html": "<li class=\"list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5 animate-hover-lift\" style=\"transition-delay: 0ms;\">",
             "target": [
               ".list-group-item.list-group-item-action.py-md-4:nth-child(1)"
             ]
@@ -11677,7 +10772,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h5 class=\"h5 mb-1 fw-bold text-primary-dark\">\n                        Mechanic — Ground Support (Haneda)\n                      </h5>",
+            "html": "<h5 class=\"h5 mb-1 fw-bold text-primary-dark\">\n                        Ground Handling Staff\n                      </h5>",
             "target": [
               ".list-group-item.list-group-item-action.py-md-4:nth-child(1) > .job-details.me-auto > .h5.mb-1.text-primary-dark"
             ]
@@ -11697,7 +10792,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p class=\"text-secondary small mb-0\">\n                        Haneda Airport — Tokyo\n                      </p>",
+            "html": "<p class=\"text-secondary small mb-0\">\n                        Aviation — Narita City, Chiba Prefecture\n                      </p>",
             "target": [
               ".list-group-item.list-group-item-action.py-md-4:nth-child(1) > .job-details.me-auto > .small.text-secondary"
             ]
@@ -11737,7 +10832,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5\">",
+            "html": "<li class=\"list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5 animate-hover-lift\" style=\"transition-delay: 100ms;\">",
             "target": [
               ".list-group-item.list-group-item-action.py-md-4:nth-child(2)"
             ]
@@ -11777,7 +10872,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h5 class=\"h5 mb-1 fw-bold text-primary-dark\">\n                        Cleaner — Facilities Maintenance\n                      </h5>",
+            "html": "<h5 class=\"h5 mb-1 fw-bold text-primary-dark\">\n                        Cleaning Staff\n                      </h5>",
             "target": [
               ".list-group-item.list-group-item-action.py-md-4:nth-child(2) > .job-details.me-auto > .h5.mb-1.text-primary-dark"
             ]
@@ -11797,7 +10892,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p class=\"text-secondary small mb-0\">\n                        Office Facilities — Tokyo\n                      </p>",
+            "html": "<p class=\"text-secondary small mb-0\">\n                        Building Cleaning — Katsuragawa (Kyoto)\n                      </p>",
             "target": [
               ".list-group-item.list-group-item-action.py-md-4:nth-child(2) > .job-details.me-auto > .small.text-secondary"
             ]
@@ -11837,7 +10932,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5\">",
+            "html": "<li class=\"list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5 animate-hover-lift\" style=\"transition-delay: 200ms;\">",
             "target": [
               ".list-group-item.list-group-item-action.py-md-4:nth-child(3)"
             ]
@@ -11877,7 +10972,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h5 class=\"h5 mb-1 fw-bold text-primary-dark\">\n                        Construction Worker — Site Support\n                      </h5>",
+            "html": "<h5 class=\"h5 mb-1 fw-bold text-primary-dark\">\n                        Construction Assistant\n                      </h5>",
             "target": [
               ".list-group-item.list-group-item-action.py-md-4:nth-child(3) > .job-details.me-auto > .h5.mb-1.text-primary-dark"
             ]
@@ -11897,7 +10992,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p class=\"text-secondary small mb-0\">\n                        Contractor — Saitama\n                      </p>",
+            "html": "<p class=\"text-secondary small mb-0\">\n                        Construction — Daimon Sta. (Tokyo)\n                      </p>",
             "target": [
               ".list-group-item.list-group-item-action.py-md-4:nth-child(3) > .job-details.me-auto > .small.text-secondary"
             ]
@@ -11937,7 +11032,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5\">",
+            "html": "<li class=\"list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5 animate-hover-lift\" style=\"transition-delay: 300ms;\">",
             "target": [
               ".list-group-item.list-group-item-action.py-md-4:nth-child(4)"
             ]
@@ -11977,7 +11072,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h5 class=\"h5 mb-1 fw-bold text-primary-dark\">\n                        Server — Hospitality\n                      </h5>",
+            "html": "<h5 class=\"h5 mb-1 fw-bold text-primary-dark\">\n                        Restaurant Waiter / Waitress\n                      </h5>",
             "target": [
               ".list-group-item.list-group-item-action.py-md-4:nth-child(4) > .job-details.me-auto > .h5.mb-1.text-primary-dark"
             ]
@@ -11997,7 +11092,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p class=\"text-secondary small mb-0\">\n                        Restaurant — Tokyo\n                      </p>",
+            "html": "<p class=\"text-secondary small mb-0\">\n                        Food and Beverages — Sangenjaya Sta. (Tokyo)\n                      </p>",
             "target": [
               ".list-group-item.list-group-item-action.py-md-4:nth-child(4) > .job-details.me-auto > .small.text-secondary"
             ]
@@ -12037,7 +11132,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5\">",
+            "html": "<li class=\"list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5 animate-hover-lift\" style=\"transition-delay: 400ms;\">",
             "target": [
               ".list-group-item.list-group-item-action.py-md-4:nth-child(5)"
             ]
@@ -12097,7 +11192,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p class=\"text-secondary small mb-0\">\n                        Jhesperus Japan Co., Ltd. — Tokyo\n                      </p>",
+            "html": "<p class=\"text-secondary small mb-0\">\n                        Nursing Care — Setagaya Ward (Tokyo)\n                      </p>",
             "target": [
               ".list-group-item.list-group-item-action.py-md-4:nth-child(5) > .job-details.me-auto > .small.text-secondary"
             ]
@@ -12157,7 +11252,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"btn btn-primary px-5 text-white shadow-sm\" style=\"\n                background-color: btn btn-primary;\n                border-color: var(--bs-primary-dark);\n              \" href=\"pages/jobs/jobFilter.html\" data-i18n=\"btn.search_jobs\">Search SSW jobs</a>",
+            "html": "<a class=\"btn btn-primary px-5 text-white shadow-sm animate-scale-up animate-on-scroll animate-hover-scale\" style=\"\n                background-color: btn btn-primary;\n                border-color: var(--bs-primary-dark);\n              \" href=\"pages/jobs/jobFilter.html\" data-i18n=\"btn.search_jobs\">",
             "target": [
               ".px-5"
             ]
@@ -12217,7 +11312,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h2 class=\"text-center mb-5 fw-bold\" data-i18n=\"section.top_companies\">\n            Top Company\n          </h2>",
+            "html": "<h2 class=\"text-center mb-5 fw-bold animate-fade-in-down animate-on-scroll\" data-i18n=\"section.top_companies\">\n            Top Company\n          </h2>",
             "target": [
               "h2[data-i18n=\"section.top_companies\"]"
             ]
@@ -12257,9 +11352,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"col-12 col-sm-6 col-lg-4\">",
+            "html": "<div class=\"col-12 col-sm-6 col-lg-4 animate-fade-in-up animate-on-scroll animate-both\" style=\"transition-delay: 0ms;\">",
             "target": [
-              ".col-sm-6.col-lg-4.col-12:nth-child(1)"
+              ".col-sm-6.col-lg-4.animate-both:nth-child(1)"
             ]
           },
           {
@@ -12297,7 +11392,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"card h-100 shadow-sm rounded-3 p-4 text-center top-company-card\">",
+            "html": "<div class=\"card h-100 shadow-sm rounded-3 p-4 text-center top-company-card animate-hover-lift\">",
             "target": [
               "a[data-company-name=\"ANA InterContinental\"] > .h-100.rounded-3.top-company-card"
             ]
@@ -12377,9 +11472,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"col-12 col-sm-6 col-lg-4\">",
+            "html": "<div class=\"col-12 col-sm-6 col-lg-4 animate-fade-in-up animate-on-scroll animate-both\" style=\"transition-delay: 120ms;\">",
             "target": [
-              ".col-sm-6.col-lg-4.col-12:nth-child(2)"
+              ".col-sm-6.col-lg-4.animate-both:nth-child(2)"
             ]
           },
           {
@@ -12417,7 +11512,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"card h-100 shadow-sm rounded-3 p-4 text-center top-company-card\">",
+            "html": "<div class=\"card h-100 shadow-sm rounded-3 p-4 text-center top-company-card animate-hover-lift\">",
             "target": [
               "a[data-company-name=\"Prince Hotels\"] > .h-100.rounded-3.top-company-card"
             ]
@@ -12497,9 +11592,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"col-12 col-sm-6 col-lg-4\">",
+            "html": "<div class=\"col-12 col-sm-6 col-lg-4 animate-fade-in-up animate-on-scroll animate-both\" style=\"transition-delay: 240ms;\">",
             "target": [
-              ".col-sm-6.col-lg-4.col-12:nth-child(3)"
+              ".col-sm-6.col-lg-4.animate-both:nth-child(3)"
             ]
           },
           {
@@ -12537,7 +11632,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"card h-100 shadow-sm rounded-3 p-4 text-center top-company-card\">",
+            "html": "<div class=\"card h-100 shadow-sm rounded-3 p-4 text-center top-company-card animate-hover-lift\">",
             "target": [
               "a[data-company-name=\"SOMPO Care\"] > .h-100.rounded-3.top-company-card"
             ]
@@ -12617,9 +11712,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"col-12 col-sm-6 col-lg-4\">",
+            "html": "<div class=\"col-12 col-sm-6 col-lg-4 animate-fade-in-up animate-on-scroll animate-both\" style=\"transition-delay: 360ms;\">",
             "target": [
-              ".col-sm-6.col-lg-4.col-12:nth-child(4)"
+              ".col-sm-6.col-lg-4.animate-both:nth-child(4)"
             ]
           },
           {
@@ -12657,7 +11752,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"card h-100 shadow-sm rounded-3 p-4 text-center top-company-card\">",
+            "html": "<div class=\"card h-100 shadow-sm rounded-3 p-4 text-center top-company-card animate-hover-lift\">",
             "target": [
               "a[href$=\"nissan.html\"] > .h-100.rounded-3.top-company-card"
             ]
@@ -12737,9 +11832,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"col-12 col-sm-6 col-lg-4\">",
+            "html": "<div class=\"col-12 col-sm-6 col-lg-4 animate-fade-in-up animate-on-scroll animate-both\" style=\"transition-delay: 480ms;\">",
             "target": [
-              ".col-sm-6.col-lg-4.col-12:nth-child(5)"
+              ".col-sm-6.col-lg-4.animate-both:nth-child(5)"
             ]
           },
           {
@@ -12777,7 +11872,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"card h-100 shadow-sm rounded-3 p-4 text-center top-company-card\">",
+            "html": "<div class=\"card h-100 shadow-sm rounded-3 p-4 text-center top-company-card animate-hover-lift\">",
             "target": [
               "a[href$=\"daikin.html\"] > .h-100.rounded-3.top-company-card"
             ]
@@ -12857,9 +11952,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"col-12 col-sm-6 col-lg-4\">",
+            "html": "<div class=\"col-12 col-sm-6 col-lg-4 animate-fade-in-up animate-on-scroll animate-both\" style=\"transition-delay: 600ms;\">",
             "target": [
-              ".col-sm-6.col-lg-4.col-12:nth-child(6)"
+              ".col-sm-6.col-lg-4.animate-both:nth-child(6)"
             ]
           },
           {
@@ -12897,7 +11992,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"card h-100 shadow-sm rounded-3 p-4 text-center top-company-card\">",
+            "html": "<div class=\"card h-100 shadow-sm rounded-3 p-4 text-center top-company-card animate-hover-lift\">",
             "target": [
               "a[href$=\"kandenko.html\"] > .h-100.rounded-3.top-company-card"
             ]
@@ -12977,9 +12072,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"col-12 col-sm-6 col-lg-4\">",
+            "html": "<div class=\"col-12 col-sm-6 col-lg-4 animate-fade-in-up animate-on-scroll animate-both\" style=\"transition-delay: 720ms;\">",
             "target": [
-              ".col-sm-6.col-lg-4.col-12:nth-child(7)"
+              ".col-sm-6.col-lg-4.animate-both:nth-child(7)"
             ]
           },
           {
@@ -13017,7 +12112,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"card h-100 shadow-sm rounded-3 p-4 text-center top-company-card\">",
+            "html": "<div class=\"card h-100 shadow-sm rounded-3 p-4 text-center top-company-card animate-hover-lift\">",
             "target": [
               "a[href$=\"yoshinoya.html\"] > .h-100.rounded-3.top-company-card"
             ]
@@ -13097,9 +12192,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"col-12 col-sm-6 col-lg-4\">",
+            "html": "<div class=\"col-12 col-sm-6 col-lg-4 animate-fade-in-up animate-on-scroll animate-both\" style=\"transition-delay: 840ms;\">",
             "target": [
-              ".col-sm-6.col-lg-4.col-12:nth-child(8)"
+              ".col-sm-6.col-lg-4.animate-both:nth-child(8)"
             ]
           },
           {
@@ -13137,7 +12232,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"card h-100 shadow-sm rounded-3 p-4 text-center top-company-card\">",
+            "html": "<div class=\"card h-100 shadow-sm rounded-3 p-4 text-center top-company-card animate-hover-lift\">",
             "target": [
               "a[href$=\"ana.html\"] > .h-100.rounded-3.top-company-card"
             ]
@@ -13217,9 +12312,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"col-12 col-sm-6 col-lg-4\">",
+            "html": "<div class=\"col-12 col-sm-6 col-lg-4 animate-fade-in-up animate-on-scroll animate-both\" style=\"transition-delay: 960ms;\">",
             "target": [
-              ".col-sm-6.col-lg-4.col-12:nth-child(9)"
+              ".col-sm-6.col-lg-4.animate-both:nth-child(9)"
             ]
           },
           {
@@ -13257,7 +12352,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"card h-100 shadow-sm rounded-3 p-4 text-center top-company-card\">",
+            "html": "<div class=\"card h-100 shadow-sm rounded-3 p-4 text-center top-company-card animate-hover-lift\">",
             "target": [
               "a[data-company-name=\"Mitsubishi Heavy Industries\"] > .h-100.rounded-3.top-company-card"
             ]
@@ -13337,7 +12432,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"text-center mt-5\">\n            <a href=\"pages/companies/company-list.html\" class=\"btn btn-primary rounded-pill px-4\" data-i18n=\"btn.view_all_companies\">\n              View All Companies\n            </a>\n          </div>",
+            "html": "<div class=\"text-center mt-5\">\n            <a href=\"pages/companies/company-list.html\" class=\"btn btn-primary rounded-pill px-4 animate-scale-up animate-on-scroll animate-hover-scale\" data-i18n=\"btn.view_all_companies\">\n              View All Companies\n            </a>\n          </div>",
             "target": [
               "#companies > .container > .mt-5.text-center"
             ]
@@ -13357,7 +12452,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"pages/companies/company-list.html\" class=\"btn btn-primary rounded-pill px-4\" data-i18n=\"btn.view_all_companies\">\n              View All Companies\n            </a>",
+            "html": "<a href=\"pages/companies/company-list.html\" class=\"btn btn-primary rounded-pill px-4 animate-scale-up animate-on-scroll animate-hover-scale\" data-i18n=\"btn.view_all_companies\">\n              View All Companies\n            </a>",
             "target": [
               "a[data-i18n=\"btn.view_all_companies\"]"
             ]
@@ -13417,7 +12512,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h2 id=\"rso-heading\" class=\"text-center mb-5 fs-2 fw-bold\" data-i18n=\"section.registered_support_org\">\n            Registered Support Organization\n          </h2>",
+            "html": "<h2 id=\"rso-heading\" class=\"text-center mb-5 fs-2 fw-bold animate-fade-in-down animate-on-scroll\" data-i18n=\"section.registered_support_org\">\n            Registered Support Organization\n          </h2>",
             "target": [
               "#rso-heading"
             ]
@@ -13477,7 +12572,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"card mb-3 shadow-lg rounded-4 overflow-hidden rso-card\" id=\"rsoCard\">",
+            "html": "<div class=\"card mb-3 shadow-lg rounded-4 overflow-hidden rso-card animate-slide-in-left animate-on-scroll animate-hover-lift\" id=\"rsoCard\">",
             "target": [
               "#rsoCard"
             ]
@@ -13697,7 +12792,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"btn btn-primary px-4 text-white\" style=\"\n                            background-color: btn btn-primary;\n                            border-color: var(--bs-primary-dark);\n                          \" href=\"pages/agency.html\" data-i18n=\"btn.search_agency\">Search Agency</a>",
+            "html": "<a class=\"btn btn-primary px-4 text-white animate-hover-scale\" style=\"\n                            background-color: btn btn-primary;\n                            border-color: var(--bs-primary-dark);\n                          \" href=\"pages/agency.html\" data-i18n=\"btn.search_agency\">Search Agency</a>",
             "target": [
               "a[data-i18n=\"btn.search_agency\"]"
             ]
@@ -13757,7 +12852,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h2 id=\"about-heading\" class=\"text-center mb-5 fs-2 fw-bold\" data-i18n=\"about.title\">\n            About Us\n          </h2>",
+            "html": "<h2 id=\"about-heading\" class=\"text-center mb-5 fs-2 fw-bold animate-fade-in-down animate-on-scroll\" data-i18n=\"about.title\">\n            About Us\n          </h2>",
             "target": [
               "#about-heading"
             ]
@@ -13817,9 +12912,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"card mb-3 shadow-lg rounded-4 overflow-hidden rso-card\">",
+            "html": "<div class=\"card mb-3 shadow-lg rounded-4 overflow-hidden rso-card animate-slide-in-right animate-on-scroll animate-hover-lift\">",
             "target": [
-              "section[aria-labelledby=\"about-heading\"] > .container > .row.justify-content-center > .col-lg-11.col-xl-10.col-12 > .rso-card.shadow-lg.rounded-4"
+              ".animate-slide-in-right"
             ]
           },
           {
@@ -13839,7 +12934,7 @@
             "impact": null,
             "html": "<div class=\"row g-0\">",
             "target": [
-              "section[aria-labelledby=\"about-heading\"] > .container > .row.justify-content-center > .col-lg-11.col-xl-10.col-12 > .rso-card.shadow-lg.rounded-4 > .g-0.row"
+              ".animate-slide-in-right > .g-0.row"
             ]
           },
           {
@@ -13859,7 +12954,7 @@
             "impact": null,
             "html": "<div class=\"col-md-5 min-h-md-100 p-4 d-flex align-items-center\">",
             "target": [
-              "section[aria-labelledby=\"about-heading\"] > .container > .row.justify-content-center > .col-lg-11.col-xl-10.col-12 > .rso-card.shadow-lg.rounded-4 > .g-0.row > .col-md-5.min-h-md-100.p-4"
+              ".animate-slide-in-right > .g-0.row > .col-md-5.min-h-md-100.p-4"
             ]
           },
           {
@@ -13879,7 +12974,7 @@
             "impact": null,
             "html": "<picture>",
             "target": [
-              "section[aria-labelledby=\"about-heading\"] > .container > .row.justify-content-center > .col-lg-11.col-xl-10.col-12 > .rso-card.shadow-lg.rounded-4 > .g-0.row > .col-md-5.min-h-md-100.p-4 > picture"
+              ".animate-slide-in-right > .g-0.row > .col-md-5.min-h-md-100.p-4 > picture"
             ]
           },
           {
@@ -13899,7 +12994,7 @@
             "impact": null,
             "html": "<source type=\"image/webp\" srcset=\"\n                          assets/images/aiImages/TokyoDay-800.webp 800w,\n                          assets/images/aiImages/TokyoDay-480.webp 480w\n                        \">",
             "target": [
-              "section[aria-labelledby=\"about-heading\"] > .container > .row.justify-content-center > .col-lg-11.col-xl-10.col-12 > .rso-card.shadow-lg.rounded-4 > .g-0.row > .col-md-5.min-h-md-100.p-4 > picture > source[type=\"image/webp\"]"
+              ".animate-slide-in-right > .g-0.row > .col-md-5.min-h-md-100.p-4 > picture > source[type=\"image/webp\"]"
             ]
           },
           {
@@ -13919,7 +13014,7 @@
             "impact": null,
             "html": "<img src=\"assets/images/aiImages/TokyoDay-800.png\" srcset=\"\n                          assets/images/aiImages/TokyoDay-800.png 800w,\n                          assets/images/aiImages/TokyoDay-480.png 480w\n                        \" alt=\"Tokyo cityscape representing Japan's work opportunities\" class=\"img-fluid w-100 rounded\" style=\"object-fit: cover\" loading=\"lazy\" decoding=\"async\" onerror=\"this.src='https://placehold.co/800x600/38a169/ffffff?text=About+Us+Image';\">",
             "target": [
-              "section[aria-labelledby=\"about-heading\"] > .container > .row.justify-content-center > .col-lg-11.col-xl-10.col-12 > .rso-card.shadow-lg.rounded-4 > .g-0.row > .col-md-5.min-h-md-100.p-4 > picture > .rounded.w-100"
+              ".animate-slide-in-right > .g-0.row > .col-md-5.min-h-md-100.p-4 > picture > .rounded.w-100"
             ]
           },
           {
@@ -13939,7 +13034,7 @@
             "impact": null,
             "html": "<div class=\"col-md-7 min-h-md-100\">",
             "target": [
-              "section[aria-labelledby=\"about-heading\"] > .container > .row.justify-content-center > .col-lg-11.col-xl-10.col-12 > .rso-card.shadow-lg.rounded-4 > .g-0.row > .col-md-7.min-h-md-100"
+              ".animate-slide-in-right > .g-0.row > .col-md-7.min-h-md-100"
             ]
           },
           {
@@ -14057,7 +13152,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"btn btn-primary px-4 text-white\" style=\"\n                            background-color: btn btn-primary;\n                            border-color: var(--bs-primary-dark);\n                          \" href=\"pages/about.html\" data-i18n=\"btn.learn_more\">Learn more</a>",
+            "html": "<a class=\"btn btn-primary px-4 text-white animate-hover-scale\" style=\"\n                            background-color: btn btn-primary;\n                            border-color: var(--bs-primary-dark);\n                          \" href=\"pages/about.html\" data-i18n=\"btn.learn_more\">Learn more</a>",
             "target": [
               "a[data-i18n=\"btn.learn_more\"]"
             ]
@@ -14077,7 +13172,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<section class=\"alerts-band\">",
+            "html": "<section class=\"alerts-band animate-slide-up animate-on-scroll\">",
             "target": [
               ".alerts-band"
             ]
@@ -14217,7 +13312,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<button id=\"signup-button\" class=\"btn btn-light lg\" aria-disabled=\"true\" data-i18n=\"btn.signup_demo\" disabled=\"\">\n              Activate Me\n            </button>",
+            "html": "<button id=\"signup-button\" class=\"btn btn-light lg animate-hover-scale\" aria-disabled=\"true\" data-i18n=\"btn.signup_demo\" disabled=\"\">\n              Activate Me\n            </button>",
             "target": [
               "#signup-button"
             ]
@@ -14277,7 +13372,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"feature-card feature-cta\">",
+            "html": "<div class=\"feature-card feature-cta animate-scale-up animate-on-scroll animate-hover-lift\">",
             "target": [
               ".feature-card"
             ]
@@ -14357,7 +13452,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div>\n              <a class=\"btn btn-primary\" href=\"#\" data-i18n=\"btn.post_job\">Post a Job</a>\n            </div>",
+            "html": "<div>\n              <a class=\"btn btn-primary animate-hover-scale\" href=\"#\" data-i18n=\"btn.post_job\">Post a Job</a>\n            </div>",
             "target": [
               ".feature-card > div:nth-child(2)"
             ]
@@ -14377,9 +13472,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"btn btn-primary\" href=\"#\" data-i18n=\"btn.post_job\">Post a Job</a>",
+            "html": "<a class=\"btn btn-primary animate-hover-scale\" href=\"#\" data-i18n=\"btn.post_job\">Post a Job</a>",
             "target": [
-              "div:nth-child(2) > .btn-primary[data-i18n=\"btn.post_job\"][href=\"#\"]"
+              ".animate-hover-scale[data-i18n=\"btn.post_job\"][href=\"#\"]"
             ]
           },
           {
@@ -15243,6 +14338,37 @@
             ]
           }
         ]
+      },
+      {
+        "id": "skip-link",
+        "impact": null,
+        "tags": [
+          "cat.keyboard",
+          "best-practice"
+        ],
+        "description": "Ensure all skip links have a focusable target",
+        "help": "The skip-link target should exist and be focusable",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.6/skip-link?application=axeAPI",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "skip-link",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "Skip link target exists"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a href=\"#main-content\" class=\"skip-link\" data-i18n=\"accessibility.skipToContent\">Skip to main content</a>",
+            "target": [
+              ".skip-link"
+            ]
+          }
+        ]
       }
     ],
     "incomplete": [
@@ -15264,62 +14390,26 @@
               {
                 "id": "color-contrast",
                 "data": {
-                  "fontSize": "22.5pt (30px)",
+                  "fgColor": "#290000",
+                  "contrastRatio": 0,
+                  "fontSize": "24.0pt (32px)",
                   "fontWeight": "bold",
-                  "messageKey": "pseudoContent",
+                  "messageKey": "bgOverlap",
                   "expectedContrastRatio": "3:1"
                 },
-                "relatedNodes": [
-                  {
-                    "html": "<section class=\"hero hero-centered\" aria-label=\"Welcome to Japan SSW\" \"=\"\">",
-                    "target": [
-                      ".hero"
-                    ]
-                  }
-                ],
+                "relatedNodes": [],
                 "impact": "serious",
-                "message": "Element's background color could not be determined due to a pseudo element"
+                "message": "Element's background color could not be determined because it is overlapped by another element"
               }
             ],
             "all": [],
             "none": [],
             "impact": "serious",
-            "html": "<h1 class=\"hero-title\" data-i18n=\"hero.title\">\n              Specified Skilled Worker Jobs in Japan\n            </h1>",
+            "html": "<h2 id=\"jobs-heading\" class=\"text-center mb-5 fs-2 fw-bold animate-fade-in-down animate-on-scroll\" data-i18n=\"section.job_listings\">\n            Latest Job Listings\n          </h2>",
             "target": [
-              "h1"
+              "#jobs-heading"
             ],
-            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fontSize": "15.0pt (20px)",
-                  "fontWeight": "normal",
-                  "messageKey": "pseudoContent",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [
-                  {
-                    "html": "<section class=\"hero hero-centered\" aria-label=\"Welcome to Japan SSW\" \"=\"\">",
-                    "target": [
-                      ".hero"
-                    ]
-                  }
-                ],
-                "impact": "serious",
-                "message": "Element's background color could not be determined due to a pseudo element"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": "serious",
-            "html": "<p class=\"muted mt-xs\" data-i18n=\"hero.lead\">\n              Your one-stop destination for job matching, visa assistance, and\n              essential community resources.\n            </p>",
-            "target": [
-              ".mt-xs"
-            ],
-            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
           }
         ]
       }
@@ -15404,7 +14494,7 @@
             "all": [],
             "none": [],
             "impact": "moderate",
-            "html": "<h5 class=\"h5 mb-1 fw-bold text-primary-dark\">\n                        Mechanic — Ground Support (Haneda)\n                      </h5>",
+            "html": "<h5 class=\"h5 mb-1 fw-bold text-primary-dark\">\n                        Ground Handling Staff\n                      </h5>",
             "target": [
               ".list-group-item.list-group-item-action.py-md-4:nth-child(1) > .job-details.me-auto > .h5.mb-1.text-primary-dark"
             ],

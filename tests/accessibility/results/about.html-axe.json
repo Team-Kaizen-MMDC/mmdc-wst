@@ -9,13 +9,13 @@
       "name": "axe"
     },
     "testEnvironment": {
-      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/140.0.7339.186 Safari/537.36",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/140.0.7339.186 Safari/537.36",
       "windowWidth": 1280,
       "windowHeight": 720,
       "orientationAngle": 0,
       "orientationType": "landscape-primary"
     },
-    "timestamp": "2025-10-25T03:15:30.773Z",
+    "timestamp": "2025-10-29T09:37:28.852Z",
     "url": "http://localhost:8000/pages/about.html",
     "toolOptions": {
       "reporter": "v1"
@@ -607,18 +607,6 @@
         "description": "Ensures that server-side image maps are not used",
         "help": "Server-side image maps must not be used",
         "helpUrl": "https://dequeuniversity.com/rules/axe/4.6/server-side-image-map?application=axeAPI",
-        "nodes": []
-      },
-      {
-        "id": "skip-link",
-        "impact": null,
-        "tags": [
-          "cat.keyboard",
-          "best-practice"
-        ],
-        "description": "Ensure all skip links have a focusable target",
-        "help": "The skip-link target should exist and be focusable",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/4.6/skip-link?application=axeAPI",
         "nodes": []
       },
       {
@@ -1382,31 +1370,6 @@
               {
                 "id": "color-contrast",
                 "data": {
-                  "fgColor": "#ffffff",
-                  "bgColor": "#000000",
-                  "contrastRatio": 21,
-                  "fontSize": "10.5pt (14px)",
-                  "fontWeight": "normal",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 21"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<a href=\"#main-content\" class=\"skip-link\" data-i18n=\"accessibility.skipToContent\">Skip to main content</a>",
-            "target": [
-              ".skip-link"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
                   "fgColor": "#290000",
                   "bgColor": "#fcfcfc",
                   "contrastRatio": 18.7,
@@ -1511,7 +1474,7 @@
                   "bgColor": "#fcfcfc",
                   "contrastRatio": 4.51,
                   "fontSize": "12.0pt (16px)",
-                  "fontWeight": "normal",
+                  "fontWeight": "bold",
                   "expectedContrastRatio": "4.5:1"
                 },
                 "relatedNodes": [],
@@ -1775,81 +1738,6 @@
             "html": "<p class=\"about-card__text\">\n            To be Japan's leading platform that empowers skilled foreign workers\n            to achieve meaningful careers and brighter futures.\n          </p>",
             "target": [
               ".about-card__text:nth-child(7)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#290000",
-                  "bgColor": "#ffffff",
-                  "contrastRatio": 19.19,
-                  "fontSize": "24.0pt (32px)",
-                  "fontWeight": "bold",
-                  "expectedContrastRatio": "3:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 19.19"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h2 class=\"m-0 feature-card__title\">Want to work with us?</h2>",
-            "target": [
-              ".feature-card__title"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#595959",
-                  "bgColor": "#ffffff",
-                  "contrastRatio": 7,
-                  "fontSize": "11.4pt (15.2px)",
-                  "fontWeight": "normal",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 7"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<p class=\"muted mt-xxs feature-card__desc\">\n                We partner with companies to hire and onboard exceptional\n                talent.\n              </p>",
-            "target": [
-              ".mt-xxs"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#ffffff",
-                  "bgColor": "#eb0000",
-                  "contrastRatio": 4.63,
-                  "fontSize": "11.3pt (15px)",
-                  "fontWeight": "normal",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 4.63"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<a class=\"btn btn-primary feature-card__cta\" href=\"../index.html#post-job\">Contact Us</a>",
-            "target": [
-              ".feature-card__cta"
             ]
           },
           {
@@ -3680,7 +3568,7 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"btn btn-primary feature-card__cta\" href=\"../index.html#post-job\">Contact Us</a>",
+            "html": "<a class=\"btn btn-primary feature-card__cta animate-hover-scale\" href=\"../index.html#post-job\">Contact Us</a>",
             "target": [
               ".feature-card__cta"
             ]
@@ -4979,7 +4867,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"about-card\">",
+            "html": "<div class=\"about-card animate-fade-in-up animate-on-scroll animate-active\">",
             "target": [
               ".about-card"
             ]
@@ -5179,7 +5067,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"feature-card feature-cta\">",
+            "html": "<div class=\"feature-card feature-cta animate-scale-up animate-on-scroll animate-hover-lift\">",
             "target": [
               ".feature-card"
             ]
@@ -5259,7 +5147,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div>\n              <a class=\"btn btn-primary feature-card__cta\" href=\"../index.html#post-job\">Contact Us</a>\n            </div>",
+            "html": "<div>\n              <a class=\"btn btn-primary feature-card__cta animate-hover-scale\" href=\"../index.html#post-job\">Contact Us</a>\n            </div>",
             "target": [
               ".feature-card > div:nth-child(2)"
             ]
@@ -5279,7 +5167,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"btn btn-primary feature-card__cta\" href=\"../index.html#post-job\">Contact Us</a>",
+            "html": "<a class=\"btn btn-primary feature-card__cta animate-hover-scale\" href=\"../index.html#post-job\">Contact Us</a>",
             "target": [
               ".feature-card__cta"
             ]
@@ -6122,6 +6010,37 @@
             "html": "<a href=\"privacy.html\">Privacy</a>",
             "target": [
               "nav[aria-label=\"Footer legal\"] > a[href$=\"privacy.html\"]"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "skip-link",
+        "impact": null,
+        "tags": [
+          "cat.keyboard",
+          "best-practice"
+        ],
+        "description": "Ensure all skip links have a focusable target",
+        "help": "The skip-link target should exist and be focusable",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.6/skip-link?application=axeAPI",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "skip-link",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "Skip link target exists"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a href=\"#main-content\" class=\"skip-link\" data-i18n=\"accessibility.skipToContent\">Skip to main content</a>",
+            "target": [
+              ".skip-link"
             ]
           }
         ]

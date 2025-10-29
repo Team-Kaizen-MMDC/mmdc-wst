@@ -9,13 +9,13 @@
       "name": "axe"
     },
     "testEnvironment": {
-      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/140.0.7339.186 Safari/537.36",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/140.0.7339.186 Safari/537.36",
       "windowWidth": 1280,
       "windowHeight": 720,
       "orientationAngle": 0,
       "orientationType": "landscape-primary"
     },
-    "timestamp": "2025-10-25T03:15:31.225Z",
+    "timestamp": "2025-10-29T09:37:29.201Z",
     "url": "http://localhost:8000/pages/agency.html",
     "toolOptions": {
       "reporter": "v1"
@@ -231,6 +231,20 @@
         "description": "Ensure the autocomplete attribute is correct and suitable for the form field",
         "help": "autocomplete attribute must be used correctly",
         "helpUrl": "https://dequeuniversity.com/rules/axe/4.6/autocomplete-valid?application=axeAPI",
+        "nodes": []
+      },
+      {
+        "id": "avoid-inline-spacing",
+        "impact": null,
+        "tags": [
+          "cat.structure",
+          "wcag21aa",
+          "wcag1412",
+          "ACT"
+        ],
+        "description": "Ensure that text spacing set through style attributes can be adjusted with custom stylesheets",
+        "help": "Inline text spacing must be adjustable with custom stylesheets",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.6/avoid-inline-spacing?application=axeAPI",
         "nodes": []
       },
       {
@@ -596,18 +610,6 @@
         "nodes": []
       },
       {
-        "id": "skip-link",
-        "impact": null,
-        "tags": [
-          "cat.keyboard",
-          "best-practice"
-        ],
-        "description": "Ensure all skip links have a focusable target",
-        "help": "The skip-link target should exist and be focusable",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/4.6/skip-link?application=axeAPI",
-        "nodes": []
-      },
-      {
         "id": "svg-img-alt",
         "impact": null,
         "tags": [
@@ -795,9 +797,9 @@
               }
             ],
             "impact": null,
-            "html": "<section class=\"feature-card mt-md\" aria-labelledby=\"rso-heading\">",
+            "html": "<section class=\"feature-card mt-md animate-fade-in-down animate-on-scroll animate-active\" aria-labelledby=\"rso-heading\">",
             "target": [
-              "section[aria-labelledby=\"rso-heading\"]"
+              ".animate-fade-in-down"
             ]
           },
           {
@@ -828,7 +830,7 @@
               }
             ],
             "impact": null,
-            "html": "<section class=\"feature-card mt-md\" aria-labelledby=\"tokyo-rso-heading\">",
+            "html": "<section class=\"feature-card mt-md animate-fade-in-up animate-on-scroll\" aria-labelledby=\"tokyo-rso-heading\">",
             "target": [
               "section[aria-labelledby=\"tokyo-rso-heading\"]"
             ]
@@ -914,6 +916,24 @@
             "target": [
               "#lang-toggle-off"
             ]
+          },
+          {
+            "any": [
+              {
+                "id": "aria-allowed-role",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "minor",
+                "message": "ARIA role is allowed for given element"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<main id=\"main-content\" role=\"main\" class=\"section-padding\">",
+            "target": [
+              "#main-content"
+            ]
           }
         ]
       },
@@ -978,6 +998,24 @@
             "target": [
               "#lang-toggle"
             ]
+          },
+          {
+            "any": [
+              {
+                "id": "aria-required-attr",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "All required ARIA attributes are present"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<main id=\"main-content\" role=\"main\" class=\"section-padding\">",
+            "target": [
+              "#main-content"
+            ]
           }
         ]
       },
@@ -1030,6 +1068,45 @@
             "html": "<input class=\"form-check-input\" type=\"checkbox\" id=\"lang-toggle\" role=\"switch\" aria-checked=\"false\">",
             "target": [
               "#lang-toggle"
+            ]
+          },
+          {
+            "any": [],
+            "all": [],
+            "none": [
+              {
+                "id": "invalidrole",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA role is valid"
+              },
+              {
+                "id": "abstractrole",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Abstract roles are not used"
+              },
+              {
+                "id": "unsupportedrole",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "ARIA role is supported"
+              },
+              {
+                "id": "deprecatedrole",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "minor",
+                "message": "ARIA role is not deprecated"
+              }
+            ],
+            "impact": null,
+            "html": "<main id=\"main-content\" role=\"main\" class=\"section-padding\">",
+            "target": [
+              "#main-content"
             ]
           }
         ]
@@ -1105,9 +1182,9 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<section class=\"feature-card mt-md\" aria-labelledby=\"rso-heading\">",
+            "html": "<section class=\"feature-card mt-md animate-fade-in-down animate-on-scroll animate-active\" aria-labelledby=\"rso-heading\">",
             "target": [
-              "section[aria-labelledby=\"rso-heading\"]"
+              ".animate-fade-in-down"
             ]
           },
           {
@@ -1137,7 +1214,7 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<section class=\"feature-card mt-md\" aria-labelledby=\"tokyo-rso-heading\">",
+            "html": "<section class=\"feature-card mt-md animate-fade-in-up animate-on-scroll\" aria-labelledby=\"tokyo-rso-heading\">",
             "target": [
               "section[aria-labelledby=\"tokyo-rso-heading\"]"
             ]
@@ -1219,9 +1296,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<section class=\"feature-card mt-md\" aria-labelledby=\"rso-heading\">",
+            "html": "<section class=\"feature-card mt-md animate-fade-in-down animate-on-scroll animate-active\" aria-labelledby=\"rso-heading\">",
             "target": [
-              "section[aria-labelledby=\"rso-heading\"]"
+              ".animate-fade-in-down"
             ]
           },
           {
@@ -1237,7 +1314,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<section class=\"feature-card mt-md\" aria-labelledby=\"tokyo-rso-heading\">",
+            "html": "<section class=\"feature-card mt-md animate-fade-in-up animate-on-scroll\" aria-labelledby=\"tokyo-rso-heading\">",
             "target": [
               "section[aria-labelledby=\"tokyo-rso-heading\"]"
             ]
@@ -1263,53 +1340,6 @@
         ]
       },
       {
-        "id": "avoid-inline-spacing",
-        "impact": null,
-        "tags": [
-          "cat.structure",
-          "wcag21aa",
-          "wcag1412",
-          "ACT"
-        ],
-        "description": "Ensure that text spacing set through style attributes can be adjusted with custom stylesheets",
-        "help": "Inline text spacing must be adjustable with custom stylesheets",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/4.6/avoid-inline-spacing?application=axeAPI",
-        "nodes": [
-          {
-            "any": [],
-            "all": [
-              {
-                "id": "important-letter-spacing",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
-              },
-              {
-                "id": "important-word-spacing",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
-              },
-              {
-                "id": "important-line-height",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
-              }
-            ],
-            "none": [],
-            "impact": null,
-            "html": "<p class=\"mt-lg\" style=\"text-align: center\">\n          <a class=\"btn btn-primary btn--small\" href=\"../index.html\">Back to Home</a>\n        </p>",
-            "target": [
-              ".mt-lg"
-            ]
-          }
-        ]
-      },
-      {
         "id": "bypass",
         "impact": null,
         "tags": [
@@ -1326,6 +1356,13 @@
           {
             "any": [
               {
+                "id": "internal-link-present",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Valid skip link found"
+              },
+              {
                 "id": "header-present",
                 "data": null,
                 "relatedNodes": [
@@ -1338,19 +1375,19 @@
                   {
                     "html": "<h3 class=\"agency-item__name\">\n                Gurutto Corporation (Registration Support Organization)\n              </h3>",
                     "target": [
-                      "section[aria-labelledby=\"rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(1) > .agency-item__name"
+                      ".animate-active.agency-item.animate-hover-lift:nth-child(1) > .agency-item__name"
                     ]
                   },
                   {
                     "html": "<h3 class=\"agency-item__name\">\n                THRIVE Business Cooperative Association\n              </h3>",
                     "target": [
-                      "section[aria-labelledby=\"rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(2) > .agency-item__name"
+                      ".animate-active.agency-item.animate-hover-lift:nth-child(2) > .agency-item__name"
                     ]
                   },
                   {
                     "html": "<h3 class=\"agency-item__name\">\n                Hokkaido Human Resource Development Cooperative\n              </h3>",
                     "target": [
-                      "section[aria-labelledby=\"rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(3) > .agency-item__name"
+                      ".animate-active.agency-item.animate-hover-lift:nth-child(3) > .agency-item__name"
                     ]
                   },
                   {
@@ -1362,61 +1399,61 @@
                   {
                     "html": "<h3 class=\"agency-item__name\">First Stakes Corp.</h3>",
                     "target": [
-                      "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(1) > .agency-item__name"
+                      "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item.animate-hover-lift.animate-fade-in-up:nth-child(1) > .agency-item__name"
                     ]
                   },
                   {
                     "html": "<h3 class=\"agency-item__name\">\n                CALICO LEGAL Immigration Support\n              </h3>",
                     "target": [
-                      "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(2) > .agency-item__name"
+                      "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item.animate-hover-lift.animate-fade-in-up:nth-child(2) > .agency-item__name"
                     ]
                   },
                   {
                     "html": "<h3 class=\"agency-item__name\">\n                TSUKASA TSB CARE ACADEMY Co., Ltd\n              </h3>",
                     "target": [
-                      "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(3) > .agency-item__name"
+                      "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item.animate-hover-lift.animate-fade-in-up:nth-child(3) > .agency-item__name"
                     ]
                   },
                   {
                     "html": "<h3 class=\"agency-item__name\">\n                General Incorporated Foundation CHIKYUJIN (Tokyo HQ)\n              </h3>",
                     "target": [
-                      ".agency-item:nth-child(4) > .agency-item__name"
+                      ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(4) > .agency-item__name"
                     ]
                   },
                   {
                     "html": "<h3 class=\"agency-item__name\">\n                General Incorporated Foundation CHIKYUJIN (Tokyo Branch)\n              </h3>",
                     "target": [
-                      ".agency-item:nth-child(5) > .agency-item__name"
+                      ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(5) > .agency-item__name"
                     ]
                   },
                   {
                     "html": "<h3 class=\"agency-item__name\">\n                KYUSHU NET COOPERATIVE (Tokyo branch)\n              </h3>",
                     "target": [
-                      ".agency-item:nth-child(6) > .agency-item__name"
+                      ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(6) > .agency-item__name"
                     ]
                   },
                   {
                     "html": "<h3 class=\"agency-item__name\">\n                Support Center Fukuoka YUKARI Life Support Center (Tokyo office)\n              </h3>",
                     "target": [
-                      ".agency-item:nth-child(7) > .agency-item__name"
+                      ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(7) > .agency-item__name"
                     ]
                   },
                   {
                     "html": "<h3 class=\"agency-item__name\">\n                Non-Profit Organization Global Life\n              </h3>",
                     "target": [
-                      ".agency-item:nth-child(8) > .agency-item__name"
+                      ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(8) > .agency-item__name"
                     ]
                   },
                   {
                     "html": "<h3 class=\"agency-item__name\">\n                Shinichi Kato Office (Administrative scrivener and social\n                insurance worker)\n              </h3>",
                     "target": [
-                      ".agency-item:nth-child(9) > .agency-item__name"
+                      ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(9) > .agency-item__name"
                     ]
                   },
                   {
                     "html": "<h3 class=\"agency-item__name\">\n                General Incorporated Association HASEGAWA\n              </h3>",
                     "target": [
-                      ".agency-item:nth-child(10) > .agency-item__name"
+                      ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(10) > .agency-item__name"
                     ]
                   },
                   {
@@ -1452,9 +1489,9 @@
                 "data": null,
                 "relatedNodes": [
                   {
-                    "html": "<main class=\"section-padding\">",
+                    "html": "<main id=\"main-content\" role=\"main\" class=\"section-padding\">",
                     "target": [
-                      "main"
+                      "#main-content"
                     ]
                   }
                 ],
@@ -1569,7 +1606,7 @@
                   "bgColor": "#fcfcfc",
                   "contrastRatio": 4.51,
                   "fontSize": "12.0pt (16px)",
-                  "fontWeight": "normal",
+                  "fontWeight": "bold",
                   "expectedContrastRatio": "4.5:1"
                 },
                 "relatedNodes": [],
@@ -1732,7 +1769,7 @@
             "impact": null,
             "html": "<p class=\"muted feature-card__desc\">\n            Below are a selection of organisations and agencies that assist\n            employers and candidates with the SSW programme. Click through to\n            learn more or contact them directly.\n          </p>",
             "target": [
-              "section[aria-labelledby=\"rso-heading\"] > .feature-card__desc"
+              ".animate-fade-in-down > .feature-card__desc"
             ]
           },
           {
@@ -1757,7 +1794,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                Gurutto Corporation (Registration Support Organization)\n              </h3>",
             "target": [
-              "section[aria-labelledby=\"rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(1) > .agency-item__name"
+              ".animate-active.agency-item.animate-hover-lift:nth-child(1) > .agency-item__name"
             ]
           },
           {
@@ -1782,7 +1819,7 @@
             "impact": null,
             "html": "<p class=\"muted agency-item__desc\">\n                Provides employer and candidate support under regional programs.\n                See their listing and contact information.\n              </p>",
             "target": [
-              "section[aria-labelledby=\"rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(1) > .agency-item__desc"
+              ".animate-active.agency-item.animate-hover-lift:nth-child(1) > .agency-item__desc"
             ]
           },
           {
@@ -1805,9 +1842,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"btn btn-secondary\" href=\"https://ph.gurutto-asia.com/digest/category-1/search/sub-category-9/\" target=\"_blank\" rel=\"noopener noreferrer\">Visit Gurutto listing</a>",
+            "html": "<a class=\"btn btn-secondary animate-hover-scale\" href=\"https://ph.gurutto-asia.com/digest/category-1/search/sub-category-9/\" target=\"_blank\" rel=\"noopener noreferrer\">Visit Gurutto listing</a>",
             "target": [
-              ".agency-item:nth-child(1) > .btn-secondary[target=\"_blank\"][rel=\"noopener noreferrer\"]"
+              ".animate-active.agency-item.animate-hover-lift:nth-child(1) > .btn-secondary[target=\"_blank\"][rel=\"noopener noreferrer\"]"
             ]
           },
           {
@@ -1832,7 +1869,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                THRIVE Business Cooperative Association\n              </h3>",
             "target": [
-              "section[aria-labelledby=\"rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(2) > .agency-item__name"
+              ".animate-active.agency-item.animate-hover-lift:nth-child(2) > .agency-item__name"
             ]
           },
           {
@@ -1857,7 +1894,7 @@
             "impact": null,
             "html": "<p class=\"muted agency-item__desc\">\n                A business cooperative offering support services and community\n                integration assistance in Miyagi.\n              </p>",
             "target": [
-              "section[aria-labelledby=\"rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(2) > .agency-item__desc"
+              ".animate-active.agency-item.animate-hover-lift:nth-child(2) > .agency-item__desc"
             ]
           },
           {
@@ -1880,7 +1917,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"btn btn-secondary\" href=\"https://thrive-miyagi.com\" target=\"_blank\" rel=\"noopener noreferrer\">Visit THRIVE</a>",
+            "html": "<a class=\"btn btn-secondary animate-hover-scale\" href=\"https://thrive-miyagi.com\" target=\"_blank\" rel=\"noopener noreferrer\">Visit THRIVE</a>",
             "target": [
               "a[href$=\"thrive-miyagi.com\"]"
             ]
@@ -1907,7 +1944,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                Hokkaido Human Resource Development Cooperative\n              </h3>",
             "target": [
-              "section[aria-labelledby=\"rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(3) > .agency-item__name"
+              ".animate-active.agency-item.animate-hover-lift:nth-child(3) > .agency-item__name"
             ]
           },
           {
@@ -1932,7 +1969,7 @@
             "impact": null,
             "html": "<p class=\"muted agency-item__desc\">\n                Focuses on workforce development and training programs in\n                Hokkaido.\n              </p>",
             "target": [
-              "section[aria-labelledby=\"rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(3) > .agency-item__desc"
+              ".animate-active.agency-item.animate-hover-lift:nth-child(3) > .agency-item__desc"
             ]
           },
           {
@@ -1955,9 +1992,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"btn btn-secondary\" href=\"https://hhd.or.jp/\" target=\"_blank\" rel=\"noopener noreferrer\">Visit Hokkaido HRD</a>",
+            "html": "<a class=\"btn btn-secondary animate-hover-scale\" href=\"https://fohred.synfoster.hokudai.ac.jp/en/\" target=\"_blank\" rel=\"noopener noreferrer\">Visit Hokkaido HRD</a>",
             "target": [
-              "a[href$=\"hhd.or.jp/\"]"
+              ".animate-active.agency-item.animate-hover-lift:nth-child(3) > .btn-secondary[target=\"_blank\"][rel=\"noopener noreferrer\"]"
             ]
           },
           {
@@ -2032,7 +2069,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">First Stakes Corp.</h3>",
             "target": [
-              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(1) > .agency-item__name"
+              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item.animate-hover-lift.animate-fade-in-up:nth-child(1) > .agency-item__name"
             ]
           },
           {
@@ -2057,7 +2094,7 @@
             "impact": null,
             "html": "<p class=\"muted agency-item__desc\">\n                Address: 7-4-7-5F, Nishishinjuku, Shinjuku-ku, Tokyo\n              </p>",
             "target": [
-              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(1) > .agency-item__desc:nth-child(2)"
+              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item.animate-hover-lift.animate-fade-in-up:nth-child(1) > .agency-item__desc:nth-child(2)"
             ]
           },
           {
@@ -2082,7 +2119,7 @@
             "impact": null,
             "html": "<p class=\"muted agency-item__desc\">\n                Phone: <a href=\"tel:+81353120271\">03-5312-0271</a>\n              </p>",
             "target": [
-              ".agency-item:nth-child(1) > .agency-item__desc:nth-child(3)"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(1) > .agency-item__desc:nth-child(3)"
             ]
           },
           {
@@ -2107,7 +2144,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                CALICO LEGAL Immigration Support\n              </h3>",
             "target": [
-              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(2) > .agency-item__name"
+              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item.animate-hover-lift.animate-fade-in-up:nth-child(2) > .agency-item__name"
             ]
           },
           {
@@ -2132,7 +2169,7 @@
             "impact": null,
             "html": "<p class=\"muted agency-item__desc\">\n                Address: 409, Tensho Office Bldg, 3-3-5, Nihonbashi Ningyo-cho,\n                Chuo-ku, Tokyo\n              </p>",
             "target": [
-              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(2) > .agency-item__desc:nth-child(2)"
+              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item.animate-hover-lift.animate-fade-in-up:nth-child(2) > .agency-item__desc:nth-child(2)"
             ]
           },
           {
@@ -2157,7 +2194,7 @@
             "impact": null,
             "html": "<p class=\"muted agency-item__desc\">\n                Phone: <a href=\"tel:+81336695200\">03-3669-5200</a>\n              </p>",
             "target": [
-              ".agency-item:nth-child(2) > .agency-item__desc:nth-child(3)"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(2) > .agency-item__desc:nth-child(3)"
             ]
           },
           {
@@ -2182,7 +2219,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                TSUKASA TSB CARE ACADEMY Co., Ltd\n              </h3>",
             "target": [
-              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(3) > .agency-item__name"
+              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item.animate-hover-lift.animate-fade-in-up:nth-child(3) > .agency-item__name"
             ]
           },
           {
@@ -2207,7 +2244,7 @@
             "impact": null,
             "html": "<p class=\"muted agency-item__desc\">\n                Address: Aiku-bldg, 5-5-1 Kokuryo-cho, Chofu-shi, Tokyo\n              </p>",
             "target": [
-              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(3) > .agency-item__desc:nth-child(2)"
+              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item.animate-hover-lift.animate-fade-in-up:nth-child(3) > .agency-item__desc:nth-child(2)"
             ]
           },
           {
@@ -2232,7 +2269,7 @@
             "impact": null,
             "html": "<p class=\"muted agency-item__desc\">\n                Phone: <a href=\"tel:+81424428130\">042-442-8130</a>\n              </p>",
             "target": [
-              ".agency-item:nth-child(3) > .agency-item__desc:nth-child(3)"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(3) > .agency-item__desc:nth-child(3)"
             ]
           },
           {
@@ -2257,7 +2294,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                General Incorporated Foundation CHIKYUJIN (Tokyo HQ)\n              </h3>",
             "target": [
-              ".agency-item:nth-child(4) > .agency-item__name"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(4) > .agency-item__name"
             ]
           },
           {
@@ -2282,7 +2319,7 @@
             "impact": null,
             "html": "<p class=\"muted agency-item__desc\">\n                Address: Kisho Bldg. 8F Sotokanda, Chiyoda-ku, Tokyo\n              </p>",
             "target": [
-              ".agency-item:nth-child(4) > .agency-item__desc:nth-child(2)"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(4) > .agency-item__desc:nth-child(2)"
             ]
           },
           {
@@ -2307,7 +2344,7 @@
             "impact": null,
             "html": "<p class=\"muted agency-item__desc\">\n                Phone: <a href=\"tel:+81335258148\">03-3525-8148</a>\n              </p>",
             "target": [
-              ".agency-item:nth-child(4) > .agency-item__desc:nth-child(3)"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(4) > .agency-item__desc:nth-child(3)"
             ]
           },
           {
@@ -2332,7 +2369,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                General Incorporated Foundation CHIKYUJIN (Tokyo Branch)\n              </h3>",
             "target": [
-              ".agency-item:nth-child(5) > .agency-item__name"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(5) > .agency-item__name"
             ]
           },
           {
@@ -2357,7 +2394,7 @@
             "impact": null,
             "html": "<p class=\"muted agency-item__desc\">\n                Address: 6F, 3-3-7 Bakurocho, Chuo-ku, Tokyo\n              </p>",
             "target": [
-              ".agency-item:nth-child(5) > .agency-item__desc"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(5) > .agency-item__desc"
             ]
           },
           {
@@ -2382,7 +2419,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                KYUSHU NET COOPERATIVE (Tokyo branch)\n              </h3>",
             "target": [
-              ".agency-item:nth-child(6) > .agency-item__name"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(6) > .agency-item__name"
             ]
           },
           {
@@ -2407,7 +2444,7 @@
             "impact": null,
             "html": "<p class=\"muted agency-item__desc\">\n                Address: Oshidatemachi, Fuchu-city, Tokyo\n              </p>",
             "target": [
-              ".agency-item:nth-child(6) > .agency-item__desc"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(6) > .agency-item__desc"
             ]
           },
           {
@@ -2432,7 +2469,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                Support Center Fukuoka YUKARI Life Support Center (Tokyo office)\n              </h3>",
             "target": [
-              ".agency-item:nth-child(7) > .agency-item__name"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(7) > .agency-item__name"
             ]
           },
           {
@@ -2457,7 +2494,7 @@
             "impact": null,
             "html": "<p class=\"muted agency-item__desc\">\n                Address: Kamikawabata-Machi, Hakata-ku, Tokyo\n              </p>",
             "target": [
-              ".agency-item:nth-child(7) > .agency-item__desc"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(7) > .agency-item__desc"
             ]
           },
           {
@@ -2482,7 +2519,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                Non-Profit Organization Global Life\n              </h3>",
             "target": [
-              ".agency-item:nth-child(8) > .agency-item__name"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(8) > .agency-item__name"
             ]
           },
           {
@@ -2507,7 +2544,7 @@
             "impact": null,
             "html": "<p class=\"muted agency-item__desc\">\n                Address: 12-28 Kamikawabata-Machi, Hakata-ku, Tokyo\n              </p>",
             "target": [
-              ".agency-item:nth-child(8) > .agency-item__desc"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(8) > .agency-item__desc"
             ]
           },
           {
@@ -2532,7 +2569,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                Shinichi Kato Office (Administrative scrivener and social\n                insurance worker)\n              </h3>",
             "target": [
-              ".agency-item:nth-child(9) > .agency-item__name"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(9) > .agency-item__name"
             ]
           },
           {
@@ -2557,7 +2594,7 @@
             "impact": null,
             "html": "<p class=\"muted agency-item__desc\">\n                Address: 3-1-27 Shinkawa-cho, Noboribetsu-shi, Tokyo\n              </p>",
             "target": [
-              ".agency-item:nth-child(9) > .agency-item__desc"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(9) > .agency-item__desc"
             ]
           },
           {
@@ -2582,7 +2619,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                General Incorporated Association HASEGAWA\n              </h3>",
             "target": [
-              ".agency-item:nth-child(10) > .agency-item__name"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(10) > .agency-item__name"
             ]
           },
           {
@@ -2607,32 +2644,7 @@
             "impact": null,
             "html": "<p class=\"muted agency-item__desc\">\n                Address: 4-2-39 Fudomae, Utsunomiya-shi, Tochigi-ken, Tokyo\n              </p>",
             "target": [
-              ".agency-item:nth-child(10) > .agency-item__desc"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#ffffff",
-                  "bgColor": "#eb0000",
-                  "contrastRatio": 4.63,
-                  "fontSize": "11.3pt (15px)",
-                  "fontWeight": "normal",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 4.63"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<a class=\"btn btn-primary btn--small\" href=\"../index.html\">Back to Home</a>",
-            "target": [
-              ".btn--small"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(10) > .agency-item__desc"
             ]
           },
           {
@@ -3332,6 +3344,24 @@
             "target": [
               "#lang-toggle-label-off"
             ]
+          },
+          {
+            "any": [
+              {
+                "id": "duplicate-id",
+                "data": "main-content",
+                "relatedNodes": [],
+                "impact": "minor",
+                "message": "Document has no static elements that share the same id attribute"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<main id=\"main-content\" role=\"main\" class=\"section-padding\">",
+            "target": [
+              "#main-content"
+            ]
           }
         ]
       },
@@ -3379,7 +3409,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                Gurutto Corporation (Registration Support Organization)\n              </h3>",
             "target": [
-              "section[aria-labelledby=\"rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(1) > .agency-item__name"
+              ".animate-active.agency-item.animate-hover-lift:nth-child(1) > .agency-item__name"
             ]
           },
           {
@@ -3397,7 +3427,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                THRIVE Business Cooperative Association\n              </h3>",
             "target": [
-              "section[aria-labelledby=\"rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(2) > .agency-item__name"
+              ".animate-active.agency-item.animate-hover-lift:nth-child(2) > .agency-item__name"
             ]
           },
           {
@@ -3415,7 +3445,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                Hokkaido Human Resource Development Cooperative\n              </h3>",
             "target": [
-              "section[aria-labelledby=\"rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(3) > .agency-item__name"
+              ".animate-active.agency-item.animate-hover-lift:nth-child(3) > .agency-item__name"
             ]
           },
           {
@@ -3451,7 +3481,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">First Stakes Corp.</h3>",
             "target": [
-              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(1) > .agency-item__name"
+              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item.animate-hover-lift.animate-fade-in-up:nth-child(1) > .agency-item__name"
             ]
           },
           {
@@ -3469,7 +3499,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                CALICO LEGAL Immigration Support\n              </h3>",
             "target": [
-              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(2) > .agency-item__name"
+              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item.animate-hover-lift.animate-fade-in-up:nth-child(2) > .agency-item__name"
             ]
           },
           {
@@ -3487,7 +3517,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                TSUKASA TSB CARE ACADEMY Co., Ltd\n              </h3>",
             "target": [
-              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(3) > .agency-item__name"
+              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item.animate-hover-lift.animate-fade-in-up:nth-child(3) > .agency-item__name"
             ]
           },
           {
@@ -3505,7 +3535,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                General Incorporated Foundation CHIKYUJIN (Tokyo HQ)\n              </h3>",
             "target": [
-              ".agency-item:nth-child(4) > .agency-item__name"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(4) > .agency-item__name"
             ]
           },
           {
@@ -3523,7 +3553,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                General Incorporated Foundation CHIKYUJIN (Tokyo Branch)\n              </h3>",
             "target": [
-              ".agency-item:nth-child(5) > .agency-item__name"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(5) > .agency-item__name"
             ]
           },
           {
@@ -3541,7 +3571,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                KYUSHU NET COOPERATIVE (Tokyo branch)\n              </h3>",
             "target": [
-              ".agency-item:nth-child(6) > .agency-item__name"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(6) > .agency-item__name"
             ]
           },
           {
@@ -3559,7 +3589,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                Support Center Fukuoka YUKARI Life Support Center (Tokyo office)\n              </h3>",
             "target": [
-              ".agency-item:nth-child(7) > .agency-item__name"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(7) > .agency-item__name"
             ]
           },
           {
@@ -3577,7 +3607,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                Non-Profit Organization Global Life\n              </h3>",
             "target": [
-              ".agency-item:nth-child(8) > .agency-item__name"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(8) > .agency-item__name"
             ]
           },
           {
@@ -3595,7 +3625,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                Shinichi Kato Office (Administrative scrivener and social\n                insurance worker)\n              </h3>",
             "target": [
-              ".agency-item:nth-child(9) > .agency-item__name"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(9) > .agency-item__name"
             ]
           },
           {
@@ -3613,7 +3643,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                General Incorporated Association HASEGAWA\n              </h3>",
             "target": [
-              ".agency-item:nth-child(10) > .agency-item__name"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(10) > .agency-item__name"
             ]
           },
           {
@@ -3748,115 +3778,115 @@
                   "headingOrder": [
                     {
                       "ancestry": [
-                        "html > body > main:nth-child(2) > div > section:nth-child(1) > h2:nth-child(1)"
+                        "html > body > main:nth-child(3) > div > section:nth-child(1) > h2:nth-child(1)"
                       ],
                       "level": 2
                     },
                     {
                       "ancestry": [
-                        "html > body > main:nth-child(2) > div > section:nth-child(1) > ul:nth-child(3) > li:nth-child(1) > h3:nth-child(1)"
+                        "html > body > main:nth-child(3) > div > section:nth-child(1) > ul:nth-child(3) > li:nth-child(1) > h3:nth-child(1)"
                       ],
                       "level": 3
                     },
                     {
                       "ancestry": [
-                        "html > body > main:nth-child(2) > div > section:nth-child(1) > ul:nth-child(3) > li:nth-child(2) > h3:nth-child(1)"
+                        "html > body > main:nth-child(3) > div > section:nth-child(1) > ul:nth-child(3) > li:nth-child(2) > h3:nth-child(1)"
                       ],
                       "level": 3
                     },
                     {
                       "ancestry": [
-                        "html > body > main:nth-child(2) > div > section:nth-child(1) > ul:nth-child(3) > li:nth-child(3) > h3:nth-child(1)"
+                        "html > body > main:nth-child(3) > div > section:nth-child(1) > ul:nth-child(3) > li:nth-child(3) > h3:nth-child(1)"
                       ],
                       "level": 3
                     },
                     {
                       "ancestry": [
-                        "html > body > main:nth-child(2) > div > section:nth-child(2) > h2:nth-child(1)"
+                        "html > body > main:nth-child(3) > div > section:nth-child(2) > h2:nth-child(1)"
                       ],
                       "level": 2
                     },
                     {
                       "ancestry": [
-                        "html > body > main:nth-child(2) > div > section:nth-child(2) > ul:nth-child(3) > li:nth-child(1) > h3:nth-child(1)"
+                        "html > body > main:nth-child(3) > div > section:nth-child(2) > ul:nth-child(3) > li:nth-child(1) > h3:nth-child(1)"
                       ],
                       "level": 3
                     },
                     {
                       "ancestry": [
-                        "html > body > main:nth-child(2) > div > section:nth-child(2) > ul:nth-child(3) > li:nth-child(2) > h3:nth-child(1)"
+                        "html > body > main:nth-child(3) > div > section:nth-child(2) > ul:nth-child(3) > li:nth-child(2) > h3:nth-child(1)"
                       ],
                       "level": 3
                     },
                     {
                       "ancestry": [
-                        "html > body > main:nth-child(2) > div > section:nth-child(2) > ul:nth-child(3) > li:nth-child(3) > h3:nth-child(1)"
+                        "html > body > main:nth-child(3) > div > section:nth-child(2) > ul:nth-child(3) > li:nth-child(3) > h3:nth-child(1)"
                       ],
                       "level": 3
                     },
                     {
                       "ancestry": [
-                        "html > body > main:nth-child(2) > div > section:nth-child(2) > ul:nth-child(3) > li:nth-child(4) > h3:nth-child(1)"
+                        "html > body > main:nth-child(3) > div > section:nth-child(2) > ul:nth-child(3) > li:nth-child(4) > h3:nth-child(1)"
                       ],
                       "level": 3
                     },
                     {
                       "ancestry": [
-                        "html > body > main:nth-child(2) > div > section:nth-child(2) > ul:nth-child(3) > li:nth-child(5) > h3:nth-child(1)"
+                        "html > body > main:nth-child(3) > div > section:nth-child(2) > ul:nth-child(3) > li:nth-child(5) > h3:nth-child(1)"
                       ],
                       "level": 3
                     },
                     {
                       "ancestry": [
-                        "html > body > main:nth-child(2) > div > section:nth-child(2) > ul:nth-child(3) > li:nth-child(6) > h3:nth-child(1)"
+                        "html > body > main:nth-child(3) > div > section:nth-child(2) > ul:nth-child(3) > li:nth-child(6) > h3:nth-child(1)"
                       ],
                       "level": 3
                     },
                     {
                       "ancestry": [
-                        "html > body > main:nth-child(2) > div > section:nth-child(2) > ul:nth-child(3) > li:nth-child(7) > h3:nth-child(1)"
+                        "html > body > main:nth-child(3) > div > section:nth-child(2) > ul:nth-child(3) > li:nth-child(7) > h3:nth-child(1)"
                       ],
                       "level": 3
                     },
                     {
                       "ancestry": [
-                        "html > body > main:nth-child(2) > div > section:nth-child(2) > ul:nth-child(3) > li:nth-child(8) > h3:nth-child(1)"
+                        "html > body > main:nth-child(3) > div > section:nth-child(2) > ul:nth-child(3) > li:nth-child(8) > h3:nth-child(1)"
                       ],
                       "level": 3
                     },
                     {
                       "ancestry": [
-                        "html > body > main:nth-child(2) > div > section:nth-child(2) > ul:nth-child(3) > li:nth-child(9) > h3:nth-child(1)"
+                        "html > body > main:nth-child(3) > div > section:nth-child(2) > ul:nth-child(3) > li:nth-child(9) > h3:nth-child(1)"
                       ],
                       "level": 3
                     },
                     {
                       "ancestry": [
-                        "html > body > main:nth-child(2) > div > section:nth-child(2) > ul:nth-child(3) > li:nth-child(10) > h3:nth-child(1)"
+                        "html > body > main:nth-child(3) > div > section:nth-child(2) > ul:nth-child(3) > li:nth-child(10) > h3:nth-child(1)"
                       ],
                       "level": 3
                     },
                     {
                       "ancestry": [
-                        "html > body > footer:nth-child(3) > div:nth-child(1) > div:nth-child(1) > h3:nth-child(1)"
+                        "html > body > footer:nth-child(4) > div:nth-child(1) > div:nth-child(1) > h3:nth-child(1)"
                       ],
                       "level": 3
                     },
                     {
                       "ancestry": [
-                        "html > body > footer:nth-child(3) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > h4:nth-child(1)"
+                        "html > body > footer:nth-child(4) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > h4:nth-child(1)"
                       ],
                       "level": 4
                     },
                     {
                       "ancestry": [
-                        "html > body > footer:nth-child(3) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > h4:nth-child(1)"
+                        "html > body > footer:nth-child(4) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > h4:nth-child(1)"
                       ],
                       "level": 4
                     },
                     {
                       "ancestry": [
-                        "html > body > footer:nth-child(3) > div:nth-child(1) > div:nth-child(2) > div:nth-child(3) > h4:nth-child(1)"
+                        "html > body > footer:nth-child(4) > div:nth-child(1) > div:nth-child(2) > div:nth-child(3) > h4:nth-child(1)"
                       ],
                       "level": 4
                     }
@@ -3890,7 +3920,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                Gurutto Corporation (Registration Support Organization)\n              </h3>",
             "target": [
-              "section[aria-labelledby=\"rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(1) > .agency-item__name"
+              ".animate-active.agency-item.animate-hover-lift:nth-child(1) > .agency-item__name"
             ]
           },
           {
@@ -3908,7 +3938,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                THRIVE Business Cooperative Association\n              </h3>",
             "target": [
-              "section[aria-labelledby=\"rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(2) > .agency-item__name"
+              ".animate-active.agency-item.animate-hover-lift:nth-child(2) > .agency-item__name"
             ]
           },
           {
@@ -3926,7 +3956,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                Hokkaido Human Resource Development Cooperative\n              </h3>",
             "target": [
-              "section[aria-labelledby=\"rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(3) > .agency-item__name"
+              ".animate-active.agency-item.animate-hover-lift:nth-child(3) > .agency-item__name"
             ]
           },
           {
@@ -3962,7 +3992,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">First Stakes Corp.</h3>",
             "target": [
-              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(1) > .agency-item__name"
+              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item.animate-hover-lift.animate-fade-in-up:nth-child(1) > .agency-item__name"
             ]
           },
           {
@@ -3980,7 +4010,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                CALICO LEGAL Immigration Support\n              </h3>",
             "target": [
-              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(2) > .agency-item__name"
+              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item.animate-hover-lift.animate-fade-in-up:nth-child(2) > .agency-item__name"
             ]
           },
           {
@@ -3998,7 +4028,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                TSUKASA TSB CARE ACADEMY Co., Ltd\n              </h3>",
             "target": [
-              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(3) > .agency-item__name"
+              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item.animate-hover-lift.animate-fade-in-up:nth-child(3) > .agency-item__name"
             ]
           },
           {
@@ -4016,7 +4046,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                General Incorporated Foundation CHIKYUJIN (Tokyo HQ)\n              </h3>",
             "target": [
-              ".agency-item:nth-child(4) > .agency-item__name"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(4) > .agency-item__name"
             ]
           },
           {
@@ -4034,7 +4064,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                General Incorporated Foundation CHIKYUJIN (Tokyo Branch)\n              </h3>",
             "target": [
-              ".agency-item:nth-child(5) > .agency-item__name"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(5) > .agency-item__name"
             ]
           },
           {
@@ -4052,7 +4082,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                KYUSHU NET COOPERATIVE (Tokyo branch)\n              </h3>",
             "target": [
-              ".agency-item:nth-child(6) > .agency-item__name"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(6) > .agency-item__name"
             ]
           },
           {
@@ -4070,7 +4100,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                Support Center Fukuoka YUKARI Life Support Center (Tokyo office)\n              </h3>",
             "target": [
-              ".agency-item:nth-child(7) > .agency-item__name"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(7) > .agency-item__name"
             ]
           },
           {
@@ -4088,7 +4118,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                Non-Profit Organization Global Life\n              </h3>",
             "target": [
-              ".agency-item:nth-child(8) > .agency-item__name"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(8) > .agency-item__name"
             ]
           },
           {
@@ -4106,7 +4136,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                Shinichi Kato Office (Administrative scrivener and social\n                insurance worker)\n              </h3>",
             "target": [
-              ".agency-item:nth-child(9) > .agency-item__name"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(9) > .agency-item__name"
             ]
           },
           {
@@ -4124,7 +4154,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                General Incorporated Association HASEGAWA\n              </h3>",
             "target": [
-              ".agency-item:nth-child(10) > .agency-item__name"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(10) > .agency-item__name"
             ]
           },
           {
@@ -4442,9 +4472,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<main class=\"section-padding\">",
+            "html": "<main id=\"main-content\" role=\"main\" class=\"section-padding\">",
             "target": [
-              "main"
+              "#main-content"
             ]
           }
         ]
@@ -4535,9 +4565,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<main class=\"section-padding\">",
+            "html": "<main id=\"main-content\" role=\"main\" class=\"section-padding\">",
             "target": [
-              "main"
+              "#main-content"
             ]
           }
         ]
@@ -4561,9 +4591,9 @@
                 "data": null,
                 "relatedNodes": [
                   {
-                    "html": "<main class=\"section-padding\">",
+                    "html": "<main id=\"main-content\" role=\"main\" class=\"section-padding\">",
                     "target": [
-                      "main"
+                      "#main-content"
                     ]
                   }
                 ],
@@ -4649,9 +4679,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<main class=\"section-padding\">",
+            "html": "<main id=\"main-content\" role=\"main\" class=\"section-padding\">",
             "target": [
-              "main"
+              "#main-content"
             ]
           },
           {
@@ -4670,9 +4700,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<section class=\"feature-card mt-md\" aria-labelledby=\"rso-heading\">",
+            "html": "<section class=\"feature-card mt-md animate-fade-in-down animate-on-scroll animate-active\" aria-labelledby=\"rso-heading\">",
             "target": [
-              "section[aria-labelledby=\"rso-heading\"]"
+              ".animate-fade-in-down"
             ]
           },
           {
@@ -4691,7 +4721,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<section class=\"feature-card mt-md\" aria-labelledby=\"tokyo-rso-heading\">",
+            "html": "<section class=\"feature-card mt-md animate-fade-in-up animate-on-scroll\" aria-labelledby=\"tokyo-rso-heading\">",
             "target": [
               "section[aria-labelledby=\"tokyo-rso-heading\"]"
             ]
@@ -4756,6 +4786,32 @@
         "help": "Links must have discernible text",
         "helpUrl": "https://dequeuniversity.com/rules/axe/4.6/link-name?application=axeAPI",
         "nodes": [
+          {
+            "any": [
+              {
+                "id": "has-visible-text",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "minor",
+                "message": "Element has text that is visible to screen readers"
+              }
+            ],
+            "all": [],
+            "none": [
+              {
+                "id": "focusable-no-name",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element is not in tab order or has accessible text"
+              }
+            ],
+            "impact": null,
+            "html": "<a href=\"#main-content\" class=\"skip-link\" data-i18n=\"accessibility.skipToContent\">Skip to main content</a>",
+            "target": [
+              ".skip-link"
+            ]
+          },
           {
             "any": [
               {
@@ -4959,9 +5015,9 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"btn btn-secondary\" href=\"https://ph.gurutto-asia.com/digest/category-1/search/sub-category-9/\" target=\"_blank\" rel=\"noopener noreferrer\">Visit Gurutto listing</a>",
+            "html": "<a class=\"btn btn-secondary animate-hover-scale\" href=\"https://ph.gurutto-asia.com/digest/category-1/search/sub-category-9/\" target=\"_blank\" rel=\"noopener noreferrer\">Visit Gurutto listing</a>",
             "target": [
-              ".agency-item:nth-child(1) > .btn-secondary[target=\"_blank\"][rel=\"noopener noreferrer\"]"
+              ".animate-active.agency-item.animate-hover-lift:nth-child(1) > .btn-secondary[target=\"_blank\"][rel=\"noopener noreferrer\"]"
             ]
           },
           {
@@ -4985,7 +5041,7 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"btn btn-secondary\" href=\"https://thrive-miyagi.com\" target=\"_blank\" rel=\"noopener noreferrer\">Visit THRIVE</a>",
+            "html": "<a class=\"btn btn-secondary animate-hover-scale\" href=\"https://thrive-miyagi.com\" target=\"_blank\" rel=\"noopener noreferrer\">Visit THRIVE</a>",
             "target": [
               "a[href$=\"thrive-miyagi.com\"]"
             ]
@@ -5011,9 +5067,9 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"btn btn-secondary\" href=\"https://hhd.or.jp/\" target=\"_blank\" rel=\"noopener noreferrer\">Visit Hokkaido HRD</a>",
+            "html": "<a class=\"btn btn-secondary animate-hover-scale\" href=\"https://fohred.synfoster.hokudai.ac.jp/en/\" target=\"_blank\" rel=\"noopener noreferrer\">Visit Hokkaido HRD</a>",
             "target": [
-              "a[href$=\"hhd.or.jp/\"]"
+              ".animate-active.agency-item.animate-hover-lift:nth-child(3) > .btn-secondary[target=\"_blank\"][rel=\"noopener noreferrer\"]"
             ]
           },
           {
@@ -5141,7 +5197,7 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"btn btn-primary btn--small\" href=\"../index.html\">Back to Home</a>",
+            "html": "<a class=\"btn btn-primary btn--small animate-hover-scale\" href=\"../index.html\">Back to Home</a>",
             "target": [
               ".btn--small"
             ]
@@ -5531,7 +5587,7 @@
             "impact": null,
             "html": "<ul class=\"agency-list mt-md\">",
             "target": [
-              "section[aria-labelledby=\"rso-heading\"] > .agency-list.mt-md"
+              ".animate-fade-in-down > .agency-list.mt-md"
             ]
           },
           {
@@ -5705,9 +5761,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"agency-item\">",
+            "html": "<li class=\"agency-item animate-fade-in-up animate-on-scroll animate-hover-lift animate-active\">",
             "target": [
-              "section[aria-labelledby=\"rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(1)"
+              ".animate-active.agency-item.animate-hover-lift:nth-child(1)"
             ]
           },
           {
@@ -5723,9 +5779,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"agency-item\">",
+            "html": "<li class=\"agency-item animate-fade-in-up animate-on-scroll animate-hover-lift animate-active\">",
             "target": [
-              "section[aria-labelledby=\"rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(2)"
+              ".animate-active.agency-item.animate-hover-lift:nth-child(2)"
             ]
           },
           {
@@ -5741,9 +5797,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"agency-item\">",
+            "html": "<li class=\"agency-item animate-fade-in-up animate-on-scroll animate-hover-lift animate-active\">",
             "target": [
-              "section[aria-labelledby=\"rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(3)"
+              ".animate-active.agency-item.animate-hover-lift:nth-child(3)"
             ]
           },
           {
@@ -5759,9 +5815,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"agency-item\">",
+            "html": "<li class=\"agency-item animate-fade-in-up animate-on-scroll animate-hover-lift\">",
             "target": [
-              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(1)"
+              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item.animate-hover-lift.animate-fade-in-up:nth-child(1)"
             ]
           },
           {
@@ -5777,9 +5833,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"agency-item\">",
+            "html": "<li class=\"agency-item animate-fade-in-up animate-on-scroll animate-hover-lift\">",
             "target": [
-              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(2)"
+              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item.animate-hover-lift.animate-fade-in-up:nth-child(2)"
             ]
           },
           {
@@ -5795,9 +5851,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"agency-item\">",
+            "html": "<li class=\"agency-item animate-fade-in-up animate-on-scroll animate-hover-lift\">",
             "target": [
-              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(3)"
+              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item.animate-hover-lift.animate-fade-in-up:nth-child(3)"
             ]
           },
           {
@@ -5813,9 +5869,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"agency-item\">",
+            "html": "<li class=\"agency-item animate-fade-in-up animate-on-scroll animate-hover-lift\">",
             "target": [
-              ".agency-item:nth-child(4)"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(4)"
             ]
           },
           {
@@ -5831,9 +5887,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"agency-item\">",
+            "html": "<li class=\"agency-item animate-fade-in-up animate-on-scroll animate-hover-lift\">",
             "target": [
-              ".agency-item:nth-child(5)"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(5)"
             ]
           },
           {
@@ -5849,9 +5905,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"agency-item\">\n              <h3 class=\"agency-item__name\">\n                KYUSHU NET COOPERATIVE (Tokyo branch)\n              </h3>\n              <p class=\"muted agency-item__desc\">\n                Address: Oshidatemachi, Fuchu-city, Tokyo\n              </p>\n            </li>",
+            "html": "<li class=\"agency-item animate-fade-in-up animate-on-scroll animate-hover-lift\">",
             "target": [
-              ".agency-item:nth-child(6)"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(6)"
             ]
           },
           {
@@ -5867,9 +5923,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"agency-item\">",
+            "html": "<li class=\"agency-item animate-fade-in-up animate-on-scroll animate-hover-lift\">",
             "target": [
-              ".agency-item:nth-child(7)"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(7)"
             ]
           },
           {
@@ -5885,9 +5941,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"agency-item\">\n              <h3 class=\"agency-item__name\">\n                Non-Profit Organization Global Life\n              </h3>\n              <p class=\"muted agency-item__desc\">\n                Address: 12-28 Kamikawabata-Machi, Hakata-ku, Tokyo\n              </p>\n            </li>",
+            "html": "<li class=\"agency-item animate-fade-in-up animate-on-scroll animate-hover-lift\">",
             "target": [
-              ".agency-item:nth-child(8)"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(8)"
             ]
           },
           {
@@ -5903,9 +5959,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"agency-item\">",
+            "html": "<li class=\"agency-item animate-fade-in-up animate-on-scroll animate-hover-lift\">",
             "target": [
-              ".agency-item:nth-child(9)"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(9)"
             ]
           },
           {
@@ -5921,9 +5977,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"agency-item\">",
+            "html": "<li class=\"agency-item animate-fade-in-up animate-on-scroll animate-hover-lift\">",
             "target": [
-              ".agency-item:nth-child(10)"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(10)"
             ]
           },
           {
@@ -6197,6 +6253,26 @@
         "help": "All page content should be contained by landmarks",
         "helpUrl": "https://dequeuniversity.com/rules/axe/4.6/region?application=axeAPI",
         "nodes": [
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a href=\"#main-content\" class=\"skip-link\" data-i18n=\"accessibility.skipToContent\">Skip to main content</a>",
+            "target": [
+              ".skip-link"
+            ]
+          },
           {
             "any": [
               {
@@ -6612,9 +6688,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<main class=\"section-padding\">",
+            "html": "<main id=\"main-content\" role=\"main\" class=\"section-padding\">",
             "target": [
-              "main"
+              "#main-content"
             ]
           },
           {
@@ -6634,7 +6710,7 @@
             "impact": null,
             "html": "<div class=\"container\">",
             "target": [
-              "main > .container"
+              "#main-content > .container"
             ]
           },
           {
@@ -6652,9 +6728,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<section class=\"feature-card mt-md\" aria-labelledby=\"rso-heading\">",
+            "html": "<section class=\"feature-card mt-md animate-fade-in-down animate-on-scroll animate-active\" aria-labelledby=\"rso-heading\">",
             "target": [
-              "section[aria-labelledby=\"rso-heading\"]"
+              ".animate-fade-in-down"
             ]
           },
           {
@@ -6694,7 +6770,7 @@
             "impact": null,
             "html": "<p class=\"muted feature-card__desc\">\n            Below are a selection of organisations and agencies that assist\n            employers and candidates with the SSW programme. Click through to\n            learn more or contact them directly.\n          </p>",
             "target": [
-              "section[aria-labelledby=\"rso-heading\"] > .feature-card__desc"
+              ".animate-fade-in-down > .feature-card__desc"
             ]
           },
           {
@@ -6714,7 +6790,7 @@
             "impact": null,
             "html": "<ul class=\"agency-list mt-md\">",
             "target": [
-              "section[aria-labelledby=\"rso-heading\"] > .agency-list.mt-md"
+              ".animate-fade-in-down > .agency-list.mt-md"
             ]
           },
           {
@@ -6732,9 +6808,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"agency-item\">",
+            "html": "<li class=\"agency-item animate-fade-in-up animate-on-scroll animate-hover-lift animate-active\">",
             "target": [
-              "section[aria-labelledby=\"rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(1)"
+              ".animate-active.agency-item.animate-hover-lift:nth-child(1)"
             ]
           },
           {
@@ -6754,7 +6830,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                Gurutto Corporation (Registration Support Organization)\n              </h3>",
             "target": [
-              "section[aria-labelledby=\"rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(1) > .agency-item__name"
+              ".animate-active.agency-item.animate-hover-lift:nth-child(1) > .agency-item__name"
             ]
           },
           {
@@ -6774,7 +6850,7 @@
             "impact": null,
             "html": "<p class=\"muted agency-item__desc\">\n                Provides employer and candidate support under regional programs.\n                See their listing and contact information.\n              </p>",
             "target": [
-              "section[aria-labelledby=\"rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(1) > .agency-item__desc"
+              ".animate-active.agency-item.animate-hover-lift:nth-child(1) > .agency-item__desc"
             ]
           },
           {
@@ -6792,9 +6868,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"btn btn-secondary\" href=\"https://ph.gurutto-asia.com/digest/category-1/search/sub-category-9/\" target=\"_blank\" rel=\"noopener noreferrer\">Visit Gurutto listing</a>",
+            "html": "<a class=\"btn btn-secondary animate-hover-scale\" href=\"https://ph.gurutto-asia.com/digest/category-1/search/sub-category-9/\" target=\"_blank\" rel=\"noopener noreferrer\">Visit Gurutto listing</a>",
             "target": [
-              ".agency-item:nth-child(1) > .btn-secondary[target=\"_blank\"][rel=\"noopener noreferrer\"]"
+              ".animate-active.agency-item.animate-hover-lift:nth-child(1) > .btn-secondary[target=\"_blank\"][rel=\"noopener noreferrer\"]"
             ]
           },
           {
@@ -6812,9 +6888,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"agency-item\">",
+            "html": "<li class=\"agency-item animate-fade-in-up animate-on-scroll animate-hover-lift animate-active\">",
             "target": [
-              "section[aria-labelledby=\"rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(2)"
+              ".animate-active.agency-item.animate-hover-lift:nth-child(2)"
             ]
           },
           {
@@ -6834,7 +6910,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                THRIVE Business Cooperative Association\n              </h3>",
             "target": [
-              "section[aria-labelledby=\"rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(2) > .agency-item__name"
+              ".animate-active.agency-item.animate-hover-lift:nth-child(2) > .agency-item__name"
             ]
           },
           {
@@ -6854,7 +6930,7 @@
             "impact": null,
             "html": "<p class=\"muted agency-item__desc\">\n                A business cooperative offering support services and community\n                integration assistance in Miyagi.\n              </p>",
             "target": [
-              "section[aria-labelledby=\"rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(2) > .agency-item__desc"
+              ".animate-active.agency-item.animate-hover-lift:nth-child(2) > .agency-item__desc"
             ]
           },
           {
@@ -6872,7 +6948,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"btn btn-secondary\" href=\"https://thrive-miyagi.com\" target=\"_blank\" rel=\"noopener noreferrer\">Visit THRIVE</a>",
+            "html": "<a class=\"btn btn-secondary animate-hover-scale\" href=\"https://thrive-miyagi.com\" target=\"_blank\" rel=\"noopener noreferrer\">Visit THRIVE</a>",
             "target": [
               "a[href$=\"thrive-miyagi.com\"]"
             ]
@@ -6892,9 +6968,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"agency-item\">",
+            "html": "<li class=\"agency-item animate-fade-in-up animate-on-scroll animate-hover-lift animate-active\">",
             "target": [
-              "section[aria-labelledby=\"rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(3)"
+              ".animate-active.agency-item.animate-hover-lift:nth-child(3)"
             ]
           },
           {
@@ -6914,7 +6990,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                Hokkaido Human Resource Development Cooperative\n              </h3>",
             "target": [
-              "section[aria-labelledby=\"rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(3) > .agency-item__name"
+              ".animate-active.agency-item.animate-hover-lift:nth-child(3) > .agency-item__name"
             ]
           },
           {
@@ -6934,7 +7010,7 @@
             "impact": null,
             "html": "<p class=\"muted agency-item__desc\">\n                Focuses on workforce development and training programs in\n                Hokkaido.\n              </p>",
             "target": [
-              "section[aria-labelledby=\"rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(3) > .agency-item__desc"
+              ".animate-active.agency-item.animate-hover-lift:nth-child(3) > .agency-item__desc"
             ]
           },
           {
@@ -6952,9 +7028,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"btn btn-secondary\" href=\"https://hhd.or.jp/\" target=\"_blank\" rel=\"noopener noreferrer\">Visit Hokkaido HRD</a>",
+            "html": "<a class=\"btn btn-secondary animate-hover-scale\" href=\"https://fohred.synfoster.hokudai.ac.jp/en/\" target=\"_blank\" rel=\"noopener noreferrer\">Visit Hokkaido HRD</a>",
             "target": [
-              "a[href$=\"hhd.or.jp/\"]"
+              ".animate-active.agency-item.animate-hover-lift:nth-child(3) > .btn-secondary[target=\"_blank\"][rel=\"noopener noreferrer\"]"
             ]
           },
           {
@@ -6972,7 +7048,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<section class=\"feature-card mt-md\" aria-labelledby=\"tokyo-rso-heading\">",
+            "html": "<section class=\"feature-card mt-md animate-fade-in-up animate-on-scroll\" aria-labelledby=\"tokyo-rso-heading\">",
             "target": [
               "section[aria-labelledby=\"tokyo-rso-heading\"]"
             ]
@@ -7052,9 +7128,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"agency-item\">",
+            "html": "<li class=\"agency-item animate-fade-in-up animate-on-scroll animate-hover-lift\">",
             "target": [
-              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(1)"
+              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item.animate-hover-lift.animate-fade-in-up:nth-child(1)"
             ]
           },
           {
@@ -7074,7 +7150,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">First Stakes Corp.</h3>",
             "target": [
-              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(1) > .agency-item__name"
+              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item.animate-hover-lift.animate-fade-in-up:nth-child(1) > .agency-item__name"
             ]
           },
           {
@@ -7094,7 +7170,7 @@
             "impact": null,
             "html": "<p class=\"muted agency-item__desc\">\n                Address: 7-4-7-5F, Nishishinjuku, Shinjuku-ku, Tokyo\n              </p>",
             "target": [
-              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(1) > .agency-item__desc:nth-child(2)"
+              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item.animate-hover-lift.animate-fade-in-up:nth-child(1) > .agency-item__desc:nth-child(2)"
             ]
           },
           {
@@ -7114,7 +7190,7 @@
             "impact": null,
             "html": "<p class=\"muted agency-item__desc\">\n                Phone: <a href=\"tel:+81353120271\">03-5312-0271</a>\n              </p>",
             "target": [
-              ".agency-item:nth-child(1) > .agency-item__desc:nth-child(3)"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(1) > .agency-item__desc:nth-child(3)"
             ]
           },
           {
@@ -7152,9 +7228,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"agency-item\">",
+            "html": "<li class=\"agency-item animate-fade-in-up animate-on-scroll animate-hover-lift\">",
             "target": [
-              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(2)"
+              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item.animate-hover-lift.animate-fade-in-up:nth-child(2)"
             ]
           },
           {
@@ -7174,7 +7250,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                CALICO LEGAL Immigration Support\n              </h3>",
             "target": [
-              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(2) > .agency-item__name"
+              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item.animate-hover-lift.animate-fade-in-up:nth-child(2) > .agency-item__name"
             ]
           },
           {
@@ -7194,7 +7270,7 @@
             "impact": null,
             "html": "<p class=\"muted agency-item__desc\">\n                Address: 409, Tensho Office Bldg, 3-3-5, Nihonbashi Ningyo-cho,\n                Chuo-ku, Tokyo\n              </p>",
             "target": [
-              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(2) > .agency-item__desc:nth-child(2)"
+              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item.animate-hover-lift.animate-fade-in-up:nth-child(2) > .agency-item__desc:nth-child(2)"
             ]
           },
           {
@@ -7214,7 +7290,7 @@
             "impact": null,
             "html": "<p class=\"muted agency-item__desc\">\n                Phone: <a href=\"tel:+81336695200\">03-3669-5200</a>\n              </p>",
             "target": [
-              ".agency-item:nth-child(2) > .agency-item__desc:nth-child(3)"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(2) > .agency-item__desc:nth-child(3)"
             ]
           },
           {
@@ -7252,9 +7328,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"agency-item\">",
+            "html": "<li class=\"agency-item animate-fade-in-up animate-on-scroll animate-hover-lift\">",
             "target": [
-              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(3)"
+              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item.animate-hover-lift.animate-fade-in-up:nth-child(3)"
             ]
           },
           {
@@ -7274,7 +7350,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                TSUKASA TSB CARE ACADEMY Co., Ltd\n              </h3>",
             "target": [
-              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(3) > .agency-item__name"
+              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item.animate-hover-lift.animate-fade-in-up:nth-child(3) > .agency-item__name"
             ]
           },
           {
@@ -7294,7 +7370,7 @@
             "impact": null,
             "html": "<p class=\"muted agency-item__desc\">\n                Address: Aiku-bldg, 5-5-1 Kokuryo-cho, Chofu-shi, Tokyo\n              </p>",
             "target": [
-              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(3) > .agency-item__desc:nth-child(2)"
+              "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item.animate-hover-lift.animate-fade-in-up:nth-child(3) > .agency-item__desc:nth-child(2)"
             ]
           },
           {
@@ -7314,7 +7390,7 @@
             "impact": null,
             "html": "<p class=\"muted agency-item__desc\">\n                Phone: <a href=\"tel:+81424428130\">042-442-8130</a>\n              </p>",
             "target": [
-              ".agency-item:nth-child(3) > .agency-item__desc:nth-child(3)"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(3) > .agency-item__desc:nth-child(3)"
             ]
           },
           {
@@ -7352,9 +7428,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"agency-item\">",
+            "html": "<li class=\"agency-item animate-fade-in-up animate-on-scroll animate-hover-lift\">",
             "target": [
-              ".agency-item:nth-child(4)"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(4)"
             ]
           },
           {
@@ -7374,7 +7450,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                General Incorporated Foundation CHIKYUJIN (Tokyo HQ)\n              </h3>",
             "target": [
-              ".agency-item:nth-child(4) > .agency-item__name"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(4) > .agency-item__name"
             ]
           },
           {
@@ -7394,7 +7470,7 @@
             "impact": null,
             "html": "<p class=\"muted agency-item__desc\">\n                Address: Kisho Bldg. 8F Sotokanda, Chiyoda-ku, Tokyo\n              </p>",
             "target": [
-              ".agency-item:nth-child(4) > .agency-item__desc:nth-child(2)"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(4) > .agency-item__desc:nth-child(2)"
             ]
           },
           {
@@ -7414,7 +7490,7 @@
             "impact": null,
             "html": "<p class=\"muted agency-item__desc\">\n                Phone: <a href=\"tel:+81335258148\">03-3525-8148</a>\n              </p>",
             "target": [
-              ".agency-item:nth-child(4) > .agency-item__desc:nth-child(3)"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(4) > .agency-item__desc:nth-child(3)"
             ]
           },
           {
@@ -7452,9 +7528,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"agency-item\">",
+            "html": "<li class=\"agency-item animate-fade-in-up animate-on-scroll animate-hover-lift\">",
             "target": [
-              ".agency-item:nth-child(5)"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(5)"
             ]
           },
           {
@@ -7474,7 +7550,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                General Incorporated Foundation CHIKYUJIN (Tokyo Branch)\n              </h3>",
             "target": [
-              ".agency-item:nth-child(5) > .agency-item__name"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(5) > .agency-item__name"
             ]
           },
           {
@@ -7494,7 +7570,7 @@
             "impact": null,
             "html": "<p class=\"muted agency-item__desc\">\n                Address: 6F, 3-3-7 Bakurocho, Chuo-ku, Tokyo\n              </p>",
             "target": [
-              ".agency-item:nth-child(5) > .agency-item__desc"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(5) > .agency-item__desc"
             ]
           },
           {
@@ -7512,9 +7588,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"agency-item\">\n              <h3 class=\"agency-item__name\">\n                KYUSHU NET COOPERATIVE (Tokyo branch)\n              </h3>\n              <p class=\"muted agency-item__desc\">\n                Address: Oshidatemachi, Fuchu-city, Tokyo\n              </p>\n            </li>",
+            "html": "<li class=\"agency-item animate-fade-in-up animate-on-scroll animate-hover-lift\">",
             "target": [
-              ".agency-item:nth-child(6)"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(6)"
             ]
           },
           {
@@ -7534,7 +7610,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                KYUSHU NET COOPERATIVE (Tokyo branch)\n              </h3>",
             "target": [
-              ".agency-item:nth-child(6) > .agency-item__name"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(6) > .agency-item__name"
             ]
           },
           {
@@ -7554,7 +7630,7 @@
             "impact": null,
             "html": "<p class=\"muted agency-item__desc\">\n                Address: Oshidatemachi, Fuchu-city, Tokyo\n              </p>",
             "target": [
-              ".agency-item:nth-child(6) > .agency-item__desc"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(6) > .agency-item__desc"
             ]
           },
           {
@@ -7572,9 +7648,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"agency-item\">",
+            "html": "<li class=\"agency-item animate-fade-in-up animate-on-scroll animate-hover-lift\">",
             "target": [
-              ".agency-item:nth-child(7)"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(7)"
             ]
           },
           {
@@ -7594,7 +7670,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                Support Center Fukuoka YUKARI Life Support Center (Tokyo office)\n              </h3>",
             "target": [
-              ".agency-item:nth-child(7) > .agency-item__name"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(7) > .agency-item__name"
             ]
           },
           {
@@ -7614,7 +7690,7 @@
             "impact": null,
             "html": "<p class=\"muted agency-item__desc\">\n                Address: Kamikawabata-Machi, Hakata-ku, Tokyo\n              </p>",
             "target": [
-              ".agency-item:nth-child(7) > .agency-item__desc"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(7) > .agency-item__desc"
             ]
           },
           {
@@ -7632,9 +7708,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"agency-item\">\n              <h3 class=\"agency-item__name\">\n                Non-Profit Organization Global Life\n              </h3>\n              <p class=\"muted agency-item__desc\">\n                Address: 12-28 Kamikawabata-Machi, Hakata-ku, Tokyo\n              </p>\n            </li>",
+            "html": "<li class=\"agency-item animate-fade-in-up animate-on-scroll animate-hover-lift\">",
             "target": [
-              ".agency-item:nth-child(8)"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(8)"
             ]
           },
           {
@@ -7654,7 +7730,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                Non-Profit Organization Global Life\n              </h3>",
             "target": [
-              ".agency-item:nth-child(8) > .agency-item__name"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(8) > .agency-item__name"
             ]
           },
           {
@@ -7674,7 +7750,7 @@
             "impact": null,
             "html": "<p class=\"muted agency-item__desc\">\n                Address: 12-28 Kamikawabata-Machi, Hakata-ku, Tokyo\n              </p>",
             "target": [
-              ".agency-item:nth-child(8) > .agency-item__desc"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(8) > .agency-item__desc"
             ]
           },
           {
@@ -7692,9 +7768,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"agency-item\">",
+            "html": "<li class=\"agency-item animate-fade-in-up animate-on-scroll animate-hover-lift\">",
             "target": [
-              ".agency-item:nth-child(9)"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(9)"
             ]
           },
           {
@@ -7714,7 +7790,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                Shinichi Kato Office (Administrative scrivener and social\n                insurance worker)\n              </h3>",
             "target": [
-              ".agency-item:nth-child(9) > .agency-item__name"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(9) > .agency-item__name"
             ]
           },
           {
@@ -7734,7 +7810,7 @@
             "impact": null,
             "html": "<p class=\"muted agency-item__desc\">\n                Address: 3-1-27 Shinkawa-cho, Noboribetsu-shi, Tokyo\n              </p>",
             "target": [
-              ".agency-item:nth-child(9) > .agency-item__desc"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(9) > .agency-item__desc"
             ]
           },
           {
@@ -7752,9 +7828,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"agency-item\">",
+            "html": "<li class=\"agency-item animate-fade-in-up animate-on-scroll animate-hover-lift\">",
             "target": [
-              ".agency-item:nth-child(10)"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(10)"
             ]
           },
           {
@@ -7774,7 +7850,7 @@
             "impact": null,
             "html": "<h3 class=\"agency-item__name\">\n                General Incorporated Association HASEGAWA\n              </h3>",
             "target": [
-              ".agency-item:nth-child(10) > .agency-item__name"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(10) > .agency-item__name"
             ]
           },
           {
@@ -7794,7 +7870,7 @@
             "impact": null,
             "html": "<p class=\"muted agency-item__desc\">\n                Address: 4-2-39 Fudomae, Utsunomiya-shi, Tochigi-ken, Tokyo\n              </p>",
             "target": [
-              ".agency-item:nth-child(10) > .agency-item__desc"
+              ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(10) > .agency-item__desc"
             ]
           },
           {
@@ -7812,7 +7888,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p class=\"mt-lg\" style=\"text-align: center\">\n          <a class=\"btn btn-primary btn--small\" href=\"../index.html\">Back to Home</a>\n        </p>",
+            "html": "<p class=\"mt-lg animate-scale-up animate-on-scroll\" style=\"text-align: center\">\n          <a class=\"btn btn-primary btn--small animate-hover-scale\" href=\"../index.html\">Back to Home</a>\n        </p>",
             "target": [
               ".mt-lg"
             ]
@@ -7832,7 +7908,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"btn btn-primary btn--small\" href=\"../index.html\">Back to Home</a>",
+            "html": "<a class=\"btn btn-primary btn--small animate-hover-scale\" href=\"../index.html\">Back to Home</a>",
             "target": [
               ".btn--small"
             ]
@@ -8678,6 +8754,37 @@
             ]
           }
         ]
+      },
+      {
+        "id": "skip-link",
+        "impact": null,
+        "tags": [
+          "cat.keyboard",
+          "best-practice"
+        ],
+        "description": "Ensure all skip links have a focusable target",
+        "help": "The skip-link target should exist and be focusable",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.6/skip-link?application=axeAPI",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "skip-link",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "Skip link target exists"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a href=\"#main-content\" class=\"skip-link\" data-i18n=\"accessibility.skipToContent\">Skip to main content</a>",
+            "target": [
+              ".skip-link"
+            ]
+          }
+        ]
       }
     ],
     "incomplete": [],
@@ -8710,9 +8817,9 @@
                 },
                 "relatedNodes": [
                   {
-                    "html": "<li class=\"agency-item\">",
+                    "html": "<li class=\"agency-item animate-fade-in-up animate-on-scroll animate-hover-lift\">",
                     "target": [
-                      "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(1)"
+                      "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item.animate-hover-lift.animate-fade-in-up:nth-child(1)"
                     ]
                   }
                 ],
@@ -8744,9 +8851,9 @@
                 },
                 "relatedNodes": [
                   {
-                    "html": "<li class=\"agency-item\">",
+                    "html": "<li class=\"agency-item animate-fade-in-up animate-on-scroll animate-hover-lift\">",
                     "target": [
-                      "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(2)"
+                      "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item.animate-hover-lift.animate-fade-in-up:nth-child(2)"
                     ]
                   }
                 ],
@@ -8778,9 +8885,9 @@
                 },
                 "relatedNodes": [
                   {
-                    "html": "<li class=\"agency-item\">",
+                    "html": "<li class=\"agency-item animate-fade-in-up animate-on-scroll animate-hover-lift\">",
                     "target": [
-                      "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item:nth-child(3)"
+                      "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item.animate-hover-lift.animate-fade-in-up:nth-child(3)"
                     ]
                   }
                 ],
@@ -8812,9 +8919,9 @@
                 },
                 "relatedNodes": [
                   {
-                    "html": "<li class=\"agency-item\">",
+                    "html": "<li class=\"agency-item animate-fade-in-up animate-on-scroll animate-hover-lift\">",
                     "target": [
-                      ".agency-item:nth-child(4)"
+                      ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(4)"
                     ]
                   }
                 ],
