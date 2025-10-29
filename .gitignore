@@ -160,3 +160,6 @@ tests/playwright/report/
 
 # Usability test summary (generated for PR comments)
 usability-summary.md
+
+# Accessibility generated results
+tests/accessibility/results/
