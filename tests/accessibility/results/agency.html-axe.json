@@ -15,7 +15,7 @@
       "orientationAngle": 0,
       "orientationType": "landscape-primary"
     },
-    "timestamp": "2025-10-29T09:53:36.852Z",
+    "timestamp": "2025-10-29T10:56:06.192Z",
     "url": "http://localhost:8000/pages/agency.html",
     "toolOptions": {
       "reporter": "v1"
@@ -1367,6 +1367,12 @@
                 "data": null,
                 "relatedNodes": [
                   {
+                    "html": "<h1 class=\"visually-hidden\">Agency Services and Support Organizations</h1>",
+                    "target": [
+                      "h1"
+                    ]
+                  },
+                  {
                     "html": "<h2 id=\"rso-heading\" class=\"feature-card__title\">\n            Registered Support Organizations\n          </h2>",
                     "target": [
                       "#rso-heading"
@@ -1511,7 +1517,7 @@
       },
       {
         "id": "color-contrast",
-        "impact": "serious",
+        "impact": null,
         "tags": [
           "cat.color",
           "wcag2aa",
@@ -2117,9 +2123,34 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p class=\"muted agency-item__desc\">\n                Phone: <a href=\"tel:+81353120271\">03-5312-0271</a>\n              </p>",
+            "html": "<p class=\"muted agency-item__desc\">\n                Phone: <a href=\"tel:+81353120271\" class=\"fw-bold text-dark\">03-5312-0271</a>\n              </p>",
             "target": [
               ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(1) > .agency-item__desc:nth-child(3)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#212529",
+                  "bgColor": "#fcfcfc",
+                  "contrastRatio": 15.03,
+                  "fontSize": "11.4pt (15.2px)",
+                  "fontWeight": "bold",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 15.03"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a href=\"tel:+81353120271\" class=\"fw-bold text-dark\">03-5312-0271</a>",
+            "target": [
+              "a[href=\"tel:+81353120271\"]"
             ]
           },
           {
@@ -2192,9 +2223,34 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p class=\"muted agency-item__desc\">\n                Phone: <a href=\"tel:+81336695200\">03-3669-5200</a>\n              </p>",
+            "html": "<p class=\"muted agency-item__desc\">\n                Phone: <a href=\"tel:+81336695200\" class=\"fw-bold text-dark\">03-3669-5200</a>\n              </p>",
             "target": [
               ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(2) > .agency-item__desc:nth-child(3)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#212529",
+                  "bgColor": "#fcfcfc",
+                  "contrastRatio": 15.03,
+                  "fontSize": "11.4pt (15.2px)",
+                  "fontWeight": "bold",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 15.03"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a href=\"tel:+81336695200\" class=\"fw-bold text-dark\">03-3669-5200</a>",
+            "target": [
+              "a[href=\"tel:+81336695200\"]"
             ]
           },
           {
@@ -2267,9 +2323,34 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p class=\"muted agency-item__desc\">\n                Phone: <a href=\"tel:+81424428130\">042-442-8130</a>\n              </p>",
+            "html": "<p class=\"muted agency-item__desc\">\n                Phone: <a href=\"tel:+81424428130\" class=\"fw-bold text-dark\">042-442-8130</a>\n              </p>",
             "target": [
               ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(3) > .agency-item__desc:nth-child(3)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#212529",
+                  "bgColor": "#fcfcfc",
+                  "contrastRatio": 15.03,
+                  "fontSize": "11.4pt (15.2px)",
+                  "fontWeight": "bold",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 15.03"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a href=\"tel:+81424428130\" class=\"fw-bold text-dark\">042-442-8130</a>",
+            "target": [
+              "a[href=\"tel:+81424428130\"]"
             ]
           },
           {
@@ -2342,9 +2423,34 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p class=\"muted agency-item__desc\">\n                Phone: <a href=\"tel:+81335258148\">03-3525-8148</a>\n              </p>",
+            "html": "<p class=\"muted agency-item__desc\">\n                Phone: <a href=\"tel:+81335258148\" class=\"fw-bold text-dark\">03-3525-8148</a>\n              </p>",
             "target": [
               ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(4) > .agency-item__desc:nth-child(3)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#212529",
+                  "bgColor": "#fcfcfc",
+                  "contrastRatio": 15.03,
+                  "fontSize": "11.4pt (15.2px)",
+                  "fontWeight": "bold",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 15.03"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a href=\"tel:+81335258148\" class=\"fw-bold text-dark\">03-3525-8148</a>",
+            "target": [
+              "a[href=\"tel:+81335258148\"]"
             ]
           },
           {
@@ -3389,6 +3495,24 @@
             "all": [],
             "none": [],
             "impact": null,
+            "html": "<h1 class=\"visually-hidden\">Agency Services and Support Organizations</h1>",
+            "target": [
+              "h1"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "has-visible-text",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "minor",
+                "message": "Element has text that is visible to screen readers"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
             "html": "<h2 id=\"rso-heading\" class=\"feature-card__title\">\n            Registered Support Organizations\n          </h2>",
             "target": [
               "#rso-heading"
@@ -3778,27 +3902,9 @@
                   "headingOrder": [
                     {
                       "ancestry": [
-                        "html > body > main:nth-child(3) > div > section:nth-child(1) > h2:nth-child(1)"
+                        "html > body > main:nth-child(3) > div > h1:nth-child(1)"
                       ],
-                      "level": 2
-                    },
-                    {
-                      "ancestry": [
-                        "html > body > main:nth-child(3) > div > section:nth-child(1) > ul:nth-child(3) > li:nth-child(1) > h3:nth-child(1)"
-                      ],
-                      "level": 3
-                    },
-                    {
-                      "ancestry": [
-                        "html > body > main:nth-child(3) > div > section:nth-child(1) > ul:nth-child(3) > li:nth-child(2) > h3:nth-child(1)"
-                      ],
-                      "level": 3
-                    },
-                    {
-                      "ancestry": [
-                        "html > body > main:nth-child(3) > div > section:nth-child(1) > ul:nth-child(3) > li:nth-child(3) > h3:nth-child(1)"
-                      ],
-                      "level": 3
+                      "level": 1
                     },
                     {
                       "ancestry": [
@@ -3826,43 +3932,67 @@
                     },
                     {
                       "ancestry": [
-                        "html > body > main:nth-child(3) > div > section:nth-child(2) > ul:nth-child(3) > li:nth-child(4) > h3:nth-child(1)"
+                        "html > body > main:nth-child(3) > div > section:nth-child(3) > h2:nth-child(1)"
+                      ],
+                      "level": 2
+                    },
+                    {
+                      "ancestry": [
+                        "html > body > main:nth-child(3) > div > section:nth-child(3) > ul:nth-child(3) > li:nth-child(1) > h3:nth-child(1)"
                       ],
                       "level": 3
                     },
                     {
                       "ancestry": [
-                        "html > body > main:nth-child(3) > div > section:nth-child(2) > ul:nth-child(3) > li:nth-child(5) > h3:nth-child(1)"
+                        "html > body > main:nth-child(3) > div > section:nth-child(3) > ul:nth-child(3) > li:nth-child(2) > h3:nth-child(1)"
                       ],
                       "level": 3
                     },
                     {
                       "ancestry": [
-                        "html > body > main:nth-child(3) > div > section:nth-child(2) > ul:nth-child(3) > li:nth-child(6) > h3:nth-child(1)"
+                        "html > body > main:nth-child(3) > div > section:nth-child(3) > ul:nth-child(3) > li:nth-child(3) > h3:nth-child(1)"
                       ],
                       "level": 3
                     },
                     {
                       "ancestry": [
-                        "html > body > main:nth-child(3) > div > section:nth-child(2) > ul:nth-child(3) > li:nth-child(7) > h3:nth-child(1)"
+                        "html > body > main:nth-child(3) > div > section:nth-child(3) > ul:nth-child(3) > li:nth-child(4) > h3:nth-child(1)"
                       ],
                       "level": 3
                     },
                     {
                       "ancestry": [
-                        "html > body > main:nth-child(3) > div > section:nth-child(2) > ul:nth-child(3) > li:nth-child(8) > h3:nth-child(1)"
+                        "html > body > main:nth-child(3) > div > section:nth-child(3) > ul:nth-child(3) > li:nth-child(5) > h3:nth-child(1)"
                       ],
                       "level": 3
                     },
                     {
                       "ancestry": [
-                        "html > body > main:nth-child(3) > div > section:nth-child(2) > ul:nth-child(3) > li:nth-child(9) > h3:nth-child(1)"
+                        "html > body > main:nth-child(3) > div > section:nth-child(3) > ul:nth-child(3) > li:nth-child(6) > h3:nth-child(1)"
                       ],
                       "level": 3
                     },
                     {
                       "ancestry": [
-                        "html > body > main:nth-child(3) > div > section:nth-child(2) > ul:nth-child(3) > li:nth-child(10) > h3:nth-child(1)"
+                        "html > body > main:nth-child(3) > div > section:nth-child(3) > ul:nth-child(3) > li:nth-child(7) > h3:nth-child(1)"
+                      ],
+                      "level": 3
+                    },
+                    {
+                      "ancestry": [
+                        "html > body > main:nth-child(3) > div > section:nth-child(3) > ul:nth-child(3) > li:nth-child(8) > h3:nth-child(1)"
+                      ],
+                      "level": 3
+                    },
+                    {
+                      "ancestry": [
+                        "html > body > main:nth-child(3) > div > section:nth-child(3) > ul:nth-child(3) > li:nth-child(9) > h3:nth-child(1)"
+                      ],
+                      "level": 3
+                    },
+                    {
+                      "ancestry": [
+                        "html > body > main:nth-child(3) > div > section:nth-child(3) > ul:nth-child(3) > li:nth-child(10) > h3:nth-child(1)"
                       ],
                       "level": 3
                     },
@@ -3892,6 +4022,24 @@
                     }
                   ]
                 },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "Heading order valid"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<h1 class=\"visually-hidden\">Agency Services and Support Organizations</h1>",
+            "target": [
+              "h1"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "heading-order",
+                "data": null,
                 "relatedNodes": [],
                 "impact": "moderate",
                 "message": "Heading order valid"
@@ -5093,7 +5241,7 @@
               }
             ],
             "impact": null,
-            "html": "<a href=\"tel:+81353120271\">03-5312-0271</a>",
+            "html": "<a href=\"tel:+81353120271\" class=\"fw-bold text-dark\">03-5312-0271</a>",
             "target": [
               "a[href=\"tel:+81353120271\"]"
             ]
@@ -5119,7 +5267,7 @@
               }
             ],
             "impact": null,
-            "html": "<a href=\"tel:+81336695200\">03-3669-5200</a>",
+            "html": "<a href=\"tel:+81336695200\" class=\"fw-bold text-dark\">03-3669-5200</a>",
             "target": [
               "a[href=\"tel:+81336695200\"]"
             ]
@@ -5145,7 +5293,7 @@
               }
             ],
             "impact": null,
-            "html": "<a href=\"tel:+81424428130\">042-442-8130</a>",
+            "html": "<a href=\"tel:+81424428130\" class=\"fw-bold text-dark\">042-442-8130</a>",
             "target": [
               "a[href=\"tel:+81424428130\"]"
             ]
@@ -5171,7 +5319,7 @@
               }
             ],
             "impact": null,
-            "html": "<a href=\"tel:+81335258148\">03-3525-8148</a>",
+            "html": "<a href=\"tel:+81335258148\" class=\"fw-bold text-dark\">03-3525-8148</a>",
             "target": [
               "a[href=\"tel:+81335258148\"]"
             ]
@@ -6243,6 +6391,44 @@
         ]
       },
       {
+        "id": "page-has-heading-one",
+        "impact": null,
+        "tags": [
+          "cat.semantics",
+          "best-practice"
+        ],
+        "description": "Ensure that the page, or at least one of its frames contains a level-one heading",
+        "help": "Page should contain a level-one heading",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.6/page-has-heading-one?application=axeAPI",
+        "nodes": [
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "page-has-heading-one",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<h1 class=\"visually-hidden\">Agency Services and Support Organizations</h1>",
+                    "target": [
+                      "h1"
+                    ]
+                  }
+                ],
+                "impact": "moderate",
+                "message": "Page has at least one level-one heading"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<html lang=\"en\" data-bs-theme=\"light\">",
+            "target": [
+              "html"
+            ]
+          }
+        ]
+      },
+      {
         "id": "region",
         "impact": null,
         "tags": [
@@ -6728,6 +6914,26 @@
             "all": [],
             "none": [],
             "impact": null,
+            "html": "<h1 class=\"visually-hidden\">Agency Services and Support Organizations</h1>",
+            "target": [
+              "h1"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
             "html": "<section class=\"feature-card mt-md animate-fade-in-down animate-on-scroll animate-active\" aria-labelledby=\"rso-heading\">",
             "target": [
               ".animate-fade-in-down"
@@ -7188,7 +7394,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p class=\"muted agency-item__desc\">\n                Phone: <a href=\"tel:+81353120271\">03-5312-0271</a>\n              </p>",
+            "html": "<p class=\"muted agency-item__desc\">\n                Phone: <a href=\"tel:+81353120271\" class=\"fw-bold text-dark\">03-5312-0271</a>\n              </p>",
             "target": [
               ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(1) > .agency-item__desc:nth-child(3)"
             ]
@@ -7208,7 +7414,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"tel:+81353120271\">03-5312-0271</a>",
+            "html": "<a href=\"tel:+81353120271\" class=\"fw-bold text-dark\">03-5312-0271</a>",
             "target": [
               "a[href=\"tel:+81353120271\"]"
             ]
@@ -7288,7 +7494,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p class=\"muted agency-item__desc\">\n                Phone: <a href=\"tel:+81336695200\">03-3669-5200</a>\n              </p>",
+            "html": "<p class=\"muted agency-item__desc\">\n                Phone: <a href=\"tel:+81336695200\" class=\"fw-bold text-dark\">03-3669-5200</a>\n              </p>",
             "target": [
               ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(2) > .agency-item__desc:nth-child(3)"
             ]
@@ -7308,7 +7514,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"tel:+81336695200\">03-3669-5200</a>",
+            "html": "<a href=\"tel:+81336695200\" class=\"fw-bold text-dark\">03-3669-5200</a>",
             "target": [
               "a[href=\"tel:+81336695200\"]"
             ]
@@ -7388,7 +7594,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p class=\"muted agency-item__desc\">\n                Phone: <a href=\"tel:+81424428130\">042-442-8130</a>\n              </p>",
+            "html": "<p class=\"muted agency-item__desc\">\n                Phone: <a href=\"tel:+81424428130\" class=\"fw-bold text-dark\">042-442-8130</a>\n              </p>",
             "target": [
               ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(3) > .agency-item__desc:nth-child(3)"
             ]
@@ -7408,7 +7614,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"tel:+81424428130\">042-442-8130</a>",
+            "html": "<a href=\"tel:+81424428130\" class=\"fw-bold text-dark\">042-442-8130</a>",
             "target": [
               "a[href=\"tel:+81424428130\"]"
             ]
@@ -7488,7 +7694,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p class=\"muted agency-item__desc\">\n                Phone: <a href=\"tel:+81335258148\">03-3525-8148</a>\n              </p>",
+            "html": "<p class=\"muted agency-item__desc\">\n                Phone: <a href=\"tel:+81335258148\" class=\"fw-bold text-dark\">03-3525-8148</a>\n              </p>",
             "target": [
               ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(4) > .agency-item__desc:nth-child(3)"
             ]
@@ -7508,7 +7714,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"tel:+81335258148\">03-3525-8148</a>",
+            "html": "<a href=\"tel:+81335258148\" class=\"fw-bold text-dark\">03-3525-8148</a>",
             "target": [
               "a[href=\"tel:+81335258148\"]"
             ]
@@ -8788,190 +8994,6 @@
       }
     ],
     "incomplete": [],
-    "violations": [
-      {
-        "id": "color-contrast",
-        "impact": "serious",
-        "tags": [
-          "cat.color",
-          "wcag2aa",
-          "wcag143",
-          "ACT"
-        ],
-        "description": "Ensures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds",
-        "help": "Elements must have sufficient color contrast",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/4.6/color-contrast?application=axeAPI",
-        "nodes": [
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#0d6efd",
-                  "bgColor": "#fcfcfc",
-                  "contrastRatio": 4.38,
-                  "fontSize": "11.4pt (15.2px)",
-                  "fontWeight": "normal",
-                  "messageKey": null,
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [
-                  {
-                    "html": "<li class=\"agency-item animate-fade-in-up animate-on-scroll animate-hover-lift\">",
-                    "target": [
-                      "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item.animate-hover-lift.animate-fade-in-up:nth-child(1)"
-                    ]
-                  }
-                ],
-                "impact": "serious",
-                "message": "Element has insufficient color contrast of 4.38 (foreground color: #0d6efd, background color: #fcfcfc, font size: 11.4pt (15.2px), font weight: normal). Expected contrast ratio of 4.5:1"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": "serious",
-            "html": "<a href=\"tel:+81353120271\">03-5312-0271</a>",
-            "target": [
-              "a[href=\"tel:+81353120271\"]"
-            ],
-            "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.38 (foreground color: #0d6efd, background color: #fcfcfc, font size: 11.4pt (15.2px), font weight: normal). Expected contrast ratio of 4.5:1"
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#0d6efd",
-                  "bgColor": "#fcfcfc",
-                  "contrastRatio": 4.38,
-                  "fontSize": "11.4pt (15.2px)",
-                  "fontWeight": "normal",
-                  "messageKey": null,
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [
-                  {
-                    "html": "<li class=\"agency-item animate-fade-in-up animate-on-scroll animate-hover-lift\">",
-                    "target": [
-                      "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item.animate-hover-lift.animate-fade-in-up:nth-child(2)"
-                    ]
-                  }
-                ],
-                "impact": "serious",
-                "message": "Element has insufficient color contrast of 4.38 (foreground color: #0d6efd, background color: #fcfcfc, font size: 11.4pt (15.2px), font weight: normal). Expected contrast ratio of 4.5:1"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": "serious",
-            "html": "<a href=\"tel:+81336695200\">03-3669-5200</a>",
-            "target": [
-              "a[href=\"tel:+81336695200\"]"
-            ],
-            "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.38 (foreground color: #0d6efd, background color: #fcfcfc, font size: 11.4pt (15.2px), font weight: normal). Expected contrast ratio of 4.5:1"
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#0d6efd",
-                  "bgColor": "#fcfcfc",
-                  "contrastRatio": 4.38,
-                  "fontSize": "11.4pt (15.2px)",
-                  "fontWeight": "normal",
-                  "messageKey": null,
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [
-                  {
-                    "html": "<li class=\"agency-item animate-fade-in-up animate-on-scroll animate-hover-lift\">",
-                    "target": [
-                      "section[aria-labelledby=\"tokyo-rso-heading\"] > .agency-list.mt-md > .agency-item.animate-hover-lift.animate-fade-in-up:nth-child(3)"
-                    ]
-                  }
-                ],
-                "impact": "serious",
-                "message": "Element has insufficient color contrast of 4.38 (foreground color: #0d6efd, background color: #fcfcfc, font size: 11.4pt (15.2px), font weight: normal). Expected contrast ratio of 4.5:1"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": "serious",
-            "html": "<a href=\"tel:+81424428130\">042-442-8130</a>",
-            "target": [
-              "a[href=\"tel:+81424428130\"]"
-            ],
-            "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.38 (foreground color: #0d6efd, background color: #fcfcfc, font size: 11.4pt (15.2px), font weight: normal). Expected contrast ratio of 4.5:1"
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#0d6efd",
-                  "bgColor": "#fcfcfc",
-                  "contrastRatio": 4.38,
-                  "fontSize": "11.4pt (15.2px)",
-                  "fontWeight": "normal",
-                  "messageKey": null,
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [
-                  {
-                    "html": "<li class=\"agency-item animate-fade-in-up animate-on-scroll animate-hover-lift\">",
-                    "target": [
-                      ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(4)"
-                    ]
-                  }
-                ],
-                "impact": "serious",
-                "message": "Element has insufficient color contrast of 4.38 (foreground color: #0d6efd, background color: #fcfcfc, font size: 11.4pt (15.2px), font weight: normal). Expected contrast ratio of 4.5:1"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": "serious",
-            "html": "<a href=\"tel:+81335258148\">03-3525-8148</a>",
-            "target": [
-              "a[href=\"tel:+81335258148\"]"
-            ],
-            "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.38 (foreground color: #0d6efd, background color: #fcfcfc, font size: 11.4pt (15.2px), font weight: normal). Expected contrast ratio of 4.5:1"
-          }
-        ]
-      },
-      {
-        "id": "page-has-heading-one",
-        "impact": "moderate",
-        "tags": [
-          "cat.semantics",
-          "best-practice"
-        ],
-        "description": "Ensure that the page, or at least one of its frames contains a level-one heading",
-        "help": "Page should contain a level-one heading",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/4.6/page-has-heading-one?application=axeAPI",
-        "nodes": [
-          {
-            "any": [],
-            "all": [
-              {
-                "id": "page-has-heading-one",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "Page must have a level-one heading"
-              }
-            ],
-            "none": [],
-            "impact": "moderate",
-            "html": "<html lang=\"en\" data-bs-theme=\"light\">",
-            "target": [
-              "html"
-            ],
-            "failureSummary": "Fix all of the following:\n  Page must have a level-one heading"
-          }
-        ]
-      }
-    ]
+    "violations": []
   }
 }

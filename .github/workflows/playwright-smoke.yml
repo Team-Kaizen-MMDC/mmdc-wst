@@ -94,7 +94,7 @@ jobs:
             }
 
             const summaryLines = [];
-            summaryLines.push('Playwright smoke tests (Chromium) run on this pull request.');
+            summaryLines.push('## 🧪 Playwright Smoke Tests (Chromium)');
             summaryLines.push('');
 
             // Prefer parsing Playwright JSON report files if present for exact counts
@@ -154,51 +154,57 @@ jobs:
             }
 
             if (parsed) {
-              summaryLines.push(`Test summary: ${total} total, ${passed} passed, ${failed} failed, ${skipped} skipped, ${flaky} flaky.`);
-            } else {
-              // Fallback: include a tail of the run log
-              const logPaths = ['/tmp/mmdc-wst-http.log','/tmp/playwright-run.log'];
-              let tail = '';
-              for (const p of logPaths) {
-                const v = safeRead(p);
-                if (v) { tail += `\n--- ${p} (tail) ---\n` + v.split('\n').slice(-200).join('\n'); }
-              }
-              summaryLines.push('Test summary: Could not find Playwright JSON report; falling back to run logs.');
-              if (tail) summaryLines.push('');
-              if (tail) summaryLines.push(tail);
-            }
-
-            // Try to find the uploaded artifact for this run and include a download URL
-            let artifactUrl = null;
-            try {
-              const resp = await github.actions.listWorkflowRunArtifacts({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                run_id: context.runId,
-              });
-              const artifacts = resp.data && resp.data.artifacts ? resp.data.artifacts : [];
-              const found = artifacts.find(a => a.name === 'playwright-results');
-              if (found) artifactUrl = found.archive_download_url;
-            } catch (e) {
-              console.log('Failed to list artifacts for run:', e.message || e);
-            }
-
-            if (artifactUrl) {
+              // Determine overall status
+              const status = failed > 0 ? '❌ FAIL' : '✅ PASS';
+              summaryLines.push(`### ${status}`);
               summaryLines.push('');
-              summaryLines.push(`Download artifacts (requires repository access): ${artifactUrl}`);
+              summaryLines.push('| Metric | Count |');
+              summaryLines.push('|--------|-------|');
+              summaryLines.push(`| Total | ${total} |`);
+              summaryLines.push(`| Passed | ${passed} ✅ |`);
+              if (failed > 0) summaryLines.push(`| Failed | ${failed} ❌ |`);
+              if (skipped > 0) summaryLines.push(`| Skipped | ${skipped} |`);
+              if (flaky > 0) summaryLines.push(`| Flaky | ${flaky} ⚠️ |`);
+            } else {
+              summaryLines.push('### ⚠️ Unknown');
+              summaryLines.push('');
+              summaryLines.push('Could not parse test results. Check workflow logs for details.');
             }
 
             const body = summaryLines.join('\n');
 
-            // Post comment on the PR
+            // Post or update comment on the PR
             const prNumber = context.payload.pull_request && context.payload.pull_request.number;
             if (!prNumber) {
               console.log('No pull request number found in context; skipping comment.');
             } else {
-              await github.rest.issues.createComment({
+              // Try to find existing comment to update
+              const { data: comments } = await github.rest.issues.listComments({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: prNumber,
-                body,
               });
+
+              const botComment = comments.find(comment => 
+                comment.user.type === 'Bot' && 
+                comment.body.includes('🧪 Playwright Smoke Tests')
+              );
+
+              if (botComment) {
+                // Update existing comment
+                await github.rest.issues.updateComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  comment_id: botComment.id,
+                  body,
+                });
+              } else {
+                // Create new comment
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: prNumber,
+                  body,
+                });
+              }
             }

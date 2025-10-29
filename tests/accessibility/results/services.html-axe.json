@@ -15,7 +15,7 @@
       "orientationAngle": 0,
       "orientationType": "landscape-primary"
     },
-    "timestamp": "2025-10-29T09:53:37.179Z",
+    "timestamp": "2025-10-29T10:56:06.522Z",
     "url": "http://localhost:8000/pages/services.html",
     "toolOptions": {
       "reporter": "v1"
@@ -1181,27 +1181,27 @@
                     ]
                   },
                   {
-                    "html": "<h3>Want to post jobs on JapanSSW?</h3>",
+                    "html": "<h2 class=\"h3\">Want to post jobs on JapanSSW?</h2>",
                     "target": [
-                      "h3"
+                      "h2"
                     ]
                   },
                   {
-                    "html": "<h4>Company</h4>",
+                    "html": "<h3 class=\"h4\">Company</h3>",
                     "target": [
-                      ".link-col.site-footer__link-col:nth-child(1) > h4"
+                      ".link-col.site-footer__link-col:nth-child(1) > h3"
                     ]
                   },
                   {
-                    "html": "<h4>Jobs</h4>",
+                    "html": "<h3 class=\"h4\">Jobs</h3>",
                     "target": [
-                      ".link-col.site-footer__link-col:nth-child(2) > h4"
+                      ".link-col.site-footer__link-col:nth-child(2) > h3"
                     ]
                   },
                   {
-                    "html": "<h4>Resources</h4>",
+                    "html": "<h3 class=\"h4\">Resources</h3>",
                     "target": [
-                      ".link-col.site-footer__link-col:nth-child(3) > h4"
+                      ".link-col.site-footer__link-col:nth-child(3) > h3"
                     ]
                   }
                 ],
@@ -1479,9 +1479,9 @@
                   "fgColor": "#ffffff",
                   "bgColor": "#290000",
                   "contrastRatio": 19.19,
-                  "fontSize": "13.5pt (18px)",
-                  "fontWeight": "bold",
-                  "expectedContrastRatio": "4.5:1"
+                  "fontSize": "21.0pt (28px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "3:1"
                 },
                 "relatedNodes": [],
                 "impact": "serious",
@@ -1491,9 +1491,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h3>Want to post jobs on JapanSSW?</h3>",
+            "html": "<h2 class=\"h3\">Want to post jobs on JapanSSW?</h2>",
             "target": [
-              "h3"
+              "h2"
             ]
           },
           {
@@ -1591,9 +1591,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h4>Company</h4>",
+            "html": "<h3 class=\"h4\">Company</h3>",
             "target": [
-              ".link-col.site-footer__link-col:nth-child(1) > h4"
+              ".link-col.site-footer__link-col:nth-child(1) > h3"
             ]
           },
           {
@@ -1691,9 +1691,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h4>Jobs</h4>",
+            "html": "<h3 class=\"h4\">Jobs</h3>",
             "target": [
-              ".link-col.site-footer__link-col:nth-child(2) > h4"
+              ".link-col.site-footer__link-col:nth-child(2) > h3"
             ]
           },
           {
@@ -1791,9 +1791,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h4>Resources</h4>",
+            "html": "<h3 class=\"h4\">Resources</h3>",
             "target": [
-              ".link-col.site-footer__link-col:nth-child(3) > h4"
+              ".link-col.site-footer__link-col:nth-child(3) > h3"
             ]
           },
           {
@@ -2055,9 +2055,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h3>Want to post jobs on JapanSSW?</h3>",
+            "html": "<h2 class=\"h3\">Want to post jobs on JapanSSW?</h2>",
             "target": [
-              "h3"
+              "h2"
             ]
           },
           {
@@ -2073,9 +2073,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h4>Company</h4>",
+            "html": "<h3 class=\"h4\">Company</h3>",
             "target": [
-              ".link-col.site-footer__link-col:nth-child(1) > h4"
+              ".link-col.site-footer__link-col:nth-child(1) > h3"
             ]
           },
           {
@@ -2091,9 +2091,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h4>Jobs</h4>",
+            "html": "<h3 class=\"h4\">Jobs</h3>",
             "target": [
-              ".link-col.site-footer__link-col:nth-child(2) > h4"
+              ".link-col.site-footer__link-col:nth-child(2) > h3"
             ]
           },
           {
@@ -2109,16 +2109,16 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h4>Resources</h4>",
+            "html": "<h3 class=\"h4\">Resources</h3>",
             "target": [
-              ".link-col.site-footer__link-col:nth-child(3) > h4"
+              ".link-col.site-footer__link-col:nth-child(3) > h3"
             ]
           }
         ]
       },
       {
         "id": "heading-order",
-        "impact": "moderate",
+        "impact": null,
         "tags": [
           "cat.semantics",
           "best-practice"
@@ -2141,27 +2141,27 @@
                     },
                     {
                       "ancestry": [
-                        "html > body > footer:nth-child(4) > div:nth-child(1) > div:nth-child(1) > h3:nth-child(1)"
+                        "html > body > footer:nth-child(4) > div:nth-child(1) > div:nth-child(1) > h2:nth-child(1)"
+                      ],
+                      "level": 2
+                    },
+                    {
+                      "ancestry": [
+                        "html > body > footer:nth-child(4) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > h3:nth-child(1)"
                       ],
                       "level": 3
                     },
                     {
                       "ancestry": [
-                        "html > body > footer:nth-child(4) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > h4:nth-child(1)"
+                        "html > body > footer:nth-child(4) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > h3:nth-child(1)"
                       ],
-                      "level": 4
+                      "level": 3
                     },
                     {
                       "ancestry": [
-                        "html > body > footer:nth-child(4) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > h4:nth-child(1)"
+                        "html > body > footer:nth-child(4) > div:nth-child(1) > div:nth-child(2) > div:nth-child(3) > h3:nth-child(1)"
                       ],
-                      "level": 4
-                    },
-                    {
-                      "ancestry": [
-                        "html > body > footer:nth-child(4) > div:nth-child(1) > div:nth-child(2) > div:nth-child(3) > h4:nth-child(1)"
-                      ],
-                      "level": 4
+                      "level": 3
                     }
                   ]
                 },
@@ -2191,9 +2191,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h4>Company</h4>",
+            "html": "<h2 class=\"h3\">Want to post jobs on JapanSSW?</h2>",
             "target": [
-              ".link-col.site-footer__link-col:nth-child(1) > h4"
+              "h2"
             ]
           },
           {
@@ -2209,9 +2209,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h4>Jobs</h4>",
+            "html": "<h3 class=\"h4\">Company</h3>",
             "target": [
-              ".link-col.site-footer__link-col:nth-child(2) > h4"
+              ".link-col.site-footer__link-col:nth-child(1) > h3"
             ]
           },
           {
@@ -2227,9 +2227,27 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h4>Resources</h4>",
+            "html": "<h3 class=\"h4\">Jobs</h3>",
             "target": [
-              ".link-col.site-footer__link-col:nth-child(3) > h4"
+              ".link-col.site-footer__link-col:nth-child(2) > h3"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "heading-order",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "Heading order valid"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<h3 class=\"h4\">Resources</h3>",
+            "target": [
+              ".link-col.site-footer__link-col:nth-child(3) > h3"
             ]
           }
         ]
@@ -4044,9 +4062,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h3>Want to post jobs on JapanSSW?</h3>",
+            "html": "<h2 class=\"h3\">Want to post jobs on JapanSSW?</h2>",
             "target": [
-              "h3"
+              "h2"
             ]
           },
           {
@@ -4164,7 +4182,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"link-col site-footer__link-col\">\n            <h4>Company</h4>\n            <ul>\n              <li><a href=\"../\">Home</a></li>\n              <li><a href=\"about.html\">About</a></li>\n              <li><a href=\"contact.html\">Contact</a></li>\n            </ul>\n          </div>",
+            "html": "<div class=\"link-col site-footer__link-col\">\n            <h3 class=\"h4\">Company</h3>\n            <ul>\n              <li><a href=\"../\">Home</a></li>\n              <li><a href=\"about.html\">About</a></li>\n              <li><a href=\"contact.html\">Contact</a></li>\n            </ul>\n          </div>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(1)"
             ]
@@ -4184,9 +4202,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h4>Company</h4>",
+            "html": "<h3 class=\"h4\">Company</h3>",
             "target": [
-              ".link-col.site-footer__link-col:nth-child(1) > h4"
+              ".link-col.site-footer__link-col:nth-child(1) > h3"
             ]
           },
           {
@@ -4364,9 +4382,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h4>Jobs</h4>",
+            "html": "<h3 class=\"h4\">Jobs</h3>",
             "target": [
-              ".link-col.site-footer__link-col:nth-child(2) > h4"
+              ".link-col.site-footer__link-col:nth-child(2) > h3"
             ]
           },
           {
@@ -4544,9 +4562,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h4>Resources</h4>",
+            "html": "<h3 class=\"h4\">Resources</h3>",
             "target": [
-              ".link-col.site-footer__link-col:nth-child(3) > h4"
+              ".link-col.site-footer__link-col:nth-child(3) > h3"
             ]
           },
           {
@@ -4894,39 +4912,6 @@
         ]
       }
     ],
-    "violations": [
-      {
-        "id": "heading-order",
-        "impact": "moderate",
-        "tags": [
-          "cat.semantics",
-          "best-practice"
-        ],
-        "description": "Ensures the order of headings is semantically correct",
-        "help": "Heading levels should only increase by one",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/4.6/heading-order?application=axeAPI",
-        "nodes": [
-          {
-            "any": [
-              {
-                "id": "heading-order",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "Heading order invalid"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": "moderate",
-            "html": "<h3>Want to post jobs on JapanSSW?</h3>",
-            "target": [
-              "h3"
-            ],
-            "failureSummary": "Fix any of the following:\n  Heading order invalid"
-          }
-        ]
-      }
-    ]
+    "violations": []
   }
 }
