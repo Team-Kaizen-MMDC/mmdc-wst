@@ -35,17 +35,11 @@ jobs:
 
             - name: Run accessibility tests (axe-core)
               id: axe-tests
-              run: |
-                  node tests/accessibility/runAxe.js
-                  echo "axe_status=success" >> $GITHUB_OUTPUT
-              continue-on-error: true
+              run: node tests/accessibility/runAxe.js
 
             - name: Run keyboard navigation tests
               id: keyboard-tests
-              run: |
-                  npm run test:keyboard
-                  echo "keyboard_status=success" >> $GITHUB_OUTPUT
-              continue-on-error: true
+              run: npm run test:keyboard
 
             - name: Stop server
               if: always()
@@ -58,7 +52,6 @@ jobs:
               id: summary
               if: always()
               run: node .github/workflows/scripts/format-usability-summary.js
-              continue-on-error: true
 
             - name: Upload test results
               if: always()
