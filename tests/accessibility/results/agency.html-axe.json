@@ -15,7 +15,7 @@
       "orientationAngle": 0,
       "orientationType": "landscape-primary"
     },
-    "timestamp": "2025-10-29T10:56:06.192Z",
+    "timestamp": "2025-10-29T11:25:42.095Z",
     "url": "http://localhost:8000/pages/agency.html",
     "toolOptions": {
       "reporter": "v1"
@@ -1367,7 +1367,7 @@
                 "data": null,
                 "relatedNodes": [
                   {
-                    "html": "<h1 class=\"visually-hidden\">Agency Services and Support Organizations</h1>",
+                    "html": "<h1 class=\"visually-hidden\">\n          Agency Services and Support Organizations\n        </h1>",
                     "target": [
                       "h1"
                     ]
@@ -2123,7 +2123,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p class=\"muted agency-item__desc\">\n                Phone: <a href=\"tel:+81353120271\" class=\"fw-bold text-dark\">03-5312-0271</a>\n              </p>",
+            "html": "<p class=\"muted agency-item__desc\">\n                Phone:\n                <a href=\"tel:+81353120271\" class=\"fw-bold text-dark\">03-5312-0271</a>\n              </p>",
             "target": [
               ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(1) > .agency-item__desc:nth-child(3)"
             ]
@@ -2223,7 +2223,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p class=\"muted agency-item__desc\">\n                Phone: <a href=\"tel:+81336695200\" class=\"fw-bold text-dark\">03-3669-5200</a>\n              </p>",
+            "html": "<p class=\"muted agency-item__desc\">\n                Phone:\n                <a href=\"tel:+81336695200\" class=\"fw-bold text-dark\">03-3669-5200</a>\n              </p>",
             "target": [
               ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(2) > .agency-item__desc:nth-child(3)"
             ]
@@ -2323,7 +2323,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p class=\"muted agency-item__desc\">\n                Phone: <a href=\"tel:+81424428130\" class=\"fw-bold text-dark\">042-442-8130</a>\n              </p>",
+            "html": "<p class=\"muted agency-item__desc\">\n                Phone:\n                <a href=\"tel:+81424428130\" class=\"fw-bold text-dark\">042-442-8130</a>\n              </p>",
             "target": [
               ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(3) > .agency-item__desc:nth-child(3)"
             ]
@@ -2423,7 +2423,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p class=\"muted agency-item__desc\">\n                Phone: <a href=\"tel:+81335258148\" class=\"fw-bold text-dark\">03-3525-8148</a>\n              </p>",
+            "html": "<p class=\"muted agency-item__desc\">\n                Phone:\n                <a href=\"tel:+81335258148\" class=\"fw-bold text-dark\">03-3525-8148</a>\n              </p>",
             "target": [
               ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(4) > .agency-item__desc:nth-child(3)"
             ]
@@ -3495,7 +3495,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h1 class=\"visually-hidden\">Agency Services and Support Organizations</h1>",
+            "html": "<h1 class=\"visually-hidden\">\n          Agency Services and Support Organizations\n        </h1>",
             "target": [
               "h1"
             ]
@@ -4030,7 +4030,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h1 class=\"visually-hidden\">Agency Services and Support Organizations</h1>",
+            "html": "<h1 class=\"visually-hidden\">\n          Agency Services and Support Organizations\n        </h1>",
             "target": [
               "h1"
             ]
@@ -6409,7 +6409,7 @@
                 "data": null,
                 "relatedNodes": [
                   {
-                    "html": "<h1 class=\"visually-hidden\">Agency Services and Support Organizations</h1>",
+                    "html": "<h1 class=\"visually-hidden\">\n          Agency Services and Support Organizations\n        </h1>",
                     "target": [
                       "h1"
                     ]
@@ -6914,7 +6914,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h1 class=\"visually-hidden\">Agency Services and Support Organizations</h1>",
+            "html": "<h1 class=\"visually-hidden\">\n          Agency Services and Support Organizations\n        </h1>",
             "target": [
               "h1"
             ]
@@ -7394,7 +7394,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p class=\"muted agency-item__desc\">\n                Phone: <a href=\"tel:+81353120271\" class=\"fw-bold text-dark\">03-5312-0271</a>\n              </p>",
+            "html": "<p class=\"muted agency-item__desc\">\n                Phone:\n                <a href=\"tel:+81353120271\" class=\"fw-bold text-dark\">03-5312-0271</a>\n              </p>",
             "target": [
               ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(1) > .agency-item__desc:nth-child(3)"
             ]
@@ -7494,7 +7494,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p class=\"muted agency-item__desc\">\n                Phone: <a href=\"tel:+81336695200\" class=\"fw-bold text-dark\">03-3669-5200</a>\n              </p>",
+            "html": "<p class=\"muted agency-item__desc\">\n                Phone:\n                <a href=\"tel:+81336695200\" class=\"fw-bold text-dark\">03-3669-5200</a>\n              </p>",
             "target": [
               ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(2) > .agency-item__desc:nth-child(3)"
             ]
@@ -7594,7 +7594,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p class=\"muted agency-item__desc\">\n                Phone: <a href=\"tel:+81424428130\" class=\"fw-bold text-dark\">042-442-8130</a>\n              </p>",
+            "html": "<p class=\"muted agency-item__desc\">\n                Phone:\n                <a href=\"tel:+81424428130\" class=\"fw-bold text-dark\">042-442-8130</a>\n              </p>",
             "target": [
               ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(3) > .agency-item__desc:nth-child(3)"
             ]
@@ -7694,7 +7694,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p class=\"muted agency-item__desc\">\n                Phone: <a href=\"tel:+81335258148\" class=\"fw-bold text-dark\">03-3525-8148</a>\n              </p>",
+            "html": "<p class=\"muted agency-item__desc\">\n                Phone:\n                <a href=\"tel:+81335258148\" class=\"fw-bold text-dark\">03-3525-8148</a>\n              </p>",
             "target": [
               ".agency-item.animate-hover-lift.animate-fade-in-up:nth-child(4) > .agency-item__desc:nth-child(3)"
             ]
