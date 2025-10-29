@@ -1,0 +1,178 @@
+name: Usability Tests (Accessibility + Keyboard)
+
+on:
+    pull_request:
+        types: [opened, synchronize, reopened]
+
+permissions:
+    contents: read
+    pull-requests: write
+
+jobs:
+    usability-tests:
+        name: Run Usability Tests
+        runs-on: ubuntu-latest
+        env:
+            # Explicitly exclude auth-protected and asset folders from CI discovery
+            EXCLUDE_PAGES: "pages/addEdit/,archive/,assets/,scripts/fixes-backup/"
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Use Node.js 18
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 18
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Install Playwright browsers (Chromium only)
+              run: npx playwright install chromium
+
+            - name: Start static server
+              run: |
+                  python3 -m http.server 8000 > /tmp/server.log 2>&1 &
+                  echo $! > /tmp/server.pid
+                  sleep 3
+                  # Wait for server to be ready
+                  for i in {1..10}; do
+                    if curl -s http://localhost:8000/ > /dev/null; then
+                      echo "Server is ready"
+                      break
+                    fi
+                    echo "Waiting for server... ($i/10)"
+                    sleep 1
+                  done
+
+            - name: Run accessibility tests (axe-core)
+              id: axe-tests
+              env:
+                  EXCLUDE_PAGES: ${{ env.EXCLUDE_PAGES }}
+              run: |
+                  echo "Using EXCLUDE_PAGES=$EXCLUDE_PAGES"
+                  node tests/accessibility/runAxe.js
+
+            - name: Run keyboard navigation tests
+              id: keyboard-tests
+              run: npm run test:keyboard
+
+            - name: Stop server
+              if: always()
+              run: |
+                  if [ -f /tmp/server.pid ]; then
+                    kill $(cat /tmp/server.pid) 2>/dev/null || true
+                  fi
+
+            - name: Generate usability summary
+              id: summary
+              if: always()
+              run: |
+                  echo "Generating usability summary..."
+                  node .github/workflows/scripts/format-usability-summary.js
+                  echo "Summary generated, checking file..."
+                  if [ -f usability-summary.md ]; then
+                    echo "✅ Summary file created successfully"
+                    echo "File size: $(wc -c < usability-summary.md) bytes"
+                    echo "--- Preview (first 500 chars) ---"
+                    head -c 500 usability-summary.md
+                    echo ""
+                    echo "--- End preview ---"
+                  else
+                    echo "❌ ERROR: Summary file not created!"
+                    exit 1
+                  fi
+
+            - name: Upload test results
+              if: always()
+              uses: actions/upload-artifact@v4
+              with:
+                  name: usability-test-results
+                  path: |
+                      tests/accessibility/results/**
+                      test-results/**
+                      tests/playwright/**/trace.zip
+
+            - name: Post PR comment with usability summary
+              if: always()
+              uses: actions/github-script@v6
+              env:
+                  PR_NUMBER: ${{ github.event.pull_request.number }}
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  script: |
+                      const fs = require('fs');
+                      const path = require('path');
+
+                      // Read the generated summary
+                      let summaryContent = '## 🎯 Usability Test Results\n\n';
+
+                      try {
+                        const summaryFile = path.join(process.cwd(), 'usability-summary.md');
+                        if (fs.existsSync(summaryFile)) {
+                          summaryContent = fs.readFileSync(summaryFile, 'utf8');
+                        } else {
+                          summaryContent += '⚠️ Summary file not found. Check workflow logs.\n';
+                        }
+                      } catch (err) {
+                        summaryContent += `❌ Error reading summary: ${err.message}\n`;
+                      }
+
+                      // Get PR number from environment or context
+                      const prNumber = process.env.PR_NUMBER || context.payload.pull_request?.number;
+
+                      console.log('PR Number from env:', process.env.PR_NUMBER);
+                      console.log('PR Number from context:', context.payload.pull_request?.number);
+                      console.log('Using PR Number:', prNumber);
+
+                      if (!prNumber) {
+                        console.error('ERROR: No PR number found!');
+                        console.log('Context keys:', Object.keys(context));
+                        console.log('Payload keys:', Object.keys(context.payload));
+                        console.log('Event name:', context.eventName);
+                        return;
+                      }
+
+                      console.log('Processing PR #' + prNumber);
+
+                      try {
+                        // Find existing comment
+                        const { data: comments } = await github.rest.issues.listComments({
+                          owner: context.repo.owner,
+                          repo: context.repo.repo,
+                          issue_number: parseInt(prNumber),
+                        });
+
+                        console.log('Found', comments.length, 'existing comments');
+
+                        const botComment = comments.find(comment => 
+                          comment.user.type === 'Bot' && 
+                          comment.body.includes('🎯 Usability Test Results')
+                        );
+
+                        const commentBody = summaryContent;
+
+                        if (botComment) {
+                          console.log('Updating existing comment:', botComment.id);
+                          await github.rest.issues.updateComment({
+                            owner: context.repo.owner,
+                            repo: context.repo.repo,
+                            comment_id: botComment.id,
+                            body: commentBody,
+                          });
+                          console.log('✅ Comment updated successfully');
+                        } else {
+                          console.log('Creating new comment');
+                          await github.rest.issues.createComment({
+                            owner: context.repo.owner,
+                            repo: context.repo.repo,
+                            issue_number: parseInt(prNumber),
+                            body: commentBody,
+                          });
+                          console.log('✅ Comment created successfully');
+                        }
+                      } catch (error) {
+                        console.error('❌ Error posting comment:', error.message);
+                        console.error('Error details:', error);
+                        throw error;
+                      }

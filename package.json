@@ -20,6 +20,8 @@
   "homepage": "https://github.com/Team-Kaizen-MMDC/mmdc-wst#readme",
   "devDependencies": {
     "@playwright/test": "^1.40.0",
+    "glob": "^10.4.5",
+    "jsdom": "^22.1.0",
     "playwright": "^1.40.0"
   },
   "dependencies": {
@@ -99,6 +101,7 @@
   "scripts": {
     "playwright:install": "npx playwright install",
     "server": "python3 -m http.server 8000",
+    "fix:html": "node ./scripts/fix-html-usability.js",
     "test": "npx playwright test",
     "test:ui": "npx playwright test --ui",
     "test:headed": "npx playwright test --headed",
@@ -117,6 +120,10 @@
     "test:playwright": "npx playwright test",
     "test:playwright:with-server": "(python3 -m http.server 8000 > /tmp/mmdc-wst-http.log 2>&1 &) && SERVER_PID=$! && sleep 0.5 && npx playwright test --config=tests/playwright/playwright.config.js; rc=$?; kill $SERVER_PID 2>/dev/null || true; exit $rc",
     "test:playwright:headed": "npx playwright test --headed",
-    "test:playwright:chromium": "npx playwright test --project=chromium"
+    "test:playwright:chromium": "npx playwright test --project=chromium",
+    "test:accessibility": "node tests/accessibility/runAxe.js",
+    "test:keyboard": "npx playwright test keyboard-navigation.spec.js",
+    "test:usability": "npm run test:accessibility && npm run test:keyboard",
+    "usability:summary": "node .github/workflows/scripts/format-usability-summary.js"
   }
 }

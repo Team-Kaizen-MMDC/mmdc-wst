@@ -59,10 +59,10 @@ jobs:
         id: run-tests
         run: |
           set -e
-          # Capture Playwright output to a log so we can extract a concise summary
-          echo "Running smoke tests and teeing output to /tmp/playwright-run.log"
-          # Emit a machine-readable JSON reporter alongside the regular logs
-          ./run-tests.sh smoke chromium --no-server --reporter=json 2>&1 | tee /tmp/playwright-run.log || true
+          # Run smoke tests - Playwright will generate JSON report via config
+          echo "Running smoke tests"
+          mkdir -p test-results
+          ./run-tests.sh smoke chromium --no-server 2>&1 | tee /tmp/playwright-run.log || true
         continue-on-error: true
 
       - name: Upload Playwright results
@@ -83,6 +83,8 @@ jobs:
       - name: Post PR comment with summary
         if: always()
         uses: actions/github-script@v6
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -94,111 +96,142 @@ jobs:
             }
 
             const summaryLines = [];
-            summaryLines.push('Playwright smoke tests (Chromium) run on this pull request.');
+            summaryLines.push('## 🧪 Playwright Smoke Tests (Chromium)');
             summaryLines.push('');
 
-            // Prefer parsing Playwright JSON report files if present for exact counts
-            const resultsDir = path.join(process.cwd(), 'tests', 'playwright', 'tests', 'playwright', 'results');
+            // Parse Playwright JSON results from test-results/results.json
+            const resultsPath = path.join(process.cwd(), 'test-results', 'results.json');
+            console.log('Looking for results at:', resultsPath);
+            console.log('File exists:', fs.existsSync(resultsPath));
+
             let parsed = false;
             let total = 0, passed = 0, failed = 0, skipped = 0, flaky = 0;
 
             try {
-              if (fs.existsSync(resultsDir)) {
-                const files = fs.readdirSync(resultsDir);
-                // Find any JSON files produced by Playwright
-                const jsonFiles = files.filter(f => f.endsWith('.json'));
-                for (const jf of jsonFiles) {
-                  try {
-                    const data = JSON.parse(fs.readFileSync(path.join(resultsDir, jf), 'utf8'));
-                    // Playwright JSON reporter emits 'suites' and 'entries' with results
-                    if (data && Array.isArray(data.suites)) {
-                      // Walk suites to gather counts
-                      const walk = (node) => {
-                        if (!node) return;
-                        if (Array.isArray(node.suites)) node.suites.forEach(walk);
-                        if (Array.isArray(node.tests)) {
-                          node.tests.forEach(t => {
-                            total += 1;
-                            const status = (t.outcome || t.result || t.status || '').toLowerCase();
-                            if (status === 'passed' || status === 'ok' ) passed += 1;
-                            else if (status === 'failed' || status === 'error') failed += 1;
-                            else if (status === 'skipped' || status === 'skipped') skipped += 1;
-                            else if (status === 'flaky') flaky += 1;
-                          });
-                        }
-                      };
-                      data.suites.forEach(walk);
-                      parsed = true;
-                      break;
+              const resultsContent = safeRead(resultsPath);
+              if (resultsContent) {
+                console.log('Results file content length:', resultsContent.length);
+                const data = JSON.parse(resultsContent);
+                console.log('Parsed JSON, has suites:', Array.isArray(data.suites));
+                
+                // Playwright JSON reporter structure
+                if (data && Array.isArray(data.suites)) {
+                  const walk = (suite) => {
+                    if (!suite) return;
+                    if (Array.isArray(suite.suites)) {
+                      suite.suites.forEach(walk);
                     }
-                    // Some reporters emit a top-level array of tests
-                    if (Array.isArray(data)) {
-                      data.forEach(t => {
-                        total += 1;
-                        const status = (t.outcome || t.status || '').toLowerCase();
-                        if (status === 'passed') passed += 1;
-                        else if (status === 'failed') failed += 1;
-                        else if (status === 'skipped') skipped += 1;
-                        else if (status === 'flaky') flaky += 1;
+                    if (Array.isArray(suite.specs)) {
+                      suite.specs.forEach(spec => {
+                        spec.tests.forEach(test => {
+                          total += 1;
+                          const results = test.results || [];
+                          const lastResult = results[results.length - 1];
+                          if (!lastResult) return;
+                          
+                          const status = lastResult.status || '';
+                          if (status === 'passed') passed += 1;
+                          else if (status === 'failed') failed += 1;
+                          else if (status === 'skipped') skipped += 1;
+                          else if (status === 'timedOut') failed += 1;
+                          
+                          // Check if flaky (passed on retry)
+                          if (results.length > 1 && status === 'passed') {
+                            const firstFailed = results[0].status === 'failed';
+                            if (firstFailed) flaky += 1;
+                          }
+                        });
                       });
-                      parsed = true;
-                      break;
                     }
-                  } catch (e) {
-                    // ignore JSON parse errors for individual files
-                  }
+                  };
+                  data.suites.forEach(walk);
+                  parsed = true;
+                  console.log('Successfully parsed. Total:', total, 'Passed:', passed, 'Failed:', failed);
                 }
+              } else {
+                console.log('No results content found');
               }
             } catch (e) {
-              console.log('Error while reading Playwright JSON reports:', e.message || e);
+              console.log('Error parsing Playwright JSON:', e.message || e);
+              console.log('Stack:', e.stack);
             }
 
             if (parsed) {
-              summaryLines.push(`Test summary: ${total} total, ${passed} passed, ${failed} failed, ${skipped} skipped, ${flaky} flaky.`);
-            } else {
-              // Fallback: include a tail of the run log
-              const logPaths = ['/tmp/mmdc-wst-http.log','/tmp/playwright-run.log'];
-              let tail = '';
-              for (const p of logPaths) {
-                const v = safeRead(p);
-                if (v) { tail += `\n--- ${p} (tail) ---\n` + v.split('\n').slice(-200).join('\n'); }
-              }
-              summaryLines.push('Test summary: Could not find Playwright JSON report; falling back to run logs.');
-              if (tail) summaryLines.push('');
-              if (tail) summaryLines.push(tail);
-            }
-
-            // Try to find the uploaded artifact for this run and include a download URL
-            let artifactUrl = null;
-            try {
-              const resp = await github.actions.listWorkflowRunArtifacts({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                run_id: context.runId,
-              });
-              const artifacts = resp.data && resp.data.artifacts ? resp.data.artifacts : [];
-              const found = artifacts.find(a => a.name === 'playwright-results');
-              if (found) artifactUrl = found.archive_download_url;
-            } catch (e) {
-              console.log('Failed to list artifacts for run:', e.message || e);
-            }
-
-            if (artifactUrl) {
+              // Determine overall status
+              const status = failed > 0 ? '❌ FAIL' : '✅ PASS';
+              summaryLines.push(`### ${status}`);
               summaryLines.push('');
-              summaryLines.push(`Download artifacts (requires repository access): ${artifactUrl}`);
+              summaryLines.push('| Metric | Count |');
+              summaryLines.push('|--------|-------|');
+              summaryLines.push(`| Total | ${total} |`);
+              summaryLines.push(`| Passed | ${passed} ✅ |`);
+              if (failed > 0) summaryLines.push(`| Failed | ${failed} ❌ |`);
+              if (skipped > 0) summaryLines.push(`| Skipped | ${skipped} |`);
+              if (flaky > 0) summaryLines.push(`| Flaky | ${flaky} ⚠️ |`);
+            } else {
+              summaryLines.push('### ⚠️ Unknown');
+              summaryLines.push('');
+              summaryLines.push('Could not parse test results. Check workflow logs for details.');
             }
 
             const body = summaryLines.join('\n');
+            console.log('Comment body:', body);
 
-            // Post comment on the PR
-            const prNumber = context.payload.pull_request && context.payload.pull_request.number;
+            // Get PR number from environment or context
+            const prNumber = process.env.PR_NUMBER || context.payload.pull_request?.number;
+
+            console.log('PR Number from env:', process.env.PR_NUMBER);
+            console.log('PR Number from context:', context.payload.pull_request?.number);
+            console.log('Using PR Number:', prNumber);
+
             if (!prNumber) {
-              console.log('No pull request number found in context; skipping comment.');
-            } else {
-              await github.rest.issues.createComment({
+              console.error('ERROR: No PR number found!');
+              console.log('Context keys:', Object.keys(context));
+              console.log('Payload keys:', Object.keys(context.payload));
+              console.log('Event name:', context.eventName);
+              return;
+            }
+
+            console.log('Processing PR #' + prNumber);
+
+            try {
+              // Try to find existing comment to update
+              const { data: comments } = await github.rest.issues.listComments({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                issue_number: prNumber,
-                body,
+                issue_number: parseInt(prNumber),
               });
+              
+              console.log('Found', comments.length, 'existing comments');
+
+              const botComment = comments.find(comment => 
+                comment.user.type === 'Bot' && 
+                comment.body.includes('🧪 Playwright Smoke Tests')
+              );
+
+              if (botComment) {
+                console.log('Updating existing comment:', botComment.id);
+                // Update existing comment
+                await github.rest.issues.updateComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  comment_id: botComment.id,
+                  body,
+                });
+                console.log('✅ Comment updated successfully');
+              } else {
+                console.log('Creating new comment');
+                // Create new comment
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: parseInt(prNumber),
+                  body,
+                });
+                console.log('✅ Comment created successfully');
+              }
+            } catch (error) {
+              console.error('❌ Error posting comment:', error.message);
+              console.error('Error details:', error);
+              throw error;
             }

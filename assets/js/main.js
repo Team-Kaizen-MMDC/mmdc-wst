@@ -178,27 +178,29 @@ class App {
     // Log successful initialization
     console.log("✅ All features initialized successfully");
   }
-  
-    //Nav Tab color link Active
-   initDashboardTabs() {
-    const tabButtons = document.querySelectorAll('#dashboardTabs button[data-bs-toggle="tab"]');
-    
+
+  //Nav Tab color link Active
+  initDashboardTabs() {
+    const tabButtons = document.querySelectorAll(
+      '#dashboardTabs button[data-bs-toggle="tab"]'
+    );
+
     if (tabButtons.length === 0) {
       // Not on a dashboard page, skip
       return;
     }
 
-    console.log('✅ Dashboard tabs found:', tabButtons.length);
-    
-    tabButtons.forEach(button => {
-      button.addEventListener('shown.bs.tab', function() {
-        tabButtons.forEach(btn => {
-          btn.classList.remove('text-danger', 'fw-bold');
-          btn.classList.add('text-secondary');
+    console.log("✅ Dashboard tabs found:", tabButtons.length);
+
+    tabButtons.forEach((button) => {
+      button.addEventListener("shown.bs.tab", function () {
+        tabButtons.forEach((btn) => {
+          btn.classList.remove("text-danger", "fw-bold");
+          btn.classList.add("text-secondary");
         });
-        
-        this.classList.remove('text-secondary');
-        this.classList.add('text-danger', 'fw-bold');
+
+        this.classList.remove("text-secondary");
+        this.classList.add("text-danger", "fw-bold");
       });
     });
   }
@@ -445,121 +447,132 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-       // --- Profile Summary Inline Edit Logic ---
+// --- Profile Summary Inline Edit Logic ---
 function initializeApp() {
-    console.log("main.js script loaded successfully from assets/js/ - Initializing Dashboard Logic.");
+  console.log(
+    "main.js script loaded successfully from assets/js/ - Initializing Dashboard Logic."
+  );
 
-    // --- DOM Element References ---
-    const readDisplay = document.getElementById('read-display');
-    const textContent = document.getElementById('text-content');
-    const editInput = document.getElementById('edit-input'); // This is the textarea element
-    const charCount = document.getElementById('char-count');
-    const editBtn = document.getElementById('edit-btn');
-    const saveBtn = document.getElementById('save-btn');
+  // --- DOM Element References ---
+  const readDisplay = document.getElementById("read-display");
+  const textContent = document.getElementById("text-content");
+  const editInput = document.getElementById("edit-input"); // This is the textarea element
+  const charCount = document.getElementById("char-count");
+  const editBtn = document.getElementById("edit-btn");
+  const saveBtn = document.getElementById("save-btn");
 
-    // Ensure all required elements exist before proceeding
-    if (!readDisplay || !textContent || !editInput || !charCount || !editBtn || !saveBtn) {
-        console.error("One or more required profile dashboard elements are missing. Aborting initialization.");
-        return;
+  // Ensure all required elements exist before proceeding
+  if (
+    !readDisplay ||
+    !textContent ||
+    !editInput ||
+    !charCount ||
+    !editBtn ||
+    !saveBtn
+  ) {
+    console.error(
+      "One or more required profile dashboard elements are missing. Aborting initialization."
+    );
+    return;
+  }
+
+  // Get max length property
+  const maxLength = editInput.getAttribute("maxlength");
+
+  /**
+   * Updates the character count display.
+   */
+  const updateCount = () => {
+    const currentLength = editInput.value.length;
+    charCount.textContent = `${currentLength} / ${maxLength} characters`;
+  };
+
+  // Attach listener and perform initial count update
+  editInput.addEventListener("input", updateCount);
+  updateCount();
+
+  /**
+   * Toggles the editor between read mode and edit mode.
+   * This function is attached to the window object so it can be called
+   * directly from the HTML 'onclick' attributes.
+   * @param {boolean} isEditing - True to enter edit mode, false to enter read mode (save).
+   */
+  window.toggleEditMode = function (isEditing) {
+    if (isEditing) {
+      // --- SWITCH TO EDIT MODE ---
+
+      // 1. Transfer current text from read-only display to the textarea input
+      editInput.value = textContent.textContent.trim();
+
+      // 2. Toggle Visibility (Hide read, Show edit & character count)
+      readDisplay.classList.add("d-none");
+      editInput.classList.remove("d-none");
+      charCount.classList.remove("d-none");
+
+      // Re-update the count to reflect the text we just loaded into the input
+      updateCount();
+
+      // 3. Toggle Buttons (Hide edit button, Show save button)
+      editBtn.classList.add("d-none");
+      saveBtn.classList.remove("d-none");
+
+      // 4. Focus on the textarea and move the cursor to the end
+      editInput.focus();
+      editInput.setSelectionRange(
+        editInput.value.length,
+        editInput.value.length
+      );
+    } else {
+      // --- SWITCH TO READ/SAVE MODE ---
+
+      // 1. Get the new content from the textarea
+      const newContent = editInput.value.trim();
+
+      // 2. Update the read-only display with the new content
+      textContent.textContent = newContent;
+
+      // 3. Toggle Visibility (Show read, Hide edit & character count)
+      editInput.classList.add("d-none");
+      readDisplay.classList.remove("d-none");
+      charCount.classList.add("d-none");
+
+      // 4. Toggle Buttons (Show edit button, Hide save button)
+      saveBtn.classList.add("d-none");
+      editBtn.classList.remove("d-none");
+
+      console.log("Content Saved:", newContent);
+      // NOTE: Add your Firestore update logic here in a real app.
     }
-
-    // Get max length property
-    const maxLength = editInput.getAttribute('maxlength'); 
-
-    /**
-     * Updates the character count display.
-     */
-    const updateCount = () => {
-        const currentLength = editInput.value.length;
-        charCount.textContent = `${currentLength} / ${maxLength} characters`;
-    };
-
-    // Attach listener and perform initial count update
-    editInput.addEventListener('input', updateCount);
-    updateCount();
-
-    /**
-     * Toggles the editor between read mode and edit mode.
-     * This function is attached to the window object so it can be called 
-     * directly from the HTML 'onclick' attributes.
-     * @param {boolean} isEditing - True to enter edit mode, false to enter read mode (save).
-     */
-    window.toggleEditMode = function(isEditing) {
-        if (isEditing) {
-            // --- SWITCH TO EDIT MODE ---
-
-            // 1. Transfer current text from read-only display to the textarea input
-            editInput.value = textContent.textContent.trim();
-
-            // 2. Toggle Visibility (Hide read, Show edit & character count)
-            readDisplay.classList.add('d-none');
-            editInput.classList.remove('d-none');
-            charCount.classList.remove('d-none');
-            
-            // Re-update the count to reflect the text we just loaded into the input
-            updateCount(); 
-
-            // 3. Toggle Buttons (Hide edit button, Show save button)
-            editBtn.classList.add('d-none');
-            saveBtn.classList.remove('d-none'); 
-
-            // 4. Focus on the textarea and move the cursor to the end
-            editInput.focus();
-            editInput.setSelectionRange(
-                editInput.value.length,
-                editInput.value.length
-            );
-        } else {
-            // --- SWITCH TO READ/SAVE MODE ---
-
-            // 1. Get the new content from the textarea
-            const newContent = editInput.value.trim();
-
-            // 2. Update the read-only display with the new content
-            textContent.textContent = newContent;
-
-            // 3. Toggle Visibility (Show read, Hide edit & character count)
-            editInput.classList.add('d-none');
-            readDisplay.classList.remove('d-none');
-            charCount.classList.add('d-none');
-
-            // 4. Toggle Buttons (Show edit button, Hide save button)
-            saveBtn.classList.add('d-none');
-            editBtn.classList.remove('d-none');
-
-            console.log('Content Saved:', newContent);
-            // NOTE: Add your Firestore update logic here in a real app.
-        }
-    }
+  };
 }
 
 // Listen for the DOMContentLoaded event to safely run the initialization function
-document.addEventListener('DOMContentLoaded', initializeApp);
+document.addEventListener("DOMContentLoaded", initializeApp);
 
 //userMenu dropdown
-document.addEventListener('DOMContentLoaded', () => {
-            const userMenuBtn = document.getElementById('user-menu-btn');
-            const userMenuDropdown = document.getElementById('user-menu-dropdown');
+document.addEventListener("DOMContentLoaded", () => {
+  const userMenuBtn = document.getElementById("user-menu-btn");
+  const userMenuDropdown = document.getElementById("user-menu-dropdown");
 
-            // Function to toggle the menu's visibility
-            function toggleMenu() {
-                userMenuDropdown.classList.toggle('is-active');
-            }
+  // Function to toggle the menu's visibility
+  function toggleMenu() {
+    userMenuDropdown.classList.toggle("is-active");
+  }
 
-            // Event listener to open/close the menu when the button is clicked
-            userMenuBtn.addEventListener('click', (e) => {
-                e.preventDefault(); // Prevents the link from navigating
-                e.stopPropagation(); // Prevents the click from bubbling up to the document
-                toggleMenu();
-            });
+  // Event listener to open/close the menu when the button is clicked
+  userMenuBtn.addEventListener("click", (e) => {
+    e.preventDefault(); // Prevents the link from navigating
+    e.stopPropagation(); // Prevents the click from bubbling up to the document
+    toggleMenu();
+  });
 
-            // Event listener to close the menu when clicking anywhere else on the page
-            document.addEventListener('click', (e) => {
-                if (!userMenuDropdown.contains(e.target) && e.target !== userMenuBtn) {
-                    userMenuDropdown.classList.remove('is-active');
-                }
-            });
-        });
+  // Event listener to close the menu when clicking anywhere else on the page
+  document.addEventListener("click", (e) => {
+    if (!userMenuDropdown.contains(e.target) && e.target !== userMenuBtn) {
+      userMenuDropdown.classList.remove("is-active");
+    }
+  });
+});
 
 // Inject and handle Dark/Light Mode Toggle (Desktop + Mobile)
 // Author: MK
@@ -608,7 +621,9 @@ document.addEventListener("DOMContentLoaded", function () {
     label.className = "form-check-label mb-0";
     label.setAttribute("for", `theme-toggle${idSuffix}`);
     label.id = `theme-toggle-label${idSuffix}`;
-    label.innerHTML = `<i class="bi ${savedTheme === "dark" ? "bi-moon" : "bi-sun"}"></i>`;
+    label.innerHTML = `<i class="bi ${
+      savedTheme === "dark" ? "bi-moon" : "bi-sun"
+    }"></i>`;
 
     wrapper.appendChild(input);
     wrapper.appendChild(label);
@@ -616,8 +631,7 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   // ----- Show toggle only if logged in -----
-  const isLoggedIn =
-    sessionStorage.getItem("isLoggedIn") === "true";
+  const isLoggedIn = sessionStorage.getItem("isLoggedIn") === "true";
 
   if (!isLoggedIn) {
     console.log("Dark/Light toggle hidden — user not logged in");
@@ -630,7 +644,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const { wrapper, input } = createToggle();
     const langToggle = document.getElementById("lang-toggle");
     if (langToggle) {
-      langToggle.closest(".form-check")?.insertAdjacentElement("afterend", wrapper);
+      langToggle
+        .closest(".form-check")
+        ?.insertAdjacentElement("afterend", wrapper);
     } else {
       headerActions.appendChild(wrapper);
     }
@@ -673,344 +689,635 @@ document.addEventListener("DOMContentLoaded", function () {
       }, 300);
     });
   }
-});                                                                                                                                                                                      
-      // --- FilterData (normalized) Job listed ---
-      const jobData = [
-        { id: 1, title: "Mechanic Ground Support", company: "Japan Airline", location: "tokyo", industry: "aviation", salary: 220000, japaneseLevel: "n4", support: "yes" },
-        { id: 2, title: "Construction Worker", company: "Mitsubishi Heavy Industries", location: "kyoto", salary: 200000, industry: "construction", japaneseLevel: "n5", support: "yes" },
-        { id: 3, title: "Food Service Staff", company: "Local Ramen Shop", location: "osaka", salary: 200000, industry: "food service", japaneseLevel: "n5", support: "yes" },
-        { id: 4, title: "Nursing Care Assistant", company: "Harmony Home", location: "kanagawa", salary: 220000, industry: "nursing care", japaneseLevel: "n3", support: "yes" }
-      ];
+});
+// --- FilterData (normalized) Job listed ---
+const jobData = [
+  {
+    id: 1,
+    title: "Mechanic Ground Support",
+    company: "Japan Airline",
+    location: "tokyo",
+    industry: "aviation",
+    salary: 220000,
+    japaneseLevel: "n4",
+    support: "yes",
+  },
+  {
+    id: 2,
+    title: "Construction Worker",
+    company: "Mitsubishi Heavy Industries",
+    location: "kyoto",
+    salary: 200000,
+    industry: "construction",
+    japaneseLevel: "n5",
+    support: "yes",
+  },
+  {
+    id: 3,
+    title: "Food Service Staff",
+    company: "Local Ramen Shop",
+    location: "osaka",
+    salary: 200000,
+    industry: "food service",
+    japaneseLevel: "n5",
+    support: "yes",
+  },
+  {
+    id: 4,
+    title: "Nursing Care Assistant",
+    company: "Harmony Home",
+    location: "kanagawa",
+    salary: 220000,
+    industry: "nursing care",
+    japaneseLevel: "n3",
+    support: "yes",
+  },
+];
 
-      // --- State (use lowercase tokens consistently) ---
-      const state = {
-        search: '',
-        support: ['all'],
-        japaneseLevel: ['any'],
-        location: ['all'],
-        industry: ['all'],
-        minSalary: [0]
-      };
+// --- State (use lowercase tokens consistently) ---
+const state = {
+  search: "",
+  support: ["all"],
+  japaneseLevel: ["any"],
+  location: ["all"],
+  industry: ["all"],
+  minSalary: [0],
+};
 
-      // DOM refs
-      const jobListings = document.getElementById('jobListings');
-      const noResults = document.getElementById('noResults');
-      const resultCountEl = document.getElementById('resultCount');
-      const filters = document.querySelectorAll('[data-filter-group]');
-      const searchInput = document.getElementById('searchInput');
-      const clearBtn = document.getElementById('clearFilters');
+// DOM refs
+const jobListings = document.getElementById("jobListings");
+const noResults = document.getElementById("noResults");
+const resultCountEl = document.getElementById("resultCount");
+const filterAnnouncement = document.getElementById("filterAnnouncement");
+const filters = document.querySelectorAll("[data-filter-group]");
+const searchInput = document.getElementById("searchInput");
+const clearBtn = document.getElementById("clearFilters");
 
-      // helper: render jobs
-      function renderJobs(jobs) {
-        jobListings.innerHTML = '';
-        resultCountEl.textContent = jobs.length;
+// helper: render jobs
+function renderJobs(jobs) {
+  jobListings.innerHTML = "";
+  resultCountEl.textContent = jobs.length;
 
-        if (!jobs.length) {
-          noResults.classList.remove('d-none');
-          return;
-        }
-        noResults.classList.add('d-none');
+  if (!jobs.length) {
+    noResults.classList.remove("d-none");
+    // Announce to screen readers
+    if (filterAnnouncement) {
+      filterAnnouncement.textContent =
+        "No jobs found. Try adjusting your filters.";
+    }
+    return;
+  }
+  noResults.classList.add("d-none");
 
-        jobs.forEach(job => {
-          const col = document.createElement('div');
-          col.className = 'col-md-6 col-lg-6';
-          col.innerHTML = `
+  // Announce results to screen readers
+  if (filterAnnouncement) {
+    filterAnnouncement.textContent = `${jobs.length} job${
+      jobs.length === 1 ? "" : "s"
+    } found`;
+  }
+
+  jobs.forEach((job) => {
+    const col = document.createElement("div");
+    col.className = "col-md-6 col-lg-6";
+    col.setAttribute("role", "listitem");
+    col.innerHTML = `
             <div class="card h-100 shadow-sm border-0 job-card">
               <div class="card-body">
                 <div class="d-flex justify-content-between">
                   <h5 class="fw-bold mb-1">${escapeHtml(job.title)}</h5>
            
                 </div>
-                <p class="text-muted mb-2">${escapeHtml(job.company)} · ${capitalize(job.location)}</p>
-                <p class="small mb-1"><strong>Industry:</strong> ${capitalize(job.industry)}</p>
+                <p class="text-muted mb-2">${escapeHtml(
+                  job.company
+                )} · ${capitalize(job.location)}</p>
+                <p class="small mb-1"><strong>Industry:</strong> ${capitalize(
+                  job.industry
+                )}</p>
                 <p class="small mb-1"><strong>Salary:</strong> ¥${job.salary.toLocaleString()}</p>
-                     <p class="small mb-1"><strong>Industry:</strong> ${capitalize(job.japaneseLevel)}</p>
-                <p class="small mb-1"><strong>Visa Support:</strong> ${capitalize(job.support)}</p>
+                     <p class="small mb-1"><strong>Industry:</strong> ${capitalize(
+                       job.japaneseLevel
+                     )}</p>
+                <p class="small mb-1"><strong>Visa Support:</strong> ${capitalize(
+                  job.support
+                )}</p>
               </div>
               <div class="card-footer bg-transparent border-0">
                 <button class="btn btn-primary w-100">View Details</button>
               </div>
             </div>
           `;
-          jobListings.appendChild(col);
-        });
-      }
+    jobListings.appendChild(col);
+  });
+}
 
-      // helpers
-      function capitalize(str) {
-        if (!str) return '';
-        return str.charAt(0).toUpperCase() + str.slice(1);
-      }
-      function escapeHtml(unsafe) {
-        return unsafe.replace(/[&<"'>]/g, function(m) { return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[m]); });
-      }
+// helpers
+function capitalize(str) {
+  if (!str) return "";
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+function escapeHtml(unsafe) {
+  return unsafe.replace(/[&<"'>]/g, function (m) {
+    return {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;",
+    }[m];
+  });
+}
 
-      // update button styles for a group
-      function updateButtons(groupKey) {
-        const container = document.querySelector(`[data-filter-group="${groupKey}"]`);
-        if (!container) return;
-        container.querySelectorAll('button[data-value]').forEach(btn => {
-          const val = String(btn.dataset.value).toLowerCase();
-          const salary = parseInt(btn.dataset.salary || '0', 10);
-          const active = groupKey === 'minSalary'
-            ? state[groupKey].includes(salary)
-            : state[groupKey].includes(val);
-          if (active) {
-            btn.classList.remove('btn-outline-secondary');
-            btn.classList.add('btn-outline-secondary', 'active');
-       
+// update button styles for a group
+function updateButtons(groupKey) {
+  const container = document.querySelector(`[data-filter-group="${groupKey}"]`);
+  if (!container) return;
+  container.querySelectorAll("button[data-value]").forEach((btn) => {
+    const val = String(btn.dataset.value).toLowerCase();
+    const salary = parseInt(btn.dataset.salary || "0", 10);
+    const active =
+      groupKey === "minSalary"
+        ? state[groupKey].includes(salary)
+        : state[groupKey].includes(val);
+
+    // Update visual state
+    if (active) {
+      btn.classList.remove("btn-outline-secondary");
+      btn.classList.add("btn-outline-primary", "active");
+    } else {
+      btn.classList.remove("btn-primary", "btn-outline-primary", "active");
+      btn.classList.add("btn-outline-secondary");
+    }
+
+    // Update ARIA pressed state for accessibility
+    btn.setAttribute("aria-pressed", active ? "true" : "false");
+  });
+}
+
+// main filter function
+function filterJobs() {
+  const search = state.search;
+  const isSupportAll = state.support.includes("all");
+  const isJapaneseAny = state.japaneseLevel.includes("any");
+  const isLocationAll = state.location.includes("all");
+  const isIndustryAll = state.industry.includes("all");
+  const minSalaryValue = Math.max(...state.minSalary);
+
+  const filtered = jobData.filter((job) => {
+    // search (title, company, location, japaneseLevel)
+    if (search) {
+      const hay = (
+        job.title +
+        " " +
+        job.company +
+        " " +
+        job.location +
+        " " +
+        job.japaneseLevel
+      ).toLowerCase();
+      if (!hay.includes(search)) return false;
+    }
+
+    // support
+    if (!isSupportAll && !state.support.includes(job.support)) return false;
+
+    // japanese level
+    if (!isJapaneseAny && !state.japaneseLevel.includes(job.japaneseLevel))
+      return false;
+
+    // location
+    if (!isLocationAll && !state.location.includes(job.location)) return false;
+
+    // industry
+    if (!isIndustryAll && !state.industry.includes(job.industry)) return false;
+
+    // salary
+    if (job.salary < minSalaryValue) return false;
+
+    return true;
+  });
+
+  renderJobs(filtered);
+}
+
+// wire up filter buttons (delegated per group)
+filters.forEach((groupEl) => {
+  const groupKey = groupEl.dataset.filterGroup;
+  groupEl.addEventListener("click", (e) => {
+    const btn = e.target.closest("button[data-value]");
+    if (!btn) return;
+
+    const rawVal = btn.dataset.value;
+    const val = String(rawVal).toLowerCase();
+    const salary = parseInt(btn.dataset.salary || "0", 10);
+
+    // determine key and whether clicked is reset/all option
+    const isMinSalary = groupKey === "minSalary";
+    const isReset =
+      val === "all" ||
+      val === "any" ||
+      (!isMinSalary && val === "") ||
+      (isMinSalary && salary === 0);
+
+    const key = isMinSalary ? salary : val;
+
+    // toggle selection
+    if (state[groupKey].includes(key)) {
+      // if more than 1 selected, remove; else keep (prevent empty)
+      if (state[groupKey].length > 1) {
+        state[groupKey] = state[groupKey].filter((v) => v !== key);
+      }
+    } else {
+      // add new selection
+      state[groupKey].push(key);
+    }
+
+    // if reset/all clicked and is now selected -> set alone
+    if (isReset && state[groupKey].includes(key)) {
+      state[groupKey] = [key];
+    }
+
+    // when non-reset selected, remove any 'all' default
+    if (!isReset && state[groupKey].length > 1) {
+      state[groupKey] = state[groupKey].filter((v) => {
+        return !(v === "all" || v === "any" || v === 0);
+      });
+    }
+
+    // ensure at least one default remains
+    if (state[groupKey].length === 0) {
+      if (groupKey === "support") state[groupKey] = ["all"];
+      if (groupKey === "japaneseLevel") state[groupKey] = ["any"];
+      if (groupKey === "location") state[groupKey] = ["all"];
+      if (groupKey === "industry") state[groupKey] = ["all"];
+      if (groupKey === "minSalary") state[groupKey] = [0];
+    }
+
+    updateButtons(groupKey);
+    filterJobs();
+  });
+});
+
+// search input
+searchInput.addEventListener("input", () => {
+  state.search = searchInput.value.toLowerCase().trim();
+  filterJobs();
+});
+
+// Keyboard shortcuts for search input
+searchInput.addEventListener("keydown", (e) => {
+  // Escape key clears the search
+  if (e.key === "Escape") {
+    searchInput.value = "";
+    state.search = "";
+    filterJobs();
+    if (filterAnnouncement) {
+      filterAnnouncement.textContent = "Search cleared";
+    }
+  }
+});
+
+// clear filters
+clearBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  state.support = ["all"];
+  state.japaneseLevel = ["any"];
+  state.location = ["all"];
+  state.industry = ["all"];
+  state.minSalary = [0];
+
+  // update all button groups visually
+  ["support", "japaneseLevel", "location", "industry", "minSalary"].forEach(
+    (k) => updateButtons(k)
+  );
+  searchInput.value = "";
+  state.search = "";
+  filterJobs();
+
+  // Announce to screen readers
+  if (filterAnnouncement) {
+    filterAnnouncement.textContent = "All filters cleared. Showing all jobs.";
+  }
+
+  // Return focus to search input for keyboard users
+  searchInput.focus();
+});
+
+// Global keyboard shortcut: Ctrl+K or Cmd+K to focus search
+document.addEventListener("keydown", (e) => {
+  if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+    e.preventDefault();
+    searchInput.focus();
+    searchInput.select();
+  }
+});
+
+// initial render
+window.addEventListener("DOMContentLoaded", () => {
+  // ensure all groups reflect initial active button styles
+  ["support", "japaneseLevel", "location", "industry", "minSalary"].forEach(
+    (k) => updateButtons(k)
+  );
+  filterJobs();
+});
+//  JOB ALERT
+document.addEventListener("DOMContentLoaded", () => {
+  // 1. Get references to the elements
+  const emailInput = document.getElementById("newsletter-email");
+  const signupButton = document.getElementById("signup-button");
+  const jobAlertToastEl = document.getElementById("jobAlertToast");
+
+  // 2. Initialize the Bootstrap Toast component
+  // Note: bootstrap is available globally since the bundle script is loaded above
+  const jobAlertToast = new bootstrap.Toast(jobAlertToastEl, {
+    autohide: true,
+    delay: 5000, // Toast will hide after 5 seconds
+  });
+
+  // 3. Function to update the button state
+  const updateButtonState = () => {
+    // Check for a non-empty value and basic email format (containing '@')
+    const isValid =
+      emailInput.value.trim() !== "" && emailInput.value.includes("@");
+  };
+
+  // 4. Enable/Disable the button based on input
+  emailInput.addEventListener("input", updateButtonState);
+
+  // Run once on load in case the browser pre-fills the input
+  updateButtonState();
+
+  // 5. Show the Toast on button click (Demo action)
+  signupButton.addEventListener("click", (event) => {
+    event.preventDefault(); // Prevent default form submission behavior (though this isn't a form, it's good practice)
+
+    if (!signupButton.disabled) {
+      //DEMO ACTION: Show the success Toast
+      jobAlertToast.show();
+
+      //DEMO ACTION: Clear the input field and disable the button after "signing up"
+      emailInput.value = "";
+      updateButtonState();
+    }
+  });
+});
+
+document.addEventListener("DOMContentLoaded"),
+  () => {
+    // --- Profile Summary Toggle (Preserved as requested) ---
+    function toggleEditMode(isEditing) {
+      const readDisplay = document.getElementById("read-display");
+      const editInput = document.getElementById("edit-input");
+      const editBtn = document.getElementById("edit-btn");
+      const saveBtn = document.getElementById("save-btn");
+
+      if (isEditing) {
+        readView.classList.add("d-none");
+        editView.classList.remove("d-none");
+        editBtn.classList.add("d-none");
+        saveBtn.classList.remove("d-none");
+      } else {
+        // In a real app, logic to save content would go here
+        editView.classList.add("d-none");
+        readView.classList.remove("d-none");
+        saveBtn.classList.add("d-none");
+        editBtn.classList.remove("d-none");
+        console.log("Profile summary saved.");
+      }
+    }
+
+    // --- Modal Save/Add Placeholder Functions ---
+    // These functions simulate saving and close the modal (handled by form submit + data-bs-dismiss="modal" or JS)
+
+    function saveBasicInfo() {
+      // Placeholder: Logic to save Basic Info fields via API call
+      console.log("Basic Information saved via Modal.");
+      // Manually hide modal if not using data-bs-dismiss
+      const modalElement = document.getElementById("basicInfoModal");
+      const modal = bootstrap.Modal.getInstance(modalElement);
+      if (modal) modal.hide();
+    }
+
+    function saveExperience() {
+      // Placeholder: Logic to save all Experience entries
+      console.log("Experience entries saved via Modal.");
+      const modalElement = document.getElementById("experienceModal");
+      const modal = bootstrap.Modal.getInstance(modalElement);
+      if (modal) modal.hide();
+    }
+
+    function saveSkills() {
+      // Placeholder: Logic to save Skills entries
+      console.log("Skills saved via Modal.");
+      const modalElement = document.getElementById("skillsModal");
+      const modal = bootstrap.Modal.getInstance(modalElement);
+      if (modal) modal.hide();
+    }
+
+    function saveEducation() {
+      // Placeholder: Logic to save Education entries
+      console.log("Education entries saved via Modal.");
+      const modalElement = document.getElementById("educationModal");
+      const modal = bootstrap.Modal.getInstance(modalElement);
+      if (modal) modal.hide();
+    }
+
+    function saveAvailability() {
+      // Placeholder: Logic to save Availability/Preferences
+      console.log("Availability/Preferences saved via Modal.");
+      const modalElement = document.getElementById("availabilityModal");
+      const modal = bootstrap.Modal.getInstance(modalElement);
+      if (modal) modal.hide();
+    }
+
+    // Additional Add placeholders for console logging
+    function addNewExperience() {
+      console.log("Preparing modal to add new experience...");
+    }
+    function addNewExperienceEntry() {
+      console.log("New experience entry added to form (client-side)");
+    }
+    function addNewSkill() {
+      console.log("Preparing modal to add new skill...");
+    }
+    function addNewEducation() {
+      console.log("Preparing modal to add new education...");
+    }
+    function addNewEducationEntry() {
+      console.log("New education entry added to form (client-side)");
+    }
+  };
+
+// --- Small, conservative utilities: active-nav auto-detect + aria fallbacks ---
+(function () {
+  // Active nav auto-detection: mark nav link matching current path as .active
+  function applyActiveNav() {
+    try {
+      const links = document.querySelectorAll(
+        ".navbar a.nav-link, .nav-link, nav a[href]"
+      );
+      if (!links || links.length === 0) return;
+
+      const currentPath = window.location.pathname.replace(/\/+$/, "");
+      const currentHash = window.location.hash;
+
+      links.forEach((link) => {
+        try {
+          const href = link.getAttribute("href");
+          if (!href) return;
+
+          // Normalize
+          let url;
+          try {
+            url = new URL(href, window.location.href);
+          } catch (e) {
+            // If href is something odd, skip
+            return;
+          }
+
+          const linkPath = url.pathname.replace(/\/+$/, "");
+
+          // Exact path match OR hash-only match
+          if (
+            linkPath === currentPath ||
+            (url.hash && url.hash === currentHash) ||
+            href === "#" + currentHash.replace(/^#/, "")
+          ) {
+            link.classList.add("active");
           } else {
-            btn.classList.remove('btn-primary', 'btn-outline-primary', 'active');
-            btn.classList.add('btn-outline-secondary');
-            btn.classList.remove('btn-secondary');
+            link.classList.remove("active");
           }
-        });
-      }
+        } catch (errInner) {
+          // ignore per-link errors
+        }
+      });
+    } catch (err) {
+      console.warn("Active-nav helper failed:", err);
+    }
+  }
 
-      // main filter function
-      function filterJobs() {
-        const search = state.search;
-        const isSupportAll = state.support.includes('all');
-        const isJapaneseAny = state.japaneseLevel.includes('any');
-        const isLocationAll = state.location.includes('all');
-        const isIndustryAll = state.industry.includes('all');
-        const minSalaryValue = Math.max(...state.minSalary);
+  // Aria fallbacks: add conservative accessible names for unlabeled selects, empty anchors, and images without alt
+  function applyAriaFallbacks() {
+    try {
+      // SELECTS: if no aria-label / aria-labelledby / associated label, try to infer
+      document.querySelectorAll("select").forEach((sel) => {
+        if (
+          sel.getAttribute("aria-label") ||
+          sel.getAttribute("aria-labelledby")
+        )
+          return;
 
-        const filtered = jobData.filter(job => {
-          // search (title, company, location, japaneseLevel)
-          if (search) {
-            const hay = (job.title + ' ' + job.company + ' ' + job.location + ' ' + job.japaneseLevel).toLowerCase();
-            if (!hay.includes(search)) return false;
+        // If there's a label[for=id]
+        const id = sel.id;
+        if (id) {
+          const lab = document.querySelector(`label[for="${id}"]`);
+          if (lab && lab.textContent.trim()) {
+            sel.setAttribute("aria-label", lab.textContent.trim());
+            return;
           }
+        }
 
-          // support
-          if (!isSupportAll && !state.support.includes(job.support)) return false;
+        // If wrapped by a label
+        const wrapperLabel = sel.closest("label");
+        if (wrapperLabel && wrapperLabel.textContent.trim()) {
+          sel.setAttribute("aria-label", wrapperLabel.textContent.trim());
+          return;
+        }
 
-          // japanese level
-          if (!isJapaneseAny && !state.japaneseLevel.includes(job.japaneseLevel)) return false;
+        // Try nearest heading or legend or small descriptive text
+        let inferred = null;
+        const heading = sel.closest("fieldset")
+          ? sel.closest("fieldset").querySelector("legend")
+          : null;
+        if (heading && heading.textContent.trim())
+          inferred = heading.textContent.trim();
 
-          // location
-          if (!isLocationAll && !state.location.includes(job.location)) return false;
+        if (!inferred) {
+          const prev = sel.previousElementSibling;
+          if (prev && prev.textContent && prev.textContent.trim().length < 80)
+            inferred = prev.textContent.trim();
+        }
 
-          // industry
-          if (!isIndustryAll && !state.industry.includes(job.industry)) return false;
+        if (!inferred) {
+          const parentHeader = sel.closest(".card")
+            ? sel.closest(".card").querySelector("h3,h4,h5,h6,h2,h1")
+            : null;
+          if (parentHeader && parentHeader.textContent.trim())
+            inferred = parentHeader.textContent.trim();
+        }
 
-          // salary
-          if (job.salary < minSalaryValue) return false;
+        if (inferred) sel.setAttribute("aria-label", inferred);
+      });
 
-          return true;
-        });
-
-        renderJobs(filtered);
-      }
-
-      // wire up filter buttons (delegated per group)
-      filters.forEach(groupEl => {
-        const groupKey = groupEl.dataset.filterGroup;
-        groupEl.addEventListener('click', e => {
-          const btn = e.target.closest('button[data-value]');
-          if (!btn) return;
-
-          const rawVal = btn.dataset.value;
-          const val = String(rawVal).toLowerCase();
-          const salary = parseInt(btn.dataset.salary || '0', 10);
-
-          // determine key and whether clicked is reset/all option
-          const isMinSalary = groupKey === 'minSalary';
-          const isReset = (
-            val === 'all' || val === 'any' || (!isMinSalary && val === '') || (isMinSalary && salary === 0)
-          );
-
-          const key = isMinSalary ? salary : val;
-
-          // toggle selection
-          if (state[groupKey].includes(key)) {
-            // if more than 1 selected, remove; else keep (prevent empty)
-            if (state[groupKey].length > 1) {
-              state[groupKey] = state[groupKey].filter(v => v !== key);
+      // IMAGES: add conservative alt text for images missing the attribute or empty alt
+      document.querySelectorAll("img").forEach((img) => {
+        try {
+          const hasAlt = img.hasAttribute("alt");
+          if (!hasAlt || (img.getAttribute("alt") || "").trim() === "") {
+            // If the image has an adjacent caption or title, prefer that
+            const title = img.getAttribute("title");
+            if (title && title.trim()) {
+              img.setAttribute("alt", title.trim());
+              return;
             }
-          } else {
-            // add new selection
-            state[groupKey].push(key);
-          }
 
-          // if reset/all clicked and is now selected -> set alone
-          if (isReset && state[groupKey].includes(key)) {
-            state[groupKey] = [key];
-          }
-
-          // when non-reset selected, remove any 'all' default
-          if (!isReset && state[groupKey].length > 1) {
-            state[groupKey] = state[groupKey].filter(v => {
-              return !(v === 'all' || v === 'any' || v === 0);
-            });
-          }
-
-          // ensure at least one default remains
-          if (state[groupKey].length === 0) {
-            if (groupKey === 'support') state[groupKey] = ['all'];
-            if (groupKey === 'japaneseLevel') state[groupKey] = ['any'];
-            if (groupKey === 'location') state[groupKey] = ['all'];
-            if (groupKey === 'industry') state[groupKey] = ['all'];
-            if (groupKey === 'minSalary') state[groupKey] = [0];
-          }
-
-          updateButtons(groupKey);
-          filterJobs();
-        });
-      });
-
-      // search input
-      searchInput.addEventListener('input', () => {
-        state.search = searchInput.value.toLowerCase().trim();
-        filterJobs();
-      });
-
-      // clear filters
-      clearBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        state.support = ['all'];
-        state.japaneseLevel = ['any'];
-        state.location = ['all'];
-        state.industry = ['all'];
-        state.minSalary = [0];
-
-        // update all button groups visually
-        ['support','japaneseLevel','location','industry','minSalary'].forEach(k => updateButtons(k));
-        searchInput.value = '';
-        state.search = '';
-        filterJobs();
-      });
-
-      // initial render
-      window.addEventListener('DOMContentLoaded', () => {
-        // ensure all groups reflect initial active button styles
-        ['support','japaneseLevel','location','industry','minSalary'].forEach(k => updateButtons(k));
-        filterJobs();
-      });
-    //  JOB ALERT 
-    document.addEventListener('DOMContentLoaded', () => {
-        // 1. Get references to the elements
-        const emailInput = document.getElementById('newsletter-email');
-        const signupButton = document.getElementById('signup-button');
-        const jobAlertToastEl = document.getElementById('jobAlertToast');
-
-        // 2. Initialize the Bootstrap Toast component
-        // Note: bootstrap is available globally since the bundle script is loaded above
-        const jobAlertToast = new bootstrap.Toast(jobAlertToastEl, {
-            autohide: true,
-            delay: 5000 // Toast will hide after 5 seconds
-        });
-
-        // 3. Function to update the button state
-        const updateButtonState = () => {
-            // Check for a non-empty value and basic email format (containing '@')
-            const isValid = emailInput.value.trim() !== '' && emailInput.value.includes('@');
-       
-        };
-
-        // 4. Enable/Disable the button based on input
-        emailInput.addEventListener('input', updateButtonState);
-
-        // Run once on load in case the browser pre-fills the input
-        updateButtonState();
-
-        // 5. Show the Toast on button click (Demo action)
-        signupButton.addEventListener('click', (event) => {
-            event.preventDefault(); // Prevent default form submission behavior (though this isn't a form, it's good practice)
-
-            if (!signupButton.disabled) {
-                //DEMO ACTION: Show the success Toast
-                jobAlertToast.show();
-
-                //DEMO ACTION: Clear the input field and disable the button after "signing up"
-                emailInput.value = '';
-                updateButtonState();
+            const fig = img.closest("figure");
+            if (fig) {
+              const cap = fig.querySelector("figcaption");
+              if (cap && cap.textContent.trim()) {
+                img.setAttribute("alt", cap.textContent.trim());
+                return;
+              }
             }
-        });
+
+            // Fallback conservative alt
+            img.setAttribute("alt", "Image");
+          }
+        } catch (e) {
+          // ignore image failures
+        }
+      });
+
+      // EMPTY ANCHORS: label anchors that have no text and no aria-label
+      document.querySelectorAll("a").forEach((a) => {
+        try {
+          if ((a.textContent || "").trim().length > 0) return;
+          if (a.getAttribute("aria-label") || a.getAttribute("title")) return;
+
+          // If anchor contains an image with alt text, use that
+          const img = a.querySelector("img");
+          if (img && (img.getAttribute("alt") || "").trim()) {
+            a.setAttribute("aria-label", img.getAttribute("alt").trim());
+            return;
+          }
+
+          // Otherwise infer from nearest header
+          const header = a.closest(".card")
+            ? a.closest(".card").querySelector("h3,h4,h5,h6,h2,h1")
+            : null;
+          if (header && header.textContent.trim()) {
+            a.setAttribute("aria-label", header.textContent.trim());
+            return;
+          }
+
+          // Last resort: use a generic label
+          a.setAttribute("aria-label", "Link");
+        } catch (e) {
+          // ignore per-anchor errors
+        }
+      });
+    } catch (err) {
+      console.warn("Aria fallbacks failed:", err);
+    }
+  }
+
+  // Run on DOMContentLoaded
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => {
+      applyActiveNav();
+      applyAriaFallbacks();
     });
-
-document.addEventListener('DOMContentLoaded'), () => {
-        // --- Profile Summary Toggle (Preserved as requested) ---
-        function toggleEditMode(isEditing) {
-            const readDisplay = document.getElementById('read-display');
-            const editInput = document.getElementById('edit-input');
-            const editBtn = document.getElementById('edit-btn');
-            const saveBtn = document.getElementById('save-btn');
-
-            if (isEditing) {
-                readView.classList.add('d-none');
-                editView.classList.remove('d-none');
-                editBtn.classList.add('d-none');
-                saveBtn.classList.remove('d-none');
-            } else {
-                // In a real app, logic to save content would go here
-                editView.classList.add('d-none');
-                readView.classList.remove('d-none');
-                saveBtn.classList.add('d-none');
-                editBtn.classList.remove('d-none');
-                console.log('Profile summary saved.');
-            }
-        }
-
-        // --- Modal Save/Add Placeholder Functions ---
-        // These functions simulate saving and close the modal (handled by form submit + data-bs-dismiss="modal" or JS)
-
-        function saveBasicInfo() {
-            // Placeholder: Logic to save Basic Info fields via API call
-            console.log('Basic Information saved via Modal.');
-            // Manually hide modal if not using data-bs-dismiss
-            const modalElement = document.getElementById('basicInfoModal');
-            const modal = bootstrap.Modal.getInstance(modalElement);
-            if (modal) modal.hide();
-        }
-
-        function saveExperience() {
-            // Placeholder: Logic to save all Experience entries
-            console.log('Experience entries saved via Modal.');
-            const modalElement = document.getElementById('experienceModal');
-            const modal = bootstrap.Modal.getInstance(modalElement);
-            if (modal) modal.hide();
-        }
-
-        function saveSkills() {
-            // Placeholder: Logic to save Skills entries
-            console.log('Skills saved via Modal.');
-            const modalElement = document.getElementById('skillsModal');
-            const modal = bootstrap.Modal.getInstance(modalElement);
-            if (modal) modal.hide();
-        }
-
-        function saveEducation() {
-            // Placeholder: Logic to save Education entries
-            console.log('Education entries saved via Modal.');
-            const modalElement = document.getElementById('educationModal');
-            const modal = bootstrap.Modal.getInstance(modalElement);
-            if (modal) modal.hide();
-        }
-
-        function saveAvailability() {
-            // Placeholder: Logic to save Availability/Preferences
-            console.log('Availability/Preferences saved via Modal.');
-            const modalElement = document.getElementById('availabilityModal');
-            const modal = bootstrap.Modal.getInstance(modalElement);
-            if (modal) modal.hide();
-        }
-
-        // Additional Add placeholders for console logging
-        function addNewExperience() {
-            console.log('Preparing modal to add new experience...');
-        }
-        function addNewExperienceEntry() {
-            console.log('New experience entry added to form (client-side)');
-        }
-        function addNewSkill() {
-            console.log('Preparing modal to add new skill...');
-        }
-        function addNewEducation() {
-            console.log('Preparing modal to add new education...');
-        }
-        function addNewEducationEntry() {
-            console.log('New education entry added to form (client-side)');
-        }
-    };
+  } else {
+    applyActiveNav();
+    applyAriaFallbacks();
+  }
+})();

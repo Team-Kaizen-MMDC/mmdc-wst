@@ -309,4 +309,33 @@
   }
 }
 
+/* High-contrast text utilities (conservative, safe to apply) */
+.text-contrast-high {
+  color: #0b1220 !important; /* near-black for strong contrast against white */
+}
 
+.text-contrast-danger {
+  color: #991b1b !important; /* darker red for danger links/buttons */
+}
+
+.bg-contrast-strong {
+  background-color: #ffffff !important; /* force white background for contrast */
+  color: #0b1220 !important; /* ensure strong text color on white */
+}
+
+/* Make links and danger tokens more contrasty when inside high-contrast areas */
+.bg-contrast-strong a,
+.bg-contrast-strong .text-contrast-danger,
+.bg-contrast-strong .btn-link,
+.bg-contrast-strong .btn {
+  color: #991b1b !important;
+}
+
+/* Page-scoped overrides: profile-dashboard uses danger tokens heavily; limit scope */
+.profile-dashboard .text-danger,
+.profile-dashboard a.text-danger,
+.profile-dashboard .text-contrast-danger,
+.profile-dashboard a.text-contrast-danger,
+.profile-dashboard .badge.bg-danger-subtle.text-danger {
+  color: #991b1b !important;
+}

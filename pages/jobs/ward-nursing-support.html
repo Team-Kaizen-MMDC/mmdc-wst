@@ -30,6 +30,14 @@
     />
   </head>
   <body>
+    <!-- Skip to Content Link for Screen Readers -->
+    <a
+      href="#main-content"
+      class="skip-link"
+      data-i18n="accessibility.skipToContent"
+      >Skip to main content</a
+    >
+
     <!-- Shared Header (offcanvas mobile nav) -->
     <header class="site-header">
       <div class="container">
@@ -53,12 +61,12 @@
             <span class="navbar-toggler-icon"></span>
           </button>
 
-          <!-- Desktop nav (visible on lg+) -->
+          <!-- Desktop nav -->
           <div class="collapse navbar-collapse d-none d-lg-flex" id="navbarNav">
             <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
               <li class="nav-item">
                 <a
-                  class="nav-link site-header__nav-link"
+                  class="nav-link site-header__nav-link active"
                   href="../../index.html#jobs"
                   data-i18n="nav.jobs"
                   >Jobs</a
@@ -66,7 +74,7 @@
               </li>
               <li class="nav-item">
                 <a
-                  class="nav-link site-header__nav-link active"
+                  class="nav-link site-header__nav-link"
                   href="../../index.html#companies"
                   data-i18n="nav.services"
                   >Companies</a
@@ -182,7 +190,7 @@
       </div>
     </header>
 
-    <main>
+    <main id="main-content" role="main">
       <!-- Job Content -->
       <section class="job-card-wrap">
         <div class="container">
@@ -225,12 +233,16 @@
                       <li>Summer: Aug 13–15</li>
                     </ul>
                   </li>
-                  <li class="job-pill">Bonus: Twice a year (August, December)</li>
+                  <li class="job-pill">
+                    Bonus: Twice a year (August, December)
+                  </li>
                   <li class="job-pill">Trial Period: 6 months</li>
                   <li class="job-pill">Overtime: Average 10 hours/month</li>
                   <li class="job-pill">Workplace: Setagaya Ward, Tokyo</li>
                   <li class="job-pill">Health Insurance: Paid by company</li>
-                  <li class="job-pill">Commuting Expenses: Partially subsidized</li>
+                  <li class="job-pill">
+                    Commuting Expenses: Partially subsidized
+                  </li>
                 </ul>
               </section>
 
@@ -260,37 +272,43 @@
                 <h2>Department Overview</h2>
                 <p><strong>Jhesperus Japan Co., Ltd.</strong></p>
                 <p>
-                  This clinic specializes in orthopedic and rehabilitation treatments.
-                  We perform arthroscopic surgery and focus on sports medicine.
+                  This clinic specializes in orthopedic and rehabilitation
+                  treatments. We perform arthroscopic surgery and focus on
+                  sports medicine.
                 </p>
                 <p>
-                  This is a workplace where you can put your desire to “help someone”
-                  and “contribute to the medical field” into practice. With little overtime
-                  and systems for bonuses and salary increases, it’s ideal for those
-                  seeking stable, long-term employment.
+                  This is a workplace where you can put your desire to “help
+                  someone” and “contribute to the medical field” into practice.
+                  With little overtime and systems for bonuses and salary
+                  increases, it’s ideal for those seeking stable, long-term
+                  employment.
                 </p>
               </section>
 
               <section>
                 <h2>Why We Hire</h2>
                 <p>
-                  We strive daily to ensure that patients who are hospitalized before and
-                  after surgery can live their lives with peace of mind. We look forward
-                  to receiving applications from people who wish to work alongside us
-                  in supporting patient care.
+                  We strive daily to ensure that patients who are hospitalized
+                  before and after surgery can live their lives with peace of
+                  mind. We look forward to receiving applications from people
+                  who wish to work alongside us in supporting patient care.
                 </p>
               </section>
 
               <section>
                 <h2>Position Details</h2>
                 <p>
-                  You will work as a nurse support staff on the ward, helping maintain
-                  a clean, safe, and organized environment.
+                  You will work as a nurse support staff on the ward, helping
+                  maintain a clean, safe, and organized environment.
                 </p>
                 <ul>
-                  <li>Maintaining the ward environment (bed making, cleaning)</li>
+                  <li>
+                    Maintaining the ward environment (bed making, cleaning)
+                  </li>
                   <li>Serving and clearing hospital meals</li>
-                  <li>Cleaning up, recording, and reporting on daily life and care</li>
+                  <li>
+                    Cleaning up, recording, and reporting on daily life and care
+                  </li>
                   <li>Cleaning inside the hospital</li>
                 </ul>
               </section>
@@ -317,7 +335,9 @@
           </p>
           <div class="footer-cta-actions site-footer__cta-actions">
             <a class="btn btn-secondary" href="../../">Employer Login</a>
-            <a class="btn btn-primary" href="../../index.html#post-job">Post a Job</a>
+            <a class="btn btn-primary" href="../../index.html#post-job"
+              >Post a Job</a
+            >
           </div>
         </div>
         <div class="footer-links site-footer__links">

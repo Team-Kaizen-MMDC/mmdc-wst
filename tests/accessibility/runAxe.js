@@ -7,14 +7,69 @@ const fs = require("fs");
 const path = require("path");
 const { chromium } = require("playwright");
 
-const pages = [
-  "index.html",
-  "pages/about.html",
-  "pages/agency.html",
-  "pages/services.html",
-  "pages/privacy.html",
-  "pages/visaGuidance.html",
-];
+// Auto-discover HTML pages to test. This will include files under the repository
+// root and any files under the `pages/` directory (including jobs/ and companies/).
+// Read optional environment variable EXCLUDE_PAGES which can be a comma-separated
+// list of repository-relative path prefixes to skip during discovery. This makes
+// CI exclusions explicit (for example: "pages/addEdit/,archive/,assets/").
+function discoverHtmlPages() {
+  const root = path.resolve(process.cwd());
+  const results = new Set();
+  const rawExcludes = process.env.EXCLUDE_PAGES || "";
+  const excludes = rawExcludes
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+
+  function walk(dir) {
+    const entries = fs.readdirSync(dir, { withFileTypes: true });
+    for (const ent of entries) {
+      const full = path.join(dir, ent.name);
+      // skip node_modules and tests directories
+      if (ent.isDirectory()) {
+        if (ent.name === "node_modules" || ent.name === "tests") continue;
+        walk(full);
+      } else if (ent.isFile() && ent.name.endsWith(".html")) {
+        // compute a web-relative path from repo root
+        const rel = path.relative(root, full).replace(/\\/g, "/");
+        // ignore any exclude prefixes supplied via EXCLUDE_PAGES or the default
+        // safe list (archive, assets, addEdit, script backups).
+        const defaultExcludes = [
+          "archive/",
+          "assets/",
+          "pages/addEdit/",
+          "scripts/fixes-backup/",
+        ];
+        const allExcludes = defaultExcludes.concat(excludes);
+        let skip = false;
+        for (const ex of allExcludes) {
+          if (rel.startsWith(ex)) {
+            skip = true;
+            break;
+          }
+        }
+        if (skip) continue;
+        results.add(rel);
+      }
+    }
+  }
+
+  // Walk the project root and also explicitly the pages/ folder if present
+  walk(root);
+  const pagesDir = path.join(root, "pages");
+  if (fs.existsSync(pagesDir)) walk(pagesDir);
+
+  // Ensure index.html is first for deterministic ordering
+  const ordered = Array.from(results).sort();
+  const idx = ordered.indexOf("index.html");
+  if (idx !== -1) {
+    ordered.splice(idx, 1);
+    ordered.unshift("index.html");
+  }
+  return ordered;
+}
+
+const pages = discoverHtmlPages();
 
 async function run() {
   const resultsDir = path.resolve(__dirname, "results");

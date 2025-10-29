@@ -23,6 +23,14 @@
     <link rel="stylesheet" href="../assets/css/main.css" />
   </head>
   <body>
+    <!-- Skip to Content Link for Screen Readers -->
+    <a
+      href="#main-content"
+      class="skip-link"
+      data-i18n="accessibility.skipToContent"
+      >Skip to main content</a
+    >
+
     <header class="site-header">
       <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light">
@@ -175,8 +183,13 @@
       </div>
     </header>
 
-    <main class="section-padding">
+    <main id="main-content" role="main" class="section-padding">
       <div class="container">
+        <!-- Page title - h1 for semantic structure -->
+        <h1 class="visually-hidden">
+          Agency Services and Support Organizations
+        </h1>
+
         <section
           class="feature-card mt-md animate-fade-in-down animate-on-scroll"
           aria-labelledby="rso-heading"
@@ -271,7 +284,10 @@
                 Address: 7-4-7-5F, Nishishinjuku, Shinjuku-ku, Tokyo
               </p>
               <p class="muted agency-item__desc">
-                Phone: <a href="tel:+81353120271">03-5312-0271</a>
+                Phone:
+                <a href="tel:+81353120271" class="fw-bold text-dark"
+                  >03-5312-0271</a
+                >
               </p>
             </li>
 
@@ -286,7 +302,10 @@
                 Chuo-ku, Tokyo
               </p>
               <p class="muted agency-item__desc">
-                Phone: <a href="tel:+81336695200">03-3669-5200</a>
+                Phone:
+                <a href="tel:+81336695200" class="fw-bold text-dark"
+                  >03-3669-5200</a
+                >
               </p>
             </li>
 
@@ -300,7 +319,10 @@
                 Address: Aiku-bldg, 5-5-1 Kokuryo-cho, Chofu-shi, Tokyo
               </p>
               <p class="muted agency-item__desc">
-                Phone: <a href="tel:+81424428130">042-442-8130</a>
+                Phone:
+                <a href="tel:+81424428130" class="fw-bold text-dark"
+                  >042-442-8130</a
+                >
               </p>
             </li>
 
@@ -314,7 +336,10 @@
                 Address: Kisho Bldg. 8F Sotokanda, Chiyoda-ku, Tokyo
               </p>
               <p class="muted agency-item__desc">
-                Phone: <a href="tel:+81335258148">03-3525-8148</a>
+                Phone:
+                <a href="tel:+81335258148" class="fw-bold text-dark"
+                  >03-3525-8148</a
+                >
               </p>
             </li>
 

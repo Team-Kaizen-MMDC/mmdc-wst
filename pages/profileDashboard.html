@@ -12,6 +12,7 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/utilities.css" />
   </head>
   <body class="profile-dashboard">
     <!-- Site Header (canonical: matches index.html) -->
@@ -85,11 +86,7 @@
                 >
 
                 <!-- User Menu Dropdown (non-Bootstrap custom dropdown) -->
-                <div
-                  id="user-menu-dropdown"
-                  class="user-menu-dropdown"
-                  aria-hidden="true"
-                >
+                <div id="user-menu-dropdown" class="user-menu-dropdown">
                   <h4 class="user-menu-dropdown__greeting">Welcome Back!</h4>
                   <h3 class="user-menu-dropdown__userName">Juan Dela Cruz</h3>
                   <a href="#" class="user-menu-dropdown__link">Profile</a>
@@ -179,131 +176,168 @@
       </div>
     </header>
 
- <!-- MAIN CONTENT --> 
-   <main class="container my-5">
+    <!-- MAIN CONTENT -->
+    <main id="main-content" role="main" class="container my-5">
+      <h1 class="visually-hidden">Profile Dashboard</h1>
       <div class="row g-4">
-        
         <!-- PROFILE -->
-    <div class="col-12 col-md-6">
-  <div class="card shadow-sm border-0 overflow-hidden">
-    <!-- Cover Section -->
-    <div class="position-relative">
-     <picture>
-       <!-- WebP Sources -->
-        <source
-          type="image/webp"
-          srcset="../assets/images/aiImages/TokyoDay-640.webp 640w,
-                  ../assets/images/aiImages/TokyoDay-320.webp 320w"
-        />
-        <!-- Fallback JPG -->
-       <img
-          id="profileCoverImage"
-          src="../assets/images/aiImages/TokyoDay.jpg"
-          alt="Profile cover"
-          class="w-100 rounded-0"
-          style="height: 150px; object-fit: cover; object-position: center;"
-          loading="lazy"
-          onerror="this.src='https://placehold.co/1000x200/0d6efd/ffffff?text=Cover+Image';"
-        />
-     </picture>
-
-      <!-- Camera icon for cover upload -->
-      <button
-        type="button"
-        class="btn btn-sm btn-light position-absolute top-0 end-0 m-2"
-        onclick="document.getElementById('coverImageUpload').click();"
-        title="Change cover photo"
-      >
-        <i class="bi bi-camera"></i>
-      </button>
-
-      <!-- Avatar Overlap -->
-      <div
-        class="position-absolute start-0 ms-4"
-        style="bottom: -50px; z-index: 10;"
-      >
-        <a
-          href="#"
-          class="d-inline-block rounded-circle border border-4 border-white shadow-sm overflow-hidden text-decoration-none"
-          onclick="document.getElementById('avatarImageUpload').click(); return false;"
-        >
-          <picture>
-            <!-- WebP format for optimized loading -->
-              <source
-                type="image/webp"
-                srcset="../assets/images/aiImages/Applying1-640.webp 640w,
-                        ../assets/images/aiImages/Applying1-320.webp 320w"
-              />
-            <img
-              src="../assets/images/aiImages/Applying1.jpg"
-              alt="User Avatar"
-              class="rounded-circle"
-              style="width: 100px; height: 100px; object-fit: cover; object-position: center;"
+        <div class="col-12 col-md-6">
+          <div class="card shadow-sm border-0 overflow-hidden">
+            <!-- Cover Section -->
+            <div class="position-relative">
+              <picture>
+                <!-- WebP Sources -->
+                <source
+                  type="image/webp"
+                  srcset="
+                    ../assets/images/aiImages/TokyoDay-640.webp 640w,
+                    ../assets/images/aiImages/TokyoDay-320.webp 320w
+                  "
+                />
+                <!-- Fallback JPG -->
+                <img
+                  id="profileCoverImage"
+                  src="../assets/images/aiImages/TokyoDay.jpg"
+                  alt="Profile cover"
+                  class="w-100 rounded-0"
+                  style="
+                    height: 150px;
+                    object-fit: cover;
+                    object-position: center;
+                  "
                   loading="lazy"
-                onerror="this.src='https://placehold.co/100x100/fecaca/991b1b?text=JD';"
+                  onerror="this.src='https://placehold.co/1000x200/0d6efd/ffffff?text=Cover+Image';"
+                />
+              </picture>
+
+              <!-- Camera icon for cover upload -->
+              <button
+                type="button"
+                class="btn btn-sm btn-light position-absolute top-0 end-0 m-2"
+                onclick="document.getElementById('coverImageUpload').click();"
+                title="Change cover photo"
+              >
+                <i class="bi bi-camera"></i>
+              </button>
+
+              <!-- Avatar Overlap -->
+              <div
+                class="position-absolute start-0 ms-4"
+                style="bottom: -50px; z-index: 10"
+              >
+                <a
+                  href="#"
+                  class="d-inline-block rounded-circle border border-4 border-white shadow-sm overflow-hidden text-decoration-none"
+                  onclick="document.getElementById('avatarImageUpload').click(); return false;"
+                >
+                  <picture>
+                    <!-- WebP format for optimized loading -->
+                    <source
+                      type="image/webp"
+                      srcset="
+                        ../assets/images/aiImages/Applying1-640.webp 640w,
+                        ../assets/images/aiImages/Applying1-320.webp 320w
+                      "
+                    />
+                    <img
+                      src="../assets/images/aiImages/Applying1.jpg"
+                      alt="User Avatar"
+                      class="rounded-circle"
+                      style="
+                        width: 100px;
+                        height: 100px;
+                        object-fit: cover;
+                        object-position: center;
+                      "
+                      loading="lazy"
+                      onerror="this.src='https://placehold.co/100x100/fecaca/991b1b?text=JD';"
+                    />
+                  </picture>
+                </a>
+              </div>
+            </div>
+
+            <!-- Hidden file inputs -->
+            <input
+              type="file"
+              id="coverImageUpload"
+              accept="image/*"
+              hidden=""
             />
-          </picture>
-         
-        </a>
-      </div>
-    </div>
+            <input
+              type="file"
+              id="avatarImageUpload"
+              accept="image/*"
+              hidden=""
+            />
 
-    <!-- Hidden file inputs -->
-    <input type="file" id="coverImageUpload" accept="image/*" hidden>
-    <input type="file" id="avatarImageUpload" accept="image/*" hidden>
-
-    <!-- Card Body -->
-    <div class="card-body d-flex align-items-center mt-1">
-    <!-- Spacer to match avatar space -->
-      <div style="width: 180px;"></div>
-     <small class="text-muted mb-1">Profile <span class="text-info">80% </span>complete — finish to boost matches.</small>
-    </div>
-  </div>
-</div>
+            <!-- Card Body -->
+            <div class="card-body d-flex align-items-center mt-1">
+              <!-- Spacer to match avatar space -->
+              <div style="width: 180px"></div>
+              <small class="text-muted mb-1"
+                >Profile <span class="text-primary">80% </span>complete — finish
+                to boost matches.</small
+              >
+            </div>
+          </div>
+        </div>
 
         <!-- Profile Summary-->
         <div class="col-12 col-md-6">
           <div class="card shadow-sm h-100 rounded-4">
             <div class="card-header bg-white">
-                  <div class="d-flex justify-content-between">
-
-                <h6 class="card-title mb-0">Profile Summary</h6>
-                     <!-- Edit Button (Initially visible) -->
-                        <button type="button" class="btn btn-link 
-                        text-red small ms-2 p-0 shadow-none" 
-                        id="edit-btn" onclick="toggleEditMode(true)">Edit
-                      </button>
-                        <!-- Save Button (Initially hidden) -->
-                          <button type="button" class="btn btn-link 
-                          text-red small ms-2 d-none p-0 shadow-none" 
-                          id="save-btn" onclick="toggleEditMode(false)">Save
-                        </button>
+              <div class="d-flex justify-content-between">
+                <h2 class="card-title mb-0">Profile Summary</h2>
+                <!-- Edit Button (Initially visible) -->
+                <button
+                  type="button"
+                  class="btn btn-link text-contrast-danger small ms-2 p-0 shadow-none"
+                  id="edit-btn"
+                  onclick="toggleEditMode(true)"
+                >
+                  Edit
+                </button>
+                <!-- Save Button (Initially hidden) -->
+                <button
+                  type="button"
+                  class="btn btn-link text-contrast-danger small ms-2 d-none p-0 shadow-none"
+                  id="save-btn"
+                  onclick="toggleEditMode(false)"
+                >
+                  Save
+                </button>
               </div>
             </div>
-           
-            <div class="card-body">
-                <!-- The main container for the text and controls (using Bootstrap flex and gap) -->
-                <div class="d-flex flex-column gap-3">
-                    <!-- Read-Only Display Area -->
-                    <div id="read-display" 
-                    class="p-3 bg-white rounded-3 text-secondary lh-base border shadow-inset"
-                      style="min-height: 100px;">
-                        <p id="text-content" class="mb-0">
-                            This is the default profile description. Click 'Edit' to make changes.  
-                        </p>
-                    </div>
 
-                    <!-- Editable Textarea (Initially hidden) -->
-                    <textarea
-                        id="edit-input"
-                        class="form-control p-3 bg-light text-secondary lh-base border rounded-3 shadow-inset d-none resize-y"
-                        rows="3"
-                        maxlength="170"
-                    >This is the default profile description. Click 'Edit' to make changes.</textarea>
-                      <small id="char-count" class="text-muted d-none">
-                      0 / 170 characters
-                        </small>
-                </div>  
+            <div class="card-body">
+              <!-- The main container for the text and controls (using Bootstrap flex and gap) -->
+              <div class="d-flex flex-column gap-3">
+                <!-- Read-Only Display Area -->
+                <div
+                  id="read-display"
+                  class="p-3 bg-white rounded-3 text-secondary lh-base border shadow-inset"
+                  style="min-height: 100px"
+                >
+                  <p id="text-content" class="mb-0">
+                    This is the default profile description. Click 'Edit' to
+                    make changes.
+                  </p>
+                </div>
+
+                <!-- Editable Textarea (Initially hidden) -->
+                <textarea
+                  id="edit-input"
+                  class="form-control p-3 bg-light text-secondary lh-base border rounded-3 shadow-inset d-none resize-y"
+                  rows="3"
+                  maxlength="170"
+                >
+This is the default profile description. Click 'Edit' to make changes.</textarea
+                >
+                <small id="char-count" class="text-muted d-none">
+                  0 / 170 characters
+                </small>
+              </div>
             </div>
           </div>
         </div>
@@ -313,79 +347,129 @@
           <div class="card shadow-sm h-100">
             <div class="card-body">
               <div class="d-flex justify-content-between">
-                <h5 class="card-title mb-0" id="info-name"></h5>
-                <a href="#" class="text-red small ms-2" data-bs-toggle="modal" data-bs-target="#basicInfoModal">Edit</a>
+                <h3 class="card-title mb-0" id="info-name">profileDashboard</h3>
+                <a
+                  href="#"
+                  class="text-contrast-danger small ms-2"
+                  data-bs-toggle="modal"
+                  data-bs-target="#basicInfoModal"
+                  >Edit</a
+                >
               </div>
               <p class="text-muted" id="info-location"></p>
               <hr />
               <div class="row small">
-                <div class="col-6 mb-2"><span class="fw-semibold">Visa:</span> <span id="info-visa"></span></div>
-                <div class="col-6 mb-2"><span class="fw-semibold">Valid until:</span> <span id="info-validity"></span></div>
-                <div class="col-6 mb-2"><span class="fw-semibold">Industry:</span> <span id="info-industry"></span></div>
-                <div class="col-6 mb-2"><span class="fw-semibold">Japanese:</span> <span id="info-japanese"></span></div>
-                <div class="col-6 mb-2"><span class="fw-semibold">Nationality:</span> <span id="info-nationality"></span></div>
-                <div class="col-6 mb-2"><span class="fw-semibold">Age:</span> <span id="info-age"></span></div>
+                <div class="col-6 mb-2">
+                  <span class="fw-semibold">Visa:</span>
+                  <span id="info-visa"></span>
+                </div>
+                <div class="col-6 mb-2">
+                  <span class="fw-semibold">Valid until:</span>
+                  <span id="info-validity"></span>
+                </div>
+                <div class="col-6 mb-2">
+                  <span class="fw-semibold">Industry:</span>
+                  <span id="info-industry"></span>
+                </div>
+                <div class="col-6 mb-2">
+                  <span class="fw-semibold">Japanese:</span>
+                  <span id="info-japanese"></span>
+                </div>
+                <div class="col-6 mb-2">
+                  <span class="fw-semibold">Nationality:</span>
+                  <span id="info-nationality"></span>
+                </div>
+                <div class="col-6 mb-2">
+                  <span class="fw-semibold">Age:</span>
+                  <span id="info-age"></span>
+                </div>
               </div>
-              
+
               <div id="resume-container">
                 <!-- Hidden File Input for upload resume -->
-                <input type="file" id="resumeUpload" accept="image/*" style="display: none;">
+                <input
+                  type="file"
+                  id="resumeUpload"
+                  accept="image/*"
+                  style="display: none"
+                />
 
-                <a href="#" class="d-block mt-3 text-secondary fw-semibold" 
-                   onclick="document.getElementById('resumeUpload').click(); return false;"
-                   >Upload Resume →</a>
+                <a
+                  href="#"
+                  class="d-block mt-3 text-secondary fw-semibold"
+                  onclick="document.getElementById('resumeUpload').click(); return false;"
+                  >Upload Resume →</a
+                >
 
-                <div id="view-section" style="display: none; margin-top: 10px;">
+                <div id="view-section" style="display: none; margin-top: 10px">
                   <a id="view-link" href="#" target="_blank">View Resume →</a>
-                  <button id="remove-button" style="margin-left: 10px;">X</button>
+                  <button id="remove-button" style="margin-left: 10px">
+                    X
+                  </button>
                 </div>
 
-                <input type="hidden" id="file-path">
-              </div>
-              
+                <input type="hidden" id="file-path" />
               </div>
             </div>
           </div>
+        </div>
 
-            <!-- APPLICATION + NOTIFICATIONS -->
+        <!-- APPLICATION + NOTIFICATIONS -->
         <div class="col-12 col-md-6">
           <div class="card shadow-sm h-100">
             <div class="card-body">
               <div class="row">
                 <div class="col-md-6 border-md-end mb-3 mb-md-0">
-                  <h6 class="fw-bold d-flex justify-content-between align-items-center mb-3">
+                  <h3
+                    class="fw-bold d-flex justify-content-between align-items-center mb-3"
+                  >
                     Application Tracking
-                   <!--Button ICON -->
-                       <button 
-              class="btn btn-outline-danger btn-sm px-3 shadow-sm d-flex align-items-center gap-1" 
-              data-bs-toggle="modal" 
-              data-bs-target="#applicationDetailModal"
-              aria-label="View application history">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list-ul" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2m0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2m0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
-              </svg>
-              <span class="small fw-semibold"></span>
+                    <!--Button ICON -->
+                    <button
+                      class="btn btn-outline-danger btn-sm px-3 shadow-sm d-flex align-items-center gap-1"
+                      data-bs-toggle="modal"
+                      data-bs-target="#applicationDetailModal"
+                      aria-label="View application history"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        class="bi bi-list-ul"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2m0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2m0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2"
+                        ></path>
+                      </svg>
+                      <span class="small fw-semibold"></span>
                     </button>
-                    </h6>
+                  </h3>
                   <ul class="list-unstyled small mb-0">
-            <li class="mb-2">
-              <span class="fw-semibold">
-              Applied:</span>5</li>
-            <li class="mb-2">
-              <span class="fw-semibold">
-              Pending:</span> 2</li>
-            <li class="mb-2">
-              <span class="fw-semibold">
-                Interview:</span> 22</li>
-            <li class="mb-2">
-              <span class="fw-semibold">
-                Rejected:</span> 2</li>
-          </ul >
+                    <li class="mb-2">
+                      <span class="fw-semibold"> Applied:</span>5
+                    </li>
+                    <li class="mb-2">
+                      <span class="fw-semibold"> Pending:</span> 2
+                    </li>
+                    <li class="mb-2">
+                      <span class="fw-semibold"> Interview:</span> 22
+                    </li>
+                    <li class="mb-2">
+                      <span class="fw-semibold"> Rejected:</span> 2
+                    </li>
+                  </ul>
                 </div>
-                 <div class="col-md-6 ps-md-4 mt-md-2">
-                  <h6 class="fw-bold">Notifications</h6>
-                  <p class="small mb-1 text-info">Interview: Oct 20, 2025 – XYZ Care (OSAKA)</p>
-                  <p class="small text-secondary">Interview: Nov 1, 2025 – AB Day Care (TOKYO)</p>
+                <div class="col-md-6 ps-md-4 mt-md-2">
+                  <h3 class="fw-bold">Notifications</h3>
+                  <p class="small mb-1 text-dark">
+                    Interview: Oct 20, 2025 – XYZ Care (OSAKA)
+                  </p>
+                  <p class="small text-secondary">
+                    Interview: Nov 1, 2025 – AB Day Care (TOKYO)
+                  </p>
                 </div>
               </div>
             </div>
@@ -395,20 +479,33 @@
         <!-- EXPERIENCE -->
         <div class="col-12 col-md-6">
           <div class="card shadow-sm">
-            <div class="card-header d-flex justify-content-between align-items-center">
-              <h6 class="mb-0">Experience</h6>
-              <a href="addEdit/experience.html" class="text-danger small ms-2">Add</a>
+            <div
+              class="card-header d-flex justify-content-between align-items-center"
+            >
+              <h4 class="mb-0">Experience</h4>
+              <a
+                href="addEdit/experience.html"
+                class="text-contrast-danger small ms-2"
+                >Add</a
+              >
             </div>
-            <div class="card-body d-flex align-items-center justify-content-between">
+            <div
+              class="card-body d-flex align-items-center justify-content-between"
+            >
               <div class="d-flex align-items-center">
-               
                 <div>
                   <div class="fw-semibold">Service Crew</div>
                   <div class="text-muted small">Mcdonald • Full-time</div>
                   <div class="small">2023 – 2027</div>
                 </div>
               </div>
-              <a href="#" class="text-red small ms-2" data-bs-toggle="modal" data-bs-target="#experienceModal">Edit</a>
+              <a
+                href="#"
+                class="text-contrast-danger small ms-2"
+                data-bs-toggle="modal"
+                data-bs-target="#experienceModal"
+                >Edit</a
+              >
             </div>
           </div>
         </div>
@@ -417,18 +514,29 @@
         <div class="col-12 col-md-6">
           <div class="card shadow-sm">
             <div class="card-header d-flex justify-content-between">
-              <h6 class="mb-0">Skills</h6>
-              <a href="addEdit/skill.html" class="text-danger small ms-2">Add</a>
+              <h4 class="mb-0">Skills</h4>
+              <a
+                href="addEdit/skill.html"
+                class="text-contrast-danger small ms-2"
+                >Add</a
+              >
             </div>
-            <div class="card-body d-flex justify-content-between align-items-center">
-              <div class="d-flex flex-wrap gap-3 mb-3">  
+            <div
+              class="card-body d-flex justify-content-between align-items-center"
+            >
+              <div class="d-flex flex-wrap gap-3 mb-3">
                 <span class="badge bg-secondary">Communication</span>
-              <span class="badge bg-secondary">Customer Service</span>
-              <span class="badge bg-secondary">knife</span>
-              <span class="badge bg-secondary">Prepping</span>
-              
-            </div>
-             <a href="#" class="text-red small ms-2"  data-bs-toggle="modal" data-bs-target="#skillsModal">Edit</a>
+                <span class="badge bg-secondary">Customer Service</span>
+                <span class="badge bg-secondary">knife</span>
+                <span class="badge bg-secondary">Prepping</span>
+              </div>
+              <a
+                href="#"
+                class="text-contrast-danger small ms-2"
+                data-bs-toggle="modal"
+                data-bs-target="#skillsModal"
+                >Edit</a
+              >
             </div>
           </div>
         </div>
@@ -437,536 +545,862 @@
         <div class="col-12 col-md-6">
           <div class="card shadow-sm">
             <div class="card-header d-flex justify-content-between">
-              <h6 class="mb-0">Education</h6>
-              <a href="addEdit/education.html" class="text-danger small ms-2">Add</a>
+              <h4 class="mb-0">Education</h4>
+              <a
+                href="addEdit/education.html"
+                class="text-contrast-danger small ms-2"
+                >Add</a
+              >
             </div>
-            <div class="card-body d-flex justify-content-between align-items-center">
+            <div
+              class="card-body d-flex justify-content-between align-items-center"
+            >
               <div>
                 <div class="fw-semibold">Mapua Malayan Digital College</div>
-                <div class="text-muted small">B.S. IT – Software Development</div>
+                <div class="text-muted small">
+                  B.S. IT – Software Development
+                </div>
                 <div class="small">2023 – 2028</div>
               </div>
-              <a href="#" class="text-red small ms-2" data-bs-toggle="modal" data-bs-target="#educationModal">Edit</a>
+              <a
+                href="#"
+                class="text-contrast-danger small ms-2"
+                data-bs-toggle="modal"
+                data-bs-target="#educationModal"
+                >Edit</a
+              >
             </div>
           </div>
         </div>
-
-         
 
         <!-- AVAILABILITY -->
         <div class="col-12 col-md-6">
-               <div class="card shadow-sm">
+          <div class="card shadow-sm">
             <div class="card-header d-flex justify-content-between">
-              <h6 class="mb-0">Availability / Preferences</h6>
-                <a href="addEdit/availability.html" class="text-danger small ms-2">Add</a>
-             
+              <h4 class="mb-0">Availability / Preferences</h4>
+              <a
+                href="addEdit/availability.html"
+                class="text-contrast-danger small ms-2"
+                >Add</a
+              >
             </div>
-                     <div class="card-body d-flex justify-content-between align-items-center">
-                     
-                        <div id="availability-read-view">
-                           <p class="mb-0 small"><span class="fw-semibold">Status:</span> Kitchen</p>
-                            <p class="mb-1 small"><span class="fw-semibold">Location:</span> Tokyo</p>
-                            <p class="mb-1 small"><span class="fw-semibold">Work Preferences:</span> Full-time</p>
-                      
-                        </div>
-                         <a href="#" class="text-red small ms-2" data-bs-toggle="modal" data-bs-target="#availabilityModal">Edit</a>
-                    </div>
-                </div>
+            <div
+              class="card-body d-flex justify-content-between align-items-center"
+            >
+              <div id="availability-read-view">
+                <p class="mb-0 small">
+                  <span class="fw-semibold">Status:</span> Kitchen
+                </p>
+                <p class="mb-1 small">
+                  <span class="fw-semibold">Location:</span> Tokyo
+                </p>
+                <p class="mb-1 small">
+                  <span class="fw-semibold">Work Preferences:</span> Full-time
+                </p>
+              </div>
+              <a
+                href="#"
+                class="text-contrast-danger small ms-2"
+                data-bs-toggle="modal"
+                data-bs-target="#availabilityModal"
+                >Edit</a
+              >
+            </div>
+          </div>
         </div>
       </div>
     </main>
-
-        <!-- ========================================================================= -->
-    <!-- MODAL DEFINITIONS -->
     <!-- ========================================================================= -->
 
-       <!-- Basic Information Modal -->
-      <div class="modal fade" id="basicInfoModal" tabindex="-1" aria-labelledby="basicInfoModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content rounded-4">
-            <div class="modal-header bg-light text-white rounded-top-4">
-            <h5 class="modal-title" id="basicInfoModalLabel">Basic Information</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="close">
+    <!-- Basic Information Modal -->
+    <div
+      class="modal fade"
+      id="basicInfoModal"
+      tabindex="-1"
+      aria-labelledby="basicInfoModalLabel"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content rounded-4">
+          <div class="modal-header bg-light text-white rounded-top-4">
+            <h5 class="modal-title" id="basicInfoModalLabel">
+              Basic Information
+            </h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <!-- Basic Info Edit View (Moved from original inline HTML) -->
+            <form onsubmit="saveBasicInfo(); return false;">
+              <div class="mb-3">
+                <label for="modal-name" class="form-label small fw-semibold"
+                  >Full name</label
+                >
+                <input
+                  id="modal-name"
+                  class="form-control"
+                  type="text"
+                  value="Dela Cruz Juan"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <a
+                  href="addEdit/education.html"
+                  class="text-contrast-danger small ms-2"
+                  >Add</a
+                >
+              </div>
+              <div class="mb-3">
+                <label class="form-label small fw-semibold">Location</label>
+                <input
+                  type="text"
+                  id="modal-location"
+                  class="form-control"
+                  value="Osaka, Japan"
+                  required=""
+                />
+              </div>
+              <div class="row">
+                <div class="col-6 mb-3">
+                  <label class="form-label small fw-semibold" for="modal-visa"
+                    >Visa Type</label
+                  >
+                  <select id="modal-visa" class="form-select">
+                    <option selected="">Special Skilled Worker 1</option>
+                    <option>Special Skilled Worker 2</option>
+                    <option>Student</option>
+                    <option>Designated Visa</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+                <div class="col-6 mb-3">
+                  <label class="form-label small fw-semibold"
+                    >Valid Until</label
+                  >
+                  <input
+                    type="month"
+                    id="modal-validity"
+                    class="form-control"
+                    value="2026-05"
+                  />
+                </div>
+                <div class="col-6 mb-3">
+                  <label
+                    class="form-label small fw-semibold"
+                    for="modal-industry"
+                    >Industry</label
+                  >
+                  <select id="modal-industry" class="form-select">
+                    <option selected="">Food Service</option>
+                    <option>Aviation</option>
+                    <option>Caregiver</option>
+                    <option>Automotive</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+                <div class="col-6 mb-3">
+                  <label
+                    class="form-label small fw-semibold"
+                    for="modal-japanese"
+                    >Japanese</label
+                  >
+                  <select id="modal-japanese" class="form-select">
+                    <option selected="">Beginner / N5</option>
+                    <option>Basic / N4</option>
+                    <option>Conversational / N3</option>
+                    <option>Business / N2</option>
+                    <option>Fluent / N1</option>
+                  </select>
+                </div>
+                <div class="col-6 mb-3">
+                  <label
+                    class="form-label small fw-semibold"
+                    for="modal-nationality"
+                    >Nationality</label
+                  >
+                  <select id="modal-nationality" class="form-select">
+                    <option selected="">Filipino</option>
+                    <option>Indonesian</option>
+                    <option>Vietnamese</option>
+                    <option>Thailand</option>
+                    <option>Nepalese</option>
+                  </select>
+                </div>
+                <div class="col-6 mb-3">
+                  <label class="form-label small fw-semibold">Age</label>
+                  <input
+                    type="number"
+                    id="modal-age"
+                    class="form-control"
+                    value="31"
+                  />
+                </div>
+              </div>
+              <div class="d-flex justify-content-end mt-3">
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary border me-2"
+                  data-bs-dismiss="modal"
+                >
+                  Cancel
+                </button>
+                <button type="submit" class="btn btn-primary">Save</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Experience Modal -->
+    <div
+      class="modal fade"
+      id="experienceModal"
+      tabindex="-1"
+      aria-labelledby="experienceModalLabel"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content rounded-4">
+          <!-- Header -->
+          <div class="modal-header bg-light rounded-top-4">
+            <h5 class="modal-title" id="experienceModalLabel">
+              Manage Experience
+            </h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+
+          <!-- Body -->
+          <div class="modal-body p-4">
+            <form onsubmit="saveExperience(); return false;">
+              <h6 class="fw-bold mb-4 text-light">Edit Existing Entry</h6>
+
+              <!-- Experience Entry -->
+              <div class="p-3 mb-4 border rounded-4 bg-light shadow-sm">
+                <!-- Job Title -->
+                <div class="mb-3">
+                  <label class="form-label small fw-semibold">Job Title</label>
+                  <input
+                    type="text"
+                    class="form-control rounded-md"
+                    value="Service Crew"
+                    required=""
+                  />
+                </div>
+
+                <!-- Company -->
+                <div class="mb-3">
+                  <label class="form-label small fw-semibold">Company</label>
+                  <input
+                    type="text"
+                    class="form-control rounded-md"
+                    value="McDonald's"
+                    required=""
+                  />
+                </div>
+
+                <!-- Start / End Dates -->
+                <div class="row">
+                  <!-- Start Date -->
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label small fw-semibold"
+                      >Start Date*</label
+                    >
+                    <div class="row g-2">
+                      <div class="col">
+                        <select
+                          id="startMonth"
+                          class="form-select rounded-md"
+                          aria-label="profileDashboard select"
+                        >
+                          <option value="">Month</option>
+                          <option>January</option>
+                          <option>February</option>
+                          <option>March</option>
+                          <option>April</option>
+                          <option>May</option>
+                          <option>June</option>
+                          <option>July</option>
+                          <option>August</option>
+                          <option>September</option>
+                          <option>October</option>
+                          <option>November</option>
+                          <option>December</option>
+                        </select>
+                      </div>
+                      <div class="col">
+                        <select
+                          id="startYear"
+                          class="form-select rounded-md"
+                          aria-label="profileDashboard select"
+                        >
+                          <option value="">Year</option>
+                          <option>2024</option>
+                          <option>2023</option>
+                          <option>2022</option>
+                          <option>2021</option>
+                          <option>2020</option>
+                          <option>2019</option>
+                          <option>2018</option>
+                          <option>2017</option>
+                          <option>2016</option>
+                          <option>2015</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- End Date -->
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label small fw-semibold"
+                      >End Date*</label
+                    >
+                    <div class="row g-2">
+                      <div class="col">
+                        <select
+                          id="endMonth"
+                          class="form-select rounded-md"
+                          aria-label="profileDashboard select"
+                        >
+                          <option value="">Month</option>
+                          <option>January</option>
+                          <option>February</option>
+                          <option>March</option>
+                          <option>April</option>
+                          <option>May</option>
+                          <option>June</option>
+                          <option>July</option>
+                          <option>August</option>
+                          <option>September</option>
+                          <option>October</option>
+                          <option>November</option>
+                          <option>December</option>
+                        </select>
+                      </div>
+                      <div class="col">
+                        <select
+                          id="endYear"
+                          class="form-select rounded-md"
+                          aria-label="profileDashboard select"
+                        >
+                          <option value="">Year</option>
+                          <option>2024</option>
+                          <option>2023</option>
+                          <option>2022</option>
+                          <option>2021</option>
+                          <option>2020</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Employment Type -->
+                <div class="mb-3">
+                  <label
+                    class="form-label small fw-semibold"
+                    for="auto-select-1"
+                    >Employment Type</label
+                  >
+                  <select class="form-select rounded-md" id="auto-select-1">
+                    <option selected="">Part-time</option>
+                    <option>Full-time</option>
+                    <option>Contract</option>
+                  </select>
+                </div>
+
+                <!-- Remove Entry Button -->
+                <div class="text-start">
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-danger rounded-md"
+                  >
+                    <i class="bi bi-trash me-1"></i> Remove Entry
+                  </button>
+                </div>
+              </div>
+
+              <hr class="my-3" />
+
+              <!-- Modal Footer Buttons -->
+              <div class="d-flex justify-content-end mt-3">
+                <div class="ms-auto">
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary me-2 rounded-md"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button
+                    type="submit"
+                    class="btn btn-primary px-4 rounded-md shadow-sm"
+                  >
+                    Save
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Skills Modal (Simplified) -->
+    <div
+      class="modal fade"
+      id="skillsModal"
+      tabindex="-1"
+      aria-labelledby="skillsModalLabel"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content rounded-4">
+          <div class="modal-header bg-light rounded-top-4">
+            <h5 class="modal-title" id="skillsModalLabel">
+              Skills or Certificate
+            </h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form onsubmit="saveSkills(); return false;">
+              <!-- Skills Edit View (Moved from original inline HTML) -->
+              <div class="mb-2">
+                <label class="form-label small fw-semibold"
+                  >Existing Skills (Edit or remove)</label
+                >
+                <input
+                  type="text"
+                  class="form-control mb-2"
+                  value="Communication"
+                />
+                <input
+                  type="text"
+                  class="form-control mb-2"
+                  value="Customer Service"
+                />
+                <input type="text" class="form-control mb-2" value="Prepping" />
+                <input type="text" class="form-control mb-2" value="knife" />
+              </div>
+              <hr />
+              <div class="mb-3">
+                <label class="form-label small fw-semibold"
+                  >Add New Skill</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter new skill..."
+                />
+              </div>
+              <div class="d-flex justify-content-end mt-3">
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary border me-2"
+                  data-bs-dismiss="modal"
+                >
+                  Cancel
+                </button>
+                <button type="submit" class="btn btn-danger">
+                  Save Skills
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Education Modal -->
+    <div
+      class="modal fade"
+      id="educationModal"
+      tabindex="-1"
+      aria-labelledby="educationModalLabel"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content rounded-4">
+          <!-- Header -->
+          <div class="modal-header bg-light rounded-top-4">
+            <h5 class="modal-title" id="experienceModalLabel-2">Education</h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+
+          <!-- Body -->
+          <div class="modal-body p-4">
+            <form
+              id="educationForm"
+              onsubmit="saveEducationEntry(); 
+                     return false;"
+              novalidate=""
+            >
+              <input type="hidden" id="editingIndex" value="-1" />
+              <!-- Education Entry -->
+              <div class="p-3 mb-4 border rounded-4 bg-light shadow-sm">
+                <!-- School Title -->
+                <div class="mb-3">
+                  <label for="school" class="form-label small fw-semibold"
+                    >School*</label
+                  >
+                  <input
+                    id="school"
+                    name="school"
+                    type="text"
+                    placeholder="Ex: Mapua University"
+                    required=""
+                    class="form-control"
+                  />
+                </div>
+
+                <!-- Degree -->
+                <div class="mb-3">
+                  <label for="degree" class="form-label small fw-semibold"
+                    >Degree*</label
+                  >
+                  <select
+                    id="degree"
+                    name="degree"
+                    class="form-select"
+                    required=""
+                  >
+                    <option value="">Please Select</option>
+                    <option>Associate Degree</option>
+                    <option>Bachelor's Degree</option>
+                    <option>Master's Degree</option>
+                    <option>Doctoral Degree</option>
+                    <option>High School Diploma or Equivalent</option>
+                  </select>
+                </div>
+
+                <!-- Field of Study -->
+                <div class="mb-3">
+                  <label for="field" class="form-label small fw-semibold"
+                    >Field of Study*</label
+                  >
+                  <input
+                    id="field"
+                    name="field"
+                    type="text"
+                    placeholder="Ex: Software Development"
+                    required=""
+                    class="form-control"
+                  />
+                </div>
+
+                <div class="mb-4">
+                  <label for="eduStartMonth" class="form-label"
+                    >Start Date*</label
+                  >
+                  <div class="row g-2">
+                    <div class="col">
+                      <select
+                        id="eduStartMonth"
+                        name="eduStartMonth"
+                        class="form-select"
+                        required=""
+                      >
+                        <option value="">Month</option>
+                      </select>
+                    </div>
+                    <div class="col">
+                      <select
+                        id="eduStartYear"
+                        name="eduStartYear"
+                        class="form-select"
+                        required=""
+                        aria-label="profileDashboard select"
+                      >
+                        <option value="">Year</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mb-4" id="endDateWrapper">
+                  <label for="eduEndMonth" class="form-label">End Date*</label>
+                  <div class="row g-2" id="endDateSelects">
+                    <div class="col">
+                      <select
+                        id="eduEndMonth"
+                        name="eduEndMonth"
+                        class="form-select"
+                        required=""
+                      >
+                        <option value="">Month</option>
+                      </select>
+                    </div>
+                    <div class="col">
+                      <select
+                        id="eduEndYear"
+                        name="eduEndYear"
+                        class="form-select"
+                        required=""
+                        aria-label="profileDashboard select"
+                      >
+                        <option value="">Year</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div
+                    id="date-error-message"
+                    class="small text-danger mt-2 mb-3 d-none"
+                  ></div>
+                </div>
+
+                <input
+                  id="currentDateField"
+                  type="text"
+                  value="Present"
+                  disabled=""
+                  class="form-control bg-light text-secondary mt-2"
+                  style="display: none"
+                />
+              </div>
+
+              <div class="form-check mb-4">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="currentlyStudyingCheckbox"
+                  name="currentlyStudyingCheckbox"
+                />
+                <label class="form-check-label" for="currentlyStudyingCheckbox">
+                  I currently study here
+                </label>
+              </div>
+              <div class="d-flex justify-content-between mt-4">
+                <button
+                  type="button"
+                  class="btn btn-outline-danger me-2 rounded-md"
+                  id="deleteEducationBtn"
+                  style="display: none"
+                >
+                  Delete Entry
+                </button>
+
+                <div class="ms-auto d-flex">
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary me-2 rounded-md"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button
+                    type="submit"
+                    class="btn btn-primary px-4 rounded-md shadow-sm"
+                  >
+                    Save
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Availability Modal -->
+    <div
+      class="modal fade"
+      id="availabilityModal"
+      tabindex="-1"
+      aria-labelledby="availabilityModalLabel"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content rounded-4">
+          <div class="modal-header bg-light rounded-top-4">
+            <h5 class="modal-title" id="availabilityModalLabel">
+              Availability &amp; Preferences
+            </h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form onsubmit="saveAvailability(); return false;">
+              <!-- Availability Edit View -->
+              <div class="mb-3">
+                <label class="form-label small fw-semibold">Status</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  value="Kitchen"
+                  required=""
+                />
+              </div>
+              <div class="mb-3">
+                <label class="form-label small fw-semibold" for="auto-select-2"
+                  >Preferred Location</label
+                >
+                <select class="form-select" id="auto-select-2">
+                  <option selected="">Tokyo</option>
+                  <option>Osaka</option>
+                  <option>Kyoto</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label small fw-semibold" for="auto-select-3"
+                  >Job Type</label
+                >
+                <select class="form-select" id="auto-select-3">
+                  <option selected="">Full-time</option>
+                  <option>Part-time</option>
+                  <option>Contract</option>
+                </select>
+              </div>
+
+              <div class="d-flex justify-content-end mt-3">
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary border me-2"
+                  data-bs-dismiss="modal"
+                >
+                  Cancel
+                </button>
+                <button type="submit" class="btn btn-primary">Save</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- APPLICATION DETAIL MODAL -->
+    <div
+      class="modal fade"
+      id="applicationDetailModal"
+      tabindex="-1"
+      aria-labelledby="applicationDetailModalLabel"
+    >
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content rounded-4 shadow-lg">
+          <div class="modal-header border-0 pb-0">
+            <h5
+              class="modal-title fw-bold text-primary"
+              id="applicationDetailModalLabel"
+            >
+              Full Application History
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body pt-0">
+            <p class="text-muted small mb-4">
+              Detailed tracking of all job applications submitted through Japan
+              SSW.
+            </p>
+            <div class="table-responsive">
+              <table class="table table-striped align-middle">
+                <thead>
+                  <tr>
+                    <th scope="col">Job Title / Company</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Date Applied</th>
+                    <th scope="col">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <div class="fw-semibold">Caregiver</div>
+                      <div class="small text-muted">XYZ Care Solutions</div>
+                    </td>
+                    <td>Osaka</td>
+                    <td>2025/09/01</td>
+                    <td>
+                      <span
+                        class="badge bg-info-subtle text-primary border border-info-subtle"
+                        >Interview Scheduled</span
+                      >
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="fw-semibold">Hotel Desk Staff</div>
+                      <div class="small text-muted">Kyoto Grand Inn</div>
+                    </td>
+                    <td>Kyoto</td>
+                    <td>2025/08/15</td>
+                    <td>
+                      <span
+                        class="badge bg-warning-subtle text-warning border border-warning-subtle"
+                        >Under Review</span
+                      >
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="fw-semibold">Ground Handling</div>
+                      <div class="small text-muted">Japan Airline</div>
+                    </td>
+                    <td>Tokyo</td>
+                    <td>2025/08/01</td>
+                    <td>
+                      <span
+                        class="badge bg-danger-subtle text-danger border border-danger-subtle"
+                        >Rejected</span
+                      >
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="fw-semibold">Food Processor</div>
+                      <div class="small text-muted">AgriFoods Japan</div>
+                    </td>
+                    <td>Hokkaido</td>
+                    <td>2025/07/20</td>
+                    <td>
+                      <span
+                        class="badge bg-success-subtle text-success border border-success-subtle"
+                        >Applied</span
+                      >
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="modal-footer border-0">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
             </button>
-            </div>
-            <div class="modal-body">
-                  <!-- Basic Info Edit View (Moved from original inline HTML) -->
-                   <form onsubmit="saveBasicInfo(); return false;">
-                    <div class="mb-3">
-                      <label class="form-label small fw-semibold">Full Name</label>
-                      <input type="text" id="modal-name" class="form-control" value="Dela Cruz Juan" required>
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label small fw-semibold">Location</label>
-                      <input type="text" id="modal-location" class="form-control" value="Osaka, Japan" required>
-                    </div>
-                  <div class="row">
-                    <div class="col-6 mb-3">
-                      <label class="form-label small fw-semibold">Visa Type</label>
-                      <select id="modal-visa" class="form-select">
-                        <option selected>Special Skilled Worker 1</option>
-                        <option>Special Skilled Worker 2</option>
-                        <option>Student</option>  
-                        <option>Designated Visa</option>
-                       <option>Other</option>    
-                     </select>
-                    </div>
-                    <div class="col-6 mb-3">
-                     <label class="form-label small fw-semibold">Valid Until</label>
-                     <input type="month" id="modal-validity" class="form-control" value="2026-05" />   
-                    </div>
-                    <div class="col-6 mb-3">
-                                <label class="form-label small fw-semibold">Industry</label>
-                                  <select id="modal-industry" class="form-select">
-                                    <option selected>Food Service</option>
-                                    <option>Aviation</option>
-                                    <option>Caregiver</option>  
-                                    <option>Automotive</option>
-                                  <option>Other</option>    
-                                </select>
-                            </div>
-                             <div class="col-6 mb-3">
-                                <label class="form-label small fw-semibold">Japanese</label>
-                                  <select id="modal-japanese" class="form-select">
-                                    <option selected>Beginner / N5</option>
-                                    <option>Basic / N4</option>
-                                    <option>Conversational / N3</option>  
-                                    <option>Business / N2</option>
-                                  <option>Fluent / N1</option>    
-                                </select>
-                            </div>
-                               <div class="col-6 mb-3">
-                                <label class="form-label small fw-semibold">Nationality</label>
-                                  <select id="modal-nationality" class="form-select">
-                                    <option selected>Filipino</option>
-                                    <option>Indonesian</option>
-                                    <option>Vietnamese</option>  
-                                    <option>Thailand</option>
-                                  <option>Nepalese</option>    
-                                </select>
-                            </div>
-                            <div class="col-6 mb-3">
-                                <label class="form-label small fw-semibold">Age</label>
-                                <input type="number" id="modal-age" class="form-control" value="31" />
-                            </div>
-
-                          </div>
-                             <div class="d-flex justify-content-end mt-3">
-                            <button type="button" class="btn btn-outline-secondary border me-2" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary">Save</button>
-                          </div>
-                   </form>
-               </div>
-            </div>
+            <button type="button" class="btn btn-primary">
+              Download Report
+            </button>
           </div>
         </div>
       </div>
-
-            <!-- Experience Modal -->
-            <div class="modal fade" id="experienceModal" tabindex="-1" aria-labelledby="experienceModalLabel" aria-hidden="true">
-              <div class="modal-dialog modal-lg">
-                <div class="modal-content rounded-4">
-                  
-                  <!-- Header -->
-                  <div class="modal-header bg-light rounded-top-4">
-                    <h5 class="modal-title" id="experienceModalLabel">Manage Experience</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-
-                  <!-- Body -->
-                  <div class="modal-body p-4">
-                    <form onsubmit="saveExperience(); return false;">
-                      <h6 class="fw-bold mb-4 text-light">Edit Existing Entry</h6>
-
-                      <!-- Experience Entry -->
-                      <div class="p-3 mb-4 border rounded-4 bg-light shadow-sm">
-                        <!-- Job Title -->
-                        <div class="mb-3">
-                          <label class="form-label small fw-semibold">Job Title</label>
-                          <input type="text" class="form-control rounded-md" value="Service Crew" required />
-                        </div>
-
-                        <!-- Company -->
-                        <div class="mb-3">
-                          <label class="form-label small fw-semibold">Company</label>
-                          <input type="text" class="form-control rounded-md" value="McDonald's" required />
-                        </div>
-
-                        <!-- Start / End Dates -->
-                        <div class="row">
-                          <!-- Start Date -->
-                          <div class="col-md-6 mb-3">
-                            <label class="form-label small fw-semibold">Start Date*</label>
-                            <div class="row g-2">
-                              <div class="col">
-                                <select id="startMonth" class="form-select rounded-md">
-                                  <option value="">Month</option>
-                                  <option>January</option>
-                                  <option>February</option>
-                                  <option>March</option>
-                                  <option>April</option>
-                                  <option>May</option>
-                                  <option>June</option>
-                                  <option>July</option>
-                                  <option>August</option>
-                                  <option>September</option>
-                                  <option>October</option>
-                                  <option>November</option>
-                                  <option>December</option>
-                                </select>
-                              </div>
-                              <div class="col">
-                                <select id="startYear" class="form-select rounded-md">
-                                  <option value="">Year</option>
-                                  <option>2024</option>
-                                  <option>2023</option>
-                                  <option>2022</option>
-                                  <option>2021</option>
-                                  <option>2020</option>
-                                  <option>2019</option>
-                                  <option>2018</option>
-                                  <option>2017</option>
-                                  <option>2016</option>
-                                  <option>2015</option>
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-
-                          <!-- End Date -->
-                          <div class="col-md-6 mb-3">
-                            <label class="form-label small fw-semibold">End Date*</label>
-                            <div class="row g-2">
-                              <div class="col">
-                                <select id="endMonth" class="form-select rounded-md">
-                                  <option value="">Month</option>
-                                  <option>January</option>
-                                  <option>February</option>
-                                  <option>March</option>
-                                  <option>April</option>
-                                  <option>May</option>
-                                  <option>June</option>
-                                  <option>July</option>
-                                  <option>August</option>
-                                  <option>September</option>
-                                  <option>October</option>
-                                  <option>November</option>
-                                  <option>December</option>
-                                </select>
-                              </div>
-                              <div class="col">
-                                <select id="endYear" class="form-select rounded-md">
-                                  <option value="">Year</option>
-                                  <option>2024</option>
-                                  <option>2023</option>
-                                  <option>2022</option>
-                                  <option>2021</option>
-                                  <option>2020</option>
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <!-- Employment Type -->
-                        <div class="mb-3">
-                          <label class="form-label small fw-semibold">Employment Type</label>
-                          <select class="form-select rounded-md">
-                            <option selected>Part-time</option>
-                            <option>Full-time</option>
-                            <option>Contract</option>
-                          </select>
-                        </div>
-
-                        <!-- Remove Entry Button -->
-                        <div class="text-start">
-                          <button type="button" class="btn btn-sm btn-outline-danger rounded-md">
-                            <i class="bi bi-trash me-1"></i> Remove Entry
-                          </button>
-                        </div>
-                      </div>
-
-                      <hr class="my-3" />
-
-                      <!-- Modal Footer Buttons -->
-                      <div class="d-flex justify-content-end mt-3">
-                        
-                        <div class="ms-auto">
-                         <button type="button" class="btn btn-outline-secondary me-2 rounded-md" 
-                          data-bs-dismiss="modal">Close</button>
-                          <button type="submit" class="btn btn-primary px-4 rounded-md shadow-sm"
-                          >Save</button>
-                       </div>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-
-        <!-- Skills Modal (Simplified) -->
-    <div class="modal fade" id="skillsModal" tabindex="-1" aria-labelledby="skillsModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content rounded-4">
-                <div class="modal-header bg-light rounded-top-4">
-                    <h5 class="modal-title" id="skillsModalLabel">Skills or Certificate</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form onsubmit="saveSkills(); return false;">
-                        <!-- Skills Edit View (Moved from original inline HTML) -->
-                        <div class="mb-2"> 
-                            <label class="form-label small fw-semibold">Existing Skills (Edit or remove)</label>
-                            <input type="text" class="form-control mb-2" value="Communication" />
-                            <input type="text" class="form-control mb-2" value="Customer Service" />
-                            <input type="text" class="form-control mb-2" value="Prepping" />
-                            <input type="text" class="form-control mb-2" value="knife" />
-                                
-                        </div>
-                        <hr/>
-                        <div class="mb-3">
-                             <label class="form-label small fw-semibold">Add New Skill</label>
-                             <input type="text" class="form-control" placeholder="Enter new skill..." />
-                        </div>
-                        <div class="d-flex justify-content-end mt-3">
-                            <button type="button" class="btn btn-outline-secondary border me-2" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-danger">Save Skills</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
     </div>
 
-       <!-- Education Modal -->
-            <div class="modal fade" id="educationModal" tabindex="-1" 
-            aria-labelledby="educationModalLabel" aria-hidden="true">
-              <div class="modal-dialog modal-lg">
-                <div class="modal-content rounded-4">
-                  
-                  <!-- Header -->
-                  <div class="modal-header bg-light rounded-top-4">
-                    <h5 class="modal-title" id="experienceModalLabel">Education</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-
-                  <!-- Body -->
-                  <div class="modal-body p-4">
-                    <form id="educationForm" onsubmit="saveEducationEntry(); 
-                     return false;" novalidate>
-                      <input type="hidden" id="editingIndex" value="-1" />
-                      <!-- Education Entry -->
-                      <div class="p-3 mb-4 border rounded-4 bg-light shadow-sm">
-                        <!-- School Title -->
-                        <div class="mb-3">
-                          <label for="school" class="form-label small fw-semibold">School*</label>
-                          <input  
-                            id="school"
-                            name="school"
-                            type="text"
-                            placeholder="Ex: Mapua University"
-                            required
-                            class="form-control"
-                          />
-                        </div>
-
-                        <!-- Degree -->
-                        <div class="mb-3">
-                          <label for="degree" class="form-label small fw-semibold">Degree*</label>
-                          <select id="degree" name="degree" class="form-select" required>
-                            <option value="">Please Select</option>
-                            <option>Associate Degree</option>
-                            <option>Bachelor's Degree</option>
-                            <option>Master's Degree</option>
-                            <option>Doctoral Degree</option>
-                            <option>High School Diploma or Equivalent</option>
-                          </select>
-                        </div>
-
-                            <!-- Field of Study -->
-                        <div class="mb-3">
-                          <label for="field" class="form-label small fw-semibold">Field of Study*</label>
-                         <input
-                            id="field"
-                            name="field"
-                            type="text"
-                            placeholder="Ex: Software Development"
-                            required
-                            class="form-control"
-                         />
-                        </div>
-
-                       <div class="mb-4">
-                        <label for="eduStartMonth" class="form-label">Start Date*</label>
-                        <div class="row g-2">
-                            <div class="col">
-                                <select id="eduStartMonth" name="eduStartMonth" class="form-select" required>
-                                    <option value="">Month</option>
-                                    </select>
-                            </div>
-                            <div class="col">
-                                <select id="eduStartYear" name="eduStartYear" class="form-select" required>
-                                    <option value="">Year</option>
-                                    </select>
-                            </div>
-                        </div>
-                    </div>
-
-                                        <div class="mb-4" id="endDateWrapper">
-                          <label for="eduEndMonth" class="form-label">End Date*</label>
-                          <div class="row g-2" id="endDateSelects">
-                              <div class="col">
-                                  <select id="eduEndMonth" name="eduEndMonth" class="form-select" required> 
-                                      <option value="">Month</option>
-                                  </select>
-                              </div>
-                              <div class="col">
-                                  <select id="eduEndYear" name="eduEndYear" class="form-select" required> 
-                                      <option value="">Year</option>
-                                  </select>
-                              </div>
-                          </div>
-                          <div 
-  id="date-error-message" 
-  class="small text-danger mt-2 mb-3 d-none"
->
-  </div>
-                          </div>
-    
-                        <input
-                            id="currentDateField"
-                            type="text"
-                            value="Present"
-                            disabled
-                            class="form-control bg-light text-secondary mt-2"
-                            style="display:none;"
-                        />
-                    </div>
-
-                    <div class="form-check mb-4">
-                        <input class="form-check-input" type="checkbox" id="currentlyStudyingCheckbox" name="currentlyStudyingCheckbox">
-                        <label class="form-check-label" for="currentlyStudyingCheckbox">
-                            I currently study here
-                        </label>
-                    </div>
-                    <div class="d-flex justify-content-between mt-4">
-                            <button type="button" class="btn btn-outline-danger me-2 rounded-md" 
-                                id="deleteEducationBtn" style="display:none;">Delete Entry</button>
-                            
-                            <div class="ms-auto d-flex">
-                                <button type="button" class="btn btn-outline-secondary me-2 rounded-md" 
-                                data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary px-4 rounded-md shadow-sm"
-                                >Save</button>
-                            </div>
-                        </div>
-                    </form>
-              </div>
-          </div>
-      </div>
-    </div>
-
-       <!-- Availability Modal -->
-    <div class="modal fade" id="availabilityModal" tabindex="-1" aria-labelledby="availabilityModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content rounded-4">
-                <div class="modal-header bg-light rounded-top-4">
-                    <h5 class="modal-title" id="availabilityModalLabel">Availability & Preferences</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form onsubmit="saveAvailability(); return false;">
-                        <!-- Availability Edit View -->
-                          <div class="mb-3">
-                        <label class="form-label small fw-semibold">Status</label>
-                        <input type="text" class="form-control" value="Kitchen" required>
-                      </div>
-                        <div class="mb-3">
-                            <label class="form-label small fw-semibold">Preferred Location</label>
-                            <select class="form-select">
-                                <option selected>Tokyo</option>
-                                <option>Osaka</option>
-                                <option>Kyoto</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label small fw-semibold">Job Type</label>
-                            <select class="form-select">
-                                <option selected>Full-time</option>
-                                <option>Part-time</option>
-                                <option>Contract</option>
-                            </select>
-                        </div>
-                       
-                        <div class="d-flex justify-content-end mt-3">
-                            <button type="button" class="btn btn-outline-secondary border me-2" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary">Save</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-       <!-- APPLICATION DETAIL MODAL -->
-    <div class="modal fade" id="applicationDetailModal" tabindex="-1" aria-labelledby="applicationDetailModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content rounded-4 shadow-lg">
-                <div class="modal-header border-0 pb-0">
-                    <h5 class="modal-title fw-bold text-primary" id="applicationDetailModalLabel">Full Application History</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body pt-0">
-                    <p class="text-muted small mb-4">Detailed tracking of all job applications submitted through Japan SSW.</p>
-                    <div class="table-responsive">
-                        <table class="table table-striped align-middle">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Job Title / Company</th>
-                                    <th scope="col">Location</th>
-                                    <th scope="col">Date Applied</th>
-                                    <th scope="col">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><div class="fw-semibold">Caregiver</div><div class="small text-muted">XYZ Care Solutions</div></td>
-                                    <td>Osaka</td>
-                                    <td>2025/09/01</td>
-                                    <td><span class="badge bg-info-subtle text-info border border-info-subtle">Interview Scheduled</span></td>
-                                </tr>
-                                <tr>
-                                    <td><div class="fw-semibold">Hotel Desk Staff</div><div class="small text-muted">Kyoto Grand Inn</div></td>
-                                    <td>Kyoto</td>
-                                    <td>2025/08/15</td>
-                                    <td><span class="badge bg-warning-subtle text-warning border border-warning-subtle">Under Review</span></td>
-                                </tr>
-                                <tr>
-                                    <td><div class="fw-semibold">Ground Handling</div><div class="small text-muted">Japan Airline</div></td>
-                                    <td>Tokyo</td>
-                                    <td>2025/08/01</td>
-                                    <td><span class="badge bg-danger-subtle text-danger border border-danger-subtle">Rejected</span></td>
-                                </tr>
-                                <tr>
-                                    <td><div class="fw-semibold">Food Processor</div><div class="small text-muted">AgriFoods Japan</div></td>
-                                    <td>Hokkaido</td>
-                                    <td>2025/07/20</td>
-                                    <td><span class="badge bg-success-subtle text-success border border-success-subtle">Applied</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="modal-footer border-0">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Download Report</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    
     <footer class="site-footer site-footer--dark" role="contentinfo">
       <div class="container footer-grid site-footer__grid">
         <div class="footer-cta site-footer__cta">
@@ -1014,7 +1448,7 @@
       <div class="container footer-legal site-footer__legal">
         <div class="legal-inner site-footer__legal-inner">
           <small data-i18n="footer.copyright"
-            >&copy; 2025 Japan SSW. All rights reserved.</small
+            >© 2025 Japan SSW. All rights reserved.</small
           >
           <nav aria-label="Footer legal">
             <a href="terms.html">Terms</a>
@@ -1023,308 +1457,346 @@
         </div>
       </div>
     </footer>
-                                                                                                                                                                
+
     <!-- Bootstrap JS Bundle (includes Popper) -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
-    
 
     <!-- Site JavaScript (ES Module) -->
     <script type="module" src="../assets/js/main.js"></script>
-    
-      <script>
-        // --- Profile Summary Toggle (Preserved as requested) ---
-        function toggleEditMode(isEditing) {
-            const readView = document.getElementById('summary-read-view');
-            const editView = document.getElementById('summary-edit-view');
-            const editBtn = document.getElementById('edit-btn');
-            const saveBtn = document.getElementById('save-btn');
 
-            if (isEditing) {
-                readView.classList.add('d-none');
-                editView.classList.remove('d-none');
-                editBtn.classList.add('d-none');
-                saveBtn.classList.remove('d-none');
-            } else {
-                // In a real app, logic to save content would go here
-                editView.classList.add('d-none');
-                readView.classList.remove('d-none');
-                saveBtn.classList.add('d-none');
-                editBtn.classList.remove('d-none');
-                console.log('Profile summary saved.');
-            }
+    <script>
+      // --- Profile Summary Toggle (Preserved as requested) ---
+      function toggleEditMode(isEditing) {
+        // The DOM in this page uses 'read-display' and 'edit-input' IDs
+        const readView = document.getElementById("read-display");
+        const editView = document.getElementById("edit-input");
+        const editBtn = document.getElementById("edit-btn");
+        const saveBtn = document.getElementById("save-btn");
+
+        // Defensive: do nothing if expected elements aren't present
+        if (!readView || !editView || !editBtn) {
+          console.warn(
+            "toggleEditMode: expected elements missing, aborting toggle"
+          );
+          return;
         }
 
-        // --- Modal Save/Add Placeholder Functions ---
-        // These functions simulate saving and close the modal (handled by form submit + data-bs-dismiss="modal" or JS)
+        if (isEditing) {
+          readView.classList.add("d-none");
+          editView.classList.remove("d-none");
+          // Hide the edit button (it becomes a cancel/save UI elsewhere)
+          editBtn.setAttribute("aria-pressed", "true");
+          if (saveBtn) saveBtn.classList.remove("d-none");
+        } else {
+          // In a real app, logic to save content would go here
+          editView.classList.add("d-none");
+          readView.classList.remove("d-none");
+          if (saveBtn) saveBtn.classList.add("d-none");
+          editBtn.setAttribute("aria-pressed", "false");
+          console.log("Profile summary saved.");
+        }
+      }
 
-        function saveBasicInfo() {
-            // Placeholder: Logic to save Basic Info fields via API call
-            console.log('Basic Information saved via Modal.');
-            // Manually hide modal if not using data-bs-dismiss
-            const modalElement = document.getElementById('basicInfoModal');
-            const modal = bootstrap.Modal.getInstance(modalElement);
-            if (modal) modal.hide();
-        }
+      // --- Modal Save/Add Placeholder Functions ---
+      // These functions simulate saving and close the modal (handled by form submit + data-bs-dismiss="modal" or JS)
 
-        function saveExperience() {
-            // Placeholder: Logic to save all Experience entries
-            console.log('Experience entries saved via Modal.');
-            const modalElement = document.getElementById('experienceModal');
-            const modal = bootstrap.Modal.getInstance(modalElement);
-            if (modal) modal.hide();
-        }
+      function saveBasicInfo() {
+        // Placeholder: Logic to save Basic Info fields via API call
+        console.log("Basic Information saved via Modal.");
+        // Manually hide modal if not using data-bs-dismiss
+        const modalElement = document.getElementById("basicInfoModal");
+        const modal = bootstrap.Modal.getInstance(modalElement);
+        if (modal) modal.hide();
+      }
 
-        function saveSkills() {
-            // Placeholder: Logic to save Skills entries
-            console.log('Skills saved via Modal.');
-            const modalElement = document.getElementById('skillsModal');
-            const modal = bootstrap.Modal.getInstance(modalElement);
-            if (modal) modal.hide();
-        }
+      function saveExperience() {
+        // Placeholder: Logic to save all Experience entries
+        console.log("Experience entries saved via Modal.");
+        const modalElement = document.getElementById("experienceModal");
+        const modal = bootstrap.Modal.getInstance(modalElement);
+        if (modal) modal.hide();
+      }
 
-        function saveEducation() {
-            // Placeholder: Logic to save Education entries
-            console.log('Education entries saved via Modal.');
-            const modalElement = document.getElementById('educationModal');
-            const modal = bootstrap.Modal.getInstance(modalElement);
-            if (modal) modal.hide();
-        }
+      function saveSkills() {
+        // Placeholder: Logic to save Skills entries
+        console.log("Skills saved via Modal.");
+        const modalElement = document.getElementById("skillsModal");
+        const modal = bootstrap.Modal.getInstance(modalElement);
+        if (modal) modal.hide();
+      }
 
-        function saveAvailability() {
-            // Placeholder: Logic to save Availability/Preferences
-            console.log('Availability/Preferences saved via Modal.');
-            const modalElement = document.getElementById('availabilityModal');
-            const modal = bootstrap.Modal.getInstance(modalElement);
-            if (modal) modal.hide();
-        }
+      function saveEducation() {
+        // Placeholder: Logic to save Education entries
+        console.log("Education entries saved via Modal.");
+        const modalElement = document.getElementById("educationModal");
+        const modal = bootstrap.Modal.getInstance(modalElement);
+        if (modal) modal.hide();
+      }
 
-        // Additional Add placeholders for console logging
-        function addNewExperience() {
-            console.log('Preparing modal to add new experience...');
-        }
-        function addNewExperienceEntry() {
-            console.log('New experience entry added to form (client-side)');
-        }
-        function addNewSkill() {
-            console.log('Preparing modal to add new skill...');
-        }
-        function addNewEducation() {
-            console.log('Preparing modal to add new education...');
-        }
-        function addNewEducationEntry() {
-            console.log('New education entry added to form (client-side)');
-        }
+      function saveAvailability() {
+        // Placeholder: Logic to save Availability/Preferences
+        console.log("Availability/Preferences saved via Modal.");
+        const modalElement = document.getElementById("availabilityModal");
+        const modal = bootstrap.Modal.getInstance(modalElement);
+        if (modal) modal.hide();
+      }
+
+      // Additional Add placeholders for console logging
+      function addNewExperience() {
+        console.log("Preparing modal to add new experience...");
+      }
+      function addNewExperienceEntry() {
+        console.log("New experience entry added to form (client-side)");
+      }
+      function addNewSkill() {
+        console.log("Preparing modal to add new skill...");
+      }
+      function addNewEducation() {
+        console.log("Preparing modal to add new education...");
+      }
+      function addNewEducationEntry() {
+        console.log("New education entry added to form (client-side)");
+      }
     </script>
 
-     <script>
-    const EDUCATION_STORAGE_KEY = 'educationData';
-    const EDUCATION_MODAL_ID = 'educationModal';
-    const Modal = bootstrap.Modal;
-    
-    const MONTH_NAMES = [
-        "January", "February", "March", "April", "May", "June", 
-        "July", "August", "September", "October", "November", "December"
-    ];
+    <script>
+      const EDUCATION_STORAGE_KEY = "educationData";
+      const EDUCATION_MODAL_ID = "educationModal";
+      // Modal reference left intentionally to be declared later (avoid duplicate declarations)
 
-    /**
-     * Helper to retrieve the array of education data from localStorage.
-     */
-    function getEducationData() {
+      const MONTH_NAMES = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
+
+      /**
+       * Helper to retrieve the array of education data from localStorage.
+       */
+      function getEducationData() {
         const storedData = localStorage.getItem(EDUCATION_STORAGE_KEY);
         try {
-            const data = storedData ? JSON.parse(storedData) : [];
-            return Array.isArray(data) ? data : [];
+          const data = storedData ? JSON.parse(storedData) : [];
+          return Array.isArray(data) ? data : [];
         } catch (e) {
-            console.error("Error parsing education data from localStorage:", e);
-            return [];
+          console.error("Error parsing education data from localStorage:", e);
+          return [];
         }
-    }
-    
-    /**
-     * Fills the Month and Year dropdowns dynamically.
-     */
-    function populateDateSelects() {
-        const monthSelects = document.querySelectorAll('#eduStartMonth, #eduEndMonth');
-        monthSelects.forEach(select => {
-            if (select.options.length <= 1) {
-                MONTH_NAMES.forEach(month => {
-                    const option = document.createElement('option');
-                    option.value = month;
-                    option.textContent = month;
-                    select.appendChild(option);
-                });
-            }
+      }
+
+      /**
+       * Fills the Month and Year dropdowns dynamically.
+       */
+      function populateDateSelects() {
+        const monthSelects = document.querySelectorAll(
+          "#eduStartMonth, #eduEndMonth"
+        );
+        monthSelects.forEach((select) => {
+          if (select.options.length <= 1) {
+            MONTH_NAMES.forEach((month) => {
+              const option = document.createElement("option");
+              option.value = month;
+              option.textContent = month;
+              select.appendChild(option);
+            });
+          }
         });
 
         const currentYear = new Date().getFullYear();
-        const yearSelects = document.querySelectorAll('#eduStartYear, #eduEndYear');
+        const yearSelects = document.querySelectorAll(
+          "#eduStartYear, #eduEndYear"
+        );
 
-        yearSelects.forEach(select => {
-            if (select.options.length <= 1) {
-                const maxYear = currentYear + 10; 
-                const minYear = currentYear - 50; 
-                
-                for (let year = maxYear; year >= minYear; year--) {
-                    const option = document.createElement('option');
-                    option.value = year.toString();
-                    option.textContent = year.toString();
-                    select.appendChild(option);
-                }
+        yearSelects.forEach((select) => {
+          if (select.options.length <= 1) {
+            const maxYear = currentYear + 10;
+            const minYear = currentYear - 50;
+
+            for (let year = maxYear; year >= minYear; year--) {
+              const option = document.createElement("option");
+              option.value = year.toString();
+              option.textContent = year.toString();
+              select.appendChild(option);
             }
+          }
         });
-    }
+      }
 
-    /**
-     * Toggles the visibility of the End Date fields.
-     */
-    function toggleCurrentlyStudying() {
-        const checkbox = document.getElementById('currentlyStudyingCheckbox');
-        const endDateSelects = document.getElementById('endDateSelects');
-        const currentDateField = document.getElementById('currentDateField');
-        const endMonthSelect = document.getElementById('eduEndMonth');
-        const endYearSelect = document.getElementById('eduEndYear');
-        const dateErrorDiv = document.getElementById('date-error-message');
+      /**
+       * Toggles the visibility of the End Date fields.
+       */
+      function toggleCurrentlyStudying() {
+        const checkbox = document.getElementById("currentlyStudyingCheckbox");
+        const endDateSelects = document.getElementById("endDateSelects");
+        const currentDateField = document.getElementById("currentDateField");
+        const endMonthSelect = document.getElementById("eduEndMonth");
+        const endYearSelect = document.getElementById("eduEndYear");
+        const dateErrorDiv = document.getElementById("date-error-message");
 
-        dateErrorDiv.classList.add('d-none');
-        
+        dateErrorDiv.classList.add("d-none");
+
         if (checkbox.checked) {
-            endDateSelects.style.display = 'none';
-            currentDateField.style.display = 'block';
-            endMonthSelect.removeAttribute('required');
-            endYearSelect.removeAttribute('required');
-            endMonthSelect.classList.remove('is-invalid');
-            endYearSelect.classList.remove('is-invalid');
+          endDateSelects.style.display = "none";
+          currentDateField.style.display = "block";
+          endMonthSelect.removeAttribute("required");
+          endYearSelect.removeAttribute("required");
+          endMonthSelect.classList.remove("is-invalid");
+          endYearSelect.classList.remove("is-invalid");
         } else {
-            endDateSelects.style.display = 'flex';
-            currentDateField.style.display = 'none';
-            endMonthSelect.setAttribute('required', 'required');
-            endYearSelect.setAttribute('required', 'required');
+          endDateSelects.style.display = "flex";
+          currentDateField.style.display = "none";
+          endMonthSelect.setAttribute("required", "required");
+          endYearSelect.setAttribute("required", "required");
         }
-    }
+      }
 
-    /**
-     * Validates that end date is after start date.
-     */
-    function validateDates() {
-        const isCurrent = document.getElementById('currentlyStudyingCheckbox').checked;
-        const errorDiv = document.getElementById('date-error-message');
-        errorDiv.classList.add('d-none');
+      /**
+       * Validates that end date is after start date.
+       */
+      function validateDates() {
+        const isCurrent = document.getElementById(
+          "currentlyStudyingCheckbox"
+        ).checked;
+        const errorDiv = document.getElementById("date-error-message");
+        errorDiv.classList.add("d-none");
 
         if (isCurrent) {
-            return true; 
+          return true;
         }
 
-        const startMonth = document.getElementById('eduStartMonth').value;
-        const startYear = parseInt(document.getElementById('eduStartYear').value);
-        const endMonth = document.getElementById('eduEndMonth').value;
-        const endYear = parseInt(document.getElementById('eduEndYear').value);
-        
+        const startMonth = document.getElementById("eduStartMonth").value;
+        const startYear = parseInt(
+          document.getElementById("eduStartYear").value
+        );
+        const endMonth = document.getElementById("eduEndMonth").value;
+        const endYear = parseInt(document.getElementById("eduEndYear").value);
+
         if (startMonth && startYear && endMonth && endYear) {
-            const startMonthIndex = MONTH_NAMES.indexOf(startMonth);
-            const endMonthIndex = MONTH_NAMES.indexOf(endMonth);
-            
-            if (startYear > endYear || 
-                (startYear === endYear && startMonthIndex > endMonthIndex)) {
-                
-                errorDiv.textContent = 'End date must be the same as or after the start date.';
-                errorDiv.classList.remove('d-none');
-                return false;
-            }
+          const startMonthIndex = MONTH_NAMES.indexOf(startMonth);
+          const endMonthIndex = MONTH_NAMES.indexOf(endMonth);
+
+          if (
+            startYear > endYear ||
+            (startYear === endYear && startMonthIndex > endMonthIndex)
+          ) {
+            errorDiv.textContent =
+              "End date must be the same as or after the start date.";
+            errorDiv.classList.remove("d-none");
+            return false;
+          }
         }
 
         return true;
-    }
+      }
 
-    /**
-     * Opens the education modal for adding or editing.
-     * @param {number} index - Entry index to edit, or -1 for new entry
-     */
-    function openEducationModal(index = -1) {
+      /**
+       * Opens the education modal for adding or editing.
+       * @param {number} index - Entry index to edit, or -1 for new entry
+       */
+      function openEducationModal(index = -1) {
         const dataArray = getEducationData();
-        const form = document.getElementById('educationForm');
-        const modalTitle = document.getElementById('educationModalLabel');
-        const deleteBtn = document.getElementById('deleteEducationBtn');
-        const dateErrorDiv = document.getElementById('date-error-message');
-        
+        const form = document.getElementById("educationForm");
+        const modalTitle = document.getElementById("educationModalLabel");
+        const deleteBtn = document.getElementById("deleteEducationBtn");
+        const dateErrorDiv = document.getElementById("date-error-message");
+
         // Reset form
         form.reset();
-        form.classList.remove('was-validated');
-        dateErrorDiv.classList.add('d-none');
-        
+        form.classList.remove("was-validated");
+        dateErrorDiv.classList.add("d-none");
+
         // Store which entry we're editing
-        document.getElementById('editingIndex').value = index;
+        document.getElementById("editingIndex").value = index;
 
         if (index >= 0 && index < dataArray.length) {
-            // EDIT MODE
-            const data = dataArray[index];
-            modalTitle.textContent = 'Edit Education Entry';
-            deleteBtn.style.display = 'block';
+          // EDIT MODE
+          const data = dataArray[index];
+          modalTitle.textContent = "Edit Education Entry";
+          deleteBtn.style.display = "block";
 
-            // Populate form
-            document.getElementById('school').value = data.school || '';
-            document.getElementById('degree').value = data.degree || '';
-            document.getElementById('field').value = data.field || '';
-            
-            const checkbox = document.getElementById('currentlyStudyingCheckbox');
-            checkbox.checked = data.isCurrent || false;
-            
-            document.getElementById('eduStartMonth').value = data.startMonth || '';
-            document.getElementById('eduStartYear').value = data.startYear || '';
-            document.getElementById('eduEndMonth').value = data.endMonth === 'N/A' ? '' : data.endMonth || '';
-            document.getElementById('eduEndYear').value = data.endYear === 'N/A' ? '' : data.endYear || '';
+          // Populate form
+          document.getElementById("school").value = data.school || "";
+          document.getElementById("degree").value = data.degree || "";
+          document.getElementById("field").value = data.field || "";
 
+          const checkbox = document.getElementById("currentlyStudyingCheckbox");
+          checkbox.checked = data.isCurrent || false;
+
+          document.getElementById("eduStartMonth").value =
+            data.startMonth || "";
+          document.getElementById("eduStartYear").value = data.startYear || "";
+          document.getElementById("eduEndMonth").value =
+            data.endMonth === "N/A" ? "" : data.endMonth || "";
+          document.getElementById("eduEndYear").value =
+            data.endYear === "N/A" ? "" : data.endYear || "";
         } else {
-            // ADD MODE
-            modalTitle.textContent = 'Add New Education Entry';
-            deleteBtn.style.display = 'none';
-            document.getElementById('currentlyStudyingCheckbox').checked = false;
+          // ADD MODE
+          modalTitle.textContent = "Add New Education Entry";
+          deleteBtn.style.display = "none";
+          document.getElementById("currentlyStudyingCheckbox").checked = false;
         }
-        
-        toggleCurrentlyStudying();
-    }
-    
-    // Make function globally accessible
-    window.openEducationModal = openEducationModal;
 
-    /**
-     * Saves education entry (add or edit).
-     */
-    function saveEducationEntry() {
-        const form = document.getElementById('educationForm');
-        form.classList.remove('was-validated');
+        toggleCurrentlyStudying();
+      }
+
+      // Make function globally accessible
+      window.openEducationModal = openEducationModal;
+
+      /**
+       * Saves education entry (add or edit).
+       */
+      function saveEducationEntry() {
+        const form = document.getElementById("educationForm");
+        form.classList.remove("was-validated");
 
         if (!form.checkValidity() || !validateDates()) {
-            form.classList.add('was-validated');
-            return;
+          form.classList.add("was-validated");
+          return;
         }
-        
-        const index = parseInt(document.getElementById('editingIndex').value, 10);
-        const checkbox = document.getElementById('currentlyStudyingCheckbox');
+
+        const index = parseInt(
+          document.getElementById("editingIndex").value,
+          10
+        );
+        const checkbox = document.getElementById("currentlyStudyingCheckbox");
         let dataArray = getEducationData();
 
         // Collect form data
         const newData = {
-            school: document.getElementById('school').value,
-            degree: document.getElementById('degree').value,
-            field: document.getElementById('field').value,
-            startMonth: document.getElementById('eduStartMonth').value,
-            startYear: document.getElementById('eduStartYear').value,
-            isCurrent: checkbox.checked,
-            endMonth: checkbox.checked ? 'N/A' : document.getElementById('eduEndMonth').value,
-            endYear: checkbox.checked ? 'N/A' : document.getElementById('eduEndYear').value,
+          school: document.getElementById("school").value,
+          degree: document.getElementById("degree").value,
+          field: document.getElementById("field").value,
+          startMonth: document.getElementById("eduStartMonth").value,
+          startYear: document.getElementById("eduStartYear").value,
+          isCurrent: checkbox.checked,
+          endMonth: checkbox.checked
+            ? "N/A"
+            : document.getElementById("eduEndMonth").value,
+          endYear: checkbox.checked
+            ? "N/A"
+            : document.getElementById("eduEndYear").value,
         };
 
         // Add or update
         if (index === -1) {
-            // Adding new entry
-            dataArray.push(newData);
+          // Adding new entry
+          dataArray.push(newData);
         } else if (index >= 0 && index < dataArray.length) {
-            // Editing existing entry
-            dataArray[index] = newData;
+          // Editing existing entry
+          dataArray[index] = newData;
         }
 
         // Save and update UI
@@ -1335,38 +1807,42 @@
         const modalElement = document.getElementById(EDUCATION_MODAL_ID);
         const modal = Modal.getInstance(modalElement);
         if (modal) modal.hide();
-        
-        form.classList.remove('was-validated');
-    }
 
-    
-   /**
- * Renders ALL education entries using the simple Array.map method.
- * This function handles all list creation automatically.
- */
-function renderEducationSection() {
-    const dataArray = getEducationData();
-    const displayContainer = document.getElementById('education-list-container');
+        form.classList.remove("was-validated");
+      }
 
-    if (dataArray.length === 0) {
-        // Simple empty state message
-        displayContainer.innerHTML = `
+      /**
+       * Renders ALL education entries using the simple Array.map method.
+       * This function handles all list creation automatically.
+       */
+      function renderEducationSection() {
+        const dataArray = getEducationData();
+        const displayContainer = document.getElementById(
+          "education-list-container"
+        );
+
+        if (dataArray.length === 0) {
+          // Simple empty state message
+          displayContainer.innerHTML = `
             <div class="text-muted small p-3">
                 No education entries yet. Click "Add" above to create your first entry.
             </div>
         `;
-        return;
-    }
+          return;
+        }
 
-    // 1. Convert each data object into a complete HTML string (the 'map' loop)
-    const educationHTML = dataArray.map((data, index) => {
-        // Logic for dates (same as before)
-        const endDateText = data.isCurrent ? 'Present' : `${data.endMonth} ${data.endYear}`;
-        const datesText = `${data.startMonth} ${data.startYear} – ${endDateText}`;
-        const dateClass = data.isCurrent ? 'text-success fw-semibold' : '';
+        // 1. Convert each data object into a complete HTML string (the 'map' loop)
+        const educationHTML = dataArray
+          .map((data, index) => {
+            // Logic for dates (same as before)
+            const endDateText = data.isCurrent
+              ? "Present"
+              : `${data.endMonth} ${data.endYear}`;
+            const datesText = `${data.startMonth} ${data.startYear} – ${endDateText}`;
+            const dateClass = data.isCurrent ? "text-success fw-semibold" : "";
 
-        // Generate the HTML row
-        return `
+            // Generate the HTML row
+            return `
             <div class="d-flex justify-content-between align-items-start py-3 px-3 border-bottom education-entry-row">
                 <div class="flex-grow-1">
                     <div class="fw-semibold">${data.school}</div>
@@ -1382,92 +1858,103 @@ function renderEducationSection() {
                 </a>
             </div>
         `;
-    }).join(''); // 2. Join all the HTML strings together
+          })
+          .join(""); // 2. Join all the HTML strings together
 
-    // 3. Insert the entire combined HTML string into the container at once
-    displayContainer.innerHTML = educationHTML;
+        // 3. Insert the entire combined HTML string into the container at once
+        displayContainer.innerHTML = educationHTML;
 
-    // Optional: Remove border-bottom from last entry
-    const lastEntry = displayContainer.querySelector('.education-entry-row:last-child');
-    if (lastEntry) {
-        lastEntry.classList.remove('border-bottom');
-    }
-}
-    /**
-     * Deletes the currently edited education entry.
-     */
-    function deleteEducationEntry() {
-        const index = parseInt(document.getElementById('editingIndex').value, 10);
-        let dataArray = getEducationData();
-        
-        if (index >= 0 && index < dataArray.length) {
-            // Confirm deletion
-            if (!confirm('Are you sure you want to delete this education entry?')) {
-                return;
-            }
-            
-            // Remove entry
-            dataArray.splice(index, 1);
-            
-            // Save and update
-            localStorage.setItem(EDUCATION_STORAGE_KEY, JSON.stringify(dataArray));
-            renderEducationSection();
-            
-            // Close modal
-            const modalElement = document.getElementById(EDUCATION_MODAL_ID);
-            const modal = Modal.getInstance(modalElement);
-            if (modal) modal.hide();
-            
-            console.log(`Education entry at index ${index} deleted.`);
+        // Optional: Remove border-bottom from last entry
+        const lastEntry = displayContainer.querySelector(
+          ".education-entry-row:last-child"
+        );
+        if (lastEntry) {
+          lastEntry.classList.remove("border-bottom");
         }
-    }
-    
-    // ------------------------------------------------------------------
-    // INITIALIZATION
-    // ------------------------------------------------------------------
-    document.addEventListener('DOMContentLoaded', () => {
+      }
+      /**
+       * Deletes the currently edited education entry.
+       */
+      function deleteEducationEntry() {
+        const index = parseInt(
+          document.getElementById("editingIndex").value,
+          10
+        );
+        let dataArray = getEducationData();
+
+        if (index >= 0 && index < dataArray.length) {
+          // Confirm deletion
+          if (
+            !confirm("Are you sure you want to delete this education entry?")
+          ) {
+            return;
+          }
+
+          // Remove entry
+          dataArray.splice(index, 1);
+
+          // Save and update
+          localStorage.setItem(
+            EDUCATION_STORAGE_KEY,
+            JSON.stringify(dataArray)
+          );
+          renderEducationSection();
+
+          // Close modal
+          const modalElement = document.getElementById(EDUCATION_MODAL_ID);
+          const modal = Modal.getInstance(modalElement);
+          if (modal) modal.hide();
+
+          console.log(`Education entry at index ${index} deleted.`);
+        }
+      }
+
+      // ------------------------------------------------------------------
+      // INITIALIZATION
+      // ------------------------------------------------------------------
+      document.addEventListener("DOMContentLoaded", () => {
         populateDateSelects();
         renderEducationSection();
 
-        const checkbox = document.getElementById('currentlyStudyingCheckbox');
+        const checkbox = document.getElementById("currentlyStudyingCheckbox");
         if (checkbox) {
-            checkbox.addEventListener('change', toggleCurrentlyStudying);
+          checkbox.addEventListener("change", toggleCurrentlyStudying);
         }
 
         // Handle "Add" button click
-        const addLink = document.getElementById('education-action-link');
+        const addLink = document.getElementById("education-action-link");
         if (addLink) {
-            addLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                openEducationModal(-1); // -1 means new entry
-            });
+          addLink.addEventListener("click", (e) => {
+            e.preventDefault();
+            openEducationModal(-1); // -1 means new entry
+          });
         }
 
         // Handle delete button
-        const deleteBtn = document.getElementById('deleteEducationBtn');
+        const deleteBtn = document.getElementById("deleteEducationBtn");
         if (deleteBtn) {
-            deleteBtn.addEventListener('click', deleteEducationEntry);
+          deleteBtn.addEventListener("click", deleteEducationEntry);
         }
 
         // Handle modal events
         const educationModal = document.getElementById(EDUCATION_MODAL_ID);
         if (educationModal) {
-            educationModal.addEventListener('hidden.bs.modal', () => {
-                // Reset form when modal closes
-                const form = document.getElementById('educationForm');
-                form.reset();
-                form.classList.remove('was-validated');
-            });
+          educationModal.addEventListener("hidden.bs.modal", () => {
+            // Reset form when modal closes
+            const form = document.getElementById("educationForm");
+            form.reset();
+            form.classList.remove("was-validated");
+          });
         }
-    });
-</script>
-  
+      });
+    </script>
+
     <script>
       // Ensure Bootstrap's Modal class is accessible (defined in the bundle linked above)
-    const { Modal } = bootstrap;
-    
-    // Define the default data structure for reference
-    const DEFAULT_BASIC_INFO = {
+      const { Modal } = bootstrap;
+
+      // Define the default data structure for reference
+      const DEFAULT_BASIC_INFO = {
         name: "Dela Cruz Juan",
         location: "Osaka, Japan",
         visa: "Special Skill Worker 1",
@@ -1475,120 +1962,216 @@ function renderEducationSection() {
         industry: "Food Service",
         japanese: "Beginner / N5",
         nationality: "Filipino",
-        age: "31"
-    };
+        age: "31",
+      };
 
-    // ------------------------------------------------------------------
-    // DYNAMIC BASIC INFO LOGIC
-    // ------------------------------------------------------------------
+      // ------------------------------------------------------------------
+      // DYNAMIC BASIC INFO LOGIC
+      // ------------------------------------------------------------------
 
-    // --- 1. Load data from localStorage or default ---
-    function initializeBasicInfo() {
-        let storedData = localStorage.getItem('basicInfoData');
+      // --- 1. Load data from localStorage or default ---
+      function initializeBasicInfo() {
+        let storedData = localStorage.getItem("basicInfoData");
         let data = storedData ? JSON.parse(storedData) : DEFAULT_BASIC_INFO;
 
         // Ensure the validity is in the YYYY-MM format for the modal, but display differently
-        
+
         // Update Display Fields
-        document.getElementById('info-name').textContent = data.name;
-        document.getElementById('info-location').textContent = data.location;
-        document.getElementById('info-visa').textContent = data.visa;
-        document.getElementById('info-validity').textContent = data.validity.replace('-', '/'); // Convert YYYY-MM to YYYY/MM for display
-        document.getElementById('info-industry').textContent = data.industry;
-        document.getElementById('info-japanese').textContent = data.japanese;
-        document.getElementById('info-nationality').textContent = data.nationality;
-        document.getElementById('info-age').textContent = data.age;
+        document.getElementById("info-name").textContent = data.name;
+        document.getElementById("info-location").textContent = data.location;
+        document.getElementById("info-visa").textContent = data.visa;
+        document.getElementById("info-validity").textContent =
+          data.validity.replace("-", "/"); // Convert YYYY-MM to YYYY/MM for display
+        document.getElementById("info-industry").textContent = data.industry;
+        document.getElementById("info-japanese").textContent = data.japanese;
+        document.getElementById("info-nationality").textContent =
+          data.nationality;
+        document.getElementById("info-age").textContent = data.age;
 
-        console.log('Basic Info initialized from local storage.');
-    }
+        console.log("Basic Info initialized from local storage.");
+      }
 
-    // --- 2. Load current display data into modal fields ---
-    function loadBasicInfoToModal() {
+      // --- 2. Load current display data into modal fields ---
+      function loadBasicInfoToModal() {
         // Read current values from the displayed profile
         const currentData = {
-            name: document.getElementById('info-name').textContent,
-            location: document.getElementById('info-location').textContent,
-            visa: document.getElementById('info-visa').textContent,
-            // Convert YYYY/MM display format back to YYYY-MM for the input type="month"
-            validity: document.getElementById('info-validity').textContent.replace('/', '-'),
-            industry: document.getElementById('info-industry').textContent,
-            japanese: document.getElementById('info-japanese').textContent,
-            nationality: document.getElementById('info-nationality').textContent,
-            age: document.getElementById('info-age').textContent
+          name: document.getElementById("info-name").textContent,
+          location: document.getElementById("info-location").textContent,
+          visa: document.getElementById("info-visa").textContent,
+          // Convert YYYY/MM display format back to YYYY-MM for the input type="month"
+          validity: document
+            .getElementById("info-validity")
+            .textContent.replace("/", "-"),
+          industry: document.getElementById("info-industry").textContent,
+          japanese: document.getElementById("info-japanese").textContent,
+          nationality: document.getElementById("info-nationality").textContent,
+          age: document.getElementById("info-age").textContent,
         };
 
         // Populate modal fields
-        document.getElementById('modal-name').value = currentData.name;
-        document.getElementById('modal-location').value = currentData.location;
-        document.getElementById('modal-visa').value = currentData.visa;
-        document.getElementById('modal-validity').value = currentData.validity;
-        document.getElementById('modal-industry').value = currentData.industry;
-        document.getElementById('modal-japanese').value = currentData.japanese;
-        document.getElementById('modal-nationality').value = currentData.nationality;
-        document.getElementById('modal-age').value = currentData.age;
+        document.getElementById("modal-name").value = currentData.name;
+        document.getElementById("modal-location").value = currentData.location;
+        document.getElementById("modal-visa").value = currentData.visa;
+        document.getElementById("modal-validity").value = currentData.validity;
+        document.getElementById("modal-industry").value = currentData.industry;
+        document.getElementById("modal-japanese").value = currentData.japanese;
+        document.getElementById("modal-nationality").value =
+          currentData.nationality;
+        document.getElementById("modal-age").value = currentData.age;
 
-        console.log('Basic Info Modal loaded with current profile data.');
-    }
+        console.log("Basic Info Modal loaded with current profile data.");
+      }
 
-    // --- 3. Save data from modal fields to display and localStorage ---
-    function saveBasicInfo() {
+      // --- 3. Save data from modal fields to display and localStorage ---
+      function saveBasicInfo() {
         // 1. Collect new data from modal inputs
         const newData = {
-            name: document.getElementById('modal-name').value,
-            location: document.getElementById('modal-location').value,
-            visa: document.getElementById('modal-visa').value,
-            validity: document.getElementById('modal-validity').value, // This is YYYY-MM
-            industry: document.getElementById('modal-industry').value,
-            japanese: document.getElementById('modal-japanese').value,
-            nationality: document.getElementById('modal-nationality').value,
-            age: document.getElementById('modal-age').value
+          name: document.getElementById("modal-name").value,
+          location: document.getElementById("modal-location").value,
+          visa: document.getElementById("modal-visa").value,
+          validity: document.getElementById("modal-validity").value, // This is YYYY-MM
+          industry: document.getElementById("modal-industry").value,
+          japanese: document.getElementById("modal-japanese").value,
+          nationality: document.getElementById("modal-nationality").value,
+          age: document.getElementById("modal-age").value,
         };
 
         // 2. Update the main profile display (uses initialize function logic)
         // Store the data in localStorage
-        localStorage.setItem('basicInfoData', JSON.stringify(newData));
-        
+        localStorage.setItem("basicInfoData", JSON.stringify(newData));
+
         // Re-run the initialization function to update the DOM
         initializeBasicInfo();
 
-        console.log('Basic Information saved and display updated.');
+        console.log("Basic Information saved and display updated.");
 
-       // 3. Close the modal
-        const modalElement = document.getElementById('basicInfoModal');
+        // 3. Close the modal
+        const modalElement = document.getElementById("basicInfoModal");
         const modal = Modal.getInstance(modalElement);
         if (modal) modal.hide();
-    }
-    
-    // ------------------------------------------------------------------
-    // PLACEHOLDER FUNCTIONS (Kept for other modals)
-    // ------------------------------------------------------------------
-    function saveExperience() { /* ... logic ... */ }
-    function saveSkills() { /* ... logic ... */ }
-    function saveEducation() { /* ... logic ... */ }
-    function saveAvailability() { /* ... logic ... */ }
-    
-    // ... other addNew placeholders ...
+      }
 
-    // ------------------------------------------------------------------
-    // INITIALIZATION & EVENT LISTENERS
-    // ------------------------------------------------------------------
-    document.addEventListener('DOMContentLoaded', () => {
+      // ------------------------------------------------------------------
+      // PLACEHOLDER FUNCTIONS (Kept for other modals)
+      // ------------------------------------------------------------------
+      function saveExperience() {
+        /* ... logic ... */
+      }
+      function saveSkills() {
+        /* ... logic ... */
+      }
+      function saveEducation() {
+        /* ... logic ... */
+      }
+      function saveAvailability() {
+        /* ... logic ... */
+      }
+
+      // ... other addNew placeholders ...
+
+      // ------------------------------------------------------------------
+      // INITIALIZATION & EVENT LISTENERS
+      // ------------------------------------------------------------------
+      document.addEventListener("DOMContentLoaded", () => {
         // Run once on page load to set initial data
         initializeBasicInfo();
 
         // Attach event listener to load data into modal just before it's displayed
-        const basicInfoModal = document.getElementById('basicInfoModal');
+        const basicInfoModal = document.getElementById("basicInfoModal");
         if (basicInfoModal) {
-            basicInfoModal.addEventListener('show.bs.modal', loadBasicInfoToModal);
+          basicInfoModal.addEventListener(
+            "show.bs.modal",
+            loadBasicInfoToModal
+          );
         }
-        
+
         // --- NOTE: Add other DOmContentLoaded listeners here if needed ---
-    });
+      });
 
-    // NOTE: If you are moving all JS to an external file, ensure the 
-    // saveBasicInfo function is globally accessible.
-    // The previous saveBasicInfo() placeholder is replaced by this function.
+      // NOTE: If you are moving all JS to an external file, ensure the
+      // saveBasicInfo function is globally accessible.
+      // The previous saveBasicInfo() placeholder is replaced by this function.
+    </script>
 
-</script>
+    <!-- Conservative accessibility filler: add aria-labels to unlabeled selects/anchors/images -->
+    <script>
+      (function addConservativeAriaLabels() {
+        try {
+          // Adds aria-label to selects missing an accessible name
+          document.querySelectorAll("select").forEach((sel, idx) => {
+            if (!sel) return;
+            if (
+              sel.hasAttribute("aria-label") ||
+              sel.hasAttribute("aria-labelledby")
+            )
+              return;
+
+            // Skip if wrapped by a label
+            if (sel.closest("label")) return;
+
+            // If there's a <label for> matching an id, skip
+            if (sel.id && document.querySelector(`label[for="${sel.id}"]`))
+              return;
+
+            // Try to derive a label from nearest heading or card header
+            let derived = "";
+            const header = sel
+              .closest(".card")
+              ?.querySelector("h6, h5, label, .card-title, .card-header h6");
+            if (header && header.textContent.trim())
+              derived = header.textContent.trim();
+
+            // Fallback: use name attribute or data-label
+            if (!derived)
+              derived =
+                sel.getAttribute("name") ||
+                sel.getAttribute("data-label") ||
+                "";
+
+            // Final fallback: small conservative default to avoid empty accessible name
+            if (!derived) derived = "Selection";
+
+            sel.setAttribute("aria-label", derived + " select");
+          });
+
+          // For anchors with empty text, add an aria-label if we can safely guess
+          document.querySelectorAll("a").forEach((a) => {
+            if (!a) return;
+            if (a.textContent && a.textContent.trim().length > 0) return;
+            if (
+              a.hasAttribute("aria-label") ||
+              a.hasAttribute("aria-labelledby")
+            )
+              return;
+
+            // If anchor contains an image with a non-empty alt, use that
+            const img = a.querySelector('img[alt]:not([alt=""])');
+            if (img) {
+              a.setAttribute("aria-label", img.getAttribute("alt"));
+              return;
+            }
+
+            const href = a.getAttribute("href") || "";
+            if (href.includes("addEdit") || href.includes("edit")) {
+              a.setAttribute("aria-label", "Edit");
+            }
+          });
+
+          // Ensure images have alt text; very conservative default only if missing
+          document.querySelectorAll("img").forEach((img) => {
+            if (!img) return;
+            if (
+              !img.hasAttribute("alt") ||
+              img.getAttribute("alt").trim() === ""
+            ) {
+              img.setAttribute("alt", "Image");
+            }
+          });
+        } catch (e) {
+          // never throw on production pages
+          console.error("aria-label filler failed", e);
+        }
+      })();
+    </script>
   </body>
 </html>

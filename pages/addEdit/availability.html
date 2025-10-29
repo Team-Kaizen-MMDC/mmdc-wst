@@ -13,7 +13,7 @@
     />
     <link rel="stylesheet" href="../../assets/css/main.css" />
     <link rel="stylesheet" href="../../assets/css/components.css" />
-    
+
     <!-- Stepper Styles -->
     <style>
       .stepper-new {
@@ -81,144 +81,164 @@
         justify-content: space-between;
       }
       .stepper-line-segment {
-          height: 2px;
-          background-color: #e9ecef;
-          flex: 1;
+        height: 2px;
+        background-color: #e9ecef;
+        flex: 1;
       }
       .stepper-segment-active {
-          background-color: #28a745; /* Green for completed segments */
+        background-color: #28a745; /* Green for completed segments */
       }
     </style>
   </head>
 
-  <body class="bg-light d-flex align-items-center justify-content-center min-vh-100">
-
-  <div class="container" style="max-width: 740px;"> 
-    <div class="bg-white p-4 rounded-4 shadow-lg"
-          style="width: 100%; max-width: 672px;">
-
-
-      <!-- Header: Back Button and Close Button -->
-      <div class="d-flex justify-content-between align-items-center mb-4">
-
+  <body
+    class="bg-light d-flex align-items-center justify-content-center min-vh-100"
+  >
+    <main
+      id="main-content"
+      role="main"
+      class="container"
+      style="max-width: 740px"
+    >
+      <div
+        class="bg-white p-4 rounded-4 shadow-lg"
+        style="width: 100%; max-width: 672px"
+      >
+        <!-- Header: Back Button and Close Button -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
           <!-- LEFT: Back Button  -->
-          <a href="skill.html" class="text-secondary fw-bold text-decoration-none p-2 me-auto">
-              ← Back 
+          <a
+            href="skill.html"
+            class="text-secondary fw-bold text-decoration-none p-2 me-auto"
+          >
+            ← Back
           </a>
-          
-          <!-- CENTER -->
-          <span class="mx-auto"></span> 
-          
-          <!-- RIGHT: Close Button -->
-        <a
-          href="../profileDashboard.html"
-          class="text-secondary fw-bold text-decoration-none"
-          aria-label="Close"
-        >
-          Close
-        </a>
-      </div>
 
-      <!-- STEPPER COMPONENT (Step 6 Active) -->
-      <div class="stepper-new">
-        <!-- Connecting Line Segments -->
-        <div class="stepper-line">
+          <!-- CENTER -->
+          <span class="mx-auto"></span>
+
+          <!-- RIGHT: Close Button -->
+          <a
+            href="../profileDashboard.html"
+            class="text-secondary fw-bold text-decoration-none"
+            aria-label="Close"
+          >
+            Close
+          </a>
+        </div>
+
+        <!-- STEPPER COMPONENT (Step 6 Active) -->
+        <div class="stepper-new">
+          <!-- Connecting Line Segments -->
+          <div class="stepper-line">
             <!-- Segment 1, 2, 3, 4, 5: Completed (All segments green) -->
             <div class="stepper-line-segment stepper-segment-active"></div>
             <div class="stepper-line-segment stepper-segment-active"></div>
             <div class="stepper-line-segment stepper-segment-active"></div>
             <div class="stepper-line-segment stepper-segment-active"></div>
             <div class="stepper-line-segment stepper-segment-active"></div>
-        </div>
+          </div>
 
-        <!-- Step 1: Profile (Completed) -->
-        <div class="stepper-step completed">
-          <div class="stepper-circle">1</div>
-          <div class="stepper-label">Profile</div>
-        </div>
+          <!-- Step 1: Profile (Completed) -->
+          <div class="stepper-step completed">
+            <div class="stepper-circle">1</div>
+            <div class="stepper-label">Profile</div>
+          </div>
 
-        <!-- Step 2: Contact (Completed) -->
-        <div class="stepper-step completed">
-          <div class="stepper-circle">2</div>
-          <div class="stepper-label">Contact</div>
-        </div>
+          <!-- Step 2: Contact (Completed) -->
+          <div class="stepper-step completed">
+            <div class="stepper-circle">2</div>
+            <div class="stepper-label">Contact</div>
+          </div>
 
-        <!-- Step 3: Education (Completed) -->
-        <div class="stepper-step completed">
-          <div class="stepper-circle">3</div>
-          <div class="stepper-label">Education</div>
-        </div>
-        
-        <!-- Step 4: Experience (Completed) -->
-        <div class="stepper-step completed">
-          <div class="stepper-circle">4</div>
-          <div class="stepper-label">Experience</div>
-        </div>
+          <!-- Step 3: Education (Completed) -->
+          <div class="stepper-step completed">
+            <div class="stepper-circle">3</div>
+            <div class="stepper-label">Education</div>
+          </div>
 
-        <!-- Step 5: Skill (Completed) -->
-        <div class="stepper-step completed">
-          <div class="stepper-circle">5</div>
-          <div class="stepper-label">Skill</div>
-        </div>
+          <!-- Step 4: Experience (Completed) -->
+          <div class="stepper-step completed">
+            <div class="stepper-circle">4</div>
+            <div class="stepper-label">Experience</div>
+          </div>
 
-        <!-- Step 6: Availability (Active) -->
-        <div class="stepper-step active">
-          <div class="stepper-circle">6</div>
-          <div class="stepper-label">Availability</div>
+          <!-- Step 5: Skill (Completed) -->
+          <div class="stepper-step completed">
+            <div class="stepper-circle">5</div>
+            <div class="stepper-label">Skill</div>
+          </div>
+
+          <!-- Step 6: Availability (Active) -->
+          <div class="stepper-step active">
+            <div class="stepper-circle">6</div>
+            <div class="stepper-label">Availability</div>
+          </div>
         </div>
+        <!-- END STEPPER COMPONENT -->
+
+        <!-- Page Title -->
+        <h1 class="h4 fw-bold text-dark mb-4 text-center">
+          Availability / Preferences
+        </h1>
+
+        <!-- Form -->
+        <form class="g-3" action="../profileDashboard.html" method="GET">
+          <!-- Status -->
+          <div class="mb-3">
+            <label for="status" class="form-label">Status</label>
+            <input
+              id="status"
+              name="status"
+              type="text"
+              placeholder="Ex: Assistant Store Manager"
+              class="form-control"
+            />
+          </div>
+
+          <!-- Location -->
+          <div class="mb-3">
+            <label for="location" class="form-label">Location</label>
+            <input
+              id="location"
+              name="location"
+              type="text"
+              placeholder="Ex: Shinigawa, Tokyo"
+              class="form-control"
+            />
+          </div>
+
+          <!-- Work Preferences -->
+          <div class="mb-4">
+            <label for="workPreferences" class="form-label"
+              >Work Preferences</label
+            >
+            <input
+              id="workPreferences"
+              name="workPreferences"
+              type="text"
+              placeholder="Ex: full-time / shift-based / overtime OK"
+              class="form-control"
+            />
+          </div>
+
+          <!-- Buttons Section -->
+          <div class="text-center">
+            <a
+              href="../profileDashboard.html"
+              class="text-secondary text-decoration-underline d-block mb-3"
+              >Skip</a
+            >
+            <button
+              type="submit"
+              class="btn btn-danger px-5 rounded-pill shadow-sm"
+            >
+              Save
+            </button>
+          </div>
+        </form>
       </div>
-      <!-- END STEPPER COMPONENT -->
-        
-      <!-- Page Title -->
-      <h1 class="h4 fw-bold text-dark mb-4 text-center">Availability / Preferences</h1>
-
-      <!-- Form -->
-      <form class="g-3" action="../profileDashboard.html" method="GET">
-
-        <!-- Status -->
-        <div class="mb-3">
-          <label for="status" class="form-label">Status</label>
-          <input
-            id="status"
-            name="status"
-            type="text"
-            placeholder="Ex: Assistant Store Manager"
-            class="form-control"
-          />
-        </div>
-
-        <!-- Location -->
-        <div class="mb-3">
-          <label for="location" class="form-label">Location</label>
-          <input
-            id="location"
-            name="location"
-            type="text"
-            placeholder="Ex: Shinigawa, Tokyo"
-            class="form-control"
-          />
-        </div>
-
-        <!-- Work Preferences -->
-        <div class="mb-4">
-          <label for="workPreferences" class="form-label">Work Preferences</label>
-          <input
-            id="workPreferences"
-            name="workPreferences"
-            type="text"
-            placeholder="Ex: full-time / shift-based / overtime OK"
-            class="form-control"
-          />
-        </div>
-
-        <!-- Buttons Section -->
-      <div class="text-center">
-        <a href="../profileDashboard.html" class="text-secondary text-decoration-underline d-block mb-3">Skip</a>
-        <button type="submit" class="btn btn-danger px-5 rounded-pill shadow-sm">Save</button>
-      </div>
-    </form>
-  </div>
-</div>
+    </main>
 
     <!-- Bootstrap JS Bundle -->
     <script
@@ -228,14 +248,14 @@
     ></script>
 
     <!-- Validation -->
-        <script type="module">
-        import { checkAuthAndRedirect } from '../../assets/js/modules/auth.js'; 
-        import { initializeAvailabilityValidation } from '../../assets/js/modules/validation.js'; 
+    <script type="module">
+      import { checkAuthAndRedirect } from "../../assets/js/modules/auth.js";
+      import { initializeAvailabilityValidation } from "../../assets/js/modules/validation.js";
 
-        window.addEventListener('DOMContentLoaded', () => {
-            checkAuthAndRedirect();
-            initializeAvailabilityValidation(); 
-        });
+      window.addEventListener("DOMContentLoaded", () => {
+        checkAuthAndRedirect();
+        initializeAvailabilityValidation();
+      });
     </script>
   </body>
 </html>
