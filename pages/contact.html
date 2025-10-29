@@ -31,6 +31,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/utilities.css" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.ico" />
@@ -214,22 +215,29 @@
         <div class="row justify-content-center">
           <div class="col-lg-10 col-xl-9">
             <div
-              class="card shadow-lg border-0 rounded-4 contact-card transition animate-scale-up animate-on-scroll"
-              style="color: #000 !important"
+              class="card shadow-lg border-0 rounded-4 contact-card transition animate-scale-up animate-on-scroll bg-contrast-strong"
             >
               <div class="card-body p-0">
                 <div class="row g-0">
                   <!-- Left Side (Branding/Header Info) -->
                   <div
-                    class="col-lg-5 p-4 p-md-5 d-flex flex-column card-header-left"
+                    class="col-lg-5 p-4 p-md-5 d-flex flex-column card-header-left bg-dark text-white"
                   >
                     <div class="mb-4">
                       <i
-                        class="bi bi-send-check-fill text-primary"
-                        style="font-size: 3rem"
+                        class="bi bi-send-check-fill"
+                        style="font-size: 3rem; color: #ffffff !important"
                       ></i>
-                      <h2 class="header-title mt-3 text-black">Get In Touch</h2>
-                      <p class="header-subtitle lead text-black fw-normal">
+                      <h2
+                        class="header-title mt-3"
+                        style="color: #ffffff !important"
+                      >
+                        Get In Touch
+                      </h2>
+                      <p
+                        class="header-subtitle lead fw-normal"
+                        style="color: #ffffff !important"
+                      >
                         We'd love to hear from you! Fill out the form to send us
                         a message about jobs, partnerships, or visa guidance.
                       </p>
@@ -238,23 +246,40 @@
                     <!-- Static Contact Info -->
                     <div class="contact-info-block mt-auto pt-4">
                       <div class="contact-info-item">
-                        <i class="bi bi-geo-alt-fill"></i>
-                        <span>Shinjuku, Tokyo, Japan 160-0022</span>
+                        <i
+                          class="bi bi-geo-alt-fill"
+                          style="color: #ffffff !important"
+                        ></i>
+                        <span style="color: #ffffff !important"
+                          >Shinjuku, Tokyo, Japan 160-0022</span
+                        >
                       </div>
                       <div class="contact-info-item">
-                        <i class="bi bi-envelope-fill"></i>
-                        <span>support@japanssw.com</span>
+                        <i
+                          class="bi bi-envelope-fill"
+                          style="color: #ffffff !important"
+                        ></i>
+                        <span style="color: #ffffff !important"
+                          >support@japanssw.com</span
+                        >
                       </div>
                       <div class="contact-info-item">
-                        <i class="bi bi-clock-fill"></i>
-                        <span>Mon - Fri: 9:00 - 18:00 JST</span>
+                        <i
+                          class="bi bi-clock-fill"
+                          style="color: #ffffff !important"
+                        ></i>
+                        <span style="color: #ffffff !important"
+                          >Mon - Fri: 9:00 - 18:00 JST</span
+                        >
                       </div>
                     </div>
                   </div>
 
                   <!-- Right Side (Form Fields) -->
                   <div class="col-lg-7 p-4 p-md-5 card-form-right">
-                    <h3 class="form-title">Send Us a Message</h3>
+                    <h3 class="form-title text-contrast-high">
+                      Send Us a Message
+                    </h3>
 
                     <!-- Confirmation Message Box (Hidden by default, shown by JS) -->
                     <div id="successMessage" class="success-message">
