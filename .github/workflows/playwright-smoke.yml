@@ -83,6 +83,8 @@ jobs:
       - name: Post PR comment with summary
         if: always()
         uses: actions/github-script@v6
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -175,22 +177,29 @@ jobs:
             const body = summaryLines.join('\n');
             console.log('Comment body:', body);
 
-            // Post or update comment on the PR
-            const prNumber = context.payload.pull_request && context.payload.pull_request.number;
-            console.log('PR number:', prNumber);
-            console.log('Context payload:', JSON.stringify(context.payload, null, 2).substring(0, 500));
+            // Get PR number from environment or context
+            const prNumber = process.env.PR_NUMBER || context.payload.pull_request?.number;
+            
+            console.log('PR Number from env:', process.env.PR_NUMBER);
+            console.log('PR Number from context:', context.payload.pull_request?.number);
+            console.log('Using PR Number:', prNumber);
 
             if (!prNumber) {
-              console.log('No pull request number found in context; skipping comment.');
-              console.log('Full context:', JSON.stringify(context, null, 2).substring(0, 1000));
-            } else {
-              console.log('Attempting to post/update comment for PR #' + prNumber);
-              
+              console.error('ERROR: No PR number found!');
+              console.log('Context keys:', Object.keys(context));
+              console.log('Payload keys:', Object.keys(context.payload));
+              console.log('Event name:', context.eventName);
+              return;
+            }
+
+            console.log('Processing PR #' + prNumber);
+
+            try {
               // Try to find existing comment to update
               const { data: comments } = await github.rest.issues.listComments({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                issue_number: prNumber,
+                issue_number: parseInt(prNumber),
               });
               
               console.log('Found', comments.length, 'existing comments');
@@ -209,16 +218,20 @@ jobs:
                   comment_id: botComment.id,
                   body,
                 });
-                console.log('Comment updated successfully');
+                console.log('✅ Comment updated successfully');
               } else {
                 console.log('Creating new comment');
                 // Create new comment
                 await github.rest.issues.createComment({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
-                  issue_number: prNumber,
+                  issue_number: parseInt(prNumber),
                   body,
                 });
-                console.log('Comment created successfully');
+                console.log('✅ Comment created successfully');
               }
+            } catch (error) {
+              console.error('❌ Error posting comment:', error.message);
+              console.error('Error details:', error);
+              throw error;
             }
