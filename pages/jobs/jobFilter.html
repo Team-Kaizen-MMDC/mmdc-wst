@@ -1,63 +1,32 @@
-<!-- Moved from pages/jobFilter.html -->
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Job Filter</title>
 
     <!-- Fonts (same as other pages) -->
-    <link rel="preconnect" href="../../fonts.googleapis.com" />
-    <link rel="preconnect" href="../../fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="preconnect" href="../../fonts.googleapis.com">
+    <link rel="preconnect" href="../../fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
 
     <!-- Bootstrap CSS 5.3.3 (Phase 2) -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-      crossorigin="anonymous"
-    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!-- Project CSS -->
-    <link rel="stylesheet" href="../../assets/css/main.css" />
-    <link
-      rel="icon"
-      type="image/x-icon"
-      href="../../assets/icons/favicon.ico"
-    />
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="icon" type="image/x-icon" href="../../assets/icons/favicon.ico">
   </head>
   <body>
     <!-- Skip to Content Link for Screen Readers -->
-    <a
-      href="#main-content"
-      class="skip-link"
-      data-i18n="accessibility.skipToContent"
-      >Skip to main content</a
-    >
+    <a href="#main-content" class="skip-link" data-i18n="accessibility.skipToContent">Skip to main content</a>
 
     <!-- Shared Header (offcanvas mobile nav) -->
     <header class="site-header">
       <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light">
-          <a
-            class="navbar-brand site-header__brand"
-            href="../../index.html"
-            data-i18n="site.brand"
-            >Japan SSW</a
-          >
+          <a class="navbar-brand site-header__brand" href="../../index.html" data-i18n="site.brand">Japan SSW</a>
 
           <!-- Offcanvas toggler for mobile -->
-          <button
-            class="btn btn-outline-secondary d-lg-none"
-            type="button"
-            data-bs-toggle="offcanvas"
-            data-bs-target="#siteOffcanvas"
-            aria-controls="siteOffcanvas"
-            aria-label="Open menu"
-          >
+          <button class="btn btn-outline-secondary d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#siteOffcanvas" aria-controls="siteOffcanvas" aria-label="Open menu">
             <span class="navbar-toggler-icon"></span>
           </button>
 
@@ -65,129 +34,51 @@
           <div class="collapse navbar-collapse d-none d-lg-flex" id="navbarNav">
             <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a
-                  class="nav-link site-header__nav-link active"
-                  href="../../index.html#jobs"
-                  data-i18n="nav.jobs"
-                  >Jobs</a
-                >
+                <a class="nav-link site-header__nav-link active" href="../../index.html#jobs" data-i18n="nav.jobs">Jobs</a>
               </li>
               <li class="nav-item">
-                <a
-                  class="nav-link site-header__nav-link"
-                  href="../../index.html#companies"
-                  data-i18n="nav.services"
-                  >Companies</a
-                >
+                <a class="nav-link site-header__nav-link" href="../../index.html#companies" data-i18n="nav.services">Companies</a>
               </li>
               <li class="nav-item">
-                <a
-                  class="nav-link site-header__nav-link"
-                  href="../agency.html"
-                  data-i18n="nav.agency"
-                  >Agency</a
-                >
+                <a class="nav-link site-header__nav-link" href="../agency.html" data-i18n="nav.agency">Agency</a>
               </li>
               <li class="nav-item">
-                <a
-                  class="nav-link site-header__nav-link"
-                  href="../about.html"
-                  data-i18n="nav.about"
-                  >About</a
-                >
+                <a class="nav-link site-header__nav-link" href="../about.html" data-i18n="nav.about">About</a>
               </li>
             </ul>
             <div class="d-flex align-items-center gap-2 site-header__actions">
-              <a
-                class="site-header__signup muted"
-                href="../createAccount.html"
-                data-i18n="nav.signup"
-                >Signup</a
-              >
-              <a
-                class="btn btn-primary site-header__login-btn"
-                href="../signin.html"
-                data-i18n="nav.login"
-                >Login</a
-              >
+              <a class="site-header__signup muted" href="../createAccount.html" data-i18n="nav.signup">Signup</a>
+              <a class="btn btn-primary site-header__login-btn" href="../signin.html" data-i18n="nav.login">Login</a>
             </div>
           </div>
         </nav>
       </div>
 
       <!-- Offcanvas (mobile) -->
-      <div
-        class="offcanvas offcanvas-start"
-        tabindex="-1"
-        id="siteOffcanvas"
-        aria-labelledby="siteOffcanvasLabel"
-      >
+      <div class="offcanvas offcanvas-start" tabindex="-1" id="siteOffcanvas" aria-labelledby="siteOffcanvasLabel">
         <div class="offcanvas-header">
           <h5 class="offcanvas-title" id="siteOffcanvasLabel">Menu</h5>
-          <button
-            type="button"
-            class="btn-close text-reset"
-            data-bs-dismiss="offcanvas"
-            aria-label="Close"
-          ></button>
+          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body d-flex flex-column">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a
-                class="nav-link py-3 active"
-                href="../../index.html#jobs"
-                data-bs-dismiss="offcanvas"
-                data-i18n="nav.jobs"
-                >Jobs</a
-              >
+              <a class="nav-link py-3 active" href="../../index.html#jobs" data-bs-dismiss="offcanvas" data-i18n="nav.jobs">Jobs</a>
             </li>
             <li class="nav-item">
-              <a
-                class="nav-link py-3"
-                href="../../index.html#companies"
-                data-bs-dismiss="offcanvas"
-                data-i18n="nav.services"
-                >Companies</a
-              >
+              <a class="nav-link py-3" href="../../index.html#companies" data-bs-dismiss="offcanvas" data-i18n="nav.services">Companies</a>
             </li>
             <li class="nav-item">
-              <a
-                class="nav-link py-3"
-                href="../agency.html"
-                data-bs-dismiss="offcanvas"
-                data-i18n="nav.agency"
-                >Agency</a
-              >
+              <a class="nav-link py-3" href="../agency.html" data-bs-dismiss="offcanvas" data-i18n="nav.agency">Agency</a>
             </li>
             <li class="nav-item">
-              <a
-                class="nav-link py-3"
-                href="../about.html"
-                data-bs-dismiss="offcanvas"
-                data-i18n="nav.about"
-                >About</a
-              >
+              <a class="nav-link py-3" href="../about.html" data-bs-dismiss="offcanvas" data-i18n="nav.about">About</a>
             </li>
           </ul>
 
-          <div
-            class="mt-auto d-flex justify-content-between align-items-center pt-3 border-top"
-          >
-            <a
-              class="btn btn-outline-secondary"
-              href="../createAccount.html"
-              data-bs-dismiss="offcanvas"
-              data-i18n="nav.signup"
-              >Signup</a
-            >
-            <a
-              class="btn btn-danger"
-              href="../signin.html"
-              data-bs-dismiss="offcanvas"
-              data-i18n="nav.login"
-              >Login</a
-            >
+          <div class="mt-auto d-flex justify-content-between align-items-center pt-3 border-top">
+            <a class="btn btn-outline-secondary" href="../createAccount.html" data-bs-dismiss="offcanvas" data-i18n="nav.signup">Signup</a>
+            <a class="btn btn-danger" href="../signin.html" data-bs-dismiss="offcanvas" data-i18n="nav.login">Login</a>
           </div>
         </div>
       </div>
@@ -214,411 +105,166 @@
             <div class="card-body">
               <!-- Search -->
               <div class="mb-4">
-                <label
-                  for="searchInput"
-                  class="form-label fw-semibold text-secondary"
-                  >Search Job Listings</label
-                >
-                <input
-                  id="searchInput"
-                  type="search"
-                  class="form-control"
-                  placeholder="e.g., engineer, Osaka, N2"
-                  aria-describedby="search-help"
-                  autocomplete="off"
-                />
+                <label for="searchInput" class="form-label fw-semibold text-secondary">Search Job Listings</label>
+                <input id="searchInput" type="search" class="form-control" placeholder="e.g., engineer, Osaka, N2" aria-describedby="search-help" autocomplete="off">
                 <small id="search-help" class="form-text text-muted">
                   Search by job title, company, location, or Japanese level
                 </small>
               </div>
 
-              <hr />
+              <hr>
 
               <!-- Support -->
               <div class="mb-3">
-                <label
-                  class="form-label fw-semibold text-secondary"
-                  id="support-label"
-                  >Support</label
-                >
-                <div
-                  data-filter-group="support"
-                  class="btn-group-filter d-flex flex-wrap"
-                  role="group"
-                  aria-labelledby="support-label"
-                  aria-describedby="support-desc"
-                >
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-primary rounded-pill me-2 mb-2 active"
-                    data-value="all"
-                    aria-pressed="true"
-                  >
+                <label class="form-label fw-semibold text-secondary" id="support-label">Support</label>
+                <div data-filter-group="support" class="btn-group-filter d-flex flex-wrap" role="group" aria-labelledby="support-label" aria-describedby="support-desc">
+                  <button type="button" class="btn btn-sm btn-outline-primary rounded-pill me-2 mb-2 active" data-value="all" aria-pressed="true">
                     All
                   </button>
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
-                    data-value="yes"
-                    aria-pressed="false"
-                  >
+                  <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="yes" aria-pressed="false">
                     Yes
                   </button>
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
-                    data-value="no"
-                    aria-pressed="false"
-                  >
+                  <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="no" aria-pressed="false">
                     No
                   </button>
                 </div>
-                <small
-                  id="support-desc"
-                  class="form-text text-muted visually-hidden"
-                >
+                <small id="support-desc" class="form-text text-muted visually-hidden">
                   Filter jobs by visa support availability
                 </small>
               </div>
 
               <!-- Japanese Level -->
               <div class="mb-3">
-                <label
-                  class="form-label fw-semibold text-secondary"
-                  id="japanese-label"
-                  >Japanese Level</label
-                >
-                <div
-                  data-filter-group="japaneseLevel"
-                  class="btn-group-filter d-flex flex-wrap"
-                  role="group"
-                  aria-labelledby="japanese-label"
-                  aria-describedby="japanese-desc"
-                >
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-primary rounded-pill me-2 mb-2 active"
-                    data-value="any"
-                    aria-pressed="true"
-                  >
+                <label class="form-label fw-semibold text-secondary" id="japanese-label">Japanese Level</label>
+                <div data-filter-group="japaneseLevel" class="btn-group-filter d-flex flex-wrap" role="group" aria-labelledby="japanese-label" aria-describedby="japanese-desc">
+                  <button type="button" class="btn btn-sm btn-outline-primary rounded-pill me-2 mb-2 active" data-value="any" aria-pressed="true">
                     Any
                   </button>
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
-                    data-value="n5"
-                    aria-pressed="false"
-                  >
+                  <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="n5" aria-pressed="false">
                     Beginner / N5
                   </button>
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
-                    data-value="n4"
-                    aria-pressed="false"
-                  >
+                  <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="n4" aria-pressed="false">
                     Basic / N4
                   </button>
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
-                    data-value="n3"
-                    aria-pressed="false"
-                  >
+                  <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="n3" aria-pressed="false">
                     Conversational / N3
                   </button>
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
-                    data-value="n2"
-                    aria-pressed="false"
-                  >
+                  <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="n2" aria-pressed="false">
                     Business / N2
                   </button>
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
-                    data-value="n1"
-                    aria-pressed="false"
-                  >
+                  <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="n1" aria-pressed="false">
                     Fluent / N1
                   </button>
                 </div>
-                <small
-                  id="japanese-desc"
-                  class="form-text text-muted visually-hidden"
-                >
+                <small id="japanese-desc" class="form-text text-muted visually-hidden">
                   Filter jobs by required Japanese language proficiency level
                 </small>
               </div>
 
               <!-- Location -->
               <div class="mb-3">
-                <label
-                  class="form-label fw-semibold text-secondary"
-                  id="location-label"
-                  >Work Location</label
-                >
-                <div
-                  data-filter-group="location"
-                  class="btn-group-filter d-flex flex-wrap"
-                  role="group"
-                  aria-labelledby="location-label"
-                  aria-describedby="location-desc"
-                >
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-primary rounded-pill me-2 mb-2 active"
-                    data-value="all"
-                    aria-pressed="true"
-                  >
+                <label class="form-label fw-semibold text-secondary" id="location-label">Work Location</label>
+                <div data-filter-group="location" class="btn-group-filter d-flex flex-wrap" role="group" aria-labelledby="location-label" aria-describedby="location-desc">
+                  <button type="button" class="btn btn-sm btn-outline-primary rounded-pill me-2 mb-2 active" data-value="all" aria-pressed="true">
                     All
                   </button>
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
-                    data-value="tokyo"
-                    aria-pressed="false"
-                  >
+                  <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="tokyo" aria-pressed="false">
                     Tokyo
                   </button>
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
-                    data-value="osaka"
-                    aria-pressed="false"
-                  >
+                  <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="osaka" aria-pressed="false">
                     Osaka
                   </button>
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
-                    data-value="kyoto"
-                    aria-pressed="false"
-                  >
+                  <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="kyoto" aria-pressed="false">
                     Kyoto
                   </button>
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
-                    data-value="fukuoka"
-                    aria-pressed="false"
-                  >
+                  <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="fukuoka" aria-pressed="false">
                     Fukuoka
                   </button>
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
-                    data-value="kanagawa"
-                    aria-pressed="false"
-                  >
+                  <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="kanagawa" aria-pressed="false">
                     Kanagawa
                   </button>
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
-                    data-value="nagoya"
-                    aria-pressed="false"
-                  >
+                  <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="nagoya" aria-pressed="false">
                     Nagoya
                   </button>
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
-                    data-value="okinawa"
-                    aria-pressed="false"
-                  >
+                  <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="okinawa" aria-pressed="false">
                     Okinawa
                   </button>
                 </div>
-                <small
-                  id="location-desc"
-                  class="form-text text-muted visually-hidden"
-                >
+                <small id="location-desc" class="form-text text-muted visually-hidden">
                   Filter jobs by work location in Japan
                 </small>
               </div>
 
               <!-- Industry -->
               <div class="mb-3">
-                <label
-                  class="form-label fw-semibold text-secondary"
-                  id="industry-label"
-                  >Industry</label
-                >
-                <div
-                  data-filter-group="industry"
-                  class="btn-group-filter d-flex flex-wrap"
-                  role="group"
-                  aria-labelledby="industry-label"
-                  aria-describedby="industry-desc"
-                >
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-primary rounded-pill me-2 mb-2 active"
-                    data-value="all"
-                    aria-pressed="true"
-                  >
+                <label class="form-label fw-semibold text-secondary" id="industry-label">Industry</label>
+                <div data-filter-group="industry" class="btn-group-filter d-flex flex-wrap" role="group" aria-labelledby="industry-label" aria-describedby="industry-desc">
+                  <button type="button" class="btn btn-sm btn-outline-primary rounded-pill me-2 mb-2 active" data-value="all" aria-pressed="true">
                     All
                   </button>
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
-                    data-value="aviation"
-                    aria-pressed="false"
-                  >
+                  <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="aviation" aria-pressed="false">
                     Aviation
                   </button>
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
-                    data-value="nursing care"
-                    aria-pressed="false"
-                  >
+                  <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="nursing care" aria-pressed="false">
                     Nursing Care
                   </button>
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
-                    data-value="food service"
-                    aria-pressed="false"
-                  >
+                  <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="food service" aria-pressed="false">
                     Food Service
                   </button>
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
-                    data-value="software engineering"
-                    aria-pressed="false"
-                  >
+                  <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="software engineering" aria-pressed="false">
                     Agriculture
                   </button>
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
-                    data-value="education"
-                    aria-pressed="false"
-                  >
+                  <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="education" aria-pressed="false">
                     Fishery
                   </button>
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
-                    data-value="building cleaning"
-                    aria-pressed="false"
-                  >
+                  <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="building cleaning" aria-pressed="false">
                     Building Cleaning
                   </button>
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
-                    data-value="manufacturing"
-                    aria-pressed="false"
-                  >
+                  <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="manufacturing" aria-pressed="false">
                     Manufacturing
                   </button>
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
-                    data-value="construction"
-                    aria-pressed="false"
-                  >
+                  <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="construction" aria-pressed="false">
                     Construction
                   </button>
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
-                    data-value="automobile maint."
-                    aria-pressed="false"
-                  >
+                  <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="automobile maint." aria-pressed="false">
                     Automotive
                   </button>
                 </div>
-                <small
-                  id="industry-desc"
-                  class="form-text text-muted visually-hidden"
-                >
+                <small id="industry-desc" class="form-text text-muted visually-hidden">
                   Filter jobs by industry sector
                 </small>
               </div>
 
               <!-- Min Salary -->
               <div class="mb-3">
-                <label
-                  class="form-label fw-semibold text-secondary"
-                  id="salary-label"
-                  >Min Salary (Monthly)</label
-                >
-                <div
-                  data-filter-group="minSalary"
-                  class="btn-group-filter d-flex flex-wrap"
-                  role="group"
-                  aria-labelledby="salary-label"
-                  aria-describedby="salary-desc"
-                >
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-primary rounded-pill me-2 mb-2 active"
-                    data-value="0"
-                    data-salary="0"
-                    aria-pressed="true"
-                  >
+                <label class="form-label fw-semibold text-secondary" id="salary-label">Min Salary (Monthly)</label>
+                <div data-filter-group="minSalary" class="btn-group-filter d-flex flex-wrap" role="group" aria-labelledby="salary-label" aria-describedby="salary-desc">
+                  <button type="button" class="btn btn-sm btn-outline-primary rounded-pill me-2 mb-2 active" data-value="0" data-salary="0" aria-pressed="true">
                     Any
                   </button>
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
-                    data-value="200000"
-                    data-salary="200000"
-                    aria-pressed="false"
-                  >
+                  <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="200000" data-salary="200000" aria-pressed="false">
                     ¥200k+
                   </button>
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
-                    data-value="250000"
-                    data-salary="250000"
-                    aria-pressed="false"
-                  >
+                  <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="250000" data-salary="250000" aria-pressed="false">
                     ¥250k+
                   </button>
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2"
-                    data-value="300000"
-                    data-salary="300000"
-                    aria-pressed="false"
-                  >
+                  <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill me-2 mb-2" data-value="300000" data-salary="300000" aria-pressed="false">
                     ¥300k+
                   </button>
                 </div>
-                <small
-                  id="salary-desc"
-                  class="form-text text-muted visually-hidden"
-                >
+                <small id="salary-desc" class="form-text text-muted visually-hidden">
                   Filter jobs by minimum monthly salary in Japanese Yen
                 </small>
               </div>
 
               <div class="text-center mt-3">
-                <button
-                  id="clearFilters"
-                  type="button"
-                  class="btn btn-light text-decoration-none"
-                  aria-label="Clear all filters and reset search"
-                >
+                <button id="clearFilters" type="button" class="btn btn-light text-decoration-none" aria-label="Clear all filters and reset search">
                   Clear All Filters
                 </button>
               </div>
 
               <!-- ARIA live region for announcing filter changes to screen readers -->
-              <div
-                id="filterAnnouncement"
-                class="visually-hidden"
-                aria-live="polite"
-                aria-atomic="true"
-              ></div>
+              <div id="filterAnnouncement" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
             </div>
           </div>
         </aside>
@@ -628,27 +274,15 @@
           <!-- Results count announcement -->
           <div class="d-flex justify-content-between align-items-center mb-3">
             <p class="text-muted mb-0">
-              <span id="resultCount" aria-live="polite">0</span> jobs found
+              <span id="resultCount-2" aria-live="polite">0</span> jobs found
             </p>
           </div>
 
           <div id="jobListings" class="row g-4" role="list"></div>
 
           <div id="noResults" class="text-center py-5 d-none">
-            <svg
-              class="mx-auto mb-3"
-              width="80"
-              height="80"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              />
+            <svg class="mx-auto mb-3" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
             </svg>
             <h4 class="text-muted fw-semibold mb-2">No jobs found</h4>
             <p class="text-secondary">
@@ -669,9 +303,7 @@
           </p>
           <div class="footer-cta-actions site-footer__cta-actions">
             <a class="btn btn-secondary" href="../../">Employer Login</a>
-            <a class="btn btn-primary" href="../../index.html#post-job"
-              >Post a Job</a
-            >
+            <a class="btn btn-primary" href="../../index.html#post-job">Post a Job</a>
           </div>
         </div>
         <div class="footer-links site-footer__links">
@@ -703,7 +335,7 @@
       </div>
       <div class="container footer-legal site-footer__legal">
         <div class="legal-inner site-footer__legal-inner">
-          <small>&copy; 2025 Japan SSW. All rights reserved.</small>
+          <small>© 2025 Japan SSW. All rights reserved.</small>
           <nav aria-label="Footer legal">
             <a href="../terms.html">Terms</a>
             <a href="../privacy.html">Privacy</a>
@@ -713,13 +345,10 @@
     </footer>
 
     <!-- Bootstrap JS Bundle 5.3.3 (Phase 2) -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-      crossorigin="anonymous"
-    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <!-- Custom JS Module (Phase 2) -->
     <script type="module" src="../../assets/js/main.js"></script>
-  </body>
-</html>
+  
+
+</body></html>
