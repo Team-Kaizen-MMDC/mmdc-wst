@@ -24,8 +24,13 @@ function discoverHtmlPages() {
       } else if (ent.isFile() && ent.name.endsWith(".html")) {
         // compute a web-relative path from repo root
         const rel = path.relative(root, full).replace(/\\/g, "/");
-        // ignore archive and assets HTML that aren't part of site pages
-        if (rel.startsWith("archive/") || rel.startsWith("assets/")) continue;
+        // ignore archive, assets and script backups HTML that aren't part of site pages
+        if (
+          rel.startsWith("archive/") ||
+          rel.startsWith("assets/") ||
+          rel.startsWith("scripts/fixes-backup/")
+        )
+          continue;
         results.add(rel);
       }
     }
