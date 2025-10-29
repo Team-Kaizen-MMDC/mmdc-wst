@@ -59,10 +59,10 @@ jobs:
         id: run-tests
         run: |
           set -e
-          # Run smoke tests with JSON reporter output
-          echo "Running smoke tests with JSON reporter"
+          # Run smoke tests - Playwright will generate JSON report via config
+          echo "Running smoke tests"
           mkdir -p test-results
-          ./run-tests.sh smoke chromium --no-server --reporter=json --reporter=line > test-results/results.json 2>&1 || true
+          ./run-tests.sh smoke chromium --no-server 2>&1 | tee /tmp/playwright-run.log || true
         continue-on-error: true
 
       - name: Upload Playwright results
@@ -99,13 +99,18 @@ jobs:
 
             // Parse Playwright JSON results from test-results/results.json
             const resultsPath = path.join(process.cwd(), 'test-results', 'results.json');
+            console.log('Looking for results at:', resultsPath);
+            console.log('File exists:', fs.existsSync(resultsPath));
+            
             let parsed = false;
             let total = 0, passed = 0, failed = 0, skipped = 0, flaky = 0;
 
             try {
               const resultsContent = safeRead(resultsPath);
               if (resultsContent) {
+                console.log('Results file content length:', resultsContent.length);
                 const data = JSON.parse(resultsContent);
+                console.log('Parsed JSON, has suites:', Array.isArray(data.suites));
                 
                 // Playwright JSON reporter structure
                 if (data && Array.isArray(data.suites)) {
@@ -139,10 +144,14 @@ jobs:
                   };
                   data.suites.forEach(walk);
                   parsed = true;
+                  console.log('Successfully parsed. Total:', total, 'Passed:', passed, 'Failed:', failed);
                 }
+              } else {
+                console.log('No results content found');
               }
             } catch (e) {
               console.log('Error parsing Playwright JSON:', e.message || e);
+              console.log('Stack:', e.stack);
             }
 
             if (parsed) {
@@ -164,18 +173,27 @@ jobs:
             }
 
             const body = summaryLines.join('\n');
+            console.log('Comment body:', body);
 
             // Post or update comment on the PR
             const prNumber = context.payload.pull_request && context.payload.pull_request.number;
+            console.log('PR number:', prNumber);
+            console.log('Context payload:', JSON.stringify(context.payload, null, 2).substring(0, 500));
+            
             if (!prNumber) {
               console.log('No pull request number found in context; skipping comment.');
+              console.log('Full context:', JSON.stringify(context, null, 2).substring(0, 1000));
             } else {
+              console.log('Attempting to post/update comment for PR #' + prNumber);
+              
               // Try to find existing comment to update
               const { data: comments } = await github.rest.issues.listComments({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: prNumber,
               });
+              
+              console.log('Found', comments.length, 'existing comments');
 
               const botComment = comments.find(comment => 
                 comment.user.type === 'Bot' && 
@@ -183,6 +201,7 @@ jobs:
               );
 
               if (botComment) {
+                console.log('Updating existing comment:', botComment.id);
                 // Update existing comment
                 await github.rest.issues.updateComment({
                   owner: context.repo.owner,
@@ -190,7 +209,9 @@ jobs:
                   comment_id: botComment.id,
                   body,
                 });
+                console.log('Comment updated successfully');
               } else {
+                console.log('Creating new comment');
                 // Create new comment
                 await github.rest.issues.createComment({
                   owner: context.repo.owner,
@@ -198,5 +219,6 @@ jobs:
                   issue_number: prNumber,
                   body,
                 });
+                console.log('Comment created successfully');
               }
             }

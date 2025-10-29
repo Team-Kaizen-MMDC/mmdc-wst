@@ -8,7 +8,11 @@ module.exports = {
   expect: { timeout: 5000 },
   fullyParallel: true,
   retries: 1,
-  reporter: [["list"], ["html", { outputFolder: "tests/playwright/results" }]],
+  reporter: [
+    ["list"], 
+    ["html", { outputFolder: "tests/playwright/results" }],
+    ["json", { outputFile: "test-results/results.json" }]
+  ],
   use: {
     headless: true,
     // Allow overriding the base URL via environment variable so tests can run
