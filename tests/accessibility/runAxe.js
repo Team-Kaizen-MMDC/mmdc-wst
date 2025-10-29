@@ -19,13 +19,13 @@ function discoverHtmlPages() {
       const full = path.join(dir, ent.name);
       // skip node_modules and tests directories
       if (ent.isDirectory()) {
-        if (ent.name === 'node_modules' || ent.name === 'tests') continue;
+        if (ent.name === "node_modules" || ent.name === "tests") continue;
         walk(full);
-      } else if (ent.isFile() && ent.name.endsWith('.html')) {
+      } else if (ent.isFile() && ent.name.endsWith(".html")) {
         // compute a web-relative path from repo root
-        const rel = path.relative(root, full).replace(/\\/g, '/');
+        const rel = path.relative(root, full).replace(/\\/g, "/");
         // ignore archive and assets HTML that aren't part of site pages
-        if (rel.startsWith('archive/') || rel.startsWith('assets/')) continue;
+        if (rel.startsWith("archive/") || rel.startsWith("assets/")) continue;
         results.add(rel);
       }
     }
@@ -33,15 +33,15 @@ function discoverHtmlPages() {
 
   // Walk the project root and also explicitly the pages/ folder if present
   walk(root);
-  const pagesDir = path.join(root, 'pages');
+  const pagesDir = path.join(root, "pages");
   if (fs.existsSync(pagesDir)) walk(pagesDir);
 
   // Ensure index.html is first for deterministic ordering
   const ordered = Array.from(results).sort();
-  const idx = ordered.indexOf('index.html');
+  const idx = ordered.indexOf("index.html");
   if (idx !== -1) {
     ordered.splice(idx, 1);
-    ordered.unshift('index.html');
+    ordered.unshift("index.html");
   }
   return ordered;
 }

@@ -1,5 +1,5 @@
 {
-  "url": "http://localhost:8000/pages/about.html",
+  "url": "http://localhost:8000/pages/companies/mitsubishi-heavy-industries.html",
   "axe": {
     "testEngine": {
       "name": "axe-core",
@@ -15,8 +15,8 @@
       "orientationAngle": 0,
       "orientationType": "landscape-primary"
     },
-    "timestamp": "2025-10-29T13:18:41.801Z",
-    "url": "http://localhost:8000/pages/about.html",
+    "timestamp": "2025-10-29T13:18:46.569Z",
+    "url": "http://localhost:8000/pages/companies/mitsubishi-heavy-industries.html",
     "toolOptions": {
       "reporter": "v1"
     },
@@ -398,34 +398,6 @@
         "nodes": []
       },
       {
-        "id": "image-alt",
-        "impact": null,
-        "tags": [
-          "cat.text-alternatives",
-          "wcag2a",
-          "wcag111",
-          "section508",
-          "section508.22.a",
-          "ACT"
-        ],
-        "description": "Ensures <img> elements have alternate text or a role of none or presentation",
-        "help": "Images must have alternate text",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/4.6/image-alt?application=axeAPI",
-        "nodes": []
-      },
-      {
-        "id": "image-redundant-alt",
-        "impact": null,
-        "tags": [
-          "cat.text-alternatives",
-          "best-practice"
-        ],
-        "description": "Ensure image alternative is not repeated as text",
-        "help": "Alternative text of images should not be repeated as text",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/4.6/image-redundant-alt?application=axeAPI",
-        "nodes": []
-      },
-      {
         "id": "input-button-name",
         "impact": null,
         "tags": [
@@ -607,6 +579,18 @@
         "description": "Ensures that server-side image maps are not used",
         "help": "Server-side image maps must not be used",
         "helpUrl": "https://dequeuniversity.com/rules/axe/4.6/server-side-image-map?application=axeAPI",
+        "nodes": []
+      },
+      {
+        "id": "skip-link",
+        "impact": null,
+        "tags": [
+          "cat.keyboard",
+          "best-practice"
+        ],
+        "description": "Ensure all skip links have a focusable target",
+        "help": "The skip-link target should exist and be focusable",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.6/skip-link?application=axeAPI",
         "nodes": []
       },
       {
@@ -797,7 +781,7 @@
               }
             ],
             "impact": null,
-            "html": "<nav aria-label=\"Footer legal\">\n            <a href=\"terms.html\">Terms</a>\n            <a href=\"privacy.html\">Privacy</a>\n          </nav>",
+            "html": "<nav aria-label=\"Footer legal\">\n            <a href=\"../terms.html\">Terms</a>\n            <a href=\"../privacy.html\">Privacy</a>\n          </nav>",
             "target": [
               "nav[aria-label=\"Footer legal\"]"
             ]
@@ -815,24 +799,6 @@
         "help": "ARIA role should be appropriate for the element",
         "helpUrl": "https://dequeuniversity.com/rules/axe/4.6/aria-allowed-role?application=axeAPI",
         "nodes": [
-          {
-            "any": [
-              {
-                "id": "aria-allowed-role",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "minor",
-                "message": "ARIA role is allowed for given element"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<header class=\"site-header\" role=\"banner\">",
-            "target": [
-              "header"
-            ]
-          },
           {
             "any": [
               {
@@ -868,24 +834,6 @@
             "target": [
               "#lang-toggle-off"
             ]
-          },
-          {
-            "any": [
-              {
-                "id": "aria-allowed-role",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "minor",
-                "message": "ARIA role is allowed for given element"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<main id=\"main-content\" role=\"main\">",
-            "target": [
-              "#main-content"
-            ]
           }
         ]
       },
@@ -914,7 +862,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<body>",
+            "html": "<body class=\"sticky-footer-layout\">",
             "target": [
               "body"
             ]
@@ -946,45 +894,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<header class=\"site-header\" role=\"banner\">",
-            "target": [
-              "header"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "aria-required-attr",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "critical",
-                "message": "All required ARIA attributes are present"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
             "html": "<input class=\"form-check-input\" type=\"checkbox\" id=\"lang-toggle\" role=\"switch\" aria-checked=\"false\">",
             "target": [
               "#lang-toggle"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "aria-required-attr",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "critical",
-                "message": "All required ARIA attributes are present"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<main id=\"main-content\" role=\"main\">",
-            "target": [
-              "#main-content"
             ]
           }
         ]
@@ -1035,87 +947,9 @@
               }
             ],
             "impact": null,
-            "html": "<header class=\"site-header\" role=\"banner\">",
-            "target": [
-              "header"
-            ]
-          },
-          {
-            "any": [],
-            "all": [],
-            "none": [
-              {
-                "id": "invalidrole",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "critical",
-                "message": "ARIA role is valid"
-              },
-              {
-                "id": "abstractrole",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Abstract roles are not used"
-              },
-              {
-                "id": "unsupportedrole",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "critical",
-                "message": "ARIA role is supported"
-              },
-              {
-                "id": "deprecatedrole",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "minor",
-                "message": "ARIA role is not deprecated"
-              }
-            ],
-            "impact": null,
             "html": "<input class=\"form-check-input\" type=\"checkbox\" id=\"lang-toggle\" role=\"switch\" aria-checked=\"false\">",
             "target": [
               "#lang-toggle"
-            ]
-          },
-          {
-            "any": [],
-            "all": [],
-            "none": [
-              {
-                "id": "invalidrole",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "critical",
-                "message": "ARIA role is valid"
-              },
-              {
-                "id": "abstractrole",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Abstract roles are not used"
-              },
-              {
-                "id": "unsupportedrole",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "critical",
-                "message": "ARIA role is supported"
-              },
-              {
-                "id": "deprecatedrole",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "minor",
-                "message": "ARIA role is not deprecated"
-              }
-            ],
-            "impact": null,
-            "html": "<main id=\"main-content\" role=\"main\">",
-            "target": [
-              "#main-content"
             ]
           }
         ]
@@ -1191,7 +1025,7 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<nav aria-label=\"Footer legal\">\n            <a href=\"terms.html\">Terms</a>\n            <a href=\"privacy.html\">Privacy</a>\n          </nav>",
+            "html": "<nav aria-label=\"Footer legal\">\n            <a href=\"../terms.html\">Terms</a>\n            <a href=\"../privacy.html\">Privacy</a>\n          </nav>",
             "target": [
               "nav[aria-label=\"Footer legal\"]"
             ]
@@ -1241,7 +1075,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<nav aria-label=\"Footer legal\">\n            <a href=\"terms.html\">Terms</a>\n            <a href=\"privacy.html\">Privacy</a>\n          </nav>",
+            "html": "<nav aria-label=\"Footer legal\">\n            <a href=\"../terms.html\">Terms</a>\n            <a href=\"../privacy.html\">Privacy</a>\n          </nav>",
             "target": [
               "nav[aria-label=\"Footer legal\"]"
             ]
@@ -1265,44 +1099,19 @@
           {
             "any": [
               {
-                "id": "internal-link-present",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Valid skip link found"
-              },
-              {
                 "id": "header-present",
                 "data": null,
                 "relatedNodes": [
                   {
-                    "html": "<h1 class=\"about-card__title\">About Us</h1>",
+                    "html": "<h1 class=\"feature-card__title\">Mitsubishi Heavy Industries</h1>",
                     "target": [
                       "h1"
                     ]
                   },
                   {
-                    "html": "<h2 class=\"about-card__subtitle\">Our Mission</h2>",
-                    "target": [
-                      ".about-card__subtitle:nth-child(4)"
-                    ]
-                  },
-                  {
-                    "html": "<h2 class=\"about-card__subtitle\">Our Vision</h2>",
-                    "target": [
-                      ".about-card__subtitle:nth-child(6)"
-                    ]
-                  },
-                  {
-                    "html": "<h2 class=\"m-0 feature-card__title\">Want to work with us?</h2>",
-                    "target": [
-                      ".feature-card__title"
-                    ]
-                  },
-                  {
                     "html": "<h2>Want to post jobs on JapanSSW?</h2>",
                     "target": [
-                      ".footer-cta > h2"
+                      "h2"
                     ]
                   },
                   {
@@ -1312,9 +1121,9 @@
                     ]
                   },
                   {
-                    "html": "<h4>Jobs</h4>",
+                    "html": "<h3>Jobs</h3>",
                     "target": [
-                      "h4"
+                      ".link-col.site-footer__link-col:nth-child(2) > h3"
                     ]
                   },
                   {
@@ -1332,9 +1141,9 @@
                 "data": null,
                 "relatedNodes": [
                   {
-                    "html": "<main id=\"main-content\" role=\"main\">",
+                    "html": "<main>",
                     "target": [
-                      "#main-content"
+                      "main"
                     ]
                   }
                 ],
@@ -1385,7 +1194,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"navbar-brand site-header__brand\" href=\"../index.html\">Japan SSW</a>",
+            "html": "<a class=\"navbar-brand site-header__brand\" href=\"../../index.html\" data-i18n=\"site.brand\">Japan SSW</a>",
             "target": [
               ".navbar-brand"
             ]
@@ -1410,7 +1219,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../index.html#jobs\" data-i18n=\"nav.jobs\">Jobs</a>",
+            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../../index.html#jobs\" data-i18n=\"nav.jobs\">Jobs</a>",
             "target": [
               ".site-header__nav-link[data-i18n=\"nav.jobs\"][href$=\"index.html#jobs\"]"
             ]
@@ -1435,9 +1244,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../index.html#companies\" data-i18n=\"nav.services\">Companies</a>",
+            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../../index.html#companies\" data-i18n=\"nav.services\">Companies</a>",
             "target": [
-              "a[data-i18n=\"nav.services\"]"
+              ".site-header__nav-link[data-i18n=\"nav.services\"][href$=\"index.html#companies\"]"
             ]
           },
           {
@@ -1460,7 +1269,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../pages/agency.html\" data-i18n=\"nav.agency\">Agency</a>",
+            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../agency.html\" data-i18n=\"nav.agency\">Agency</a>",
             "target": [
               ".site-header__nav-link[href$=\"agency.html\"][data-i18n=\"nav.agency\"]"
             ]
@@ -1470,24 +1279,24 @@
               {
                 "id": "color-contrast",
                 "data": {
-                  "fgColor": "#eb0000",
+                  "fgColor": "#290000",
                   "bgColor": "#fcfcfc",
-                  "contrastRatio": 4.51,
+                  "contrastRatio": 18.7,
                   "fontSize": "12.0pt (16px)",
-                  "fontWeight": "bold",
+                  "fontWeight": "normal",
                   "expectedContrastRatio": "4.5:1"
                 },
                 "relatedNodes": [],
                 "impact": "serious",
-                "message": "Element has sufficient color contrast of 4.51"
+                "message": "Element has sufficient color contrast of 18.7"
               }
             ],
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"nav-link site-header__nav-link active\" href=\"about.html\" data-i18n=\"nav.about\">About</a>",
+            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../about.html\" data-i18n=\"nav.about\">About</a>",
             "target": [
-              ".active"
+              ".site-header__nav-link[data-i18n=\"nav.about\"][href$=\"about.html\"]"
             ]
           },
           {
@@ -1510,7 +1319,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"site-header__signup muted text-decoration-none\" href=\"../pages/createAccount.html\" data-i18n=\"nav.signup\">Signup</a>",
+            "html": "<a class=\"site-header__signup muted\" href=\"../createAccount.html\" data-i18n=\"nav.signup\">Signup</a>",
             "target": [
               ".site-header__signup"
             ]
@@ -1535,7 +1344,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"btn btn-primary site-header__login-btn\" href=\"../pages/signin.html\" data-i18n=\"nav.login\">Login</a>",
+            "html": "<a class=\"btn btn-primary site-header__login-btn\" href=\"../signin.html\" data-i18n=\"nav.login\">Login</a>",
             "target": [
               ".site-header__login-btn"
             ]
@@ -1573,7 +1382,7 @@
                   "fgColor": "#290000",
                   "bgColor": "#ffffff",
                   "contrastRatio": 19.19,
-                  "fontSize": "18.0pt (24px)",
+                  "fontSize": "27.0pt (36px)",
                   "fontWeight": "bold",
                   "expectedContrastRatio": "3:1"
                 },
@@ -1585,7 +1394,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h1 class=\"about-card__title\">About Us</h1>",
+            "html": "<h1 class=\"feature-card__title\">Mitsubishi Heavy Industries</h1>",
             "target": [
               "h1"
             ]
@@ -1595,24 +1404,24 @@
               {
                 "id": "color-contrast",
                 "data": {
-                  "fgColor": "#290000",
+                  "fgColor": "#595959",
                   "bgColor": "#ffffff",
-                  "contrastRatio": 19.19,
-                  "fontSize": "12.0pt (16px)",
+                  "contrastRatio": 7,
+                  "fontSize": "11.4pt (15.2px)",
                   "fontWeight": "normal",
                   "expectedContrastRatio": "4.5:1"
                 },
                 "relatedNodes": [],
                 "impact": "serious",
-                "message": "Element has sufficient color contrast of 19.19"
+                "message": "Element has sufficient color contrast of 7"
               }
             ],
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p class=\"about-card__text\">",
+            "html": "<p class=\"muted\">\n                Mitsubishi Heavy Industries is a major Japanese multinational\n                engineering, electrical equipment and electronics company hiring\n                across many technical roles.\n              </p>",
             "target": [
-              ".about-card__text:nth-child(2)"
+              "div:nth-child(2) > p:nth-child(2)"
             ]
           },
           {
@@ -1620,24 +1429,24 @@
               {
                 "id": "color-contrast",
                 "data": {
-                  "fgColor": "#290000",
-                  "bgColor": "#ffffff",
-                  "contrastRatio": 19.19,
-                  "fontSize": "12.0pt (16px)",
+                  "fgColor": "#ffffff",
+                  "bgColor": "#eb0000",
+                  "contrastRatio": 4.63,
+                  "fontSize": "11.3pt (15px)",
                   "fontWeight": "normal",
                   "expectedContrastRatio": "4.5:1"
                 },
                 "relatedNodes": [],
                 "impact": "serious",
-                "message": "Element has sufficient color contrast of 19.19"
+                "message": "Element has sufficient color contrast of 4.63"
               }
             ],
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p class=\"about-card__text\">",
+            "html": "<a class=\"btn btn-primary\" href=\"../createAccount.html?company=mitsubishi-heavy\">View jobs</a>",
             "target": [
-              ".about-card__text:nth-child(3)"
+              ".mt-md > .btn-primary.btn"
             ]
           },
           {
@@ -1645,99 +1454,24 @@
               {
                 "id": "color-contrast",
                 "data": {
-                  "fgColor": "#290000",
-                  "bgColor": "#ffffff",
-                  "contrastRatio": 19.19,
-                  "fontSize": "15.0pt (20px)",
+                  "fgColor": "#ffffff",
+                  "bgColor": "#eb0000",
+                  "contrastRatio": 4.63,
+                  "fontSize": "11.3pt (15px)",
                   "fontWeight": "normal",
                   "expectedContrastRatio": "4.5:1"
                 },
                 "relatedNodes": [],
                 "impact": "serious",
-                "message": "Element has sufficient color contrast of 19.19"
+                "message": "Element has sufficient color contrast of 4.63"
               }
             ],
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h2 class=\"about-card__subtitle\">Our Mission</h2>",
+            "html": "<a class=\"btn btn-secondary\" href=\"../../index.html#companies\">Back to companies</a>",
             "target": [
-              ".about-card__subtitle:nth-child(4)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#290000",
-                  "bgColor": "#ffffff",
-                  "contrastRatio": 19.19,
-                  "fontSize": "12.0pt (16px)",
-                  "fontWeight": "normal",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 19.19"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<p class=\"about-card__text\">\n            Fair careers for workers. Trusted recruitment for employers.\n            Sustainable growth for Japan.\n          </p>",
-            "target": [
-              ".about-card__text:nth-child(5)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#290000",
-                  "bgColor": "#ffffff",
-                  "contrastRatio": 19.19,
-                  "fontSize": "15.0pt (20px)",
-                  "fontWeight": "normal",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 19.19"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h2 class=\"about-card__subtitle\">Our Vision</h2>",
-            "target": [
-              ".about-card__subtitle:nth-child(6)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#290000",
-                  "bgColor": "#ffffff",
-                  "contrastRatio": 19.19,
-                  "fontSize": "12.0pt (16px)",
-                  "fontWeight": "normal",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 19.19"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<p class=\"about-card__text\">\n            To be Japan's leading platform that empowers skilled foreign workers\n            to achieve meaningful careers and brighter futures.\n          </p>",
-            "target": [
-              ".about-card__text:nth-child(7)"
+              ".btn-secondary.btn[href$=\"index.html#companies\"]"
             ]
           },
           {
@@ -1762,7 +1496,7 @@
             "impact": null,
             "html": "<h2>Want to post jobs on JapanSSW?</h2>",
             "target": [
-              ".footer-cta > h2"
+              "h2"
             ]
           },
           {
@@ -1810,9 +1544,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"btn btn-secondary\" href=\"../\">Employer Login</a>",
+            "html": "<a class=\"btn btn-secondary\" href=\"#\">Employer Login</a>",
             "target": [
-              ".btn-secondary"
+              ".btn-secondary.btn[href=\"#\"]"
             ]
           },
           {
@@ -1835,9 +1569,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"btn btn-primary\" href=\"../index.html#post-job\">Post a Job</a>",
+            "html": "<a class=\"btn btn-primary\" href=\"#\">Post a Job</a>",
             "target": [
-              ".footer-cta-actions > .btn-primary.btn[href$=\"index.html#post-job\"]"
+              ".btn-primary.btn[href=\"#\"]"
             ]
           },
           {
@@ -1885,9 +1619,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"../\">Home</a>",
+            "html": "<a href=\"../../index.html\">Home</a>",
             "target": [
-              "li:nth-child(1) > a[href=\"../\"]"
+              "li:nth-child(1) > a[href=\"../../index.html\"]"
             ]
           },
           {
@@ -1910,7 +1644,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"about.html\">About</a>",
+            "html": "<a href=\"../about.html\">About</a>",
             "target": [
               "li:nth-child(2) > a[href$=\"about.html\"]"
             ]
@@ -1935,7 +1669,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"contact.html\">Contact</a>",
+            "html": "<a href=\"../contact.html\">Contact</a>",
             "target": [
               "a[href$=\"contact.html\"]"
             ]
@@ -1948,8 +1682,8 @@
                   "fgColor": "#ffffff",
                   "bgColor": "#290000",
                   "contrastRatio": 19.19,
-                  "fontSize": "18.0pt (24px)",
-                  "fontWeight": "normal",
+                  "fontSize": "21.0pt (28px)",
+                  "fontWeight": "bold",
                   "expectedContrastRatio": "3:1"
                 },
                 "relatedNodes": [],
@@ -1960,9 +1694,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h4>Jobs</h4>",
+            "html": "<h3>Jobs</h3>",
             "target": [
-              "h4"
+              ".link-col.site-footer__link-col:nth-child(2) > h3"
             ]
           },
           {
@@ -1985,7 +1719,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"../index.html#jobs\">Search Jobs</a>",
+            "html": "<a href=\"../../index.html#jobs\">Search Jobs</a>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(2) > ul > li:nth-child(1) > a[href$=\"index.html#jobs\"]"
             ]
@@ -2010,7 +1744,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"../index.html#companies\">Companies</a>",
+            "html": "<a href=\"../../index.html#companies\">Companies</a>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(2) > ul > li:nth-child(2) > a[href$=\"index.html#companies\"]"
             ]
@@ -2035,9 +1769,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"../index.html#post-job\">Post a Job</a>",
+            "html": "<a href=\"../../index.html#post-job\">Post a Job</a>",
             "target": [
-              "li:nth-child(3) > a[href$=\"index.html#post-job\"]"
+              "a[href$=\"index.html#post-job\"]"
             ]
           },
           {
@@ -2085,7 +1819,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"visaGuidance.html\">Visa Guidance</a>",
+            "html": "<a href=\"../visaGuidance.html\">Visa Guidance</a>",
             "target": [
               "a[href$=\"visaGuidance.html\"]"
             ]
@@ -2112,7 +1846,7 @@
             "impact": null,
             "html": "<a href=\"#\">Employer Hub</a>",
             "target": [
-              "a[href=\"#\"]"
+              "li:nth-child(2) > a[href=\"#\"]"
             ]
           },
           {
@@ -2135,7 +1869,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"privacy.html\">Privacy</a>",
+            "html": "<a href=\"../privacy.html\">Privacy</a>",
             "target": [
               "li:nth-child(3) > a[href$=\"privacy.html\"]"
             ]
@@ -2185,7 +1919,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"terms.html\">Terms</a>",
+            "html": "<a href=\"../terms.html\">Terms</a>",
             "target": [
               "a[href$=\"terms.html\"]"
             ]
@@ -2210,7 +1944,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"privacy.html\">Privacy</a>",
+            "html": "<a href=\"../privacy.html\">Privacy</a>",
             "target": [
               "nav[aria-label=\"Footer legal\"] > a[href$=\"privacy.html\"]"
             ]
@@ -2401,24 +2135,6 @@
             "target": [
               "#lang-toggle-label-off"
             ]
-          },
-          {
-            "any": [
-              {
-                "id": "duplicate-id",
-                "data": "main-content",
-                "relatedNodes": [],
-                "impact": "minor",
-                "message": "Document has no static elements that share the same id attribute"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<main id=\"main-content\" role=\"main\">",
-            "target": [
-              "#main-content"
-            ]
           }
         ]
       },
@@ -2446,7 +2162,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h1 class=\"about-card__title\">About Us</h1>",
+            "html": "<h1 class=\"feature-card__title\">Mitsubishi Heavy Industries</h1>",
             "target": [
               "h1"
             ]
@@ -2464,63 +2180,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h2 class=\"about-card__subtitle\">Our Mission</h2>",
-            "target": [
-              ".about-card__subtitle:nth-child(4)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "has-visible-text",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "minor",
-                "message": "Element has text that is visible to screen readers"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h2 class=\"about-card__subtitle\">Our Vision</h2>",
-            "target": [
-              ".about-card__subtitle:nth-child(6)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "has-visible-text",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "minor",
-                "message": "Element has text that is visible to screen readers"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h2 class=\"m-0 feature-card__title\">Want to work with us?</h2>",
-            "target": [
-              ".feature-card__title"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "has-visible-text",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "minor",
-                "message": "Element has text that is visible to screen readers"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
             "html": "<h2>Want to post jobs on JapanSSW?</h2>",
             "target": [
-              ".footer-cta > h2"
+              "h2"
             ]
           },
           {
@@ -2554,9 +2216,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h4>Jobs</h4>",
+            "html": "<h3>Jobs</h3>",
             "target": [
-              "h4"
+              ".link-col.site-footer__link-col:nth-child(2) > h3"
             ]
           },
           {
@@ -2637,49 +2299,31 @@
                   "headingOrder": [
                     {
                       "ancestry": [
-                        "html > body > main:nth-child(3) > div:nth-child(1) > div > h1:nth-child(1)"
+                        "html > body > main:nth-child(2) > section > div > div > div:nth-child(2) > h1:nth-child(1)"
                       ],
                       "level": 1
                     },
                     {
                       "ancestry": [
-                        "html > body > main:nth-child(3) > div:nth-child(1) > div > h2:nth-child(4)"
+                        "html > body > footer:nth-child(3) > div:nth-child(1) > div:nth-child(1) > h2:nth-child(1)"
                       ],
                       "level": 2
                     },
                     {
                       "ancestry": [
-                        "html > body > main:nth-child(3) > div:nth-child(1) > div > h2:nth-child(6)"
-                      ],
-                      "level": 2
-                    },
-                    {
-                      "ancestry": [
-                        "html > body > main:nth-child(3) > section:nth-child(2) > div > div > div:nth-child(1) > h2:nth-child(1)"
-                      ],
-                      "level": 2
-                    },
-                    {
-                      "ancestry": [
-                        "html > body > footer:nth-child(4) > div:nth-child(1) > div:nth-child(1) > h2:nth-child(1)"
-                      ],
-                      "level": 2
-                    },
-                    {
-                      "ancestry": [
-                        "html > body > footer:nth-child(4) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > h3:nth-child(1)"
+                        "html > body > footer:nth-child(3) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > h3:nth-child(1)"
                       ],
                       "level": 3
                     },
                     {
                       "ancestry": [
-                        "html > body > footer:nth-child(4) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > h4:nth-child(1)"
+                        "html > body > footer:nth-child(3) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > h3:nth-child(1)"
                       ],
-                      "level": 4
+                      "level": 3
                     },
                     {
                       "ancestry": [
-                        "html > body > footer:nth-child(4) > div:nth-child(1) > div:nth-child(2) > div:nth-child(3) > h3:nth-child(1)"
+                        "html > body > footer:nth-child(3) > div:nth-child(1) > div:nth-child(2) > div:nth-child(3) > h3:nth-child(1)"
                       ],
                       "level": 3
                     }
@@ -2693,7 +2337,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h1 class=\"about-card__title\">About Us</h1>",
+            "html": "<h1 class=\"feature-card__title\">Mitsubishi Heavy Industries</h1>",
             "target": [
               "h1"
             ]
@@ -2711,63 +2355,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h2 class=\"about-card__subtitle\">Our Mission</h2>",
-            "target": [
-              ".about-card__subtitle:nth-child(4)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "heading-order",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "Heading order valid"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h2 class=\"about-card__subtitle\">Our Vision</h2>",
-            "target": [
-              ".about-card__subtitle:nth-child(6)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "heading-order",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "Heading order valid"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h2 class=\"m-0 feature-card__title\">Want to work with us?</h2>",
-            "target": [
-              ".feature-card__title"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "heading-order",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "Heading order valid"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
             "html": "<h2>Want to post jobs on JapanSSW?</h2>",
             "target": [
-              ".footer-cta > h2"
+              "h2"
             ]
           },
           {
@@ -2801,9 +2391,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h4>Jobs</h4>",
+            "html": "<h3>Jobs</h3>",
             "target": [
-              "h4"
+              ".link-col.site-footer__link-col:nth-child(2) > h3"
             ]
           },
           {
@@ -2888,6 +2478,80 @@
             "html": "<html lang=\"en\" data-bs-theme=\"light\">",
             "target": [
               "html"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "image-alt",
+        "impact": null,
+        "tags": [
+          "cat.text-alternatives",
+          "wcag2a",
+          "wcag111",
+          "section508",
+          "section508.22.a",
+          "ACT"
+        ],
+        "description": "Ensures <img> elements have alternate text or a role of none or presentation",
+        "help": "Images must have alternate text",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.6/image-alt?application=axeAPI",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "has-alt",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "Element has an alt attribute"
+              }
+            ],
+            "all": [],
+            "none": [
+              {
+                "id": "alt-space-value",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "Element has a valid alt attribute value"
+              }
+            ],
+            "impact": null,
+            "html": "<img src=\"../../assets/images/company-logos/Mitsubishi_Heavy_Industries.png\" alt=\"Mitsubishi Heavy Industries logo\" class=\"img-160 object-contain\">",
+            "target": [
+              "img"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "image-redundant-alt",
+        "impact": null,
+        "tags": [
+          "cat.text-alternatives",
+          "best-practice"
+        ],
+        "description": "Ensure image alternative is not repeated as text",
+        "help": "Alternative text of images should not be repeated as text",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.6/image-redundant-alt?application=axeAPI",
+        "nodes": [
+          {
+            "any": [],
+            "all": [],
+            "none": [
+              {
+                "id": "duplicate-img-label",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "minor",
+                "message": "Element does not duplicate existing text in <img> alt text"
+              }
+            ],
+            "impact": null,
+            "html": "<img src=\"../../assets/images/company-logos/Mitsubishi_Heavy_Industries.png\" alt=\"Mitsubishi Heavy Industries logo\" class=\"img-160 object-contain\">",
+            "target": [
+              "img"
             ]
           }
         ]
@@ -3001,7 +2665,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<header class=\"site-header\" role=\"banner\">",
+            "html": "<header class=\"site-header\">",
             "target": [
               "header"
             ]
@@ -3067,9 +2731,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<main id=\"main-content\" role=\"main\">",
+            "html": "<main>",
             "target": [
-              "#main-content"
+              "main"
             ]
           }
         ]
@@ -3098,7 +2762,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<header class=\"site-header\" role=\"banner\">",
+            "html": "<header class=\"site-header\">",
             "target": [
               "header"
             ]
@@ -3160,9 +2824,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<main id=\"main-content\" role=\"main\">",
+            "html": "<main>",
             "target": [
-              "#main-content"
+              "main"
             ]
           }
         ]
@@ -3186,9 +2850,9 @@
                 "data": null,
                 "relatedNodes": [
                   {
-                    "html": "<main id=\"main-content\" role=\"main\">",
+                    "html": "<main>",
                     "target": [
-                      "#main-content"
+                      "main"
                     ]
                   }
                 ],
@@ -3232,7 +2896,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<header class=\"site-header\" role=\"banner\">",
+            "html": "<header class=\"site-header\">",
             "target": [
               "header"
             ]
@@ -3274,9 +2938,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<main id=\"main-content\" role=\"main\">",
+            "html": "<main>",
             "target": [
-              "#main-content"
+              "main"
             ]
           },
           {
@@ -3316,7 +2980,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<nav aria-label=\"Footer legal\">\n            <a href=\"terms.html\">Terms</a>\n            <a href=\"privacy.html\">Privacy</a>\n          </nav>",
+            "html": "<nav aria-label=\"Footer legal\">\n            <a href=\"../terms.html\">Terms</a>\n            <a href=\"../privacy.html\">Privacy</a>\n          </nav>",
             "target": [
               "nav[aria-label=\"Footer legal\"]"
             ]
@@ -3360,33 +3024,7 @@
               }
             ],
             "impact": null,
-            "html": "<a href=\"#main-content\" class=\"skip-link\" data-i18n=\"accessibility.skipToContent\">Skip to main content</a>",
-            "target": [
-              ".skip-link"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "has-visible-text",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "minor",
-                "message": "Element has text that is visible to screen readers"
-              }
-            ],
-            "all": [],
-            "none": [
-              {
-                "id": "focusable-no-name",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element is not in tab order or has accessible text"
-              }
-            ],
-            "impact": null,
-            "html": "<a class=\"navbar-brand site-header__brand\" href=\"../index.html\">Japan SSW</a>",
+            "html": "<a class=\"navbar-brand site-header__brand\" href=\"../../index.html\" data-i18n=\"site.brand\">Japan SSW</a>",
             "target": [
               ".navbar-brand"
             ]
@@ -3412,7 +3050,7 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../index.html#jobs\" data-i18n=\"nav.jobs\">Jobs</a>",
+            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../../index.html#jobs\" data-i18n=\"nav.jobs\">Jobs</a>",
             "target": [
               ".site-header__nav-link[data-i18n=\"nav.jobs\"][href$=\"index.html#jobs\"]"
             ]
@@ -3438,9 +3076,9 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../index.html#companies\" data-i18n=\"nav.services\">Companies</a>",
+            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../../index.html#companies\" data-i18n=\"nav.services\">Companies</a>",
             "target": [
-              "a[data-i18n=\"nav.services\"]"
+              ".site-header__nav-link[data-i18n=\"nav.services\"][href$=\"index.html#companies\"]"
             ]
           },
           {
@@ -3464,7 +3102,7 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../pages/agency.html\" data-i18n=\"nav.agency\">Agency</a>",
+            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../agency.html\" data-i18n=\"nav.agency\">Agency</a>",
             "target": [
               ".site-header__nav-link[href$=\"agency.html\"][data-i18n=\"nav.agency\"]"
             ]
@@ -3490,9 +3128,9 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"nav-link site-header__nav-link active\" href=\"about.html\" data-i18n=\"nav.about\">About</a>",
+            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../about.html\" data-i18n=\"nav.about\">About</a>",
             "target": [
-              ".active"
+              ".site-header__nav-link[data-i18n=\"nav.about\"][href$=\"about.html\"]"
             ]
           },
           {
@@ -3516,7 +3154,7 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"site-header__signup muted text-decoration-none\" href=\"../pages/createAccount.html\" data-i18n=\"nav.signup\">Signup</a>",
+            "html": "<a class=\"site-header__signup muted\" href=\"../createAccount.html\" data-i18n=\"nav.signup\">Signup</a>",
             "target": [
               ".site-header__signup"
             ]
@@ -3542,7 +3180,7 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"btn btn-primary site-header__login-btn\" href=\"../pages/signin.html\" data-i18n=\"nav.login\">Login</a>",
+            "html": "<a class=\"btn btn-primary site-header__login-btn\" href=\"../signin.html\" data-i18n=\"nav.login\">Login</a>",
             "target": [
               ".site-header__login-btn"
             ]
@@ -3568,9 +3206,9 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"btn btn-primary feature-card__cta animate-hover-scale\" href=\"../index.html#post-job\">Contact Us</a>",
+            "html": "<a class=\"btn btn-primary\" href=\"../createAccount.html?company=mitsubishi-heavy\">View jobs</a>",
             "target": [
-              ".feature-card__cta"
+              ".mt-md > .btn-primary.btn"
             ]
           },
           {
@@ -3594,9 +3232,9 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"btn btn-secondary\" href=\"../\">Employer Login</a>",
+            "html": "<a class=\"btn btn-secondary\" href=\"../../index.html#companies\">Back to companies</a>",
             "target": [
-              ".btn-secondary"
+              ".btn-secondary.btn[href$=\"index.html#companies\"]"
             ]
           },
           {
@@ -3620,9 +3258,9 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"btn btn-primary\" href=\"../index.html#post-job\">Post a Job</a>",
+            "html": "<a class=\"btn btn-secondary\" href=\"#\">Employer Login</a>",
             "target": [
-              ".footer-cta-actions > .btn-primary.btn[href$=\"index.html#post-job\"]"
+              ".btn-secondary.btn[href=\"#\"]"
             ]
           },
           {
@@ -3646,9 +3284,9 @@
               }
             ],
             "impact": null,
-            "html": "<a href=\"../\">Home</a>",
+            "html": "<a class=\"btn btn-primary\" href=\"#\">Post a Job</a>",
             "target": [
-              "li:nth-child(1) > a[href=\"../\"]"
+              ".btn-primary.btn[href=\"#\"]"
             ]
           },
           {
@@ -3672,7 +3310,33 @@
               }
             ],
             "impact": null,
-            "html": "<a href=\"about.html\">About</a>",
+            "html": "<a href=\"../../index.html\">Home</a>",
+            "target": [
+              "li:nth-child(1) > a[href=\"../../index.html\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "has-visible-text",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "minor",
+                "message": "Element has text that is visible to screen readers"
+              }
+            ],
+            "all": [],
+            "none": [
+              {
+                "id": "focusable-no-name",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element is not in tab order or has accessible text"
+              }
+            ],
+            "impact": null,
+            "html": "<a href=\"../about.html\">About</a>",
             "target": [
               "li:nth-child(2) > a[href$=\"about.html\"]"
             ]
@@ -3698,7 +3362,7 @@
               }
             ],
             "impact": null,
-            "html": "<a href=\"contact.html\">Contact</a>",
+            "html": "<a href=\"../contact.html\">Contact</a>",
             "target": [
               "a[href$=\"contact.html\"]"
             ]
@@ -3724,7 +3388,7 @@
               }
             ],
             "impact": null,
-            "html": "<a href=\"../index.html#jobs\">Search Jobs</a>",
+            "html": "<a href=\"../../index.html#jobs\">Search Jobs</a>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(2) > ul > li:nth-child(1) > a[href$=\"index.html#jobs\"]"
             ]
@@ -3750,7 +3414,7 @@
               }
             ],
             "impact": null,
-            "html": "<a href=\"../index.html#companies\">Companies</a>",
+            "html": "<a href=\"../../index.html#companies\">Companies</a>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(2) > ul > li:nth-child(2) > a[href$=\"index.html#companies\"]"
             ]
@@ -3776,9 +3440,9 @@
               }
             ],
             "impact": null,
-            "html": "<a href=\"../index.html#post-job\">Post a Job</a>",
+            "html": "<a href=\"../../index.html#post-job\">Post a Job</a>",
             "target": [
-              "li:nth-child(3) > a[href$=\"index.html#post-job\"]"
+              "a[href$=\"index.html#post-job\"]"
             ]
           },
           {
@@ -3802,7 +3466,7 @@
               }
             ],
             "impact": null,
-            "html": "<a href=\"visaGuidance.html\">Visa Guidance</a>",
+            "html": "<a href=\"../visaGuidance.html\">Visa Guidance</a>",
             "target": [
               "a[href$=\"visaGuidance.html\"]"
             ]
@@ -3830,7 +3494,7 @@
             "impact": null,
             "html": "<a href=\"#\">Employer Hub</a>",
             "target": [
-              "a[href=\"#\"]"
+              "li:nth-child(2) > a[href=\"#\"]"
             ]
           },
           {
@@ -3854,7 +3518,7 @@
               }
             ],
             "impact": null,
-            "html": "<a href=\"privacy.html\">Privacy</a>",
+            "html": "<a href=\"../privacy.html\">Privacy</a>",
             "target": [
               "li:nth-child(3) > a[href$=\"privacy.html\"]"
             ]
@@ -3880,7 +3544,7 @@
               }
             ],
             "impact": null,
-            "html": "<a href=\"terms.html\">Terms</a>",
+            "html": "<a href=\"../terms.html\">Terms</a>",
             "target": [
               "a[href$=\"terms.html\"]"
             ]
@@ -3906,7 +3570,7 @@
               }
             ],
             "impact": null,
-            "html": "<a href=\"privacy.html\">Privacy</a>",
+            "html": "<a href=\"../privacy.html\">Privacy</a>",
             "target": [
               "nav[aria-label=\"Footer legal\"] > a[href$=\"privacy.html\"]"
             ]
@@ -3956,7 +3620,7 @@
               }
             ],
             "impact": null,
-            "html": "<ul>\n              <li><a href=\"../\">Home</a></li>\n              <li><a href=\"about.html\">About</a></li>\n              <li><a href=\"contact.html\">Contact</a></li>\n            </ul>",
+            "html": "<ul>\n              <li><a href=\"../../index.html\">Home</a></li>\n              <li><a href=\"../about.html\">About</a></li>\n              <li><a href=\"../contact.html\">Contact</a></li>\n            </ul>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(1) > ul"
             ]
@@ -3974,7 +3638,7 @@
               }
             ],
             "impact": null,
-            "html": "<ul>\n              <li><a href=\"../index.html#jobs\">Search Jobs</a></li>\n              <li><a href=\"../index.html#companies\">Companies</a></li>\n              <li><a href=\"../index.html#post-job\">Post a Job</a></li>\n            </ul>",
+            "html": "<ul>\n              <li><a href=\"../../index.html#jobs\">Search Jobs</a></li>\n              <li><a href=\"../../index.html#companies\">Companies</a></li>\n              <li><a href=\"../../index.html#post-job\">Post a Job</a></li>\n            </ul>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(2) > ul"
             ]
@@ -3992,7 +3656,7 @@
               }
             ],
             "impact": null,
-            "html": "<ul>\n              <li><a href=\"visaGuidance.html\">Visa Guidance</a></li>\n              <li><a href=\"#\">Employer Hub</a></li>\n              <li><a href=\"privacy.html\">Privacy</a></li>\n            </ul>",
+            "html": "<ul>\n              <li><a href=\"../visaGuidance.html\">Visa Guidance</a></li>\n              <li><a href=\"#\">Employer Hub</a></li>\n              <li><a href=\"../privacy.html\">Privacy</a></li>\n            </ul>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(3) > ul"
             ]
@@ -4024,7 +3688,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"nav-item\">\n                <a class=\"nav-link site-header__nav-link\" href=\"../index.html#jobs\" data-i18n=\"nav.jobs\">Jobs</a>\n              </li>",
+            "html": "<li class=\"nav-item\">\n                <a class=\"nav-link site-header__nav-link\" href=\"../../index.html#jobs\" data-i18n=\"nav.jobs\">Jobs</a>\n              </li>",
             "target": [
               ".mx-auto > .nav-item:nth-child(1)"
             ]
@@ -4042,7 +3706,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"nav-item\">\n                <a class=\"nav-link site-header__nav-link\" href=\"../index.html#companies\" data-i18n=\"nav.services\">Companies</a>\n              </li>",
+            "html": "<li class=\"nav-item\">\n                <a class=\"nav-link site-header__nav-link\" href=\"../../index.html#companies\" data-i18n=\"nav.services\">Companies</a>\n              </li>",
             "target": [
               ".mx-auto > .nav-item:nth-child(2)"
             ]
@@ -4060,7 +3724,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"nav-item\">\n                <a class=\"nav-link site-header__nav-link\" href=\"../pages/agency.html\" data-i18n=\"nav.agency\">Agency</a>\n              </li>",
+            "html": "<li class=\"nav-item\">\n                <a class=\"nav-link site-header__nav-link\" href=\"../agency.html\" data-i18n=\"nav.agency\">Agency</a>\n              </li>",
             "target": [
               ".mx-auto > .nav-item:nth-child(3)"
             ]
@@ -4078,7 +3742,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"nav-item\">\n                <a class=\"nav-link site-header__nav-link active\" href=\"about.html\" data-i18n=\"nav.about\">About</a>\n              </li>",
+            "html": "<li class=\"nav-item\">\n                <a class=\"nav-link site-header__nav-link\" href=\"../about.html\" data-i18n=\"nav.about\">About</a>\n              </li>",
             "target": [
               ".mx-auto > .nav-item:nth-child(4)"
             ]
@@ -4096,7 +3760,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li><a href=\"../\">Home</a></li>",
+            "html": "<li><a href=\"../../index.html\">Home</a></li>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(1) > ul > li:nth-child(1)"
             ]
@@ -4114,7 +3778,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li><a href=\"about.html\">About</a></li>",
+            "html": "<li><a href=\"../about.html\">About</a></li>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(1) > ul > li:nth-child(2)"
             ]
@@ -4132,7 +3796,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li><a href=\"contact.html\">Contact</a></li>",
+            "html": "<li><a href=\"../contact.html\">Contact</a></li>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(1) > ul > li:nth-child(3)"
             ]
@@ -4150,7 +3814,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li><a href=\"../index.html#jobs\">Search Jobs</a></li>",
+            "html": "<li><a href=\"../../index.html#jobs\">Search Jobs</a></li>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(2) > ul > li:nth-child(1)"
             ]
@@ -4168,7 +3832,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li><a href=\"../index.html#companies\">Companies</a></li>",
+            "html": "<li><a href=\"../../index.html#companies\">Companies</a></li>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(2) > ul > li:nth-child(2)"
             ]
@@ -4186,7 +3850,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li><a href=\"../index.html#post-job\">Post a Job</a></li>",
+            "html": "<li><a href=\"../../index.html#post-job\">Post a Job</a></li>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(2) > ul > li:nth-child(3)"
             ]
@@ -4204,7 +3868,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li><a href=\"visaGuidance.html\">Visa Guidance</a></li>",
+            "html": "<li><a href=\"../visaGuidance.html\">Visa Guidance</a></li>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(3) > ul > li:nth-child(1)"
             ]
@@ -4240,7 +3904,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li><a href=\"privacy.html\">Privacy</a></li>",
+            "html": "<li><a href=\"../privacy.html\">Privacy</a></li>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(3) > ul > li:nth-child(3)"
             ]
@@ -4271,7 +3935,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">",
+            "html": "<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">",
             "target": [
               "meta[name=\"viewport\"]"
             ]
@@ -4304,7 +3968,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">",
+            "html": "<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">",
             "target": [
               "meta[name=\"viewport\"]"
             ]
@@ -4340,6 +4004,24 @@
             "target": [
               "#lang-toggle"
             ]
+          },
+          {
+            "any": [
+              {
+                "id": "no-focusable-content",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element does not have focusable descendants"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<img src=\"../../assets/images/company-logos/Mitsubishi_Heavy_Industries.png\" alt=\"Mitsubishi Heavy Industries logo\" class=\"img-160 object-contain\">",
+            "target": [
+              "img"
+            ]
           }
         ]
       },
@@ -4362,7 +4044,7 @@
                 "data": null,
                 "relatedNodes": [
                   {
-                    "html": "<h1 class=\"about-card__title\">About Us</h1>",
+                    "html": "<h1 class=\"feature-card__title\">Mitsubishi Heavy Industries</h1>",
                     "target": [
                       "h1"
                     ]
@@ -4407,27 +4089,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"#main-content\" class=\"skip-link\" data-i18n=\"accessibility.skipToContent\">Skip to main content</a>",
-            "target": [
-              ".skip-link"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<header class=\"site-header\" role=\"banner\">",
+            "html": "<header class=\"site-header\">",
             "target": [
               "header"
             ]
@@ -4487,7 +4149,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"navbar-brand site-header__brand\" href=\"../index.html\">Japan SSW</a>",
+            "html": "<a class=\"navbar-brand site-header__brand\" href=\"../../index.html\" data-i18n=\"site.brand\">Japan SSW</a>",
             "target": [
               ".navbar-brand"
             ]
@@ -4547,7 +4209,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"nav-item\">\n                <a class=\"nav-link site-header__nav-link\" href=\"../index.html#jobs\" data-i18n=\"nav.jobs\">Jobs</a>\n              </li>",
+            "html": "<li class=\"nav-item\">\n                <a class=\"nav-link site-header__nav-link\" href=\"../../index.html#jobs\" data-i18n=\"nav.jobs\">Jobs</a>\n              </li>",
             "target": [
               ".mx-auto > .nav-item:nth-child(1)"
             ]
@@ -4567,7 +4229,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../index.html#jobs\" data-i18n=\"nav.jobs\">Jobs</a>",
+            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../../index.html#jobs\" data-i18n=\"nav.jobs\">Jobs</a>",
             "target": [
               ".site-header__nav-link[data-i18n=\"nav.jobs\"][href$=\"index.html#jobs\"]"
             ]
@@ -4587,7 +4249,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"nav-item\">\n                <a class=\"nav-link site-header__nav-link\" href=\"../index.html#companies\" data-i18n=\"nav.services\">Companies</a>\n              </li>",
+            "html": "<li class=\"nav-item\">\n                <a class=\"nav-link site-header__nav-link\" href=\"../../index.html#companies\" data-i18n=\"nav.services\">Companies</a>\n              </li>",
             "target": [
               ".mx-auto > .nav-item:nth-child(2)"
             ]
@@ -4607,9 +4269,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../index.html#companies\" data-i18n=\"nav.services\">Companies</a>",
+            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../../index.html#companies\" data-i18n=\"nav.services\">Companies</a>",
             "target": [
-              "a[data-i18n=\"nav.services\"]"
+              ".site-header__nav-link[data-i18n=\"nav.services\"][href$=\"index.html#companies\"]"
             ]
           },
           {
@@ -4627,7 +4289,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"nav-item\">\n                <a class=\"nav-link site-header__nav-link\" href=\"../pages/agency.html\" data-i18n=\"nav.agency\">Agency</a>\n              </li>",
+            "html": "<li class=\"nav-item\">\n                <a class=\"nav-link site-header__nav-link\" href=\"../agency.html\" data-i18n=\"nav.agency\">Agency</a>\n              </li>",
             "target": [
               ".mx-auto > .nav-item:nth-child(3)"
             ]
@@ -4647,7 +4309,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../pages/agency.html\" data-i18n=\"nav.agency\">Agency</a>",
+            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../agency.html\" data-i18n=\"nav.agency\">Agency</a>",
             "target": [
               ".site-header__nav-link[href$=\"agency.html\"][data-i18n=\"nav.agency\"]"
             ]
@@ -4667,7 +4329,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"nav-item\">\n                <a class=\"nav-link site-header__nav-link active\" href=\"about.html\" data-i18n=\"nav.about\">About</a>\n              </li>",
+            "html": "<li class=\"nav-item\">\n                <a class=\"nav-link site-header__nav-link\" href=\"../about.html\" data-i18n=\"nav.about\">About</a>\n              </li>",
             "target": [
               ".mx-auto > .nav-item:nth-child(4)"
             ]
@@ -4687,9 +4349,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"nav-link site-header__nav-link active\" href=\"about.html\" data-i18n=\"nav.about\">About</a>",
+            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../about.html\" data-i18n=\"nav.about\">About</a>",
             "target": [
-              ".active"
+              ".site-header__nav-link[data-i18n=\"nav.about\"][href$=\"about.html\"]"
             ]
           },
           {
@@ -4727,7 +4389,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"site-header__signup muted text-decoration-none\" href=\"../pages/createAccount.html\" data-i18n=\"nav.signup\">Signup</a>",
+            "html": "<a class=\"site-header__signup muted\" href=\"../createAccount.html\" data-i18n=\"nav.signup\">Signup</a>",
             "target": [
               ".site-header__signup"
             ]
@@ -4747,7 +4409,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"btn btn-primary site-header__login-btn\" href=\"../pages/signin.html\" data-i18n=\"nav.login\">Login</a>",
+            "html": "<a class=\"btn btn-primary site-header__login-btn\" href=\"../signin.html\" data-i18n=\"nav.login\">Login</a>",
             "target": [
               ".site-header__login-btn"
             ]
@@ -4827,9 +4489,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<main id=\"main-content\" role=\"main\">",
+            "html": "<main>",
             "target": [
-              "#main-content"
+              "main"
             ]
           },
           {
@@ -4847,187 +4509,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"about-us-wrapper\">",
-            "target": [
-              ".about-us-wrapper"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<div class=\"about-card animate-fade-in-up animate-on-scroll animate-active\">",
-            "target": [
-              ".about-card"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h1 class=\"about-card__title\">About Us</h1>",
-            "target": [
-              "h1"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<p class=\"about-card__text\">",
-            "target": [
-              ".about-card__text:nth-child(2)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<p class=\"about-card__text\">",
-            "target": [
-              ".about-card__text:nth-child(3)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h2 class=\"about-card__subtitle\">Our Mission</h2>",
-            "target": [
-              ".about-card__subtitle:nth-child(4)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<p class=\"about-card__text\">\n            Fair careers for workers. Trusted recruitment for employers.\n            Sustainable growth for Japan.\n          </p>",
-            "target": [
-              ".about-card__text:nth-child(5)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h2 class=\"about-card__subtitle\">Our Vision</h2>",
-            "target": [
-              ".about-card__subtitle:nth-child(6)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<p class=\"about-card__text\">\n            To be Japan's leading platform that empowers skilled foreign workers\n            to achieve meaningful careers and brighter futures.\n          </p>",
-            "target": [
-              ".about-card__text:nth-child(7)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<section class=\"cta-band\">",
+            "html": "<section class=\"section-padding\">",
             "target": [
               "section"
             ]
@@ -5067,7 +4549,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"feature-card feature-cta animate-scale-up animate-on-scroll animate-hover-lift\">",
+            "html": "<div class=\"feature-card feature-two-col\">",
             "target": [
               ".feature-card"
             ]
@@ -5087,7 +4569,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div>\n              <h2 class=\"m-0 feature-card__title\">Want to work with us?</h2>\n              <p class=\"muted mt-xxs feature-card__desc\">\n                We partner with companies to hire and onboard exceptional\n                talent.\n              </p>\n            </div>",
+            "html": "<div>",
             "target": [
               ".feature-card > div:nth-child(1)"
             ]
@@ -5107,9 +4589,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h2 class=\"m-0 feature-card__title\">Want to work with us?</h2>",
+            "html": "<picture>",
             "target": [
-              ".feature-card__title"
+              "picture"
             ]
           },
           {
@@ -5127,9 +4609,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p class=\"muted mt-xxs feature-card__desc\">\n                We partner with companies to hire and onboard exceptional\n                talent.\n              </p>",
+            "html": "<source type=\"image/webp\" srcset=\"\n                    ../../assets/images/company-logos/Mitsubishi_Heavy_Industries.webp\n                  \">",
             "target": [
-              ".mt-xxs"
+              "source"
             ]
           },
           {
@@ -5147,7 +4629,27 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div>\n              <a class=\"btn btn-primary feature-card__cta animate-hover-scale\" href=\"../index.html#post-job\">Contact Us</a>\n            </div>",
+            "html": "<img src=\"../../assets/images/company-logos/Mitsubishi_Heavy_Industries.png\" alt=\"Mitsubishi Heavy Industries logo\" class=\"img-160 object-contain\">",
+            "target": [
+              "img"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<div>",
             "target": [
               ".feature-card > div:nth-child(2)"
             ]
@@ -5167,9 +4669,89 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"btn btn-primary feature-card__cta animate-hover-scale\" href=\"../index.html#post-job\">Contact Us</a>",
+            "html": "<h1 class=\"feature-card__title\">Mitsubishi Heavy Industries</h1>",
             "target": [
-              ".feature-card__cta"
+              "h1"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<p class=\"muted\">\n                Mitsubishi Heavy Industries is a major Japanese multinational\n                engineering, electrical equipment and electronics company hiring\n                across many technical roles.\n              </p>",
+            "target": [
+              "div:nth-child(2) > p:nth-child(2)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<p class=\"mt-md\">\n                <a class=\"btn btn-primary\" href=\"../createAccount.html?company=mitsubishi-heavy\">View jobs</a>\n                <a class=\"btn btn-secondary\" href=\"../../index.html#companies\">Back to companies</a>\n              </p>",
+            "target": [
+              ".mt-md"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a class=\"btn btn-primary\" href=\"../createAccount.html?company=mitsubishi-heavy\">View jobs</a>",
+            "target": [
+              ".mt-md > .btn-primary.btn"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a class=\"btn btn-secondary\" href=\"../../index.html#companies\">Back to companies</a>",
+            "target": [
+              ".btn-secondary.btn[href$=\"index.html#companies\"]"
             ]
           },
           {
@@ -5249,7 +4831,7 @@
             "impact": null,
             "html": "<h2>Want to post jobs on JapanSSW?</h2>",
             "target": [
-              ".footer-cta > h2"
+              "h2"
             ]
           },
           {
@@ -5287,7 +4869,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"footer-cta-actions site-footer__cta-actions\">\n            <a class=\"btn btn-secondary\" href=\"../\">Employer Login</a>\n            <a class=\"btn btn-primary\" href=\"../index.html#post-job\">Post a Job</a>\n          </div>",
+            "html": "<div class=\"footer-cta-actions site-footer__cta-actions\">\n            <a class=\"btn btn-secondary\" href=\"#\">Employer Login</a>\n            <a class=\"btn btn-primary\" href=\"#\">Post a Job</a>\n          </div>",
             "target": [
               ".footer-cta-actions"
             ]
@@ -5307,9 +4889,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"btn btn-secondary\" href=\"../\">Employer Login</a>",
+            "html": "<a class=\"btn btn-secondary\" href=\"#\">Employer Login</a>",
             "target": [
-              ".btn-secondary"
+              ".btn-secondary.btn[href=\"#\"]"
             ]
           },
           {
@@ -5327,9 +4909,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"btn btn-primary\" href=\"../index.html#post-job\">Post a Job</a>",
+            "html": "<a class=\"btn btn-primary\" href=\"#\">Post a Job</a>",
             "target": [
-              ".footer-cta-actions > .btn-primary.btn[href$=\"index.html#post-job\"]"
+              ".btn-primary.btn[href=\"#\"]"
             ]
           },
           {
@@ -5367,7 +4949,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"link-col site-footer__link-col\">\n            <h3>Company</h3>\n            <ul>\n              <li><a href=\"../\">Home</a></li>\n              <li><a href=\"about.html\">About</a></li>\n              <li><a href=\"contact.html\">Contact</a></li>\n            </ul>\n          </div>",
+            "html": "<div class=\"link-col site-footer__link-col\">",
             "target": [
               ".link-col.site-footer__link-col:nth-child(1)"
             ]
@@ -5407,7 +4989,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<ul>\n              <li><a href=\"../\">Home</a></li>\n              <li><a href=\"about.html\">About</a></li>\n              <li><a href=\"contact.html\">Contact</a></li>\n            </ul>",
+            "html": "<ul>\n              <li><a href=\"../../index.html\">Home</a></li>\n              <li><a href=\"../about.html\">About</a></li>\n              <li><a href=\"../contact.html\">Contact</a></li>\n            </ul>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(1) > ul"
             ]
@@ -5427,7 +5009,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li><a href=\"../\">Home</a></li>",
+            "html": "<li><a href=\"../../index.html\">Home</a></li>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(1) > ul > li:nth-child(1)"
             ]
@@ -5447,9 +5029,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"../\">Home</a>",
+            "html": "<a href=\"../../index.html\">Home</a>",
             "target": [
-              "li:nth-child(1) > a[href=\"../\"]"
+              "li:nth-child(1) > a[href=\"../../index.html\"]"
             ]
           },
           {
@@ -5467,7 +5049,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li><a href=\"about.html\">About</a></li>",
+            "html": "<li><a href=\"../about.html\">About</a></li>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(1) > ul > li:nth-child(2)"
             ]
@@ -5487,7 +5069,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"about.html\">About</a>",
+            "html": "<a href=\"../about.html\">About</a>",
             "target": [
               "li:nth-child(2) > a[href$=\"about.html\"]"
             ]
@@ -5507,7 +5089,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li><a href=\"contact.html\">Contact</a></li>",
+            "html": "<li><a href=\"../contact.html\">Contact</a></li>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(1) > ul > li:nth-child(3)"
             ]
@@ -5527,7 +5109,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"contact.html\">Contact</a>",
+            "html": "<a href=\"../contact.html\">Contact</a>",
             "target": [
               "a[href$=\"contact.html\"]"
             ]
@@ -5567,9 +5149,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h4>Jobs</h4>",
+            "html": "<h3>Jobs</h3>",
             "target": [
-              "h4"
+              ".link-col.site-footer__link-col:nth-child(2) > h3"
             ]
           },
           {
@@ -5587,7 +5169,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<ul>\n              <li><a href=\"../index.html#jobs\">Search Jobs</a></li>\n              <li><a href=\"../index.html#companies\">Companies</a></li>\n              <li><a href=\"../index.html#post-job\">Post a Job</a></li>\n            </ul>",
+            "html": "<ul>\n              <li><a href=\"../../index.html#jobs\">Search Jobs</a></li>\n              <li><a href=\"../../index.html#companies\">Companies</a></li>\n              <li><a href=\"../../index.html#post-job\">Post a Job</a></li>\n            </ul>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(2) > ul"
             ]
@@ -5607,7 +5189,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li><a href=\"../index.html#jobs\">Search Jobs</a></li>",
+            "html": "<li><a href=\"../../index.html#jobs\">Search Jobs</a></li>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(2) > ul > li:nth-child(1)"
             ]
@@ -5627,7 +5209,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"../index.html#jobs\">Search Jobs</a>",
+            "html": "<a href=\"../../index.html#jobs\">Search Jobs</a>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(2) > ul > li:nth-child(1) > a[href$=\"index.html#jobs\"]"
             ]
@@ -5647,7 +5229,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li><a href=\"../index.html#companies\">Companies</a></li>",
+            "html": "<li><a href=\"../../index.html#companies\">Companies</a></li>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(2) > ul > li:nth-child(2)"
             ]
@@ -5667,7 +5249,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"../index.html#companies\">Companies</a>",
+            "html": "<a href=\"../../index.html#companies\">Companies</a>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(2) > ul > li:nth-child(2) > a[href$=\"index.html#companies\"]"
             ]
@@ -5687,7 +5269,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li><a href=\"../index.html#post-job\">Post a Job</a></li>",
+            "html": "<li><a href=\"../../index.html#post-job\">Post a Job</a></li>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(2) > ul > li:nth-child(3)"
             ]
@@ -5707,9 +5289,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"../index.html#post-job\">Post a Job</a>",
+            "html": "<a href=\"../../index.html#post-job\">Post a Job</a>",
             "target": [
-              "li:nth-child(3) > a[href$=\"index.html#post-job\"]"
+              "a[href$=\"index.html#post-job\"]"
             ]
           },
           {
@@ -5767,7 +5349,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<ul>\n              <li><a href=\"visaGuidance.html\">Visa Guidance</a></li>\n              <li><a href=\"#\">Employer Hub</a></li>\n              <li><a href=\"privacy.html\">Privacy</a></li>\n            </ul>",
+            "html": "<ul>\n              <li><a href=\"../visaGuidance.html\">Visa Guidance</a></li>\n              <li><a href=\"#\">Employer Hub</a></li>\n              <li><a href=\"../privacy.html\">Privacy</a></li>\n            </ul>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(3) > ul"
             ]
@@ -5787,7 +5369,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li><a href=\"visaGuidance.html\">Visa Guidance</a></li>",
+            "html": "<li><a href=\"../visaGuidance.html\">Visa Guidance</a></li>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(3) > ul > li:nth-child(1)"
             ]
@@ -5807,7 +5389,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"visaGuidance.html\">Visa Guidance</a>",
+            "html": "<a href=\"../visaGuidance.html\">Visa Guidance</a>",
             "target": [
               "a[href$=\"visaGuidance.html\"]"
             ]
@@ -5849,7 +5431,7 @@
             "impact": null,
             "html": "<a href=\"#\">Employer Hub</a>",
             "target": [
-              "a[href=\"#\"]"
+              "li:nth-child(2) > a[href=\"#\"]"
             ]
           },
           {
@@ -5867,7 +5449,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li><a href=\"privacy.html\">Privacy</a></li>",
+            "html": "<li><a href=\"../privacy.html\">Privacy</a></li>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(3) > ul > li:nth-child(3)"
             ]
@@ -5887,7 +5469,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"privacy.html\">Privacy</a>",
+            "html": "<a href=\"../privacy.html\">Privacy</a>",
             "target": [
               "li:nth-child(3) > a[href$=\"privacy.html\"]"
             ]
@@ -5927,7 +5509,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"legal-inner site-footer__legal-inner\">\n          <small>© 2025 Japan SSW. All rights reserved.</small>\n          <nav aria-label=\"Footer legal\">\n            <a href=\"terms.html\">Terms</a>\n            <a href=\"privacy.html\">Privacy</a>\n          </nav>\n        </div>",
+            "html": "<div class=\"legal-inner site-footer__legal-inner\">\n          <small>© 2025 Japan SSW. All rights reserved.</small>\n          <nav aria-label=\"Footer legal\">\n            <a href=\"../terms.html\">Terms</a>\n            <a href=\"../privacy.html\">Privacy</a>\n          </nav>\n        </div>",
             "target": [
               ".legal-inner"
             ]
@@ -5967,7 +5549,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<nav aria-label=\"Footer legal\">\n            <a href=\"terms.html\">Terms</a>\n            <a href=\"privacy.html\">Privacy</a>\n          </nav>",
+            "html": "<nav aria-label=\"Footer legal\">\n            <a href=\"../terms.html\">Terms</a>\n            <a href=\"../privacy.html\">Privacy</a>\n          </nav>",
             "target": [
               "nav[aria-label=\"Footer legal\"]"
             ]
@@ -5987,7 +5569,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"terms.html\">Terms</a>",
+            "html": "<a href=\"../terms.html\">Terms</a>",
             "target": [
               "a[href$=\"terms.html\"]"
             ]
@@ -6007,40 +5589,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"privacy.html\">Privacy</a>",
+            "html": "<a href=\"../privacy.html\">Privacy</a>",
             "target": [
               "nav[aria-label=\"Footer legal\"] > a[href$=\"privacy.html\"]"
-            ]
-          }
-        ]
-      },
-      {
-        "id": "skip-link",
-        "impact": null,
-        "tags": [
-          "cat.keyboard",
-          "best-practice"
-        ],
-        "description": "Ensure all skip links have a focusable target",
-        "help": "The skip-link target should exist and be focusable",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/4.6/skip-link?application=axeAPI",
-        "nodes": [
-          {
-            "any": [
-              {
-                "id": "skip-link",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "Skip link target exists"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<a href=\"#main-content\" class=\"skip-link\" data-i18n=\"accessibility.skipToContent\">Skip to main content</a>",
-            "target": [
-              ".skip-link"
             ]
           }
         ]

@@ -1,5 +1,5 @@
 {
-  "url": "http://localhost:8000/pages/about.html",
+  "url": "http://localhost:8000/pages/companies/company-list.html",
   "axe": {
     "testEngine": {
       "name": "axe-core",
@@ -15,8 +15,8 @@
       "orientationAngle": 0,
       "orientationType": "landscape-primary"
     },
-    "timestamp": "2025-10-29T13:18:41.801Z",
-    "url": "http://localhost:8000/pages/about.html",
+    "timestamp": "2025-10-29T13:18:45.211Z",
+    "url": "http://localhost:8000/pages/companies/company-list.html",
     "toolOptions": {
       "reporter": "v1"
     },
@@ -234,20 +234,6 @@
         "nodes": []
       },
       {
-        "id": "avoid-inline-spacing",
-        "impact": null,
-        "tags": [
-          "cat.structure",
-          "wcag21aa",
-          "wcag1412",
-          "ACT"
-        ],
-        "description": "Ensure that text spacing set through style attributes can be adjusted with custom stylesheets",
-        "help": "Inline text spacing must be adjustable with custom stylesheets",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/4.6/avoid-inline-spacing?application=axeAPI",
-        "nodes": []
-      },
-      {
         "id": "blink",
         "impact": null,
         "tags": [
@@ -395,34 +381,6 @@
         "description": "Ensure that HTML elements with both valid lang and xml:lang attributes agree on the base language of the page",
         "help": "HTML elements with lang and xml:lang must have the same base language",
         "helpUrl": "https://dequeuniversity.com/rules/axe/4.6/html-xml-lang-mismatch?application=axeAPI",
-        "nodes": []
-      },
-      {
-        "id": "image-alt",
-        "impact": null,
-        "tags": [
-          "cat.text-alternatives",
-          "wcag2a",
-          "wcag111",
-          "section508",
-          "section508.22.a",
-          "ACT"
-        ],
-        "description": "Ensures <img> elements have alternate text or a role of none or presentation",
-        "help": "Images must have alternate text",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/4.6/image-alt?application=axeAPI",
-        "nodes": []
-      },
-      {
-        "id": "image-redundant-alt",
-        "impact": null,
-        "tags": [
-          "cat.text-alternatives",
-          "best-practice"
-        ],
-        "description": "Ensure image alternative is not repeated as text",
-        "help": "Alternative text of images should not be repeated as text",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/4.6/image-redundant-alt?application=axeAPI",
         "nodes": []
       },
       {
@@ -607,6 +565,18 @@
         "description": "Ensures that server-side image maps are not used",
         "help": "Server-side image maps must not be used",
         "helpUrl": "https://dequeuniversity.com/rules/axe/4.6/server-side-image-map?application=axeAPI",
+        "nodes": []
+      },
+      {
+        "id": "skip-link",
+        "impact": null,
+        "tags": [
+          "cat.keyboard",
+          "best-practice"
+        ],
+        "description": "Ensure all skip links have a focusable target",
+        "help": "The skip-link target should exist and be focusable",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.6/skip-link?application=axeAPI",
         "nodes": []
       },
       {
@@ -797,7 +767,7 @@
               }
             ],
             "impact": null,
-            "html": "<nav aria-label=\"Footer legal\">\n            <a href=\"terms.html\">Terms</a>\n            <a href=\"privacy.html\">Privacy</a>\n          </nav>",
+            "html": "<nav aria-label=\"Footer legal\">\n            <a href=\"../terms.html\">Terms</a>\n            <a href=\"../privacy.html\">Privacy</a>\n          </nav>",
             "target": [
               "nav[aria-label=\"Footer legal\"]"
             ]
@@ -815,24 +785,6 @@
         "help": "ARIA role should be appropriate for the element",
         "helpUrl": "https://dequeuniversity.com/rules/axe/4.6/aria-allowed-role?application=axeAPI",
         "nodes": [
-          {
-            "any": [
-              {
-                "id": "aria-allowed-role",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "minor",
-                "message": "ARIA role is allowed for given element"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<header class=\"site-header\" role=\"banner\">",
-            "target": [
-              "header"
-            ]
-          },
           {
             "any": [
               {
@@ -868,24 +820,6 @@
             "target": [
               "#lang-toggle-off"
             ]
-          },
-          {
-            "any": [
-              {
-                "id": "aria-allowed-role",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "minor",
-                "message": "ARIA role is allowed for given element"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<main id=\"main-content\" role=\"main\">",
-            "target": [
-              "#main-content"
-            ]
           }
         ]
       },
@@ -914,7 +848,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<body>",
+            "html": "<body class=\"sticky-footer-layout\">",
             "target": [
               "body"
             ]
@@ -946,45 +880,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<header class=\"site-header\" role=\"banner\">",
-            "target": [
-              "header"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "aria-required-attr",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "critical",
-                "message": "All required ARIA attributes are present"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
             "html": "<input class=\"form-check-input\" type=\"checkbox\" id=\"lang-toggle\" role=\"switch\" aria-checked=\"false\">",
             "target": [
               "#lang-toggle"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "aria-required-attr",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "critical",
-                "message": "All required ARIA attributes are present"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<main id=\"main-content\" role=\"main\">",
-            "target": [
-              "#main-content"
             ]
           }
         ]
@@ -1035,87 +933,9 @@
               }
             ],
             "impact": null,
-            "html": "<header class=\"site-header\" role=\"banner\">",
-            "target": [
-              "header"
-            ]
-          },
-          {
-            "any": [],
-            "all": [],
-            "none": [
-              {
-                "id": "invalidrole",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "critical",
-                "message": "ARIA role is valid"
-              },
-              {
-                "id": "abstractrole",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Abstract roles are not used"
-              },
-              {
-                "id": "unsupportedrole",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "critical",
-                "message": "ARIA role is supported"
-              },
-              {
-                "id": "deprecatedrole",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "minor",
-                "message": "ARIA role is not deprecated"
-              }
-            ],
-            "impact": null,
             "html": "<input class=\"form-check-input\" type=\"checkbox\" id=\"lang-toggle\" role=\"switch\" aria-checked=\"false\">",
             "target": [
               "#lang-toggle"
-            ]
-          },
-          {
-            "any": [],
-            "all": [],
-            "none": [
-              {
-                "id": "invalidrole",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "critical",
-                "message": "ARIA role is valid"
-              },
-              {
-                "id": "abstractrole",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Abstract roles are not used"
-              },
-              {
-                "id": "unsupportedrole",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "critical",
-                "message": "ARIA role is supported"
-              },
-              {
-                "id": "deprecatedrole",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "minor",
-                "message": "ARIA role is not deprecated"
-              }
-            ],
-            "impact": null,
-            "html": "<main id=\"main-content\" role=\"main\">",
-            "target": [
-              "#main-content"
             ]
           }
         ]
@@ -1191,7 +1011,7 @@
             ],
             "none": [],
             "impact": null,
-            "html": "<nav aria-label=\"Footer legal\">\n            <a href=\"terms.html\">Terms</a>\n            <a href=\"privacy.html\">Privacy</a>\n          </nav>",
+            "html": "<nav aria-label=\"Footer legal\">\n            <a href=\"../terms.html\">Terms</a>\n            <a href=\"../privacy.html\">Privacy</a>\n          </nav>",
             "target": [
               "nav[aria-label=\"Footer legal\"]"
             ]
@@ -1241,9 +1061,120 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<nav aria-label=\"Footer legal\">\n            <a href=\"terms.html\">Terms</a>\n            <a href=\"privacy.html\">Privacy</a>\n          </nav>",
+            "html": "<nav aria-label=\"Footer legal\">\n            <a href=\"../terms.html\">Terms</a>\n            <a href=\"../privacy.html\">Privacy</a>\n          </nav>",
             "target": [
               "nav[aria-label=\"Footer legal\"]"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "avoid-inline-spacing",
+        "impact": null,
+        "tags": [
+          "cat.structure",
+          "wcag21aa",
+          "wcag1412",
+          "ACT"
+        ],
+        "description": "Ensure that text spacing set through style attributes can be adjusted with custom stylesheets",
+        "help": "Inline text spacing must be adjustable with custom stylesheets",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.6/avoid-inline-spacing?application=axeAPI",
+        "nodes": [
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "important-letter-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-word-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-line-height",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<img src=\"https://placehold.co/100x100/cccccc/000000?text=Logo\" alt=\"Company logo\" class=\"img-fluid\" style=\"width: 100px; height: 100px; object-fit: contain\" onerror=\"this.onerror=null; this.src='https://placehold.co/100x100/cccccc/000000?text=Logo';\">",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(1) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-shrink-0 > img"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "important-letter-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-word-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-line-height",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<img src=\"https://placehold.co/100x100/cccccc/000000?text=Logo\" alt=\"Company logo\" class=\"img-fluid\" style=\"width: 100px; height: 100px; object-fit: contain\" onerror=\"this.onerror=null; this.src='https://placehold.co/100x100/cccccc/000000?text=Logo';\">",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(2) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-shrink-0 > img"
+            ]
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "important-letter-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Letter-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-word-spacing",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "word-spacing in the style attribute is not set to !important, or meets the minimum"
+              },
+              {
+                "id": "important-line-height",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "line-height in the style attribute is not set to !important, or meets the minimum"
+              }
+            ],
+            "none": [],
+            "impact": null,
+            "html": "<img src=\"https://placehold.co/100x100/cccccc/000000?text=Logo\" alt=\"Company logo\" class=\"img-fluid\" style=\"width: 100px; height: 100px; object-fit: contain\" onerror=\"this.onerror=null; this.src='https://placehold.co/100x100/cccccc/000000?text=Logo';\">",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(3) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-shrink-0 > img"
             ]
           }
         ]
@@ -1265,38 +1196,31 @@
           {
             "any": [
               {
-                "id": "internal-link-present",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Valid skip link found"
-              },
-              {
                 "id": "header-present",
                 "data": null,
                 "relatedNodes": [
                   {
-                    "html": "<h1 class=\"about-card__title\">About Us</h1>",
+                    "html": "<h1 class=\"fw-bold text-dark mb-4 border-bottom border-3 border-primary pb-2 text-center\">\n          Featured Companies\n        </h1>",
                     "target": [
                       "h1"
                     ]
                   },
                   {
-                    "html": "<h2 class=\"about-card__subtitle\">Our Mission</h2>",
+                    "html": "<h2 class=\"h6 fw-bold mb-2\">Company Name</h2>",
                     "target": [
-                      ".about-card__subtitle:nth-child(4)"
+                      ".col-12.col-md-6.col-lg-4:nth-child(1) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-grow-1.text-md-start.text-center > .h6"
                     ]
                   },
                   {
-                    "html": "<h2 class=\"about-card__subtitle\">Our Vision</h2>",
+                    "html": "<h2 class=\"h6 fw-bold mb-2\">Another Company</h2>",
                     "target": [
-                      ".about-card__subtitle:nth-child(6)"
+                      ".col-12.col-md-6.col-lg-4:nth-child(2) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-grow-1.text-md-start.text-center > .h6"
                     ]
                   },
                   {
-                    "html": "<h2 class=\"m-0 feature-card__title\">Want to work with us?</h2>",
+                    "html": "<h2 class=\"h6 fw-bold mb-2\">Third Company</h2>",
                     "target": [
-                      ".feature-card__title"
+                      ".col-12.col-md-6.col-lg-4:nth-child(3) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-grow-1.text-md-start.text-center > .h6"
                     ]
                   },
                   {
@@ -1312,9 +1236,9 @@
                     ]
                   },
                   {
-                    "html": "<h4>Jobs</h4>",
+                    "html": "<h3>Jobs</h3>",
                     "target": [
-                      "h4"
+                      ".link-col.site-footer__link-col:nth-child(2) > h3"
                     ]
                   },
                   {
@@ -1332,9 +1256,9 @@
                 "data": null,
                 "relatedNodes": [
                   {
-                    "html": "<main id=\"main-content\" role=\"main\">",
+                    "html": "<main class=\"py-5\">",
                     "target": [
-                      "#main-content"
+                      "main"
                     ]
                   }
                 ],
@@ -1385,7 +1309,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"navbar-brand site-header__brand\" href=\"../index.html\">Japan SSW</a>",
+            "html": "<a class=\"navbar-brand site-header__brand\" href=\"../../index.html\" data-i18n=\"site.brand\">Japan SSW</a>",
             "target": [
               ".navbar-brand"
             ]
@@ -1410,7 +1334,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../index.html#jobs\" data-i18n=\"nav.jobs\">Jobs</a>",
+            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../../index.html#jobs\" data-i18n=\"nav.jobs\">Jobs</a>",
             "target": [
               ".site-header__nav-link[data-i18n=\"nav.jobs\"][href$=\"index.html#jobs\"]"
             ]
@@ -1435,9 +1359,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../index.html#companies\" data-i18n=\"nav.services\">Companies</a>",
+            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../../index.html#companies\" data-i18n=\"nav.services\">Companies</a>",
             "target": [
-              "a[data-i18n=\"nav.services\"]"
+              ".site-header__nav-link[data-i18n=\"nav.services\"][href$=\"index.html#companies\"]"
             ]
           },
           {
@@ -1460,7 +1384,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../pages/agency.html\" data-i18n=\"nav.agency\">Agency</a>",
+            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../agency.html\" data-i18n=\"nav.agency\">Agency</a>",
             "target": [
               ".site-header__nav-link[href$=\"agency.html\"][data-i18n=\"nav.agency\"]"
             ]
@@ -1470,24 +1394,24 @@
               {
                 "id": "color-contrast",
                 "data": {
-                  "fgColor": "#eb0000",
+                  "fgColor": "#290000",
                   "bgColor": "#fcfcfc",
-                  "contrastRatio": 4.51,
+                  "contrastRatio": 18.7,
                   "fontSize": "12.0pt (16px)",
-                  "fontWeight": "bold",
+                  "fontWeight": "normal",
                   "expectedContrastRatio": "4.5:1"
                 },
                 "relatedNodes": [],
                 "impact": "serious",
-                "message": "Element has sufficient color contrast of 4.51"
+                "message": "Element has sufficient color contrast of 18.7"
               }
             ],
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"nav-link site-header__nav-link active\" href=\"about.html\" data-i18n=\"nav.about\">About</a>",
+            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../about.html\" data-i18n=\"nav.about\">About</a>",
             "target": [
-              ".active"
+              ".site-header__nav-link[data-i18n=\"nav.about\"][href$=\"about.html\"]"
             ]
           },
           {
@@ -1510,7 +1434,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"site-header__signup muted text-decoration-none\" href=\"../pages/createAccount.html\" data-i18n=\"nav.signup\">Signup</a>",
+            "html": "<a class=\"site-header__signup muted text-decoration-none\" href=\"../createAccount.html\" data-i18n=\"nav.signup\">Signup</a>",
             "target": [
               ".site-header__signup"
             ]
@@ -1535,7 +1459,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"btn btn-primary site-header__login-btn\" href=\"../pages/signin.html\" data-i18n=\"nav.login\">Login</a>",
+            "html": "<a class=\"btn btn-primary site-header__login-btn\" href=\"../signin.html\" data-i18n=\"nav.login\">Login</a>",
             "target": [
               ".site-header__login-btn"
             ]
@@ -1570,22 +1494,22 @@
               {
                 "id": "color-contrast",
                 "data": {
-                  "fgColor": "#290000",
+                  "fgColor": "#212529",
                   "bgColor": "#ffffff",
-                  "contrastRatio": 19.19,
-                  "fontSize": "18.0pt (24px)",
+                  "contrastRatio": 15.42,
+                  "fontSize": "27.0pt (36px)",
                   "fontWeight": "bold",
                   "expectedContrastRatio": "3:1"
                 },
                 "relatedNodes": [],
                 "impact": "serious",
-                "message": "Element has sufficient color contrast of 19.19"
+                "message": "Element has sufficient color contrast of 15.42"
               }
             ],
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h1 class=\"about-card__title\">About Us</h1>",
+            "html": "<h1 class=\"fw-bold text-dark mb-4 border-bottom border-3 border-primary pb-2 text-center\">\n          Featured Companies\n        </h1>",
             "target": [
               "h1"
             ]
@@ -1599,7 +1523,7 @@
                   "bgColor": "#ffffff",
                   "contrastRatio": 19.19,
                   "fontSize": "12.0pt (16px)",
-                  "fontWeight": "normal",
+                  "fontWeight": "bold",
                   "expectedContrastRatio": "4.5:1"
                 },
                 "relatedNodes": [],
@@ -1610,9 +1534,84 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p class=\"about-card__text\">",
+            "html": "<h2 class=\"h6 fw-bold mb-2\">Company Name</h2>",
             "target": [
-              ".about-card__text:nth-child(2)"
+              ".col-12.col-md-6.col-lg-4:nth-child(1) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-grow-1.text-md-start.text-center > .h6"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#595c5f",
+                  "bgColor": "#ffffff",
+                  "contrastRatio": 6.72,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 6.72"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<p class=\"text-muted small mb-3\">\n                    Short description about the company, what they do, and what\n                    kinds of roles they recruit for.\n                  </p>",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(1) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-grow-1.text-md-start.text-center > .text-muted.small.mb-3"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#0d6efd",
+                  "bgColor": "#ffffff",
+                  "contrastRatio": 4.5,
+                  "fontSize": "11.3pt (15px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 4.5"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a href=\"../createAccount.html\" class=\"btn btn-outline-primary btn-sm\">View Company</a>",
+            "target": [
+              ".btn-outline-primary.btn-sm[href$=\"createAccount.html\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#212529",
+                  "bgColor": "#ffffff",
+                  "contrastRatio": 15.42,
+                  "fontSize": "11.3pt (15px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 15.42"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a href=\"../../index.html#companies\" class=\"btn btn-outline-dark btn-sm\">5+ Jobs</a>",
+            "target": [
+              ".btn-outline-dark.btn-sm[href$=\"index.html#companies\"]"
             ]
           },
           {
@@ -1624,7 +1623,7 @@
                   "bgColor": "#ffffff",
                   "contrastRatio": 19.19,
                   "fontSize": "12.0pt (16px)",
-                  "fontWeight": "normal",
+                  "fontWeight": "bold",
                   "expectedContrastRatio": "4.5:1"
                 },
                 "relatedNodes": [],
@@ -1635,9 +1634,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p class=\"about-card__text\">",
+            "html": "<h2 class=\"h6 fw-bold mb-2\">Another Company</h2>",
             "target": [
-              ".about-card__text:nth-child(3)"
+              ".col-12.col-md-6.col-lg-4:nth-child(2) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-grow-1.text-md-start.text-center > .h6"
             ]
           },
           {
@@ -1645,24 +1644,74 @@
               {
                 "id": "color-contrast",
                 "data": {
-                  "fgColor": "#290000",
+                  "fgColor": "#595c5f",
                   "bgColor": "#ffffff",
-                  "contrastRatio": 19.19,
-                  "fontSize": "15.0pt (20px)",
+                  "contrastRatio": 6.72,
+                  "fontSize": "10.5pt (14px)",
                   "fontWeight": "normal",
                   "expectedContrastRatio": "4.5:1"
                 },
                 "relatedNodes": [],
                 "impact": "serious",
-                "message": "Element has sufficient color contrast of 19.19"
+                "message": "Element has sufficient color contrast of 6.72"
               }
             ],
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h2 class=\"about-card__subtitle\">Our Mission</h2>",
+            "html": "<p class=\"text-muted small mb-3\">\n                    Example description about the company’s services and job\n                    roles.\n                  </p>",
             "target": [
-              ".about-card__subtitle:nth-child(4)"
+              ".col-12.col-md-6.col-lg-4:nth-child(2) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-grow-1.text-md-start.text-center > .text-muted.small.mb-3"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#0d6efd",
+                  "bgColor": "#ffffff",
+                  "contrastRatio": 4.5,
+                  "fontSize": "11.3pt (15px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 4.5"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a href=\"#\" class=\"btn btn-outline-primary btn-sm\">View Company</a>",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(2) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-grow-1.text-md-start.text-center > .flex-sm-row.justify-content-md-start.justify-content-center > .btn-outline-primary.btn-sm[href=\"#\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#212529",
+                  "bgColor": "#ffffff",
+                  "contrastRatio": 15.42,
+                  "fontSize": "11.3pt (15px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 15.42"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a href=\"#\" class=\"btn btn-outline-dark btn-sm\">3 Jobs</a>",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(2) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-grow-1.text-md-start.text-center > .flex-sm-row.justify-content-md-start.justify-content-center > .btn-outline-dark.btn-sm[href=\"#\"]"
             ]
           },
           {
@@ -1674,7 +1723,7 @@
                   "bgColor": "#ffffff",
                   "contrastRatio": 19.19,
                   "fontSize": "12.0pt (16px)",
-                  "fontWeight": "normal",
+                  "fontWeight": "bold",
                   "expectedContrastRatio": "4.5:1"
                 },
                 "relatedNodes": [],
@@ -1685,9 +1734,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p class=\"about-card__text\">\n            Fair careers for workers. Trusted recruitment for employers.\n            Sustainable growth for Japan.\n          </p>",
+            "html": "<h2 class=\"h6 fw-bold mb-2\">Third Company</h2>",
             "target": [
-              ".about-card__text:nth-child(5)"
+              ".col-12.col-md-6.col-lg-4:nth-child(3) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-grow-1.text-md-start.text-center > .h6"
             ]
           },
           {
@@ -1695,24 +1744,24 @@
               {
                 "id": "color-contrast",
                 "data": {
-                  "fgColor": "#290000",
+                  "fgColor": "#595c5f",
                   "bgColor": "#ffffff",
-                  "contrastRatio": 19.19,
-                  "fontSize": "15.0pt (20px)",
+                  "contrastRatio": 6.72,
+                  "fontSize": "10.5pt (14px)",
                   "fontWeight": "normal",
                   "expectedContrastRatio": "4.5:1"
                 },
                 "relatedNodes": [],
                 "impact": "serious",
-                "message": "Element has sufficient color contrast of 19.19"
+                "message": "Element has sufficient color contrast of 6.72"
               }
             ],
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h2 class=\"about-card__subtitle\">Our Vision</h2>",
+            "html": "<p class=\"text-muted small mb-3\">\n                    Another company info section goes here for testing layout.\n                  </p>",
             "target": [
-              ".about-card__subtitle:nth-child(6)"
+              ".col-12.col-md-6.col-lg-4:nth-child(3) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-grow-1.text-md-start.text-center > .text-muted.small.mb-3"
             ]
           },
           {
@@ -1720,24 +1769,49 @@
               {
                 "id": "color-contrast",
                 "data": {
-                  "fgColor": "#290000",
+                  "fgColor": "#0d6efd",
                   "bgColor": "#ffffff",
-                  "contrastRatio": 19.19,
-                  "fontSize": "12.0pt (16px)",
+                  "contrastRatio": 4.5,
+                  "fontSize": "11.3pt (15px)",
                   "fontWeight": "normal",
                   "expectedContrastRatio": "4.5:1"
                 },
                 "relatedNodes": [],
                 "impact": "serious",
-                "message": "Element has sufficient color contrast of 19.19"
+                "message": "Element has sufficient color contrast of 4.5"
               }
             ],
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p class=\"about-card__text\">\n            To be Japan's leading platform that empowers skilled foreign workers\n            to achieve meaningful careers and brighter futures.\n          </p>",
+            "html": "<a href=\"#\" class=\"btn btn-outline-primary btn-sm\">View Company</a>",
             "target": [
-              ".about-card__text:nth-child(7)"
+              ".col-12.col-md-6.col-lg-4:nth-child(3) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-grow-1.text-md-start.text-center > .flex-sm-row.justify-content-md-start.justify-content-center > .btn-outline-primary.btn-sm[href=\"#\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#212529",
+                  "bgColor": "#ffffff",
+                  "contrastRatio": 15.42,
+                  "fontSize": "11.3pt (15px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 15.42"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a href=\"#\" class=\"btn btn-outline-dark btn-sm\">2 Jobs</a>",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(3) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-grow-1.text-md-start.text-center > .flex-sm-row.justify-content-md-start.justify-content-center > .btn-outline-dark.btn-sm[href=\"#\"]"
             ]
           },
           {
@@ -1810,7 +1884,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"btn btn-secondary\" href=\"../\">Employer Login</a>",
+            "html": "<a class=\"btn btn-secondary\" href=\"#\">Employer Login</a>",
             "target": [
               ".btn-secondary"
             ]
@@ -1835,9 +1909,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"btn btn-primary\" href=\"../index.html#post-job\">Post a Job</a>",
+            "html": "<a class=\"btn btn-primary\" href=\"#\">Post a Job</a>",
             "target": [
-              ".footer-cta-actions > .btn-primary.btn[href$=\"index.html#post-job\"]"
+              ".btn-primary.btn[href=\"#\"]"
             ]
           },
           {
@@ -1885,9 +1959,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"../\">Home</a>",
+            "html": "<a href=\"../../index.html\">Home</a>",
             "target": [
-              "li:nth-child(1) > a[href=\"../\"]"
+              "li:nth-child(1) > a[href=\"../../index.html\"]"
             ]
           },
           {
@@ -1910,7 +1984,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"about.html\">About</a>",
+            "html": "<a href=\"../about.html\">About</a>",
             "target": [
               "li:nth-child(2) > a[href$=\"about.html\"]"
             ]
@@ -1935,7 +2009,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"contact.html\">Contact</a>",
+            "html": "<a href=\"../contact.html\">Contact</a>",
             "target": [
               "a[href$=\"contact.html\"]"
             ]
@@ -1948,8 +2022,8 @@
                   "fgColor": "#ffffff",
                   "bgColor": "#290000",
                   "contrastRatio": 19.19,
-                  "fontSize": "18.0pt (24px)",
-                  "fontWeight": "normal",
+                  "fontSize": "21.0pt (28px)",
+                  "fontWeight": "bold",
                   "expectedContrastRatio": "3:1"
                 },
                 "relatedNodes": [],
@@ -1960,9 +2034,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h4>Jobs</h4>",
+            "html": "<h3>Jobs</h3>",
             "target": [
-              "h4"
+              ".link-col.site-footer__link-col:nth-child(2) > h3"
             ]
           },
           {
@@ -1985,7 +2059,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"../index.html#jobs\">Search Jobs</a>",
+            "html": "<a href=\"../../index.html#jobs\">Search Jobs</a>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(2) > ul > li:nth-child(1) > a[href$=\"index.html#jobs\"]"
             ]
@@ -2010,7 +2084,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"../index.html#companies\">Companies</a>",
+            "html": "<a href=\"../../index.html#companies\">Companies</a>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(2) > ul > li:nth-child(2) > a[href$=\"index.html#companies\"]"
             ]
@@ -2035,9 +2109,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"../index.html#post-job\">Post a Job</a>",
+            "html": "<a href=\"../../index.html#post-job\">Post a Job</a>",
             "target": [
-              "li:nth-child(3) > a[href$=\"index.html#post-job\"]"
+              "a[href$=\"index.html#post-job\"]"
             ]
           },
           {
@@ -2085,7 +2159,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"visaGuidance.html\">Visa Guidance</a>",
+            "html": "<a href=\"../visaGuidance.html\">Visa Guidance</a>",
             "target": [
               "a[href$=\"visaGuidance.html\"]"
             ]
@@ -2112,7 +2186,7 @@
             "impact": null,
             "html": "<a href=\"#\">Employer Hub</a>",
             "target": [
-              "a[href=\"#\"]"
+              "li:nth-child(2) > a[href=\"#\"]"
             ]
           },
           {
@@ -2135,7 +2209,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"privacy.html\">Privacy</a>",
+            "html": "<a href=\"../privacy.html\">Privacy</a>",
             "target": [
               "li:nth-child(3) > a[href$=\"privacy.html\"]"
             ]
@@ -2185,7 +2259,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"terms.html\">Terms</a>",
+            "html": "<a href=\"../terms.html\">Terms</a>",
             "target": [
               "a[href$=\"terms.html\"]"
             ]
@@ -2210,7 +2284,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"privacy.html\">Privacy</a>",
+            "html": "<a href=\"../privacy.html\">Privacy</a>",
             "target": [
               "nav[aria-label=\"Footer legal\"] > a[href$=\"privacy.html\"]"
             ]
@@ -2311,7 +2385,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h5 class=\"offcanvas-title\" id=\"siteOffcanvasLabel\">Menu</h5>",
+            "html": "<h5 class=\"offcanvas-title\" id=\"siteOffcanvasLabel\" data-i18n=\"nav.menu\">\n            Menu\n          </h5>",
             "target": [
               "#siteOffcanvasLabel"
             ]
@@ -2401,24 +2475,6 @@
             "target": [
               "#lang-toggle-label-off"
             ]
-          },
-          {
-            "any": [
-              {
-                "id": "duplicate-id",
-                "data": "main-content",
-                "relatedNodes": [],
-                "impact": "minor",
-                "message": "Document has no static elements that share the same id attribute"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<main id=\"main-content\" role=\"main\">",
-            "target": [
-              "#main-content"
-            ]
           }
         ]
       },
@@ -2446,7 +2502,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h1 class=\"about-card__title\">About Us</h1>",
+            "html": "<h1 class=\"fw-bold text-dark mb-4 border-bottom border-3 border-primary pb-2 text-center\">\n          Featured Companies\n        </h1>",
             "target": [
               "h1"
             ]
@@ -2464,9 +2520,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h2 class=\"about-card__subtitle\">Our Mission</h2>",
+            "html": "<h2 class=\"h6 fw-bold mb-2\">Company Name</h2>",
             "target": [
-              ".about-card__subtitle:nth-child(4)"
+              ".col-12.col-md-6.col-lg-4:nth-child(1) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-grow-1.text-md-start.text-center > .h6"
             ]
           },
           {
@@ -2482,9 +2538,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h2 class=\"about-card__subtitle\">Our Vision</h2>",
+            "html": "<h2 class=\"h6 fw-bold mb-2\">Another Company</h2>",
             "target": [
-              ".about-card__subtitle:nth-child(6)"
+              ".col-12.col-md-6.col-lg-4:nth-child(2) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-grow-1.text-md-start.text-center > .h6"
             ]
           },
           {
@@ -2500,9 +2556,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h2 class=\"m-0 feature-card__title\">Want to work with us?</h2>",
+            "html": "<h2 class=\"h6 fw-bold mb-2\">Third Company</h2>",
             "target": [
-              ".feature-card__title"
+              ".col-12.col-md-6.col-lg-4:nth-child(3) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-grow-1.text-md-start.text-center > .h6"
             ]
           },
           {
@@ -2554,9 +2610,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h4>Jobs</h4>",
+            "html": "<h3>Jobs</h3>",
             "target": [
-              "h4"
+              ".link-col.site-footer__link-col:nth-child(2) > h3"
             ]
           },
           {
@@ -2637,49 +2693,49 @@
                   "headingOrder": [
                     {
                       "ancestry": [
-                        "html > body > main:nth-child(3) > div:nth-child(1) > div > h1:nth-child(1)"
+                        "html > body > main:nth-child(2) > div > h1:nth-child(1)"
                       ],
                       "level": 1
                     },
                     {
                       "ancestry": [
-                        "html > body > main:nth-child(3) > div:nth-child(1) > div > h2:nth-child(4)"
+                        "html > body > main:nth-child(2) > div > div:nth-child(2) > div:nth-child(1) > div > div > div:nth-child(2) > h2:nth-child(1)"
                       ],
                       "level": 2
                     },
                     {
                       "ancestry": [
-                        "html > body > main:nth-child(3) > div:nth-child(1) > div > h2:nth-child(6)"
+                        "html > body > main:nth-child(2) > div > div:nth-child(2) > div:nth-child(2) > div > div > div:nth-child(2) > h2:nth-child(1)"
                       ],
                       "level": 2
                     },
                     {
                       "ancestry": [
-                        "html > body > main:nth-child(3) > section:nth-child(2) > div > div > div:nth-child(1) > h2:nth-child(1)"
+                        "html > body > main:nth-child(2) > div > div:nth-child(2) > div:nth-child(3) > div > div > div:nth-child(2) > h2:nth-child(1)"
                       ],
                       "level": 2
                     },
                     {
                       "ancestry": [
-                        "html > body > footer:nth-child(4) > div:nth-child(1) > div:nth-child(1) > h2:nth-child(1)"
+                        "html > body > footer:nth-child(3) > div:nth-child(1) > div:nth-child(1) > h2:nth-child(1)"
                       ],
                       "level": 2
                     },
                     {
                       "ancestry": [
-                        "html > body > footer:nth-child(4) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > h3:nth-child(1)"
+                        "html > body > footer:nth-child(3) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > h3:nth-child(1)"
                       ],
                       "level": 3
                     },
                     {
                       "ancestry": [
-                        "html > body > footer:nth-child(4) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > h4:nth-child(1)"
+                        "html > body > footer:nth-child(3) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > h3:nth-child(1)"
                       ],
-                      "level": 4
+                      "level": 3
                     },
                     {
                       "ancestry": [
-                        "html > body > footer:nth-child(4) > div:nth-child(1) > div:nth-child(2) > div:nth-child(3) > h3:nth-child(1)"
+                        "html > body > footer:nth-child(3) > div:nth-child(1) > div:nth-child(2) > div:nth-child(3) > h3:nth-child(1)"
                       ],
                       "level": 3
                     }
@@ -2693,7 +2749,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h1 class=\"about-card__title\">About Us</h1>",
+            "html": "<h1 class=\"fw-bold text-dark mb-4 border-bottom border-3 border-primary pb-2 text-center\">\n          Featured Companies\n        </h1>",
             "target": [
               "h1"
             ]
@@ -2711,9 +2767,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h2 class=\"about-card__subtitle\">Our Mission</h2>",
+            "html": "<h2 class=\"h6 fw-bold mb-2\">Company Name</h2>",
             "target": [
-              ".about-card__subtitle:nth-child(4)"
+              ".col-12.col-md-6.col-lg-4:nth-child(1) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-grow-1.text-md-start.text-center > .h6"
             ]
           },
           {
@@ -2729,9 +2785,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h2 class=\"about-card__subtitle\">Our Vision</h2>",
+            "html": "<h2 class=\"h6 fw-bold mb-2\">Another Company</h2>",
             "target": [
-              ".about-card__subtitle:nth-child(6)"
+              ".col-12.col-md-6.col-lg-4:nth-child(2) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-grow-1.text-md-start.text-center > .h6"
             ]
           },
           {
@@ -2747,9 +2803,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h2 class=\"m-0 feature-card__title\">Want to work with us?</h2>",
+            "html": "<h2 class=\"h6 fw-bold mb-2\">Third Company</h2>",
             "target": [
-              ".feature-card__title"
+              ".col-12.col-md-6.col-lg-4:nth-child(3) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-grow-1.text-md-start.text-center > .h6"
             ]
           },
           {
@@ -2801,9 +2857,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h4>Jobs</h4>",
+            "html": "<h3>Jobs</h3>",
             "target": [
-              "h4"
+              ".link-col.site-footer__link-col:nth-child(2) > h3"
             ]
           },
           {
@@ -2888,6 +2944,168 @@
             "html": "<html lang=\"en\" data-bs-theme=\"light\">",
             "target": [
               "html"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "image-alt",
+        "impact": null,
+        "tags": [
+          "cat.text-alternatives",
+          "wcag2a",
+          "wcag111",
+          "section508",
+          "section508.22.a",
+          "ACT"
+        ],
+        "description": "Ensures <img> elements have alternate text or a role of none or presentation",
+        "help": "Images must have alternate text",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.6/image-alt?application=axeAPI",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "has-alt",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "Element has an alt attribute"
+              }
+            ],
+            "all": [],
+            "none": [
+              {
+                "id": "alt-space-value",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "Element has a valid alt attribute value"
+              }
+            ],
+            "impact": null,
+            "html": "<img src=\"https://placehold.co/100x100/cccccc/000000?text=Logo\" alt=\"Company logo\" class=\"img-fluid\" style=\"width: 100px; height: 100px; object-fit: contain\" onerror=\"this.onerror=null; this.src='https://placehold.co/100x100/cccccc/000000?text=Logo';\">",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(1) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-shrink-0 > img"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "has-alt",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "Element has an alt attribute"
+              }
+            ],
+            "all": [],
+            "none": [
+              {
+                "id": "alt-space-value",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "Element has a valid alt attribute value"
+              }
+            ],
+            "impact": null,
+            "html": "<img src=\"https://placehold.co/100x100/cccccc/000000?text=Logo\" alt=\"Company logo\" class=\"img-fluid\" style=\"width: 100px; height: 100px; object-fit: contain\" onerror=\"this.onerror=null; this.src='https://placehold.co/100x100/cccccc/000000?text=Logo';\">",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(2) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-shrink-0 > img"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "has-alt",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "Element has an alt attribute"
+              }
+            ],
+            "all": [],
+            "none": [
+              {
+                "id": "alt-space-value",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "critical",
+                "message": "Element has a valid alt attribute value"
+              }
+            ],
+            "impact": null,
+            "html": "<img src=\"https://placehold.co/100x100/cccccc/000000?text=Logo\" alt=\"Company logo\" class=\"img-fluid\" style=\"width: 100px; height: 100px; object-fit: contain\" onerror=\"this.onerror=null; this.src='https://placehold.co/100x100/cccccc/000000?text=Logo';\">",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(3) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-shrink-0 > img"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "image-redundant-alt",
+        "impact": null,
+        "tags": [
+          "cat.text-alternatives",
+          "best-practice"
+        ],
+        "description": "Ensure image alternative is not repeated as text",
+        "help": "Alternative text of images should not be repeated as text",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.6/image-redundant-alt?application=axeAPI",
+        "nodes": [
+          {
+            "any": [],
+            "all": [],
+            "none": [
+              {
+                "id": "duplicate-img-label",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "minor",
+                "message": "Element does not duplicate existing text in <img> alt text"
+              }
+            ],
+            "impact": null,
+            "html": "<img src=\"https://placehold.co/100x100/cccccc/000000?text=Logo\" alt=\"Company logo\" class=\"img-fluid\" style=\"width: 100px; height: 100px; object-fit: contain\" onerror=\"this.onerror=null; this.src='https://placehold.co/100x100/cccccc/000000?text=Logo';\">",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(1) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-shrink-0 > img"
+            ]
+          },
+          {
+            "any": [],
+            "all": [],
+            "none": [
+              {
+                "id": "duplicate-img-label",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "minor",
+                "message": "Element does not duplicate existing text in <img> alt text"
+              }
+            ],
+            "impact": null,
+            "html": "<img src=\"https://placehold.co/100x100/cccccc/000000?text=Logo\" alt=\"Company logo\" class=\"img-fluid\" style=\"width: 100px; height: 100px; object-fit: contain\" onerror=\"this.onerror=null; this.src='https://placehold.co/100x100/cccccc/000000?text=Logo';\">",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(2) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-shrink-0 > img"
+            ]
+          },
+          {
+            "any": [],
+            "all": [],
+            "none": [
+              {
+                "id": "duplicate-img-label",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "minor",
+                "message": "Element does not duplicate existing text in <img> alt text"
+              }
+            ],
+            "impact": null,
+            "html": "<img src=\"https://placehold.co/100x100/cccccc/000000?text=Logo\" alt=\"Company logo\" class=\"img-fluid\" style=\"width: 100px; height: 100px; object-fit: contain\" onerror=\"this.onerror=null; this.src='https://placehold.co/100x100/cccccc/000000?text=Logo';\">",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(3) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-shrink-0 > img"
             ]
           }
         ]
@@ -3001,7 +3219,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<header class=\"site-header\" role=\"banner\">",
+            "html": "<header class=\"site-header\">",
             "target": [
               "header"
             ]
@@ -3067,9 +3285,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<main id=\"main-content\" role=\"main\">",
+            "html": "<main class=\"py-5\">",
             "target": [
-              "#main-content"
+              "main"
             ]
           }
         ]
@@ -3098,7 +3316,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<header class=\"site-header\" role=\"banner\">",
+            "html": "<header class=\"site-header\">",
             "target": [
               "header"
             ]
@@ -3160,9 +3378,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<main id=\"main-content\" role=\"main\">",
+            "html": "<main class=\"py-5\">",
             "target": [
-              "#main-content"
+              "main"
             ]
           }
         ]
@@ -3186,9 +3404,9 @@
                 "data": null,
                 "relatedNodes": [
                   {
-                    "html": "<main id=\"main-content\" role=\"main\">",
+                    "html": "<main class=\"py-5\">",
                     "target": [
-                      "#main-content"
+                      "main"
                     ]
                   }
                 ],
@@ -3232,7 +3450,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<header class=\"site-header\" role=\"banner\">",
+            "html": "<header class=\"site-header\">",
             "target": [
               "header"
             ]
@@ -3274,9 +3492,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<main id=\"main-content\" role=\"main\">",
+            "html": "<main class=\"py-5\">",
             "target": [
-              "#main-content"
+              "main"
             ]
           },
           {
@@ -3316,7 +3534,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<nav aria-label=\"Footer legal\">\n            <a href=\"terms.html\">Terms</a>\n            <a href=\"privacy.html\">Privacy</a>\n          </nav>",
+            "html": "<nav aria-label=\"Footer legal\">\n            <a href=\"../terms.html\">Terms</a>\n            <a href=\"../privacy.html\">Privacy</a>\n          </nav>",
             "target": [
               "nav[aria-label=\"Footer legal\"]"
             ]
@@ -3360,33 +3578,7 @@
               }
             ],
             "impact": null,
-            "html": "<a href=\"#main-content\" class=\"skip-link\" data-i18n=\"accessibility.skipToContent\">Skip to main content</a>",
-            "target": [
-              ".skip-link"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "has-visible-text",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "minor",
-                "message": "Element has text that is visible to screen readers"
-              }
-            ],
-            "all": [],
-            "none": [
-              {
-                "id": "focusable-no-name",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element is not in tab order or has accessible text"
-              }
-            ],
-            "impact": null,
-            "html": "<a class=\"navbar-brand site-header__brand\" href=\"../index.html\">Japan SSW</a>",
+            "html": "<a class=\"navbar-brand site-header__brand\" href=\"../../index.html\" data-i18n=\"site.brand\">Japan SSW</a>",
             "target": [
               ".navbar-brand"
             ]
@@ -3412,7 +3604,7 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../index.html#jobs\" data-i18n=\"nav.jobs\">Jobs</a>",
+            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../../index.html#jobs\" data-i18n=\"nav.jobs\">Jobs</a>",
             "target": [
               ".site-header__nav-link[data-i18n=\"nav.jobs\"][href$=\"index.html#jobs\"]"
             ]
@@ -3438,9 +3630,9 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../index.html#companies\" data-i18n=\"nav.services\">Companies</a>",
+            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../../index.html#companies\" data-i18n=\"nav.services\">Companies</a>",
             "target": [
-              "a[data-i18n=\"nav.services\"]"
+              ".site-header__nav-link[data-i18n=\"nav.services\"][href$=\"index.html#companies\"]"
             ]
           },
           {
@@ -3464,7 +3656,7 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../pages/agency.html\" data-i18n=\"nav.agency\">Agency</a>",
+            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../agency.html\" data-i18n=\"nav.agency\">Agency</a>",
             "target": [
               ".site-header__nav-link[href$=\"agency.html\"][data-i18n=\"nav.agency\"]"
             ]
@@ -3490,9 +3682,9 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"nav-link site-header__nav-link active\" href=\"about.html\" data-i18n=\"nav.about\">About</a>",
+            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../about.html\" data-i18n=\"nav.about\">About</a>",
             "target": [
-              ".active"
+              ".site-header__nav-link[data-i18n=\"nav.about\"][href$=\"about.html\"]"
             ]
           },
           {
@@ -3516,7 +3708,7 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"site-header__signup muted text-decoration-none\" href=\"../pages/createAccount.html\" data-i18n=\"nav.signup\">Signup</a>",
+            "html": "<a class=\"site-header__signup muted text-decoration-none\" href=\"../createAccount.html\" data-i18n=\"nav.signup\">Signup</a>",
             "target": [
               ".site-header__signup"
             ]
@@ -3542,7 +3734,7 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"btn btn-primary site-header__login-btn\" href=\"../pages/signin.html\" data-i18n=\"nav.login\">Login</a>",
+            "html": "<a class=\"btn btn-primary site-header__login-btn\" href=\"../signin.html\" data-i18n=\"nav.login\">Login</a>",
             "target": [
               ".site-header__login-btn"
             ]
@@ -3568,9 +3760,9 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"btn btn-primary feature-card__cta animate-hover-scale\" href=\"../index.html#post-job\">Contact Us</a>",
+            "html": "<a href=\"../createAccount.html\" class=\"btn btn-outline-primary btn-sm\">View Company</a>",
             "target": [
-              ".feature-card__cta"
+              ".btn-outline-primary.btn-sm[href$=\"createAccount.html\"]"
             ]
           },
           {
@@ -3594,7 +3786,137 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"btn btn-secondary\" href=\"../\">Employer Login</a>",
+            "html": "<a href=\"../../index.html#companies\" class=\"btn btn-outline-dark btn-sm\">5+ Jobs</a>",
+            "target": [
+              ".btn-outline-dark.btn-sm[href$=\"index.html#companies\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "has-visible-text",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "minor",
+                "message": "Element has text that is visible to screen readers"
+              }
+            ],
+            "all": [],
+            "none": [
+              {
+                "id": "focusable-no-name",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element is not in tab order or has accessible text"
+              }
+            ],
+            "impact": null,
+            "html": "<a href=\"#\" class=\"btn btn-outline-primary btn-sm\">View Company</a>",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(2) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-grow-1.text-md-start.text-center > .flex-sm-row.justify-content-md-start.justify-content-center > .btn-outline-primary.btn-sm[href=\"#\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "has-visible-text",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "minor",
+                "message": "Element has text that is visible to screen readers"
+              }
+            ],
+            "all": [],
+            "none": [
+              {
+                "id": "focusable-no-name",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element is not in tab order or has accessible text"
+              }
+            ],
+            "impact": null,
+            "html": "<a href=\"#\" class=\"btn btn-outline-dark btn-sm\">3 Jobs</a>",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(2) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-grow-1.text-md-start.text-center > .flex-sm-row.justify-content-md-start.justify-content-center > .btn-outline-dark.btn-sm[href=\"#\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "has-visible-text",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "minor",
+                "message": "Element has text that is visible to screen readers"
+              }
+            ],
+            "all": [],
+            "none": [
+              {
+                "id": "focusable-no-name",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element is not in tab order or has accessible text"
+              }
+            ],
+            "impact": null,
+            "html": "<a href=\"#\" class=\"btn btn-outline-primary btn-sm\">View Company</a>",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(3) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-grow-1.text-md-start.text-center > .flex-sm-row.justify-content-md-start.justify-content-center > .btn-outline-primary.btn-sm[href=\"#\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "has-visible-text",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "minor",
+                "message": "Element has text that is visible to screen readers"
+              }
+            ],
+            "all": [],
+            "none": [
+              {
+                "id": "focusable-no-name",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element is not in tab order or has accessible text"
+              }
+            ],
+            "impact": null,
+            "html": "<a href=\"#\" class=\"btn btn-outline-dark btn-sm\">2 Jobs</a>",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(3) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-grow-1.text-md-start.text-center > .flex-sm-row.justify-content-md-start.justify-content-center > .btn-outline-dark.btn-sm[href=\"#\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "has-visible-text",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "minor",
+                "message": "Element has text that is visible to screen readers"
+              }
+            ],
+            "all": [],
+            "none": [
+              {
+                "id": "focusable-no-name",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element is not in tab order or has accessible text"
+              }
+            ],
+            "impact": null,
+            "html": "<a class=\"btn btn-secondary\" href=\"#\">Employer Login</a>",
             "target": [
               ".btn-secondary"
             ]
@@ -3620,9 +3942,9 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"btn btn-primary\" href=\"../index.html#post-job\">Post a Job</a>",
+            "html": "<a class=\"btn btn-primary\" href=\"#\">Post a Job</a>",
             "target": [
-              ".footer-cta-actions > .btn-primary.btn[href$=\"index.html#post-job\"]"
+              ".btn-primary.btn[href=\"#\"]"
             ]
           },
           {
@@ -3646,9 +3968,9 @@
               }
             ],
             "impact": null,
-            "html": "<a href=\"../\">Home</a>",
+            "html": "<a href=\"../../index.html\">Home</a>",
             "target": [
-              "li:nth-child(1) > a[href=\"../\"]"
+              "li:nth-child(1) > a[href=\"../../index.html\"]"
             ]
           },
           {
@@ -3672,7 +3994,7 @@
               }
             ],
             "impact": null,
-            "html": "<a href=\"about.html\">About</a>",
+            "html": "<a href=\"../about.html\">About</a>",
             "target": [
               "li:nth-child(2) > a[href$=\"about.html\"]"
             ]
@@ -3698,7 +4020,7 @@
               }
             ],
             "impact": null,
-            "html": "<a href=\"contact.html\">Contact</a>",
+            "html": "<a href=\"../contact.html\">Contact</a>",
             "target": [
               "a[href$=\"contact.html\"]"
             ]
@@ -3724,7 +4046,7 @@
               }
             ],
             "impact": null,
-            "html": "<a href=\"../index.html#jobs\">Search Jobs</a>",
+            "html": "<a href=\"../../index.html#jobs\">Search Jobs</a>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(2) > ul > li:nth-child(1) > a[href$=\"index.html#jobs\"]"
             ]
@@ -3750,7 +4072,7 @@
               }
             ],
             "impact": null,
-            "html": "<a href=\"../index.html#companies\">Companies</a>",
+            "html": "<a href=\"../../index.html#companies\">Companies</a>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(2) > ul > li:nth-child(2) > a[href$=\"index.html#companies\"]"
             ]
@@ -3776,9 +4098,9 @@
               }
             ],
             "impact": null,
-            "html": "<a href=\"../index.html#post-job\">Post a Job</a>",
+            "html": "<a href=\"../../index.html#post-job\">Post a Job</a>",
             "target": [
-              "li:nth-child(3) > a[href$=\"index.html#post-job\"]"
+              "a[href$=\"index.html#post-job\"]"
             ]
           },
           {
@@ -3802,7 +4124,7 @@
               }
             ],
             "impact": null,
-            "html": "<a href=\"visaGuidance.html\">Visa Guidance</a>",
+            "html": "<a href=\"../visaGuidance.html\">Visa Guidance</a>",
             "target": [
               "a[href$=\"visaGuidance.html\"]"
             ]
@@ -3830,7 +4152,7 @@
             "impact": null,
             "html": "<a href=\"#\">Employer Hub</a>",
             "target": [
-              "a[href=\"#\"]"
+              "li:nth-child(2) > a[href=\"#\"]"
             ]
           },
           {
@@ -3854,7 +4176,7 @@
               }
             ],
             "impact": null,
-            "html": "<a href=\"privacy.html\">Privacy</a>",
+            "html": "<a href=\"../privacy.html\">Privacy</a>",
             "target": [
               "li:nth-child(3) > a[href$=\"privacy.html\"]"
             ]
@@ -3880,7 +4202,7 @@
               }
             ],
             "impact": null,
-            "html": "<a href=\"terms.html\">Terms</a>",
+            "html": "<a href=\"../terms.html\">Terms</a>",
             "target": [
               "a[href$=\"terms.html\"]"
             ]
@@ -3906,7 +4228,7 @@
               }
             ],
             "impact": null,
-            "html": "<a href=\"privacy.html\">Privacy</a>",
+            "html": "<a href=\"../privacy.html\">Privacy</a>",
             "target": [
               "nav[aria-label=\"Footer legal\"] > a[href$=\"privacy.html\"]"
             ]
@@ -3956,7 +4278,7 @@
               }
             ],
             "impact": null,
-            "html": "<ul>\n              <li><a href=\"../\">Home</a></li>\n              <li><a href=\"about.html\">About</a></li>\n              <li><a href=\"contact.html\">Contact</a></li>\n            </ul>",
+            "html": "<ul>\n              <li><a href=\"../../index.html\">Home</a></li>\n              <li><a href=\"../about.html\">About</a></li>\n              <li><a href=\"../contact.html\">Contact</a></li>\n            </ul>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(1) > ul"
             ]
@@ -3974,7 +4296,7 @@
               }
             ],
             "impact": null,
-            "html": "<ul>\n              <li><a href=\"../index.html#jobs\">Search Jobs</a></li>\n              <li><a href=\"../index.html#companies\">Companies</a></li>\n              <li><a href=\"../index.html#post-job\">Post a Job</a></li>\n            </ul>",
+            "html": "<ul>\n              <li><a href=\"../../index.html#jobs\">Search Jobs</a></li>\n              <li><a href=\"../../index.html#companies\">Companies</a></li>\n              <li><a href=\"../../index.html#post-job\">Post a Job</a></li>\n            </ul>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(2) > ul"
             ]
@@ -3992,7 +4314,7 @@
               }
             ],
             "impact": null,
-            "html": "<ul>\n              <li><a href=\"visaGuidance.html\">Visa Guidance</a></li>\n              <li><a href=\"#\">Employer Hub</a></li>\n              <li><a href=\"privacy.html\">Privacy</a></li>\n            </ul>",
+            "html": "<ul>\n              <li><a href=\"../visaGuidance.html\">Visa Guidance</a></li>\n              <li><a href=\"#\">Employer Hub</a></li>\n              <li><a href=\"../privacy.html\">Privacy</a></li>\n            </ul>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(3) > ul"
             ]
@@ -4024,7 +4346,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"nav-item\">\n                <a class=\"nav-link site-header__nav-link\" href=\"../index.html#jobs\" data-i18n=\"nav.jobs\">Jobs</a>\n              </li>",
+            "html": "<li class=\"nav-item\">\n                <a class=\"nav-link site-header__nav-link\" href=\"../../index.html#jobs\" data-i18n=\"nav.jobs\">Jobs</a>\n              </li>",
             "target": [
               ".mx-auto > .nav-item:nth-child(1)"
             ]
@@ -4042,7 +4364,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"nav-item\">\n                <a class=\"nav-link site-header__nav-link\" href=\"../index.html#companies\" data-i18n=\"nav.services\">Companies</a>\n              </li>",
+            "html": "<li class=\"nav-item\">\n                <a class=\"nav-link site-header__nav-link\" href=\"../../index.html#companies\" data-i18n=\"nav.services\">Companies</a>\n              </li>",
             "target": [
               ".mx-auto > .nav-item:nth-child(2)"
             ]
@@ -4060,7 +4382,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"nav-item\">\n                <a class=\"nav-link site-header__nav-link\" href=\"../pages/agency.html\" data-i18n=\"nav.agency\">Agency</a>\n              </li>",
+            "html": "<li class=\"nav-item\">\n                <a class=\"nav-link site-header__nav-link\" href=\"../agency.html\" data-i18n=\"nav.agency\">Agency</a>\n              </li>",
             "target": [
               ".mx-auto > .nav-item:nth-child(3)"
             ]
@@ -4078,7 +4400,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"nav-item\">\n                <a class=\"nav-link site-header__nav-link active\" href=\"about.html\" data-i18n=\"nav.about\">About</a>\n              </li>",
+            "html": "<li class=\"nav-item\">\n                <a class=\"nav-link site-header__nav-link\" href=\"../about.html\" data-i18n=\"nav.about\">About</a>\n              </li>",
             "target": [
               ".mx-auto > .nav-item:nth-child(4)"
             ]
@@ -4096,7 +4418,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li><a href=\"../\">Home</a></li>",
+            "html": "<li><a href=\"../../index.html\">Home</a></li>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(1) > ul > li:nth-child(1)"
             ]
@@ -4114,7 +4436,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li><a href=\"about.html\">About</a></li>",
+            "html": "<li><a href=\"../about.html\">About</a></li>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(1) > ul > li:nth-child(2)"
             ]
@@ -4132,7 +4454,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li><a href=\"contact.html\">Contact</a></li>",
+            "html": "<li><a href=\"../contact.html\">Contact</a></li>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(1) > ul > li:nth-child(3)"
             ]
@@ -4150,7 +4472,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li><a href=\"../index.html#jobs\">Search Jobs</a></li>",
+            "html": "<li><a href=\"../../index.html#jobs\">Search Jobs</a></li>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(2) > ul > li:nth-child(1)"
             ]
@@ -4168,7 +4490,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li><a href=\"../index.html#companies\">Companies</a></li>",
+            "html": "<li><a href=\"../../index.html#companies\">Companies</a></li>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(2) > ul > li:nth-child(2)"
             ]
@@ -4186,7 +4508,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li><a href=\"../index.html#post-job\">Post a Job</a></li>",
+            "html": "<li><a href=\"../../index.html#post-job\">Post a Job</a></li>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(2) > ul > li:nth-child(3)"
             ]
@@ -4204,7 +4526,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li><a href=\"visaGuidance.html\">Visa Guidance</a></li>",
+            "html": "<li><a href=\"../visaGuidance.html\">Visa Guidance</a></li>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(3) > ul > li:nth-child(1)"
             ]
@@ -4240,7 +4562,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li><a href=\"privacy.html\">Privacy</a></li>",
+            "html": "<li><a href=\"../privacy.html\">Privacy</a></li>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(3) > ul > li:nth-child(3)"
             ]
@@ -4271,7 +4593,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">",
+            "html": "<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">",
             "target": [
               "meta[name=\"viewport\"]"
             ]
@@ -4304,7 +4626,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">",
+            "html": "<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">",
             "target": [
               "meta[name=\"viewport\"]"
             ]
@@ -4340,6 +4662,60 @@
             "target": [
               "#lang-toggle"
             ]
+          },
+          {
+            "any": [
+              {
+                "id": "no-focusable-content",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element does not have focusable descendants"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<img src=\"https://placehold.co/100x100/cccccc/000000?text=Logo\" alt=\"Company logo\" class=\"img-fluid\" style=\"width: 100px; height: 100px; object-fit: contain\" onerror=\"this.onerror=null; this.src='https://placehold.co/100x100/cccccc/000000?text=Logo';\">",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(1) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-shrink-0 > img"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "no-focusable-content",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element does not have focusable descendants"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<img src=\"https://placehold.co/100x100/cccccc/000000?text=Logo\" alt=\"Company logo\" class=\"img-fluid\" style=\"width: 100px; height: 100px; object-fit: contain\" onerror=\"this.onerror=null; this.src='https://placehold.co/100x100/cccccc/000000?text=Logo';\">",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(2) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-shrink-0 > img"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "no-focusable-content",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element does not have focusable descendants"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<img src=\"https://placehold.co/100x100/cccccc/000000?text=Logo\" alt=\"Company logo\" class=\"img-fluid\" style=\"width: 100px; height: 100px; object-fit: contain\" onerror=\"this.onerror=null; this.src='https://placehold.co/100x100/cccccc/000000?text=Logo';\">",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(3) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-shrink-0 > img"
+            ]
           }
         ]
       },
@@ -4362,7 +4738,7 @@
                 "data": null,
                 "relatedNodes": [
                   {
-                    "html": "<h1 class=\"about-card__title\">About Us</h1>",
+                    "html": "<h1 class=\"fw-bold text-dark mb-4 border-bottom border-3 border-primary pb-2 text-center\">\n          Featured Companies\n        </h1>",
                     "target": [
                       "h1"
                     ]
@@ -4407,27 +4783,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"#main-content\" class=\"skip-link\" data-i18n=\"accessibility.skipToContent\">Skip to main content</a>",
-            "target": [
-              ".skip-link"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<header class=\"site-header\" role=\"banner\">",
+            "html": "<header class=\"site-header\">",
             "target": [
               "header"
             ]
@@ -4487,7 +4843,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"navbar-brand site-header__brand\" href=\"../index.html\">Japan SSW</a>",
+            "html": "<a class=\"navbar-brand site-header__brand\" href=\"../../index.html\" data-i18n=\"site.brand\">Japan SSW</a>",
             "target": [
               ".navbar-brand"
             ]
@@ -4547,7 +4903,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"nav-item\">\n                <a class=\"nav-link site-header__nav-link\" href=\"../index.html#jobs\" data-i18n=\"nav.jobs\">Jobs</a>\n              </li>",
+            "html": "<li class=\"nav-item\">\n                <a class=\"nav-link site-header__nav-link\" href=\"../../index.html#jobs\" data-i18n=\"nav.jobs\">Jobs</a>\n              </li>",
             "target": [
               ".mx-auto > .nav-item:nth-child(1)"
             ]
@@ -4567,7 +4923,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../index.html#jobs\" data-i18n=\"nav.jobs\">Jobs</a>",
+            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../../index.html#jobs\" data-i18n=\"nav.jobs\">Jobs</a>",
             "target": [
               ".site-header__nav-link[data-i18n=\"nav.jobs\"][href$=\"index.html#jobs\"]"
             ]
@@ -4587,7 +4943,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"nav-item\">\n                <a class=\"nav-link site-header__nav-link\" href=\"../index.html#companies\" data-i18n=\"nav.services\">Companies</a>\n              </li>",
+            "html": "<li class=\"nav-item\">\n                <a class=\"nav-link site-header__nav-link\" href=\"../../index.html#companies\" data-i18n=\"nav.services\">Companies</a>\n              </li>",
             "target": [
               ".mx-auto > .nav-item:nth-child(2)"
             ]
@@ -4607,9 +4963,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../index.html#companies\" data-i18n=\"nav.services\">Companies</a>",
+            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../../index.html#companies\" data-i18n=\"nav.services\">Companies</a>",
             "target": [
-              "a[data-i18n=\"nav.services\"]"
+              ".site-header__nav-link[data-i18n=\"nav.services\"][href$=\"index.html#companies\"]"
             ]
           },
           {
@@ -4627,7 +4983,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"nav-item\">\n                <a class=\"nav-link site-header__nav-link\" href=\"../pages/agency.html\" data-i18n=\"nav.agency\">Agency</a>\n              </li>",
+            "html": "<li class=\"nav-item\">\n                <a class=\"nav-link site-header__nav-link\" href=\"../agency.html\" data-i18n=\"nav.agency\">Agency</a>\n              </li>",
             "target": [
               ".mx-auto > .nav-item:nth-child(3)"
             ]
@@ -4647,7 +5003,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../pages/agency.html\" data-i18n=\"nav.agency\">Agency</a>",
+            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../agency.html\" data-i18n=\"nav.agency\">Agency</a>",
             "target": [
               ".site-header__nav-link[href$=\"agency.html\"][data-i18n=\"nav.agency\"]"
             ]
@@ -4667,7 +5023,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"nav-item\">\n                <a class=\"nav-link site-header__nav-link active\" href=\"about.html\" data-i18n=\"nav.about\">About</a>\n              </li>",
+            "html": "<li class=\"nav-item\">\n                <a class=\"nav-link site-header__nav-link\" href=\"../about.html\" data-i18n=\"nav.about\">About</a>\n              </li>",
             "target": [
               ".mx-auto > .nav-item:nth-child(4)"
             ]
@@ -4687,9 +5043,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"nav-link site-header__nav-link active\" href=\"about.html\" data-i18n=\"nav.about\">About</a>",
+            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../about.html\" data-i18n=\"nav.about\">About</a>",
             "target": [
-              ".active"
+              ".site-header__nav-link[data-i18n=\"nav.about\"][href$=\"about.html\"]"
             ]
           },
           {
@@ -4727,7 +5083,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"site-header__signup muted text-decoration-none\" href=\"../pages/createAccount.html\" data-i18n=\"nav.signup\">Signup</a>",
+            "html": "<a class=\"site-header__signup muted text-decoration-none\" href=\"../createAccount.html\" data-i18n=\"nav.signup\">Signup</a>",
             "target": [
               ".site-header__signup"
             ]
@@ -4747,7 +5103,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"btn btn-primary site-header__login-btn\" href=\"../pages/signin.html\" data-i18n=\"nav.login\">Login</a>",
+            "html": "<a class=\"btn btn-primary site-header__login-btn\" href=\"../signin.html\" data-i18n=\"nav.login\">Login</a>",
             "target": [
               ".site-header__login-btn"
             ]
@@ -4827,209 +5183,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<main id=\"main-content\" role=\"main\">",
+            "html": "<main class=\"py-5\">",
             "target": [
-              "#main-content"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<div class=\"about-us-wrapper\">",
-            "target": [
-              ".about-us-wrapper"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<div class=\"about-card animate-fade-in-up animate-on-scroll animate-active\">",
-            "target": [
-              ".about-card"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h1 class=\"about-card__title\">About Us</h1>",
-            "target": [
-              "h1"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<p class=\"about-card__text\">",
-            "target": [
-              ".about-card__text:nth-child(2)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<p class=\"about-card__text\">",
-            "target": [
-              ".about-card__text:nth-child(3)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h2 class=\"about-card__subtitle\">Our Mission</h2>",
-            "target": [
-              ".about-card__subtitle:nth-child(4)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<p class=\"about-card__text\">\n            Fair careers for workers. Trusted recruitment for employers.\n            Sustainable growth for Japan.\n          </p>",
-            "target": [
-              ".about-card__text:nth-child(5)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h2 class=\"about-card__subtitle\">Our Vision</h2>",
-            "target": [
-              ".about-card__subtitle:nth-child(6)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<p class=\"about-card__text\">\n            To be Japan's leading platform that empowers skilled foreign workers\n            to achieve meaningful careers and brighter futures.\n          </p>",
-            "target": [
-              ".about-card__text:nth-child(7)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<section class=\"cta-band\">",
-            "target": [
-              "section"
+              "main"
             ]
           },
           {
@@ -5049,7 +5205,7 @@
             "impact": null,
             "html": "<div class=\"container\">",
             "target": [
-              "section > .container"
+              "main > .container"
             ]
           },
           {
@@ -5067,9 +5223,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"feature-card feature-cta animate-scale-up animate-on-scroll animate-hover-lift\">",
+            "html": "<h1 class=\"fw-bold text-dark mb-4 border-bottom border-3 border-primary pb-2 text-center\">\n          Featured Companies\n        </h1>",
             "target": [
-              ".feature-card"
+              "h1"
             ]
           },
           {
@@ -5087,9 +5243,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div>\n              <h2 class=\"m-0 feature-card__title\">Want to work with us?</h2>\n              <p class=\"muted mt-xxs feature-card__desc\">\n                We partner with companies to hire and onboard exceptional\n                talent.\n              </p>\n            </div>",
+            "html": "<div class=\"row g-4 justify-content-center\">",
             "target": [
-              ".feature-card > div:nth-child(1)"
+              ".row"
             ]
           },
           {
@@ -5107,9 +5263,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h2 class=\"m-0 feature-card__title\">Want to work with us?</h2>",
+            "html": "<div class=\"col-12 col-md-6 col-lg-4\">",
             "target": [
-              ".feature-card__title"
+              ".col-12.col-md-6.col-lg-4:nth-child(1)"
             ]
           },
           {
@@ -5127,9 +5283,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p class=\"muted mt-xxs feature-card__desc\">\n                We partner with companies to hire and onboard exceptional\n                talent.\n              </p>",
+            "html": "<div class=\"feature-card bg-white p-4 rounded-4 shadow-sm h-100\">",
             "target": [
-              ".mt-xxs"
+              ".col-12.col-md-6.col-lg-4:nth-child(1) > .feature-card.bg-white.p-4"
             ]
           },
           {
@@ -5147,9 +5303,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div>\n              <a class=\"btn btn-primary feature-card__cta animate-hover-scale\" href=\"../index.html#post-job\">Contact Us</a>\n            </div>",
+            "html": "<div class=\"d-flex flex-column flex-md-row align-items-center align-items-md-start gap-4\">",
             "target": [
-              ".feature-card > div:nth-child(2)"
+              ".col-12.col-md-6.col-lg-4:nth-child(1) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4"
             ]
           },
           {
@@ -5167,9 +5323,589 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"btn btn-primary feature-card__cta animate-hover-scale\" href=\"../index.html#post-job\">Contact Us</a>",
+            "html": "<div class=\"flex-shrink-0\">",
             "target": [
-              ".feature-card__cta"
+              ".col-12.col-md-6.col-lg-4:nth-child(1) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-shrink-0"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<img src=\"https://placehold.co/100x100/cccccc/000000?text=Logo\" alt=\"Company logo\" class=\"img-fluid\" style=\"width: 100px; height: 100px; object-fit: contain\" onerror=\"this.onerror=null; this.src='https://placehold.co/100x100/cccccc/000000?text=Logo';\">",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(1) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-shrink-0 > img"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<div class=\"flex-grow-1 text-center text-md-start\">",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(1) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-grow-1.text-md-start.text-center"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<h2 class=\"h6 fw-bold mb-2\">Company Name</h2>",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(1) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-grow-1.text-md-start.text-center > .h6"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<p class=\"text-muted small mb-3\">\n                    Short description about the company, what they do, and what\n                    kinds of roles they recruit for.\n                  </p>",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(1) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-grow-1.text-md-start.text-center > .text-muted.small.mb-3"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<div class=\"d-flex flex-column flex-sm-row justify-content-center justify-content-md-start gap-2\">",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(1) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-grow-1.text-md-start.text-center > .flex-sm-row.justify-content-md-start.justify-content-center"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a href=\"../createAccount.html\" class=\"btn btn-outline-primary btn-sm\">View Company</a>",
+            "target": [
+              ".btn-outline-primary.btn-sm[href$=\"createAccount.html\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a href=\"../../index.html#companies\" class=\"btn btn-outline-dark btn-sm\">5+ Jobs</a>",
+            "target": [
+              ".btn-outline-dark.btn-sm[href$=\"index.html#companies\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<div class=\"col-12 col-md-6 col-lg-4\">",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(2)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<div class=\"feature-card bg-white p-4 rounded-4 shadow-sm h-100\">",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(2) > .feature-card.bg-white.p-4"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<div class=\"d-flex flex-column flex-md-row align-items-center align-items-md-start gap-4\">",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(2) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<div class=\"flex-shrink-0\">",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(2) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-shrink-0"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<img src=\"https://placehold.co/100x100/cccccc/000000?text=Logo\" alt=\"Company logo\" class=\"img-fluid\" style=\"width: 100px; height: 100px; object-fit: contain\" onerror=\"this.onerror=null; this.src='https://placehold.co/100x100/cccccc/000000?text=Logo';\">",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(2) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-shrink-0 > img"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<div class=\"flex-grow-1 text-center text-md-start\">",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(2) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-grow-1.text-md-start.text-center"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<h2 class=\"h6 fw-bold mb-2\">Another Company</h2>",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(2) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-grow-1.text-md-start.text-center > .h6"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<p class=\"text-muted small mb-3\">\n                    Example description about the company’s services and job\n                    roles.\n                  </p>",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(2) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-grow-1.text-md-start.text-center > .text-muted.small.mb-3"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<div class=\"d-flex flex-column flex-sm-row justify-content-center justify-content-md-start gap-2\">\n                    <a href=\"#\" class=\"btn btn-outline-primary btn-sm\">View Company</a>\n                    <a href=\"#\" class=\"btn btn-outline-dark btn-sm\">3 Jobs</a>\n                  </div>",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(2) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-grow-1.text-md-start.text-center > .flex-sm-row.justify-content-md-start.justify-content-center"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a href=\"#\" class=\"btn btn-outline-primary btn-sm\">View Company</a>",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(2) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-grow-1.text-md-start.text-center > .flex-sm-row.justify-content-md-start.justify-content-center > .btn-outline-primary.btn-sm[href=\"#\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a href=\"#\" class=\"btn btn-outline-dark btn-sm\">3 Jobs</a>",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(2) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-grow-1.text-md-start.text-center > .flex-sm-row.justify-content-md-start.justify-content-center > .btn-outline-dark.btn-sm[href=\"#\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<div class=\"col-12 col-md-6 col-lg-4\">",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(3)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<div class=\"feature-card bg-white p-4 rounded-4 shadow-sm h-100\">",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(3) > .feature-card.bg-white.p-4"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<div class=\"d-flex flex-column flex-md-row align-items-center align-items-md-start gap-4\">",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(3) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<div class=\"flex-shrink-0\">",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(3) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-shrink-0"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<img src=\"https://placehold.co/100x100/cccccc/000000?text=Logo\" alt=\"Company logo\" class=\"img-fluid\" style=\"width: 100px; height: 100px; object-fit: contain\" onerror=\"this.onerror=null; this.src='https://placehold.co/100x100/cccccc/000000?text=Logo';\">",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(3) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-shrink-0 > img"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<div class=\"flex-grow-1 text-center text-md-start\">",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(3) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-grow-1.text-md-start.text-center"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<h2 class=\"h6 fw-bold mb-2\">Third Company</h2>",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(3) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-grow-1.text-md-start.text-center > .h6"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<p class=\"text-muted small mb-3\">\n                    Another company info section goes here for testing layout.\n                  </p>",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(3) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-grow-1.text-md-start.text-center > .text-muted.small.mb-3"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<div class=\"d-flex flex-column flex-sm-row justify-content-center justify-content-md-start gap-2\">\n                    <a href=\"#\" class=\"btn btn-outline-primary btn-sm\">View Company</a>\n                    <a href=\"#\" class=\"btn btn-outline-dark btn-sm\">2 Jobs</a>\n                  </div>",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(3) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-grow-1.text-md-start.text-center > .flex-sm-row.justify-content-md-start.justify-content-center"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a href=\"#\" class=\"btn btn-outline-primary btn-sm\">View Company</a>",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(3) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-grow-1.text-md-start.text-center > .flex-sm-row.justify-content-md-start.justify-content-center > .btn-outline-primary.btn-sm[href=\"#\"]"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "region",
+                "data": {
+                  "isIframe": false
+                },
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "All page content is contained by landmarks"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<a href=\"#\" class=\"btn btn-outline-dark btn-sm\">2 Jobs</a>",
+            "target": [
+              ".col-12.col-md-6.col-lg-4:nth-child(3) > .feature-card.bg-white.p-4 > .flex-md-row.align-items-md-start.gap-4 > .flex-grow-1.text-md-start.text-center > .flex-sm-row.justify-content-md-start.justify-content-center > .btn-outline-dark.btn-sm[href=\"#\"]"
             ]
           },
           {
@@ -5287,7 +6023,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"footer-cta-actions site-footer__cta-actions\">\n            <a class=\"btn btn-secondary\" href=\"../\">Employer Login</a>\n            <a class=\"btn btn-primary\" href=\"../index.html#post-job\">Post a Job</a>\n          </div>",
+            "html": "<div class=\"footer-cta-actions site-footer__cta-actions\">\n            <a class=\"btn btn-secondary\" href=\"#\">Employer Login</a>\n            <a class=\"btn btn-primary\" href=\"#\">Post a Job</a>\n          </div>",
             "target": [
               ".footer-cta-actions"
             ]
@@ -5307,7 +6043,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"btn btn-secondary\" href=\"../\">Employer Login</a>",
+            "html": "<a class=\"btn btn-secondary\" href=\"#\">Employer Login</a>",
             "target": [
               ".btn-secondary"
             ]
@@ -5327,9 +6063,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"btn btn-primary\" href=\"../index.html#post-job\">Post a Job</a>",
+            "html": "<a class=\"btn btn-primary\" href=\"#\">Post a Job</a>",
             "target": [
-              ".footer-cta-actions > .btn-primary.btn[href$=\"index.html#post-job\"]"
+              ".btn-primary.btn[href=\"#\"]"
             ]
           },
           {
@@ -5367,7 +6103,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"link-col site-footer__link-col\">\n            <h3>Company</h3>\n            <ul>\n              <li><a href=\"../\">Home</a></li>\n              <li><a href=\"about.html\">About</a></li>\n              <li><a href=\"contact.html\">Contact</a></li>\n            </ul>\n          </div>",
+            "html": "<div class=\"link-col site-footer__link-col\">",
             "target": [
               ".link-col.site-footer__link-col:nth-child(1)"
             ]
@@ -5407,7 +6143,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<ul>\n              <li><a href=\"../\">Home</a></li>\n              <li><a href=\"about.html\">About</a></li>\n              <li><a href=\"contact.html\">Contact</a></li>\n            </ul>",
+            "html": "<ul>\n              <li><a href=\"../../index.html\">Home</a></li>\n              <li><a href=\"../about.html\">About</a></li>\n              <li><a href=\"../contact.html\">Contact</a></li>\n            </ul>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(1) > ul"
             ]
@@ -5427,7 +6163,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li><a href=\"../\">Home</a></li>",
+            "html": "<li><a href=\"../../index.html\">Home</a></li>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(1) > ul > li:nth-child(1)"
             ]
@@ -5447,9 +6183,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"../\">Home</a>",
+            "html": "<a href=\"../../index.html\">Home</a>",
             "target": [
-              "li:nth-child(1) > a[href=\"../\"]"
+              "li:nth-child(1) > a[href=\"../../index.html\"]"
             ]
           },
           {
@@ -5467,7 +6203,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li><a href=\"about.html\">About</a></li>",
+            "html": "<li><a href=\"../about.html\">About</a></li>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(1) > ul > li:nth-child(2)"
             ]
@@ -5487,7 +6223,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"about.html\">About</a>",
+            "html": "<a href=\"../about.html\">About</a>",
             "target": [
               "li:nth-child(2) > a[href$=\"about.html\"]"
             ]
@@ -5507,7 +6243,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li><a href=\"contact.html\">Contact</a></li>",
+            "html": "<li><a href=\"../contact.html\">Contact</a></li>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(1) > ul > li:nth-child(3)"
             ]
@@ -5527,7 +6263,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"contact.html\">Contact</a>",
+            "html": "<a href=\"../contact.html\">Contact</a>",
             "target": [
               "a[href$=\"contact.html\"]"
             ]
@@ -5567,9 +6303,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h4>Jobs</h4>",
+            "html": "<h3>Jobs</h3>",
             "target": [
-              "h4"
+              ".link-col.site-footer__link-col:nth-child(2) > h3"
             ]
           },
           {
@@ -5587,7 +6323,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<ul>\n              <li><a href=\"../index.html#jobs\">Search Jobs</a></li>\n              <li><a href=\"../index.html#companies\">Companies</a></li>\n              <li><a href=\"../index.html#post-job\">Post a Job</a></li>\n            </ul>",
+            "html": "<ul>\n              <li><a href=\"../../index.html#jobs\">Search Jobs</a></li>\n              <li><a href=\"../../index.html#companies\">Companies</a></li>\n              <li><a href=\"../../index.html#post-job\">Post a Job</a></li>\n            </ul>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(2) > ul"
             ]
@@ -5607,7 +6343,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li><a href=\"../index.html#jobs\">Search Jobs</a></li>",
+            "html": "<li><a href=\"../../index.html#jobs\">Search Jobs</a></li>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(2) > ul > li:nth-child(1)"
             ]
@@ -5627,7 +6363,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"../index.html#jobs\">Search Jobs</a>",
+            "html": "<a href=\"../../index.html#jobs\">Search Jobs</a>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(2) > ul > li:nth-child(1) > a[href$=\"index.html#jobs\"]"
             ]
@@ -5647,7 +6383,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li><a href=\"../index.html#companies\">Companies</a></li>",
+            "html": "<li><a href=\"../../index.html#companies\">Companies</a></li>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(2) > ul > li:nth-child(2)"
             ]
@@ -5667,7 +6403,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"../index.html#companies\">Companies</a>",
+            "html": "<a href=\"../../index.html#companies\">Companies</a>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(2) > ul > li:nth-child(2) > a[href$=\"index.html#companies\"]"
             ]
@@ -5687,7 +6423,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li><a href=\"../index.html#post-job\">Post a Job</a></li>",
+            "html": "<li><a href=\"../../index.html#post-job\">Post a Job</a></li>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(2) > ul > li:nth-child(3)"
             ]
@@ -5707,9 +6443,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"../index.html#post-job\">Post a Job</a>",
+            "html": "<a href=\"../../index.html#post-job\">Post a Job</a>",
             "target": [
-              "li:nth-child(3) > a[href$=\"index.html#post-job\"]"
+              "a[href$=\"index.html#post-job\"]"
             ]
           },
           {
@@ -5767,7 +6503,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<ul>\n              <li><a href=\"visaGuidance.html\">Visa Guidance</a></li>\n              <li><a href=\"#\">Employer Hub</a></li>\n              <li><a href=\"privacy.html\">Privacy</a></li>\n            </ul>",
+            "html": "<ul>\n              <li><a href=\"../visaGuidance.html\">Visa Guidance</a></li>\n              <li><a href=\"#\">Employer Hub</a></li>\n              <li><a href=\"../privacy.html\">Privacy</a></li>\n            </ul>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(3) > ul"
             ]
@@ -5787,7 +6523,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li><a href=\"visaGuidance.html\">Visa Guidance</a></li>",
+            "html": "<li><a href=\"../visaGuidance.html\">Visa Guidance</a></li>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(3) > ul > li:nth-child(1)"
             ]
@@ -5807,7 +6543,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"visaGuidance.html\">Visa Guidance</a>",
+            "html": "<a href=\"../visaGuidance.html\">Visa Guidance</a>",
             "target": [
               "a[href$=\"visaGuidance.html\"]"
             ]
@@ -5849,7 +6585,7 @@
             "impact": null,
             "html": "<a href=\"#\">Employer Hub</a>",
             "target": [
-              "a[href=\"#\"]"
+              "li:nth-child(2) > a[href=\"#\"]"
             ]
           },
           {
@@ -5867,7 +6603,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li><a href=\"privacy.html\">Privacy</a></li>",
+            "html": "<li><a href=\"../privacy.html\">Privacy</a></li>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(3) > ul > li:nth-child(3)"
             ]
@@ -5887,7 +6623,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"privacy.html\">Privacy</a>",
+            "html": "<a href=\"../privacy.html\">Privacy</a>",
             "target": [
               "li:nth-child(3) > a[href$=\"privacy.html\"]"
             ]
@@ -5927,7 +6663,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"legal-inner site-footer__legal-inner\">\n          <small>© 2025 Japan SSW. All rights reserved.</small>\n          <nav aria-label=\"Footer legal\">\n            <a href=\"terms.html\">Terms</a>\n            <a href=\"privacy.html\">Privacy</a>\n          </nav>\n        </div>",
+            "html": "<div class=\"legal-inner site-footer__legal-inner\">\n          <small>© 2025 Japan SSW. All rights reserved.</small>\n          <nav aria-label=\"Footer legal\">\n            <a href=\"../terms.html\">Terms</a>\n            <a href=\"../privacy.html\">Privacy</a>\n          </nav>\n        </div>",
             "target": [
               ".legal-inner"
             ]
@@ -5967,7 +6703,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<nav aria-label=\"Footer legal\">\n            <a href=\"terms.html\">Terms</a>\n            <a href=\"privacy.html\">Privacy</a>\n          </nav>",
+            "html": "<nav aria-label=\"Footer legal\">\n            <a href=\"../terms.html\">Terms</a>\n            <a href=\"../privacy.html\">Privacy</a>\n          </nav>",
             "target": [
               "nav[aria-label=\"Footer legal\"]"
             ]
@@ -5987,7 +6723,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"terms.html\">Terms</a>",
+            "html": "<a href=\"../terms.html\">Terms</a>",
             "target": [
               "a[href$=\"terms.html\"]"
             ]
@@ -6007,40 +6743,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a href=\"privacy.html\">Privacy</a>",
+            "html": "<a href=\"../privacy.html\">Privacy</a>",
             "target": [
               "nav[aria-label=\"Footer legal\"] > a[href$=\"privacy.html\"]"
-            ]
-          }
-        ]
-      },
-      {
-        "id": "skip-link",
-        "impact": null,
-        "tags": [
-          "cat.keyboard",
-          "best-practice"
-        ],
-        "description": "Ensure all skip links have a focusable target",
-        "help": "The skip-link target should exist and be focusable",
-        "helpUrl": "https://dequeuniversity.com/rules/axe/4.6/skip-link?application=axeAPI",
-        "nodes": [
-          {
-            "any": [
-              {
-                "id": "skip-link",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "Skip link target exists"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<a href=\"#main-content\" class=\"skip-link\" data-i18n=\"accessibility.skipToContent\">Skip to main content</a>",
-            "target": [
-              ".skip-link"
             ]
           }
         ]

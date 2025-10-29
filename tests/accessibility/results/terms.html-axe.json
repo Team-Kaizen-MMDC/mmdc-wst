@@ -1,5 +1,5 @@
 {
-  "url": "http://localhost:8000/pages/about.html",
+  "url": "http://localhost:8000/pages/terms.html",
   "axe": {
     "testEngine": {
       "name": "axe-core",
@@ -15,8 +15,8 @@
       "orientationAngle": 0,
       "orientationType": "landscape-primary"
     },
-    "timestamp": "2025-10-29T13:18:41.801Z",
-    "url": "http://localhost:8000/pages/about.html",
+    "timestamp": "2025-10-29T13:18:54.311Z",
+    "url": "http://localhost:8000/pages/terms.html",
     "toolOptions": {
       "reporter": "v1"
     },
@@ -828,24 +828,6 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<header class=\"site-header\" role=\"banner\">",
-            "target": [
-              "header"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "aria-allowed-role",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "minor",
-                "message": "ARIA role is allowed for given element"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
             "html": "<input class=\"form-check-input\" type=\"checkbox\" id=\"lang-toggle\" role=\"switch\" aria-checked=\"false\">",
             "target": [
               "#lang-toggle"
@@ -882,7 +864,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<main id=\"main-content\" role=\"main\">",
+            "html": "<main id=\"main-content\" role=\"main\" class=\"section-padding\">",
             "target": [
               "#main-content"
             ]
@@ -946,24 +928,6 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<header class=\"site-header\" role=\"banner\">",
-            "target": [
-              "header"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "aria-required-attr",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "critical",
-                "message": "All required ARIA attributes are present"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
             "html": "<input class=\"form-check-input\" type=\"checkbox\" id=\"lang-toggle\" role=\"switch\" aria-checked=\"false\">",
             "target": [
               "#lang-toggle"
@@ -982,7 +946,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<main id=\"main-content\" role=\"main\">",
+            "html": "<main id=\"main-content\" role=\"main\" class=\"section-padding\">",
             "target": [
               "#main-content"
             ]
@@ -1035,45 +999,6 @@
               }
             ],
             "impact": null,
-            "html": "<header class=\"site-header\" role=\"banner\">",
-            "target": [
-              "header"
-            ]
-          },
-          {
-            "any": [],
-            "all": [],
-            "none": [
-              {
-                "id": "invalidrole",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "critical",
-                "message": "ARIA role is valid"
-              },
-              {
-                "id": "abstractrole",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Abstract roles are not used"
-              },
-              {
-                "id": "unsupportedrole",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "critical",
-                "message": "ARIA role is supported"
-              },
-              {
-                "id": "deprecatedrole",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "minor",
-                "message": "ARIA role is not deprecated"
-              }
-            ],
-            "impact": null,
             "html": "<input class=\"form-check-input\" type=\"checkbox\" id=\"lang-toggle\" role=\"switch\" aria-checked=\"false\">",
             "target": [
               "#lang-toggle"
@@ -1113,7 +1038,7 @@
               }
             ],
             "impact": null,
-            "html": "<main id=\"main-content\" role=\"main\">",
+            "html": "<main id=\"main-content\" role=\"main\" class=\"section-padding\">",
             "target": [
               "#main-content"
             ]
@@ -1276,51 +1201,69 @@
                 "data": null,
                 "relatedNodes": [
                   {
-                    "html": "<h1 class=\"about-card__title\">About Us</h1>",
+                    "html": "<h1 class=\"section-title animate-fade-in-down animate-on-scroll animate-active\">\n          Terms of Service\n        </h1>",
                     "target": [
                       "h1"
                     ]
                   },
                   {
-                    "html": "<h2 class=\"about-card__subtitle\">Our Mission</h2>",
+                    "html": "<h2>1. Use of the Service</h2>",
                     "target": [
-                      ".about-card__subtitle:nth-child(4)"
+                      "h2:nth-child(2)"
                     ]
                   },
                   {
-                    "html": "<h2 class=\"about-card__subtitle\">Our Vision</h2>",
+                    "html": "<h2>2. Accounts and Registration</h2>",
                     "target": [
-                      ".about-card__subtitle:nth-child(6)"
+                      "h2:nth-child(4)"
                     ]
                   },
                   {
-                    "html": "<h2 class=\"m-0 feature-card__title\">Want to work with us?</h2>",
+                    "html": "<h2>3. Intellectual Property</h2>",
                     "target": [
-                      ".feature-card__title"
+                      "h2:nth-child(6)"
                     ]
                   },
                   {
-                    "html": "<h2>Want to post jobs on JapanSSW?</h2>",
+                    "html": "<h2>4. Disclaimers</h2>",
                     "target": [
-                      ".footer-cta > h2"
+                      "h2:nth-child(8)"
                     ]
                   },
                   {
-                    "html": "<h3>Company</h3>",
+                    "html": "<h2>5. Limitation of Liability</h2>",
                     "target": [
-                      ".link-col.site-footer__link-col:nth-child(1) > h3"
+                      "h2:nth-child(10)"
+                    ]
+                  },
+                  {
+                    "html": "<h2>6. Changes to Terms</h2>",
+                    "target": [
+                      "h2:nth-child(12)"
+                    ]
+                  },
+                  {
+                    "html": "<h3>Want to post jobs on JapanSSW?</h3>",
+                    "target": [
+                      "h3"
+                    ]
+                  },
+                  {
+                    "html": "<h4>Company</h4>",
+                    "target": [
+                      ".link-col.site-footer__link-col:nth-child(1) > h4"
                     ]
                   },
                   {
                     "html": "<h4>Jobs</h4>",
                     "target": [
-                      "h4"
+                      ".link-col.site-footer__link-col:nth-child(2) > h4"
                     ]
                   },
                   {
-                    "html": "<h3>Resources</h3>",
+                    "html": "<h4>Resources</h4>",
                     "target": [
-                      ".link-col.site-footer__link-col:nth-child(3) > h3"
+                      ".link-col.site-footer__link-col:nth-child(3) > h4"
                     ]
                   }
                 ],
@@ -1332,7 +1275,7 @@
                 "data": null,
                 "relatedNodes": [
                   {
-                    "html": "<main id=\"main-content\" role=\"main\">",
+                    "html": "<main id=\"main-content\" role=\"main\" class=\"section-padding\">",
                     "target": [
                       "#main-content"
                     ]
@@ -1385,7 +1328,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"navbar-brand site-header__brand\" href=\"../index.html\">Japan SSW</a>",
+            "html": "<a class=\"navbar-brand site-header__brand\" href=\"../index.html\" data-i18n=\"site.brand\">Japan SSW</a>",
             "target": [
               ".navbar-brand"
             ]
@@ -1412,7 +1355,7 @@
             "impact": null,
             "html": "<a class=\"nav-link site-header__nav-link\" href=\"../index.html#jobs\" data-i18n=\"nav.jobs\">Jobs</a>",
             "target": [
-              ".site-header__nav-link[data-i18n=\"nav.jobs\"][href$=\"index.html#jobs\"]"
+              "a[data-i18n=\"nav.jobs\"]"
             ]
           },
           {
@@ -1460,84 +1403,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../pages/agency.html\" data-i18n=\"nav.agency\">Agency</a>",
+            "html": "<a class=\"nav-link site-header__nav-link\" href=\"about.html\" data-i18n=\"nav.about\">About</a>",
             "target": [
-              ".site-header__nav-link[href$=\"agency.html\"][data-i18n=\"nav.agency\"]"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#eb0000",
-                  "bgColor": "#fcfcfc",
-                  "contrastRatio": 4.51,
-                  "fontSize": "12.0pt (16px)",
-                  "fontWeight": "bold",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 4.51"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<a class=\"nav-link site-header__nav-link active\" href=\"about.html\" data-i18n=\"nav.about\">About</a>",
-            "target": [
-              ".active"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#595959",
-                  "bgColor": "#fcfcfc",
-                  "contrastRatio": 6.82,
-                  "fontSize": "11.4pt (15.2px)",
-                  "fontWeight": "normal",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 6.82"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<a class=\"site-header__signup muted text-decoration-none\" href=\"../pages/createAccount.html\" data-i18n=\"nav.signup\">Signup</a>",
-            "target": [
-              ".site-header__signup"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#ffffff",
-                  "bgColor": "#eb0000",
-                  "contrastRatio": 4.63,
-                  "fontSize": "11.3pt (15px)",
-                  "fontWeight": "normal",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 4.63"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<a class=\"btn btn-primary site-header__login-btn\" href=\"../pages/signin.html\" data-i18n=\"nav.login\">Login</a>",
-            "target": [
-              ".site-header__login-btn"
+              "a[data-i18n=\"nav.about\"]"
             ]
           },
           {
@@ -1573,7 +1441,7 @@
                   "fgColor": "#290000",
                   "bgColor": "#ffffff",
                   "contrastRatio": 19.19,
-                  "fontSize": "18.0pt (24px)",
+                  "fontSize": "27.0pt (36px)",
                   "fontWeight": "bold",
                   "expectedContrastRatio": "3:1"
                 },
@@ -1585,7 +1453,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h1 class=\"about-card__title\">About Us</h1>",
+            "html": "<h1 class=\"section-title animate-fade-in-down animate-on-scroll animate-active\">\n          Terms of Service\n        </h1>",
             "target": [
               "h1"
             ]
@@ -1595,24 +1463,24 @@
               {
                 "id": "color-contrast",
                 "data": {
-                  "fgColor": "#290000",
+                  "fgColor": "#595959",
                   "bgColor": "#ffffff",
-                  "contrastRatio": 19.19,
-                  "fontSize": "12.0pt (16px)",
+                  "contrastRatio": 7,
+                  "fontSize": "11.4pt (15.2px)",
                   "fontWeight": "normal",
                   "expectedContrastRatio": "4.5:1"
                 },
                 "relatedNodes": [],
                 "impact": "serious",
-                "message": "Element has sufficient color contrast of 19.19"
+                "message": "Element has sufficient color contrast of 7"
               }
             ],
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p class=\"about-card__text\">",
+            "html": "<p class=\"muted\">",
             "target": [
-              ".about-card__text:nth-child(2)"
+              "article > .muted"
             ]
           },
           {
@@ -1622,131 +1490,6 @@
                 "data": {
                   "fgColor": "#290000",
                   "bgColor": "#ffffff",
-                  "contrastRatio": 19.19,
-                  "fontSize": "12.0pt (16px)",
-                  "fontWeight": "normal",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 19.19"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<p class=\"about-card__text\">",
-            "target": [
-              ".about-card__text:nth-child(3)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#290000",
-                  "bgColor": "#ffffff",
-                  "contrastRatio": 19.19,
-                  "fontSize": "15.0pt (20px)",
-                  "fontWeight": "normal",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 19.19"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h2 class=\"about-card__subtitle\">Our Mission</h2>",
-            "target": [
-              ".about-card__subtitle:nth-child(4)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#290000",
-                  "bgColor": "#ffffff",
-                  "contrastRatio": 19.19,
-                  "fontSize": "12.0pt (16px)",
-                  "fontWeight": "normal",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 19.19"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<p class=\"about-card__text\">\n            Fair careers for workers. Trusted recruitment for employers.\n            Sustainable growth for Japan.\n          </p>",
-            "target": [
-              ".about-card__text:nth-child(5)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#290000",
-                  "bgColor": "#ffffff",
-                  "contrastRatio": 19.19,
-                  "fontSize": "15.0pt (20px)",
-                  "fontWeight": "normal",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 19.19"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h2 class=\"about-card__subtitle\">Our Vision</h2>",
-            "target": [
-              ".about-card__subtitle:nth-child(6)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#290000",
-                  "bgColor": "#ffffff",
-                  "contrastRatio": 19.19,
-                  "fontSize": "12.0pt (16px)",
-                  "fontWeight": "normal",
-                  "expectedContrastRatio": "4.5:1"
-                },
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element has sufficient color contrast of 19.19"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<p class=\"about-card__text\">\n            To be Japan's leading platform that empowers skilled foreign workers\n            to achieve meaningful careers and brighter futures.\n          </p>",
-            "target": [
-              ".about-card__text:nth-child(7)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "color-contrast",
-                "data": {
-                  "fgColor": "#ffffff",
-                  "bgColor": "#290000",
                   "contrastRatio": 19.19,
                   "fontSize": "24.0pt (32px)",
                   "fontWeight": "bold",
@@ -1760,9 +1503,309 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h2>Want to post jobs on JapanSSW?</h2>",
+            "html": "<h2>1. Use of the Service</h2>",
             "target": [
-              ".footer-cta > h2"
+              "h2:nth-child(2)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#290000",
+                  "bgColor": "#ffffff",
+                  "contrastRatio": 19.19,
+                  "fontSize": "12.0pt (16px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 19.19"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<p>",
+            "target": [
+              "p:nth-child(3)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#290000",
+                  "bgColor": "#ffffff",
+                  "contrastRatio": 19.19,
+                  "fontSize": "24.0pt (32px)",
+                  "fontWeight": "bold",
+                  "expectedContrastRatio": "3:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 19.19"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<h2>2. Accounts and Registration</h2>",
+            "target": [
+              "h2:nth-child(4)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#290000",
+                  "bgColor": "#ffffff",
+                  "contrastRatio": 19.19,
+                  "fontSize": "12.0pt (16px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 19.19"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<p>\n            When creating an account you are responsible for maintaining the\n            confidentiality of your account credentials and for all activity\n            that occurs under your account. You must provide accurate and\n            complete information where requested.\n          </p>",
+            "target": [
+              "p:nth-child(5)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#290000",
+                  "bgColor": "#ffffff",
+                  "contrastRatio": 19.19,
+                  "fontSize": "24.0pt (32px)",
+                  "fontWeight": "bold",
+                  "expectedContrastRatio": "3:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 19.19"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<h2>3. Intellectual Property</h2>",
+            "target": [
+              "h2:nth-child(6)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#290000",
+                  "bgColor": "#ffffff",
+                  "contrastRatio": 19.19,
+                  "fontSize": "12.0pt (16px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 19.19"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<p>\n            All content on Japan SSW, including text, logos, and images, is\n            owned by or licensed to Japan SSW unless otherwise stated. You may\n            not reproduce or redistribute content from this site without our\n            prior written consent.\n          </p>",
+            "target": [
+              "p:nth-child(7)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#290000",
+                  "bgColor": "#ffffff",
+                  "contrastRatio": 19.19,
+                  "fontSize": "24.0pt (32px)",
+                  "fontWeight": "bold",
+                  "expectedContrastRatio": "3:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 19.19"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<h2>4. Disclaimers</h2>",
+            "target": [
+              "h2:nth-child(8)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#290000",
+                  "bgColor": "#ffffff",
+                  "contrastRatio": 19.19,
+                  "fontSize": "12.0pt (16px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 19.19"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<p>",
+            "target": [
+              "p:nth-child(9)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#290000",
+                  "bgColor": "#ffffff",
+                  "contrastRatio": 19.19,
+                  "fontSize": "24.0pt (32px)",
+                  "fontWeight": "bold",
+                  "expectedContrastRatio": "3:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 19.19"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<h2>5. Limitation of Liability</h2>",
+            "target": [
+              "h2:nth-child(10)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#290000",
+                  "bgColor": "#ffffff",
+                  "contrastRatio": 19.19,
+                  "fontSize": "12.0pt (16px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 19.19"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<p>\n            To the maximum extent permitted by law, Japan SSW will not be liable\n            for any direct, indirect, incidental, consequential, or punitive\n            damages arising out of your use of the service.\n          </p>",
+            "target": [
+              "p:nth-child(11)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#290000",
+                  "bgColor": "#ffffff",
+                  "contrastRatio": 19.19,
+                  "fontSize": "24.0pt (32px)",
+                  "fontWeight": "bold",
+                  "expectedContrastRatio": "3:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 19.19"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<h2>6. Changes to Terms</h2>",
+            "target": [
+              "h2:nth-child(12)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#290000",
+                  "bgColor": "#ffffff",
+                  "contrastRatio": 19.19,
+                  "fontSize": "12.0pt (16px)",
+                  "fontWeight": "normal",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 19.19"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<p>\n            We may modify these Terms at any time. Material changes will be\n            posted on this page with the date of the last revision. Continued\n            use of the site after changes indicates acceptance of the updated\n            Terms.\n          </p>",
+            "target": [
+              "p:nth-child(13)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#ffffff",
+                  "bgColor": "#290000",
+                  "contrastRatio": 19.19,
+                  "fontSize": "13.5pt (18px)",
+                  "fontWeight": "bold",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has sufficient color contrast of 19.19"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<h3>Want to post jobs on JapanSSW?</h3>",
+            "target": [
+              "h3"
             ]
           },
           {
@@ -1837,7 +1880,7 @@
             "impact": null,
             "html": "<a class=\"btn btn-primary\" href=\"../index.html#post-job\">Post a Job</a>",
             "target": [
-              ".footer-cta-actions > .btn-primary.btn[href$=\"index.html#post-job\"]"
+              ".btn-primary"
             ]
           },
           {
@@ -1848,8 +1891,8 @@
                   "fgColor": "#ffffff",
                   "bgColor": "#290000",
                   "contrastRatio": 19.19,
-                  "fontSize": "21.0pt (28px)",
-                  "fontWeight": "bold",
+                  "fontSize": "18.0pt (24px)",
+                  "fontWeight": "normal",
                   "expectedContrastRatio": "3:1"
                 },
                 "relatedNodes": [],
@@ -1860,9 +1903,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h3>Company</h3>",
+            "html": "<h4>Company</h4>",
             "target": [
-              ".link-col.site-footer__link-col:nth-child(1) > h3"
+              ".link-col.site-footer__link-col:nth-child(1) > h4"
             ]
           },
           {
@@ -1962,7 +2005,7 @@
             "impact": null,
             "html": "<h4>Jobs</h4>",
             "target": [
-              "h4"
+              ".link-col.site-footer__link-col:nth-child(2) > h4"
             ]
           },
           {
@@ -2048,8 +2091,8 @@
                   "fgColor": "#ffffff",
                   "bgColor": "#290000",
                   "contrastRatio": 19.19,
-                  "fontSize": "21.0pt (28px)",
-                  "fontWeight": "bold",
+                  "fontSize": "18.0pt (24px)",
+                  "fontWeight": "normal",
                   "expectedContrastRatio": "3:1"
                 },
                 "relatedNodes": [],
@@ -2060,9 +2103,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h3>Resources</h3>",
+            "html": "<h4>Resources</h4>",
             "target": [
-              ".link-col.site-footer__link-col:nth-child(3) > h3"
+              ".link-col.site-footer__link-col:nth-child(3) > h4"
             ]
           },
           {
@@ -2311,7 +2354,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h5 class=\"offcanvas-title\" id=\"siteOffcanvasLabel\">Menu</h5>",
+            "html": "<h5 class=\"offcanvas-title\" id=\"siteOffcanvasLabel\">Japan SSW</h5>",
             "target": [
               "#siteOffcanvasLabel"
             ]
@@ -2415,7 +2458,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<main id=\"main-content\" role=\"main\">",
+            "html": "<main id=\"main-content\" role=\"main\" class=\"section-padding\">",
             "target": [
               "#main-content"
             ]
@@ -2446,7 +2489,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h1 class=\"about-card__title\">About Us</h1>",
+            "html": "<h1 class=\"section-title animate-fade-in-down animate-on-scroll animate-active\">\n          Terms of Service\n        </h1>",
             "target": [
               "h1"
             ]
@@ -2464,9 +2507,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h2 class=\"about-card__subtitle\">Our Mission</h2>",
+            "html": "<h2>1. Use of the Service</h2>",
             "target": [
-              ".about-card__subtitle:nth-child(4)"
+              "h2:nth-child(2)"
             ]
           },
           {
@@ -2482,9 +2525,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h2 class=\"about-card__subtitle\">Our Vision</h2>",
+            "html": "<h2>2. Accounts and Registration</h2>",
             "target": [
-              ".about-card__subtitle:nth-child(6)"
+              "h2:nth-child(4)"
             ]
           },
           {
@@ -2500,9 +2543,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h2 class=\"m-0 feature-card__title\">Want to work with us?</h2>",
+            "html": "<h2>3. Intellectual Property</h2>",
             "target": [
-              ".feature-card__title"
+              "h2:nth-child(6)"
             ]
           },
           {
@@ -2518,9 +2561,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h2>Want to post jobs on JapanSSW?</h2>",
+            "html": "<h2>4. Disclaimers</h2>",
             "target": [
-              ".footer-cta > h2"
+              "h2:nth-child(8)"
             ]
           },
           {
@@ -2536,9 +2579,63 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h3>Company</h3>",
+            "html": "<h2>5. Limitation of Liability</h2>",
             "target": [
-              ".link-col.site-footer__link-col:nth-child(1) > h3"
+              "h2:nth-child(10)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "has-visible-text",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "minor",
+                "message": "Element has text that is visible to screen readers"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<h2>6. Changes to Terms</h2>",
+            "target": [
+              "h2:nth-child(12)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "has-visible-text",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "minor",
+                "message": "Element has text that is visible to screen readers"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<h3>Want to post jobs on JapanSSW?</h3>",
+            "target": [
+              "h3"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "has-visible-text",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "minor",
+                "message": "Element has text that is visible to screen readers"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<h4>Company</h4>",
+            "target": [
+              ".link-col.site-footer__link-col:nth-child(1) > h4"
             ]
           },
           {
@@ -2556,7 +2653,7 @@
             "impact": null,
             "html": "<h4>Jobs</h4>",
             "target": [
-              "h4"
+              ".link-col.site-footer__link-col:nth-child(2) > h4"
             ]
           },
           {
@@ -2572,9 +2669,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h3>Resources</h3>",
+            "html": "<h4>Resources</h4>",
             "target": [
-              ".link-col.site-footer__link-col:nth-child(3) > h3"
+              ".link-col.site-footer__link-col:nth-child(3) > h4"
             ]
           }
         ]
@@ -2637,39 +2734,57 @@
                   "headingOrder": [
                     {
                       "ancestry": [
-                        "html > body > main:nth-child(3) > div:nth-child(1) > div > h1:nth-child(1)"
+                        "html > body > main:nth-child(3) > div > h1:nth-child(1)"
                       ],
                       "level": 1
                     },
                     {
                       "ancestry": [
-                        "html > body > main:nth-child(3) > div:nth-child(1) > div > h2:nth-child(4)"
+                        "html > body > main:nth-child(3) > div > article:nth-child(2) > h2:nth-child(2)"
                       ],
                       "level": 2
                     },
                     {
                       "ancestry": [
-                        "html > body > main:nth-child(3) > div:nth-child(1) > div > h2:nth-child(6)"
+                        "html > body > main:nth-child(3) > div > article:nth-child(2) > h2:nth-child(4)"
                       ],
                       "level": 2
                     },
                     {
                       "ancestry": [
-                        "html > body > main:nth-child(3) > section:nth-child(2) > div > div > div:nth-child(1) > h2:nth-child(1)"
+                        "html > body > main:nth-child(3) > div > article:nth-child(2) > h2:nth-child(6)"
                       ],
                       "level": 2
                     },
                     {
                       "ancestry": [
-                        "html > body > footer:nth-child(4) > div:nth-child(1) > div:nth-child(1) > h2:nth-child(1)"
+                        "html > body > main:nth-child(3) > div > article:nth-child(2) > h2:nth-child(8)"
                       ],
                       "level": 2
                     },
                     {
                       "ancestry": [
-                        "html > body > footer:nth-child(4) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > h3:nth-child(1)"
+                        "html > body > main:nth-child(3) > div > article:nth-child(2) > h2:nth-child(10)"
+                      ],
+                      "level": 2
+                    },
+                    {
+                      "ancestry": [
+                        "html > body > main:nth-child(3) > div > article:nth-child(2) > h2:nth-child(12)"
+                      ],
+                      "level": 2
+                    },
+                    {
+                      "ancestry": [
+                        "html > body > footer:nth-child(4) > div:nth-child(1) > div:nth-child(1) > h3:nth-child(1)"
                       ],
                       "level": 3
+                    },
+                    {
+                      "ancestry": [
+                        "html > body > footer:nth-child(4) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > h4:nth-child(1)"
+                      ],
+                      "level": 4
                     },
                     {
                       "ancestry": [
@@ -2679,9 +2794,9 @@
                     },
                     {
                       "ancestry": [
-                        "html > body > footer:nth-child(4) > div:nth-child(1) > div:nth-child(2) > div:nth-child(3) > h3:nth-child(1)"
+                        "html > body > footer:nth-child(4) > div:nth-child(1) > div:nth-child(2) > div:nth-child(3) > h4:nth-child(1)"
                       ],
-                      "level": 3
+                      "level": 4
                     }
                   ]
                 },
@@ -2693,7 +2808,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h1 class=\"about-card__title\">About Us</h1>",
+            "html": "<h1 class=\"section-title animate-fade-in-down animate-on-scroll animate-active\">\n          Terms of Service\n        </h1>",
             "target": [
               "h1"
             ]
@@ -2711,9 +2826,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h2 class=\"about-card__subtitle\">Our Mission</h2>",
+            "html": "<h2>1. Use of the Service</h2>",
             "target": [
-              ".about-card__subtitle:nth-child(4)"
+              "h2:nth-child(2)"
             ]
           },
           {
@@ -2729,9 +2844,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h2 class=\"about-card__subtitle\">Our Vision</h2>",
+            "html": "<h2>2. Accounts and Registration</h2>",
             "target": [
-              ".about-card__subtitle:nth-child(6)"
+              "h2:nth-child(4)"
             ]
           },
           {
@@ -2747,9 +2862,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h2 class=\"m-0 feature-card__title\">Want to work with us?</h2>",
+            "html": "<h2>3. Intellectual Property</h2>",
             "target": [
-              ".feature-card__title"
+              "h2:nth-child(6)"
             ]
           },
           {
@@ -2765,9 +2880,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h2>Want to post jobs on JapanSSW?</h2>",
+            "html": "<h2>4. Disclaimers</h2>",
             "target": [
-              ".footer-cta > h2"
+              "h2:nth-child(8)"
             ]
           },
           {
@@ -2783,9 +2898,63 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h3>Company</h3>",
+            "html": "<h2>5. Limitation of Liability</h2>",
             "target": [
-              ".link-col.site-footer__link-col:nth-child(1) > h3"
+              "h2:nth-child(10)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "heading-order",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "Heading order valid"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<h2>6. Changes to Terms</h2>",
+            "target": [
+              "h2:nth-child(12)"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "heading-order",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "Heading order valid"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<h3>Want to post jobs on JapanSSW?</h3>",
+            "target": [
+              "h3"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "heading-order",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "moderate",
+                "message": "Heading order valid"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": null,
+            "html": "<h4>Company</h4>",
+            "target": [
+              ".link-col.site-footer__link-col:nth-child(1) > h4"
             ]
           },
           {
@@ -2803,7 +2972,7 @@
             "impact": null,
             "html": "<h4>Jobs</h4>",
             "target": [
-              "h4"
+              ".link-col.site-footer__link-col:nth-child(2) > h4"
             ]
           },
           {
@@ -2819,9 +2988,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h3>Resources</h3>",
+            "html": "<h4>Resources</h4>",
             "target": [
-              ".link-col.site-footer__link-col:nth-child(3) > h3"
+              ".link-col.site-footer__link-col:nth-child(3) > h4"
             ]
           }
         ]
@@ -3001,7 +3170,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<header class=\"site-header\" role=\"banner\">",
+            "html": "<header class=\"site-header\">",
             "target": [
               "header"
             ]
@@ -3067,7 +3236,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<main id=\"main-content\" role=\"main\">",
+            "html": "<main id=\"main-content\" role=\"main\" class=\"section-padding\">",
             "target": [
               "#main-content"
             ]
@@ -3098,7 +3267,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<header class=\"site-header\" role=\"banner\">",
+            "html": "<header class=\"site-header\">",
             "target": [
               "header"
             ]
@@ -3160,7 +3329,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<main id=\"main-content\" role=\"main\">",
+            "html": "<main id=\"main-content\" role=\"main\" class=\"section-padding\">",
             "target": [
               "#main-content"
             ]
@@ -3186,7 +3355,7 @@
                 "data": null,
                 "relatedNodes": [
                   {
-                    "html": "<main id=\"main-content\" role=\"main\">",
+                    "html": "<main id=\"main-content\" role=\"main\" class=\"section-padding\">",
                     "target": [
                       "#main-content"
                     ]
@@ -3232,7 +3401,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<header class=\"site-header\" role=\"banner\">",
+            "html": "<header class=\"site-header\">",
             "target": [
               "header"
             ]
@@ -3274,7 +3443,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<main id=\"main-content\" role=\"main\">",
+            "html": "<main id=\"main-content\" role=\"main\" class=\"section-padding\">",
             "target": [
               "#main-content"
             ]
@@ -3386,7 +3555,7 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"navbar-brand site-header__brand\" href=\"../index.html\">Japan SSW</a>",
+            "html": "<a class=\"navbar-brand site-header__brand\" href=\"../index.html\" data-i18n=\"site.brand\">Japan SSW</a>",
             "target": [
               ".navbar-brand"
             ]
@@ -3414,7 +3583,7 @@
             "impact": null,
             "html": "<a class=\"nav-link site-header__nav-link\" href=\"../index.html#jobs\" data-i18n=\"nav.jobs\">Jobs</a>",
             "target": [
-              ".site-header__nav-link[data-i18n=\"nav.jobs\"][href$=\"index.html#jobs\"]"
+              "a[data-i18n=\"nav.jobs\"]"
             ]
           },
           {
@@ -3464,113 +3633,9 @@
               }
             ],
             "impact": null,
-            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../pages/agency.html\" data-i18n=\"nav.agency\">Agency</a>",
+            "html": "<a class=\"nav-link site-header__nav-link\" href=\"about.html\" data-i18n=\"nav.about\">About</a>",
             "target": [
-              ".site-header__nav-link[href$=\"agency.html\"][data-i18n=\"nav.agency\"]"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "has-visible-text",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "minor",
-                "message": "Element has text that is visible to screen readers"
-              }
-            ],
-            "all": [],
-            "none": [
-              {
-                "id": "focusable-no-name",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element is not in tab order or has accessible text"
-              }
-            ],
-            "impact": null,
-            "html": "<a class=\"nav-link site-header__nav-link active\" href=\"about.html\" data-i18n=\"nav.about\">About</a>",
-            "target": [
-              ".active"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "has-visible-text",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "minor",
-                "message": "Element has text that is visible to screen readers"
-              }
-            ],
-            "all": [],
-            "none": [
-              {
-                "id": "focusable-no-name",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element is not in tab order or has accessible text"
-              }
-            ],
-            "impact": null,
-            "html": "<a class=\"site-header__signup muted text-decoration-none\" href=\"../pages/createAccount.html\" data-i18n=\"nav.signup\">Signup</a>",
-            "target": [
-              ".site-header__signup"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "has-visible-text",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "minor",
-                "message": "Element has text that is visible to screen readers"
-              }
-            ],
-            "all": [],
-            "none": [
-              {
-                "id": "focusable-no-name",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element is not in tab order or has accessible text"
-              }
-            ],
-            "impact": null,
-            "html": "<a class=\"btn btn-primary site-header__login-btn\" href=\"../pages/signin.html\" data-i18n=\"nav.login\">Login</a>",
-            "target": [
-              ".site-header__login-btn"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "has-visible-text",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "minor",
-                "message": "Element has text that is visible to screen readers"
-              }
-            ],
-            "all": [],
-            "none": [
-              {
-                "id": "focusable-no-name",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "Element is not in tab order or has accessible text"
-              }
-            ],
-            "impact": null,
-            "html": "<a class=\"btn btn-primary feature-card__cta animate-hover-scale\" href=\"../index.html#post-job\">Contact Us</a>",
-            "target": [
-              ".feature-card__cta"
+              "a[data-i18n=\"nav.about\"]"
             ]
           },
           {
@@ -3622,7 +3687,7 @@
             "impact": null,
             "html": "<a class=\"btn btn-primary\" href=\"../index.html#post-job\">Post a Job</a>",
             "target": [
-              ".footer-cta-actions > .btn-primary.btn[href$=\"index.html#post-job\"]"
+              ".btn-primary"
             ]
           },
           {
@@ -4060,27 +4125,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"nav-item\">\n                <a class=\"nav-link site-header__nav-link\" href=\"../pages/agency.html\" data-i18n=\"nav.agency\">Agency</a>\n              </li>",
+            "html": "<li class=\"nav-item\">\n                <a class=\"nav-link site-header__nav-link\" href=\"about.html\" data-i18n=\"nav.about\">About</a>\n              </li>",
             "target": [
               ".mx-auto > .nav-item:nth-child(3)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "listitem",
-                "data": null,
-                "relatedNodes": [],
-                "impact": "serious",
-                "message": "List item has a <ul>, <ol> or role=\"list\" parent element"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<li class=\"nav-item\">\n                <a class=\"nav-link site-header__nav-link active\" href=\"about.html\" data-i18n=\"nav.about\">About</a>\n              </li>",
-            "target": [
-              ".mx-auto > .nav-item:nth-child(4)"
             ]
           },
           {
@@ -4271,7 +4318,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">",
+            "html": "<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">",
             "target": [
               "meta[name=\"viewport\"]"
             ]
@@ -4304,7 +4351,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">",
+            "html": "<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">",
             "target": [
               "meta[name=\"viewport\"]"
             ]
@@ -4362,7 +4409,7 @@
                 "data": null,
                 "relatedNodes": [
                   {
-                    "html": "<h1 class=\"about-card__title\">About Us</h1>",
+                    "html": "<h1 class=\"section-title animate-fade-in-down animate-on-scroll animate-active\">\n          Terms of Service\n        </h1>",
                     "target": [
                       "h1"
                     ]
@@ -4427,7 +4474,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<header class=\"site-header\" role=\"banner\">",
+            "html": "<header class=\"site-header\">",
             "target": [
               "header"
             ]
@@ -4487,7 +4534,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"navbar-brand site-header__brand\" href=\"../index.html\">Japan SSW</a>",
+            "html": "<a class=\"navbar-brand site-header__brand\" href=\"../index.html\" data-i18n=\"site.brand\">Japan SSW</a>",
             "target": [
               ".navbar-brand"
             ]
@@ -4569,7 +4616,7 @@
             "impact": null,
             "html": "<a class=\"nav-link site-header__nav-link\" href=\"../index.html#jobs\" data-i18n=\"nav.jobs\">Jobs</a>",
             "target": [
-              ".site-header__nav-link[data-i18n=\"nav.jobs\"][href$=\"index.html#jobs\"]"
+              "a[data-i18n=\"nav.jobs\"]"
             ]
           },
           {
@@ -4627,7 +4674,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<li class=\"nav-item\">\n                <a class=\"nav-link site-header__nav-link\" href=\"../pages/agency.html\" data-i18n=\"nav.agency\">Agency</a>\n              </li>",
+            "html": "<li class=\"nav-item\">\n                <a class=\"nav-link site-header__nav-link\" href=\"about.html\" data-i18n=\"nav.about\">About</a>\n              </li>",
             "target": [
               ".mx-auto > .nav-item:nth-child(3)"
             ]
@@ -4647,49 +4694,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"nav-link site-header__nav-link\" href=\"../pages/agency.html\" data-i18n=\"nav.agency\">Agency</a>",
+            "html": "<a class=\"nav-link site-header__nav-link\" href=\"about.html\" data-i18n=\"nav.about\">About</a>",
             "target": [
-              ".site-header__nav-link[href$=\"agency.html\"][data-i18n=\"nav.agency\"]"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<li class=\"nav-item\">\n                <a class=\"nav-link site-header__nav-link active\" href=\"about.html\" data-i18n=\"nav.about\">About</a>\n              </li>",
-            "target": [
-              ".mx-auto > .nav-item:nth-child(4)"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<a class=\"nav-link site-header__nav-link active\" href=\"about.html\" data-i18n=\"nav.about\">About</a>",
-            "target": [
-              ".active"
+              "a[data-i18n=\"nav.about\"]"
             ]
           },
           {
@@ -4710,46 +4717,6 @@
             "html": "<div class=\"d-flex align-items-center gap-2 site-header__actions\">",
             "target": [
               ".site-header__actions"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<a class=\"site-header__signup muted text-decoration-none\" href=\"../pages/createAccount.html\" data-i18n=\"nav.signup\">Signup</a>",
-            "target": [
-              ".site-header__signup"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<a class=\"btn btn-primary site-header__login-btn\" href=\"../pages/signin.html\" data-i18n=\"nav.login\">Login</a>",
-            "target": [
-              ".site-header__login-btn"
             ]
           },
           {
@@ -4827,7 +4794,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<main id=\"main-content\" role=\"main\">",
+            "html": "<main id=\"main-content\" role=\"main\" class=\"section-padding\">",
             "target": [
               "#main-content"
             ]
@@ -4847,9 +4814,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"about-us-wrapper\">",
+            "html": "<div class=\"container legal-content\">",
             "target": [
-              ".about-us-wrapper"
+              ".legal-content"
             ]
           },
           {
@@ -4867,27 +4834,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"about-card animate-fade-in-up animate-on-scroll animate-active\">",
-            "target": [
-              ".about-card"
-            ]
-          },
-          {
-            "any": [
-              {
-                "id": "region",
-                "data": {
-                  "isIframe": false
-                },
-                "relatedNodes": [],
-                "impact": "moderate",
-                "message": "All page content is contained by landmarks"
-              }
-            ],
-            "all": [],
-            "none": [],
-            "impact": null,
-            "html": "<h1 class=\"about-card__title\">About Us</h1>",
+            "html": "<h1 class=\"section-title animate-fade-in-down animate-on-scroll animate-active\">\n          Terms of Service\n        </h1>",
             "target": [
               "h1"
             ]
@@ -4907,9 +4854,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p class=\"about-card__text\">",
+            "html": "<article class=\"feature-card feature-wide animate-fade-in-up animate-on-scroll animate-active\">",
             "target": [
-              ".about-card__text:nth-child(2)"
+              "article"
             ]
           },
           {
@@ -4927,9 +4874,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p class=\"about-card__text\">",
+            "html": "<p class=\"muted\">",
             "target": [
-              ".about-card__text:nth-child(3)"
+              "article > .muted"
             ]
           },
           {
@@ -4947,9 +4894,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h2 class=\"about-card__subtitle\">Our Mission</h2>",
+            "html": "<h2>1. Use of the Service</h2>",
             "target": [
-              ".about-card__subtitle:nth-child(4)"
+              "h2:nth-child(2)"
             ]
           },
           {
@@ -4967,9 +4914,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p class=\"about-card__text\">\n            Fair careers for workers. Trusted recruitment for employers.\n            Sustainable growth for Japan.\n          </p>",
+            "html": "<p>",
             "target": [
-              ".about-card__text:nth-child(5)"
+              "p:nth-child(3)"
             ]
           },
           {
@@ -4987,9 +4934,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h2 class=\"about-card__subtitle\">Our Vision</h2>",
+            "html": "<h2>2. Accounts and Registration</h2>",
             "target": [
-              ".about-card__subtitle:nth-child(6)"
+              "h2:nth-child(4)"
             ]
           },
           {
@@ -5007,9 +4954,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p class=\"about-card__text\">\n            To be Japan's leading platform that empowers skilled foreign workers\n            to achieve meaningful careers and brighter futures.\n          </p>",
+            "html": "<p>\n            When creating an account you are responsible for maintaining the\n            confidentiality of your account credentials and for all activity\n            that occurs under your account. You must provide accurate and\n            complete information where requested.\n          </p>",
             "target": [
-              ".about-card__text:nth-child(7)"
+              "p:nth-child(5)"
             ]
           },
           {
@@ -5027,9 +4974,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<section class=\"cta-band\">",
+            "html": "<h2>3. Intellectual Property</h2>",
             "target": [
-              "section"
+              "h2:nth-child(6)"
             ]
           },
           {
@@ -5047,9 +4994,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"container\">",
+            "html": "<p>\n            All content on Japan SSW, including text, logos, and images, is\n            owned by or licensed to Japan SSW unless otherwise stated. You may\n            not reproduce or redistribute content from this site without our\n            prior written consent.\n          </p>",
             "target": [
-              "section > .container"
+              "p:nth-child(7)"
             ]
           },
           {
@@ -5067,9 +5014,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"feature-card feature-cta animate-scale-up animate-on-scroll animate-hover-lift\">",
+            "html": "<h2>4. Disclaimers</h2>",
             "target": [
-              ".feature-card"
+              "h2:nth-child(8)"
             ]
           },
           {
@@ -5087,9 +5034,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div>\n              <h2 class=\"m-0 feature-card__title\">Want to work with us?</h2>\n              <p class=\"muted mt-xxs feature-card__desc\">\n                We partner with companies to hire and onboard exceptional\n                talent.\n              </p>\n            </div>",
+            "html": "<p>",
             "target": [
-              ".feature-card > div:nth-child(1)"
+              "p:nth-child(9)"
             ]
           },
           {
@@ -5107,9 +5054,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h2 class=\"m-0 feature-card__title\">Want to work with us?</h2>",
+            "html": "<h2>5. Limitation of Liability</h2>",
             "target": [
-              ".feature-card__title"
+              "h2:nth-child(10)"
             ]
           },
           {
@@ -5127,9 +5074,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<p class=\"muted mt-xxs feature-card__desc\">\n                We partner with companies to hire and onboard exceptional\n                talent.\n              </p>",
+            "html": "<p>\n            To the maximum extent permitted by law, Japan SSW will not be liable\n            for any direct, indirect, incidental, consequential, or punitive\n            damages arising out of your use of the service.\n          </p>",
             "target": [
-              ".mt-xxs"
+              "p:nth-child(11)"
             ]
           },
           {
@@ -5147,9 +5094,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div>\n              <a class=\"btn btn-primary feature-card__cta animate-hover-scale\" href=\"../index.html#post-job\">Contact Us</a>\n            </div>",
+            "html": "<h2>6. Changes to Terms</h2>",
             "target": [
-              ".feature-card > div:nth-child(2)"
+              "h2:nth-child(12)"
             ]
           },
           {
@@ -5167,9 +5114,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<a class=\"btn btn-primary feature-card__cta animate-hover-scale\" href=\"../index.html#post-job\">Contact Us</a>",
+            "html": "<p>\n            We may modify these Terms at any time. Material changes will be\n            posted on this page with the date of the last revision. Continued\n            use of the site after changes indicates acceptance of the updated\n            Terms.\n          </p>",
             "target": [
-              ".feature-card__cta"
+              "p:nth-child(13)"
             ]
           },
           {
@@ -5247,9 +5194,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h2>Want to post jobs on JapanSSW?</h2>",
+            "html": "<h3>Want to post jobs on JapanSSW?</h3>",
             "target": [
-              ".footer-cta > h2"
+              "h3"
             ]
           },
           {
@@ -5329,7 +5276,7 @@
             "impact": null,
             "html": "<a class=\"btn btn-primary\" href=\"../index.html#post-job\">Post a Job</a>",
             "target": [
-              ".footer-cta-actions > .btn-primary.btn[href$=\"index.html#post-job\"]"
+              ".btn-primary"
             ]
           },
           {
@@ -5367,7 +5314,7 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<div class=\"link-col site-footer__link-col\">\n            <h3>Company</h3>\n            <ul>\n              <li><a href=\"../\">Home</a></li>\n              <li><a href=\"about.html\">About</a></li>\n              <li><a href=\"contact.html\">Contact</a></li>\n            </ul>\n          </div>",
+            "html": "<div class=\"link-col site-footer__link-col\">\n            <h4>Company</h4>\n            <ul>\n              <li><a href=\"../\">Home</a></li>\n              <li><a href=\"about.html\">About</a></li>\n              <li><a href=\"contact.html\">Contact</a></li>\n            </ul>\n          </div>",
             "target": [
               ".link-col.site-footer__link-col:nth-child(1)"
             ]
@@ -5387,9 +5334,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h3>Company</h3>",
+            "html": "<h4>Company</h4>",
             "target": [
-              ".link-col.site-footer__link-col:nth-child(1) > h3"
+              ".link-col.site-footer__link-col:nth-child(1) > h4"
             ]
           },
           {
@@ -5569,7 +5516,7 @@
             "impact": null,
             "html": "<h4>Jobs</h4>",
             "target": [
-              "h4"
+              ".link-col.site-footer__link-col:nth-child(2) > h4"
             ]
           },
           {
@@ -5747,9 +5694,9 @@
             "all": [],
             "none": [],
             "impact": null,
-            "html": "<h3>Resources</h3>",
+            "html": "<h4>Resources</h4>",
             "target": [
-              ".link-col.site-footer__link-col:nth-child(3) > h3"
+              ".link-col.site-footer__link-col:nth-child(3) > h4"
             ]
           },
           {

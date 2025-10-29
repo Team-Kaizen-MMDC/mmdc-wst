@@ -20,6 +20,8 @@
   "homepage": "https://github.com/Team-Kaizen-MMDC/mmdc-wst#readme",
   "devDependencies": {
     "@playwright/test": "^1.40.0",
+    "glob": "^10.4.5",
+    "jsdom": "^22.1.0",
     "playwright": "^1.40.0"
   },
   "dependencies": {
@@ -99,6 +101,7 @@
   "scripts": {
     "playwright:install": "npx playwright install",
     "server": "python3 -m http.server 8000",
+    "fix:html": "node ./scripts/fix-html-usability.js",
     "test": "npx playwright test",
     "test:ui": "npx playwright test --ui",
     "test:headed": "npx playwright test --headed",
