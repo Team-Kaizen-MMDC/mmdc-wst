@@ -170,6 +170,18 @@ const pages = [
 ];
 ```
 
+### Auth-protected pages (addEdit/\*)
+
+Some pages under `pages/addEdit/` require authentication in the running site and cannot be exercised by the automated scanner in CI. To avoid false-positive "Document should have one main landmark" or "All page content should be contained by landmarks" errors the test runner excludes `pages/addEdit/*` by default.
+
+Options for testing these pages locally:
+
+- Run the site in a development mode that bypasses auth (recommended for local dev). Example: set `TEST_MODE=true` in your environment and start the server if your app supports it.
+- Manually open the `pages/addEdit/*.html` files in a browser and run axe DevTools or the browser extension to validate accessibility.
+- Temporarily remove the exclusion in `tests/accessibility/runAxe.js` to include these pages in local automated runs (not recommended in CI).
+
+When you intentionally include addEdit pages in a PR scan, document the change in the PR description and ensure local test instructions or test-mode credentials are provided for reviewers.
+
 ### Keyboard Navigation Test Scenarios
 
 - Skip link functionality on all major pages

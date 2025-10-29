@@ -1274,7 +1274,8 @@ a:focus-visible {
 }
 
 .site-footer__cta-muted {
-  color: rgba(255, 255, 255, 0.9);
+  /* Use full white for muted footer CTA text to guarantee contrast on dark footer */
+  color: #ffffff;
   margin-bottom: 0.5rem; /* slightly tighter */
 }
 
@@ -1298,7 +1299,7 @@ a:focus-visible {
 }
 
 .site-footer__cta .muted {
-  color: rgba(255, 255, 255, 0.85);
+  color: #ffffff;
   font-size: 0.9rem;
   max-width: 42ch; /* keep lines readable */
 }

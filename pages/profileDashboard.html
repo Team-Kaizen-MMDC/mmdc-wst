@@ -610,7 +610,6 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
         </div>
       </div>
     </main>
-    <a href="addEdit/skill.html" class="text-contrast-danger small ms-2">Add</a>
     <!-- ========================================================================= -->
 
     <!-- Basic Information Modal -->
@@ -637,13 +636,23 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
             <!-- Basic Info Edit View (Moved from original inline HTML) -->
             <form onsubmit="saveBasicInfo(); return false;">
               <div class="mb-3">
+                <label for="modal-name" class="form-label small fw-semibold"
+                  >Full name</label
+                >
+                <input
+                  id="modal-name"
+                  class="form-control"
+                  type="text"
+                  value="Dela Cruz Juan"
+                  required
+                />
+              </div>
+              <div class="mb-3">
                 <a
                   href="addEdit/education.html"
                   class="text-contrast-danger small ms-2"
                   >Add</a
                 >
-                id="modal-name" class="form-control" value="Dela Cruz Juan"
-                required="" />
               </div>
               <div class="mb-3">
                 <label class="form-label small fw-semibold">Location</label>
