@@ -33,12 +33,37 @@ function parseAxeResults() {
     .readdirSync(resultsDir)
     .filter((f) => f.endsWith("-axe.json"));
 
+  // Read optional EXCLUDE_PAGES env var (comma-separated repo-relative prefixes)
+  const rawExcludes = process.env.EXCLUDE_PAGES || "";
+  const excludes = rawExcludes
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+
   for (const file of files) {
     const filePath = path.join(resultsDir, file);
     try {
       const data = JSON.parse(fs.readFileSync(filePath, "utf8"));
       if (data.axe) {
         const pageName = file.replace("-axe.json", "");
+
+        // Skip results that match any exclude prefix (by URL or repo-relative pageName)
+        let shouldSkip = false;
+        for (const ex of excludes) {
+          if (!ex) continue;
+          // If the URL contains the exclude string
+          if (data.url && data.url.includes(ex.replace(/\/$/, ""))) {
+            shouldSkip = true;
+            break;
+          }
+          // If the pageName starts with the exclude prefix (repo relative)
+          if (pageName.startsWith(ex.replace(/\/$/, ""))) {
+            shouldSkip = true;
+            break;
+          }
+        }
+        if (shouldSkip) continue;
+
         const axe = data.axe;
         results.total++;
         results.violations += axe.violations?.length || 0;
