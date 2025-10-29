@@ -157,3 +157,6 @@ tests/playwright/tests/playwright/results/data/**
 
 # Local Playwright report folder
 tests/playwright/report/
+
+# Usability test summary (generated for PR comments)
+usability-summary.md

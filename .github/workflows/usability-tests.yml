@@ -1,0 +1,128 @@
+name: Usability Tests (Accessibility + Keyboard)
+
+on:
+    pull_request:
+        types: [opened, synchronize, reopened]
+
+permissions:
+    contents: read
+    pull-requests: write
+
+jobs:
+    usability-tests:
+        name: Run Usability Tests
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Use Node.js 18
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 18
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Install Playwright browsers (Chromium only)
+              run: npx playwright install chromium
+
+            - name: Start static server
+              run: |
+                  python3 -m http.server 8000 > /tmp/server.log 2>&1 &
+                  echo $! > /tmp/server.pid
+                  sleep 2
+
+            - name: Run accessibility tests (axe-core)
+              id: axe-tests
+              run: |
+                  node tests/accessibility/runAxe.js
+                  echo "axe_status=success" >> $GITHUB_OUTPUT
+              continue-on-error: true
+
+            - name: Run keyboard navigation tests
+              id: keyboard-tests
+              run: |
+                  npm run test:keyboard
+                  echo "keyboard_status=success" >> $GITHUB_OUTPUT
+              continue-on-error: true
+
+            - name: Stop server
+              if: always()
+              run: |
+                  if [ -f /tmp/server.pid ]; then
+                    kill $(cat /tmp/server.pid) 2>/dev/null || true
+                  fi
+
+            - name: Generate usability summary
+              id: summary
+              if: always()
+              run: node .github/workflows/scripts/format-usability-summary.js
+              continue-on-error: true
+
+            - name: Upload test results
+              if: always()
+              uses: actions/upload-artifact@v4
+              with:
+                  name: usability-test-results
+                  path: |
+                      tests/accessibility/results/**
+                      test-results/**
+                      tests/playwright/**/trace.zip
+
+            - name: Post PR comment with usability summary
+              if: always()
+              uses: actions/github-script@v6
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  script: |
+                      const fs = require('fs');
+                      const path = require('path');
+
+                      // Read the generated summary
+                      let summaryContent = '## 🎯 Usability Test Results\n\n';
+
+                      try {
+                        const summaryFile = path.join(process.cwd(), 'usability-summary.md');
+                        if (fs.existsSync(summaryFile)) {
+                          summaryContent = fs.readFileSync(summaryFile, 'utf8');
+                        } else {
+                          summaryContent += '⚠️ Summary file not found. Check workflow logs.\n';
+                        }
+                      } catch (err) {
+                        summaryContent += `❌ Error reading summary: ${err.message}\n`;
+                      }
+
+                      // Find existing comment
+                      const { data: comments } = await github.rest.issues.listComments({
+                        owner: context.repo.owner,
+                        repo: context.repo.repo,
+                        issue_number: context.issue.number,
+                      });
+
+                      const botComment = comments.find(comment => 
+                        comment.user.type === 'Bot' && 
+                        comment.body.includes('🎯 Usability Test Results')
+                      );
+
+                      const commentBody = summaryContent;
+
+                      if (botComment) {
+                        // Update existing comment
+                        await github.rest.issues.updateComment({
+                          owner: context.repo.owner,
+                          repo: context.repo.repo,
+                          comment_id: botComment.id,
+                          body: commentBody,
+                        });
+                        console.log('Updated existing comment:', botComment.id);
+                      } else {
+                        // Create new comment
+                        await github.rest.issues.createComment({
+                          owner: context.repo.owner,
+                          repo: context.repo.repo,
+                          issue_number: context.issue.number,
+                          body: commentBody,
+                        });
+                        console.log('Created new comment');
+                      }
