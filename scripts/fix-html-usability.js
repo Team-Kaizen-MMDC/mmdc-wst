@@ -66,8 +66,16 @@ function fixFile(filePath) {
     // Prefer wrapping meaningful page content into a top-level main element.
     // We'll move all body children except header/nav/footer/script/link/meta/style into <main>.
     const bodyChildren = Array.from(doc.body.childNodes);
-    const skipTags = ["HEADER", "NAV", "FOOTER", "SCRIPT", "LINK", "META", "STYLE"];
-    const movable = bodyChildren.filter(n => {
+    const skipTags = [
+      "HEADER",
+      "NAV",
+      "FOOTER",
+      "SCRIPT",
+      "LINK",
+      "META",
+      "STYLE",
+    ];
+    const movable = bodyChildren.filter((n) => {
       if (n.nodeType !== 1) return true; // text nodes should be moved
       if (skipTags.includes(n.tagName)) return false;
       // don't move empty whitespace-only text nodes
@@ -75,8 +83,8 @@ function fixFile(filePath) {
       return true;
     });
     if (movable.length > 0) {
-      const main = doc.createElement('main');
-      main.id = 'main-content';
+      const main = doc.createElement("main");
+      main.id = "main-content";
       // Insert main before the first movable node for stable order
       const first = movable[0];
       doc.body.insertBefore(main, first);
@@ -86,8 +94,8 @@ function fixFile(filePath) {
       changed = true;
     } else {
       // create an empty main at end of body as a fallback
-      const main = doc.createElement('main');
-      main.id = 'main-content';
+      const main = doc.createElement("main");
+      main.id = "main-content";
       doc.body.appendChild(main);
       changed = true;
     }

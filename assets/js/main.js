@@ -1146,3 +1146,178 @@ document.addEventListener("DOMContentLoaded"),
       console.log("New education entry added to form (client-side)");
     }
   };
+
+// --- Small, conservative utilities: active-nav auto-detect + aria fallbacks ---
+(function () {
+  // Active nav auto-detection: mark nav link matching current path as .active
+  function applyActiveNav() {
+    try {
+      const links = document.querySelectorAll(
+        ".navbar a.nav-link, .nav-link, nav a[href]"
+      );
+      if (!links || links.length === 0) return;
+
+      const currentPath = window.location.pathname.replace(/\/+$/, "");
+      const currentHash = window.location.hash;
+
+      links.forEach((link) => {
+        try {
+          const href = link.getAttribute("href");
+          if (!href) return;
+
+          // Normalize
+          let url;
+          try {
+            url = new URL(href, window.location.href);
+          } catch (e) {
+            // If href is something odd, skip
+            return;
+          }
+
+          const linkPath = url.pathname.replace(/\/+$/, "");
+
+          // Exact path match OR hash-only match
+          if (
+            linkPath === currentPath ||
+            (url.hash && url.hash === currentHash) ||
+            href === "#" + currentHash.replace(/^#/, "")
+          ) {
+            link.classList.add("active");
+          } else {
+            link.classList.remove("active");
+          }
+        } catch (errInner) {
+          // ignore per-link errors
+        }
+      });
+    } catch (err) {
+      console.warn("Active-nav helper failed:", err);
+    }
+  }
+
+  // Aria fallbacks: add conservative accessible names for unlabeled selects, empty anchors, and images without alt
+  function applyAriaFallbacks() {
+    try {
+      // SELECTS: if no aria-label / aria-labelledby / associated label, try to infer
+      document.querySelectorAll("select").forEach((sel) => {
+        if (
+          sel.getAttribute("aria-label") ||
+          sel.getAttribute("aria-labelledby")
+        )
+          return;
+
+        // If there's a label[for=id]
+        const id = sel.id;
+        if (id) {
+          const lab = document.querySelector(`label[for="${id}"]`);
+          if (lab && lab.textContent.trim()) {
+            sel.setAttribute("aria-label", lab.textContent.trim());
+            return;
+          }
+        }
+
+        // If wrapped by a label
+        const wrapperLabel = sel.closest("label");
+        if (wrapperLabel && wrapperLabel.textContent.trim()) {
+          sel.setAttribute("aria-label", wrapperLabel.textContent.trim());
+          return;
+        }
+
+        // Try nearest heading or legend or small descriptive text
+        let inferred = null;
+        const heading = sel.closest("fieldset")
+          ? sel.closest("fieldset").querySelector("legend")
+          : null;
+        if (heading && heading.textContent.trim())
+          inferred = heading.textContent.trim();
+
+        if (!inferred) {
+          const prev = sel.previousElementSibling;
+          if (prev && prev.textContent && prev.textContent.trim().length < 80)
+            inferred = prev.textContent.trim();
+        }
+
+        if (!inferred) {
+          const parentHeader = sel.closest(".card")
+            ? sel.closest(".card").querySelector("h3,h4,h5,h6,h2,h1")
+            : null;
+          if (parentHeader && parentHeader.textContent.trim())
+            inferred = parentHeader.textContent.trim();
+        }
+
+        if (inferred) sel.setAttribute("aria-label", inferred);
+      });
+
+      // IMAGES: add conservative alt text for images missing the attribute or empty alt
+      document.querySelectorAll("img").forEach((img) => {
+        try {
+          const hasAlt = img.hasAttribute("alt");
+          if (!hasAlt || (img.getAttribute("alt") || "").trim() === "") {
+            // If the image has an adjacent caption or title, prefer that
+            const title = img.getAttribute("title");
+            if (title && title.trim()) {
+              img.setAttribute("alt", title.trim());
+              return;
+            }
+
+            const fig = img.closest("figure");
+            if (fig) {
+              const cap = fig.querySelector("figcaption");
+              if (cap && cap.textContent.trim()) {
+                img.setAttribute("alt", cap.textContent.trim());
+                return;
+              }
+            }
+
+            // Fallback conservative alt
+            img.setAttribute("alt", "Image");
+          }
+        } catch (e) {
+          // ignore image failures
+        }
+      });
+
+      // EMPTY ANCHORS: label anchors that have no text and no aria-label
+      document.querySelectorAll("a").forEach((a) => {
+        try {
+          if ((a.textContent || "").trim().length > 0) return;
+          if (a.getAttribute("aria-label") || a.getAttribute("title")) return;
+
+          // If anchor contains an image with alt text, use that
+          const img = a.querySelector("img");
+          if (img && (img.getAttribute("alt") || "").trim()) {
+            a.setAttribute("aria-label", img.getAttribute("alt").trim());
+            return;
+          }
+
+          // Otherwise infer from nearest header
+          const header = a.closest(".card")
+            ? a.closest(".card").querySelector("h3,h4,h5,h6,h2,h1")
+            : null;
+          if (header && header.textContent.trim()) {
+            a.setAttribute("aria-label", header.textContent.trim());
+            return;
+          }
+
+          // Last resort: use a generic label
+          a.setAttribute("aria-label", "Link");
+        } catch (e) {
+          // ignore per-anchor errors
+        }
+      });
+    } catch (err) {
+      console.warn("Aria fallbacks failed:", err);
+    }
+  }
+
+  // Run on DOMContentLoaded
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => {
+      applyActiveNav();
+      applyAriaFallbacks();
+    });
+  } else {
+    applyActiveNav();
+    applyAriaFallbacks();
+  }
+})();
