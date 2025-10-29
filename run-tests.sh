@@ -186,6 +186,12 @@ main() {
             ;;
     esac
     
+    # Ensure results directory exists so Playwright can write JSON reporter
+    mkdir -p test-results
+
+    # By default, request Playwright to emit a JSON report at test-results/results.json
+    TEST_REPORTER="--reporter=json=test-results/results.json"
+
     # Check/start server for tests
     if [ "$NO_SERVER" = true ]; then
         if check_server; then
@@ -209,42 +215,42 @@ main() {
     # Run tests based on command
     case $COMMAND in
         all)
-            npx playwright test $PLAYWRIGHT_CONFIG "${EXTRA_ARGS[@]}"
+            npx playwright test $PLAYWRIGHT_CONFIG $TEST_REPORTER "${EXTRA_ARGS[@]}"
             ;;
         smoke)
-            npx playwright test $PLAYWRIGHT_CONFIG smoke-links.spec.ts "${EXTRA_ARGS[@]}"
+            npx playwright test $PLAYWRIGHT_CONFIG smoke-links.spec.ts $TEST_REPORTER "${EXTRA_ARGS[@]}"
             ;;
         e2e)
-            npx playwright test $PLAYWRIGHT_CONFIG e2e-navigation.spec.ts "${EXTRA_ARGS[@]}"
+            npx playwright test $PLAYWRIGHT_CONFIG e2e-navigation.spec.ts $TEST_REPORTER "${EXTRA_ARGS[@]}"
             ;;
         i18n)
-            npx playwright test $PLAYWRIGHT_CONFIG i18n.spec.ts "${EXTRA_ARGS[@]}"
+            npx playwright test $PLAYWRIGHT_CONFIG i18n.spec.ts $TEST_REPORTER "${EXTRA_ARGS[@]}"
             ;;
         jobs)
-            npx playwright test $PLAYWRIGHT_CONFIG jobs.spec.js "${EXTRA_ARGS[@]}"
+            npx playwright test $PLAYWRIGHT_CONFIG jobs.spec.js $TEST_REPORTER "${EXTRA_ARGS[@]}"
             ;;
         offcanvas)
-            npx playwright test $PLAYWRIGHT_CONFIG offcanvas.spec.ts "${EXTRA_ARGS[@]}"
+            npx playwright test $PLAYWRIGHT_CONFIG offcanvas.spec.ts $TEST_REPORTER "${EXTRA_ARGS[@]}"
             ;;
         ui)
             print_info "Opening Playwright UI mode..."
-            npx playwright test $PLAYWRIGHT_CONFIG --ui "${EXTRA_ARGS[@]}"
+            npx playwright test $PLAYWRIGHT_CONFIG --ui $TEST_REPORTER "${EXTRA_ARGS[@]}"
             ;;
         debug)
             print_info "Starting debug mode..."
-            npx playwright test $PLAYWRIGHT_CONFIG --debug "${EXTRA_ARGS[@]}"
+            npx playwright test $PLAYWRIGHT_CONFIG --debug $TEST_REPORTER "${EXTRA_ARGS[@]}"
             ;;
         headed)
-            npx playwright test $PLAYWRIGHT_CONFIG --headed "${EXTRA_ARGS[@]}"
+            npx playwright test $PLAYWRIGHT_CONFIG --headed $TEST_REPORTER "${EXTRA_ARGS[@]}"
             ;;
         chromium)
-            npx playwright test $PLAYWRIGHT_CONFIG --project=chromium "${EXTRA_ARGS[@]}"
+            npx playwright test $PLAYWRIGHT_CONFIG --project=chromium $TEST_REPORTER "${EXTRA_ARGS[@]}"
             ;;
         firefox)
-            npx playwright test $PLAYWRIGHT_CONFIG --project=firefox "${EXTRA_ARGS[@]}"
+            npx playwright test $PLAYWRIGHT_CONFIG --project=firefox $TEST_REPORTER "${EXTRA_ARGS[@]}"
             ;;
         mobile)
-            npx playwright test $PLAYWRIGHT_CONFIG --project=webkit-mobile "${EXTRA_ARGS[@]}"
+            npx playwright test $PLAYWRIGHT_CONFIG --project=webkit-mobile $TEST_REPORTER "${EXTRA_ARGS[@]}"
             ;;
         codegen)
             print_info "Launching Playwright code generator..."
