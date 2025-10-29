@@ -186,6 +186,12 @@ main() {
             ;;
     esac
     
+    # Ensure results directory exists so Playwright can write JSON reporter
+    mkdir -p test-results
+
+    # Playwright reporters are defined in tests/playwright/playwright.config.js
+    # Ensure results directory exists so Playwright can write JSON reporter defined in the config
+
     # Check/start server for tests
     if [ "$NO_SERVER" = true ]; then
         if check_server; then

@@ -1087,6 +1087,23 @@ a:focus-visible {
   text-decoration: underline;
 }
 
+/* Focus ring utility (Bootstrap-like) - used across components for consistent focus visuals */
+:root {
+  --bs-focus-ring-color: rgba(var(--primary-color-rgb), 0.5);
+}
+
+.focus-ring:focus,
+.focus-ring:focus-visible,
+.site-footer a:focus,
+.site-footer a:focus-visible {
+  outline: 3px solid var(--bs-focus-ring-color);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px rgba(var(--primary-color-rgb), 0.12);
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.02);
+  text-decoration: underline;
+}
+
 /* Card and link focus states */
 .feature-card:focus-within,
 .company-card:focus-within,
@@ -1205,8 +1222,7 @@ a:focus-visible {
 .site-footer--dark {
   background: #6b0000;
   color: #fff;
-  /* slimmer vertical footprint while keeping touch targets usable */
-  padding: 0.5rem 0; /* tighter than before */
+  /* spacing is handled via Bootstrap spacing utilities (e.g. add .py-3 .py-md-4 on the <footer>) */
 }
 
 .site-footer--dark a {
@@ -1498,7 +1514,7 @@ a:focus-visible {
 .site-footer {
   background: var(--dark-color);
   color: #fff;
-  padding: 0.5rem 0; /* match slimmer footprint */
+  /* spacing handled via Bootstrap utility classes on the footer element */
 }
 
 .site-footer a {
@@ -2468,6 +2484,26 @@ a[href="/pages/privacy.html"]:focus {
   background: rgba(255, 255, 255, 0.06);
   border-color: rgba(255, 255, 255, 0.28);
   color: #fff;
+}
+
+/* Additional standardized footer hover/focus rules (non-breaking, additive) */
+.site-footer a:hover,
+.site-footer a:focus,
+.site-footer a:focus-visible {
+  color: var(--primary-color-shift);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  transition: color 160ms ease, text-decoration-color 160ms ease;
+}
+
+.site-footer .btn:hover,
+.site-footer .btn:focus,
+.site-footer .btn:focus-visible {
+  filter: brightness(0.95);
+  transform: translateY(-1px);
+  outline: var(--focus-outline-width) solid var(--focus-color);
+  outline-offset: var(--focus-outline-offset);
 }
 
 .site-footer--dark .btn.btn-secondary:focus {
