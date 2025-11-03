@@ -31,11 +31,14 @@ Japan SSW is a frontend-first static site scaffold used as the Phase‑1 deliver
 
 This repository holds the wireframe-driven static pages and a stylesheet (`assets/css/main.css`) that defines the design tokens (colors, spacing, typography) and header contract used across pages.
 
-### Website overview — topic, goal, audience
+### Website overview — topic, goal, audience, success metrics, stakeholders, and in-scope features.
 
 - Topic: job listings and employer information focused on Specified Skilled Worker (SSW) opportunities in Japan. The site aggregates hiring companies, agency contacts, and helpful guidance for candidates exploring SSW employment.
 - Goal: provide an accessible, easy-to-scan public-facing hub where job seekers can discover current listings, learn about hiring companies, and find agency or contact information needed to apply. The scaffold also demonstrates reusable components for future development (cards, hero, offcanvas mobile navigation, and animated entrance utilities).
 - Audience: prospective SSW job seekers (domestic and international), employers and partner agencies looking to advertise opportunities, and internal stakeholders who need a lightweight, maintainable frontend scaffold for marketing and outreach.
+-Success Metrics: The project's success will be measured by four key metrics focused on validating the Minimum Viable Product (MVP): 100% Core Function Coverage for all in-scope features; demonstrating User Adoption by securing 20 registered tester accounts across all user roles; confirming 100% Application Flow Completion by successfully tracking 10 test applications from submission to hire; and validating user experience with a System Usability Score (SUS) of 70 from internal or peer testing.
+-Stakeholders: Filipino Skilled Workers (End Users), Japanese employers (Clients), Registered Support Organizations (RSOs), Project Team, and Government & Regulatory Bodies.
+-In-scope Features: User Authentication, Worker Profile Builder, Job Search & Filter, Job Application Flow, Employer Job Posting, Application Tracking System, RSO Directory/Profile, and Multi-Language Support.
 
 ## Features (Phase 1)
 
