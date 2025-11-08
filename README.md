@@ -241,9 +241,11 @@ Notes:
 
 ### Embedded demo (in-repo)
 
-[![Play demo — registration excerpt](demo-videos/registration-excerpt-thumb.png)](demo-videos/registration-excerpt.mp4)
+**Registration demo (excerpt)** — quick registration highlights
 
-[Open player](demo-videos/player-registration-excerpt.html) · [Download MP4](demo-videos/registration-excerpt.mp4)
+https://github.com/Team-Kaizen-MMDC/mmdc-wst/assets/registration-excerpt.mp4
+
+[Download MP4](demo-videos/registration-excerpt.mp4)
 
 <!-- Retained demo files: only the short MP4 excerpt is kept in demo-videos/ to reduce repo size. Conversion tooling remains available at demo-videos/convert-webm-to-mp4.ps1 and documentation in demo-videos/CONVERT.md. -->
 
