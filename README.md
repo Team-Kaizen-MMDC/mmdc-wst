@@ -239,6 +239,18 @@ Notes:
 
 ## Testing documentation
 
+### Embedded demo (in-repo)
+
+<figure>
+  <figcaption><strong>Short demo (excerpt)</strong> — quick registration highlights</figcaption>
+  <video controls width="720" preload="metadata">
+    <source src="demo-videos/registration-excerpt.mp4" type="video/mp4">
+  Your browser does not support the video tag. Download: demo-videos/registration-excerpt.mp4
+  </video>
+</figure>
+
+<!-- Retained demo files: only the short MP4 excerpt is kept in demo-videos/ to reduce repo size. Conversion tooling remains available at demo-videos/convert-webm-to-mp4.ps1 and documentation in demo-videos/CONVERT.md. -->
+
 Detailed test documentation and results are available in `TESTING.md` at the repository root. That document contains:
 
 - A list of test cases (functional, mobile/offcanvas, i18n, accessibility)
@@ -257,7 +269,7 @@ Project management & QA
 - [Project board (Management - Asana)](https://app.asana.com/1/1207231382805506/project/1211385026996908/list/1211385050374916)
 - QA & test procedures: `TESTING.md` (detailed test cases, traces, and results)
 
-If you'd like, the team can add screenshots into `/docs/testing-screenshots/` and wire automatic test runs into CI.
+<!-- Screenshots and CI wiring are maintained separately. -->
 
 ## File Structure
 
