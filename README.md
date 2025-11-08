@@ -32,6 +32,18 @@ Japan SSW is a frontend-first static site scaffold used as the Phase‑1 deliver
 
 This repository holds the wireframe-driven static pages and a stylesheet (`assets/css/main.css`) that defines the design tokens (colors, spacing, typography) and header contract used across pages.
 
+## Demo videos
+
+A short, curated demo video is included to showcase key flows (for example: registration, profile walkthrough). Embedding the demo near the top of this README makes it easy for reviewers and stakeholders to find and play a quick visual summary of the site.
+
+Registration demo (excerpt) — quick registration highlights
+
+https://github.com/user-attachments/assets/74fa75dc-35d6-42e8-b6b4-87cb92cc3991
+
+[Download MP4](demo-videos/registration-excerpt.mp4)
+
+<!-- Retained demo files: only the short MP4 excerpt is kept in demo-videos/ to reduce repo size. Conversion tooling remains available at demo-videos/convert-webm-to-mp4.ps1 and documentation in demo-videos/CONVERT.md. -->
+
 ### Website overview — topic, goal, audience, success metrics, stakeholders, and in-scope features
 
 - Topic: job listings and employer information focused on Specified Skilled Worker (SSW) opportunities in Japan. The site aggregates hiring companies, agency contacts, and helpful guidance for candidates exploring SSW employment.
@@ -238,17 +250,7 @@ Notes:
 - If npm scripts surface shell startup errors (for example from `.zshrc`), guard optional tool initializations in your rc file (for example `if command -v jenv >/dev/null; then jenv init; fi`).
 
 ## Testing documentation
-
-### Embedded demo (in-repo)
-
-**Registration demo (excerpt)** — quick registration highlights
-
-https://github.com/user-attachments/assets/74fa75dc-35d6-42e8-b6b4-87cb92cc3991
-
-[Download MP4](demo-videos/registration-excerpt.mp4)
-
-<!-- Retained demo files: only the short MP4 excerpt is kept in demo-videos/ to reduce repo size. Conversion tooling remains available at demo-videos/convert-webm-to-mp4.ps1 and documentation in demo-videos/CONVERT.md. -->
-
+ 
 Detailed test documentation and results are available in `TESTING.md` at the repository root. That document contains:
 
 - A list of test cases (functional, mobile/offcanvas, i18n, accessibility)
