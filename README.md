@@ -241,13 +241,9 @@ Notes:
 
 ### Embedded demo (in-repo)
 
-<figure>
-  <figcaption><strong>Short demo (excerpt)</strong> — quick registration highlights</figcaption>
-  <video controls width="720" preload="metadata">
-    <source src="demo-videos/registration-excerpt.mp4" type="video/mp4">
-  Your browser does not support the video tag. Download: demo-videos/registration-excerpt.mp4
-  </video>
-</figure>
+[![Play demo — registration excerpt](demo-videos/registration-excerpt-thumb.png)](demo-videos/registration-excerpt.mp4)
+
+[Open player](demo-videos/player-registration-excerpt.html) · [Download MP4](demo-videos/registration-excerpt.mp4)
 
 <!-- Retained demo files: only the short MP4 excerpt is kept in demo-videos/ to reduce repo size. Conversion tooling remains available at demo-videos/convert-webm-to-mp4.ps1 and documentation in demo-videos/CONVERT.md. -->
 
