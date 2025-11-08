@@ -243,7 +243,7 @@ Notes:
 
 **Registration demo (excerpt)** — quick registration highlights
 
-https://github.com/Team-Kaizen-MMDC/mmdc-wst/assets/registration-excerpt.mp4
+https://github.com/user-attachments/assets/74fa75dc-35d6-42e8-b6b4-87cb92cc3991
 
 [Download MP4](demo-videos/registration-excerpt.mp4)
 
