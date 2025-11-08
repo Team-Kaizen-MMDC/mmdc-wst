@@ -32,6 +32,18 @@ Japan SSW is a frontend-first static site scaffold used as the Phase‑1 deliver
 
 This repository holds the wireframe-driven static pages and a stylesheet (`assets/css/main.css`) that defines the design tokens (colors, spacing, typography) and header contract used across pages.
 
+## Demo videos
+
+A short, curated demo video is included to showcase key flows (for example: registration, profile walkthrough). Embedding the demo near the top of this README makes it easy for reviewers and stakeholders to find and play a quick visual summary of the site.
+
+Registration demo (excerpt) — quick registration highlights
+
+https://github.com/user-attachments/assets/74fa75dc-35d6-42e8-b6b4-87cb92cc3991
+
+[Download MP4](demo-videos/registration-excerpt.mp4)
+
+<!-- Retained demo files: only the short MP4 excerpt is kept in demo-videos/ to reduce repo size. Conversion tooling remains available at demo-videos/convert-webm-to-mp4.ps1 and documentation in demo-videos/CONVERT.md. -->
+
 ### Website overview — topic, goal, audience, success metrics, stakeholders, and in-scope features
 
 - Topic: job listings and employer information focused on Specified Skilled Worker (SSW) opportunities in Japan. The site aggregates hiring companies, agency contacts, and helpful guidance for candidates exploring SSW employment.
@@ -257,7 +269,7 @@ Project management & QA
 - [Project board (Management - Asana)](https://app.asana.com/1/1207231382805506/project/1211385026996908/list/1211385050374916)
 - QA & test procedures: `TESTING.md` (detailed test cases, traces, and results)
 
-If you'd like, the team can add screenshots into `/docs/testing-screenshots/` and wire automatic test runs into CI.
+<!-- Screenshots and CI wiring are maintained separately. -->
 
 ## File Structure
 

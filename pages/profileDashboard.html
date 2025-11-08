@@ -477,25 +477,31 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
         </div>
 
         <!-- EXPERIENCE -->
-          <div class="col-12 col-md-6">
-                        <div class="card shadow-sm">
-                            <div class="card-header d-flex justify-content-between bg-white">
-                                <h4 class="mb-0 fw-bold text-primary">Experience</h4>
-                                <!-- ADD button is always visible and opens the modal for a NEW entry (-1 index) -->
-                                <a href="#" class="small text-decoration-none fw-semibold" 
-                                   data-bs-toggle="modal" data-bs-target="#experienceModal"
-                                   onclick="openExperienceModal(-1)">Add
-                                </a>
-                            </div>
-                            
-                            <!-- Container for the dynamically injected list of experience entries -->
-                            <!-- Note: The p-0 is added to remove card body padding, allowing the list items' internal padding (p-3) to control spacing -->
-                            <div class="card-body p-0" id="experience-list-container">
-                                <!-- Entries will be dynamically injected here by renderExperienceSection() -->
-                                <div class="p-3 text-muted small">Loading experience entries...</div>
-                            </div>
-                        </div>
-                    </div>
+        <div class="col-12 col-md-6">
+          <div class="card shadow-sm">
+            <div class="card-header d-flex justify-content-between bg-white">
+              <h4 class="mb-0 fw-bold text-dark">Experience</h4>
+              <!-- ADD button is always visible and opens the modal for a NEW entry (-1 index) -->
+              <a
+                href="#"
+                class="small text-decoration-none fw-semibold"
+                data-bs-toggle="modal"
+                data-bs-target="#experienceModal"
+                onclick="openExperienceModal(-1)"
+                >Add
+              </a>
+            </div>
+
+            <!-- Container for the dynamically injected list of experience entries -->
+            <!-- Note: The p-0 is added to remove card body padding, allowing the list items' internal padding (p-3) to control spacing -->
+            <div class="card-body p-0" id="experience-list-container">
+              <!-- Entries will be dynamically injected here by renderExperienceSection() -->
+              <div class="p-3 text-muted small">
+                Loading experience entries...
+              </div>
+            </div>
+          </div>
+        </div>
 
         <!-- SKILLS -->
         <div class="col-12 col-md-6">
@@ -528,26 +534,32 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           </div>
         </div>
 
-       <!-- EDUCATION -->
-       <div class="col-12 col-md-6">
-                        <div class="card shadow-sm">
-                            <div class="card-header d-flex justify-content-between bg-white">
-                                <h4 class="mb-0 fw-bold text-primary">Education</h4>
-                                <!-- ADD button is always visible and opens the modal for a NEW entry (-1 index) -->
-                                <a href="#" class="small text-decoration-none fw-semibold" 
-                                   data-bs-toggle="modal" data-bs-target="#educationModal"
-                                   onclick="openEducationModal(-1)">Add
-                                </a>
-                            </div>
-                            
-                            <!-- Container for the dynamically injected list of education entries -->
-                            <!-- Note: The p-0 is added to remove card body padding, allowing the list items' internal padding (p-3) to control spacing -->
-                            <div class="card-body p-0" id="education-list-container">
-                                <!-- Entries will be dynamically injected here by renderEducationSection() -->
-                                <div class="p-3 text-muted small">Loading education entries...</div>
-                            </div>
-                        </div>
-                    </div>
+        <!-- EDUCATION -->
+        <div class="col-12 col-md-6">
+          <div class="card shadow-sm">
+            <div class="card-header d-flex justify-content-between bg-white">
+              <h4 class="mb-0 fw-bold text-dark">Education</h4>
+              <!-- ADD button is always visible and opens the modal for a NEW entry (-1 index) -->
+              <a
+                href="#"
+                class="small text-decoration-none fw-semibold"
+                data-bs-toggle="modal"
+                data-bs-target="#educationModal"
+                onclick="openEducationModal(-1)"
+                >Add
+              </a>
+            </div>
+
+            <!-- Container for the dynamically injected list of education entries -->
+            <!-- Note: The p-0 is added to remove card body padding, allowing the list items' internal padding (p-3) to control spacing -->
+            <div class="card-body p-0" id="education-list-container">
+              <!-- Entries will be dynamically injected here by renderEducationSection() -->
+              <div class="p-3 text-muted small">
+                Loading education entries...
+              </div>
+            </div>
+          </div>
+        </div>
 
         <!-- AVAILABILITY -->
         <div class="col-12 col-md-6">
@@ -733,137 +745,200 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
     </div>
 
     <!-- Experience Modal -->
-            <div class="modal fade" id="experienceModal" tabindex="-1" 
-            aria-labelledby="experienceModalLabel" aria-hidden="true">
-              <div class="modal-dialog modal-lg">
-                <div class="modal-content rounded-4">
-                  
-                  <!-- Header -->
-                  <div class="modal-header bg-light text-white rounded-top-4">
-                    <h5 class="modal-title" id="experienceModalLabel">Experience</h5>
-                    <button type="button" class="btn-close btn-close-white" 
-                    data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-
-                  <!-- Body -->
-                  <div class="modal-body p-4">
-                    <form id="experienceForm" onsubmit="saveExperienceEntry(); 
-                     return false;" novalidate>
-                      <input type="hidden" id="expEditingIndex" value="-1" />
-                      <!-- Experience Entry -->
-                      <div class="p-3 mb-4 border rounded-4 bg-light shadow-sm">
-                        <!-- Job Title -->
-                        <div class="mb-3">
-                          <label for="job" class="form-label small fw-semibold">Job Title*</label>
-                          <input  
-                            id="job"
-                            name="job"
-                            type="text"
-                            placeholder="Ex: Kitchen"
-                            required
-                            class="form-control"
-                          />
-                        </div>
-
-                        
-                            <!--Company Name -->
-                        <div class="mb-3">
-                          <label for="company" class="form-label small fw-semibold">Company Name*</label>
-                         <input
-                            id="company"
-                            name="company"
-                            type="text"
-                            placeholder="Ex: Facebook"
-                            required
-                            class="form-control"
-                         />
-                        </div>
-
-                        <!-- Job type -->
-                        <div class="mb-3">
-                          <label for="jobType" class="form-label small fw-semibold">Job Type*</label>
-                          <select id="jobType" name="jobType" class="form-select" required>
-                             <option value="">Please Select</option>
-                              <option>Full-time</option>
-                              <option>Part-time</option>
-                              <option>Self-employed</option>
-                              <option>Freelance</option>
-                              <option>Contract</option>
-                              <option>Internship</option>
-                              <option>Apprenticeship</option>
-                          </select>
-                        </div>
-
-                       <div class="mb-4">
-                        <label for="expStartMonth" class="form-label">Start Date*</label>
-                        <div class="row g-2">
-                            <div class="col">
-                                <select id="expStartMonth" name="expStartMonth" class="form-select" required>
-                                    <option value="">Month</option>
-                                    </select>
-                            </div>
-                            <div class="col">
-                                <select id="expStartYear" name="expStartYear" class="form-select" required>
-                                    <option value="">Year</option>
-                                    </select>
-                            </div>
-                        </div>
-                    </div>
-
-                         <div class="mb-4" id="expEndDateWrapper">
-                          <label for="expEndMonth" class="form-label">End Date*</label>
-                          <div class="row g-2" id="expEndDateSelects">
-                              <div class="col">
-                                  <select id="expEndMonth" name="expEndMonth" class="form-select" required> 
-                                      <option value="">Month</option>
-                                  </select>
-                              </div>
-                              <div class="col">
-                                  <select id="expEndYear" name="expEndYear" class="form-select" required> 
-                                      <option value="">Year</option>
-                                  </select>
-                              </div>
-                          </div>
-                          <div 
-                                  id="date-error-message-exp" 
-                                  class="small text-danger mt-2 mb-3 d-none"
-                                >
-                              </div>
-                          </div>
-    
-                        <input
-                            id="expCurrentLabel"
-                            type="text"
-                            value="Present"
-                            disabled
-                            class="form-control bg-light text-secondary mt-2"
-                            style="display:none;"
-                        />
-                    </div>
-
-                    <div class="form-check mb-4">
-                        <input class="form-check-input" type="checkbox" id="currentlyWorkingCheckbox" name="currentlyWorkingCheckbox">
-                        <label class="form-check-label" for="currentlyWorkingCheckbox">
-                            I am currently working here
-                        </label>
-                    </div>
-                    <div class="d-flex justify-content-between mt-4">
-                            <button type="button" class="btn btn-outline-danger me-2 rounded-md" 
-                                id="deleteExperienceBtn" style="display:none;">Delete Entry</button>
-                            
-                            <div class="ms-auto d-flex">
-                                <button type="button" class="btn btn-outline-secondary me-2 rounded-md" 
-                                data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary px-4 rounded-md shadow-sm"
-                                >Save</button>
-                            </div>
-                        </div>
-                    </form>
-              </div>
+    <div
+      class="modal fade"
+      id="experienceModal"
+      tabindex="-1"
+      aria-labelledby="experienceModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content rounded-4">
+          <!-- Header -->
+          <div class="modal-header bg-light text-white rounded-top-4">
+            <h5 class="modal-title" id="experienceModalLabel">Experience</h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
           </div>
+
+          <!-- Body -->
+          <div class="modal-body p-4">
+            <form
+              id="experienceForm"
+              onsubmit="saveExperienceEntry(); 
+                     return false;"
+              novalidate
+            >
+              <input type="hidden" id="expEditingIndex" value="-1" />
+              <!-- Experience Entry -->
+              <div class="p-3 mb-4 border rounded-4 bg-light shadow-sm">
+                <!-- Job Title -->
+                <div class="mb-3">
+                  <label for="job" class="form-label small fw-semibold"
+                    >Job Title*</label
+                  >
+                  <input
+                    id="job"
+                    name="job"
+                    type="text"
+                    placeholder="Ex: Kitchen"
+                    required
+                    class="form-control"
+                  />
+                </div>
+
+                <!--Company Name -->
+                <div class="mb-3">
+                  <label for="company" class="form-label small fw-semibold"
+                    >Company Name*</label
+                  >
+                  <input
+                    id="company"
+                    name="company"
+                    type="text"
+                    placeholder="Ex: Facebook"
+                    required
+                    class="form-control"
+                  />
+                </div>
+
+                <!-- Job type -->
+                <div class="mb-3">
+                  <label for="jobType" class="form-label small fw-semibold"
+                    >Job Type*</label
+                  >
+                  <select
+                    id="jobType"
+                    name="jobType"
+                    class="form-select"
+                    required
+                  >
+                    <option value="">Please Select</option>
+                    <option>Full-time</option>
+                    <option>Part-time</option>
+                    <option>Self-employed</option>
+                    <option>Freelance</option>
+                    <option>Contract</option>
+                    <option>Internship</option>
+                    <option>Apprenticeship</option>
+                  </select>
+                </div>
+
+                <div class="mb-4">
+                  <label for="expStartMonth" class="form-label"
+                    >Start Date*</label
+                  >
+                  <div class="row g-2">
+                    <div class="col">
+                      <select
+                        id="expStartMonth"
+                        name="expStartMonth"
+                        class="form-select"
+                        required
+                      >
+                        <option value="">Month</option>
+                      </select>
+                    </div>
+                    <div class="col">
+                      <select
+                        id="expStartYear"
+                        name="expStartYear"
+                        class="form-select"
+                        required
+                      >
+                        <option value="">Year</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mb-4" id="expEndDateWrapper">
+                  <label for="expEndMonth" class="form-label">End Date*</label>
+                  <div class="row g-2" id="expEndDateSelects">
+                    <div class="col">
+                      <select
+                        id="expEndMonth"
+                        name="expEndMonth"
+                        class="form-select"
+                        required
+                      >
+                        <option value="">Month</option>
+                      </select>
+                    </div>
+                    <div class="col">
+                      <select
+                        id="expEndYear"
+                        name="expEndYear"
+                        class="form-select"
+                        required
+                      >
+                        <option value="">Year</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div
+                    id="date-error-message-exp"
+                    class="small text-danger mt-2 mb-3 d-none"
+                  ></div>
+                </div>
+
+                <input
+                  id="expCurrentLabel"
+                  type="text"
+                  value="Present"
+                  disabled
+                  class="form-control bg-light text-secondary mt-2"
+                  style="display: none"
+                />
+              </div>
+
+              <div class="form-check mb-4">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="currentlyWorkingCheckbox"
+                  name="currentlyWorkingCheckbox"
+                />
+                <label class="form-check-label" for="currentlyWorkingCheckbox">
+                  I am currently working here
+                </label>
+              </div>
+              <div class="d-flex justify-content-between mt-4">
+                <button
+                  type="button"
+                  class="btn btn-outline-danger me-2 rounded-md"
+                  id="deleteExperienceBtn"
+                  style="display: none"
+                >
+                  Delete Entry
+                </button>
+
+                <div class="ms-auto d-flex">
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary me-2 rounded-md"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button
+                    type="submit"
+                    class="btn btn-primary px-4 rounded-md shadow-sm"
+                  >
+                    Save
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
-    
+
     <!-- Skills Modal (Simplified) -->
     <div
       class="modal fade"
@@ -932,135 +1007,198 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
         </div>
       </div>
     </div>
-<!-- Education Modal -->
-            <div class="modal fade" id="educationModal" tabindex="-1" 
-            aria-labelledby="educationModalLabel" aria-hidden="true">
-              <div class="modal-dialog modal-lg">
-                <div class="modal-content rounded-4">
-                  
-                  <!-- Header -->
-                  <div class="modal-header bg-light text-white rounded-top-4">
-                    <h5 class="modal-title" id="educationModalLabel">Education</h5>
-                    <button type="button" class="btn-close btn-close-white" 
-                    data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-
-                  <!-- Body -->
-                  <div class="modal-body p-4">
-                    <form id="educationForm" onsubmit="saveEducationEntry(); 
-                     return false;" novalidate>
-                      <input type="hidden" id="editingIndex" value="-1" />
-                      <!-- Education Entry -->
-                      <div class="p-3 mb-4 border rounded-4 bg-light shadow-sm">
-                        <!-- School Title -->
-                        <div class="mb-3">
-                          <label for="school" class="form-label small fw-semibold">School*</label>
-                          <input  
-                            id="school"
-                            name="school"
-                            type="text"
-                            placeholder="Ex: Mapua University"
-                            required
-                            class="form-control"
-                          />
-                        </div>
-
-                        <!-- Degree -->
-                        <div class="mb-3">
-                          <label for="degree" class="form-label small fw-semibold">Degree*</label>
-                          <select id="degree" name="degree" class="form-select" required>
-                            <option value="">Please Select</option>
-                            <option>Associate Degree</option>
-                            <option>Bachelor's Degree</option>
-                            <option>Master's Degree</option>
-                            <option>Doctoral Degree</option>
-                            <option>High School Diploma or Equivalent</option>
-                          </select>
-                        </div>
-
-                            <!-- Field of Study -->
-                        <div class="mb-3">
-                          <label for="field" class="form-label small fw-semibold">Field of Study*</label>
-                         <input
-                            id="field"
-                            name="field"
-                            type="text"
-                            placeholder="Ex: Software Development"
-                            required
-                            class="form-control"
-                         />
-                        </div>
-
-                       <div class="mb-4">
-                        <label for="eduStartMonth" class="form-label">Start Date*</label>
-                        <div class="row g-2">
-                            <div class="col">
-                                <select id="eduStartMonth" name="eduStartMonth" class="form-select" required>
-                                    <option value="">Month</option>
-                                    </select>
-                            </div>
-                            <div class="col">
-                                <select id="eduStartYear" name="eduStartYear" class="form-select" required>
-                                    <option value="">Year</option>
-                                    </select>
-                            </div>
-                        </div>
-                    </div>
-
-                                        <div class="mb-4" id="eduEndDateWrapper">
-                          <label for="eduEndMonth" class="form-label">End Date*</label>
-                          <div class="row g-2" id="endDateSelects">
-                              <div class="col">
-                                  <select id="eduEndMonth" name="eduEndMonth" class="form-select" required> 
-                                      <option value="">Month</option>
-                                  </select>
-                              </div>
-                              <div class="col">
-                                  <select id="eduEndYear" name="eduEndYear" class="form-select" required> 
-                                      <option value="">Year</option>
-                                  </select>
-                              </div>
-                          </div>
-                          <div 
-  id="date-error-message" 
-  class="small text-danger mt-2 mb-3 d-none"
->
-  </div>
-                          </div>
-    
-                        <input
-                            id="currentDateField"
-                            type="text"
-                            value="Present"
-                            disabled
-                            class="form-control bg-light text-secondary mt-2"
-                            style="display:none;"
-                        />
-                    </div>
-
-                    <div class="form-check mb-4">
-                        <input class="form-check-input" type="checkbox" id="currentlyStudyingCheckbox" name="currentlyStudyingCheckbox">
-                        <label class="form-check-label" for="currentlyStudyingCheckbox">
-                            I am currently study here
-                        </label>
-                    </div>
-                    <div class="d-flex justify-content-between mt-4">
-                            <button type="button" class="btn btn-outline-danger me-2 rounded-md" 
-                                id="deleteEducationBtn" style="display:none;">Delete Entry</button>
-                            
-                            <div class="ms-auto d-flex">
-                                <button type="button" class="btn btn-outline-secondary me-2 rounded-md" 
-                                data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary px-4 rounded-md shadow-sm"
-                                >Save</button>
-                            </div>
-                        </div>
-                    </form>
-              </div>
+    <!-- Education Modal -->
+    <div
+      class="modal fade"
+      id="educationModal"
+      tabindex="-1"
+      aria-labelledby="educationModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content rounded-4">
+          <!-- Header -->
+          <div class="modal-header bg-light text-white rounded-top-4">
+            <h5 class="modal-title" id="educationModalLabel">Education</h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
           </div>
+
+          <!-- Body -->
+          <div class="modal-body p-4">
+            <form
+              id="educationForm"
+              onsubmit="saveEducationEntry(); 
+                     return false;"
+              novalidate
+            >
+              <input type="hidden" id="editingIndex" value="-1" />
+              <!-- Education Entry -->
+              <div class="p-3 mb-4 border rounded-4 bg-light shadow-sm">
+                <!-- School Title -->
+                <div class="mb-3">
+                  <label for="school" class="form-label small fw-semibold"
+                    >School*</label
+                  >
+                  <input
+                    id="school"
+                    name="school"
+                    type="text"
+                    placeholder="Ex: Mapua University"
+                    required
+                    class="form-control"
+                  />
+                </div>
+
+                <!-- Degree -->
+                <div class="mb-3">
+                  <label for="degree" class="form-label small fw-semibold"
+                    >Degree*</label
+                  >
+                  <select
+                    id="degree"
+                    name="degree"
+                    class="form-select"
+                    required
+                  >
+                    <option value="">Please Select</option>
+                    <option>Associate Degree</option>
+                    <option>Bachelor's Degree</option>
+                    <option>Master's Degree</option>
+                    <option>Doctoral Degree</option>
+                    <option>High School Diploma or Equivalent</option>
+                  </select>
+                </div>
+
+                <!-- Field of Study -->
+                <div class="mb-3">
+                  <label for="field" class="form-label small fw-semibold"
+                    >Field of Study*</label
+                  >
+                  <input
+                    id="field"
+                    name="field"
+                    type="text"
+                    placeholder="Ex: Software Development"
+                    required
+                    class="form-control"
+                  />
+                </div>
+
+                <div class="mb-4">
+                  <label for="eduStartMonth" class="form-label"
+                    >Start Date*</label
+                  >
+                  <div class="row g-2">
+                    <div class="col">
+                      <select
+                        id="eduStartMonth"
+                        name="eduStartMonth"
+                        class="form-select"
+                        required
+                      >
+                        <option value="">Month</option>
+                      </select>
+                    </div>
+                    <div class="col">
+                      <select
+                        id="eduStartYear"
+                        name="eduStartYear"
+                        class="form-select"
+                        required
+                      >
+                        <option value="">Year</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mb-4" id="eduEndDateWrapper">
+                  <label for="eduEndMonth" class="form-label">End Date*</label>
+                  <div class="row g-2" id="endDateSelects">
+                    <div class="col">
+                      <select
+                        id="eduEndMonth"
+                        name="eduEndMonth"
+                        class="form-select"
+                        required
+                      >
+                        <option value="">Month</option>
+                      </select>
+                    </div>
+                    <div class="col">
+                      <select
+                        id="eduEndYear"
+                        name="eduEndYear"
+                        class="form-select"
+                        required
+                      >
+                        <option value="">Year</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div
+                    id="date-error-message"
+                    class="small text-danger mt-2 mb-3 d-none"
+                  ></div>
+                </div>
+
+                <input
+                  id="currentDateField"
+                  type="text"
+                  value="Present"
+                  disabled
+                  class="form-control bg-light text-secondary mt-2"
+                  style="display: none"
+                />
+              </div>
+
+              <div class="form-check mb-4">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="currentlyStudyingCheckbox"
+                  name="currentlyStudyingCheckbox"
+                />
+                <label class="form-check-label" for="currentlyStudyingCheckbox">
+                  I am currently study here
+                </label>
+              </div>
+              <div class="d-flex justify-content-between mt-4">
+                <button
+                  type="button"
+                  class="btn btn-outline-danger me-2 rounded-md"
+                  id="deleteEducationBtn"
+                  style="display: none"
+                >
+                  Delete Entry
+                </button>
+
+                <div class="ms-auto d-flex">
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary me-2 rounded-md"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button
+                    type="submit"
+                    class="btn btn-primary px-4 rounded-md shadow-sm"
+                  >
+                    Save
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
-
 
     <!-- Availability Modal -->
     <div
@@ -1408,8 +1546,6 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
       }
     </script>
 
-
-
     <script>
       // Ensure Bootstrap's Modal class is accessible (defined in the bundle linked above)
       const { Modal } = bootstrap;
@@ -1512,8 +1648,6 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
         if (modal) modal.hide();
       }
 
-   
-
       // ------------------------------------------------------------------
       // INITIALIZATION & EVENT LISTENERS
       // ------------------------------------------------------------------
@@ -1538,10 +1672,8 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
       // The previous saveBasicInfo() placeholder is replaced by this function.
     </script>
 
-    
-      <!--EDUCATION-->
+    <!--EDUCATION-->
 
-      
     <script>
       const EDUCATION_STORAGE_KEY = "educationData";
       const EDUCATION_MODAL_ID = "educationModal";
@@ -1895,7 +2027,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
         populateDateSelects();
         renderEducationSection();
 
-        const checkbox = document.getElementById("currentlyStudyingCheckbox"); 
+        const checkbox = document.getElementById("currentlyStudyingCheckbox");
         if (checkbox) {
           checkbox.addEventListener("change", toggleCurrentlyStudying);
         }
@@ -1928,197 +2060,241 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
       });
     </script>
 
-<script>
-/* ------------------------------
+    <script>
+      /* ------------------------------
    EXPERIENCE SECTION CONFIG
 ------------------------------ */
-const EXPERIENCE_STORAGE_KEY = "experienceData";
-const EXPERIENCE_MODAL_ID = "experienceModal";
+      const EXPERIENCE_STORAGE_KEY = "experienceData";
+      const EXPERIENCE_MODAL_ID = "experienceModal";
 
-const EXP_MONTH_NAMES = [
-  "January","February","March","April","May","June",
-  "July","August","September","October","November","December"
-];
+      const EXP_MONTH_NAMES = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
 
-/* Retrieve Experience Data */
-function getExperienceData() {
-  const stored = localStorage.getItem(EXPERIENCE_STORAGE_KEY);
-  try { return stored ? JSON.parse(stored) : []; }
-  catch { return []; }
-}
-
-/* Populate Month/Year Selects */
-function populateExperienceSelects() {
-  const monthSelects = document.querySelectorAll("#expStartMonth, #expEndMonth");
-  monthSelects.forEach(select => {
-    if (select.options.length <= 1) {
-      EXP_MONTH_NAMES.forEach(m => {
-        const o = document.createElement("option");
-        o.value = m; o.textContent = m;
-        select.appendChild(o);
-      });
-    }
-  });
-
-  const currentYear = new Date().getFullYear();
-  const yearSelects = document.querySelectorAll("#expStartYear, #expEndYear");
-  yearSelects.forEach(select => {
-    if (select.options.length <= 1) {
-      for (let y = currentYear + 10; y >= currentYear - 50; y--) {
-        const o = document.createElement("option");
-        o.value = y; o.textContent = y;
-        select.appendChild(o);
+      /* Retrieve Experience Data */
+      function getExperienceData() {
+        const stored = localStorage.getItem(EXPERIENCE_STORAGE_KEY);
+        try {
+          return stored ? JSON.parse(stored) : [];
+        } catch {
+          return [];
+        }
       }
-    }
-  });
-}
 
-/* Toggle Current Job checkbox UI */
-function toggleCurrentlyWorking() {
-  const checkbox = document.getElementById("currentlyWorkingCheckbox");
-  const endDateSelects = document.getElementById("expEndDateSelects");
-  const presentLabel = document.getElementById("expCurrentLabel");
-  const endMonth = document.getElementById("expEndMonth");
-  const endYear = document.getElementById("expEndYear");
-  const err = document.getElementById("date-error-message-exp");
+      /* Populate Month/Year Selects */
+      function populateExperienceSelects() {
+        const monthSelects = document.querySelectorAll(
+          "#expStartMonth, #expEndMonth"
+        );
+        monthSelects.forEach((select) => {
+          if (select.options.length <= 1) {
+            EXP_MONTH_NAMES.forEach((m) => {
+              const o = document.createElement("option");
+              o.value = m;
+              o.textContent = m;
+              select.appendChild(o);
+            });
+          }
+        });
 
-  err.classList.add("d-none");
+        const currentYear = new Date().getFullYear();
+        const yearSelects = document.querySelectorAll(
+          "#expStartYear, #expEndYear"
+        );
+        yearSelects.forEach((select) => {
+          if (select.options.length <= 1) {
+            for (let y = currentYear + 10; y >= currentYear - 50; y--) {
+              const o = document.createElement("option");
+              o.value = y;
+              o.textContent = y;
+              select.appendChild(o);
+            }
+          }
+        });
+      }
 
-  if (checkbox.checked) {
-    endDateSelects.style.display = "none";
-    presentLabel.style.display = "block";
-    endMonth.removeAttribute("required");
-    endYear.removeAttribute("required");
-  } else {
-    endDateSelects.style.display = "flex";
-    presentLabel.style.display = "none";
-    endMonth.setAttribute("required", "required");
-    endYear.setAttribute("required", "required");
-  }
-}
+      /* Toggle Current Job checkbox UI */
+      function toggleCurrentlyWorking() {
+        const checkbox = document.getElementById("currentlyWorkingCheckbox");
+        const endDateSelects = document.getElementById("expEndDateSelects");
+        const presentLabel = document.getElementById("expCurrentLabel");
+        const endMonth = document.getElementById("expEndMonth");
+        const endYear = document.getElementById("expEndYear");
+        const err = document.getElementById("date-error-message-exp");
 
-/* Validate Dates */
-function validateExperienceDates() {
-  const isCurrent = document.getElementById("currentlyWorkingCheckbox").checked;
-  const err = document.getElementById("date-error-message-exp");
-  err.classList.add("d-none");
+        err.classList.add("d-none");
 
-  if (isCurrent) return true;
+        if (checkbox.checked) {
+          endDateSelects.style.display = "none";
+          presentLabel.style.display = "block";
+          endMonth.removeAttribute("required");
+          endYear.removeAttribute("required");
+        } else {
+          endDateSelects.style.display = "flex";
+          presentLabel.style.display = "none";
+          endMonth.setAttribute("required", "required");
+          endYear.setAttribute("required", "required");
+        }
+      }
 
-  const sm = EXP_MONTH_NAMES.indexOf(document.getElementById("expStartMonth").value);
-  const sy = +document.getElementById("expStartYear").value;
-  const em = EXP_MONTH_NAMES.indexOf(document.getElementById("expEndMonth").value);
-  const ey = +document.getElementById("expEndYear").value;
+      /* Validate Dates */
+      function validateExperienceDates() {
+        const isCurrent = document.getElementById(
+          "currentlyWorkingCheckbox"
+        ).checked;
+        const err = document.getElementById("date-error-message-exp");
+        err.classList.add("d-none");
 
-  if (sy > ey || (sy === ey && sm > em)) {
-    err.textContent = "End date must be on or after the start date.";
-    err.classList.remove("d-none");
-    return false;
-  }
-  return true;
-}
+        if (isCurrent) return true;
 
-/* Open Modal (Add/Edit) */
-function openExperienceModal(index = -1) {
-  const data = getExperienceData();
-  const form = document.getElementById("experienceForm");
-  const title = document.getElementById("experienceModalLabel");
-  const deleteBtn = document.getElementById("deleteExperienceBtn");
-  const err = document.getElementById("date-error-message-exp");
+        const sm = EXP_MONTH_NAMES.indexOf(
+          document.getElementById("expStartMonth").value
+        );
+        const sy = +document.getElementById("expStartYear").value;
+        const em = EXP_MONTH_NAMES.indexOf(
+          document.getElementById("expEndMonth").value
+        );
+        const ey = +document.getElementById("expEndYear").value;
 
-  form.reset();
-  form.classList.remove("was-validated");
-  err.classList.add("d-none");
+        if (sy > ey || (sy === ey && sm > em)) {
+          err.textContent = "End date must be on or after the start date.";
+          err.classList.remove("d-none");
+          return false;
+        }
+        return true;
+      }
 
-  document.getElementById("expEditingIndex").value = index;
+      /* Open Modal (Add/Edit) */
+      function openExperienceModal(index = -1) {
+        const data = getExperienceData();
+        const form = document.getElementById("experienceForm");
+        const title = document.getElementById("experienceModalLabel");
+        const deleteBtn = document.getElementById("deleteExperienceBtn");
+        const err = document.getElementById("date-error-message-exp");
 
-  if (index >= 0 && index < data.length) {
-    const d = data[index];
-    title.textContent = "Edit Experience Entry";
-    deleteBtn.style.display = "block";
+        form.reset();
+        form.classList.remove("was-validated");
+        err.classList.add("d-none");
 
-    document.getElementById("job").value = d.job || "";
-    document.getElementById("company").value = d.company || "";
-    document.getElementById("jobType").value = d.jobType || "";
+        document.getElementById("expEditingIndex").value = index;
 
-    document.getElementById("expStartMonth").value = d.startMonth || "";
-    document.getElementById("expStartYear").value = d.startYear || "";
+        if (index >= 0 && index < data.length) {
+          const d = data[index];
+          title.textContent = "Edit Experience Entry";
+          deleteBtn.style.display = "block";
 
-    document.getElementById("currentlyWorkingCheckbox").checked = d.isCurrent || false;
-    document.getElementById("expEndMonth").value = d.endMonth === "N/A" ? "" : d.endMonth;
-    document.getElementById("expEndYear").value = d.endYear === "N/A" ? "" : d.endYear;
+          document.getElementById("job").value = d.job || "";
+          document.getElementById("company").value = d.company || "";
+          document.getElementById("jobType").value = d.jobType || "";
 
-  } else {
-    title.textContent = "Add New Experience Entry";
-    deleteBtn.style.display = "none";
-    document.getElementById("currentlyWorkingCheckbox").checked = false;
-  }
+          document.getElementById("expStartMonth").value = d.startMonth || "";
+          document.getElementById("expStartYear").value = d.startYear || "";
 
-  toggleCurrentlyWorking();
-}
-window.openExperienceModal = openExperienceModal;
+          document.getElementById("currentlyWorkingCheckbox").checked =
+            d.isCurrent || false;
+          document.getElementById("expEndMonth").value =
+            d.endMonth === "N/A" ? "" : d.endMonth;
+          document.getElementById("expEndYear").value =
+            d.endYear === "N/A" ? "" : d.endYear;
+        } else {
+          title.textContent = "Add New Experience Entry";
+          deleteBtn.style.display = "none";
+          document.getElementById("currentlyWorkingCheckbox").checked = false;
+        }
 
-/* Save Entry */
-function saveExperienceEntry() {
-  const form = document.getElementById("experienceForm");
+        toggleCurrentlyWorking();
+      }
+      window.openExperienceModal = openExperienceModal;
 
-  if (!form.checkValidity() || !validateExperienceDates()) {
-    form.classList.add("was-validated");
-    return;
-  }
+      /* Save Entry */
+      function saveExperienceEntry() {
+        const form = document.getElementById("experienceForm");
 
-  const index = +document.getElementById("expEditingIndex").value;
-  const isCurrent = document.getElementById("currentlyWorkingCheckbox").checked;
-  let data = getExperienceData();
+        if (!form.checkValidity() || !validateExperienceDates()) {
+          form.classList.add("was-validated");
+          return;
+        }
 
-  const entry = {
-    job: document.getElementById("job").value,
-    company: document.getElementById("company").value,
-    jobType: document.getElementById("jobType").value,
-    startMonth: document.getElementById("expStartMonth").value,
-    startYear: document.getElementById("expStartYear").value,
-    isCurrent,
-    endMonth: isCurrent ? "N/A" : document.getElementById("expEndMonth").value,
-    endYear: isCurrent ? "N/A" : document.getElementById("expEndYear").value
-  };
+        const index = +document.getElementById("expEditingIndex").value;
+        const isCurrent = document.getElementById(
+          "currentlyWorkingCheckbox"
+        ).checked;
+        let data = getExperienceData();
 
-  if (index === -1) data.push(entry);
-  else data[index] = entry;
+        const entry = {
+          job: document.getElementById("job").value,
+          company: document.getElementById("company").value,
+          jobType: document.getElementById("jobType").value,
+          startMonth: document.getElementById("expStartMonth").value,
+          startYear: document.getElementById("expStartYear").value,
+          isCurrent,
+          endMonth: isCurrent
+            ? "N/A"
+            : document.getElementById("expEndMonth").value,
+          endYear: isCurrent
+            ? "N/A"
+            : document.getElementById("expEndYear").value,
+        };
 
-  localStorage.setItem(EXPERIENCE_STORAGE_KEY, JSON.stringify(data));
-  renderExperienceSection();
+        if (index === -1) data.push(entry);
+        else data[index] = entry;
 
-  const modal = bootstrap.Modal.getInstance(document.getElementById(EXPERIENCE_MODAL_ID));
-  if (modal) modal.hide();
-}
+        localStorage.setItem(EXPERIENCE_STORAGE_KEY, JSON.stringify(data));
+        renderExperienceSection();
 
-/* Render Section */
-function renderExperienceSection() {
-  let data = getExperienceData();
+        const modal = bootstrap.Modal.getInstance(
+          document.getElementById(EXPERIENCE_MODAL_ID)
+        );
+        if (modal) modal.hide();
+      }
 
-/* Sort: latest (most recent) appears first */
-data.sort((a, b) => {
-  // If A is current job → always put A first
-  if (a.isCurrent && !b.isCurrent) return -1;
-  if (!a.isCurrent && b.isCurrent) return 1;
+      /* Render Section */
+      function renderExperienceSection() {
+        let data = getExperienceData();
 
-  // Convert to comparable numbers (YYYYMM)
-  const aVal = parseInt(a.startYear + String(EXP_MONTH_NAMES.indexOf(a.startMonth)).padStart(2, "0"));
-  const bVal = parseInt(b.startYear + String(EXP_MONTH_NAMES.indexOf(b.startMonth)).padStart(2, "0"));
+        /* Sort: latest (most recent) appears first */
+        data.sort((a, b) => {
+          // If A is current job → always put A first
+          if (a.isCurrent && !b.isCurrent) return -1;
+          if (!a.isCurrent && b.isCurrent) return 1;
 
-  // Descending (latest first)
-  return bVal - aVal;
-});
-  const container = document.getElementById("experience-list-container");
+          // Convert to comparable numbers (YYYYMM)
+          const aVal = parseInt(
+            a.startYear +
+              String(EXP_MONTH_NAMES.indexOf(a.startMonth)).padStart(2, "0")
+          );
+          const bVal = parseInt(
+            b.startYear +
+              String(EXP_MONTH_NAMES.indexOf(b.startMonth)).padStart(2, "0")
+          );
 
-  if (!data.length) {
-    container.innerHTML = `<div class="text-muted small p-3">No experience entries yet.</div>`;
-    return;
-  }
+          // Descending (latest first)
+          return bVal - aVal;
+        });
+        const container = document.getElementById("experience-list-container");
 
-  container.innerHTML = data.map((d, i) => {
-    const endText = d.isCurrent ? "Present" : `${d.endMonth} ${d.endYear}`;
-    return `
+        if (!data.length) {
+          container.innerHTML = `<div class="text-muted small p-3">No experience entries yet.</div>`;
+          return;
+        }
+
+        container.innerHTML = data
+          .map((d, i) => {
+            const endText = d.isCurrent
+              ? "Present"
+              : `${d.endMonth} ${d.endYear}`;
+            return `
       <div class="d-flex justify-content-between py-3 px-3 border-bottom experience-entry-row">
         <div>
           <div class="fw-semibold">${d.job}</div>
@@ -2128,40 +2304,45 @@ data.sort((a, b) => {
         <a href="#" class="small" onclick="openExperienceModal(${i})" data-bs-toggle="modal" data-bs-target="#experienceModal">Edit</a>
       </div>
     `;
-  }).join("");
+          })
+          .join("");
 
-  const rows = container.querySelectorAll(".experience-entry-row");
-  if (rows.length) rows[rows.length - 1].classList.remove("border-bottom");
-}
+        const rows = container.querySelectorAll(".experience-entry-row");
+        if (rows.length)
+          rows[rows.length - 1].classList.remove("border-bottom");
+      }
 
-/* Delete Entry */
-function deleteExperienceEntry() {
-  const index = +document.getElementById("expEditingIndex").value;
-  const data = getExperienceData();
+      /* Delete Entry */
+      function deleteExperienceEntry() {
+        const index = +document.getElementById("expEditingIndex").value;
+        const data = getExperienceData();
 
-  if (index >= 0 && index < data.length && confirm("Delete this entry?")) {
-    data.splice(index, 1);
-    localStorage.setItem(EXPERIENCE_STORAGE_KEY, JSON.stringify(data));
-    renderExperienceSection();
-    const modal = bootstrap.Modal.getInstance(document.getElementById(EXPERIENCE_MODAL_ID));
-    if (modal) modal.hide();
-  }
-}
+        if (
+          index >= 0 &&
+          index < data.length &&
+          confirm("Delete this entry?")
+        ) {
+          data.splice(index, 1);
+          localStorage.setItem(EXPERIENCE_STORAGE_KEY, JSON.stringify(data));
+          renderExperienceSection();
+          const modal = bootstrap.Modal.getInstance(
+            document.getElementById(EXPERIENCE_MODAL_ID)
+          );
+          if (modal) modal.hide();
+        }
+      }
 
-/* Initialize */
-document.addEventListener("DOMContentLoaded", () => {
-  populateExperienceSelects();
-  renderExperienceSection();
-  document.getElementById("currentlyWorkingCheckbox").addEventListener("change", toggleCurrentlyWorking);
-  document.getElementById("deleteExperienceBtn").addEventListener("click", deleteExperienceEntry);
-});
-</script>
-
-
-
-
- 
-
-
+      /* Initialize */
+      document.addEventListener("DOMContentLoaded", () => {
+        populateExperienceSelects();
+        renderExperienceSection();
+        document
+          .getElementById("currentlyWorkingCheckbox")
+          .addEventListener("change", toggleCurrentlyWorking);
+        document
+          .getElementById("deleteExperienceBtn")
+          .addEventListener("click", deleteExperienceEntry);
+      });
+    </script>
   </body>
 </html>
