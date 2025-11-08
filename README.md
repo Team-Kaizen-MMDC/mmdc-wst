@@ -250,7 +250,7 @@ Notes:
 - If npm scripts surface shell startup errors (for example from `.zshrc`), guard optional tool initializations in your rc file (for example `if command -v jenv >/dev/null; then jenv init; fi`).
 
 ## Testing documentation
- 
+
 Detailed test documentation and results are available in `TESTING.md` at the repository root. That document contains:
 
 - A list of test cases (functional, mobile/offcanvas, i18n, accessibility)
