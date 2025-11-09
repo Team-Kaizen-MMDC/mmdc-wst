@@ -62,7 +62,8 @@ jobs:
           # Run smoke tests - Playwright will generate JSON report via config
           echo "Running smoke tests"
           mkdir -p test-results
-          ./run-tests.sh smoke chromium --no-server 2>&1 | tee /tmp/playwright-run.log || true
+          # Invoke the script explicitly with bash to avoid shebang/CRLF issues
+          bash ./run-tests.sh smoke chromium --no-server 2>&1 | tee /tmp/playwright-run.log || true
         continue-on-error: true
 
       - name: Upload Playwright results
