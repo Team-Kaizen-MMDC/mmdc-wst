@@ -14,7 +14,11 @@
 /* Moved to archive/assets-js/modules/forms.js on 2025-09-17 */
 
 import { setCookie } from "./storage.js";
-import { saveUserProfile, setNewUserFlag } from "./userProfile.js";
+import {
+  saveUserProfile,
+  setNewUserFlag,
+  hasCompletedProfile,
+} from "./userProfile.js";
 
 const setValidationState = (
   element,
@@ -281,8 +285,6 @@ export const initializeSignupValidation = () => {
 // Login Form Validation Function
 // ===================================================================
 
-import { hasCompletedProfile, setNewUserFlag } from "./userProfile.js";
-
 export const initializeLoginValidation = () => {
   console.log("Login Module: initializeLoginValidation is running.");
   const form = document.getElementById("loginForm");
@@ -319,27 +321,27 @@ export const initializeLoginValidation = () => {
     if (!isPasswordValid) formValid = false;
 
     if (formValid) {
-      console.log(
-        "Login validation successful. Checking profile completion..."
-      );
+      console.log("Login validation successful. Initializing user profile...");
 
       // Mark user as logged in
       setCookie("isLoggedIn", "true", 1); // Sets the persistent cookie for 1 day
       sessionStorage.setItem("isLoggedIn", "true");
 
+      // Save email to user profile for existing users logging in
+      saveUserProfile({
+        email: inputElements.email.value,
+        // Set default name for display purposes
+        firstName: "Juan",
+        lastName: "Dela Cruz",
+      });
+
       // Mark as existing user (not new registration)
       setNewUserFlag(false);
 
-      // Check if user has completed their profile
-      const profileComplete = hasCompletedProfile();
-
-      if (profileComplete) {
-        console.log("Profile complete. Redirecting to dashboard.");
-        window.location.href = "profileDashboard.html";
-      } else {
-        console.log("Profile incomplete. Redirecting to profile setup.");
-        window.location.href = "addEdit/profile.html";
-      }
+      // For login, always redirect to dashboard (not profile setup)
+      // User can navigate to edit profile from dashboard if needed
+      console.log("Login successful. Redirecting to dashboard.");
+      window.location.href = "profileDashboard.html";
     } else {
       console.log("Login validation failed. Errors displayed.");
     }

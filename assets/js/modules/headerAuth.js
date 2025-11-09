@@ -24,7 +24,8 @@ export function updateHeaderAuthState() {
 
   const profile = getUserProfile();
   console.log("User profile:", profile);
-  const userName = getFirstName() || profile.email?.split("@")[0] || "User";
+  const userName =
+    getFirstName() || profile.email?.split("@")[0] || "Juan Dela Cruz";
 
   console.log("✅ Updating header for logged-in user:", userName);
 
@@ -43,6 +44,12 @@ function updateDesktopNav(userName) {
 
   if (!desktopActions) {
     console.warn("Desktop header actions not found");
+    return;
+  }
+
+  // Check if already updated (user section exists)
+  if (desktopActions.querySelector(".user-auth-section")) {
+    console.log("Desktop header already showing user greeting");
     return;
   }
 
@@ -70,7 +77,7 @@ function updateDesktopNav(userName) {
 
     console.log("✅ Desktop header updated with user greeting");
   } else {
-    console.warn("Signup/Login buttons not found in desktop header");
+    console.log("Desktop header: Signup/Login buttons already replaced");
   }
 }
 
@@ -82,6 +89,12 @@ function updateMobileNav(userName) {
 
   if (!mobileActions) {
     console.warn("Mobile header actions not found");
+    return;
+  }
+
+  // Check if already updated (user section exists)
+  if (mobileActions.querySelector(".user-auth-section")) {
+    console.log("Mobile header already showing user greeting");
     return;
   }
 
@@ -112,7 +125,7 @@ function updateMobileNav(userName) {
 
     console.log("✅ Mobile header updated with user greeting");
   } else {
-    console.warn("Signup/Login buttons not found in mobile header");
+    console.log("Mobile header: Signup/Login buttons already replaced");
   }
 }
 
