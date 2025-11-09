@@ -363,10 +363,78 @@
     <script type="module">
       import { checkAuthAndRedirect } from "../../assets/js/modules/auth.js";
       import { initializeEducationValidation } from "../../assets/js/modules/validation.js";
+      import {
+        saveUserProfile,
+        getUserProfile,
+        updateProfileSection,
+      } from "../../assets/js/modules/userProfile.js";
+
+      // Load existing education data
+      const loadEducationData = () => {
+        const profile = getUserProfile();
+        console.log("Loading education data:", profile);
+
+        if (profile.education && profile.education.length > 0) {
+          // If education array exists, we could pre-populate the form with the first entry
+          // For now, we'll just log it as the form is designed for single entry
+          const latestEdu = profile.education[0];
+
+          if (latestEdu.educationalAttainment) {
+            document.getElementById("educationalAttainment").value =
+              latestEdu.educationalAttainment;
+          }
+          if (latestEdu.fieldOfStudy) {
+            document.getElementById("fieldOfStudy").value =
+              latestEdu.fieldOfStudy;
+          }
+          if (latestEdu.schoolName) {
+            document.getElementById("schoolName").value = latestEdu.schoolName;
+          }
+          if (latestEdu.yearGraduated) {
+            document.getElementById("yearGraduated").value =
+              latestEdu.yearGraduated;
+          }
+        }
+      };
+
+      // Save education data on form submit
+      const saveEducationData = (event) => {
+        event.preventDefault();
+
+        const educationEntry = {
+          educationalAttainment: document.getElementById(
+            "educationalAttainment"
+          ).value,
+          fieldOfStudy: document.getElementById("fieldOfStudy").value,
+          schoolName: document.getElementById("schoolName").value,
+          yearGraduated: document.getElementById("yearGraduated").value,
+        };
+
+        // Get current profile and add education entry
+        const profile = getUserProfile();
+        if (!profile.education) {
+          profile.education = [];
+        }
+
+        // Add new entry (or replace first entry for simplicity)
+        profile.education = [educationEntry];
+
+        updateProfileSection("education", profile.education);
+        console.log("Education data saved:", educationEntry);
+
+        // Proceed to next step
+        window.location.href = "experience.html";
+      };
 
       window.addEventListener("DOMContentLoaded", () => {
         checkAuthAndRedirect();
         initializeEducationValidation();
+        loadEducationData();
+
+        const form = document.getElementById("educationForm");
+        if (form) {
+          form.addEventListener("submit", saveEducationData);
+        }
       });
     </script>
   </body>
