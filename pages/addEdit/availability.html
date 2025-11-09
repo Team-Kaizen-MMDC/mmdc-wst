@@ -251,10 +251,65 @@
     <script type="module">
       import { checkAuthAndRedirect } from "../../assets/js/modules/auth.js";
       import { initializeAvailabilityValidation } from "../../assets/js/modules/validation.js";
+      import {
+        saveUserProfile,
+        getUserProfile,
+        markProfileComplete,
+      } from "../../assets/js/modules/userProfile.js";
+
+      // Load existing availability data
+      const loadAvailabilityData = () => {
+        const profile = getUserProfile();
+        console.log("Loading availability data:", profile);
+
+        if (profile.availability) {
+          if (profile.availability.status) {
+            document.getElementById("status").value =
+              profile.availability.status;
+          }
+          if (profile.availability.location) {
+            document.getElementById("location").value =
+              profile.availability.location;
+          }
+          if (profile.availability.workPreferences) {
+            document.getElementById("workPreferences").value =
+              profile.availability.workPreferences;
+          }
+        }
+      };
+
+      // Save availability data on form submit
+      const saveAvailabilityData = (event) => {
+        event.preventDefault();
+
+        const availabilityData = {
+          availability: {
+            status: document.getElementById("status").value,
+            location: document.getElementById("location").value,
+            workPreferences: document.getElementById("workPreferences").value,
+          },
+        };
+
+        saveUserProfile(availabilityData);
+
+        // Mark profile as complete (final step)
+        markProfileComplete();
+
+        console.log("Availability data saved. Profile complete!");
+
+        // Redirect to profile dashboard
+        window.location.href = "../profileDashboard.html";
+      };
 
       window.addEventListener("DOMContentLoaded", () => {
         checkAuthAndRedirect();
         initializeAvailabilityValidation();
+        loadAvailabilityData();
+
+        const form = document.querySelector("form");
+        if (form) {
+          form.addEventListener("submit", saveAvailabilityData);
+        }
       });
     </script>
   </body>

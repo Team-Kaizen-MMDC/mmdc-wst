@@ -8,6 +8,7 @@
 import { MobileNav } from "./features/navigation/MobileNav.js";
 import { SmoothScroll } from "./features/navigation/SmoothScroll.js";
 import I18n from "./i18n.js";
+import { initHeaderAuth } from "./modules/headerAuth.js";
 
 /* Ensure Bootstrap Icons CSS is loaded globally (MK) */
 (function ensureBootstrapIcons() {
@@ -40,6 +41,9 @@ class App {
 
   initFeatures() {
     console.log("🚀 Japan SSW Phase 2 - Initializing...");
+
+    // Initialize header authentication state
+    initHeaderAuth();
 
     // Initialize i18n loader and language toggle
     this.i18n = new I18n();
@@ -353,6 +357,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("contactForm");
   const successMessage = document.getElementById("successMessage");
 
+  // Only run contact form validation if we're on the contact page
+  if (!form || !successMessage) {
+    return;
+  }
+
   /**
    * Performs client-side validation using Bootstrap's built-in validation feedback.
    * Note: We rely on the 'form-control' class in the HTML being present.
@@ -553,6 +562,11 @@ document.addEventListener("DOMContentLoaded", initializeApp);
 document.addEventListener("DOMContentLoaded", () => {
   const userMenuBtn = document.getElementById("user-menu-btn");
   const userMenuDropdown = document.getElementById("user-menu-dropdown");
+
+  // Only run if elements exist (company dashboard page)
+  if (!userMenuBtn || !userMenuDropdown) {
+    return;
+  }
 
   // Function to toggle the menu's visibility
   function toggleMenu() {
@@ -958,49 +972,57 @@ filters.forEach((groupEl) => {
 });
 
 // search input
-searchInput.addEventListener("input", () => {
-  state.search = searchInput.value.toLowerCase().trim();
-  filterJobs();
-});
-
-// Keyboard shortcuts for search input
-searchInput.addEventListener("keydown", (e) => {
-  // Escape key clears the search
-  if (e.key === "Escape") {
-    searchInput.value = "";
-    state.search = "";
+if (searchInput) {
+  searchInput.addEventListener("input", () => {
+    state.search = searchInput.value.toLowerCase().trim();
     filterJobs();
-    if (filterAnnouncement) {
-      filterAnnouncement.textContent = "Search cleared";
+  });
+
+  // Keyboard shortcuts for search input
+  searchInput.addEventListener("keydown", (e) => {
+    // Escape key clears the search
+    if (e.key === "Escape") {
+      searchInput.value = "";
+      state.search = "";
+      filterJobs();
+      if (filterAnnouncement) {
+        filterAnnouncement.textContent = "Search cleared";
+      }
     }
-  }
-});
+  });
+}
 
 // clear filters
-clearBtn.addEventListener("click", (e) => {
-  e.preventDefault();
-  state.support = ["all"];
-  state.japaneseLevel = ["any"];
-  state.location = ["all"];
-  state.industry = ["all"];
-  state.minSalary = [0];
+if (clearBtn) {
+  clearBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    state.support = ["all"];
+    state.japaneseLevel = ["any"];
+    state.location = ["all"];
+    state.industry = ["all"];
+    state.minSalary = [0];
 
-  // update all button groups visually
-  ["support", "japaneseLevel", "location", "industry", "minSalary"].forEach(
-    (k) => updateButtons(k)
-  );
-  searchInput.value = "";
-  state.search = "";
-  filterJobs();
+    // update all button groups visually
+    ["support", "japaneseLevel", "location", "industry", "minSalary"].forEach(
+      (k) => updateButtons(k)
+    );
+    if (searchInput) {
+      searchInput.value = "";
+      state.search = "";
+    }
+    filterJobs();
 
-  // Announce to screen readers
-  if (filterAnnouncement) {
-    filterAnnouncement.textContent = "All filters cleared. Showing all jobs.";
-  }
+    // Announce to screen readers
+    if (filterAnnouncement) {
+      filterAnnouncement.textContent = "All filters cleared. Showing all jobs.";
+    }
 
-  // Return focus to search input for keyboard users
-  searchInput.focus();
-});
+    // Return focus to search input for keyboard users
+    if (searchInput) {
+      searchInput.focus();
+    }
+  });
+}
 
 // Global keyboard shortcut: Ctrl+K or Cmd+K to focus search
 document.addEventListener("keydown", (e) => {

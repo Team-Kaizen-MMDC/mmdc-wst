@@ -447,27 +447,13 @@
       import { setCookie, getCookie } from "../../assets/js/modules/storage.js";
       import { checkAuthAndRedirect } from "../../assets/js/modules/auth.js";
       import { initializeProfileValidation } from "../../assets/js/modules/validation.js";
+      import {
+        saveUserProfile,
+        getUserProfile,
+      } from "../../assets/js/modules/userProfile.js";
 
       // Get the form by its ID
       const form = document.getElementById("profileForm");
-
-      // List of fields to be saved and loaded
-      const profileFields = [
-        "firstName",
-        "middleName",
-        "lastName",
-        "dateOfBirth",
-        "genderSelect",
-        "nationalitySelect",
-        "location",
-        "city",
-        "address",
-        "field",
-        "prometricTest",
-        "jlptLevel",
-        "visaType",
-        "visaExpiryDate",
-      ];
 
       // Nationality Data and Population Function
       const NATIONALITIES = [
@@ -686,21 +672,89 @@
         });
       };
 
+      // Load profile data from userProfile
+      const loadProfileData = () => {
+        const profile = getUserProfile();
+        console.log("Loading profile data:", profile);
+
+        // Populate form fields if data exists
+        if (profile.firstName)
+          document.getElementById("firstName").value = profile.firstName;
+        if (profile.middleName)
+          document.getElementById("middleName").value = profile.middleName;
+        if (profile.lastName)
+          document.getElementById("lastName").value = profile.lastName;
+
+        // Date of Birth
+        if (profile.dateOfBirth) {
+          if (profile.dateOfBirth.day)
+            document.getElementById("dobDay").value = profile.dateOfBirth.day;
+          if (profile.dateOfBirth.month)
+            document.getElementById("dobMonth").value =
+              profile.dateOfBirth.month;
+          if (profile.dateOfBirth.year)
+            document.getElementById("dobYear").value = profile.dateOfBirth.year;
+        }
+
+        if (profile.gender)
+          document.getElementById("genderSelect").value = profile.gender;
+        if (profile.nationality)
+          document.getElementById("nationalitySelect").value =
+            profile.nationality;
+        if (profile.address)
+          document.getElementById("address").value = profile.address;
+        if (profile.city) document.getElementById("city").value = profile.city;
+        if (profile.prefecture)
+          document.getElementById("location").value = profile.prefecture;
+        if (profile.industry)
+          document.getElementById("field").value = profile.industry;
+        if (profile.visaStatus)
+          document.getElementById("visaType").value = profile.visaStatus;
+        if (profile.japaneseLevel)
+          document.getElementById("jlptLevel").value = profile.japaneseLevel;
+      };
+
+      // Save profile data to userProfile
+      const saveProfileData = (event) => {
+        event.preventDefault();
+
+        const profileData = {
+          firstName: document.getElementById("firstName").value,
+          middleName: document.getElementById("middleName").value,
+          lastName: document.getElementById("lastName").value,
+          dateOfBirth: {
+            day: document.getElementById("dobDay").value,
+            month: document.getElementById("dobMonth").value,
+            year: document.getElementById("dobYear").value,
+          },
+          gender: document.getElementById("genderSelect").value,
+          nationality: document.getElementById("nationalitySelect").value,
+          address: document.getElementById("address").value,
+          city: document.getElementById("city").value,
+          prefecture: document.getElementById("location").value,
+          industry: document.getElementById("field").value,
+          visaStatus: document.getElementById("visaType").value,
+          japaneseLevel: document.getElementById("jlptLevel").value,
+        };
+
+        // Save to userProfile
+        saveUserProfile(profileData);
+        console.log("Profile data saved:", profileData);
+
+        // Proceed to next step
+        window.location.href = "contact.html";
+      };
+
       // INITIALIZATION
       window.addEventListener("DOMContentLoaded", () => {
-        console.log("test test test");
         checkAuthAndRedirect();
         populateNationalitySelect();
         initializeProfileValidation();
-
         loadProfileData();
+
         if (form) {
           form.addEventListener("submit", saveProfileData);
         }
-        window.getCookie = getCookie;
-        console.log(
-          "getCookie is globally available on this page for testing."
-        );
       });
     </script>
   </body>

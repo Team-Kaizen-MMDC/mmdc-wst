@@ -2344,5 +2344,223 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           .addEventListener("click", deleteExperienceEntry);
       });
     </script>
+
+    <!-- Authentication Check -->
+    <script type="module">
+      import {
+        checkAuthAndRedirect,
+        setupLogoutButton,
+      } from "../assets/js/modules/auth.js";
+      import {
+        getUserProfile,
+        getDisplayName,
+        getFirstName,
+      } from "../assets/js/modules/userProfile.js";
+
+      // Check authentication on page load
+      checkAuthAndRedirect();
+
+      // Setup logout buttons
+      window.addEventListener("DOMContentLoaded", () => {
+        // Desktop logout button in dropdown
+        setupLogoutButton('.user-menu-dropdown__link[type="button"]');
+
+        // Mobile logout button in offcanvas
+        setupLogoutButton(".offcanvas-body .btn-danger");
+      });
+
+      // Populate dashboard with user data
+      function populateDashboard() {
+        const profile = getUserProfile();
+        console.log("Populating dashboard with profile:", profile);
+
+        // Update user menu
+        const userMenuBtn = document.getElementById("user-menu-btn");
+        const userName = document.querySelector(
+          ".user-menu-dropdown__userName"
+        );
+
+        if (userMenuBtn) {
+          userMenuBtn.textContent = getFirstName();
+        }
+        if (userName) {
+          userName.textContent = getDisplayName();
+        }
+
+        // Update profile summary section
+        const textContent = document.getElementById("text-content");
+        const editInput = document.getElementById("edit-input");
+        if (textContent && profile.profileSummary) {
+          textContent.textContent = profile.profileSummary;
+        }
+        if (editInput && profile.profileSummary) {
+          editInput.value = profile.profileSummary;
+        }
+
+        // Update basic info section
+        const infoName = document.getElementById("info-name");
+        const infoLocation = document.getElementById("info-location");
+        const infoVisa = document.getElementById("info-visa");
+        const infoValidity = document.getElementById("info-validity");
+        const infoIndustry = document.getElementById("info-industry");
+        const infoJapanese = document.getElementById("info-japanese");
+        const infoNationality = document.getElementById("info-nationality");
+        const infoAge = document.getElementById("info-age");
+
+        if (infoName) {
+          infoName.textContent = getDisplayName();
+        }
+
+        if (infoLocation) {
+          const location =
+            profile.city && profile.prefecture
+              ? `${profile.city}, ${profile.prefecture}`
+              : profile.prefecture || profile.city || "Location not set";
+          infoLocation.textContent = location;
+        }
+
+        if (infoVisa) {
+          infoVisa.textContent =
+            profile.visaStatus || profile.visa || "Not specified";
+        }
+
+        if (infoValidity) {
+          infoValidity.textContent = profile.visaValidity || "N/A";
+        }
+
+        if (infoIndustry) {
+          infoIndustry.textContent = profile.industry || "Not specified";
+        }
+
+        if (infoJapanese) {
+          infoJapanese.textContent = profile.japaneseLevel || "Not specified";
+        }
+
+        if (infoNationality) {
+          infoNationality.textContent = profile.nationality || "Not specified";
+        }
+
+        if (infoAge) {
+          // Calculate age from date of birth if available
+          if (profile.dateOfBirth && profile.dateOfBirth.year) {
+            const currentYear = new Date().getFullYear();
+            const age = currentYear - parseInt(profile.dateOfBirth.year);
+            infoAge.textContent = age > 0 ? age : "N/A";
+          } else {
+            infoAge.textContent = profile.age || "N/A";
+          }
+        }
+
+        // Update contact information if there's a section for it
+        // Note: The dashboard may need additional elements to display contact info
+
+        // Update Availability section
+        if (profile.availability) {
+          const availabilityReadView = document.getElementById(
+            "availability-read-view"
+          );
+          if (availabilityReadView) {
+            const paragraphs = availabilityReadView.querySelectorAll("p");
+            if (paragraphs.length >= 3) {
+              if (profile.availability.status) {
+                paragraphs[0].innerHTML = `<span class="fw-semibold">Status:</span> ${profile.availability.status}`;
+              }
+              if (profile.availability.location) {
+                paragraphs[1].innerHTML = `<span class="fw-semibold">Location:</span> ${profile.availability.location}`;
+              }
+              if (profile.availability.workPreferences) {
+                paragraphs[2].innerHTML = `<span class="fw-semibold">Work Preferences:</span> ${profile.availability.workPreferences}`;
+              }
+            }
+          }
+        }
+
+        // Update Education section - trigger the existing render function
+        if (profile.education && profile.education.length > 0) {
+          // Transform education data to match dashboard format
+          const transformedEducation = profile.education.map((edu) => ({
+            school: edu.schoolName || "",
+            degree: edu.educationalAttainment || "",
+            field: edu.fieldOfStudy || "",
+            startMonth: edu.startMonth || "",
+            startYear: edu.startYear || "",
+            endMonth: edu.endMonth || "",
+            endYear: edu.endYear || edu.yearGraduated || "",
+            isCurrent: edu.currentlyStudying || false,
+            grade: edu.grade || "",
+            activities: edu.activities || "",
+            description: edu.description || "",
+          }));
+
+          // Store in localStorage for the existing education script
+          localStorage.setItem(
+            "educationData",
+            JSON.stringify(transformedEducation)
+          );
+          // Trigger render if function exists
+          if (typeof renderEducationSection === "function") {
+            renderEducationSection();
+          }
+        }
+
+        // Update Experience section - trigger the existing render function
+        if (profile.experience && profile.experience.length > 0) {
+          // Transform experience data to match dashboard format
+          const transformedExperience = profile.experience.map((exp) => ({
+            job: exp.jobPosition || "",
+            company: exp.companyName || "",
+            jobType: exp.employmentType || "",
+            startMonth: exp.startMonth || "",
+            startYear: exp.startYear || "",
+            endMonth: exp.endMonth || "",
+            endYear: exp.endYear || "",
+            isCurrent: exp.currentlyWorking || false,
+          }));
+
+          // Store in localStorage for the existing experience script
+          localStorage.setItem(
+            "experienceData",
+            JSON.stringify(transformedExperience)
+          );
+          // Trigger render if function exists
+          if (typeof renderExperienceSection === "function") {
+            renderExperienceSection();
+          }
+        }
+
+        // Update Skills section
+        if (profile.skills && profile.skills.length > 0) {
+          const skillsContainer = document.querySelector(
+            ".card:has(#skillsModal) .card-body"
+          );
+          if (skillsContainer) {
+            // Clear existing content (except the edit link)
+            const editLink = skillsContainer.querySelector(".text-danger");
+            skillsContainer.innerHTML = "";
+
+            // Add skills as badges
+            const skillsWrapper = document.createElement("div");
+            skillsWrapper.className = "d-flex flex-wrap gap-2 mb-3";
+            profile.skills.forEach((skill) => {
+              const badge = document.createElement("span");
+              badge.className = "badge bg-secondary";
+              badge.textContent = skill;
+              skillsWrapper.appendChild(badge);
+            });
+            skillsContainer.appendChild(skillsWrapper);
+
+            // Re-add edit link
+            if (editLink) {
+              skillsContainer.appendChild(editLink);
+            }
+          }
+        }
+
+        console.log("Dashboard populated successfully");
+      }
+
+      // Run on page load
+      window.addEventListener("DOMContentLoaded", populateDashboard);
+    </script>
   </body>
 </html>

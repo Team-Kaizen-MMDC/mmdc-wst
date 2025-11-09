@@ -363,10 +363,103 @@
     <script type="module">
       import { checkAuthAndRedirect } from "../../assets/js/modules/auth.js";
       import { initializeEducationValidation } from "../../assets/js/modules/validation.js";
+      import {
+        saveUserProfile,
+        getUserProfile,
+        updateProfileSection,
+      } from "../../assets/js/modules/userProfile.js";
+
+      // Load existing education data
+      const loadEducationData = () => {
+        const profile = getUserProfile();
+        console.log("Loading education data:", profile);
+
+        if (profile.education && profile.education.length > 0) {
+          const latestEdu = profile.education[0];
+
+          if (latestEdu.schoolName) {
+            document.getElementById("school").value = latestEdu.schoolName;
+          }
+          if (latestEdu.educationalAttainment) {
+            document.getElementById("degree").value =
+              latestEdu.educationalAttainment;
+          }
+          if (latestEdu.fieldOfStudy) {
+            document.getElementById("field").value = latestEdu.fieldOfStudy;
+          }
+          if (latestEdu.startMonth) {
+            document.getElementById("startMonth").value = latestEdu.startMonth;
+          }
+          if (latestEdu.startYear) {
+            document.getElementById("startYear").value = latestEdu.startYear;
+          }
+          if (latestEdu.endMonth) {
+            document.getElementById("endMonth").value = latestEdu.endMonth;
+          }
+          if (latestEdu.endYear) {
+            document.getElementById("endYear").value = latestEdu.endYear;
+          }
+          if (latestEdu.currentlyStudying !== undefined) {
+            document.getElementById("CurrentlyStudying").checked =
+              latestEdu.currentlyStudying;
+          }
+          if (latestEdu.grade) {
+            document.getElementById("grades").value = latestEdu.grade;
+          }
+          if (latestEdu.activities) {
+            document.getElementById("activities").value = latestEdu.activities;
+          }
+          if (latestEdu.description) {
+            document.getElementById("description").value =
+              latestEdu.description;
+          }
+        }
+      };
+
+      // Save education data on form submit
+      const saveEducationData = (event) => {
+        event.preventDefault();
+
+        const educationEntry = {
+          schoolName: document.getElementById("school").value,
+          educationalAttainment: document.getElementById("degree").value,
+          fieldOfStudy: document.getElementById("field").value,
+          startMonth: document.getElementById("startMonth").value,
+          startYear: document.getElementById("startYear").value,
+          endMonth: document.getElementById("endMonth").value,
+          endYear: document.getElementById("endYear").value,
+          currentlyStudying:
+            document.getElementById("CurrentlyStudying").checked,
+          grade: document.getElementById("grades")?.value || "",
+          activities: document.getElementById("activities")?.value || "",
+          description: document.getElementById("description")?.value || "",
+        };
+
+        // Get current profile and add education entry
+        const profile = getUserProfile();
+        if (!profile.education) {
+          profile.education = [];
+        }
+
+        // Add new entry (or replace first entry for simplicity)
+        profile.education = [educationEntry];
+
+        updateProfileSection("education", profile.education);
+        console.log("Education data saved:", educationEntry);
+
+        // Proceed to next step
+        window.location.href = "experience.html";
+      };
 
       window.addEventListener("DOMContentLoaded", () => {
         checkAuthAndRedirect();
         initializeEducationValidation();
+        loadEducationData();
+
+        const form = document.getElementById("educationForm");
+        if (form) {
+          form.addEventListener("submit", saveEducationData);
+        }
       });
     </script>
   </body>

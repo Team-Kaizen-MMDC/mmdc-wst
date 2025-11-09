@@ -366,10 +366,99 @@
     <script type="module">
       import { checkAuthAndRedirect } from "../../assets/js/modules/auth.js";
       import { initializeExperienceValidation } from "../../assets/js/modules/validation.js";
+      import {
+        saveUserProfile,
+        getUserProfile,
+        updateProfileSection,
+      } from "../../assets/js/modules/userProfile.js";
+
+      // Load existing experience data
+      const loadExperienceData = () => {
+        const profile = getUserProfile();
+        console.log("Loading experience data:", profile);
+
+        if (profile.experience && profile.experience.length > 0) {
+          const latestExp = profile.experience[0];
+
+          if (latestExp.jobPosition) {
+            document.getElementById("title").value = latestExp.jobPosition;
+          }
+          if (latestExp.companyName) {
+            document.getElementById("company").value = latestExp.companyName;
+          }
+          if (latestExp.employmentType) {
+            document.getElementById("employmentType").value =
+              latestExp.employmentType;
+          }
+          if (latestExp.startMonth) {
+            document.getElementById("startMonth").value = latestExp.startMonth;
+          }
+          if (latestExp.startYear) {
+            document.getElementById("startYear").value = latestExp.startYear;
+          }
+          if (latestExp.endMonth) {
+            document.getElementById("endMonth").value = latestExp.endMonth;
+          }
+          if (latestExp.endYear) {
+            document.getElementById("endYear").value = latestExp.endYear;
+          }
+          if (latestExp.currentlyWorking !== undefined) {
+            document.getElementById("currentlyWorking").checked =
+              latestExp.currentlyWorking;
+          }
+          if (latestExp.location) {
+            document.getElementById("location").value = latestExp.location;
+          }
+          if (latestExp.description) {
+            document.getElementById("description").value =
+              latestExp.description;
+          }
+        }
+      };
+
+      // Save experience data on form submit
+      const saveExperienceData = (event) => {
+        event.preventDefault();
+
+        const experienceEntry = {
+          jobPosition: document.getElementById("title").value,
+          companyName: document.getElementById("company").value,
+          employmentType: document.getElementById("employmentType").value,
+          startMonth: document.getElementById("startMonth").value,
+          startYear: document.getElementById("startYear").value,
+          endMonth: document.getElementById("endMonth").value,
+          endYear: document.getElementById("endYear").value,
+          currentlyWorking:
+            document.getElementById("currentlyWorking")?.checked || false,
+          location: document.getElementById("location")?.value || "",
+          description: document.getElementById("description")?.value || "",
+        };
+
+        // Get current profile and add experience entry
+        const profile = getUserProfile();
+        if (!profile.experience) {
+          profile.experience = [];
+        }
+
+        // Add new entry (or replace first entry for simplicity)
+        profile.experience = [experienceEntry];
+
+        updateProfileSection("experience", profile.experience);
+        console.log("Experience data saved:", experienceEntry);
+
+        // Proceed to next step
+        window.location.href = "skill.html";
+      };
 
       window.addEventListener("DOMContentLoaded", () => {
         checkAuthAndRedirect();
         initializeExperienceValidation();
+        loadExperienceData();
+
+        const form = document.getElementById("experienceForm");
+        if (form) {
+          form.addEventListener("submit", saveExperienceData);
+        }
       });
     </script>
   </body>

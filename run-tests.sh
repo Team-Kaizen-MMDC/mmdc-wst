@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 
-#
 # Playwright Test Runner Script
 # Provides convenient commands for running different test suites
-#
 
 set -e
 
