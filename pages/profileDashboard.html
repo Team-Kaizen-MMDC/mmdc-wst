@@ -2454,6 +2454,108 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
         // Update contact information if there's a section for it
         // Note: The dashboard may need additional elements to display contact info
 
+        // Update Availability section
+        if (profile.availability) {
+          const availabilityReadView = document.getElementById(
+            "availability-read-view"
+          );
+          if (availabilityReadView) {
+            const paragraphs = availabilityReadView.querySelectorAll("p");
+            if (paragraphs.length >= 3) {
+              if (profile.availability.status) {
+                paragraphs[0].innerHTML = `<span class="fw-semibold">Status:</span> ${profile.availability.status}`;
+              }
+              if (profile.availability.location) {
+                paragraphs[1].innerHTML = `<span class="fw-semibold">Location:</span> ${profile.availability.location}`;
+              }
+              if (profile.availability.workPreferences) {
+                paragraphs[2].innerHTML = `<span class="fw-semibold">Work Preferences:</span> ${profile.availability.workPreferences}`;
+              }
+            }
+          }
+        }
+
+        // Update Education section - trigger the existing render function
+        if (profile.education && profile.education.length > 0) {
+          // Transform education data to match dashboard format
+          const transformedEducation = profile.education.map((edu) => ({
+            school: edu.schoolName || "",
+            degree: edu.educationalAttainment || "",
+            field: edu.fieldOfStudy || "",
+            startMonth: edu.startMonth || "",
+            startYear: edu.startYear || "",
+            endMonth: edu.endMonth || "",
+            endYear: edu.endYear || edu.yearGraduated || "",
+            isCurrent: edu.currentlyStudying || false,
+            grade: edu.grade || "",
+            activities: edu.activities || "",
+            description: edu.description || "",
+          }));
+
+          // Store in localStorage for the existing education script
+          localStorage.setItem(
+            "educationData",
+            JSON.stringify(transformedEducation)
+          );
+          // Trigger render if function exists
+          if (typeof renderEducationSection === "function") {
+            renderEducationSection();
+          }
+        }
+
+        // Update Experience section - trigger the existing render function
+        if (profile.experience && profile.experience.length > 0) {
+          // Transform experience data to match dashboard format
+          const transformedExperience = profile.experience.map((exp) => ({
+            job: exp.jobPosition || "",
+            company: exp.companyName || "",
+            jobType: exp.employmentType || "",
+            startMonth: exp.startMonth || "",
+            startYear: exp.startYear || "",
+            endMonth: exp.endMonth || "",
+            endYear: exp.endYear || "",
+            isCurrent: exp.currentlyWorking || false,
+          }));
+
+          // Store in localStorage for the existing experience script
+          localStorage.setItem(
+            "experienceData",
+            JSON.stringify(transformedExperience)
+          );
+          // Trigger render if function exists
+          if (typeof renderExperienceSection === "function") {
+            renderExperienceSection();
+          }
+        }
+
+        // Update Skills section
+        if (profile.skills && profile.skills.length > 0) {
+          const skillsContainer = document.querySelector(
+            ".card:has(#skillsModal) .card-body"
+          );
+          if (skillsContainer) {
+            // Clear existing content (except the edit link)
+            const editLink = skillsContainer.querySelector(".text-danger");
+            skillsContainer.innerHTML = "";
+
+            // Add skills as badges
+            const skillsWrapper = document.createElement("div");
+            skillsWrapper.className = "d-flex flex-wrap gap-2 mb-3";
+            profile.skills.forEach((skill) => {
+              const badge = document.createElement("span");
+              badge.className = "badge bg-secondary";
+              badge.textContent = skill;
+              skillsWrapper.appendChild(badge);
+            });
+            skillsContainer.appendChild(skillsWrapper);
+
+            // Re-add edit link
+            if (editLink) {
+              skillsContainer.appendChild(editLink);
+            }
+          }
+        }
+
         console.log("Dashboard populated successfully");
       }
 

@@ -263,13 +263,17 @@
         console.log("Loading availability data:", profile);
 
         if (profile.availability) {
-          if (profile.availability.startDate) {
-            document.getElementById("startDate").value =
-              profile.availability.startDate;
+          if (profile.availability.status) {
+            document.getElementById("status").value =
+              profile.availability.status;
           }
-          if (profile.availability.endDate) {
-            document.getElementById("endDate").value =
-              profile.availability.endDate;
+          if (profile.availability.location) {
+            document.getElementById("location").value =
+              profile.availability.location;
+          }
+          if (profile.availability.workPreferences) {
+            document.getElementById("workPreferences").value =
+              profile.availability.workPreferences;
           }
         }
       };
@@ -280,8 +284,9 @@
 
         const availabilityData = {
           availability: {
-            startDate: document.getElementById("startDate").value,
-            endDate: document.getElementById("endDate").value,
+            status: document.getElementById("status").value,
+            location: document.getElementById("location").value,
+            workPreferences: document.getElementById("workPreferences").value,
           },
         };
 
