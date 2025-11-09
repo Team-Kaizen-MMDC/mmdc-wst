@@ -46,15 +46,32 @@ function updateDesktopNav(userName) {
     return;
   }
 
-  // Replace Signup/Login with user greeting and profile link
-  desktopActions.innerHTML = `
-        <span class="text-muted me-2">Hello, <strong>${userName}</strong></span>
-        <a
-            class="btn btn-outline-primary"
-            href="${getProfileDashboardPath()}"
-            aria-label="Go to profile dashboard"
-        >My Profile</a>
+  // Find and replace only the Signup and Login links
+  const signupLink = desktopActions.querySelector(".site-header__signup");
+  const loginBtn = desktopActions.querySelector(".site-header__login-btn");
+
+  if (signupLink && loginBtn) {
+    // Create a wrapper for the user greeting and profile link
+    const userSection = document.createElement("div");
+    userSection.className = "d-flex align-items-center gap-2 user-auth-section";
+    userSection.innerHTML = `
+      <span class="text-muted">Hello, <strong>${userName}</strong></span>
+      <a
+        class="btn btn-outline-primary"
+        href="${getProfileDashboardPath()}"
+        aria-label="Go to profile dashboard"
+      >My Profile</a>
     `;
+
+    // Replace the signup link with the user section
+    signupLink.replaceWith(userSection);
+    // Remove the login button
+    loginBtn.remove();
+
+    console.log("✅ Desktop header updated with user greeting");
+  } else {
+    console.warn("Signup/Login buttons not found in desktop header");
+  }
 }
 
 /**
@@ -68,20 +85,35 @@ function updateMobileNav(userName) {
     return;
   }
 
-  // Replace Signup/Login with user greeting and profile link
-  mobileActions.innerHTML = `
-        <div class="d-flex flex-column gap-2 w-100">
-            <div class="text-center text-muted">
-                Hello, <strong>${userName}</strong>
-            </div>
-            <a
-                class="btn btn-danger w-100"
-                href="${getProfileDashboardPath()}"
-                data-bs-dismiss="offcanvas"
-                aria-label="Go to profile dashboard"
-            >My Profile</a>
-        </div>
+  // Find and replace only the Signup and Login buttons in mobile nav
+  const signupBtn = mobileActions.querySelector('a[href*="createAccount"]');
+  const loginBtn = mobileActions.querySelector('a[href*="signin"]');
+
+  if (signupBtn && loginBtn) {
+    // Create user section for mobile
+    const userSection = document.createElement("div");
+    userSection.className = "d-flex flex-column gap-2 user-auth-section";
+    userSection.innerHTML = `
+      <div class="text-center text-muted">
+        Hello, <strong>${userName}</strong>
+      </div>
+      <a
+        class="btn btn-danger w-100"
+        href="${getProfileDashboardPath()}"
+        data-bs-dismiss="offcanvas"
+        aria-label="Go to profile dashboard"
+      >My Profile</a>
     `;
+
+    // Replace signup button with user section
+    signupBtn.replaceWith(userSection);
+    // Remove login button
+    loginBtn.remove();
+
+    console.log("✅ Mobile header updated with user greeting");
+  } else {
+    console.warn("Signup/Login buttons not found in mobile header");
+  }
 }
 
 /**
@@ -92,10 +124,16 @@ function getProfileDashboardPath() {
 
   // If we're in the pages directory or subdirectories
   if (currentPath.includes("/pages/")) {
-    // Check if we're in a subdirectory like pages/addEdit/
-    if (currentPath.includes("/addEdit/")) {
+    // Count how many slashes after /pages/ to determine depth
+    const afterPages = currentPath.split("/pages/")[1];
+    const slashCount = (afterPages.match(/\//g) || []).length;
+
+    // If we're in a subdirectory (pages/addEdit/, pages/companies/, pages/jobs/, etc.)
+    if (slashCount > 0) {
       return "../profileDashboard.html";
     }
+
+    // If we're directly in pages/ (pages/about.html, pages/contact.html, etc.)
     return "profileDashboard.html";
   }
 
