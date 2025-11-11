@@ -723,7 +723,7 @@ const jobData = [
     location: "kyoto",
     salary: 200000,
     industry: "construction",
-    japaneseLevel: "n5",
+    japaneseLevel: "N5",
     support: "yes",
   },
   {
@@ -733,7 +733,7 @@ const jobData = [
     location: "osaka",
     salary: 200000,
     industry: "food service",
-    japaneseLevel: "n5",
+    japaneseLevel: "N5",
     support: "yes",
   },
   {
@@ -743,8 +743,63 @@ const jobData = [
     location: "kanagawa",
     salary: 220000,
     industry: "nursing care",
-    japaneseLevel: "n3",
+    japaneseLevel: "N3",
     support: "yes",
+  },
+
+    {
+    id: 5,
+    title: "Ground Handling Staff",
+    company: "All Nippon Airway",
+    location: "Tokyo",
+    salary: 203000,
+    industry: "aviation",
+    japaneseLevel: "N3",
+    support: "yes",
+  },
+
+  {
+    id: 6,
+    title: "Cleaning Staff",
+    company: "Yamaman General Services Co., Ltd.",
+    location: "Kyoto",
+    salary: 198000,
+    industry: "Building Cleaning",
+    japaneseLevel: "N3",
+    support: "No",
+  },
+
+   {
+    id: 7,
+    title: "Construction Assistant",
+    company: "Adecco Co., Ltd. 1500",
+    location: "Tokyo",
+    salary: 286000,
+    industry: "Building Cleaning",
+    japaneseLevel: "N5",
+    support: "No",
+  },
+
+   {
+    id: 8,
+    title: "Restaurant Waiter / Waitress",
+    company: "Skylark Corporation",
+    location: "Tokyo",
+    salary: 225000,
+    industry: "Food Service",
+    japaneseLevel: "N3",
+    support: "No",
+  },
+
+  {
+    id: 9,
+    title: "Ward Nursing Support",
+    company: "Proud Partners",
+    location: "Kagoshima",
+    salary: 184000,
+    industry: "Caregiver",
+    japaneseLevel: "N3",
+    support: "Yo",
   },
 ];
 
@@ -794,6 +849,13 @@ function renderJobs(jobs) {
     const col = document.createElement("div");
     col.className = "col-md-6 col-lg-6";
     col.setAttribute("role", "listitem");
+
+    // --- NEW: Generate the Slug and Detail URL ---
+    const jobSlug = createSlug(job.title);
+    // Use the desired path structure
+    const detailUrl = `/pages/jobs/${jobSlug}.html`; 
+    // ---------------------------------------------
+
     col.innerHTML = `
             <div class="card h-100 shadow-sm border-0 job-card">
               <div class="card-body">
@@ -816,8 +878,8 @@ function renderJobs(jobs) {
                 )}</p>
               </div>
               <div class="card-footer bg-transparent border-0">
-                <button class="btn btn-primary w-100">View Details</button>
-              </div>
+                <a href="${detailUrl}" class="btn btn-primary w-100">View Details</a>
+            </div>
             </div>
           `;
     jobListings.appendChild(col);
@@ -839,6 +901,21 @@ function escapeHtml(unsafe) {
       "'": "&#39;",
     }[m];
   });
+}
+/**
+ * Converts a string (like a title) into a URL-friendly slug.
+ * @param {string} title
+ * @returns {string} The URL slug.
+ */
+function createSlug(title) {
+    if (!title) return "";
+    return title.toLowerCase()
+        // Replace non-alphanumeric characters (except spaces/dashes) with nothing
+        .replace(/[^a-z0-9\s-]/g, "") 
+        // Trim leading/trailing whitespace
+        .trim()
+        // Replace all spaces with a single hyphen
+        .replace(/\s+/g, "-"); 
 }
 
 // update button styles for a group
