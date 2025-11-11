@@ -562,41 +562,31 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
         </div>
 
         <!-- AVAILABILITY -->
-        <div class="col-12 col-md-6">
+         <div class="col-12 col-md-6">
           <div class="card shadow-sm">
-            <div class="card-header d-flex justify-content-between">
-              <h4 class="mb-0">Availability / Preferences</h4>
-              <a
-                href="addEdit/availability.html"
-                class="text-contrast-danger small ms-2"
-                >Add</a
-              >
-            </div>
-            <div
-              class="card-body d-flex justify-content-between align-items-center"
-            >
-              <div id="availability-read-view">
-                <p class="mb-0 small">
-                  <span class="fw-semibold">Status:</span> Kitchen
-                </p>
-                <p class="mb-1 small">
-                  <span class="fw-semibold">Location:</span> Tokyo
-                </p>
-                <p class="mb-1 small">
-                  <span class="fw-semibold">Work Preferences:</span> Full-time
-                </p>
-              </div>
+            <div class="card-header d-flex justify-content-between bg-white">
+              <h4 class="mb-0 fw-bold text-dark">Availability / Preferences</h4>
+              <!-- ADD button is always visible and opens the modal for a NEW entry (-1 index) -->
               <a
                 href="#"
-                class="text-contrast-danger small ms-2"
+                class="small text-decoration-none fw-semibold"
                 data-bs-toggle="modal"
                 data-bs-target="#availabilityModal"
-                >Edit</a
-              >
+                onclick="openAvailabilityModal(-1)"
+                >Add
+              </a>
+            </div>
+
+            <!-- Container for the dynamically injected list of Availability / Preferences entries -->
+            <!-- Note: The p-0 is added to remove card body padding, allowing the list items' internal padding (p-3) to control spacing -->
+            <div class="card-body p-0" id="availability-list-container">
+              <!-- Entries will be dynamically injected here by renderAvailabilitySection() -->
+              <div class="p-3 text-muted small">
+                No Availability entries yet. Click "Add" above to create your first entry.
+              </div>
             </div>
           </div>
         </div>
-      </div>
     </main>
     <!-- ========================================================================= -->
 
@@ -907,6 +897,8 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                   I am currently working here
                 </label>
               </div>
+
+
               <div class="d-flex justify-content-between mt-4">
                 <button
                   type="button"
@@ -1206,10 +1198,12 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
       id="availabilityModal"
       tabindex="-1"
       aria-labelledby="availabilityModalLabel"
+       aria-hidden="true"
     >
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-lg">
         <div class="modal-content rounded-4">
-          <div class="modal-header bg-light rounded-top-4">
+                <!-- Header -->
+          <div class="modal-header bg-light text-white rounded-top-4">
             <h5 class="modal-title" id="availabilityModalLabel">
               Availability &amp; Preferences
             </h5>
@@ -1220,54 +1214,111 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
               aria-label="Close"
             ></button>
           </div>
-          <div class="modal-body">
-            <form onsubmit="saveAvailability(); return false;">
-              <!-- Availability Edit View -->
+     <!-- Body -->
+         <div class="modal-body p-4">
+            <form
+              id="availabilityForm"
+              onsubmit="saveAvailabilityEntry(); 
+                     return false;"
+              novalidate
+            >
+              <input type="hidden" id="avaiEditingIndex" value="-1" />
+              <!-- availability Entry -->
+              <div class="p-3 mb-4 border rounded-4 bg-light shadow-sm">
+                <!-- status Title -->
+                <div class="mb-3">
+                  <label for="workStatus" class="form-label small fw-semibold"
+                    >Status*</label
+                  >
+                  <input
+                    id="workStatus"
+                    name="workStatus"
+                    type="text"
+                    placeholder="Ex: Kitchen"
+                    required
+                    class="form-control"
+                  />
+                </div>
+           
+                <!--Preferred Location -->    
               <div class="mb-3">
-                <label class="form-label small fw-semibold">Status</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  value="Kitchen"
-                  required=""
-                />
-              </div>
-              <div class="mb-3">
-                <label class="form-label small fw-semibold" for="auto-select-2"
-                  >Preferred Location</label
+                 <label for="preferLocation" class="form-label small fw-semibold"
+                  >Prefered Work Location</label
                 >
-                <select class="form-select" id="auto-select-2">
-                  <option selected="">Tokyo</option>
-                  <option>Osaka</option>
-                  <option>Kyoto</option>
-                </select>
-              </div>
-              <div class="mb-3">
-                <label class="form-label small fw-semibold" for="auto-select-3"
-                  >Job Type</label
-                >
-                <select class="form-select" id="auto-select-3">
-                  <option selected="">Full-time</option>
-                  <option>Part-time</option>
-                  <option>Contract</option>
-                </select>
-              </div>
+                 <select
+                    id="preferLocation"
+                    name="preferLocation"
+                    class="form-select"
+                    required
+                  >
+                    <option value="">Select prefecture </option>
+                                <option value="Hokkaido (北海道)">Hokkaido (北海道)</option>
+                                <option value="Tokyo (東京都)">Tokyo (東京都)</option>
+                                <option value="Kanagawa (神奈川県)">Kanagawa (神奈川県)</option>
+                                <option value="Osaka (大阪府)">Osaka (大阪府)</option>
+                                <option value="Aichi (愛知県)">Aichi (愛知県)</option>
+                                <option value="Fukuoka (福岡県)">Fukuoka (福岡県)</option>
+                                <option value="Kyoto (京都府)">Kyoto (京都府)</option>
+                                <option value="Hyogo (兵庫県)">Hyogo (兵庫県)</option>
+                                <option value="Other / Remote">Other / Remote</option>
+                  </select>
+                </div>
 
-              <div class="d-flex justify-content-end mt-3">
+             <!-- Prefer Job type -->
+                <div class="mb-3">
+                  <label for="preferJobType" class="form-label small fw-semibold"
+                    >Preferred Job Type*</label
+                  >
+                  <select
+                    id="preferJobType"
+                    name="preferJobType"
+                    class="form-select"
+                    required
+                  >
+                    <option value="">Please Select</option>
+                    <option>Full-time</option>
+                    <option>Part-time</option>
+                    <option>Self-employed</option>
+                    <option>Freelance</option>
+                    <option>Contract</option>
+                    <option>Internship</option>
+                    <option>Apprenticeship</option>
+                  </select>
+                </div>
+
+              <div class="d-flex justify-content-between mt-4">
                 <button
                   type="button"
-                  class="btn btn-outline-secondary border me-2"
-                  data-bs-dismiss="modal"
+                  class="btn btn-outline-danger me-2 rounded-md"
+                  id="deleteAvailabilityBtn"
+                  onclick="deleteAvailabilityEntry()" 
+                  style="display: none"
                 >
-                  Cancel
+                  Delete Entry
                 </button>
-                <button type="submit" class="btn btn-primary">Save</button>
+
+                <div class="ms-auto d-flex">
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary me-2 rounded-md"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button
+                    type="submit"
+                    class="btn btn-primary px-4 rounded-md shadow-sm"
+                  >
+                    Save
+                  </button>
               </div>
+             </div>
             </form>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
     <!-- APPLICATION DETAIL MODAL -->
     <div
@@ -2561,6 +2612,189 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
 
       // Run on page load
       window.addEventListener("DOMContentLoaded", populateDashboard);
+    </script>
+
+     <script>
+        // ====================================================================
+        // Availability and Preferences
+        // ====================================================================
+        const AVAILABILITY_STORAGE_KEY = "userAvailabilityEntries";
+        const availabilityModalElement = document.getElementById("availabilityModal");
+
+        // ====================================================================
+        // AVAILABILITY/PREFERENCES LOGIC (Array/List Management)
+        // ====================================================================
+
+        /**
+         * Retrieves availability data from local storage.
+         * @returns {Array<Object>} The list of availability profiles.
+         */
+        function getAvailabilities() {
+            const storedData = localStorage.getItem(AVAILABILITY_STORAGE_KEY);
+            try {
+                // Ensure we always return an array
+                return storedData ? JSON.parse(storedData) : [];
+            } catch (e) {
+                console.error("Error parsing availability data:", e);
+                return [];
+            }
+        }
+
+        /**
+         * Renders the list of availability profiles to the UI.
+         */
+        function renderAvailabilitySection() {
+            const availabilities = getAvailabilities();
+            const container = document.getElementById("availability-list-container");
+            container.innerHTML = ''; // Clear existing content
+
+            if (availabilities.length === 0) {
+                container.innerHTML = `
+                    <div class="p-3 text-muted small fst-italic">
+                        No Availability profiles set up yet. Click "Add New Profile" above.
+                    </div>
+                `;
+                return;
+            }
+
+            // Render each availability item
+            availabilities.forEach((item, index) => {
+                const entry = document.createElement('div');
+                entry.className = 'list-item p-3';
+                entry.innerHTML = `
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h6 class="mb-1 fw-semibold text-dark">${item.workStatus}</h6>
+                            <p class="mb-1 small text-muted">Location: ${item.preferLocation}</p>
+                            <p class="mb-0 small text-secondary">Job Type: ${item.preferJobType}</p>
+                        </div>
+                        <a href="#" 
+                            class="small text-decoration-none text-blue-600 fw-semibold"
+                            data-bs-toggle="modal"
+                            data-bs-target="#availabilityModal"
+                            onclick="openAvailabilityModal(${index})"
+                            >Edit
+                        </a>
+                    </div>
+                `;
+                container.appendChild(entry);
+            });
+        }
+
+        /**
+         * Opens the modal for adding a new profile or editing an existing one.
+         * @param {number} index - The index of the entry to edit, or -1 for a new entry.
+         */
+        function openAvailabilityModal(index) {
+            const modalTitle = document.getElementById("availabilityModalLabel");
+            const deleteBtn = document.getElementById("deleteAvailabilityBtn");
+            const form = document.getElementById("availabilityForm");
+
+            // Reset form state
+            form.reset();
+            form.classList.remove("was-validated");
+            document.getElementById("avaiEditingIndex").value = index;
+
+            if (index === -1) {
+                // ADD NEW
+                modalTitle.textContent = "Add New Preferences Profile";
+                deleteBtn.style.display = 'none';
+            } else {
+                // EDIT EXISTING
+                const availabilities = getAvailabilities();
+                const item = availabilities[index];
+                if (item) {
+                    modalTitle.textContent = "Edit Preferences Profile";
+                    document.getElementById("workStatus").value = item.workStatus || "";
+                    document.getElementById("preferLocation").value = item.preferLocation || "";
+                    document.getElementById("preferJobType").value = item.preferJobType || "";
+                    deleteBtn.style.display = 'block';
+                }
+            }
+        }
+
+        /**
+         * Saves the availability entry (new or updated) to local storage.
+         * @returns {boolean} Always returns false to prevent default form submission.
+         */
+        function saveAvailabilityEntry() {
+            const form = document.getElementById("availabilityForm");
+            if (!form.checkValidity()) {
+                form.classList.add("was-validated");
+                return false;
+            }
+            
+            // Get index (or -1 for new entry)
+            const index = parseInt(document.getElementById("avaiEditingIndex").value, 10);
+
+            // Collect data
+            const newItem = {
+                workStatus: document.getElementById("workStatus").value, // Value from text input
+                preferLocation: document.getElementById("preferLocation").value,
+                preferJobType: document.getElementById("preferJobType").value,
+            };
+
+            let availabilities = getAvailabilities();
+
+            if (index === -1) {
+                // Add new entry to the end
+                availabilities.push(newItem);
+            } else {
+                // Update existing entry
+                availabilities[index] = newItem;
+            }
+
+            localStorage.setItem(AVAILABILITY_STORAGE_KEY, JSON.stringify(availabilities));
+            renderAvailabilitySection();
+
+            // Hide the modal using Bootstrap's API
+            const modal = bootstrap.Modal.getInstance(availabilityModalElement);
+            if (modal) modal.hide();
+            
+            return false;
+        }
+
+        /**
+         * Deletes the currently selected availability entry from local storage.
+         */
+        function deleteAvailabilityEntry() {
+            // Retrieve index from hidden field
+            const index = parseInt(document.getElementById("avaiEditingIndex").value, 10);
+            
+            let availabilities = getAvailabilities();
+            if (index >= 0 && index < availabilities.length) {
+                availabilities.splice(index, 1);
+                localStorage.setItem(AVAILABILITY_STORAGE_KEY, JSON.stringify(availabilities));
+                renderAvailabilitySection();
+                
+                // Hide the modal
+                const modal = bootstrap.Modal.getInstance(availabilityModalElement);
+                if (modal) modal.hide();
+            } else {
+                console.error("Invalid index for deletion.");
+            }
+        }
+        
+        // Make functions globally accessible (for onclick/onsubmit attributes)
+        window.openAvailabilityModal = openAvailabilityModal;
+        window.saveAvailabilityEntry = saveAvailabilityEntry;
+        window.deleteAvailabilityEntry = deleteAvailabilityEntry;
+
+
+        // ====================================================================
+        // INITIALIZATION
+        // ====================================================================
+        document.addEventListener("DOMContentLoaded", () => {
+            // Initial render for the Availability section
+            renderAvailabilitySection();
+
+            // Setup listeners for Availability Modal to reset form validation on close
+            if (availabilityModalElement) {
+                availabilityModalElement.addEventListener("hidden.bs.modal", () => {
+                    document.getElementById("availabilityForm").classList.remove("was-validated");
+                });
+            }
+        });
     </script>
   </body>
 </html>
