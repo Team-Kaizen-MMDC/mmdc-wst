@@ -708,7 +708,7 @@ document.addEventListener("DOMContentLoaded", function () {
 const jobData = [
   {
     id: 1,
-    title: "Mechanic Ground Support",
+    title: "Mechanic Ground Support Haneda",
     company: "Japan Airline",
     location: "tokyo",
     industry: "aviation",
@@ -760,7 +760,7 @@ const jobData = [
 
   {
     id: 6,
-    title: "Cleaning Staff",
+    title: "Cleaner Facilities Maintenance",
     company: "Yamaman General Services Co., Ltd.",
     location: "Kyoto",
     salary: 198000,
@@ -771,7 +771,7 @@ const jobData = [
 
    {
     id: 7,
-    title: "Construction Assistant",
+    title: "Construction Worker Site Support",
     company: "Adecco Co., Ltd. 1500",
     location: "Tokyo",
     salary: 286000,
@@ -782,7 +782,7 @@ const jobData = [
 
    {
     id: 8,
-    title: "Restaurant Waiter / Waitress",
+    title: "Server Hospitality",
     company: "Skylark Corporation",
     location: "Tokyo",
     salary: 225000,
