@@ -504,32 +504,28 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
         </div>
 
         <!-- SKILLS -->
-        <div class="col-12 col-md-6">
+               <div class="col-12 col-md-6">
           <div class="card shadow-sm">
-            <div class="card-header d-flex justify-content-between">
-              <h4 class="mb-0">Skills</h4>
-              <a
-                href="addEdit/skill.html"
-                class="text-contrast-danger small ms-2"
-                >Add</a
-              >
-            </div>
-            <div
-              class="card-body d-flex justify-content-between align-items-center"
-            >
-              <div class="d-flex flex-wrap gap-3 mb-3">
-                <span class="badge bg-secondary">Communication</span>
-                <span class="badge bg-secondary">Customer Service</span>
-                <span class="badge bg-secondary">knife</span>
-                <span class="badge bg-secondary">Prepping</span>
-              </div>
+            <div class="card-header d-flex justify-content-between bg-white">
+              <h4 class="mb-0 fw-bold text-dark">Skills</h4>
+              <!-- ADD button is always visible and opens the modal for a NEW entry (-1 index) -->
               <a
                 href="#"
-                class="text-contrast-danger small ms-2"
+                class="small text-decoration-none fw-semibold"
                 data-bs-toggle="modal"
                 data-bs-target="#skillsModal"
-                >Edit</a
-              >
+                onclick="openSkillsModal(-1)"
+                >Add
+              </a>
+            </div>
+
+            <!-- Container for the dynamically injected list of Skills entries -->
+            <!-- Note: The p-0 is added to remove card body padding, allowing the list items' internal padding (p-3) to control spacing -->
+            <div class="card-body p-0" id="skills-list-container">
+              <!-- Entries will be dynamically injected here by renderSkillsSection() -->
+              <div class="p-3 text-muted small fst-italic">
+                No Skills entries yet. Click "Add" above to create your first entry.
+              </div>
             </div>
           </div>
         </div>
@@ -931,7 +927,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
       </div>
     </div>
 
-    <!-- Skills Modal (Simplified) -->
+    <!-- Skills Modal-->
     <div
       class="modal fade"
       id="skillsModal"
@@ -940,7 +936,8 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
     >
       <div class="modal-dialog">
         <div class="modal-content rounded-4">
-          <div class="modal-header bg-light rounded-top-4">
+            <!-- Header -->
+          <div class="modal-header bg-light text-white rounded-top-4">
             <h5 class="modal-title" id="skillsModalLabel">
               Skills or Certificate
             </h5>
@@ -951,38 +948,30 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
               aria-label="Close"
             ></button>
           </div>
-          <div class="modal-body">
-            <form onsubmit="saveSkills(); return false;">
-              <!-- Skills Edit View (Moved from original inline HTML) -->
-              <div class="mb-2">
-                <label class="form-label small fw-semibold"
-                  >Existing Skills (Edit or remove)</label
-                >
-                <input
-                  type="text"
-                  class="form-control mb-2"
-                  value="Communication"
-                />
-                <input
-                  type="text"
-                  class="form-control mb-2"
-                  value="Customer Service"
-                />
-                <input type="text" class="form-control mb-2" value="Prepping" />
-                <input type="text" class="form-control mb-2" value="knife" />
-              </div>
-              <hr />
-              <div class="mb-3">
-                <label class="form-label small fw-semibold"
-                  >Add New Skill</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter new skill..."
-                />
-              </div>
-              <div class="d-flex justify-content-end mt-3">
+            <!-- Body -->
+          <div class="modal-body p-4">
+            <form id="skillsForm"
+            onsubmit="saveSkillsEntry();
+                return false;"
+              novalidate >
+              <!-- Skills Entry -->
+               <div class="p-3 mb-4 border rounded-4 bg-light shadow-sm">
+                  <p class="text-muted small mb-3">Add all technical, soft, or language skills you possess below.</p>
+
+                  <!-- Dynamic Skills Input Container -->
+                    <div id="dynamicSkillsContainer" class="list-group list-group-flush border rounded-3 mb-4 shadow-sm">
+                            <!-- Skill inputs will be added here JS-->
+                        </div>
+
+                             <!-- Button to add new skills (Option 1 Implementation) -->
+                        <button type="button" class="btn btn-outline-danger w-100 mb-4" onclick="addSkillInput('')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-plus-lg me-1" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"/>
+                            </svg>
+                            Add another skill
+                        </button>
+</div>
+                        <div class="d-flex justify-content-end mt-3">
                 <button
                   type="button"
                   class="btn btn-outline-secondary border me-2"
@@ -994,6 +983,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                   Save Skills
                 </button>
               </div>
+              
             </form>
           </div>
         </div>
@@ -2792,6 +2782,205 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
             if (availabilityModalElement) {
                 availabilityModalElement.addEventListener("hidden.bs.modal", () => {
                     document.getElementById("availabilityForm").classList.remove("was-validated");
+                });
+            }
+        });
+    </script>
+
+ <script>
+        // =================================================================
+        // CONSTANTS & INITIALIZATION
+        // =================================================================
+        const SKILLS_STORAGE_KEY = "skillsData";
+        const SKILLS_MODAL_ID = "skillsModal";
+        const dynamicSkillsContainer = document.getElementById("dynamicSkillsContainer");
+        
+        /**
+         * Helper to retrieve the array of skill data from localStorage.
+         */
+        function getSkillsData() {
+            const storedData = localStorage.getItem(SKILLS_STORAGE_KEY);
+            try {
+                // Returns an array of strings (e.g., ["Python", "JavaScript"])
+                const data = storedData ? JSON.parse(storedData) : [];
+                return Array.isArray(data) ? data : [];
+            } catch (e) {
+                console.error("Error parsing skills data from localStorage:", e);
+                return [];
+            }
+        }
+
+        /**
+         * Renders ALL skills entries on the main page.
+         */
+        function renderSkillsSection() {
+            const dataArray = getSkillsData().filter(skill => skill && skill.trim() !== ""); // Filter out empty/null skills
+            const displayContainer = document.getElementById("skills-list-container");
+
+            if (dataArray.length === 0) {
+                displayContainer.innerHTML = `
+                    <div class="p-4 text-muted small fst-italic">
+                        No skills entries yet. Click "Add" above to create your first entry.
+                    </div>
+                `;
+                return;
+            }
+
+            // Generate HTML for skills, grouping them in a single paragraph or list
+            const skillsHTML = dataArray.map(skill => `
+                <span class="badge bg-primary-subtle text-primary-emphasis rounded-pill px-3 py-2 m-1 fw-semibold">${skill}</span>
+            `).join('');
+
+            displayContainer.innerHTML = `
+                <div class="p-4 d-flex flex-wrap justify-content-start align-items-center">
+                    ${skillsHTML}
+                </div>
+            `;
+        }
+
+        // =================================================================
+        // MODAL & DYNAMIC FORM LOGIC
+        // =================================================================
+
+        /**
+         * Creates and inserts a single skill input field element into the modal.
+         * @param {string} skillValue - The initial value for the input field.
+         */
+        function addSkillInput(skillValue = "") {
+            const container = document.getElementById("dynamicSkillsContainer");
+
+            // Create a list-group-item element to contain the input and remove button
+            const listItem = document.createElement("div");
+            listItem.className = "list-group-item d-flex align-items-center";
+
+            // HTML for the input field and remove button
+            listItem.innerHTML = `
+                <input
+                    type="text"
+                    value="${skillValue.trim()}"
+                    placeholder="Enter skill"
+                    class="form-control border-0 bg-transparent skill-input"
+                    required
+                />
+                <button 
+                    type="button" 
+                    class="btn btn-outline-danger btn-sm flex-shrink-0"
+                    onclick="removeSkillInput(this)"
+                    aria-label="Remove skill"
+                >
+                    &times;
+                </button>
+            `;
+            
+            container.appendChild(listItem);
+
+            // Set focus on the newly added input field for better flow
+            const newInput = listItem.querySelector('.skill-input');
+            if (newInput) {
+                newInput.focus();
+            }
+        }
+        window.addSkillInput = addSkillInput; // Make globally accessible for the button
+
+        /**
+         * Removes a skill input row from the dynamic list.
+         * @param {HTMLElement} button - The remove button element clicked.
+         */
+        function removeSkillInput(button) {
+            // Traverse up to find the parent 'list-group-item' (listItem) and remove it
+            const listItem = button.closest('.list-group-item');
+            if (listItem) {
+                listItem.remove();
+            }
+        }
+        window.removeSkillInput = removeSkillInput; // Make globally accessible
+
+        /**
+         * Opens the skills modal and populates it with current data.
+         */
+        function openSkillsModal() {
+            const dataArray = getSkillsData();
+            const form = document.getElementById("skillsForm");
+
+            // Clear previous inputs
+            dynamicSkillsContainer.innerHTML = "";
+            form.classList.remove("was-validated");
+
+            // If no data, add one empty input to start the list
+            if (dataArray.length === 0) {
+                addSkillInput("");
+            } else {
+                // Populate existing skills
+                dataArray.forEach(skill => addSkillInput(skill));
+            }
+            
+            // Set focus to the first dynamically created input, if available
+            setTimeout(() => {
+                const firstInput = dynamicSkillsContainer.querySelector('.skill-input');
+                if (firstInput) {
+                    firstInput.focus();
+                }
+            }, 300);
+        }
+        window.openSkillsModal = openSkillsModal; // Make globally accessible
+
+        /**
+         * Saves all skills entries from the modal inputs.
+         */
+        function saveSkillsEntry() {
+            const form = document.getElementById("skillsForm");
+            
+            // Collect all skill values from the dynamic inputs
+            const skillInputs = document.querySelectorAll("#dynamicSkillsContainer .skill-input");
+            let newSkillsArray = [];
+            let isValid = true;
+
+            skillInputs.forEach(input => {
+                const skill = input.value.trim();
+                if (!skill) {
+                    // Check if any mandatory input is empty
+                    input.classList.add('is-invalid');
+                    isValid = false;
+                } else {
+                    input.classList.remove('is-invalid');
+                    newSkillsArray.push(skill);
+                }
+            });
+
+            if (!isValid) {
+                // Show form validation error for missing fields
+                form.classList.add("was-validated");
+                return;
+            }
+
+            // Remove duplicates and save the clean array
+            const uniqueSkills = [...new Set(newSkillsArray)];
+            
+            localStorage.setItem(SKILLS_STORAGE_KEY, JSON.stringify(uniqueSkills));
+            renderSkillsSection();
+
+            // Close modal
+            const modalElement = document.getElementById(SKILLS_MODAL_ID);
+            const modal = bootstrap.Modal.getInstance(modalElement);
+            if (modal) modal.hide();
+
+            form.classList.remove("was-validated");
+        }
+        window.saveSkillsEntry = saveSkillsEntry; // Make globally accessible
+
+        // =================================================================
+        // INITIALIZATION
+        // =================================================================
+        document.addEventListener("DOMContentLoaded", () => {
+            // 1. Initial render of the main skills list
+            renderSkillsSection();
+
+            // 2. Clear validation state when modal closes
+            const skillsModal = document.getElementById(SKILLS_MODAL_ID);
+            if (skillsModal) {
+                skillsModal.addEventListener("hidden.bs.modal", () => {
+                    document.getElementById("skillsForm").classList.remove("was-validated");
+                    // No newSkillInput to clear
                 });
             }
         });
