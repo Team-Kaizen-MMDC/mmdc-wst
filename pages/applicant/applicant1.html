@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Applicant1 Dashboard</title>
+    <!-- Bootstrap CSS 5.3.3 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/utilities.css" />
+  </head>
+<body>
+    <!-- MAIN CONTENT -->
+    <main id="main-content" role="main" class="container my-5">
+      <h1 class="visually-hidden">Profile Dashboard</h1>
+      <div class="row g-4">
+        <!-- PROFILE IMAGE/COVER -->
+        <div class="col-12 col-md-6">
+          <div class="card shadow-sm border-0 overflow-hidden">
+            <!-- Cover Section -->
+            <div class="position-relative">
+              <img
+                id="profileCoverImage"
+                src="https://placehold.co/800x200/0d6efd/ffffff?text=Cover+Image"
+                alt="Profile cover"
+                class="w-100 rounded-0"
+                style="height: 150px; object-fit: cover; object-position: center;"
+                loading="lazy"
+              />
+
+              <!-- Camera icon for cover upload -->
+              <button
+                type="button"
+                class="btn btn-sm btn-light position-absolute top-0 end-0 m-2 rounded-pill shadow-sm"
+                onclick="document.getElementById('coverImageUpload').click();"
+                title="Change cover photo"
+              >
+                <i class="bi bi-camera"></i>
+              </button>
+
+              <!-- Avatar Overlap -->
+              <div
+                class="position-absolute start-0 ms-4"
+                style="bottom: -50px; z-index: 10"
+              >
+                <a
+                  href="#"
+                  class="d-inline-block rounded-circle border border-4 border-white shadow-lg overflow-hidden text-decoration-none"
+                  onclick="document.getElementById('avatarImageUpload').click(); return false;"
+                  title="Change profile picture"
+                >
+                  <img
+                    id="profileAvatarImage"
+                    src="https://placehold.co/100x100/fecaca/991b1b?text=JD"
+                    alt="User Avatar"
+                    class="rounded-circle"
+                    style="width: 100px; height: 100px; object-fit: cover; object-position: center;"
+                    loading="lazy"
+                  />
+                </a>
+              </div>
+            </div>
+
+            <!-- Hidden file inputs -->
+            <input
+              type="file"
+              id="coverImageUpload"
+              accept="image/*"
+              hidden
+              onchange="handleImageUpload(event, 'Cover')"
+            />
+            <input
+              type="file"
+              id="avatarImageUpload"
+              accept="image/*"
+              hidden
+              onchange="handleImageUpload(event, 'Avatar')"
+            />
+
+            <!-- Card Body -->
+            <div class="card-body d-flex align-items-center pt-5 mt-1">
+              <!-- Spacer to match avatar space -->
+              <div style="width: 116px"></div>
+              <small class="text-muted mb-1 flex-grow-1"
+                >Profile <span class="text-primary fw-bold" id="profile-completion">0% </span>complete — finish
+                to boost matches.</small
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Profile Summary-->
+        <div class="col-12 col-md-6">
+          <div class="card shadow-sm h-100 rounded-4">
+            <div class="card-header bg-white border-bottom-0">
+              <div class="d-flex justify-content-between">
+                <h2 class="card-title h4 mb-0 fw-bold">Profile Summary</h2>
+                <!-- Edit/Save Buttons -->
+                <button
+                  type="button"
+                  class="btn btn-link text-contrast-danger small ms-2 p-0 shadow-none"
+                  id="edit-btn"
+                  onclick="toggleEditMode(true)"
+                >
+                  
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-link text-success small ms-2 d-none p-0 shadow-none"
+                  id="save-btn"
+                  onclick="handleSaveSummary()"
+                >
+                  Save
+                </button>
+              </div>
+            </div>
+
+            <div class="card-body pt-0">
+              <div class="d-flex flex-column gap-3">
+                <!-- Read-Only Display Area -->
+                <div
+                  id="read-display"
+                  class="p-3 bg-white rounded-3 text-secondary lh-base border shadow-inset"
+                  style="min-height: 100px"
+                >
+                  <p id="text-content" class="mb-0">
+                   I'm hard working passionate 
+                  </p>
+                </div>
+
+                <!-- Editable Textarea (Initially hidden) -->
+                <textarea
+                  id="edit-input"
+                  class="form-control p-3 bg-light text-secondary lh-base border rounded-3 shadow-inset d-none resize-y"
+                  rows="3"
+                  maxlength="170"
+                ></textarea>
+                <small id="char-count" class="text-muted d-none text-end">
+                  0 / 170 characters
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- BASIC INFO -->
+        <div class="col-12 col-md-6">
+          <div class="card shadow-sm h-100">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <h3 class="card-title h4 mb-0 fw-bold" id="info-name-display">Loading Name...</h3>
+                <a
+                  href="#"
+                  class="text-contrast-danger small ms-2"
+                  data-bs-toggle="modal"
+                  data-bs-target="#basicInfoModal"
+                ></a>
+              </div>
+              <p class="text-muted" id="info-location-display">Loading Location...</p>
+              <hr />
+              <div class="row small">
+                <div class="col-6 mb-2">
+                  <span class="fw-semibold">Visa:</span>
+                  <span id="info-visa-display">N/A</span>
+                </div>
+                <div class="col-6 mb-2">
+                  <span class="fw-semibold">Valid until:</span>
+                  <span id="info-validity-display">N/A</span>
+                </div>
+                <div class="col-6 mb-2">
+                  <span class="fw-semibold">Industry:</span>
+                  <span id="info-industry-display">N/A</span>
+                </div>
+                <div class="col-6 mb-2">
+                  <span class="fw-semibold">Japanese:</span>
+                  <span id="info-japanese-display">N/A</span>
+                </div>
+                <div class="col-6 mb-2">
+                  <span class="fw-semibold">Nationality:</span>
+                  <span id="info-nationality-display">N/A</span>
+                </div>
+                <div class="col-6 mb-2">
+                  <span class="fw-semibold">Age:</span>
+                  <span id="info-age-display">N/A</span>
+                </div>
+              </div>
+
+              <div id="resume-container">
+                <!-- Hidden File Input for upload resume -->
+                <input
+                  type="file"
+                  id="resumeUpload"
+                  accept=".pdf, .doc, .docx"
+                  style="display: none"
+                  onchange="handleResumeUpload(event)"
+                />
+
+                <div id="resume-upload-section">
+                  <a
+                    href="#"
+                    class="d-block mt-3 text-secondary fw-semibold"
+                    onclick="document.getElementById('resumeUpload').click(); return false;"
+                    >Upload Resume →</a
+                  >
+                </div>
+
+                <div id="view-section" class="mt-3 d-none">
+                  <span class="badge bg-success me-2">Resume Uploaded</span>
+                  <a id="view-link" href="#" target="_blank" class="small fw-semibold me-2">View Resume</a>
+                  <button id="remove-button" class="btn btn-sm btn-outline-danger py-0 px-2" onclick="handleRemoveResume()">
+                    <i class="bi bi-x-lg"></i>
+                  </button>
+                </div>
+
+                <input type="hidden" id="file-path" />
+              </div>
+              <small class="d-block mt-3 text-muted">User ID: <code id="user-id-display">...</code></small>
+            </div>
+          </div>
+        </div>
+
+        <!-- APPLICATION + NOTIFICATIONS -->
+        <div class="col-12 col-md-6">
+          <div class="card shadow-sm h-100">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6 border-md-end mb-3 mb-md-0">
+                  <h3
+                    class="h4 fw-bold d-flex justify-content-between align-items-center mb-3"
+                  >
+                    Application Tracking
+                    <!--Button ICON -->
+                    <button
+                      class="btn btn-outline-danger btn-sm px-3 shadow-sm d-flex align-items-center gap-1"
+                      data-bs-toggle="modal"
+                      data-bs-target="#applicationDetailModal"
+                      aria-label="View application history"
+                    >
+                      <i class="bi bi-list-ul"></i>
+                      <span class="small fw-semibold"></span>
+                    </button>
+                  </h3>
+                  <ul class="list-unstyled small mb-0">
+                    <li class="mb-2">
+                      <span class="fw-semibold"> Applied:</span><span id="app-applied"> 0</span>
+                    </li>
+                    <li class="mb-2">
+                      <span class="fw-semibold"> Pending:</span> <span id="app-pending"> 0</span>
+                    </li>
+                    <li class="mb-2">
+                      <span class="fw-semibold"> Interview:</span> <span id="app-interview"> 0</span>
+                    </li>
+                    <li class="mb-2">
+                      <span class="fw-semibold"> Rejected:</span> <span id="app-rejected"> 0</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-md-6 ps-md-4 mt-md-2">
+                  <h3 class="h4 fw-bold">Notifications</h3>
+                  <div id="notifications-list">
+                    <p class="small mb-1 text-dark">
+                      Interview: Oct 20, 2025 – XYZ Care (OSAKA)
+                    </p>
+                    <p class="small text-secondary">
+                      Interview: Nov 1, 2025 – AB Day Care (TOKYO)
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- EXPERIENCE -->
+        <div class="col-12 col-md-6">
+          <div class="card shadow-sm">
+            <div class="card-header d-flex justify-content-between bg-white">
+              <h4 class="mb-0 fw-bold text-dark">Experience</h4>
+              <a
+                href="#"
+                class="small text-contrast-danger text-decoration-none fw-semibold"
+                data-bs-toggle="modal"
+                data-bs-target="#experienceModal"
+                onclick="openExperienceModal(-1)"
+                >
+              </a>
+            </div>
+
+            <div class="card-body p-0" id="experience-list-container">
+              <!-- Entries will be dynamically injected here -->
+              <div class="p-3 text-muted small">
+                Loading experience entries...
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SKILLS -->
+        <div class="col-12 col-md-6">
+          <div class="card shadow-sm">
+            <div class="card-header d-flex justify-content-between bg-white">
+              <h4 class="mb-0 fw-bold text-dark">Skills</h4>
+              <a
+                href="#"
+                class="small text-contrast-danger text-decoration-none fw-semibold"
+                data-bs-toggle="modal"
+                data-bs-target="#skillsModal"
+                >
+              </a>
+            </div>
+            <div class="card-body">
+              <div class="d-flex flex-wrap gap-2" id="skills-container">
+                <!-- Skills will be dynamically injected here -->
+                <span class="badge rounded-pill bg-primary-subtle text-primary fw-normal p-2">Communication</span>
+                <span class="badge rounded-pill bg-primary-subtle text-primary fw-normal p-2">Customer Service</span>
+                <span class="badge rounded-pill bg-primary-subtle text-primary fw-normal p-2">Knife Skills</span>
+                <span class="badge rounded-pill bg-primary-subtle text-primary fw-normal p-2">Food Prepping</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- EDUCATION -->
+        <div class="col-12 col-md-6">
+          <div class="card shadow-sm">
+            <div class="card-header d-flex justify-content-between bg-white">
+              <h4 class="mb-0 fw-bold text-dark">Education</h4>
+              <a
+                href="#"
+                class="small text-contrast-danger text-decoration-none fw-semibold"
+                data-bs-toggle="modal"
+                data-bs-target="#educationModal"
+                onclick="openEducationModal(-1)"
+                >
+              </a>
+            </div>
+
+            <div class="card-body p-0" id="education-list-container">
+              <!-- Entries will be dynamically injected here -->
+              <div class="p-3 text-muted small">
+                Loading education entries...
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- AVAILABILITY -->
+        <div class="col-12 col-md-6">
+          <div class="card shadow-sm">
+            <div class="card-header d-flex justify-content-between bg-white">
+              <h4 class="mb-0 fw-bold text-dark">Availability / Preferences</h4>
+              <a
+                href="#"
+                class="small text-contrast-danger text-decoration-none fw-semibold"
+                data-bs-toggle="modal"
+                data-bs-target="#availabilityModal"
+                onclick="openAvailabilityModal(-1)"
+                >
+              </a>
+            </div>
+
+            <div class="card-body p-0" id="availability-list-container">
+              <!-- Entries will be dynamically injected here -->
+              <div class="p-3 text-muted small">
+                Loading availability preferences...
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+
+
+      </body>
+</html>
