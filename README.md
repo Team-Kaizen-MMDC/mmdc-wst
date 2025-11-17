@@ -30,14 +30,14 @@ features and optional Bootstrap utilities.
 
 Japan SSW is a frontend-first static site scaffold used as the Phase‑1 deliverable for the MMDC/WST project. The site demonstrates a clean, responsive layout and a small set of pages used to communicate services and contact information. Phase‑1 intentionally uses only HTML and CSS (no runtime JavaScript or Bootstrap utilities) to keep the presentation layer simple and portable.
 
-This repository holds the wireframe-driven static pages and a stylesheet (`assets/css/main.css`) that defines the design tokens (colors, spacing, typography) and header contract used across pages.
+This repository holds the wireframe-driven static pages and a stylesheet ([assets/css/main.css](assets/css/main.css)) that defines the design tokens (colors, spacing, typography) and header contract used across pages.
 
 ## Project docs (short links)
 
-- **Demo videos:** `docs/DEMO_VIDEOS.md` — guidance and the retained demo MP4 excerpt.
-- **Project overview & site features:** `docs/PROJECT_OVERVIEW.md` — topic, goals, audience, feature summary, and visitor flows.
+-- **Demo videos:** [docs/DEMO_VIDEOS.md](docs/DEMO_VIDEOS.md) — guidance and the retained demo MP4 excerpt.
+-- **Project overview & site features:** [docs/PROJECT_OVERVIEW.md](docs/PROJECT_OVERVIEW.md) — topic, goals, audience, feature summary, and visitor flows.
 
-For implementation details, testing guidance, and design docs, see the `docs/` folder.
+For implementation details, testing guidance, and design docs, see the [docs/](docs/) folder.
 
 ## Technologies
 
@@ -53,7 +53,7 @@ Notes:
 
 - The Phase‑1 site is built primarily with static HTML and CSS. JavaScript is introduced in Phase‑2 for progressive enhancements and optional features.
 
-- Playwright tests (under `tests/playwright/`) require Node.js and are executed via npm scripts. The README includes recommended npm commands to run tests.
+-- Playwright tests (under [tests/playwright/](tests/playwright/)) require Node.js and are executed via npm scripts. The README includes recommended npm commands to run tests.
 
 - Python 3 is a simple way to serve files locally for development (e.g., `python -m http.server 8000`).
 
@@ -83,16 +83,14 @@ Open `http://localhost:8000` in your browser.
 
 ## Development
 
-- HTML files live in the repo root and `pages/`
-- CSS in `assets/css/` (`main.css`, `components.css`, `utilities.css`)
-- JS in `assets/js/` (entry: `main.js`, modules under `modules/`)
-- Assets in `assets/images/`, `assets/icons/`, `assets/fonts/`
-
-- CSS cleanup summary: see `docs/CSS_CLEANUP_SUMMARY.md` for the recent refactor and conventions.
+-- HTML files live in the repo root and [pages/](pages/)
+-- CSS in [assets/css/](assets/css/) (`main.css`, `components.css`, `utilities.css`)
+-- JS in [assets/js/](assets/js/) (entry: `main.js`, modules under `modules/`)
+-- Assets in [assets/images/](assets/images/), [assets/icons/](assets/icons/), [assets/fonts/](assets/fonts/)
 
 ## Running tests
 
-Playwright-based smoke tests live under `tests/playwright/`. The Playwright config (`tests/playwright/playwright.config.js`) sets `baseURL` to `http://localhost:8000`, so tests expect a local static server to be available.
+Playwright-based smoke tests live under [tests/playwright/](tests/playwright/). The Playwright config [tests/playwright/playwright.config.js](tests/playwright/playwright.config.js) sets `baseURL` to `http://localhost:8000`, so tests expect a local static server to be available.
 
 One-time setup:
 
@@ -127,7 +125,7 @@ Notes:
 
 ## Testing documentation
 
-Detailed test documentation and results are available in `TESTING.md` at the repository root. That document contains:
+Detailed test documentation and results are available in [TESTING.md](TESTING.md) at the repository root. That document contains:
 
 - A list of test cases (functional, mobile/offcanvas, i18n, accessibility)
 - Test environment and browsers used
@@ -137,13 +135,13 @@ Detailed test documentation and results are available in `TESTING.md` at the rep
 Quick links:
 Quick links:
 
-- View the full testing report: `TESTING.md`
-- Playwright smoke tests: `tests/playwright/` (see the "Running tests" section above for commands)
+- View the full testing report: [TESTING.md](TESTING.md)
+- Playwright smoke tests: [tests/playwright/](tests/playwright/) (see the "Running tests" section above for commands)
 
 Project management & QA
 
 - [Project board (Management - Asana)](https://app.asana.com/1/1207231382805506/project/1211385026996908/list/1211385050374916)
-- QA & test procedures: `TESTING.md` (detailed test cases, traces, and results)
+- QA & test procedures: [TESTING.md](TESTING.md) (detailed test cases, traces, and results)
 
 <!-- Screenshots and CI wiring are maintained separately. -->
 
@@ -291,7 +289,7 @@ git push origin feature/your-change
 
 This repository includes a GitHub Actions workflow that publishes the repository root to the `gh-pages` branch on pushes to `main`. A `.nojekyll` file is included to ensure files are served as-is.
 
-After merging to `main`, enable GitHub Pages under `Settings > Pages` (if not automatically configured). The site will be available at:
+The site will be available at:
 
 ```text
 https://Team-Kaizen-MMDC.github.io/mmdc-wst/
