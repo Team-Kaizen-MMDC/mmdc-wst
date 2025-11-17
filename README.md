@@ -83,10 +83,9 @@ Open `http://localhost:8000` in your browser.
 
 ## Development
 
--- HTML files live in the repo root and [pages/](pages/)
--- CSS in [assets/css/](assets/css/) (`main.css`, `components.css`, `utilities.css`)
--- JS in [assets/js/](assets/js/) (entry: `main.js`, modules under `modules/`)
--- Assets in [assets/images/](assets/images/), [assets/icons/](assets/icons/), [assets/fonts/](assets/fonts/)
+- HTML files live in the repo root and [pages/](pages/)
+- JS in [assets/js/](assets/js/) (entry: `main.js`, modules under `modules/`)
+- Assets in [assets/images/](assets/images/), [assets/icons/](assets/icons/), [assets/fonts/](assets/fonts/)
 
 ## Running tests
 
