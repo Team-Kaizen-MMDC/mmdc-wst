@@ -341,7 +341,7 @@ export const initializeLoginValidation = () => {
       // For login, always redirect to dashboard (not profile setup)
       // User can navigate to edit profile from dashboard if needed
       console.log("Login successful. Redirecting to dashboard.");
-      window.location.href = "companyDashboard.html";
+      window.location.href = "profileDashboard.html";
     } else {
       console.log("Login validation failed. Errors displayed.");
     }
