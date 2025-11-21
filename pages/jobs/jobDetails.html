@@ -10,7 +10,7 @@
     <main class="container py-5">
       <a href="jobFilter.html">← Back to results</a>
       <div id="jobDetail" class="mt-4">
-        <h1 id="jobTitle">Job Details</h1>
+        <h1 id="job-title">Job Details</h1>
         <p id="jobCompany"></p>
         <p id="jobLocation"></p>
         <p id="jobSalary"></p>
@@ -36,7 +36,7 @@
         if (!job) {
           detailEl.innerHTML = "<p>Job not found.</p>";
         } else {
-          document.getElementById("jobTitle").textContent = job.title;
+          document.getElementById("job-title").textContent = job.title;
           document.getElementById("jobCompany").textContent =
             "Company: " + job.company;
           document.getElementById("jobLocation").textContent =
