@@ -338,10 +338,26 @@ export const initializeLoginValidation = () => {
       // Mark as existing user (not new registration)
       setNewUserFlag(false);
 
-      // For login, always redirect to dashboard (not profile setup)
-      // User can navigate to edit profile from dashboard if needed
-      console.log("Login successful. Redirecting to dashboard.");
-      window.location.href = "companyDashboard.html";
+      // For login, prefer form-level redirect (data-redirect) or form action
+      // so pages like employer sign-in can specify their own dashboard.
+      // Fallback to profileDashboard.html for regular users.
+      const formRedirect =
+        (form.getAttribute && form.getAttribute("data-redirect")) ||
+        (form.getAttribute && form.getAttribute("action"));
+      const defaultRedirect = "profileDashboard.html";
+      const redirectUrl =
+        formRedirect && formRedirect.trim() !== ""
+          ? formRedirect
+          : defaultRedirect;
+
+      console.log("Login successful. Redirecting to:", redirectUrl);
+      try {
+        // If redirectUrl is a relative path, navigating to it directly works.
+        window.location.href = redirectUrl;
+      } catch (err) {
+        console.warn("Redirect failed, falling back to default:", err);
+        window.location.href = defaultRedirect;
+      }
     } else {
       console.log("Login validation failed. Errors displayed.");
     }

@@ -715,6 +715,8 @@ const jobData = [
     salary: 220000,
     japaneseLevel: "n4",
     support: "yes",
+    // static detail page exists
+    slug: "mechanic-ground-support-haneda",
   },
   {
     id: 2,
@@ -725,6 +727,8 @@ const jobData = [
     industry: "construction",
     japaneseLevel: "N5",
     support: "yes",
+    // static page created
+    slug: "construction-worker",
   },
   {
     id: 3,
@@ -735,6 +739,7 @@ const jobData = [
     industry: "food service",
     japaneseLevel: "N5",
     support: "yes",
+    slug: "food-service-staff",
   },
   {
     id: 4,
@@ -745,9 +750,10 @@ const jobData = [
     industry: "nursing care",
     japaneseLevel: "N3",
     support: "yes",
+    slug: "nursing-care-assistant",
   },
 
-    {
+  {
     id: 5,
     title: "Ground Handling Staff",
     company: "All Nippon Airway",
@@ -756,6 +762,7 @@ const jobData = [
     industry: "aviation",
     japaneseLevel: "N3",
     support: "yes",
+    slug: "ground-handling-staff",
   },
 
   {
@@ -767,9 +774,10 @@ const jobData = [
     industry: "Building Cleaning",
     japaneseLevel: "N3",
     support: "No",
+    slug: "cleaner-facilities-maintenance",
   },
 
-   {
+  {
     id: 7,
     title: "Construction Worker Site Support",
     company: "Adecco Co., Ltd. 1500",
@@ -778,9 +786,10 @@ const jobData = [
     industry: "Building Cleaning",
     japaneseLevel: "N5",
     support: "No",
+    slug: "construction-worker-site-support",
   },
 
-   {
+  {
     id: 8,
     title: "Server Hospitality",
     company: "Skylark Corporation",
@@ -789,6 +798,7 @@ const jobData = [
     industry: "Food Service",
     japaneseLevel: "N3",
     support: "No",
+    slug: "server-hospitality",
   },
 
   {
@@ -800,8 +810,12 @@ const jobData = [
     industry: "Caregiver",
     japaneseLevel: "N3",
     support: "Yo",
+    slug: "ward-nursing-support",
   },
 ];
+
+// Expose job data to pages that may need to render a specific job detail
+window.JOB_DATA = jobData;
 
 // --- State (use lowercase tokens consistently) ---
 const state = {
@@ -850,10 +864,19 @@ function renderJobs(jobs) {
     col.className = "col-md-6 col-lg-6";
     col.setAttribute("role", "listitem");
 
-    // --- NEW: Generate the Slug and Detail URL ---
-    const jobSlug = createSlug(job.title);
-    // Use the desired path structure
-    const detailUrl = `/pages/jobs/${jobSlug}.html`; 
+    // --- Determine detail page URL: prefer explicit slug (static page),
+    // otherwise fall back to dynamic detail page with query id ---
+    const jobSlug = job.slug || createSlug(job.title);
+    let detailUrl;
+    if (job.slug) {
+      // static page exists under /pages/jobs/{slug}.html
+      detailUrl = `/pages/jobs/${job.slug}.html`;
+    } else {
+      // fallback to a dynamic detail page handled by jobDetails.html
+      detailUrl = `/pages/jobs/jobDetails.html?id=${encodeURIComponent(
+        String(job.id)
+      )}`;
+    }
     // ---------------------------------------------
 
     col.innerHTML = `
@@ -908,14 +931,17 @@ function escapeHtml(unsafe) {
  * @returns {string} The URL slug.
  */
 function createSlug(title) {
-    if (!title) return "";
-    return title.toLowerCase()
-        // Replace non-alphanumeric characters (except spaces/dashes) with nothing
-        .replace(/[^a-z0-9\s-]/g, "") 
-        // Trim leading/trailing whitespace
-        .trim()
-        // Replace all spaces with a single hyphen
-        .replace(/\s+/g, "-"); 
+  if (!title) return "";
+  return (
+    title
+      .toLowerCase()
+      // Replace non-alphanumeric characters (except spaces/dashes) with nothing
+      .replace(/[^a-z0-9\s-]/g, "")
+      // Trim leading/trailing whitespace
+      .trim()
+      // Replace all spaces with a single hyphen
+      .replace(/\s+/g, "-")
+  );
 }
 
 // update button styles for a group
