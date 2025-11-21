@@ -29,12 +29,14 @@
       const id = qs("id");
       const detailEl = document.getElementById("jobDetail");
       if (!id) {
-        detailEl.innerHTML = "<p>No job specified.</p>";
+        detailEl.innerHTML =
+          '<h1 id="job-title">Job Details</h1><p>No job specified.</p>';
       } else {
         const jobs = window.JOB_DATA || [];
         const job = jobs.find((j) => String(j.id) === String(id));
         if (!job) {
-          detailEl.innerHTML = "<p>Job not found.</p>";
+          detailEl.innerHTML =
+            '<h1 id="job-title">Job Details</h1><p>Job not found.</p>';
         } else {
           document.getElementById("job-title").textContent = job.title;
           document.getElementById("jobCompany").textContent =
