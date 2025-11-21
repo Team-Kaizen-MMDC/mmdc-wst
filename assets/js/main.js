@@ -872,14 +872,17 @@ function renderJobs(jobs) {
       // static page exists under pages/jobs/{slug}.html
       // Build a relative URL (no leading slash) so GitHub Pages' repo path
       // prefixes are preserved and links don't resolve to the site root.
-      if (window.location.pathname.startsWith("/pages/jobs/")) {
+      // Use `includes` because `window.location.pathname` may contain
+      // the segment anywhere (e.g. when served from a subpath), and
+      // startsWith could fail if the path contains additional prefix.
+      if (window.location.pathname.includes("/pages/jobs/")) {
         detailUrl = `./${job.slug}.html`;
       } else {
         detailUrl = `pages/jobs/${job.slug}.html`;
       }
     } else {
       // fallback to a dynamic detail page handled by jobDetails.html
-      if (window.location.pathname.startsWith("/pages/jobs/")) {
+      if (window.location.pathname.includes("/pages/jobs/")) {
         detailUrl = `./jobDetails.html?id=${encodeURIComponent(
           String(job.id)
         )}`;
