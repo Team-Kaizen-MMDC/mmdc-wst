@@ -869,13 +869,25 @@ function renderJobs(jobs) {
     const jobSlug = job.slug || createSlug(job.title);
     let detailUrl;
     if (job.slug) {
-      // static page exists under /pages/jobs/{slug}.html
-      detailUrl = `/pages/jobs/${job.slug}.html`;
+      // static page exists under pages/jobs/{slug}.html
+      // Build a relative URL (no leading slash) so GitHub Pages' repo path
+      // prefixes are preserved and links don't resolve to the site root.
+      if (window.location.pathname.startsWith("/pages/jobs/")) {
+        detailUrl = `./${job.slug}.html`;
+      } else {
+        detailUrl = `pages/jobs/${job.slug}.html`;
+      }
     } else {
       // fallback to a dynamic detail page handled by jobDetails.html
-      detailUrl = `/pages/jobs/jobDetails.html?id=${encodeURIComponent(
-        String(job.id)
-      )}`;
+      if (window.location.pathname.startsWith("/pages/jobs/")) {
+        detailUrl = `./jobDetails.html?id=${encodeURIComponent(
+          String(job.id)
+        )}`;
+      } else {
+        detailUrl = `pages/jobs/jobDetails.html?id=${encodeURIComponent(
+          String(job.id)
+        )}`;
+      }
     }
     // ---------------------------------------------
 
