@@ -892,7 +892,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                 <div class="card shadow-sm h-100">
                   <div class="card-body">
                     <div class="d-flex justify-content-between">
-                      <h5 class="card-title mb-0">Company template Inc</h5>
+                      <h5 class="card-title mb-0">Sompo Care Inc</h5>
                       <a
                         href="#"
                         class="text-danger small ms-2"
@@ -921,7 +921,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                     <div id="website">
                       <p>
                         <a class="link-opacity-75-hover d-block mt-3" href="#"
-                          >www.company-template.com</a
+                          >www.sompocare.com</a
                         >
                       </p>
                     </div>
@@ -944,44 +944,63 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                             class="btn btn-outline-danger px-2 shadow-sm"
                             data-bs-toggle="modal"
                             data-bs-target="#dataContactModal"
+                            onclick="prefillModal()"
                           >
                             Edit
                           </button>
                         </h6>
                         <p class="mb-0">
-                          <span class="fw-bold">Year in Business: </span> 12
-                          years
+                          <span class="fw-bold">Year in Business: </span>
+                          <span id="displayYearInBusiness">0</span> years
                         </p>
                         <p class="mb-0">
-                          <span class="fw-bold">Number of Employees: </span>200
+                          <span class="fw-bold">Number of Employees: </span>
+                            <span id="displayEmployees">0</span>
                         </p>
                         <p class="mb-0">
-                          <span class="fw-bold">Office: </span> 5
+                          <span class="fw-bold">Office: </span>
+                           <span id="displayOffices">0</span>
                         </p>
                         <p class="mb-0">
-                          <span class="fw-bold">Project: </span>25
+                          <span class="fw-bold">Project: </span>
+                          <span id="displayProjects">0</span>
                         </p>
                       </div>
+                       <!-- Contact Content -->
                       <div class="col-md-6 ps-md-4 mt-md-2">
                         <h6 class="fw-bold">Contact</h6>
-                        <p>
-                          <a class="link-opacity-75-hover" href="#">Facebook</a>
+                         <p class="mb-2">
+                           <a
+                      class="link-opacity-75-hover text-indigo-600 hover:text-indigo-800 transition duration-150"
+                      id="displaySocialMedia1"
+                      href="#"
+                      >Facebook</a
+                    >
                         </p>
-                        <p>
-                          <a class="link-opacity-75-hover" href="#"
-                            >Instagram</a
-                          >
+                         <p class="mb-2">
+                           <a
+                      class="link-opacity-75-hover text-indigo-600 hover:text-indigo-800 transition duration-150"
+                      id="displaySocialMedia2"
+                      href="#"
+                         target="_blank"
+                      >Instagram</a
+                    >
                         </p>
-                        <p>
-                          <a class="link-opacity-75-hover" href="#"
-                            >company@template.com</a
-                          >
-                        </p>
-                        <p>
-                          <a class="link-opacity-75-hover" href="#"
-                            >+81 080 4123 1123</a
-                          >
-                        </p>
+                        <p class="mb-2">
+                    <a
+                      class="link-opacity-75-hover text-indigo-600 hover:text-indigo-800 transition duration-150"
+                      id="displayEmail"
+                      href="mailto:contact@example.com"
+                      >sompocare@work.com</a
+                    >
+                  </p>
+                        <p class="mb-0">
+                    <a
+                     class="link-opacity-75-hover text-indigo-600 hover:text-indigo-800 transition duration-150"
+                                            id="displayTelephone"
+                                            href="tel:+1234567890"
+                                        >+1 234 567 890</a>
+                  </p>
                       </div>
                     </div>
                   </div>
@@ -1004,7 +1023,8 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                   <div
                     class="card-body d-flex justify-content-between align-items-center"
                   >
-                    <p>
+                     <!-- This is the element where saved text will be displayed -->
+              <p id="aboutUsDisplay" class="text-muted" style="white-space: pre-wrap;">
                       Company Template Inc. is a forward-thinking construction
                       technology company committed to transforming how buildings
                       are designed, managed, and built. <br /><br />
@@ -1034,6 +1054,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
             id="basicInfoModal"
             tabindex="-1"
             aria-labelledby="basicInfoModalLabel"
+            
           >
             <div class="modal-dialog modal-lg">
               <div class="modal-content rounded-4">
@@ -1127,7 +1148,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                         <input
                           type="text"
                           class="form-control"
-                          value="www.company-template.com"
+                          value="www.sompocare.com"
                           required=""
                         />
                       </div>
@@ -1169,37 +1190,39 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                   aria-label="close"
                 ></button>
               </div>
-              <div class="modal-body">
-                <!-- about us info -->
-                <div class="mb-3">
-                  <label for="about-us" class="form-label fw-semibold"
-                    >Tell the world</label
-                  >
-                  <textarea
-                    id="about-us"
-                    name="about-us"
-                    rows="10"
-                    placeholder="Describe the company history and business. provide mission and vision and goal..."
-                    required=""
-                    class="form-control"
-                  ></textarea>
-                  <div class="invalid-feedback">
-                    A detailed about us is required.
-                  </div>
-                </div>
-                <div class="d-flex justify-content-end mt-3">
-                  <button
-                    type="button"
-                    class="btn btn-outline-secondary border me-2"
-                    data-bs-dismiss="modal"
-                  >
-                    Cancel
-                  </button>
-                  <button type="submit" class="btn btn-primary">
-                    Save Changes
-                  </button>
+                  <form onsubmit="saveAboutUs(); return false;">
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="aboutUsInput" class="form-label fw-semibold">Tell the world</label>
+                                    <textarea
+                                        id="aboutUsInput"
+                                        name="about-us"
+                                        rows="10"
+                                        placeholder="Describe the company history and business. Provide mission, vision, and goals..."
+                                        required=""
+                                        class="form-control rounded-3"
+                                    >Company Template Inc. is a forward-thinking construction technology company committed to transforming how buildings are designed, managed, and built. 
+                                    
+With a diverse team of engineers, project managers, and technology specialists, we combine decades of industry experience with modern data-driven tools. 
+                                    
+We take pride in building strong partnerships with our clients and communities. 
+                                    
+Looking ahead, Company Template Inc. continues to push boundaries in sustainable construction and workforce development.</textarea>
+                                </div>
+                                <div class="d-flex justify-content-end mt-3">
+                                    <button
+                                        type="button"
+                                        class="btn btn-outline-secondary border me-2 rounded-pill"
+                                        data-bs-dismiss="modal"
+                                    >
+                                        Cancel
+                                    </button>
+                                    <button type="submit" class="btn btn-primary rounded-pill">
+                                        Save Changes
+                                    </button>
                 </div>
               </div>
+              </form>
             </div>
           </div>
         </div>
@@ -1210,6 +1233,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           id="dataContactModal"
           tabindex="-1"
           aria-labelledby="dataContactModalLabel"
+          aria-hidden="true"
         >
           <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content rounded-4 shadow-lg">
@@ -1218,7 +1242,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                   class="modal-title fw-bold text-primary"
                   id="dataContactModalLabel"
                 >
-                  Data and Contact
+                   Edit Data and Contact Details
                 </h5>
                 <button
                   type="button"
@@ -1228,87 +1252,134 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                 ></button>
               </div>
               <div class="modal-body">
-                <!-- Basic Info Edit View (Moved from original inline HTML) -->
-                <form onsubmit="saveBasicInfo(); return false;">
+                  <form id="dataContactForm">
+                   <div class="row">
+                <!-- Data content inputs -->
+                <div class="col-12 mb-3">
+                  <h6 class="fw-bold text-gray-700 mb-3 border-b pb-1">
+                    Business Data
+                  </h6>
                   <div class="row">
-                    <!--Data content-->
                     <div class="col-6 mb-3">
-                      <label class="form-label small fw-semibold"
-                        >Year in Business</label
+                      <label class="form-label small fw-semibold text-gray-600"
+                        >Years in Business</label
                       >
-                      <input type="number" class="form-control" value="12" />
+                      <input
+                        type="number"
+                        id="inputYearInBusiness"
+                        class="form-control rounded-lg"
+                        placeholder="e.g., 5"
+                        min="0"
+                      />
                     </div>
                     <div class="col-6 mb-3">
-                      <label class="form-label small fw-semibold"
+                      <label class="form-label small fw-semibold text-gray-600"
                         >Number of Employees</label
                       >
-                      <input type="number" class="form-control" value="200" />
-                    </div>
-                    <div class="col-6 mb-3">
-                      <label class="form-label small fw-semibold">Office</label>
-                      <input type="number" class="form-control" value="5" />
-                    </div>
-                    <div class="col-6 mb-3">
-                      <label class="form-label small fw-semibold"
-                        >Projects</label
-                      >
-                      <input type="number" class="form-control" value="25" />
-                    </div>
-                    <!--Contact content-->
-                    <div class="col-6 mb-3">
-                      <label class="form-label small fw-semibold"
-                        >Social Media</label
-                      >
                       <input
-                        type="text"
-                        class="form-control"
-                        value="www.facebook.com"
-                        required=""
+                        type="number"
+                        id="inputEmployees"
+                        class="form-control rounded-lg"
+                        min="1"
+                                            placeholder="e.g., 50"
+                        
                       />
                     </div>
                     <div class="col-6 mb-3">
-                      <label class="form-label small fw-semibold"
-                        >Social Media</label
+                      <label class="form-label small fw-semibold text-gray-600"
+                        >Number of Offices</label
                       >
                       <input
-                        type="text"
-                        class="form-control"
-                        value="www.Instagram.com"
-                        required=""
+                        type="number"
+                        id="inputOffices"
+                        class="form-control rounded-lg"
+                        min="0"
+                        placeholder="e.g., 3"
                       />
                     </div>
                     <div class="col-6 mb-3">
-                      <label class="form-label small fw-semibold">Email</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        value="company@template.com"
-                        required=""
-                      />
-                    </div>
-                    <div class="col-6 mb-3">
-                      <label class="form-label small fw-semibold"
-                        >Telephone</label
+                      <label class="form-label small fw-semibold text-gray-600"
+                        >Projects Completed</label
                       >
                       <input
-                        type="text"
-                        class="form-control"
-                        value="+81 080 4123 1123"
-                        required=""
+                        type="number"
+                        id="inputProjects"
+                        class="form-control rounded-lg"
+                         placeholder="e.g., 250"
+                        min="0"
                       />
                     </div>
                   </div>
-                  <div class="d-flex justify-content-end mt-3">
-                    <button
-                      type="button"
-                      class="btn btn-outline-secondary border me-2"
-                      data-bs-dismiss="modal"
-                    >
-                      Cancel
-                    </button>
-                    <button type="submit" class="btn btn-primary">
-                      Save Changes
-                    </button>
+                </div>
+
+                <!-- Contact content inputs -->
+                <div class="col-12 mb-3">
+                  <h6 class="fw-bold text-gray-700 mb-3 border-b pb-1">
+                    Contact Details
+                  </h6>
+                  <div class="row">
+                    <div class="col-6 mb-3">
+                      <label class="form-label small fw-semibold text-gray-600"
+                        >Social Media URL</label
+                      >
+                      <input
+                        type="url"
+                        id="inputSocialMedia1"
+                        class="form-control rounded-lg"
+                         placeholder="e.g., https://facebook.com/company"
+                        
+                      />
+                    </div>
+                    <div class="col-6 mb-3">
+                      <label class="form-label small fw-semibold text-gray-600"
+                        >Social Media (e.g., Instagram URL)</label
+                      >
+                      <input
+                        type="url"
+                        id="inputSocialMedia2"
+                        class="form-control rounded-lg"
+                         placeholder="e.g., https://instagram.com/company"
+                        required
+                      />
+                    </div>
+                    <div class="col-6 mb-3">
+                      <label class="form-label small fw-semibold text-gray-600"
+                        >Email Address</label
+                      >
+                      <input
+                        type="email"
+                        id="inputEmail"
+                        class="form-control rounded-lg"
+                        placeholder="company@example.com"
+                        
+                      />
+                    </div>
+                    <div class="col-6 mb-3">
+                      <label class="form-label small fw-semibold text-gray-600"
+                        >Telephone Number</label>
+                     <input
+                                            type="tel"
+                                            id="inputTelephone"
+                                            class="form-control rounded-lg"
+                                            placeholder="e.g., +81 080 1234 5678"
+                                        />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="d-flex justify-content-end mt-4">
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary border me-2 rounded-lg"
+                  data-bs-dismiss="modal"
+                >
+                  Cancel
+                </button>
+                <button type="submit" class="btn btn-primary rounded-lg">
+                  Save Changes
+                </button>
                   </div>
                 </form>
               </div>
@@ -1414,5 +1485,296 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
         }
       }
     </script>
+
+      <script>
+        // Key for localStorage
+        const ABOUT_US_KEY = 'companyProfileAboutUs';
+        
+        // Function to initialize content from localStorage
+        function initApp() {
+            const savedContent = localStorage.getItem(ABOUT_US_KEY);
+            const displayElement = document.getElementById('aboutUsDisplay');
+            const inputElement = document.getElementById('aboutUsInput');
+
+            if (savedContent) {
+                // Update display element
+                displayElement.textContent = savedContent;
+                
+                // Update modal input element
+                if (inputElement) {
+                    inputElement.value = savedContent;
+                }
+            }
+        }
+
+        // Function to save the "About Us" content
+        function saveAboutUs() {
+            const inputElement = document.getElementById('aboutUsInput');
+            const displayElement = document.getElementById('aboutUsDisplay');
+            
+            if (inputElement && displayElement) {
+                const newContent = inputElement.value.trim();
+
+                // 1. Save to localStorage
+                localStorage.setItem(ABOUT_US_KEY, newContent);
+                
+                // 2. Update the main display area
+                displayElement.textContent = newContent;
+                
+                // 3. Hide the modal
+                const aboutModal = bootstrap.Modal.getInstance(document.getElementById('aboutDetailModal'));
+                if (aboutModal) {
+                    aboutModal.hide();
+                }
+
+                console.log('About Us content saved successfully to localStorage!');
+            } else {
+                console.error("Error: Could not find About Us input or display elements.");
+            }
+        }
+
+        // Mock function for Basic Info (as requested in the original fragment)
+        function saveBasicInfo() {
+             // In a real application, you would read all form inputs here, 
+             // save them to localStorage or a database, and update the UI.
+            console.log('Basic Info saved! (Mock function)');
+            
+            // Example: Hiding the modal after mock save
+            const basicInfoModal = bootstrap.Modal.getInstance(document.getElementById('basicInfoModal'));
+            if (basicInfoModal) {
+                basicInfoModal.hide();
+            }
+        }
+
+        // Mock function for Data Contact (as requested in the original fragment)
+        function saveDataContact() {
+            console.log('Data and Contact saved! (Mock function)');
+            
+            // Example: Hiding the modal after mock save
+            const dataContactModal = bootstrap.Modal.getInstance(document.getElementById('dataContactModal'));
+            if (dataContactModal) {
+                dataContactModal.hide();
+            }
+        }
+
+
+        // Event listener to initialize the app when the page loads
+        window.addEventListener('load', initApp);
+
+        // Optional: Pre-fill the modal input field when it is opened to ensure it has the latest data
+        document.getElementById('aboutDetailModal').addEventListener('show.bs.modal', function (event) {
+            const savedContent = localStorage.getItem(ABOUT_US_KEY);
+            const inputElement = document.getElementById('aboutUsInput');
+            if (savedContent && inputElement) {
+                inputElement.value = savedContent;
+            } else if (inputElement) {
+                // If no saved content, use the default content from the display element
+                inputElement.value = document.getElementById('aboutUsDisplay').textContent.trim();
+            }
+        });
+
+    </script>
+
+
+    <script>
+        // --- Core Data Management & Persistence ---
+        const STORAGE_KEY = 'business_data_and_contact';
+
+        /**
+         * Default data structure for initialization.
+         */
+        const defaultData = {
+            data: {
+                yearInBusiness: 5,
+                employees: 100,
+                offices: 3,
+                projects: 200,
+            },
+            contact: {
+                socialMedia1: 'https://www.facebook.com/placeholder',
+                socialMedia2: 'https://www.instagram.com/placeholder',
+                email: 'contact@placeholder.com',
+                telephone: '+1 (555) 123-4567',
+            }
+        };
+
+        /**
+         * Loads data from localStorage or uses default data.
+         * @returns {object} The loaded or default data object.
+         */
+        function loadData() {
+            try {
+                const storedData = localStorage.getItem(STORAGE_KEY);
+                if (storedData) {
+                    return JSON.parse(storedData);
+                }
+            } catch (error) {
+                console.error("Error loading data from localStorage:", error);
+            }
+            return defaultData; // Return default if loading fails or data is missing
+        }
+
+        /**
+         * Saves the data object to localStorage.
+         * @param {object} data - The data object to save.
+         */
+        function saveData(data) {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+                showTemporaryMessage("Changes saved successfully!", "bg-indigo-600");
+            } catch (error) {
+                console.error("Error saving data to localStorage:", error);
+                showTemporaryMessage("Error saving changes.", "bg-red-600");
+            }
+        }
+
+        // --- UI Rendering ---
+
+        /**
+         * Renders the loaded data to the main display card.
+         * @param {object} data - The data object to display.
+         */
+        function renderDisplay(data) {
+            // Business Data
+            document.getElementById('displayYearInBusiness').textContent = data.data.yearInBusiness || 0;
+            document.getElementById('displayEmployees').textContent = data.data.employees || 0;
+            document.getElementById('displayOffices').textContent = data.data.offices || 0;
+            document.getElementById('displayProjects').textContent = data.data.projects || 0;
+
+            // Contact Details
+            const sm1 = document.getElementById('displaySocialMedia1');
+            const sm2 = document.getElementById('displaySocialMedia2');
+            const email = document.getElementById('displayEmail');
+            const tel = document.getElementById('displayTelephone');
+
+            // SM 1 (Facebook/LinkedIn)
+            sm1.textContent = getLinkText(data.contact.socialMedia1, 'Social Media 1');
+            sm1.href = data.contact.socialMedia1 || '#';
+            
+            // SM 2 (Instagram/X)
+            sm2.textContent = getLinkText(data.contact.socialMedia2, 'Social Media 2');
+            sm2.href = data.contact.socialMedia2 || '#';
+
+            // Email
+            email.textContent = data.contact.email || 'N/A';
+            email.href = `mailto:${data.contact.email}`;
+
+            // Telephone
+            tel.textContent = data.contact.telephone || 'N/A';
+            tel.href = `tel:${data.contact.telephone}`;
+        }
+        
+        /** Helper function to clean up link text for display */
+        function getLinkText(url, defaultLabel) {
+            if (!url) return defaultLabel;
+            try {
+                const hostname = new URL(url).hostname;
+                return hostname.replace('www.', '').replace(/\.[a-z]{2,3}$/i, '');
+            } catch {
+                return url; // Fallback for invalid URL
+            }
+        }
+
+
+        // --- Modal & Form Handling ---
+
+        /**
+         * Prefills the modal inputs with the currently loaded data.
+         * This function is called when the 'Edit' button is clicked.
+         */
+        function prefillModal() {
+            const currentData = loadData();
+            
+            // Business Data Inputs
+            document.getElementById('inputYearInBusiness').value = currentData.data.yearInBusiness;
+            document.getElementById('inputEmployees').value = currentData.data.employees;
+            document.getElementById('inputOffices').value = currentData.data.offices;
+            document.getElementById('inputProjects').value = currentData.data.projects;
+
+            // Contact Details Inputs
+            document.getElementById('inputSocialMedia1').value = currentData.contact.socialMedia1;
+            document.getElementById('inputSocialMedia2').value = currentData.contact.socialMedia2;
+            document.getElementById('inputEmail').value = currentData.contact.email;
+            document.getElementById('inputTelephone').value = currentData.contact.telephone;
+        }
+
+        /**
+         * Handles the form submission (Save Changes).
+         * @param {Event} event - The form submit event.
+         */
+        function handleFormSubmit(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // 1. Collect form data
+            const newData = {
+                data: {
+                    yearInBusiness: parseInt(document.getElementById('inputYearInBusiness').value) || 0,
+                    employees: parseInt(document.getElementById('inputEmployees').value) || 0,
+                    offices: parseInt(document.getElementById('inputOffices').value) || 0,
+                    projects: parseInt(document.getElementById('inputProjects').value) || 0,
+                },
+                contact: {
+                    socialMedia1: document.getElementById('inputSocialMedia1').value.trim(),
+                    socialMedia2: document.getElementById('inputSocialMedia2').value.trim(),
+                    email: document.getElementById('inputEmail').value.trim(),
+                    telephone: document.getElementById('inputTelephone').value.trim(),
+                }
+            };
+            
+            // 2. Save to localStorage
+            saveData(newData);
+            
+            // 3. Update the display
+            renderDisplay(newData);
+
+            // 4. Hide the modal (using Bootstrap's mechanism)
+            const modalElement = document.getElementById('dataContactModal');
+            const modal = bootstrap.Modal.getInstance(modalElement);
+            if (modal) {
+                modal.hide();
+            } else {
+                // Fallback for unexpected case, often useful during debugging
+                console.warn("Bootstrap Modal instance not found. Changes saved.");
+            }
+        }
+
+        /**
+         * Displays a temporary, self-dismissing message to the user (instead of alert).
+         * @param {string} message - The message to display.
+         * @param {string} bgColor - Tailwind background color class.
+         */
+        function showTemporaryMessage(message, bgColor) {
+            let messageBox = document.getElementById('temp-message-box');
+            
+            // Update content and style
+            messageBox.textContent = message;
+            messageBox.className = `fixed top-4 right-4 z-50 p-3 rounded-lg shadow-xl text-white font-semibold transform transition-opacity duration-300 ${bgColor} opacity-100`;
+
+            // Auto-hide after 3 seconds
+            clearTimeout(messageBox.timeoutId);
+            messageBox.timeoutId = setTimeout(() => {
+                messageBox.classList.replace('opacity-100', 'opacity-0');
+            }, 3000);
+        }
+
+        // --- Initialization ---
+        
+        // 1. Attach the form submit handler
+        document.getElementById('dataContactForm').addEventListener('submit', handleFormSubmit);
+
+        // 2. Initial load and render on page load
+        window.onload = () => {
+            const initialData = loadData();
+            renderDisplay(initialData);
+        };
+        
+        // 3. Ensure modal is dismissible by creating instance if it exists on load
+        const modalElement = document.getElementById('dataContactModal');
+        if (modalElement && typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+             new bootstrap.Modal(modalElement);
+        }
+    </script>
+<div id="temp-message-box" class="opacity-0"></div>
+
   </body>
 </html>
