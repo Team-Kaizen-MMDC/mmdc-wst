@@ -892,7 +892,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                 <div class="card shadow-sm h-100">
                   <div class="card-body">
                     <div class="d-flex justify-content-between">
-                      <h5 class="card-title mb-0">Sompo Care Inc</h5>
+                      <h5 id="company-name-display" class="card-title mb-0">Sompo Care Inc</h5>
                       <a
                         href="#"
                         class="text-danger small ms-2"
@@ -919,7 +919,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                     </div>
                     <div id="website">
                       <p>
-                         <a id="website-link" class="link-opacity-75-hover d-block" href="www.sompocare.com" target="_blank">www.sompocare.com</a>
+                         <a id="website-link" class="link-opacity-75-hover d-block" href="https://www.sompocare.com/" target="_blank">www.sompocare.com</a>
                             </p>
                     </div>
                   </div>
@@ -1735,160 +1735,125 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
 <div id="temp-message-box" class="opacity-0"></div>
 
 
-    <script>
-        const COMPANY_DATA_KEY = 'companyProfileData';
+   <script>
+  // ------------------------------------------------------------------
+  // DEFAULT COMPANY BASIC INFO DATA
+  // ------------------------------------------------------------------
+  const DEFAULT_COMPANY_INFO = {
+    companyName: "Sompo Care Inc",
+    tagline: "Powering the future of construction",
+    location: "Osaka, Japan",
+    industry: "Construction, Real Estate",
+    founded: "2013",
+    headquarter: "Minato, Tokyo",
+    website: "www.sompocare.com",
+  };
 
-        // Default data to initialize if localStorage is empty
-        const defaultDatas = {
-            companyName: "Sompo Care Inc",
-            tagline: "Powering the future of construction",
-            location: "Osaka, Japan",
-            industry: "Construction, Real Estate",
-            founded: 2013,
-            headquarter: "Minato, Tokyo",
-            website: "www.sompocare.com"
-        };
+  const STORAGES_KEY = "companyBasicInfo";
 
-        let currentData = { ...defaultDatas };
-        let basicInfoModalInstance;
+  // ------------------------------------------------------------------
+  // 1. INITIALIZE: Load data from localStorage → Update display
+  // ------------------------------------------------------------------
+  function initializeCompanyInfo() {
+    let storedData = localStorage.getItem(STORAGES_KEY);
+    let data = storedData ? JSON.parse(storedData) : DEFAULT_COMPANY_INFO;
 
-        // --- DATA HANDLERS ---
+    // Update card display
+    document.getElementById("company-name-display").textContent =
+      data.companyName;
+    document.getElementById("tagline-display").textContent = data.tagline;
+    document.getElementById("location-display").textContent = data.location;
+    document.getElementById("industry-display").textContent = data.industry;
+    document.getElementById("founded-display").textContent = data.founded;
+    document.getElementById("headquarter-display").textContent =
+      data.headquarter;
 
-        /**
-         * Loads company data from localStorage or uses default data.
-         */
-        const loadData = () => {
-            const storedData = localStorage.getItem(COMPANY_DATA_KEY);
-            if (storedData) {
-                try {
-                    currentData = JSON.parse(storedData);
-                    // Ensure all keys from default are present (for safety)
-                    currentData = { ...defaultDatas, ...currentData };
-                } catch (e) {
-                    console.error("Error parsing localStorage data:", e);
-                    currentData = { ...defaultDatas };
-                }
-            } else {
-                // If no data, save the default data to localStorage immediately
-                saveData(defaultDatas);
-            }
-            renderCard(currentData);
-        };
+    // Website link
+    const websiteLink = document.getElementById("website-link");
+    const url = data.website.startsWith("http")
+      ? data.website
+      : `https://${data.website}`;
 
-        /**
-         * Saves data to localStorage and re-renders the card.
-         * @param {object} data - The company data object to save.
-         */
-        const saveData = (data) => {
-            currentData = data;
-            try {
-                localStorage.setItem(COMPANY_DATA_KEY, JSON.stringify(currentData));
-                renderCard(currentData);
-                return true;
-            } catch (e) {
-                console.error("Error saving to localStorage:", e);
-                return false;
-            }
-        };
+    websiteLink.href = url;
+    websiteLink.textContent = data.website;
 
-        // --- UI RENDERERS ---
+    console.log("Company Info initialized.");
+  }
 
-        /**
-         * Renders the company data to the display card.
-         * @param {object} data - The company data object.
-         */
-        const renderCard = (data) => {
-            document.getElementById('company-name-display').textContent = data.companyName;
-            document.getElementById('tagline-display').textContent = data.tagline;
-            document.getElementById('location-display').textContent = data.location;
-            document.getElementById('industry-display').textContent = data.industry;
-            document.getElementById('founded-display').textContent = data.founded;
-            document.getElementById('headquarter-display').textContent = data.headquarter;
-            
-            const websiteLink = document.getElementById('website-link');
-            const url = data.website.startsWith('http') ? data.website : `https://${data.website}`;
-            websiteLink.href = url;
-            websiteLink.textContent = data.website;
-        };
+  // ------------------------------------------------------------------
+  // 2. LOAD DATA INTO MODAL (when modal opens)
+  // ------------------------------------------------------------------
+  function loadCompanyInfoToModal() {
+    const data = {
+      companyName: document.getElementById("company-name-display").textContent,
+      tagline: document.getElementById("tagline-display").textContent,
+      location: document.getElementById("location-display").textContent,
+      industry: document.getElementById("industry-display").textContent,
+      founded: document.getElementById("founded-display").textContent,
+      headquarter: document.getElementById("headquarter-display").textContent,
+      website: document.getElementById("website-link").textContent,
+    };
 
-        /**
-         * Populates the modal form with the current data.
-         */
-        const populateModal = () => {
-            document.getElementById('modal-companyName').value = currentData.companyName || '';
-            document.getElementById('modal-tagline').value = currentData.tagline || '';
-            document.getElementById('modal-location').value = currentData.location || '';
-            document.getElementById('modal-headquarter').value = currentData.headquarter || '';
-            document.getElementById('modal-industry').value = currentData.industry || '';
-            document.getElementById('modal-founded').value = currentData.founded || 2017;
-            document.getElementById('modal-website').value = currentData.website || '';
-            // Hide any previous error messages
-            document.getElementById('message-box').style.display = 'none';
-        };
+    // Populate modal fields
+    document.getElementById("modal-companyName").value = data.companyName;
+    document.getElementById("modal-tagline").value = data.tagline;
+    document.getElementById("modal-location").value = data.location;
+    document.getElementById("modal-industry").value = data.industry;
+    document.getElementById("modal-founded").value = data.founded;
+    document.getElementById("modal-headquarter").value = data.headquarter;
+    document.getElementById("modal-website").value = data.website;
 
-        // --- FORM AND MODAL HANDLERS ---
+    console.log("Company Info loaded into modal.");
+  }
 
-        /**
-         * Handles form submission to save data.
-         * @param {Event} event - The form submission event.
-         */
-        const saveBasicInfo = (event) => {
-            event.preventDefault(); // Prevent page reload
-            
-            const companyName = document.getElementById('modal-companyName').value.trim();
-            const tagline = document.getElementById('modal-tagline').value.trim();
-            const location = document.getElementById('modal-location').value.trim();
-            const headquarter = document.getElementById('modal-headquarter').value.trim();
-            const industry = document.getElementById('modal-industry').value.trim();
-            const founded = parseInt(document.getElementById('modal-founded').value.trim(), 10);
-            const website = document.getElementById('modal-website').value.trim();
+  // ------------------------------------------------------------------
+  // 3. SAVE: Modal → localStorage → Refresh Display
+  // ------------------------------------------------------------------
+  function saveCompanyInfo() {
+    const newData = {
+      companyName: document.getElementById("modal-companyName").value.trim(),
+      tagline: document.getElementById("modal-tagline").value.trim(),
+      location: document.getElementById("modal-location").value.trim(),
+      industry: document.getElementById("modal-industry").value.trim(),
+      founded: document.getElementById("modal-founded").value.trim(),
+      headquarter: document.getElementById("modal-headquarter").value.trim(),
+      website: document.getElementById("modal-website").value.trim(),
+    };
 
-            const msgBox = document.getElementById('message-box');
-            
-            if (!companyName || !tagline || !location || !website) {
-                msgBox.textContent = "Please fill in all required fields (Company, Tagline, Location, Website).";
-                msgBox.style.display = 'block';
-                return;
-            }
+    // Save to localStorage
+    localStorage.setItem(STORAGES_KEY, JSON.stringify(newData));
 
-            const updatedData = {
-                companyName,
-                tagline,
-                location,
-                headquarter,
-                industry,
-                founded,
-                website
-            };
+    // Refresh display
+    initializeCompanyInfo();
 
-            const success = saveData(updatedData);
+    console.log("Company Info saved.");
 
-            if (success) {
-                // Use Bootstrap's native function to hide the modal
-                basicInfoModalInstance.hide();
-            } else {
-                msgBox.textContent = "Error saving data. Please check console.";
-                msgBox.style.display = 'block';
-            }
-        };
+    // Close modal
+    const modalEl = document.getElementById("basicInfoModal");
+    const modal = bootstrap.Modal.getInstance(modalEl);
+    if (modal) modal.hide();
+  }
 
-        // --- INITIALIZATION ---
+  // ------------------------------------------------------------------
+  // INITIALIZATION
+  // ------------------------------------------------------------------
+  document.addEventListener("DOMContentLoaded", () => {
+    initializeCompanyInfo();
 
-        document.addEventListener('DOMContentLoaded', () => {
-            // 1. Initialize Bootstrap Modal Instance
-            const modalElement = document.getElementById('basicInfoModal');
-            basicInfoModalInstance = new bootstrap.Modal(modalElement);
-            
-            // 2. Set up event listeners
-            document.getElementById('basic-info-form').addEventListener('submit', saveBasicInfo);
+    // Load modal data when opened
+    const modal = document.getElementById("basicInfoModal");
+    modal.addEventListener("show.bs.modal", loadCompanyInfoToModal);
 
-            // Add listener to populate the modal right before it is shown
-            modalElement.addEventListener('show.bs.modal', populateModal);
-            
-            // 3. Load data on page load
-            loadData();
-        });
-    </script>
+    // Save on form submit
+    document
+      .getElementById("basic-info-form")
+      .addEventListener("submit", function (e) {
+        e.preventDefault();
+        saveCompanyInfo();
+      });
+  });
+</script>
+
 
 
   </body>
