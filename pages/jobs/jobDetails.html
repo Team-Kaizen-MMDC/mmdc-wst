@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Job Details</title>
+    <link rel="stylesheet" href="../../assets/css/main.css" />
+  </head>
+  <body>
+    <main class="container py-5">
+      <a href="jobFilter.html">← Back to results</a>
+      <div id="jobDetail" class="mt-4">
+        <h1 id="job-title">Job Details</h1>
+        <p id="jobCompany"></p>
+        <p id="jobLocation"></p>
+        <p id="jobSalary"></p>
+        <p id="jobJapanese"></p>
+        <p id="jobSupport"></p>
+      </div>
+    </main>
+
+    <script>
+      // Read id from query string
+      function qs(name) {
+        const params = new URLSearchParams(window.location.search);
+        return params.get(name);
+      }
+
+      const id = qs("id");
+      const detailEl = document.getElementById("jobDetail");
+      if (!id) {
+        detailEl.innerHTML =
+          '<h1 id="job-title">Job Details</h1><p>No job specified.</p>';
+      } else {
+        const jobs = window.JOB_DATA || [];
+        const job = jobs.find((j) => String(j.id) === String(id));
+        if (!job) {
+          detailEl.innerHTML =
+            '<h1 id="job-title">Job Details</h1><p>Job not found.</p>';
+        } else {
+          document.getElementById("job-title").textContent = job.title;
+          document.getElementById("jobCompany").textContent =
+            "Company: " + job.company;
+          document.getElementById("jobLocation").textContent =
+            "Location: " + job.location;
+          document.getElementById("jobSalary").textContent =
+            "Salary: ¥" + job.salary.toLocaleString();
+          document.getElementById("jobJapanese").textContent =
+            "Japanese: " + job.japaneseLevel;
+          document.getElementById("jobSupport").textContent =
+            "Visa support: " + job.support;
+        }
+      }
+    </script>
+  </body>
+</html>

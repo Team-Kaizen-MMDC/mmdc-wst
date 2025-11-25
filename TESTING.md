@@ -96,7 +96,7 @@ This document outlines the testing performed on the Japan SSW website, focusing 
 
 **Steps:**
 
-1. Navigate to `index.html`
+1. Navigate to [index.html](index.html)
 2. Verify all images load
 3. Check Bootstrap CSS/JS loads
 4. Verify custom JS module loads
@@ -118,10 +118,10 @@ This document outlines the testing performed on the Japan SSW website, focusing 
 1. Open homepage on desktop (>992px width)
 2. Click "Jobs" link → should scroll to #jobs section
 3. Click "Companies" link → should scroll to #companies section
-4. Click "Agency" link → should navigate to `pages/agency.html`
-5. Click "About" link → should navigate to `pages/about.html`
-6. Click "Signup" link → should navigate to `pages/createAccount.html`
-7. Click "Login" link → should navigate to `pages/signin.html`
+4. Click "Agency" link → should navigate to [pages/agency.html](pages/agency.html)
+5. Click "About" link → should navigate to [pages/about.html](pages/about.html)
+6. Click "Signup" link → should navigate to [pages/createAccount.html](pages/createAccount.html)
+7. Click "Login" link → should navigate to [pages/signin.html](pages/signin.html)
 
 **Expected Result:** All links navigate/scroll to correct destinations.
 
@@ -147,15 +147,15 @@ This document outlines the testing performed on the Japan SSW website, focusing 
 
 **Evidence:** All company pages load successfully:
 
-- `pages/companies/ana-intercontinental.html`
-- `pages/companies/prince-hotels.html`
-- `pages/companies/sompo-care.html`
-- `pages/companies/nissan.html`
-- `pages/companies/daikin.html`
-- `pages/companies/kandenko.html`
-- `pages/companies/yoshinoya.html`
-- `pages/companies/ana.html`
-- `pages/companies/mitsubishi-heavy-industries.html`
+- [pages/companies/ana-intercontinental.html](pages/companies/ana-intercontinental.html)
+- [pages/companies/prince-hotels.html](pages/companies/prince-hotels.html)
+- [pages/companies/sompo-care.html](pages/companies/sompo-care.html)
+- [pages/companies/nissan.html](pages/companies/nissan.html)
+- [pages/companies/daikin.html](pages/companies/daikin.html)
+- [pages/companies/kandenko.html](pages/companies/kandenko.html)
+- [pages/companies/yoshinoya.html](pages/companies/yoshinoya.html)
+- [pages/companies/ana.html](pages/companies/ana.html)
+- [pages/companies/mitsubishi-heavy-industries.html](pages/companies/mitsubishi-heavy-industries.html)
 
 ---
 
@@ -175,11 +175,11 @@ This document outlines the testing performed on the Japan SSW website, focusing 
 
 **Evidence:** All job pages load successfully:
 
-- `pages/jobs/mechanic-ground-support-haneda.html`
-- `pages/jobs/cleaner-facilities-maintenance.html`
-- `pages/jobs/construction-worker-site-support.html`
-- `pages/jobs/server-hospitality.html`
-- `pages/jobs/job.html`
+- [pages/jobs/mechanic-ground-support-haneda.html](pages/jobs/mechanic-ground-support-haneda.html)
+- [pages/jobs/cleaner-facilities-maintenance.html](pages/jobs/cleaner-facilities-maintenance.html)
+- [pages/jobs/construction-worker-site-support.html](pages/jobs/construction-worker-site-support.html)
+- [pages/jobs/server-hospitality.html](pages/jobs/server-hospitality.html)
+- [pages/jobs/job.html](pages/jobs/job.html)
 
 ---
 
@@ -249,7 +249,7 @@ This document outlines the testing performed on the Japan SSW website, focusing 
 
 **Actual Result:** ✅ PASS - Focus returns to toggle button after close.
 
-**Evidence:** Event listener in `assets/js/main.js` handles focus restoration:
+**Evidence:** Event listener in [assets/js/main.js](assets/js/main.js) handles focus restoration:
 
 ```javascript
 offcanvasEl.addEventListener("hidden.bs.offcanvas", () => {
@@ -332,8 +332,8 @@ offcanvasEl.addEventListener("hidden.bs.offcanvas", () => {
 **Evidence:**
 
 - Elements have `data-i18n` attributes (e.g., `data-i18n="nav.jobs"`)
-- Translation keys present in `locales/ja.json`
-- i18n runtime applies translations via `assets/js/i18n.js`
+- Translation keys present in [locales/ja.json](locales/ja.json)
+- i18n runtime applies translations via [assets/js/i18n.js](assets/js/i18n.js)
 
 ---
 
@@ -371,7 +371,7 @@ offcanvasEl.addEventListener("hidden.bs.offcanvas", () => {
 
 1. Open DevTools → Network tab
 2. Switch language to Japanese
-3. Verify request to `locales/ja.json` succeeds (HTTP 200)
+3. Verify request to [locales/ja.json](locales/ja.json) succeeds (HTTP 200)
 4. Verify locale JSON is valid and contains all keys
 
 **Expected Result:** Locale file loads without errors.
