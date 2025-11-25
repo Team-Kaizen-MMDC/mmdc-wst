@@ -901,29 +901,26 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                         >Edit</a
                       >
                     </div>
-                    <p class="text-muted">
+                    <p  id="tagline-display" class="text-muted">
                       Powering the future of construction
                     </p>
-                    <p class="small text-muted">Osaka, Japan</p>
+                    <p id="location-display" class="small text-muted">Osaka, Japan</p>
                     <hr />
                     <div class="row">
                       <div class="col-6 small">
-                        <span class="fw-bold">Industry:</span> Construction,
-                        Real Estate
-                      </div>
+                        <span class="fw-bold">Industry:</span> <span id="industry-display">Construction, Real Estate</span>
+                            </div>
                       <div class="col-6 small">
-                        <span class="fw-bold">Founded:</span> 2013
-                      </div>
+                         <span class="fw-bold">Founded:</span> <span id="founded-display">2013</span>
+                            </div>
                       <div class="col-6 small">
-                        <span class="fw-bold">headquater:</span> Minato, Tokyo
-                      </div>
+                       <span class="fw-bold">Headquarter:</span> <span id="headquarter-display">Minato, Tokyo</span>
+                            </div>
                     </div>
                     <div id="website">
                       <p>
-                        <a class="link-opacity-75-hover d-block mt-3" href="#"
-                          >www.sompocare.com</a
-                        >
-                      </p>
+                         <a id="website-link" class="link-opacity-75-hover d-block" href="www.sompocare.com" target="_blank">www.sompocare.com</a>
+                            </p>
                     </div>
                   </div>
                 </div>
@@ -1047,13 +1044,14 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           <!-- MODAL DEFINITIONS -->
           <!-- ========================================================================= -->
 
-          <!-- Basic Information Modal -->
+         
           <!-- Basic Information Modal -->
           <div
             class="modal fade"
             id="basicInfoModal"
             tabindex="-1"
             aria-labelledby="basicInfoModalLabel"
+                aria-hidden="true"
             
           >
             <div class="modal-dialog modal-lg">
@@ -1070,89 +1068,49 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                   ></button>
                 </div>
                 <div class="modal-body">
-                  <!-- Basic Info Edit View (Moved from original inline HTML) -->
-                  <form onsubmit="saveBasicInfo(); return false;">
+                      <div id="message-box" class="alert alert-danger" role="alert"></div>
+                      
+                    <form id="basic-info-form">
+                 
                     <div class="mb-3">
-                      <label class="form-label small fw-semibold"
-                        >Company</label
-                      >
-                      <input
-                        type="text"
-                        class="form-control"
-                        value="Company template Inc"
-                        required=""
-                      />
-                    </div>
+                      <label class="form-label small fw-semibold" for="modal-companyName">Company</label>
+                                <input type="text" class="form-control" id="modal-companyName" required value="Company template Inc" />
+                            </div>
+
                     <div class="mb-3">
-                      <label class="form-label small fw-semibold"
-                        >Tagline</label
-                      >
-                      <input
-                        type="text"
-                        class="form-control"
-                        value="Power of Future!"
-                        required=""
-                      />
-                    </div>
+                       <label class="form-label small fw-semibold" for="modal-tagline">Tagline</label>
+                                <input type="text" class="form-control" id="modal-tagline" required value="Power of Future!" />
+                            </div>
+
                     <div class="mb-3">
-                      <label class="form-label small fw-semibold"
-                        >Location</label
-                      >
-                      <input
-                        type="text"
-                        class="form-control"
-                        value="Osaka, Japan"
-                        required=""
-                      />
-                    </div>
+                       <label class="form-label small fw-semibold" for="modal-location">Location</label>
+                                <input type="text" class="form-control" id="modal-location" required value="Osaka, Japan" />
+                            </div>
+
                     <div class="mb-3">
-                      <label class="form-label small fw-semibold"
-                        >Headquarter</label
-                      >
-                      <input
-                        type="text"
-                        class="form-control"
-                        value="Minato, Tokyo"
-                        required=""
-                      />
-                    </div>
+                       <label class="form-label small fw-semibold" for="modal-headquarter">Headquarter</label>
+                                <input type="text" class="form-control" id="modal-headquarter" required value="Minato, Tokyo" />
+                            </div>
+
                     <div class="row">
                       <div class="col-6 mb-3">
-                        <label
-                          class="form-label small fw-semibold"
-                          for="auto-select-1"
-                          >Industry</label
-                        >
-                        <select class="form-select" id="auto-select-1">
-                          <option selected="">Food Service</option>
-                          <option>Aviation</option>
-                          <option>Caregiver</option>
-                          <option>Automotive</option>
-                          <option>Other</option>
-                        </select>
-                      </div>
+                         <label class="form-label small fw-semibold" for="modal-industry">Industry</label>
+                                <!-- Keeping it as a simple text input for easier data binding with localStorage -->
+                                <input type="text" class="form-control" id="modal-industry" value="Construction, Real Estate" />
+                            </div>
+
                       <div class="col-6 mb-3">
-                        <label class="form-label small fw-semibold"
-                          >Founded</label
-                        >
-                        <input
-                          type="number"
-                          class="form-control"
-                          value="2017"
-                        />
-                      </div>
+                        <label class="form-label small fw-semibold" for="modal-founded">Founded Year</label>
+                                <input type="number" class="form-control" id="modal-founded" value="2017" min="1000" max="2100" />
+                            </div>
+
                       <div class="col-6 mb-3">
-                        <label class="form-label small fw-semibold"
-                          >Website</label
-                        >
-                        <input
-                          type="text"
-                          class="form-control"
-                          value="www.sompocare.com"
-                          required=""
-                        />
-                      </div>
+                         <label class="form-label small fw-semibold" for="modal-website">Website (e.g., www.example.com)</label>
+                                <input type="text" class="form-control" id="modal-website" required value="www.sompocare.com" />
+                            </div>
+
                     </div>
+
                     <div class="d-flex justify-content-end mt-3">
                       <button
                         type="button"
@@ -1775,6 +1733,163 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
         }
     </script>
 <div id="temp-message-box" class="opacity-0"></div>
+
+
+    <script>
+        const COMPANY_DATA_KEY = 'companyProfileData';
+
+        // Default data to initialize if localStorage is empty
+        const defaultDatas = {
+            companyName: "Sompo Care Inc",
+            tagline: "Powering the future of construction",
+            location: "Osaka, Japan",
+            industry: "Construction, Real Estate",
+            founded: 2013,
+            headquarter: "Minato, Tokyo",
+            website: "www.sompocare.com"
+        };
+
+        let currentData = { ...defaultDatas };
+        let basicInfoModalInstance;
+
+        // --- DATA HANDLERS ---
+
+        /**
+         * Loads company data from localStorage or uses default data.
+         */
+        const loadData = () => {
+            const storedData = localStorage.getItem(COMPANY_DATA_KEY);
+            if (storedData) {
+                try {
+                    currentData = JSON.parse(storedData);
+                    // Ensure all keys from default are present (for safety)
+                    currentData = { ...defaultDatas, ...currentData };
+                } catch (e) {
+                    console.error("Error parsing localStorage data:", e);
+                    currentData = { ...defaultDatas };
+                }
+            } else {
+                // If no data, save the default data to localStorage immediately
+                saveData(defaultDatas);
+            }
+            renderCard(currentData);
+        };
+
+        /**
+         * Saves data to localStorage and re-renders the card.
+         * @param {object} data - The company data object to save.
+         */
+        const saveData = (data) => {
+            currentData = data;
+            try {
+                localStorage.setItem(COMPANY_DATA_KEY, JSON.stringify(currentData));
+                renderCard(currentData);
+                return true;
+            } catch (e) {
+                console.error("Error saving to localStorage:", e);
+                return false;
+            }
+        };
+
+        // --- UI RENDERERS ---
+
+        /**
+         * Renders the company data to the display card.
+         * @param {object} data - The company data object.
+         */
+        const renderCard = (data) => {
+            document.getElementById('company-name-display').textContent = data.companyName;
+            document.getElementById('tagline-display').textContent = data.tagline;
+            document.getElementById('location-display').textContent = data.location;
+            document.getElementById('industry-display').textContent = data.industry;
+            document.getElementById('founded-display').textContent = data.founded;
+            document.getElementById('headquarter-display').textContent = data.headquarter;
+            
+            const websiteLink = document.getElementById('website-link');
+            const url = data.website.startsWith('http') ? data.website : `https://${data.website}`;
+            websiteLink.href = url;
+            websiteLink.textContent = data.website;
+        };
+
+        /**
+         * Populates the modal form with the current data.
+         */
+        const populateModal = () => {
+            document.getElementById('modal-companyName').value = currentData.companyName || '';
+            document.getElementById('modal-tagline').value = currentData.tagline || '';
+            document.getElementById('modal-location').value = currentData.location || '';
+            document.getElementById('modal-headquarter').value = currentData.headquarter || '';
+            document.getElementById('modal-industry').value = currentData.industry || '';
+            document.getElementById('modal-founded').value = currentData.founded || 2017;
+            document.getElementById('modal-website').value = currentData.website || '';
+            // Hide any previous error messages
+            document.getElementById('message-box').style.display = 'none';
+        };
+
+        // --- FORM AND MODAL HANDLERS ---
+
+        /**
+         * Handles form submission to save data.
+         * @param {Event} event - The form submission event.
+         */
+        const saveBasicInfo = (event) => {
+            event.preventDefault(); // Prevent page reload
+            
+            const companyName = document.getElementById('modal-companyName').value.trim();
+            const tagline = document.getElementById('modal-tagline').value.trim();
+            const location = document.getElementById('modal-location').value.trim();
+            const headquarter = document.getElementById('modal-headquarter').value.trim();
+            const industry = document.getElementById('modal-industry').value.trim();
+            const founded = parseInt(document.getElementById('modal-founded').value.trim(), 10);
+            const website = document.getElementById('modal-website').value.trim();
+
+            const msgBox = document.getElementById('message-box');
+            
+            if (!companyName || !tagline || !location || !website) {
+                msgBox.textContent = "Please fill in all required fields (Company, Tagline, Location, Website).";
+                msgBox.style.display = 'block';
+                return;
+            }
+
+            const updatedData = {
+                companyName,
+                tagline,
+                location,
+                headquarter,
+                industry,
+                founded,
+                website
+            };
+
+            const success = saveData(updatedData);
+
+            if (success) {
+                // Use Bootstrap's native function to hide the modal
+                basicInfoModalInstance.hide();
+            } else {
+                msgBox.textContent = "Error saving data. Please check console.";
+                msgBox.style.display = 'block';
+            }
+        };
+
+        // --- INITIALIZATION ---
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Initialize Bootstrap Modal Instance
+            const modalElement = document.getElementById('basicInfoModal');
+            basicInfoModalInstance = new bootstrap.Modal(modalElement);
+            
+            // 2. Set up event listeners
+            document.getElementById('basic-info-form').addEventListener('submit', saveBasicInfo);
+
+            // Add listener to populate the modal right before it is shown
+            modalElement.addEventListener('show.bs.modal', populateModal);
+            
+            // 3. Load data on page load
+            loadData();
+        });
+    </script>
+
 
   </body>
 </html>
