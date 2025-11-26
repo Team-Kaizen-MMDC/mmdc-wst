@@ -34,7 +34,10 @@ This repository holds the wireframe-driven static pages and a stylesheet ([asset
 
 ## Project docs (short links)
 
--- **Demo videos:** [docs/DEMO_VIDEOS.md](docs/DEMO_VIDEOS.md) — guidance and the retained demo MP4 excerpt.
+-- **End-to-end walkthrough (video):** [View recording on Google Drive](https://drive.google.com/file/d/14i2okO4TMqrbPdgWfu3mnwrU6haM2bBq/view?usp=sharing)
+
+[![E2E Video Thumbnail](demo-videos/E2E%20Video%20Thumbnail.png)](https://drive.google.com/file/d/14i2okO4TMqrbPdgWfu3mnwrU6haM2bBq/view?usp=sharing)
+
 -- **Project overview & site features:** [docs/PROJECT_OVERVIEW.md](docs/PROJECT_OVERVIEW.md) — topic, goals, audience, feature summary, and visitor flows.
 
 For implementation details, testing guidance, and design docs, see the [docs/](docs/) folder.
