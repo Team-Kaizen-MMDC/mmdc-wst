@@ -66,4 +66,19 @@ test.beforeEach(async ({ page }) => {
 });
 ```
 
+## End-to-end walkthrough
+
+We recorded an end-to-end walkthrough of the site and tests. If you have permission to view the file, open the recording here:
+
+[End-to-end walkthrough (Google Drive)](https://drive.google.com/file/d/14i2okO4TMqrbPdgWfu3mnwrU6haM2bBq/view?usp=sharing)
+
+[![Walkthrough thumbnail small](../../demo-videos/E2E%20Video%20Thumbnail.png)](../../demo-videos/player-walkthrough.html)
+
+Open the [player page](../../demo-videos/player-walkthrough.html) for an inline player.
+
+Notes:
+
+- If you cannot view the video, check that your Google account has been granted access to the shared file.
+- For a repository-hosted fallback (recommended for long-term accessibility), consider uploading an MP4 to a GitHub Issue or Release and pasting the resulting `user-attachments` URL into this README so GitHub renders an inline player.
+
 The helper sets an `isLoggedIn=true` cookie scoped to the `PLAYWRIGHT_BASE_URL` or `BASE_URL` environment variables by default. You can pass an explicit baseUrl to the helper if needed.
