@@ -1,9 +1,13 @@
 const { MongoClient } = require("mongodb");
 require("dotenv").config();
+const config = require("./config");
 
-const MONGODB_URI = process.env.MONGODB_URI;
-const DB_NAME = process.env.MONGODB_DB || "mmdc-wst";
-const COLLECTION = process.env.MONGODB_COLLECTION || "about";
+const MONGODB_URI = config.MONGODB_URI;
+const DB_NAME = config.DB_NAME || "mmdc-wst";
+const COLLECTION =
+  config.COLLECTIONS && config.COLLECTIONS.ABOUT
+    ? config.COLLECTIONS.ABOUT
+    : process.env.MONGODB_COLLECTION || "about";
 
 if (!MONGODB_URI) {
   console.error(
@@ -11,6 +15,8 @@ if (!MONGODB_URI) {
   );
   process.exit(1);
 }
+
+const client = new MongoClient(MONGODB_URI);
 
 const client = new MongoClient(MONGODB_URI);
 

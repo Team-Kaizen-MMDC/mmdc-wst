@@ -4,10 +4,13 @@ const { MongoClient } = require("mongodb");
 require("dotenv").config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
-const MONGODB_URI = process.env.MONGODB_URI;
-const DB_NAME = process.env.MONGODB_DB || "mmdc-wst";
-const COLLECTION = process.env.MONGODB_COLLECTION || "about";
+const config = require("./config");
+
+const PORT = config.PORT;
+const MONGODB_URI = config.MONGODB_URI;
+const DB_NAME = config.DB_NAME;
+// Use content/about collection from config.COLLECTIONS
+// collection names: config.COLLECTIONS.ABOUT, .CONTENT, .JOBS, .USERS
 
 if (!MONGODB_URI) {
   console.error(
@@ -23,7 +26,7 @@ async function start() {
   console.log("Connected to MongoDB Atlas");
 
   const db = client.db(DB_NAME);
-  const col = db.collection(COLLECTION);
+  const col = db.collection(config.COLLECTIONS.ABOUT);
 
   // Serve repository root as static so pages/*.html are reachable at /pages/*.html
   app.use(express.static(path.join(__dirname, "..")));
