@@ -205,37 +205,45 @@ export const initializeSignupValidation = () => {
   };
 
   // Main event listener to the form submission
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     event.stopPropagation();
 
-    console.log("Submission detected. Preventing default form action.");
-
-    // Run FULL form validation on submit
+    // 1. Run our local validation first
     if (checkFormValidity(inputElements)) {
-      console.log(
-        "Sign-up validation successful. Saving cookies and redirecting..."
-      );
+      try {
+        // 2. Gather the data from the input fields
+        const signupData = {
+          email: inputElements.email.value,
+          password: inputElements.password.value
+        };
 
-      // --- COOKIE SAVING ---
-      setCookie("email", inputElements.email.value);
-      setCookie("password", inputElements.password.value);
-      // --- LOGGED-IN COOKIE ---
-      setCookie("isLoggedIn", "true", 1); // Sets the cookie for 1 day
+        // 3. Send the data to the backend
+        const response = await fetch('http://localhost:5001/api/auth/signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(signupData),
+        });
 
-      // --- INITIALIZE USER PROFILE ---
-      // Save email to profile and mark as new user
-      saveUserProfile({ email: inputElements.email.value });
-      setNewUserFlag(true);
+        const result = await response.json();
 
-      console.log(
-        "Cookies saved successfully. Logged-in status set. User profile initialized."
-      );
-      window.location.href = "addEdit/profile.html";
-    } else {
-      console.log(
-        "Sign-up validation failed. Errors displayed. Staying on page."
-      );
+        if (response.ok) {
+          // 4. If successful, save cookies and move to the next page
+          setCookie("isLoggedIn", "true", 1);
+          saveUserProfile({ email: signupData.email });
+          setNewUserFlag(true);
+          
+          window.location.href = "addEdit/profile.html";
+        } else {
+          // Show error from backend (e.g., "User already exists")
+          alert(result.error || "Signup failed");
+        }
+      } catch (error) {
+        console.error("Connection Error:", error);
+        alert("Server is not responding. Check if backend is running on port 5001.");
+      }
     }
   };
 

@@ -163,3 +163,6 @@ usability-summary.md
 
 # Accessibility generated results
 tests/accessibility/results/
+
+
+.env
