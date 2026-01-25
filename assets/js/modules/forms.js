@@ -245,7 +245,7 @@ export const initializeSignupValidation = () => {
         alert("Server is not responding. Check if backend is running on port 5001.");
       }
     }
-  };
+ };
 
   // Form submission listener
   form.addEventListener("submit", handleSubmit, false);
@@ -288,7 +288,6 @@ export const initializeSignupValidation = () => {
     "Sign-up Module: Per-field validation listeners successfully attached."
   );
 };
-
 // ===================================================================
 // Login Form Validation Function
 // ===================================================================
@@ -309,7 +308,7 @@ export const initializeLoginValidation = () => {
     password: document.getElementById("password"),
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     event.stopPropagation();
     console.log("Login Module: Handling submit event. Default prevented.");
@@ -329,45 +328,50 @@ export const initializeLoginValidation = () => {
     if (!isPasswordValid) formValid = false;
 
     if (formValid) {
-      console.log("Login validation successful. Initializing user profile...");
+      console.log("Login validation successful. Sending to backend...");
 
-      // Mark user as logged in
-      setCookie("isLoggedIn", "true", 1); // Sets the persistent cookie for 1 day
-      sessionStorage.setItem("isLoggedIn", "true");
-
-      // Save email to user profile for existing users logging in
-      saveUserProfile({
+      // 1. Prepare the data
+      const loginData = {
         email: inputElements.email.value,
-        // Set default name for display purposes
-        firstName: "Juan",
-        lastName: "Dela Cruz",
-      });
+        password: inputElements.password.value
+      };
 
-      // Mark as existing user (not new registration)
-      setNewUserFlag(false);
-
-      // For login, prefer form-level redirect (data-redirect) or form action
-      // so pages like employer sign-in can specify their own dashboard.
-      // Fallback to profileDashboard.html for regular users.
-      const formRedirect =
-        (form.getAttribute && form.getAttribute("data-redirect")) ||
-        (form.getAttribute && form.getAttribute("action"));
-      const defaultRedirect = "profileDashboard.html";
-      const redirectUrl =
-        formRedirect && formRedirect.trim() !== ""
-          ? formRedirect
-          : defaultRedirect;
-
-      console.log("Login successful. Redirecting to:", redirectUrl);
       try {
-        // If redirectUrl is a relative path, navigating to it directly works.
-        window.location.href = redirectUrl;
-      } catch (err) {
-        console.warn("Redirect failed, falling back to default:", err);
-        window.location.href = defaultRedirect;
+        // 2. Send POST request to your new signin endpoint
+        const response = await fetch('http://localhost:5001/api/auth/signin', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(loginData),
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          // 3. SUCCESS: Save the real user data from the database
+          setCookie("isLoggedIn", "true", 1);
+          sessionStorage.setItem("isLoggedIn", "true");
+
+          // Save the actual user data returned by the server
+          saveUserProfile({
+            id: result.user.id,
+            email: result.user.email,
+            username: result.user.username,
+          });
+
+          setNewUserFlag(false);
+
+          // Redirect to the dashboard
+          window.location.href = "profileDashboard.html";
+        } else {
+          // 4. FAILURE: Show the generic error message
+          alert(result.message || "Invalid email or password");
+        }
+      } catch (error) {
+        console.error("Connection Error:", error);
+        alert("Cannot connect to server. Is the backend running?");
       }
-    } else {
-      console.log("Login validation failed. Errors displayed.");
     }
   };
 
@@ -410,4 +414,4 @@ const setupPasswordToggle = (inputId, toggleButtonId, iconId) => {
       }
     });
   }
-};
+}; 
