@@ -21,5 +21,19 @@ http://localhost:3000/pages/about.html
 
 Notes:
 
-- The API endpoint `GET /api/about` will seed a default `about` document into the configured MongoDB collection if none exists.
 - The static server serves the repository root so pages under `/pages` are accessible.
+
+Manual data import (Postman)
+
+- This backend exposes an unprotected helper endpoint to allow manual imports during early development:
+  - `POST /api/content` — upserts a document by `slug` into the configured content collection. Example request body (JSON):
+
+    {
+    "slug": "about",
+    "title": "About Us",
+    "paragraphs": ["..."],
+    "mission": "...",
+    "vision": "..."
+    }
+
+  Use Postman or curl to POST JSON to this endpoint to add or update page content.

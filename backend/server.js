@@ -4,6 +4,7 @@ const { MongoClient } = require("mongodb");
 require("dotenv").config();
 
 const app = express();
+app.use(express.json());
 const config = require("./config");
 
 const PORT = config.PORT;
@@ -53,6 +54,30 @@ async function start() {
     } catch (err) {
       console.error(err);
       res.status(500).json({ error: "Failed to load documents" });
+    }
+  });
+
+  // API: POST /api/content -> upsert a content document (useful for manual imports / Postman)
+  app.post("/api/content", async (req, res) => {
+    try {
+      const payload = req.body;
+      if (!payload || !payload.slug) {
+        return res.status(400).json({ error: "Missing required field: slug" });
+      }
+
+      const contentCol = db.collection(config.COLLECTIONS.CONTENT);
+      const now = new Date();
+      const doc = Object.assign({}, payload, {
+        updatedAt: now,
+        createdAt: payload.createdAt || now,
+      });
+      const result = await contentCol.replaceOne({ slug: payload.slug }, doc, {
+        upsert: true,
+      });
+      return res.status(201).json({ ok: true, result });
+    } catch (err) {
+      console.error("Failed to upsert content", err);
+      return res.status(500).json({ error: "Failed to upsert content" });
     }
   });
 
