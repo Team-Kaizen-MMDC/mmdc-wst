@@ -35,6 +35,33 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../assets/css/main.css" />
     <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.ico" />
+    <!-- Accessibility overrides for this page: ensure sufficient contrast and visible H1 fallback -->
+    <style>
+      /* Ensure page has a meaningful level-one heading even before JS runs */
+      .about-card__title {
+        color: #0b0b0b !important;
+      }
+      .feature-card__title {
+        color: #0b0b0b !important;
+      }
+      .feature-card__desc,
+      .site-footer__cta-muted,
+      .about-card__text {
+        color: #222 !important;
+      }
+      /* Visually-hidden helper (accessible to screen readers) */
+      .visually-hidden {
+        position: absolute !important;
+        width: 1px !important;
+        height: 1px !important;
+        padding: 0 !important;
+        margin: -1px !important;
+        overflow: hidden !important;
+        clip: rect(0, 0, 0, 0) !important;
+        white-space: nowrap !important;
+        border: 0 !important;
+      }
+    </style>
   </head>
   <body>
     <!-- Skip to Content Link for Screen Readers -->
@@ -203,12 +230,10 @@
           id="about-content"
           class="about-card animate-fade-in-up animate-on-scroll"
         >
-          <h1 class="about-card__title">Loading...</h1>
-          <p class="about-card__text muted">Fetching content...</p>
+          <h1 class="about-card__title">About Japan SSW</h1>
+          <p class="about-card__text muted">About our service and mission.</p>
         </div>
       </div>
-
-
 
       <!-- CTA -->
       <section class="cta-band">

@@ -58,6 +58,53 @@ Step-by-step: add a new page API (example: `contact`)
 
 - Use Postman or curl to POST a sample `contact` document to `/api/content`. Then visit `/pages/contact.html` (or update a page to fetch that slug) to verify rendering.
 
+Seeding / Importing Content (Postman, Compass, curl)
+
+- Purpose: manually add or update page documents in your dev or staging DB without running a seed script. The `POST /api/content` endpoint upserts by `slug` (create or replace).
+
+- Important: Include a `slug` field in the JSON (e.g., `"about"`) — this is used by page lookups.
+
+- Example payload (about page):
+
+```json
+{
+  "slug": "about",
+  "title": "About Our Service",
+  "paragraphs": [
+    "We help people find work.",
+    "Our mission is to make hiring easier."
+  ],
+  "mission": "Create opportunities for everyone",
+  "vision": "A world with better job matching"
+}
+```
+
+- Using Postman
+  1.  Start the backend: `cd backend && node server.js` (ensure `MONGODB_URI`/`MONGODB_DB` set in `.env`).
+  2.  Create a new request: `POST http://localhost:3000/api/content`.
+  3.  Under `Headers` add `Content-Type: application/json` and, if you enabled the optional admin token, `X-ADMIN-TOKEN: <your-token>`.
+  4.  Under `Body` → `raw` paste the example JSON and send. You should get a 200/201 response with upsert info.
+
+- Using MongoDB Compass (manual insert)
+  1.  Open Compass and connect to your Atlas or local dev cluster.
+  2.  Select the DB name (from `MONGODB_DB`) and the collection (see `CONTENT_COLLECTION` / `ABOUT_COLLECTION`).
+  3.  Click `Insert Document`, paste the example JSON (you can omit `createdAt/updatedAt` — add them if you want explicit timestamps) and click `Insert`.
+  4.  Refresh and verify the document exists with the `slug` field.
+
+- Using curl (quick test)
+
+```bash
+curl -X POST http://localhost:3000/api/content \
+	-H "Content-Type: application/json" \
+	-H "X-ADMIN-TOKEN: your-token-if-configured" \
+	-d '{"slug":"about","title":"About Our Service","paragraphs":["We help people find work.","Our mission is to make hiring easier."],"mission":"Create opportunities for everyone","vision":"A world with better job matching"}'
+```
+
+- Notes and tips
+  - The endpoint performs an upsert by `slug` so re-sending the same `slug` will update the document.
+  - If you plan to automate imports later, prefer JSON files that include `createdAt`/`updatedAt` or let the server set timestamps consistently.
+  - Consider adding a short-lived `X-ADMIN-TOKEN` in `.env` and checking it in `POST /api/content` to avoid accidental public writes during development.
+
 Developer checklist (first week tasks)
 
 - [ ] Create a simple content validation helper (e.g., `backend/lib/validateContent.js`) — 2h
