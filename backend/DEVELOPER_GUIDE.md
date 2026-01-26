@@ -6,13 +6,14 @@ Purpose
 
 Quick start (run locally)
 
- - Copy the canonical example `backend/.env.example` to `.env` and fill in values (MONGODB_URI or MONGODB_DB, JWT_SECRET, etc.). Example:
+- Copy the canonical example `backend/.env.example` to `.env` and fill in values (MONGODB_URI or MONGODB_DB, JWT_SECRET, etc.). Example:
 
 ```bash
 cd backend
 cp .env.example .env
 # edit .env and set secrets (do NOT commit .env)
 ```
+
 - Install dependencies and start the server:
 
 ```bash

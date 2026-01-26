@@ -202,20 +202,30 @@ build/
 
 1. Create `.env.example`
 
+Use the repo's canonical backend template at `backend/.env.example` and copy it to `.env` before running locally. The example below mirrors the canonical template.
+
 ```env
+# Node / server
 NODE_ENV=development
 PORT=5000
 
-# MongoDB Atlas
-MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/japanssw_db?retryWrites=true&w=majority
+# MongoDB Atlas (preferred: full SRV URI)
+MONGODB_URI=
+
+# Or provide components instead of full URI
+MONGODB_USER=
+MONGODB_PASS=
+MONGODB_HOST=
+MONGODB_DB=japanssw_db
+
+# Collections
+CONTENT_COLLECTION=contents
+ABOUT_COLLECTION=about
 
 # JWT
 JWT_SECRET=your-super-secret-jwt-key-min-32-characters-long
 JWT_EXPIRE=7d
 JWT_COOKIE_EXPIRE=7
-
-# Client URL
-CLIENT_URL=http://localhost:8000
 
 # Rate Limiting
 RATE_LIMIT_WINDOW_MS=900000
@@ -226,9 +236,9 @@ MAX_FILE_SIZE=10485760
 UPLOAD_PATH=./uploads
 
 # Email (SendGrid)
-SENDGRID_API_KEY=your-sendgrid-api-key
+SENDGRID_API_KEY=
 FROM_EMAIL=noreply@japanssw.com
-FROM_NAME=Japan SSW Platform
+FROM_NAME="Japan SSW Platform"
 
 # Logging
 LOG_LEVEL=info
