@@ -17,11 +17,13 @@ node server.js
 
 - Open: http://localhost:3000/pages/about.html (the page fetches content from the API).
 
-What you'll use (minimal stack)
+What you'll use (minimal stack for onboarding)
 
 - Node.js + Express
 - Native MongoDB driver (no Mongoose yet) — keeps code simple for beginners
 - dotenv for env vars
+
+**Migration note:** Once comfortable with the basics, you can adopt the recommended production stack (Mongoose, bcryptjs, JWT, express-validator, helmet, etc.) documented in [`docs/NODEJS_REST_API_CRUD_GUIDE.md`](../docs/NODEJS_REST_API_CRUD_GUIDE.md). The minimal stack here is intentionally simplified for initial onboarding; the full guide provides schemas, validation, auth, and middleware patterns ready for production.
 
 Guiding principles
 
@@ -113,9 +115,14 @@ Developer checklist (first week tasks)
 - [ ] Add a small token check for write endpoints (`X-ADMIN-TOKEN` header) and document the token in `.env.example` — 1h
 - [ ] Add unit test for `GET /api/content/:slug` using a small in-memory Mongo or local dev DB — 4h
 
+Additional utilities (optional)
+
+- Password helper (`src/utils/password.js`): if you need auth (user registration/login), use the bcryptjs-based helper for hashing and comparing passwords. See [`docs/NODEJS_REST_API_CRUD_GUIDE.md`](../docs/NODEJS_REST_API_CRUD_GUIDE.md) for registration/login examples.
+- Full REST API guide: [`docs/NODEJS_REST_API_CRUD_GUIDE.md`](../docs/NODEJS_REST_API_CRUD_GUIDE.md) provides a complete, production-ready structure (Mongoose models, JWT auth, middleware, testing). Use it when you're ready to expand beyond the minimal native-driver setup.
+
 Where to extend later
 
-- Replace native driver with Mongoose when the team is comfortable (adds schemas and validation helpers).
+- **Adopt Mongoose & production packages**: When your team is ready, migrate to Mongoose (schemas, validation), bcryptjs (password hashing), JWT (auth tokens), helmet (security headers), express-validator, and other packages detailed in [`docs/NODEJS_REST_API_CRUD_GUIDE.md`](../docs/NODEJS_REST_API_CRUD_GUIDE.md). The guide includes full examples for models, controllers, middleware, and testing.
 - Extract `backend/` into `services/content-service/` and add `api-gateway` only when you need multiple services.
 - Add CI to run lint/tests and a staging environment for integration tests.
 
