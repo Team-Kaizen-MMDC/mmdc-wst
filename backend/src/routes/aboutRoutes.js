@@ -9,7 +9,8 @@ module.exports = function createAboutRouter(db) {
   router.get("/api/about", async (req, res) => {
     try {
       const doc = await aboutCol.findOne({ slug: "about" });
-      if (!doc) return res.status(404).json({ error: "About document not found" });
+      if (!doc)
+        return res.status(404).json({ error: "About document not found" });
       res.json(doc);
     } catch (err) {
       console.error(err);

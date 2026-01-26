@@ -4,7 +4,9 @@ const config = require("../../config");
 
 async function connectNative() {
   if (!config.MONGODB_URI) {
-    throw new Error("Missing MONGODB_URI environment variable for native connector");
+    throw new Error(
+      "Missing MONGODB_URI environment variable for native connector",
+    );
   }
   const client = new MongoClient(config.MONGODB_URI);
   await client.connect();
@@ -14,14 +16,19 @@ async function connectNative() {
 
 async function connectMongoose(options = {}) {
   if (!config.MONGODB_URI) {
-    throw new Error("Missing MONGODB_URI environment variable for mongoose connector");
+    throw new Error(
+      "Missing MONGODB_URI environment variable for mongoose connector",
+    );
   }
   const defaultOptions = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     maxPoolSize: 50,
   };
-  await mongoose.connect(config.MONGODB_URI, Object.assign(defaultOptions, options));
+  await mongoose.connect(
+    config.MONGODB_URI,
+    Object.assign(defaultOptions, options),
+  );
   return mongoose;
 }
 
