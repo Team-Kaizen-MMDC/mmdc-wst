@@ -141,9 +141,10 @@ If you'd like to adopt Mongoose for models and richer validation, you can enable
 - The Content Mongoose model is available at `backend/src/models/Content.js` as an example.
 
 Tip: enable Mongoose and run the About endpoints to validate the model reads the same `contents` collection as the native driver.
-  - The endpoint performs an upsert by `slug` so re-sending the same `slug` will update the document.
-  - If you plan to automate imports later, prefer JSON files that include `createdAt`/`updatedAt` or let the server set timestamps consistently.
-  - Consider adding a short-lived `X-ADMIN-TOKEN` in `.env` and checking it in `POST /api/content` to avoid accidental public writes during development.
+
+- The endpoint performs an upsert by `slug` so re-sending the same `slug` will update the document.
+- If you plan to automate imports later, prefer JSON files that include `createdAt`/`updatedAt` or let the server set timestamps consistently.
+- Consider adding a short-lived `X-ADMIN-TOKEN` in `.env` and checking it in `POST /api/content` to avoid accidental public writes during development.
 
 Developer checklist (first week tasks)
 

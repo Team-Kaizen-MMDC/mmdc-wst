@@ -27,4 +27,5 @@ ContentSchema.pre("save", function (next) {
   next();
 });
 
-module.exports = mongoose.models.Content || mongoose.model("Content", ContentSchema);
+module.exports =
+  mongoose.models.Content || mongoose.model("Content", ContentSchema);

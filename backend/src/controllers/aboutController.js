@@ -4,7 +4,8 @@ async function getAbout(db, req, res) {
   try {
     const aboutCol = db.collection(config.COLLECTIONS.ABOUT);
     const doc = await aboutCol.findOne({ slug: "about" });
-    if (!doc) return res.status(404).json({ error: "About document not found" });
+    if (!doc)
+      return res.status(404).json({ error: "About document not found" });
     res.json(doc);
   } catch (err) {
     console.error(err);

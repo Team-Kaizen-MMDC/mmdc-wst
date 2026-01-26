@@ -11,8 +11,12 @@ module.exports = function createAboutRouter(app, context) {
     router.get("/api/about", (req, res) => mCtrl.getAboutMongoose(req, res));
     router.get("/api/abouts", (req, res) => mCtrl.listAboutsMongoose(req, res));
   } else {
-    router.get("/api/about", (req, res) => controllers.getAbout(context.db, req, res));
-    router.get("/api/abouts", (req, res) => controllers.listAbouts(context.db, req, res));
+    router.get("/api/about", (req, res) =>
+      controllers.getAbout(context.db, req, res),
+    );
+    router.get("/api/abouts", (req, res) =>
+      controllers.listAbouts(context.db, req, res),
+    );
   }
 
   return router;
