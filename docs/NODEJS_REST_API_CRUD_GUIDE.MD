@@ -6,19 +6,23 @@ This guide provides a step-by-step implementation of a production-ready Node.js 
 
 ## Table of Contents
 
-- Prerequisites
-- Project Setup
-- Project Structure
-- Installation & Configuration
-- MongoDB Connection Setup
-- Mongoose Models
-- REST API Controllers
-- Express Routes
-- Middleware Implementation
-- Error Handling
-- Testing the API
-- Deployment
-- Best Practices
+- [Prerequisites](#prerequisites)
+- [Project Setup](#project-setup)
+- [Project Structure](#project-structure)
+- [Installation & Configuration](#installation--configuration)
+- [MongoDB Connection Setup](#mongodb-connection-setup)
+- [Mongoose Models](#mongoose-models)
+- [REST API Controllers](#rest-api-controllers)
+- [Authentication Examples — Password Hashing](#authentication-examples--password-hashing)
+- [Express Routes](#express-routes)
+- [Middleware Implementation](#middleware-implementation)
+- [Main Application Files](#main-application-files)
+- [Testing the API](#testing-the-api)
+- [Using Postman](#using-postman)
+- [Deployment](#deployment)
+- [Best Practices](#best-practices)
+- [Next Steps](#next-steps)
+- [Resources](#resources)
 
 ## Prerequisites
 
