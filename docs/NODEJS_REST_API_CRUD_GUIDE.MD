@@ -45,8 +45,8 @@ This guide provides a step-by-step implementation of a production-ready Node.js 
 
 ```bash
 # Create project directory
-mkdir japanssw-backend
-cd japanssw-backend
+mkdir backend
+cd backend
 
 # Initialize Node.js project
 npm init -y
@@ -96,7 +96,7 @@ npm install --save-dev jest supertest
 ## Project Structure
 
 ```text
-japanssw-backend/
+backend/
 ├── src/
 │   ├── config/
 │   │   ├── database.js           # MongoDB connection
@@ -315,6 +315,99 @@ File examples (put under `src/controllers/`), use language `js` for code blocks.
 // (job controller code — keep unchanged from original guide)
 ```
 
+## Authentication examples — password hashing
+
+Below are small examples showing how to use the password helpers in `src/utils/password.js` for registration, login, and a Mongoose pre-save hook. These are intentionally minimal — adapt to your app's validation, error handling, and response style.
+
+### Registration (controller snippet)
+
+```js
+const { hashPassword } = require("../utils/password");
+const User = require("../models/User");
+
+// POST /api/v1/auth/register
+async function register(req, res, next) {
+  try {
+    const { email, password, role } = req.body;
+
+    // validate inputs (not shown)
+
+    // Hash the password before saving
+    const passwordHash = await hashPassword(password);
+
+    const user = new User({ email, password: passwordHash, role });
+    await user.save();
+
+    res.status(201).json({ message: "User registered", userId: user._id });
+  } catch (err) {
+    next(err);
+  }
+}
+```
+
+### Login (controller snippet)
+
+```js
+const { comparePassword } = require("../utils/password");
+const User = require("../models/User");
+const jwt = require("jsonwebtoken");
+
+// POST /api/v1/auth/login
+async function login(req, res, next) {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email }).select("+password");
+    if (!user) return res.status(401).json({ message: "Invalid credentials" });
+
+    const match = await comparePassword(password, user.password);
+    if (!match) return res.status(401).json({ message: "Invalid credentials" });
+
+    const token = jwt.sign(
+      { sub: user._id, role: user.role },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: process.env.JWT_EXPIRE || "7d",
+      },
+    );
+
+    res.json({ token });
+  } catch (err) {
+    next(err);
+  }
+}
+```
+
+### Mongoose Model — pre-save hook (User model)
+
+```js
+// In src/models/User.js
+const mongoose = require("mongoose");
+const { hashPassword } = require("../utils/password");
+
+const userSchema = new mongoose.Schema({
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true, select: false },
+  role: {
+    type: String,
+    enum: ["jobseeker", "employer", "admin"],
+    default: "jobseeker",
+  },
+});
+
+userSchema.pre("save", async function (next) {
+  // Only hash if the password field was modified
+  if (!this.isModified("password")) return next();
+  try {
+    this.password = await hashPassword(this.password);
+    next();
+  } catch (err) {
+    next(err);
+  }
+});
+
+module.exports = mongoose.model("User", userSchema);
+```
+
 ## Express Routes
 
 Place route files under `src/routes/`. Example files: `userRoutes.js`, `jobRoutes.js`, `index.js`.
@@ -530,4 +623,3 @@ sudo nano /etc/nginx/sites-available/japanssw-api
 Document Version: 1.0  
 Last Updated: January 22, 2026  
 Author: Team Kaizen MMDC
-

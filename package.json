@@ -98,7 +98,8 @@
     "slash": "^5.1.0",
     "to-regex-range": "^5.0.1",
     "uc.micro": "^2.1.0",
-    "unicorn-magic": "^0.3.0"
+    "unicorn-magic": "^0.3.0",
+    "bcryptjs": "^2.4.3"
   },
   "scripts": {
     "playwright:install": "npx playwright install",
