@@ -11,12 +11,26 @@ async function createApp() {
   // Serve repository root as static so pages/*.html are reachable at /pages/*.html
   app.use(express.static(path.join(__dirname, "..", "..")));
 
-  // Connect using the native driver by default. The database helper also exposes
-  // a Mongoose connector for future migrations.
-  const { client, db } = await dbHelper.connectNative();
+  // Connect using Mongoose if requested (USE_MONGOOSE=true). Otherwise use the
+  // native driver. We pass a `context` object to route registrars so they can
+  // pick mongoose-backed controllers when available.
+  const useMongoose = process.env.USE_MONGOOSE === "true";
+  let context = {};
+  if (useMongoose) {
+    const mongoose = await dbHelper.connectMongoose();
+    // expose mongoose on app.locals for other modules/tests
+    app.locals.mongoose = mongoose;
+    context.mongoose = mongoose;
+  } else {
+    const { client, db } = await dbHelper.connectNative();
+    app.locals.dbClient = client;
+    app.locals.db = db;
+    context.db = db;
+    context.client = client;
+  }
 
-  // Register modular routes (pass db so routers can access collections)
-  registerRoutes(app, db);
+  // Register modular routes (pass context so routes can pick native or mongoose)
+  registerRoutes(app, context);
 
   return { app, client };
 }
