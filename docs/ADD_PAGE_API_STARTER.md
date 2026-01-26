@@ -3,6 +3,7 @@
 This short starter guide helps a new developer add a simple API that serves page content (e.g., pages under `pages/` like `about.html`, `contact.html`) and a small index/listing endpoint used by `index.html`.
 
 Assumptions
+
 - Backend uses the app factory in `backend/src/app.js` and exposes a DB connection on startup (native MongoDB client by default). If the repo has `USE_MONGOOSE=true`, add or use the Mongoose model alternative shown below.
 - There is already a `POST /api/content` upsert endpoint for development seeding; this guide shows how to add/read content programmatically and how to wire the front-end.
 
@@ -36,27 +37,27 @@ Create `backend/src/routes/contentRoutes.js` (or update your existing routes) an
 
 ```js
 // backend/src/routes/contentRoutes.js
-const express = require('express');
+const express = require("express");
 
 module.exports = function ({ db, collections = {} }) {
   const router = express.Router();
-  const CONTENT_COLLECTION = collections.CONTENT_COLLECTION || 'contents';
+  const CONTENT_COLLECTION = collections.CONTENT_COLLECTION || "contents";
 
   // GET /api/content/:slug
-  router.get('/:slug', async (req, res) => {
+  router.get("/:slug", async (req, res) => {
     const { slug } = req.params;
     try {
       const doc = await db.collection(CONTENT_COLLECTION).findOne({ slug });
-      if (!doc) return res.status(404).json({ error: 'Not found' });
+      if (!doc) return res.status(404).json({ error: "Not found" });
       res.json(doc);
     } catch (err) {
-      console.error('GET /api/content/:slug error', err);
-      res.status(500).json({ error: 'Internal server error' });
+      console.error("GET /api/content/:slug error", err);
+      res.status(500).json({ error: "Internal server error" });
     }
   });
 
   // GET /api/contents  (summary for index)
-  router.get('/', async (req, res) => {
+  router.get("/", async (req, res) => {
     try {
       const docs = await db
         .collection(CONTENT_COLLECTION)
@@ -64,8 +65,8 @@ module.exports = function ({ db, collections = {} }) {
         .toArray();
       res.json(docs);
     } catch (err) {
-      console.error('GET /api/contents error', err);
-      res.status(500).json({ error: 'Internal server error' });
+      console.error("GET /api/contents error", err);
+      res.status(500).json({ error: "Internal server error" });
     }
   });
 
@@ -77,8 +78,11 @@ How to mount this in your app (example snippet for `backend/src/app.js`):
 
 ```js
 // within createApp() after DB connected
-const contentRoutes = require('./routes/contentRoutes')({ db: client.db(MONGODB_DB), collections: process.env });
-app.use('/api/content', contentRoutes);
+const contentRoutes = require("./routes/contentRoutes")({
+  db: client.db(MONGODB_DB),
+  collections: process.env,
+});
+app.use("/api/content", contentRoutes);
 ```
 
 Step 4 — Mongoose variant (optional)
@@ -87,7 +91,7 @@ If you enable `USE_MONGOOSE=true`, create a Mongoose model (if not already prese
 
 ```js
 // backend/src/models/Content.js
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const contentSchema = new mongoose.Schema({
   slug: { type: String, required: true, unique: true },
@@ -95,30 +99,30 @@ const contentSchema = new mongoose.Schema({
   paragraphs: [String],
   featured: { type: Boolean, default: false },
   createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now }
+  updatedAt: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model('Content', contentSchema);
+module.exports = mongoose.model("Content", contentSchema);
 ```
 
 And the controller/router (simple example):
 
 ```js
 // backend/src/routes/contentRoutes.mongoose.js
-const express = require('express');
-const Content = require('../models/Content');
+const express = require("express");
+const Content = require("../models/Content");
 
 const router = express.Router();
 
-router.get('/:slug', async (req, res) => {
+router.get("/:slug", async (req, res) => {
   const { slug } = req.params;
   const doc = await Content.findOne({ slug }).lean();
-  if (!doc) return res.status(404).json({ error: 'Not found' });
+  if (!doc) return res.status(404).json({ error: "Not found" });
   res.json(doc);
 });
 
-router.get('/', async (req, res) => {
-  const docs = await Content.find({}, 'slug title featured').lean();
+router.get("/", async (req, res) => {
+  const docs = await Content.find({}, "slug title featured").lean();
   res.json(docs);
 });
 
@@ -135,21 +139,21 @@ async function loadPageContent(slug) {
   try {
     const res = await fetch(`/api/content/${encodeURIComponent(slug)}`);
     if (!res.ok) {
-      console.warn('Content not found', res.status);
+      console.warn("Content not found", res.status);
       return;
     }
     const data = await res.json();
     // Simple DOM injection example
-    document.querySelector('#page-title').textContent = data.title || '';
-    const container = document.querySelector('#page-body');
-    container.innerHTML = '';
-    (data.paragraphs || []).forEach(p => {
-      const el = document.createElement('p');
+    document.querySelector("#page-title").textContent = data.title || "";
+    const container = document.querySelector("#page-body");
+    container.innerHTML = "";
+    (data.paragraphs || []).forEach((p) => {
+      const el = document.createElement("p");
       el.textContent = p;
       container.appendChild(el);
     });
   } catch (err) {
-    console.error('Failed to load page content', err);
+    console.error("Failed to load page content", err);
   }
 }
 
