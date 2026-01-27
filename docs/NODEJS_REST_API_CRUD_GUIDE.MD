@@ -1383,7 +1383,132 @@ curl -X POST http://localhost:5000/api/v1/jobs \
 
 ## Deployment
 
-Examples for Heroku and AWS EC2 (commands are correctly fenced as `bash`).
+Examples for Vercel, Heroku, and AWS EC2 (commands are correctly fenced as `bash`).
+
+### Vercel
+
+Vercel offers seamless deployment for Node.js applications with automatic HTTPS, global CDN, and serverless functions.
+
+#### Prerequisites
+
+- Vercel account (free tier available)
+- Vercel CLI or GitHub integration
+
+#### Option 1: Vercel CLI Deployment
+
+```bash
+# Install Vercel CLI globally
+npm install -g vercel
+
+# Login to Vercel
+vercel login
+
+# Navigate to project directory
+cd backend
+
+# Deploy to Vercel
+vercel
+
+# Follow prompts to configure project
+# Set up project name, framework preset, build settings
+
+# Deploy to production
+vercel --prod
+```
+
+#### Option 2: GitHub Integration (Recommended)
+
+1. Push your code to a GitHub repository
+2. Go to [vercel.com](https://vercel.com) and sign in
+3. Click "New Project"
+4. Import your GitHub repository
+5. Configure project settings:
+   - **Framework Preset**: Other
+   - **Root Directory**: `backend` (if applicable)
+   - **Build Command**: Leave empty or use `npm install`
+   - **Output Directory**: Leave empty
+   - **Install Command**: `npm install`
+
+6. Add environment variables in Vercel dashboard:
+   - `NODE_ENV=production`
+   - `MONGODB_URI=your-mongodb-connection-string`
+   - `JWT_SECRET=your-jwt-secret`
+   - `JWT_EXPIRE=7d`
+   - `RATE_LIMIT_WINDOW_MS=900000`
+   - `RATE_LIMIT_MAX_REQUESTS=100`
+   - Add any other required environment variables
+
+7. Click "Deploy"
+
+#### Configuration File: `vercel.json`
+
+Create a `vercel.json` file in your backend root directory:
+
+```json
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "server.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/server.js"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  }
+}
+```
+
+#### Important Vercel Notes
+
+- **Serverless Architecture**: Vercel runs Node.js apps as serverless functions with a 10-second execution timeout on the Hobby plan (60s on Pro).
+- **Cold Starts**: First requests may be slower due to serverless function initialization.
+- **Persistent Connections**: MongoDB connection pooling works, but connections may close between invocations. Use `mongoose.connect()` with proper options.
+- **File Storage**: Vercel's filesystem is read-only. Use external storage (AWS S3, Cloudinary) for file uploads.
+- **Environment Variables**: Always set in Vercel dashboard, not in `.env` files.
+
+#### Vercel Deployment Commands
+
+```bash
+# Deploy to preview environment
+vercel
+
+# Deploy to production
+vercel --prod
+
+# View deployment logs
+vercel logs [deployment-url]
+
+# List all deployments
+vercel ls
+
+# Remove a deployment
+vercel rm [deployment-url]
+
+# View project information
+vercel inspect [deployment-url]
+```
+
+#### Continuous Deployment
+
+Vercel automatically deploys:
+
+- **Production**: Commits pushed to `main` or `master` branch
+- **Preview**: Pull requests and other branches get unique preview URLs
+
+#### Custom Domain Setup
+
+1. Go to your project in Vercel dashboard
+2. Navigate to "Settings" → "Domains"
+3. Add your custom domain
+4. Update DNS records as instructed by Vercel
+5. HTTPS is automatically configured
 
 ### Heroku (high level)
 
