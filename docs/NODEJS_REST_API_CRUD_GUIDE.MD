@@ -302,13 +302,380 @@ File examples (add these under `src/models/`): label as `js` in code blocks.
 ### `src/models/User.js`
 
 ```js
-// (user model code — keep unchanged from original guide)
+const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+
+const userSchema = new mongoose.Schema(
+  {
+    email: {
+      type: String,
+      required: [true, "Email is required"],
+      unique: true,
+      lowercase: true,
+      trim: true,
+      match: [/^\S+@\S+\.\S+$/, "Please provide a valid email"],
+    },
+    password: {
+      type: String,
+      required: [true, "Password is required"],
+      minlength: [8, "Password must be at least 8 characters"],
+      select: false, // Don't return password by default
+    },
+    role: {
+      type: String,
+      enum: ["jobseeker", "employer", "admin", "rso"],
+      default: "jobseeker",
+    },
+    profile: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "UserProfile",
+    },
+    company: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Company",
+    },
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
+    isEmailVerified: {
+      type: Boolean,
+      default: false,
+    },
+    emailVerificationToken: String,
+    emailVerificationExpire: Date,
+    resetPasswordToken: String,
+    resetPasswordExpire: Date,
+    lastLogin: Date,
+    loginAttempts: {
+      type: Number,
+      default: 0,
+    },
+    lockUntil: Date,
+  },
+  {
+    timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+  },
+);
+
+// Indexes
+userSchema.index({ email: 1 });
+userSchema.index({ role: 1 });
+userSchema.index({ isActive: 1 });
+
+// Virtual for checking if account is locked
+userSchema.virtual("isLocked").get(function () {
+  return !!(this.lockUntil && this.lockUntil > Date.now());
+});
+
+// Hash password before saving
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
+
+  try {
+    const salt = await bcrypt.genSalt(12);
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
+
+// Method to check password
+userSchema.methods.comparePassword = async function (candidatePassword) {
+  return await bcrypt.compare(candidatePassword, this.password);
+};
+
+// Method to generate JWT token
+userSchema.methods.getSignedJwtToken = function () {
+  return jwt.sign(
+    {
+      id: this._id,
+      email: this.email,
+      role: this.role,
+    },
+    process.env.JWT_SECRET,
+    { expiresIn: process.env.JWT_EXPIRE || "7d" },
+  );
+};
+
+// Method to increment login attempts
+userSchema.methods.incLoginAttempts = function () {
+  // If we have a previous lock that has expired, restart at 1
+  if (this.lockUntil && this.lockUntil < Date.now()) {
+    return this.updateOne({
+      $set: { loginAttempts: 1 },
+      $unset: { lockUntil: 1 },
+    });
+  }
+
+  const updates = { $inc: { loginAttempts: 1 } };
+  const needsLock = this.loginAttempts + 1 >= 5 && !this.isLocked;
+
+  if (needsLock) {
+    updates.$set = { lockUntil: Date.now() + 2 * 60 * 60 * 1000 }; // 2 hours
+  }
+
+  return this.updateOne(updates);
+};
+
+// Method to reset login attempts
+userSchema.methods.resetLoginAttempts = function () {
+  return this.updateOne({
+    $set: { loginAttempts: 0 },
+    $unset: { lockUntil: 1 },
+  });
+};
+
+module.exports = mongoose.model("User", userSchema);
 ```
 
 ### `src/models/Job.js`
 
 ```js
-// (job model code — keep unchanged from original guide)
+const mongoose = require("mongoose");
+
+const jobSchema = new mongoose.Schema(
+  {
+    company: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Company",
+      required: [true, "Company is required"],
+    },
+    postedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: [true, "Posted by user is required"],
+    },
+    jobInfo: {
+      title: {
+        type: String,
+        required: [true, "Job title is required"],
+        trim: true,
+        maxlength: [200, "Job title cannot exceed 200 characters"],
+      },
+      industry: {
+        type: String,
+        required: [true, "Industry is required"],
+        enum: [
+          "Manufacturing",
+          "Construction",
+          "Agriculture",
+          "Nursing Care",
+          "Building Cleaning",
+          "Material Processing",
+          "Industrial Machinery",
+          "Electric and Electronics",
+          "Shipbuilding",
+          "Auto Repair",
+          "Aviation",
+          "Accommodation",
+          "Food Service",
+          "Foodstuff and Beverage",
+        ],
+      },
+      category: {
+        type: String,
+        enum: ["full-time", "part-time", "contract", "ssw1", "ssw2"],
+        default: "ssw1",
+      },
+    },
+    description: {
+      summary: {
+        type: String,
+        required: [true, "Job summary is required"],
+        minlength: [50, "Summary must be at least 50 characters"],
+        maxlength: [2000, "Summary cannot exceed 2000 characters"],
+      },
+      responsibilities: [String],
+      requirements: [String],
+      benefits: [String],
+    },
+    requirements: {
+      education: {
+        type: String,
+        enum: [
+          "high-school",
+          "vocational",
+          "bachelors",
+          "masters",
+          "phd",
+          "any",
+        ],
+        default: "any",
+      },
+      japaneseLevel: {
+        type: String,
+        enum: ["N5", "N4", "N3", "N2", "N1", "native", "any"],
+        default: "N4",
+      },
+      experience: {
+        required: {
+          type: Boolean,
+          default: false,
+        },
+        years: {
+          type: Number,
+          min: 0,
+        },
+      },
+      skills: [String],
+      certifications: [String],
+    },
+    compensation: {
+      salary: {
+        min: {
+          type: Number,
+          required: [true, "Minimum salary is required"],
+          min: [0, "Salary cannot be negative"],
+        },
+        max: {
+          type: Number,
+          required: [true, "Maximum salary is required"],
+          min: [0, "Salary cannot be negative"],
+        },
+        currency: {
+          type: String,
+          default: "JPY",
+        },
+        period: {
+          type: String,
+          enum: ["hourly", "monthly", "yearly"],
+          default: "monthly",
+        },
+      },
+      bonuses: {
+        type: String,
+      },
+      overtime: {
+        type: String,
+      },
+    },
+    location: {
+      prefecture: {
+        type: String,
+        required: [true, "Prefecture is required"],
+      },
+      city: {
+        type: String,
+        required: [true, "City is required"],
+      },
+      address: String,
+      remote: {
+        type: Boolean,
+        default: false,
+      },
+      remoteType: {
+        type: String,
+        enum: ["full", "hybrid", "none"],
+        default: "none",
+      },
+    },
+    workConditions: {
+      workHours: {
+        type: String,
+        default: "8:00-17:00",
+      },
+      daysOff: [String],
+      vacation: String,
+      insurance: [String],
+    },
+    applicationInfo: {
+      applicationDeadline: {
+        type: Date,
+        required: [true, "Application deadline is required"],
+      },
+      startDate: Date,
+      contactEmail: String,
+      contactPhone: String,
+      applicationUrl: String,
+    },
+    status: {
+      type: String,
+      enum: ["draft", "active", "closed", "filled", "archived"],
+      default: "draft",
+    },
+    visibility: {
+      type: String,
+      enum: ["public", "private", "rso-only"],
+      default: "public",
+    },
+    views: {
+      type: Number,
+      default: 0,
+    },
+    applications: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Application",
+      },
+    ],
+    featured: {
+      type: Boolean,
+      default: false,
+    },
+    expiresAt: Date,
+  },
+  {
+    timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+  },
+);
+
+// Indexes for performance
+jobSchema.index({ "jobInfo.industry": 1 });
+jobSchema.index({ "location.prefecture": 1 });
+jobSchema.index({ status: 1 });
+jobSchema.index({ "applicationInfo.applicationDeadline": 1 });
+jobSchema.index({ company: 1 });
+jobSchema.index({ createdAt: -1 });
+jobSchema.index({ featured: -1, createdAt: -1 });
+
+// Text index for search
+jobSchema.index({
+  "jobInfo.title": "text",
+  "description.summary": "text",
+  "requirements.skills": "text",
+});
+
+// Virtual for application count
+jobSchema.virtual("applicationCount").get(function () {
+  return this.applications ? this.applications.length : 0;
+});
+
+// Virtual to check if job is expired
+jobSchema.virtual("isExpired").get(function () {
+  return this.applicationInfo.applicationDeadline < new Date();
+});
+
+// Pre-save middleware to set expiration
+jobSchema.pre("save", function (next) {
+  if (this.isModified("applicationInfo.applicationDeadline")) {
+    this.expiresAt = this.applicationInfo.applicationDeadline;
+  }
+  next();
+});
+
+// Static method to find active jobs
+jobSchema.statics.findActive = function (filter = {}) {
+  return this.find({
+    ...filter,
+    status: "active",
+    "applicationInfo.applicationDeadline": { $gt: new Date() },
+  });
+};
+
+// Method to increment view count
+jobSchema.methods.incrementViews = function () {
+  this.views += 1;
+  return this.save();
+};
+
+module.exports = mongoose.model("Job", jobSchema);
 ```
 
 > Note: The full model code is unchanged; include it in the `src/models/` files as provided in the original guide. Use `js` fenced code blocks when pasting the model code.
@@ -320,13 +687,384 @@ File examples (put under `src/controllers/`), use language `js` for code blocks.
 ### `src/controllers/userController.js`
 
 ```js
-// (user controller code — keep unchanged from original guide)
+const User = require("../models/User");
+const asyncHandler = require("../middleware/asyncHandler");
+const ApiError = require("../utils/ApiError");
+const ApiResponse = require("../utils/ApiResponse");
+
+// @desc    Get all users
+// @route   GET /api/v1/users
+// @access  Private/Admin
+exports.getUsers = asyncHandler(async (req, res, next) => {
+  const page = parseInt(req.query.page, 10) || 1;
+  const limit = parseInt(req.query.limit, 10) || 10;
+  const skip = (page - 1) * limit;
+
+  // Build filter
+  const filter = {};
+  if (req.query.role) filter.role = req.query.role;
+  if (req.query.isActive !== undefined)
+    filter.isActive = req.query.isActive === "true";
+
+  // Execute query
+  const users = await User.find(filter)
+    .select("-password")
+    .populate("profile", "firstName lastName")
+    .populate("company", "companyName")
+    .limit(limit)
+    .skip(skip)
+    .sort({ createdAt: -1 });
+
+  const total = await User.countDocuments(filter);
+
+  res.status(200).json(
+    new ApiResponse(200, "Users retrieved successfully", {
+      users,
+      pagination: {
+        page,
+        limit,
+        total,
+        pages: Math.ceil(total / limit),
+      },
+    }),
+  );
+});
+
+// @desc    Get single user
+// @route   GET /api/v1/users/:id
+// @access  Private
+exports.getUser = asyncHandler(async (req, res, next) => {
+  const user = await User.findById(req.params.id)
+    .select("-password")
+    .populate("profile")
+    .populate("company");
+
+  if (!user) {
+    return next(new ApiError(404, "User not found"));
+  }
+
+  // Check authorization - users can only view their own data unless admin
+  if (user._id.toString() !== req.user.id && req.user.role !== "admin") {
+    return next(new ApiError(403, "Not authorized to access this user"));
+  }
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, "User retrieved successfully", { user }));
+});
+
+// @desc    Update user
+// @route   PUT /api/v1/users/:id
+// @access  Private
+exports.updateUser = asyncHandler(async (req, res, next) => {
+  let user = await User.findById(req.params.id);
+
+  if (!user) {
+    return next(new ApiError(404, "User not found"));
+  }
+
+  // Check authorization
+  if (user._id.toString() !== req.user.id && req.user.role !== "admin") {
+    return next(new ApiError(403, "Not authorized to update this user"));
+  }
+
+  // Fields that can be updated
+  const allowedUpdates = ["email", "isActive"];
+
+  // Only admin can change role
+  if (req.user.role === "admin") {
+    allowedUpdates.push("role");
+  }
+
+  // Filter updates to only allowed fields
+  const updates = {};
+  allowedUpdates.forEach((field) => {
+    if (req.body[field] !== undefined) {
+      updates[field] = req.body[field];
+    }
+  });
+
+  user = await User.findByIdAndUpdate(req.params.id, updates, {
+    new: true,
+    runValidators: true,
+  }).select("-password");
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, "User updated successfully", { user }));
+});
+
+// @desc    Delete user
+// @route   DELETE /api/v1/users/:id
+// @access  Private/Admin
+exports.deleteUser = asyncHandler(async (req, res, next) => {
+  const user = await User.findById(req.params.id);
+
+  if (!user) {
+    return next(new ApiError(404, "User not found"));
+  }
+
+  // Soft delete - set isActive to false
+  await User.findByIdAndUpdate(req.params.id, { isActive: false });
+
+  res.status(200).json(new ApiResponse(200, "User deleted successfully", null));
+});
+
+// @desc    Get current user profile
+// @route   GET /api/v1/users/me
+// @access  Private
+exports.getMe = asyncHandler(async (req, res, next) => {
+  const user = await User.findById(req.user.id)
+    .select("-password")
+    .populate("profile")
+    .populate("company");
+
+  res
+    .status(200)
+    .json(
+      new ApiResponse(200, "Current user retrieved successfully", { user }),
+    );
+});
+
+// @desc    Update password
+// @route   PUT /api/v1/users/update-password
+// @access  Private
+exports.updatePassword = asyncHandler(async (req, res, next) => {
+  const user = await User.findById(req.user.id).select("+password");
+
+  // Check current password
+  const isMatch = await user.comparePassword(req.body.currentPassword);
+  if (!isMatch) {
+    return next(new ApiError(401, "Current password is incorrect"));
+  }
+
+  // Set new password
+  user.password = req.body.newPassword;
+  await user.save();
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, "Password updated successfully", null));
+});
 ```
 
 ### `src/controllers/jobController.js`
 
 ```js
-// (job controller code — keep unchanged from original guide)
+const Job = require("../models/Job");
+const asyncHandler = require("../middleware/asyncHandler");
+const ApiError = require("../utils/ApiError");
+const ApiResponse = require("../utils/ApiResponse");
+
+// @desc    Get all jobs
+// @route   GET /api/v1/jobs
+// @access  Public
+exports.getJobs = asyncHandler(async (req, res, next) => {
+  const page = parseInt(req.query.page, 10) || 1;
+  const limit = parseInt(req.query.limit, 10) || 10;
+  const skip = (page - 1) * limit;
+
+  // Build filter object
+  const filter = {};
+
+  // Filter by status
+  if (req.query.status) {
+    filter.status = req.query.status;
+  } else {
+    filter.status = "active"; // Default to active jobs
+  }
+
+  // Filter by industry
+  if (req.query.industry) {
+    filter["jobInfo.industry"] = req.query.industry;
+  }
+
+  // Filter by location
+  if (req.query.prefecture) {
+    filter["location.prefecture"] = req.query.prefecture;
+  }
+  if (req.query.city) {
+    filter["location.city"] = new RegExp(req.query.city, "i");
+  }
+
+  // Filter by salary range
+  if (req.query.minSalary) {
+    filter["compensation.salary.min"] = {
+      $gte: parseInt(req.query.minSalary, 10),
+    };
+  }
+
+  // Filter by Japanese level
+  if (req.query.japaneseLevel) {
+    filter["requirements.japaneseLevel"] = req.query.japaneseLevel;
+  }
+
+  // Search by text
+  if (req.query.search) {
+    filter.$text = { $search: req.query.search };
+  }
+
+  // Featured jobs
+  if (req.query.featured === "true") {
+    filter.featured = true;
+  }
+
+  // Execute query
+  const jobs = await Job.find(filter)
+    .populate("company", "companyName logo location")
+    .populate("postedBy", "email")
+    .limit(limit)
+    .skip(skip)
+    .sort(req.query.sort || "-createdAt");
+
+  const total = await Job.countDocuments(filter);
+
+  res.status(200).json(
+    new ApiResponse(200, "Jobs retrieved successfully", {
+      jobs,
+      pagination: {
+        page,
+        limit,
+        total,
+        pages: Math.ceil(total / limit),
+      },
+    }),
+  );
+});
+
+// @desc    Get single job
+// @route   GET /api/v1/jobs/:id
+// @access  Public
+exports.getJob = asyncHandler(async (req, res, next) => {
+  const job = await Job.findById(req.params.id)
+    .populate("company")
+    .populate("postedBy", "email")
+    .populate({
+      path: "applications",
+      select: "applicant status createdAt",
+      populate: { path: "applicant", select: "email profile" },
+    });
+
+  if (!job) {
+    return next(new ApiError(404, "Job not found"));
+  }
+
+  // Increment view count (don't await)
+  job
+    .incrementViews()
+    .catch((err) => console.error("Failed to increment views:", err));
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, "Job retrieved successfully", { job }));
+});
+
+// @desc    Create new job
+// @route   POST /api/v1/jobs
+// @access  Private/Employer
+exports.createJob = asyncHandler(async (req, res, next) => {
+  // Add postedBy and company from authenticated user
+  req.body.postedBy = req.user.id;
+
+  if (req.user.role === "employer") {
+    if (!req.user.company) {
+      return next(
+        new ApiError(400, "Employer must have an associated company"),
+      );
+    }
+    req.body.company = req.user.company;
+  }
+
+  const job = await Job.create(req.body);
+
+  res
+    .status(201)
+    .json(new ApiResponse(201, "Job created successfully", { job }));
+});
+
+// @desc    Update job
+// @route   PUT /api/v1/jobs/:id
+// @access  Private/Employer
+exports.updateJob = asyncHandler(async (req, res, next) => {
+  let job = await Job.findById(req.params.id);
+
+  if (!job) {
+    return next(new ApiError(404, "Job not found"));
+  }
+
+  // Check ownership
+  if (job.postedBy.toString() !== req.user.id && req.user.role !== "admin") {
+    return next(new ApiError(403, "Not authorized to update this job"));
+  }
+
+  // Don't allow updating certain fields
+  delete req.body.postedBy;
+  delete req.body.company;
+  delete req.body.views;
+  delete req.body.applications;
+
+  job = await Job.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, "Job updated successfully", { job }));
+});
+
+// @desc    Delete job
+// @route   DELETE /api/v1/jobs/:id
+// @access  Private/Employer
+exports.deleteJob = asyncHandler(async (req, res, next) => {
+  const job = await Job.findById(req.params.id);
+
+  if (!job) {
+    return next(new ApiError(404, "Job not found"));
+  }
+
+  // Check ownership
+  if (job.postedBy.toString() !== req.user.id && req.user.role !== "admin") {
+    return next(new ApiError(403, "Not authorized to delete this job"));
+  }
+
+  // Soft delete - change status to archived
+  job.status = "archived";
+  await job.save();
+
+  res.status(200).json(new ApiResponse(200, "Job deleted successfully", null));
+});
+
+// @desc    Get jobs by company
+// @route   GET /api/v1/jobs/company/:companyId
+// @access  Public
+exports.getJobsByCompany = asyncHandler(async (req, res, next) => {
+  const jobs = await Job.find({
+    company: req.params.companyId,
+    status: "active",
+  })
+    .populate("company", "companyName logo")
+    .sort("-createdAt");
+
+  res
+    .status(200)
+    .json(
+      new ApiResponse(200, "Company jobs retrieved successfully", { jobs }),
+    );
+});
+
+// @desc    Get my posted jobs
+// @route   GET /api/v1/jobs/my-jobs
+// @access  Private/Employer
+exports.getMyJobs = asyncHandler(async (req, res, next) => {
+  const jobs = await Job.find({ postedBy: req.user.id })
+    .populate("company", "companyName")
+    .sort("-createdAt");
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, "Your jobs retrieved successfully", { jobs }));
+});
 ```
 
 ## Authentication examples — password hashing
@@ -443,13 +1181,141 @@ Add middleware under `src/middleware/` (e.g., `auth.js`, `asyncHandler.js`, `err
 ### `src/app.js`
 
 ```js
-// (app setup code — keep unchanged from original guide)
+const express = require("express");
+const cors = require("cors");
+const helmet = require("helmet");
+const morgan = require("morgan");
+const mongoSanitize = require("express-mongo-sanitize");
+const rateLimit = require("express-rate-limit");
+const errorHandler = require("./middleware/errorHandler");
+const logger = require("./utils/logger");
+
+// Create Express app
+const app = express();
+
+// Security middleware
+app.use(helmet());
+
+// CORS configuration
+const corsOptions = {
+  origin:
+    process.env.NODE_ENV === "production"
+      ? process.env.FRONTEND_URL
+      : ["http://localhost:3000", "http://localhost:5173"],
+  credentials: true,
+  optionsSuccessStatus: 200,
+};
+app.use(cors(corsOptions));
+
+// Body parser middleware
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ extended: true, limit: "10mb" }));
+
+// Sanitize data
+app.use(mongoSanitize());
+
+// Rate limiting
+const limiter = rateLimit({
+  windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS, 10) || 15 * 60 * 1000, // 15 minutes
+  max: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS, 10) || 100,
+  message: "Too many requests from this IP, please try again later.",
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+app.use("/api/", limiter);
+
+// HTTP request logger
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
+} else {
+  app.use(
+    morgan("combined", {
+      stream: {
+        write: (message) => logger.info(message.trim()),
+      },
+    }),
+  );
+}
+
+// Health check endpoint
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "success",
+    message: "API is running",
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV,
+  });
+});
+
+// API routes
+app.use("/api/v1", require("./routes"));
+
+// 404 handler
+app.use((req, res, next) => {
+  res.status(404).json({
+    status: "error",
+    message: `Route ${req.originalUrl} not found`,
+  });
+});
+
+// Global error handler
+app.use(errorHandler);
+
+module.exports = app;
 ```
 
 ### `server.js`
 
 ```js
-// (entry point code — keep unchanged from original guide)
+const dotenv = require("dotenv");
+const path = require("path");
+
+// Load environment variables
+dotenv.config({ path: path.join(__dirname, ".env") });
+
+const app = require("./src/app");
+const connectDatabase = require("./src/config/database");
+const logger = require("./src/utils/logger");
+
+// Handle uncaught exceptions
+process.on("uncaughtException", (err) => {
+  logger.error("UNCAUGHT EXCEPTION! 💥 Shutting down...");
+  logger.error(`Error: ${err.name} - ${err.message}`);
+  logger.error(err.stack);
+  process.exit(1);
+});
+
+// Connect to database
+connectDatabase();
+
+// Start server
+const PORT = process.env.PORT || 5000;
+const server = app.listen(PORT, () => {
+  logger.info(
+    `🚀 Server running in ${process.env.NODE_ENV} mode on port ${PORT}`,
+  );
+});
+
+// Handle unhandled promise rejections
+process.on("unhandledRejection", (err) => {
+  logger.error("UNHANDLED REJECTION! 💥 Shutting down...");
+  logger.error(`Error: ${err.name} - ${err.message}`);
+  logger.error(err.stack);
+
+  server.close(() => {
+    process.exit(1);
+  });
+});
+
+// Handle SIGTERM
+process.on("SIGTERM", () => {
+  logger.info("👋 SIGTERM RECEIVED. Shutting down gracefully");
+  server.close(() => {
+    logger.info("💥 Process terminated!");
+  });
+});
+
+module.exports = server;
 ```
 
 ## Testing the API
