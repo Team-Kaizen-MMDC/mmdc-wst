@@ -6,7 +6,14 @@ Purpose
 
 Quick start (run locally)
 
-- Copy `.env.example` to `.env` and set `MONGODB_URI` and `MONGODB_DB`.
+- Copy the canonical example `backend/.env.example` to `.env` and fill in values (MONGODB_URI or MONGODB_DB, JWT_SECRET, etc.). Example:
+
+```bash
+cd backend
+cp .env.example .env
+# edit .env and set secrets (do NOT commit .env)
+```
+
 - Install dependencies and start the server:
 
 ```bash
@@ -17,11 +24,15 @@ node server.js
 
 - Open: http://localhost:3000/pages/about.html (the page fetches content from the API).
 
-What you'll use (minimal stack)
+What you'll use (minimal stack for onboarding)
 
 - Node.js + Express
-- Native MongoDB driver (no Mongoose yet) — keeps code simple for beginners
 - dotenv for env vars
+- Native MongoDB driver (used by default in this onboarding flow)
+
+Note: The repository now supports an optional Mongoose-based stack for production-ready models and validation. Mongoose is disabled by default to keep the onboarding path simple. See "Mongoose toggle" below for how to enable it and what that changes.
+
+**Migration note:** Once comfortable with the basics, you can adopt the recommended production stack (Mongoose, bcryptjs, JWT, express-validator, helmet, etc.) documented in [`docs/NODEJS_REST_API_CRUD_GUIDE.md`](../docs/NODEJS_REST_API_CRUD_GUIDE.md). The minimal stack here is intentionally simplified for initial onboarding; the full guide provides schemas, validation, auth, and middleware patterns ready for production.
 
 Guiding principles
 
@@ -36,6 +47,25 @@ Conventions
 - Documents should include: `slug` (string, unique), content fields (title, paragraphs), and timestamps (`createdAt`, `updatedAt`).
 - Endpoints return JSON and proper HTTP status codes. On error return `{ error: 'message' }`.
 
+Project layout (updated)
+
+The backend now uses a simple `src/` application layout to make it easy to evolve into a full REST service:
+
+```
+backend/
+├── src/
+│   ├── config/         # database connectors and config helpers
+│   ├── controllers/    # business logic (controllers called by routes)
+│   ├── models/         # Mongoose models (optional when USE_MONGOOSE=true)
+│   ├── routes/         # Express routers (thin, import controllers)
+│   └── app.js          # app factory (creates app + DB connections)
+├── server.js           # bootstrapper that calls app.createApp()
+├── .env.example
+└── package.json
+```
+
+The onboarding flow (quick start above) still works and uses the native MongoDB driver by default. The app factory (`src/app.js`) will connect using the native driver unless you enable Mongoose (see below).
+
 Step-by-step: add a new page API (example: `contact`)
 
 1. Decide the slug and collection
@@ -44,7 +74,7 @@ Step-by-step: add a new page API (example: `contact`)
 
 2. Add a route in `backend/server.js` (or later split into `routes/`)
 
-- Implement `GET /api/content/:slug` that queries `db.collection(CONTENT_COLLECTION).findOne({ slug })` and returns 404 when missing.
+- Implement `GET /api/content/:slug` that queries `db.collection(CONTENT_COLLECTION).findOne({ slug })` and returns 404 when missing. When running with Mongoose enabled this route can be implemented using a `Content` model instead of the native driver.
 
 3. Add manual import endpoint (already present)
 
@@ -101,9 +131,20 @@ curl -X POST http://localhost:3000/api/content \
 ```
 
 - Notes and tips
-  - The endpoint performs an upsert by `slug` so re-sending the same `slug` will update the document.
-  - If you plan to automate imports later, prefer JSON files that include `createdAt`/`updatedAt` or let the server set timestamps consistently.
-  - Consider adding a short-lived `X-ADMIN-TOKEN` in `.env` and checking it in `POST /api/content` to avoid accidental public writes during development.
+
+Mongoose toggle
+
+If you'd like to adopt Mongoose for models and richer validation, you can enable it without refactoring the whole app immediately.
+
+- Set `USE_MONGOOSE=true` in `backend/.env` to start the backend with Mongoose connected.
+- The app will expose `app.locals.mongoose` and route modules will prefer mongoose-backed controllers when present (so we can migrate endpoints one-by-one).
+- The Content Mongoose model is available at `backend/src/models/Content.js` as an example.
+
+Tip: enable Mongoose and run the About endpoints to validate the model reads the same `contents` collection as the native driver.
+
+- The endpoint performs an upsert by `slug` so re-sending the same `slug` will update the document.
+- If you plan to automate imports later, prefer JSON files that include `createdAt`/`updatedAt` or let the server set timestamps consistently.
+- Consider adding a short-lived `X-ADMIN-TOKEN` in `.env` and checking it in `POST /api/content` to avoid accidental public writes during development.
 
 Developer checklist (first week tasks)
 
@@ -113,9 +154,14 @@ Developer checklist (first week tasks)
 - [ ] Add a small token check for write endpoints (`X-ADMIN-TOKEN` header) and document the token in `.env.example` — 1h
 - [ ] Add unit test for `GET /api/content/:slug` using a small in-memory Mongo or local dev DB — 4h
 
+Additional utilities (optional)
+
+- Password helper (`src/utils/password.js`): if you need auth (user registration/login), use the bcryptjs-based helper for hashing and comparing passwords. See [`docs/NODEJS_REST_API_CRUD_GUIDE.md`](../docs/NODEJS_REST_API_CRUD_GUIDE.md) for registration/login examples.
+- Full REST API guide: [`docs/NODEJS_REST_API_CRUD_GUIDE.md`](../docs/NODEJS_REST_API_CRUD_GUIDE.md) provides a complete, production-ready structure (Mongoose models, JWT auth, middleware, testing). Use it when you're ready to expand beyond the minimal native-driver setup.
+
 Where to extend later
 
-- Replace native driver with Mongoose when the team is comfortable (adds schemas and validation helpers).
+- **Adopt Mongoose & production packages**: When your team is ready, migrate to Mongoose (schemas, validation), bcryptjs (password hashing), JWT (auth tokens), helmet (security headers), express-validator, and other packages detailed in [`docs/NODEJS_REST_API_CRUD_GUIDE.md`](../docs/NODEJS_REST_API_CRUD_GUIDE.md). The guide includes full examples for models, controllers, middleware, and testing.
 - Extract `backend/` into `services/content-service/` and add `api-gateway` only when you need multiple services.
 - Add CI to run lint/tests and a staging environment for integration tests.
 
