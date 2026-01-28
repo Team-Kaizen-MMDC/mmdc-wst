@@ -9,7 +9,12 @@ const {
   getMyJobs,
   getJobStats,
 } = require("../controllers/jobController");
+const {
+  applyToJob,
+  getJobApplications,
+} = require("../controllers/applicationController");
 const { protect, authorize } = require("../middleware/auth");
+const { validateApplication } = require("../validators/applicationValidator");
 
 const router = express.Router();
 
@@ -237,5 +242,81 @@ router.delete("/:id", authorize("employer", "admin"), deleteJob);
  *         description: Job statistics
  */
 router.get("/admin/stats", authorize("admin"), getJobStats);
+
+/**
+ * @swagger
+ * /api/v1/jobs/{jobId}/apply:
+ *   post:
+ *     summary: Apply to a job
+ *     tags: [Applications]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: jobId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               coverLetter:
+ *                 type: string
+ *                 maxLength: 2000
+ *               resumePath:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Application submitted
+ *       400:
+ *         description: Already applied or job closed
+ */
+router.post(
+  "/:jobId/apply",
+  authorize("jobseeker"),
+  validateApplication,
+  applyToJob,
+);
+
+/**
+ * @swagger
+ * /api/v1/jobs/{jobId}/applications:
+ *   get:
+ *     summary: Get applications for a job (Employer/Admin)
+ *     tags: [Applications]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: jobId
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: status
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           default: 20
+ *     responses:
+ *       200:
+ *         description: Applications retrieved
+ */
+router.get(
+  "/:jobId/applications",
+  authorize("employer", "admin"),
+  getJobApplications,
+);
 
 module.exports = router;

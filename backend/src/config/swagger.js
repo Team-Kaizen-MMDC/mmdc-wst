@@ -275,6 +275,14 @@ const options = {
         name: "Companies",
         description: "Company profiles",
       },
+      {
+        name: "Applications",
+        description: "Job applications and employer management",
+      },
+      {
+        name: "Users",
+        description: "User management and account operations",
+      },
     ],
   },
   apis: ["./src/routes/*.js"], // Path to route files with JSDoc annotations

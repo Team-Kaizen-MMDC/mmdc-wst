@@ -50,3 +50,11 @@ Maintenance
 Questions or updates
 
 - If you'd like, I can add an automated helper script that converts a clip to MP4 and uploads it to GitHub Releases using the GitHub CLI, producing a stable hosting URL without using issue attachments.
+
+Documentation requirements
+
+- **Swagger & Postman (Day 1 & Day 4):** Maintain up-to-date Swagger JSDoc comments for all Day 1 (authentication) and Day 4 (applications) route files so the OpenAPI spec reflects current endpoints. Keep a Postman collection in `backend/postman/` named `Japan_SSW_API_day1_day4.postman_collection.json` that includes example requests for the Authentication and Applications flows (register, login, get profile, apply to job, get my applications, update application status). Update both the collection and route JSDoc whenever endpoints or request/response shapes change.
+
+- **Exporting Swagger for sharing:** Use the provided `backend/scripts/export-swagger.js` helper and `npm run export:swagger` (runs from `backend/`) to write a current `backend/api-docs.json` file for sharing with frontend or QA. Commit `api-docs.json` only when you intentionally snapshot the public API (avoid committing frequently-changing interim drafts).
+
+If you'd like, I can also add a CI job that regenerates `backend/api-docs.json` on every push to `main` and saves an artifact for QA.
