@@ -152,88 +152,61 @@ Project management & QA
 Below is an updated view of the repository layout (top-level folders and important files). Paths are relative to the repository root.
 
 ```text
-mmdc-wst/
-├── index.html
-├── file.html
-├── Makefile
-├── package.json
-├── README.md
-├── STYLE.css
-├── run-tests.sh
-├── STRUCTURE.md
-├── TESTING.md
-├── Web Systems and Technology.code-workspace
-├── assets/
-│   ├── css/
-│   │   ├── main.css            # primary stylesheet
-│   │   ├── components.css
-│   │   └── utilities.css
-│   ├── icons/
-│   ├── images/
-│   │   ├── aiImages/
-│   │   ├── company-logos/
-│   │   └── team/
-│   ├── js/
-│   │   ├── main.js
-│   │   ├── i18n.js
-│   │   └── features/
-│   │       └── animations.js    # scroll-trigger controller
-│   └── videos/
-├── pages/
-│   ├── about.html
-│   ├── agency.html
-│   ├── companyDashboard.html
-│   ├── contact.html
-│   ├── createAccount.html
-│   ├── profileDashboard.html
-│   ├── services.html
-│   ├── signin.html
-│   ├── terms.html
-│   ├── visaGuidance.html
-│   ├── privacy.html
-│   ├── addEdit/
-│   │   ├── availability.html
-│   │   ├── contact.html
+/root
+├── /backend                     # Server-side logic
+│   ├── /node_modules            # Backend dependencies (Express, Mongoose, etc.)
+│   ├── /routes                  # API Route definitions
+│   │   └── auth.js              # Authentication routing
+│   ├── /src                     # Backend source code
+│   │   ├── app.js               # Express application entry point
+│   │   ├── /config              # Configuration files
+│   │   │   └── database.js      # MongoDB/Mongoose connection logic
+│   │   ├── /controllers         # Logic for handling requests
+│   │   │   ├── aboutController.js
+│   │   │   └── contentController.js
+│   │   ├── /models              # Mongoose Data Schemas
+│   │   │   └── Content.js       # Content schema definition
+│   │   └── /routes              # Modular API routes
+│   │       ├── aboutRoutes.js
+│   │       ├── contentRoutes.js
+│   │       └── index.js         # Master route aggregator
+│   ├── package.json             # Backend dependencies & scripts
+│   └── tsconfig.json            # TypeScript configuration (if applicable)
+│
+├── /pages                       # Frontend User Interface (HTML)
+│   ├── about.html               # About Us page
+│   ├── profileDashboard.html    # User profile management (uploaded)
+│   ├── signin.html              # Login page
+│   ├── /addEdit                 # Forms for creating/editing profile data
 │   │   ├── education.html
 │   │   ├── experience.html
-│   │   ├── job-post.html
-│   │   ├── profile.html
 │   │   └── skill.html
-│   ├── companies/
-│   │   ├── ana-intercontinental.html
-│   │   ├── ana.html
-│   │   ├── company-list.html
-│   │   ├── company-template.html
-│   │   ├── daikin.html
-│   │   ├── kandenko.html
-│   │   ├── mitsubishi-heavy-industries.html
-│   │   ├── nissan.html
-│   │   ├── prince-hotels.html
-│   │   ├── sompo-care.html
-│   │   └── yoshinoya.html
-│   └── jobs/
-│       ├── cleaner-facilities-maintenance.html
-│       ├── construction-worker-site-support.html
-│       ├── jobFilter.html
-│       ├── mechanic-ground-support-haneda.html
-│       ├── server-hospitality.html
-│       └── ward-nursing-support.html
-├── assets-js/                   # legacy/archive JS used in project archive
-├── docs/
-│   ├── ACCESSIBILITY_CHECKLIST.md
-│   ├── ANIMATION_EXAMPLES.html
-│   ├── CODE_AND_DESIGN_GUIDE.md
-│   └── CSS_MAIN_GUIDE.md
-├── i18n/
-│   └── en.json
-├── locales/
-│   └── ja.json
-├── tests/
-│   └── playwright/
-│       ├── smoke-links.spec.ts
-│       ├── e2e-navigation.spec.ts
-│       └── playwright.config.js
-└── test-results/
+│   ├── /jobs                    # Job listing and filtering pages
+│   │   ├── jobFilter.html
+│   │   └── jobDetails.html
+│   └── /companies               # Company-specific landing pages
+│
+├── /src                         # Shared frontend utilities
+│   └── /utils
+│       └── password.js          # Client-side password helpers
+│
+├── /docs                        # Project documentation & guides
+│   ├── BACKEND_INTEGRATION_PLAN.md
+│   ├── PROJECT_OVERVIEW.md
+│   └── /wireframes              # PDF mockups of the UI
+│
+├── /scripts                     # Automation & Maintenance scripts
+│   ├── fix-html-usability.js
+│   └── /fixes-backup            # Backups of files before major changes
+│
+├── /tests                       # Testing suites
+│   ├── /accessibility           # Axe-core accessibility tests
+│   └── /playwright              # End-to-end UI tests
+│
+├── /i18n                        # Translation files (English)
+├── /locales                     # Translation files (Japanese/Other)
+├── /demo-videos                 # Media assets for demos
+└── package.json                 # Root project configuration
 ```
 
 ## Best Practices

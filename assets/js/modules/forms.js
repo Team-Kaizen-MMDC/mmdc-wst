@@ -219,7 +219,7 @@ export const initializeSignupValidation = () => {
         };
 
         // 3. Send the data to the backend
-        const response = await fetch('http://localhost:5001/api/auth/signup', {
+        const response = await fetch('http://localhost:3000/api/auth/signup', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -242,7 +242,7 @@ export const initializeSignupValidation = () => {
         }
       } catch (error) {
         console.error("Connection Error:", error);
-        alert("Server is not responding. Check if backend is running on port 5001.");
+        alert("Server is not responding. Check if backend is running on port 3000.");
       }
     }
  };
@@ -338,7 +338,7 @@ export const initializeLoginValidation = () => {
 
       try {
         // 2. Send POST request to your new signin endpoint
-        const response = await fetch('http://localhost:5001/api/auth/signin', {
+        const response = await fetch('http://localhost:3000/api/auth/signin', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

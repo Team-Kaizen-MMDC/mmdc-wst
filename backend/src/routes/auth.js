@@ -3,6 +3,10 @@ const router = express.Router();
 const User = require('../models/user.js');
 const bcrypt = require('bcrypt');
 
+
+// Wrap the whole thing in a function so it accepts 'context'
+module.exports = function(context) {
+
 // ==========================================
 // POST: /api/auth/signup
 // ==========================================
@@ -64,4 +68,6 @@ console.log("✅ Password matches! Logging in...");
     }
 });
 
-module.exports = router;
+
+return router; // Return the router at the end
+};

@@ -1,32 +1,38 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-require('dotenv').config();
-const authRoutes = require('./routes/auth');
+require("dotenv").config();
+const config = require("./src/config/database"); // Pointing to your database config
+const { createApp } = require("./src/app");
 
+// Fallback to 5000 if PORT isn't in config
+const PORT = process.env.PORT || 5000; 
 
-const app = express();
-const PORT = process.env.PORT || 5000;
+async function start() {
+  try {
+    // This waits for the DB connection (client) and Express app to be ready
+    const { app, client } = await createApp();
 
-// Middleware
-app.use(cors());
-app.use(express.json()); // This allows us to parse JSON data from the frontend
+    const server = app.listen(PORT, () => {
+      console.log(`✅ Server listening on http://localhost:${PORT}`);
+      console.log(`📄 Main page available at /pages/about.html`);
+    });
 
-// Basic Route
-app.get('/', (req, res) => {
-  res.send('Backend Server is Running! 🚀');
-});
+    // Graceful shutdown: Ensures no data corruption when stopping the server
+    process.on("SIGINT", async () => {
+      console.log("\nSIGINT received: closing server and DB connection...");
+      server.close(async () => {
+        try {
+          if (client) await client.close(); 
+          console.log("✔️ MongoDB connection closed");
+          process.exit(0);
+        } catch (err) {
+          console.error("Error closing MongoDB client", err);
+          process.exit(1);
+        }
+      });
+    });
+  } catch (err) {
+    console.error("💥 Fatal error starting server:", err);
+    process.exit(1);
+  }
+}
 
-app.use('/api/auth', authRoutes);
-
-// Start Server
-app.listen(PORT, () => {
-  console.log(`Server is running on port: ${PORT}`);
-});
-
-// Connect to MongoDB
-console.log("URI Check:", process.env.MONGO_URI); // This should show your string (hide your password if sharing here!)
-
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log('Connected to MongoDB Atlas ✅'))
-  .catch((err) => console.error('MongoDB connection error ❌:', err));
+start();
