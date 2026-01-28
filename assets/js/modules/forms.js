@@ -24,7 +24,7 @@ const setValidationState = (
   element,
   isValid,
   feedbackId = null,
-  message = null
+  message = null,
 ) => {
   // Apply is-valid/is-invalid classes to the input element itself
   if (element) {
@@ -82,7 +82,7 @@ const validateEmail = (inputElements) => {
     inputElements.email,
     isEmailValid,
     "emailFeedback",
-    emailMsg
+    emailMsg,
   );
   return isEmailValid;
 };
@@ -106,7 +106,7 @@ const validatePassword = (inputElements) => {
     inputElements.password,
     isPasswordStrong,
     "passwordFeedback",
-    passwordMsg
+    passwordMsg,
   );
   return isPasswordStrong;
 };
@@ -129,7 +129,7 @@ const validatePasswordConfirm = (inputElements) => {
     inputElements.passwordConfirm,
     isPasswordMatch,
     "passwordConfirmFeedback",
-    passwordConfirmMsg
+    passwordConfirmMsg,
   );
   return isPasswordMatch;
 };
@@ -146,7 +146,7 @@ const validatePrivacyPolicy = (inputElements) => {
     if (isPolicyChecked) {
       // Policy is checked (Valid)
       inputElements.privacyLabelWrapper.classList.remove(
-        "privacy-error-highlight"
+        "privacy-error-highlight",
       );
       setValidationState(inputElements.privacyPolicy, true);
 
@@ -157,7 +157,7 @@ const validatePrivacyPolicy = (inputElements) => {
     } else {
       // Policy is NOT checked (Invalid)
       inputElements.privacyLabelWrapper.classList.add(
-        "privacy-error-highlight"
+        "privacy-error-highlight",
       );
       setValidationState(inputElements.privacyPolicy, false);
 
@@ -191,7 +191,7 @@ export const initializeSignupValidation = () => {
   const form = document.getElementById("createAccountForm");
   if (!form) {
     console.error(
-      'Sign-up Module: Form with ID "createAccountForm" not found.'
+      'Sign-up Module: Form with ID "createAccountForm" not found.',
     );
     return;
   }
@@ -214,7 +214,7 @@ export const initializeSignupValidation = () => {
     // Run FULL form validation on submit
     if (checkFormValidity(inputElements)) {
       console.log(
-        "Sign-up validation successful. Saving cookies and redirecting..."
+        "Sign-up validation successful. Saving cookies and redirecting...",
       );
 
       // --- COOKIE SAVING ---
@@ -229,12 +229,12 @@ export const initializeSignupValidation = () => {
       setNewUserFlag(true);
 
       console.log(
-        "Cookies saved successfully. Logged-in status set. User profile initialized."
+        "Cookies saved successfully. Logged-in status set. User profile initialized.",
       );
       window.location.href = "addEdit/profile.html";
     } else {
       console.log(
-        "Sign-up validation failed. Errors displayed. Staying on page."
+        "Sign-up validation failed. Errors displayed. Staying on page.",
       );
     }
   };
@@ -245,7 +245,7 @@ export const initializeSignupValidation = () => {
   // --- Per-Field Real-Time Validation ---
   // Email: Check validity when user types
   inputElements.email.addEventListener("input", () =>
-    validateEmail(inputElements)
+    validateEmail(inputElements),
   );
 
   // Password: Check validity when user types
@@ -256,16 +256,16 @@ export const initializeSignupValidation = () => {
 
   // Password Confirm: Check validity when user types
   inputElements.passwordConfirm.addEventListener("input", () =>
-    validatePasswordConfirm(inputElements)
+    validatePasswordConfirm(inputElements),
   );
 
   // Privacy Policy: Check validity on change (click)
   inputElements.privacyPolicy.addEventListener("change", () =>
-    validatePrivacyPolicy(inputElements)
+    validatePrivacyPolicy(inputElements),
   );
 
   console.log(
-    "Sign-up Module: Per-field validation listeners successfully attached."
+    "Sign-up Module: Per-field validation listeners successfully attached.",
   );
 
   // --- Password Visibility Toggle Setup ---
@@ -273,11 +273,11 @@ export const initializeSignupValidation = () => {
   setupPasswordToggle(
     "passwordConfirm",
     "togglePasswordConfirm",
-    "eye-icon-passwordConfirm"
+    "eye-icon-passwordConfirm",
   );
 
   console.log(
-    "Sign-up Module: Per-field validation listeners successfully attached."
+    "Sign-up Module: Per-field validation listeners successfully attached.",
   );
 };
 
@@ -291,7 +291,7 @@ export const initializeLoginValidation = () => {
 
   if (!form) {
     console.error(
-      'Login Module: Form with ID "loginForm" not found. Cannot attach validation.'
+      'Login Module: Form with ID "loginForm" not found. Cannot attach validation.',
     );
     return;
   }
@@ -321,43 +321,68 @@ export const initializeLoginValidation = () => {
     if (!isPasswordValid) formValid = false;
 
     if (formValid) {
-      console.log("Login validation successful. Initializing user profile...");
+      console.log("Login validation successful. Sending credentials to API...");
 
-      // Mark user as logged in
-      setCookie("isLoggedIn", "true", 1); // Sets the persistent cookie for 1 day
-      sessionStorage.setItem("isLoggedIn", "true");
+      const submitBtn = form.querySelector('button[type="submit"]');
+      if (submitBtn) submitBtn.disabled = true;
 
-      // Save email to user profile for existing users logging in
-      saveUserProfile({
-        email: inputElements.email.value,
-        // Set default name for display purposes
-        firstName: "Juan",
-        lastName: "Dela Cruz",
-      });
+      // POST credentials to backend API (expects JSON)
+      fetch("/api/v1/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: inputElements.email.value,
+          password: inputElements.password.value,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data && data.success) {
+            // Save token cookie for client side usage
+            if (data.data && data.data.token) {
+              setCookie("token", data.data.token, 7);
+            }
 
-      // Mark as existing user (not new registration)
-      setNewUserFlag(false);
+            // Save basic profile info and mark existing user
+            saveUserProfile({ email: inputElements.email.value });
+            setNewUserFlag(false);
 
-      // For login, prefer form-level redirect (data-redirect) or form action
-      // so pages like employer sign-in can specify their own dashboard.
-      // Fallback to profileDashboard.html for regular users.
-      const formRedirect =
-        (form.getAttribute && form.getAttribute("data-redirect")) ||
-        (form.getAttribute && form.getAttribute("action"));
-      const defaultRedirect = "profileDashboard.html";
-      const redirectUrl =
-        formRedirect && formRedirect.trim() !== ""
-          ? formRedirect
-          : defaultRedirect;
+            const formRedirect =
+              (form.getAttribute && form.getAttribute("data-redirect")) ||
+              (form.getAttribute && form.getAttribute("action"));
+            const defaultRedirect = "profileDashboard.html";
+            const redirectUrl =
+              formRedirect && formRedirect.trim() !== ""
+                ? formRedirect
+                : defaultRedirect;
 
-      console.log("Login successful. Redirecting to:", redirectUrl);
-      try {
-        // If redirectUrl is a relative path, navigating to it directly works.
-        window.location.href = redirectUrl;
-      } catch (err) {
-        console.warn("Redirect failed, falling back to default:", err);
-        window.location.href = defaultRedirect;
-      }
+            window.location.href = redirectUrl;
+          } else {
+            // API returned an error
+            console.warn("Login failed", data);
+            setValidationState(inputElements.email, false);
+            setValidationState(inputElements.password, false);
+            const msg = (data && data.message) || "Invalid credentials";
+            const fb = document.getElementById("passwordFeedback");
+            if (fb) {
+              fb.textContent = msg;
+              fb.style.display = "block";
+            }
+          }
+        })
+        .catch((err) => {
+          console.error("Login request failed", err);
+          const fb = document.getElementById("passwordFeedback");
+          if (fb) {
+            fb.textContent = "Server error. Please try again later.";
+            fb.style.display = "block";
+          }
+        })
+        .finally(() => {
+          if (submitBtn) submitBtn.disabled = false;
+        });
     } else {
       console.log("Login validation failed. Errors displayed.");
     }
@@ -366,14 +391,14 @@ export const initializeLoginValidation = () => {
   // Main event listener to the form submission
   form.addEventListener("submit", handleSubmit, false);
   console.log(
-    "Login Module: Validation listener successfully attached to loginForm."
+    "Login Module: Validation listener successfully attached to loginForm.",
   );
 
   // PASSWORD TOGGLE FUNCTION
   setupPasswordToggle("password", "togglePassword", "eye-icon-password");
 
   console.log(
-    "Login Module: Validation listener successfully attached to loginForm."
+    "Login Module: Validation listener successfully attached to loginForm.",
   );
 };
 

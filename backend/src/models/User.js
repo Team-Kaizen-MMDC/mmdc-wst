@@ -57,8 +57,7 @@ const userSchema = new mongoose.Schema(
   },
 );
 
-// Indexes
-userSchema.index({ email: 1 });
+// Indexes (email index is auto-created by unique: true)
 userSchema.index({ role: 1 });
 userSchema.index({ isActive: 1 });
 
@@ -68,16 +67,12 @@ userSchema.virtual("isLocked").get(function () {
 });
 
 // Hash password before saving
-userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next();
+// Hash password before saving - Mongoose 8.x async/await style (no next callback)
+userSchema.pre("save", async function () {
+  if (!this.isModified("password")) return;
 
-  try {
-    const salt = await bcrypt.genSalt(12);
-    this.password = await bcrypt.hash(this.password, salt);
-    next();
-  } catch (error) {
-    next(error);
-  }
+  const salt = await bcrypt.genSalt(12);
+  this.password = await bcrypt.hash(this.password, salt);
 });
 
 // Method to check password

@@ -19,11 +19,17 @@ async function start() {
       console.log("SIGINT received: closing server and DB connection...");
       server.close(async () => {
         try {
-          await client.close();
-          console.log("MongoDB connection closed");
+          // Only close client if using native driver (not Mongoose)
+          if (client) {
+            await client.close();
+            console.log("MongoDB client connection closed");
+          } else if (app.locals.mongoose) {
+            await app.locals.mongoose.connection.close();
+            console.log("Mongoose connection closed");
+          }
           process.exit(0);
         } catch (err) {
-          console.error("Error closing MongoDB client", err);
+          console.error("Error closing MongoDB connection", err);
           process.exit(1);
         }
       });

@@ -2,7 +2,9 @@ const express = require("express");
 const path = require("path");
 const helmet = require("helmet");
 const cors = require("cors");
-const mongoSanitize = require("express-mongo-sanitize");
+// Note: express-mongo-sanitize v2.x is incompatible with Express 5
+// TODO: Upgrade to v3.x when available or use alternative sanitization
+// const mongoSanitize = require("express-mongo-sanitize");
 const rateLimit = require("express-rate-limit");
 const morgan = require("morgan");
 const config = require("../config");
@@ -14,8 +16,45 @@ const logger = require("./utils/logger");
 async function createApp() {
   const app = express();
 
-  // Security middleware
-  app.use(helmet());
+  // Security middleware - enforce a Content Security Policy that explicitly
+  // allows the CDNs and external resources used by the site while keeping a
+  // secure default. This prevents the browser from blocking vital scripts
+  // (Tailwind CDN, jsDelivr, Google Fonts) yet maintains strong defaults.
+  const cspDirectives = {
+    defaultSrc: ["'self'"],
+    scriptSrc: [
+      "'self'",
+      "https://cdn.tailwindcss.com",
+      "https://cdn.jsdelivr.net",
+      "https://unpkg.com",
+      "https://cdnjs.cloudflare.com",
+    ],
+    styleSrc: [
+      "'self'",
+      "https://fonts.googleapis.com",
+      "https://cdn.jsdelivr.net",
+      "'unsafe-inline'",
+    ],
+    fontSrc: [
+      "'self'",
+      "https://fonts.gstatic.com",
+      "https://cdn.jsdelivr.net",
+    ],
+    imgSrc: ["'self'", "data:", "https:"],
+    connectSrc: ["'self'"],
+    frameAncestors: ["'self'"],
+    objectSrc: ["'none'"],
+    formAction: ["'self'"],
+    workerSrc: ["'self'", "blob:"],
+  };
+
+  app.use(
+    helmet({
+      contentSecurityPolicy: {
+        directives: cspDirectives,
+      },
+    }),
+  );
 
   // CORS configuration
   const corsOptions = {
@@ -37,8 +76,8 @@ async function createApp() {
   app.use(express.json({ limit: "10mb" }));
   app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
-  // Sanitize data
-  app.use(mongoSanitize());
+  // Sanitize data - temporarily disabled due to Express 5 compatibility
+  // app.use(mongoSanitize());
 
   // Rate limiting
   const limiter = rateLimit({
@@ -65,6 +104,13 @@ async function createApp() {
 
   // Serve repository root as static so pages/*.html are reachable at /pages/*.html
   app.use(express.static(path.join(__dirname, "..", "..")));
+
+  // Shortcut for local development checks: skip DB/connect and route registration
+  // when SKIP_DB=true to allow starting the server for static file and header
+  // verification without needing a MongoDB connection.
+  if (process.env.SKIP_DB === "true") {
+    return { app, client: null };
+  }
 
   // Connect using Mongoose if requested (USE_MONGOOSE=true). Otherwise use the
   // native driver. We pass a `context` object to route registrars so they can
@@ -108,7 +154,7 @@ async function createApp() {
   // Global error handler (must be last)
   app.use(errorHandler);
 
-  return { app, client };
+  return { app, client: context.client || null };
 }
 
 module.exports = { createApp };
