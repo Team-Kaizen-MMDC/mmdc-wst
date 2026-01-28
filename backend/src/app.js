@@ -7,6 +7,8 @@ const cors = require("cors");
 // const mongoSanitize = require("express-mongo-sanitize");
 const rateLimit = require("express-rate-limit");
 const morgan = require("morgan");
+const swaggerUi = require("swagger-ui-express");
+const swaggerSpec = require("./config/swagger");
 const config = require("../config");
 const dbHelper = require("./config/database");
 const registerRoutes = require("./routes");
@@ -104,6 +106,22 @@ async function createApp() {
 
   // Serve repository root as static so pages/*.html are reachable at /pages/*.html
   app.use(express.static(path.join(__dirname, "..", "..")));
+
+  // API Documentation with Swagger UI
+  app.use(
+    "/api-docs",
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerSpec, {
+      customCss: ".swagger-ui .topbar { display: none }",
+      customSiteTitle: "Japan SSW API Documentation",
+    }),
+  );
+
+  // Swagger JSON endpoint
+  app.get("/api-docs.json", (req, res) => {
+    res.setHeader("Content-Type", "application/json");
+    res.send(swaggerSpec);
+  });
 
   // Shortcut for local development checks: skip DB/connect and route registration
   // when SKIP_DB=true to allow starting the server for static file and header
