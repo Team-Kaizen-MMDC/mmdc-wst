@@ -1,114 +1,87 @@
 # Japan SSW Platform - API Fields Reference
 
-Complete reference of all API endpoints with required fields, parameters, and response structures.
+Complete reference of **tested and verified** API endpoints from the Successful Test Suite.
 
-**Base URL:** `http://localhost:5000/api/v1`
+**Base URL:** `http://localhost:3000/api/v1`
 
 **Date:** January 29, 2026  
-**API Version:** v1.0.0
+**API Version:** v1.0.0  
+**Test Suite Status:** ✅ 100% Success Rate (25/25 assertions passing)
 
 ---
 
 ## Table of Contents
 
-1. [Authentication API](#1-authentication-api)
-2. [User Profile API](#2-user-profile-api)
-3. [Jobs API](#3-jobs-api)
-4. [Applications API](#4-applications-api)
-5. [Companies API](#5-companies-api)
-6. [Users (Admin) API](#6-users-admin-api)
+1. [Authentication Flow](#1-authentication-flow)
+2. [Profile Operations](#2-profile-operations)
+3. [Jobs Operations](#3-jobs-operations)
+4. [Companies Operations](#4-companies-operations)
+5. [Cleanup](#5-cleanup)
 
 ---
 
-## 1. Authentication API
+## 1. Authentication Flow
 
-| Feature            | Endpoint                | HTTP Method | Request Body Parameters                                                                                                                                                                                  | Response Fields                                                                               |
-| ------------------ | ----------------------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| Register Jobseeker | `/auth/register`        | POST        | `email` (string, required)<br>`password` (string, required)<br>`firstName` (string, required)<br>`lastName` (string, required)<br>`role` (string, default: "jobseeker")                                  | `success`, `message`, `token`, `user` (userId, email, firstName, lastName, role)              |
-| Register Employer  | `/auth/register`        | POST        | `email` (string, required)<br>`password` (string, required)<br>`firstName` (string, required)<br>`lastName` (string, required)<br>`role` (string, value: "employer")<br>`companyName` (string, optional) | `success`, `message`, `token`, `user` (userId, email, firstName, lastName, role, companyName) |
-| Login              | `/auth/login`           | POST        | `email` (string, required)<br>`password` (string, required)                                                                                                                                              | `success`, `message`, `token`, `user` (userId, email, firstName, lastName, role)              |
-| Get Current User   | `/auth/me`              | GET         | None (Auth header required)                                                                                                                                                                              | `success`, `user` (userId, email, firstName, lastName, role, createdAt)                       |
-| Logout             | `/auth/logout`          | POST        | None (Auth header required)                                                                                                                                                                              | `success`, `message`                                                                          |
-| Forgot Password    | `/auth/forgot-password` | POST        | `email` (string, required)                                                                                                                                                                               | `success`, `message`, `resetToken`                                                            |
+| Feature                      | Endpoint         | HTTP Method | Request Body Parameters                                                                   | Response Fields                                      |
+| ---------------------------- | ---------------- | ----------- | ----------------------------------------------------------------------------------------- | ---------------------------------------------------- |
+| 1.0 Register Jobseeker       | `/auth/register` | POST        | `email` (string, required)<br>`password` (string, required)<br>`role` (string: jobseeker) | `success`, `data` (user, token when created)         |
+| 1.1 Login as Jobseeker       | `/auth/login`    | POST        | `email` (string, required)<br>`password` (string, required)                               | `success`, `data` (token, user: id, email, role)     |
+| 1.2 Get Current User Profile | `/auth/me`       | GET         | None (Auth header required)                                                               | `success`, `data` (user: id, email, role, createdAt) |
+| 1.3 Logout                   | `/auth/logout`   | POST        | None (Auth header required)                                                               | `success`, `message`                                 |
+| 1.4 Re-login for Tests       | `/auth/login`    | POST        | `email` (string, required)<br>`password` (string, required)<br>_(Re-login)_               | `success`, `data` (token, user: id, email, role)     |
 
 ### Authentication Headers
 
 - **Authorization:** `Bearer <JWT_TOKEN>` (required for protected routes)
 
----
+### Test Credentials
 
-## 2. User Profile API
-
-| Feature                | Endpoint                                       | HTTP Method | Request Body Parameters                                                                                                                                                                                                                                                                                                                                         | Response Fields                                                                                                                |
-| ---------------------- | ---------------------------------------------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| Create Profile         | `/profiles`                                    | POST        | `dateOfBirth` (date, required)<br>`gender` (string, enum: Male/Female/Other)<br>`nationality` (string, required)<br>`currentLocation` (string, required)<br>`phoneNumber` (string, required)<br>`japaneseLevel` (string, enum: N5/N4/N3/N2/N1)<br>`biography` (string)<br>`preferredIndustries` (array of strings)<br>`preferredPrefectures` (array of strings) | `success`, `message`, `profile` (profileId, userId, dateOfBirth, gender, nationality, phoneNumber, japaneseLevel, etc.)        |
-| Get My Profile         | `/profiles/me`                                 | GET         | None (Auth header required)                                                                                                                                                                                                                                                                                                                                     | `success`, `profile` (all profile fields including education, workExperience, skills, languages, certifications, availability) |
-| Update Profile         | `/profiles/me`                                 | PUT         | Any profile fields to update (partial update supported)                                                                                                                                                                                                                                                                                                         | `success`, `message`, `profile` (updated profile data)                                                                         |
-| Delete Profile         | `/profiles/me`                                 | DELETE      | None (Auth header required)                                                                                                                                                                                                                                                                                                                                     | `success`, `message`                                                                                                           |
-| Add Education          | `/profiles/me/education`                       | POST        | `institution` (string, required)<br>`degree` (string, required)<br>`fieldOfStudy` (string, required)<br>`startDate` (date, required)<br>`endDate` (date)<br>`isCurrent` (boolean)<br>`description` (string)                                                                                                                                                     | `success`, `message`, `education` (educationId, institution, degree, fieldOfStudy, dates)                                      |
-| Update Education       | `/profiles/me/education/:educationId`          | PUT         | Any education fields to update                                                                                                                                                                                                                                                                                                                                  | `success`, `message`, `education` (updated education data)                                                                     |
-| Delete Education       | `/profiles/me/education/:educationId`          | DELETE      | None (Auth header required)                                                                                                                                                                                                                                                                                                                                     | `success`, `message`                                                                                                           |
-| Add Work Experience    | `/profiles/me/work-experience`                 | POST        | `company` (string, required)<br>`position` (string, required)<br>`startDate` (date, required)<br>`endDate` (date)<br>`isCurrent` (boolean)<br>`description` (string)<br>`responsibilities` (array of strings)                                                                                                                                                   | `success`, `message`, `workExperience` (experienceId, company, position, dates, description)                                   |
-| Update Work Experience | `/profiles/me/work-experience/:experienceId`   | PUT         | Any work experience fields to update                                                                                                                                                                                                                                                                                                                            | `success`, `message`, `workExperience` (updated experience data)                                                               |
-| Delete Work Experience | `/profiles/me/work-experience/:experienceId`   | DELETE      | None (Auth header required)                                                                                                                                                                                                                                                                                                                                     | `success`, `message`                                                                                                           |
-| Update Skills          | `/profiles/me/skills`                          | PUT         | `skills` (array of objects)<br>Each skill: `name` (string), `level` (string: Beginner/Intermediate/Advanced/Expert)                                                                                                                                                                                                                                             | `success`, `message`, `skills` (array of updated skills)                                                                       |
-| Add Certification      | `/profiles/me/certifications`                  | POST        | `name` (string, required)<br>`issuingOrganization` (string, required)<br>`issueDate` (date, required)<br>`expiryDate` (date)<br>`credentialId` (string)<br>`credentialUrl` (string)                                                                                                                                                                             | `success`, `message`, `certification` (certificationId, name, issuingOrganization, dates)                                      |
-| Delete Certification   | `/profiles/me/certifications/:certificationId` | DELETE      | None (Auth header required)                                                                                                                                                                                                                                                                                                                                     | `success`, `message`                                                                                                           |
-| Update Languages       | `/profiles/me/languages`                       | PUT         | `languages` (array of objects)<br>Each language: `language` (string), `proficiency` (string: Native/Fluent/Intermediate/Basic)                                                                                                                                                                                                                                  | `success`, `message`, `languages` (array of updated languages)                                                                 |
-| Update Availability    | `/profiles/me/availability`                    | PUT         | `availableFrom` (date)<br>`workPreference` (string: Full-time/Part-time/Contract/Internship)<br>`willingToRelocate` (boolean)<br>`visaStatus` (string)                                                                                                                                                                                                          | `success`, `message`, `availability` (updated availability data)                                                               |
+```json
+{
+  "email": "carlos.rivera@example.com",
+  "password": "Test123!"
+}
+```
 
 ---
 
-## 3. Jobs API
+## 2. Profile Operations
 
-| Feature             | Endpoint                   | HTTP Method | Query/Body Parameters                                                                                                                                                                                                                                                                                                                                                                                                            | Response Fields                                                                             |
-| ------------------- | -------------------------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
-| Get All Jobs        | `/jobs`                    | GET         | **Query Params:**<br>`industry` (string)<br>`prefecture` (string)<br>`japaneseLevel` (string: N5-N1)<br>`employmentType` (string)<br>`page` (number, default: 1)<br>`limit` (number, default: 10)<br>`sort` (string, default: -createdAt)                                                                                                                                                                                        | `success`, `jobs` (array), `pagination` (page, limit, totalPages, totalJobs)                |
-| Search Jobs         | `/jobs/search`             | GET         | **Query Params:**<br>`keyword` (string, searches in title/description)<br>`industry` (string)<br>`prefecture` (string)<br>`japaneseLevel` (string)<br>`page` (number)<br>`limit` (number)                                                                                                                                                                                                                                        | `success`, `jobs` (array), `pagination`, `searchQuery`                                      |
-| Get Single Job      | `/jobs/:jobId`             | GET         | None (jobId in URL)                                                                                                                                                                                                                                                                                                                                                                                                              | `success`, `job` (jobId, title, company, description, requirements, salary, location, etc.) |
-| Create Job          | `/jobs`                    | POST        | `title` (string, required)<br>`description` (string, required)<br>`industry` (string, required)<br>`prefecture` (string, required)<br>`city` (string, required)<br>`employmentType` (string, required)<br>`salaryRange` (object: min, max, currency)<br>`requiredJapaneseLevel` (string)<br>`requiredSkills` (array of strings)<br>`benefits` (array of strings)<br>`applicationDeadline` (date)<br>`numberOfPositions` (number) | `success`, `message`, `job` (created job data with jobId)                                   |
-| Update Job          | `/jobs/:jobId`             | PUT         | Any job fields to update (partial update supported)                                                                                                                                                                                                                                                                                                                                                                              | `success`, `message`, `job` (updated job data)                                              |
-| Delete Job          | `/jobs/:jobId`             | DELETE      | None (Auth header required)                                                                                                                                                                                                                                                                                                                                                                                                      | `success`, `message`                                                                        |
-| Get Jobs by Company | `/jobs/company/:companyId` | GET         | **Query Params:**<br>`page` (number)<br>`limit` (number)                                                                                                                                                                                                                                                                                                                                                                         | `success`, `jobs` (array of company jobs), `pagination`                                     |
-| Get My Jobs         | `/jobs/my-jobs`            | GET         | **Query Params:**<br>`status` (string: active/closed/draft)<br>`page` (number)<br>`limit` (number)                                                                                                                                                                                                                                                                                                                               | `success`, `jobs` (array of employer's jobs), `pagination`                                  |
+| Feature             | Endpoint   | HTTP Method | Request Body Parameters                                                                                                                                                                                                                                                                                                           | Response Fields                             |
+| ------------------- | ---------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
+| 2.1 Create Profile  | `/profile` | POST        | `firstName` (string, required)<br>`lastName` (string, required)<br>`dateOfBirth` (date, required)<br>`gender` (string)<br>`nationality` (string, required)<br>`phone` (string, required)<br>`address` (string)<br>`prefecture` (string)<br>`city` (string)<br>`postalCode` (string)<br>`japaneseLevel` (string)<br>`bio` (string) | `success`, `data` (profile with all fields) |
+| 2.2 Get Own Profile | `/profile` | GET         | None (Auth header required)                                                                                                                                                                                                                                                                                                       | `success`, `data` (complete profile object) |
+| 2.3 Update Profile  | `/profile` | PUT         | Any profile fields to update (partial update supported)<br>Example: `phone`, `japaneseLevel`, `bio`                                                                                                                                                                                                                               | `success`, `data` (updated profile)         |
 
 ---
 
-## 4. Applications API
+## 3. Jobs Operations
 
-| Feature                   | Endpoint                                | HTTP Method | Request Body Parameters                                                                                                                                                         | Response Fields                                                                              |
-| ------------------------- | --------------------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| Apply to Job              | `/applications`                         | POST        | `jobId` (string, required)<br>`coverLetter` (string, required)<br>`resumeUrl` (string)<br>`expectedSalary` (number)<br>`availableStartDate` (date)<br>`additionalInfo` (string) | `success`, `message`, `application` (applicationId, jobId, applicantId, status, submittedAt) |
-| Get My Applications       | `/applications/my-applications`         | GET         | **Query Params:**<br>`status` (string: pending/reviewed/shortlisted/rejected/accepted)<br>`page` (number)<br>`limit` (number)<br>`sort` (string)                                | `success`, `applications` (array with job and company details), `pagination`                 |
-| Get Single Application    | `/applications/:applicationId`          | GET         | None (applicationId in URL)                                                                                                                                                     | `success`, `application` (full application details with job, applicant, and company info)    |
-| Get Job Applications      | `/applications/job/:jobId`              | GET         | **Query Params:**<br>`status` (string)<br>`page` (number)<br>`limit` (number)                                                                                                   | `success`, `applications` (array with applicant profile details), `pagination`, `jobTitle`   |
-| Update Application Status | `/applications/:applicationId/status`   | PUT         | `status` (string, required: reviewed/shortlisted/rejected/accepted)<br>`notes` (string)                                                                                         | `success`, `message`, `application` (updated application with new status)                    |
-| Withdraw Application      | `/applications/:applicationId/withdraw` | PUT         | `reason` (string, optional)                                                                                                                                                     | `success`, `message`, `application` (application with status: withdrawn)                     |
-| Delete Application        | `/applications/:applicationId`          | DELETE      | None (Auth header required)                                                                                                                                                     | `success`, `message`                                                                         |
+| Feature                    | Endpoint    | HTTP Method | Query Parameters                                                                     | Response Fields                             |
+| -------------------------- | ----------- | ----------- | ------------------------------------------------------------------------------------ | ------------------------------------------- |
+| 3.1 Get All Jobs           | `/jobs`     | GET         | `page` (number, default: 1)<br>`limit` (number, default: 10)                         | `success`, `data` (jobs array, pagination)  |
+| 3.2 Search Jobs by Filters | `/jobs`     | GET         | **Filters:**<br>`industry=Manufacturing`<br>`prefecture=Tokyo`<br>`japaneseLevel=N3` | `success`, `data` (filtered jobs array)     |
+| 3.3 Get Single Job Details | `/jobs/:id` | GET         | None (job ID in URL)<br>Example: `/jobs/697b380e5d7e6fe346a6269e`                    | `success`, `data` (single job with company) |
 
 ---
 
-## 5. Companies API
+## 4. Companies Operations
 
-| Feature            | Endpoint                | HTTP Method | Request Body Parameters                                                                                                                                                                                                                                                                                                           | Response Fields                                                                                          |
-| ------------------ | ----------------------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| Get All Companies  | `/companies`            | GET         | **Query Params:**<br>`industry` (string)<br>`prefecture` (string)<br>`size` (string: 1-50, 51-200, 201-500, 501+)<br>`page` (number)<br>`limit` (number)                                                                                                                                                                          | `success`, `companies` (array), `pagination`                                                             |
-| Get Single Company | `/companies/:companyId` | GET         | None (companyId in URL)                                                                                                                                                                                                                                                                                                           | `success`, `company` (companyId, name, description, industry, size, location, website, activeJobs count) |
-| Create Company     | `/companies`            | POST        | `name` (string, required)<br>`description` (string, required)<br>`industry` (string, required)<br>`size` (string, required)<br>`foundedYear` (number)<br>`website` (string)<br>`headquarters` (object: prefecture, city, address)<br>`offices` (array of location objects)<br>`benefits` (array of strings)<br>`culture` (string) | `success`, `message`, `company` (created company data with companyId)                                    |
-| Update Company     | `/companies/:companyId` | PUT         | Any company fields to update (partial update supported)                                                                                                                                                                                                                                                                           | `success`, `message`, `company` (updated company data)                                                   |
-| Delete Company     | `/companies/:companyId` | DELETE      | None (Auth header required)                                                                                                                                                                                                                                                                                                       | `success`, `message`                                                                                     |
+| Feature                          | Endpoint         | HTTP Method | Query Parameters                                                | Response Fields                                 |
+| -------------------------------- | ---------------- | ----------- | --------------------------------------------------------------- | ----------------------------------------------- |
+| 4.1 Get All Companies            | `/companies`     | GET         | `page` (number, default: 1)<br>`limit` (number, default: 10)    | `success`, `data` (companies array, pagination) |
+| 4.2 Get Single Company Details   | `/companies/:id` | GET         | None (company ID in URL)<br>Example: `/companies/697b380e5d...` | `success`, `data` (single company details)      |
+| 4.3 Search Companies by Industry | `/companies`     | GET         | **Filter:**<br>`industry=Manufacturing`                         | `success`, `data` (filtered companies array)    |
 
 ---
 
-## 6. Users (Admin) API
+## 5. Cleanup
 
-| Feature             | Endpoint         | HTTP Method | Query/Body Parameters                                                                                                                                          | Response Fields                                                                                  |
-| ------------------- | ---------------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
-| Get All Users       | `/users`         | GET         | **Query Params:**<br>`role` (string: jobseeker/employer/admin)<br>`status` (string: active/inactive)<br>`page` (number)<br>`limit` (number)<br>`sort` (string) | `success`, `users` (array), `pagination`                                                         |
-| Get Single User     | `/users/:userId` | GET         | None (userId in URL)                                                                                                                                           | `success`, `user` (userId, email, firstName, lastName, role, status, profile, createdAt)         |
-| Update User         | `/users/:userId` | PUT         | `firstName` (string)<br>`lastName` (string)<br>`email` (string)<br>`role` (string)<br>`status` (string: active/inactive)                                       | `success`, `message`, `user` (updated user data)                                                 |
-| Delete User         | `/users/:userId` | DELETE      | None (Auth header required)                                                                                                                                    | `success`, `message`                                                                             |
-| Get User Statistics | `/users/stats`   | GET         | None (Auth header required)                                                                                                                                    | `success`, `stats` (totalUsers, usersByRole, usersByStatus, newUsersThisMonth, activeUsersToday) |
+| Feature                       | Endpoint   | HTTP Method | Request Body Parameters     | Response Fields      |
+| ----------------------------- | ---------- | ----------- | --------------------------- | -------------------- |
+| 5.1 Delete Profile (Optional) | `/profile` | DELETE      | None (Auth header required) | `success`, `message` |
+
+**Note:** Optional cleanup operation to reset profile for next test run.
 
 ---
 
@@ -118,6 +91,7 @@ Complete reference of all API endpoints with required fields, parameters, and re
 
 ```json
 {
+  "statusCode": 200,
   "success": true,
   "message": "Operation successful",
   "data": {
@@ -130,53 +104,64 @@ Complete reference of all API endpoints with required fields, parameters, and re
 
 ```json
 {
+  "statusCode": 400,
   "success": false,
-  "error": "Error message",
-  "errorCode": "ERROR_CODE",
-  "statusCode": 400
+  "message": "Error description"
 }
 ```
 
 ---
 
-## Enumerations Reference
+## Status Codes
 
-### User Roles
+| Code | Meaning                          |
+| ---- | -------------------------------- |
+| 200  | OK - Request succeeded           |
+| 201  | Created - Resource created       |
+| 400  | Bad Request - Invalid parameters |
+| 401  | Unauthorized - Auth required     |
+| 404  | Not Found - Resource not found   |
+| 500  | Internal Server Error            |
 
-- `jobseeker`
-- `employer`
-- `admin`
+---
 
-### Japanese Language Levels
+## Testing
 
-- `N5` (Basic)
-- `N4` (Elementary)
-- `N3` (Intermediate)
-- `N2` (Advanced)
-- `N1` (Native-level)
+### Newman Test Results
 
-### Employment Types
+**Latest Run:** January 29, 2026  
+**Status:** ✅ 100% Success  
+**Assertions:** 25/25 passed  
+**Requests:** 14/14 successful  
+**Duration:** 5.3 seconds  
+**Average Response Time:** 160ms
 
-- `Full-time`
-- `Part-time`
-- `Contract`
-- `Internship`
-- `Temporary`
+### Postman Collection
 
-### Application Status
+Import the successful test collection:  
+`backend/postman/Japan_SSW_API_Successful_Tests.postman_collection.json`
 
-- `pending` (Initial submission)
-- `reviewed` (Employer has viewed)
-- `shortlisted` (Selected for interview)
-- `rejected` (Application declined)
-- `accepted` (Offer extended)
-- `withdrawn` (Applicant withdrew)
+### Environment
 
-### Industries (Examples)
+Use the environment file:  
+`backend/postman/Japan_SSW_API.postman_environment.json`
 
-- `Manufacturing`
-- `Nursing Care`
-- `Construction`
+### Running Tests
+
+```bash
+cd backend/postman
+newman run Japan_SSW_API_Successful_Tests.postman_collection.json \
+  -e Japan_SSW_API.postman_environment.json \
+  --reporters cli,htmlextra \
+  --delay-request 200
+```
+
+---
+
+**Last Updated:** January 29, 2026  
+**Maintained by:** Team Kaizen MMDC  
+**Test Suite:** Japan SSW Platform API - Successful Test Suite
+
 - `Hospitality`
 - `Agriculture`
 - `Food Processing`
@@ -339,7 +324,7 @@ Import the complete Postman collection from:
 ### Swagger Documentation
 
 Interactive API documentation available at:
-`http://localhost:5000/api-docs`
+`http://localhost:3000/api-docs`
 
 ---
 

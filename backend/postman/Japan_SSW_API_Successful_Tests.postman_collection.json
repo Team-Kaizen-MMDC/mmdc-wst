@@ -10,6 +10,192 @@
       "name": "1. Authentication Flow",
       "item": [
         {
+          "name": "1.0 Register Jobseeker",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// generate a unique test email and fixed password",
+                  "const ts = Date.now();",
+                  "const email = `test+${ts}@example.com`;",
+                  "const pass = 'Test123!';",
+                  "pm.environment.set('REGISTER_EMAIL', email);",
+                  "pm.environment.set('REGISTER_PASS', pass);",
+                  "console.log('REGISTER_EMAIL set to', email);"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 201 or 400', function () {",
+                  "    pm.expect([201, 400]).to.include(pm.response.code);",
+                  "});",
+                  "if (pm.response.code === 201) {",
+                  "    const jsonData = pm.response.json();",
+                  "    if (jsonData.data && jsonData.data.user) pm.environment.set('REGISTER_USER_ID', jsonData.data.user._id || jsonData.data.user.id);",
+                  "    console.log('✓ Test user created:', pm.environment.get('REGISTER_EMAIL'));",
+                  "} else {",
+                  "    console.log('ℹ User exists, continuing to login');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "register-jobseeker-1",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{REGISTER_EMAIL}}\",\n  \"password\": \"{{REGISTER_PASS}}\",\n  \"role\": \"jobseeker\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/auth/register",
+              "host": ["{{BASE_URL}}"],
+              "path": ["auth", "register"]
+            },
+            "description": "Register a jobseeker account for tests (creates a unique email)"
+          },
+          "response": [
+            {
+              "id": "e604ab03-0726-4c95-9d79-abe6136dcf8e",
+              "name": "1.0 Register Jobseeker",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"lr.bjcarlos@mmdc.mcl.edu.ph\",\n  \"password\": \"Test123!\",\n  \"role\": \"jobseeker\"\n}"
+                },
+                "url": {
+                  "raw": "{{BASE_URL}}/auth/register",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["auth", "register"]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdn.jsdelivr.net https://unpkg.com https://cdnjs.cloudflare.com;style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net;img-src 'self' data: https:;connect-src 'self';frame-ancestors 'self';object-src 'none';form-action 'self';worker-src 'self' blob:;base-uri 'self';script-src-attr 'none';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "RateLimit-Policy",
+                  "value": "1000;w=900"
+                },
+                {
+                  "key": "RateLimit-Limit",
+                  "value": "1000"
+                },
+                {
+                  "key": "RateLimit-Remaining",
+                  "value": "997"
+                },
+                {
+                  "key": "RateLimit-Reset",
+                  "value": "215"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "439"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"1b7-udfRwf6eiLLvHYVGkPXSZ/XbK7I\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 29 Jan 2026 12:03:51 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-29T12:03:55.370Z",
+              "body": "{\n    \"statusCode\": 201,\n    \"success\": true,\n    \"message\": \"User registered successfully\",\n    \"data\": {\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5N2I0Y2E3ZDhmNjYxMjk1Y2YzMzI5YiIsImVtYWlsIjoibHIuYmpjYXJsb3NAbW1kYy5tY2wuZWR1LnBoIiwicm9sZSI6ImpvYnNlZWtlciIsImlhdCI6MTc2OTY4ODIzMSwiZXhwIjoxNzcwMjkzMDMxfQ.VteZ42u3a-MfBlNIRORm6h6mt5jFfbC1L9ebblSetdU\",\n        \"user\": {\n            \"id\": \"697b4ca7d8f661295cf3329b\",\n            \"email\": \"lr.bjcarlos@mmdc.mcl.edu.ph\",\n            \"role\": \"jobseeker\"\n        }\n    }\n}"
+            }
+          ]
+        },
+        {
           "name": "1.1 Login as Jobseeker",
           "event": [
             {
@@ -46,17 +232,12 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"carlos.rivera@example.com\",\n  \"password\": \"Test123!\"\n}"
+              "raw": "{\n  \"email\": \"{{REGISTER_EMAIL}}\",\n  \"password\": \"{{REGISTER_PASS}}\"\n}"
             },
             "url": {
               "raw": "{{BASE_URL}}/auth/login",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "auth",
-                "login"
-              ]
+              "host": ["{{BASE_URL}}"],
+              "path": ["auth", "login"]
             },
             "description": "Login with existing jobseeker account"
           },
@@ -78,13 +259,8 @@
                 },
                 "url": {
                   "raw": "{{BASE_URL}}/auth/login",
-                  "host": [
-                    "{{BASE_URL}}"
-                  ],
-                  "path": [
-                    "auth",
-                    "login"
-                  ]
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["auth", "login"]
                 }
               },
               "status": "OK",
@@ -208,7 +384,8 @@
                   "pm.test('User data is correct', function () {",
                   "    const jsonData = pm.response.json();",
                   "    pm.expect(jsonData.success).to.be.true;",
-                  "    pm.expect(jsonData.data.user.email).to.eql('carlos.rivera@example.com');",
+                  "    const expectedEmail = pm.environment.get('REGISTER_EMAIL') || pm.environment.get('USER_EMAIL') || 'carlos.rivera@example.com';",
+                  "    pm.expect(jsonData.data.user.email).to.eql(expectedEmail);",
                   "    pm.expect(jsonData.data.user.role).to.eql('jobseeker');",
                   "    console.log('✓ User profile retrieved');",
                   "});"
@@ -223,13 +400,8 @@
             "header": [],
             "url": {
               "raw": "{{BASE_URL}}/auth/me",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "auth",
-                "me"
-              ]
+              "host": ["{{BASE_URL}}"],
+              "path": ["auth", "me"]
             },
             "description": "Get authenticated user information"
           },
@@ -242,13 +414,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{BASE_URL}}/auth/me",
-                  "host": [
-                    "{{BASE_URL}}"
-                  ],
-                  "path": [
-                    "auth",
-                    "me"
-                  ]
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["auth", "me"]
                 }
               },
               "status": "OK",
@@ -385,13 +552,8 @@
             "header": [],
             "url": {
               "raw": "{{BASE_URL}}/auth/logout",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "auth",
-                "logout"
-              ]
+              "host": ["{{BASE_URL}}"],
+              "path": ["auth", "logout"]
             },
             "description": "Logout current session"
           },
@@ -404,13 +566,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{BASE_URL}}/auth/logout",
-                  "host": [
-                    "{{BASE_URL}}"
-                  ],
-                  "path": [
-                    "auth",
-                    "logout"
-                  ]
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["auth", "logout"]
                 }
               },
               "status": "OK",
@@ -551,17 +708,12 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"carlos.rivera@example.com\",\n  \"password\": \"Test123!\"\n}"
+              "raw": "{\n  \"email\": \"{{REGISTER_EMAIL}}\",\n  \"password\": \"{{REGISTER_PASS}}\"\n}"
             },
             "url": {
               "raw": "{{BASE_URL}}/auth/login",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "auth",
-                "login"
-              ]
+              "host": ["{{BASE_URL}}"],
+              "path": ["auth", "login"]
             }
           },
           "response": [
@@ -582,13 +734,8 @@
                 },
                 "url": {
                   "raw": "{{BASE_URL}}/auth/login",
-                  "host": [
-                    "{{BASE_URL}}"
-                  ],
-                  "path": [
-                    "auth",
-                    "login"
-                  ]
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["auth", "login"]
                 }
               },
               "status": "OK",
@@ -743,12 +890,8 @@
             },
             "url": {
               "raw": "{{BASE_URL}}/profile",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "profile"
-              ]
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile"]
             }
           },
           "response": [
@@ -769,12 +912,8 @@
                 },
                 "url": {
                   "raw": "{{BASE_URL}}/profile",
-                  "host": [
-                    "{{BASE_URL}}"
-                  ],
-                  "path": [
-                    "profile"
-                  ]
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["profile"]
                 }
               },
               "status": "Created",
@@ -915,12 +1054,8 @@
             "header": [],
             "url": {
               "raw": "{{BASE_URL}}/profile",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "profile"
-              ]
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile"]
             }
           },
           "response": [
@@ -932,12 +1067,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{BASE_URL}}/profile",
-                  "host": [
-                    "{{BASE_URL}}"
-                  ],
-                  "path": [
-                    "profile"
-                  ]
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["profile"]
                 }
               },
               "status": "OK",
@@ -1083,12 +1214,8 @@
             },
             "url": {
               "raw": "{{BASE_URL}}/profile",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "profile"
-              ]
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile"]
             }
           },
           "response": [
@@ -1109,12 +1236,8 @@
                 },
                 "url": {
                   "raw": "{{BASE_URL}}/profile",
-                  "host": [
-                    "{{BASE_URL}}"
-                  ],
-                  "path": [
-                    "profile"
-                  ]
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["profile"]
                 }
               },
               "status": "OK",
@@ -1264,12 +1387,8 @@
             "header": [],
             "url": {
               "raw": "{{BASE_URL}}/jobs?page=1&limit=10",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "jobs"
-              ],
+              "host": ["{{BASE_URL}}"],
+              "path": ["jobs"],
               "query": [
                 {
                   "key": "page",
@@ -1291,12 +1410,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{BASE_URL}}/jobs?page=1&limit=10",
-                  "host": [
-                    "{{BASE_URL}}"
-                  ],
-                  "path": [
-                    "jobs"
-                  ],
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["jobs"],
                   "query": [
                     {
                       "key": "page",
@@ -1446,12 +1561,8 @@
             "header": [],
             "url": {
               "raw": "{{BASE_URL}}/jobs?industry=Manufacturing&prefecture=Tokyo&japaneseLevel=N3",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "jobs"
-              ],
+              "host": ["{{BASE_URL}}"],
+              "path": ["jobs"],
               "query": [
                 {
                   "key": "industry",
@@ -1477,12 +1588,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{BASE_URL}}/jobs?industry=Manufacturing&prefecture=Tokyo&japaneseLevel=N3",
-                  "host": [
-                    "{{BASE_URL}}"
-                  ],
-                  "path": [
-                    "jobs"
-                  ],
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["jobs"],
                   "query": [
                     {
                       "key": "industry",
@@ -1637,13 +1744,8 @@
             "header": [],
             "url": {
               "raw": "{{BASE_URL}}/jobs/{{JOB_ID}}",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "jobs",
-                "{{JOB_ID}}"
-              ]
+              "host": ["{{BASE_URL}}"],
+              "path": ["jobs", "{{JOB_ID}}"]
             }
           },
           "response": [
@@ -1655,13 +1757,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{BASE_URL}}/jobs/{{JOB_ID}}",
-                  "host": [
-                    "{{BASE_URL}}"
-                  ],
-                  "path": [
-                    "jobs",
-                    "{{JOB_ID}}"
-                  ]
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["jobs", "{{JOB_ID}}"]
                 }
               },
               "status": "OK",
@@ -1811,12 +1908,8 @@
             "header": [],
             "url": {
               "raw": "{{BASE_URL}}/companies?page=1&limit=10",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "companies"
-              ],
+              "host": ["{{BASE_URL}}"],
+              "path": ["companies"],
               "query": [
                 {
                   "key": "page",
@@ -1838,12 +1931,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{BASE_URL}}/companies?page=1&limit=10",
-                  "host": [
-                    "{{BASE_URL}}"
-                  ],
-                  "path": [
-                    "companies"
-                  ],
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["companies"],
                   "query": [
                     {
                       "key": "page",
@@ -1993,13 +2082,8 @@
             "header": [],
             "url": {
               "raw": "{{BASE_URL}}/companies/{{COMPANY_ID}}",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "companies",
-                "{{COMPANY_ID}}"
-              ]
+              "host": ["{{BASE_URL}}"],
+              "path": ["companies", "{{COMPANY_ID}}"]
             }
           },
           "response": [
@@ -2011,13 +2095,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{BASE_URL}}/companies/{{COMPANY_ID}}",
-                  "host": [
-                    "{{BASE_URL}}"
-                  ],
-                  "path": [
-                    "companies",
-                    "{{COMPANY_ID}}"
-                  ]
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["companies", "{{COMPANY_ID}}"]
                 }
               },
               "status": "OK",
@@ -2154,12 +2233,8 @@
             "header": [],
             "url": {
               "raw": "{{BASE_URL}}/companies?industry=Manufacturing",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "companies"
-              ],
+              "host": ["{{BASE_URL}}"],
+              "path": ["companies"],
               "query": [
                 {
                   "key": "industry",
@@ -2177,12 +2252,8 @@
                 "header": [],
                 "url": {
                   "raw": "{{BASE_URL}}/companies?industry=Manufacturing",
-                  "host": [
-                    "{{BASE_URL}}"
-                  ],
-                  "path": [
-                    "companies"
-                  ],
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["companies"],
                   "query": [
                     {
                       "key": "industry",
@@ -2333,12 +2404,8 @@
             "header": [],
             "url": {
               "raw": "{{BASE_URL}}/profile",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "profile"
-              ]
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile"]
             },
             "description": "Delete profile to reset for next test run (optional)"
           },
