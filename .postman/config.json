@@ -15,7 +15,6 @@
     "collections": [
       "../backend/postman/Japan_SSW_API.postman_collection.json",
       "../backend/postman/Japan_SSW_API_Complete.postman_collection.json",
-      "../backend/postman/Japan_SSW_API_day1_day4.postman_collection.json",
       "../backend/postman/Japan_SSW_API_Successful_Tests.postman_collection.json"
     ]
   }
