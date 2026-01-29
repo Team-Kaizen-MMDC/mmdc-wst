@@ -119,43 +119,72 @@ fi
 
 # Step 2: Create a company
 print_test "Step 2: Creating test company"
+COMPANY_NAME="Day 4 Test Company"
 
+# Try to create the company (use here-doc so variable expansion is easy)
 COMPANY_RESPONSE=$(curl -s -X POST "$API_BASE/companies" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $EMPLOYER_TOKEN" \
-  -d '{
-    "name": "Day 4 Test Company",
-    "industry": "Manufacturing",
-    "size": "201-500",
-    "founded": 2015,
-    "website": "https://test-company.com",
-    "description": "A test company for Day 4 testing",
-    "location": {
-      "prefecture": "Tokyo",
-      "city": "Shibuya"
-    },
-    "contact": {
-      "email": "contact@test-company.com",
-      "phone": "+81-3-1234-5678"
-    }
-  }')
+  -d @- <<JSON
+{
+  "name": "$COMPANY_NAME",
+  "industry": "Manufacturing",
+  "size": "201-500",
+  "founded": 2015,
+  "website": "https://test-company.com",
+  "description": "A test company for Day 4 testing",
+  "location": {
+    "prefecture": "Tokyo",
+    "city": "Shibuya"
+  },
+  "contact": {
+    "email": "contact@test-company.com",
+    "phone": "+81-3-1234-5678"
+  }
+}
+JSON
+)
 
-COMPANY_ID=$(echo $COMPANY_RESPONSE | jq -r '.data._id')
+# Response may nest company under data.company
+COMPANY_ID=$(echo $COMPANY_RESPONSE | jq -r '.data.company._id // .data._id // empty')
 
-if [ "$COMPANY_ID" != "null" ] && [ "$COMPANY_ID" != "" ]; then
-    echo -e "${GREEN}✓ Company created${NC}"
-    echo "  ID: $COMPANY_ID"
-    
-    # Update employer with company
-    curl -s -X PUT "$API_BASE/users/$EMPLOYER_ID" \
-      -H "Content-Type: application/json" \
-      -H "Authorization: Bearer $EMPLOYER_TOKEN" \
-      -d "{\"company\": \"$COMPANY_ID\"}" > /dev/null
-    
-    echo -e "${GREEN}✓ Employer linked to company${NC}"
+# If company already exists, try to look it up by name using the public companies endpoint
+if [ -z "$COMPANY_ID" ] || [ "$COMPANY_ID" = "null" ]; then
+  # Try to detect common error message
+  ERR_MSG=$(echo $COMPANY_RESPONSE | jq -r '.message // .error // empty')
+  if echo "$ERR_MSG" | grep -q "already exists"; then
+    echo "Company exists, searching for existing record..."
+    EXISTING_COMPANY_RESPONSE=$(curl -s -G "$API_BASE/companies" --data-urlencode "search=$COMPANY_NAME" --data-urlencode "limit=1")
+    COMPANY_ID=$(echo $EXISTING_COMPANY_RESPONSE | jq -r '.data.companies[0]._id // empty')
+  fi
+fi
+
+if [ -n "$COMPANY_ID" ] && [ "$COMPANY_ID" != "null" ]; then
+  echo -e "${GREEN}✓ Company created/found${NC}"
+  echo "  ID: $COMPANY_ID"
+
+  # Update employer with company (best-effort)
+  curl -s -X PUT "$API_BASE/users/$EMPLOYER_ID" \
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer $EMPLOYER_TOKEN" \
+    -d "{\"company\": \"$COMPANY_ID\"}" > /dev/null
+
+  echo -e "${GREEN}✓ Employer linked to company${NC}"
 else
-    print_error "Failed to create company"
-    echo $COMPANY_RESPONSE | jq .
+  print_error "Failed to create or locate company"
+  echo $COMPANY_RESPONSE | jq .
+fi
+
+# If company still not found, try lookup by slug (fallback)
+if [ -z "$COMPANY_ID" ] || [ "$COMPANY_ID" = "null" ]; then
+  echo "Attempting slug lookup for company..."
+  COMPANY_SLUG=$(echo "$COMPANY_NAME" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | sed 's/-\+/-/g' | sed 's/^-//' | sed 's/-$//')
+  SLUG_RESPONSE=$(curl -s -X GET "$API_BASE/companies/$COMPANY_SLUG")
+  COMPANY_ID=$(echo $SLUG_RESPONSE | jq -r '.data.company._id // empty')
+  if [ -n "$COMPANY_ID" ] && [ "$COMPANY_ID" != "null" ]; then
+    echo -e "${GREEN}✓ Company found by slug: $COMPANY_SLUG${NC}"
+    echo "  ID: $COMPANY_ID"
+  fi
 fi
 
 # Step 3: Create a job
@@ -191,7 +220,50 @@ JOB_RESPONSE=$(curl -s -X POST "$API_BASE/jobs" \
     \"status\": \"active\"
   }")
 
-JOB_ID=$(echo $JOB_RESPONSE | jq -r '.data._id')
+RESPONSIBILITIES="Test responsibility 1; Test responsibility 2"
+REQUIREMENTS_TEXT="Bachelor's degree or equivalent. Japanese N3. 2 years experience. Skills: Manufacturing, Quality Control."
+DEADLINE="2026-03-01T00:00:00Z"
+START_DATE="2026-04-01T00:00:00Z"
+
+JOB_RESPONSE=$(curl -s -X POST "$API_BASE/jobs" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $EMPLOYER_TOKEN" \
+  -d @- <<JSON
+{
+  "company": "$COMPANY_ID",
+  "postedBy": "$EMPLOYER_ID",
+  "title": "Day 4 Test Job - Manufacturing Engineer",
+  "industry": "Manufacturing",
+  "category": "Engineering",
+  "summary": "A test job for Day 4 application testing",
+  "responsibilities": "$RESPONSIBILITIES",
+  "requirements": "$REQUIREMENTS_TEXT",
+  "requiredEducation": "Bachelor",
+  "japaneseLevel": "N3",
+  "requiredExperience": { "years": 2, "description": "2 years in manufacturing" },
+  "requiredSkills": ["Manufacturing", "Quality Control"],
+  "compensation": {
+    "salaryMin": 250000,
+    "salaryMax": 350000,
+    "currency": "JPY",
+    "period": "monthly"
+  },
+  "location": {
+    "prefecture": "Tokyo",
+    "city": "Shibuya",
+    "remote": false
+  },
+  "applicationInfo": {
+    "deadline": "$DEADLINE",
+    "startDate": "$START_DATE",
+    "applicationMethod": "Platform"
+  },
+  "status": "active"
+}
+JSON
+)
+
+JOB_ID=$(echo $JOB_RESPONSE | jq -r '.data._id // .data.job._id // empty')
 
 if [ "$JOB_ID" != "null" ] && [ "$JOB_ID" != "" ]; then
     echo -e "${GREEN}✓ Job created${NC}"
@@ -212,12 +284,13 @@ APPLICATION_RESPONSE=$(curl -s -X POST "$API_BASE/jobs/$JOB_ID/apply" \
     "coverLetter": "I am very interested in this position and believe my skills in manufacturing would be a great fit. I have completed my Japanese N3 certification and have 3 years of experience in quality control."
   }')
 
-APP_ID=$(echo $APPLICATION_RESPONSE | jq -r '.data._id')
+APP_ID=$(echo "$APPLICATION_RESPONSE" | jq -r 'try .data._id catch null // try .data.application._id catch null // try .message._id catch null // empty')
 
 if [ "$APP_ID" != "null" ] && [ "$APP_ID" != "" ]; then
-    echo -e "${GREEN}✓ Application submitted${NC}"
-    echo "  ID: $APP_ID"
-    echo "  Status: $(echo $APPLICATION_RESPONSE | jq -r '.data.status')"
+  APP_STATUS=$(echo "$APPLICATION_RESPONSE" | jq -r 'try .data.status catch null // try .message.status catch null // empty')
+  echo -e "${GREEN}✓ Application submitted${NC}"
+  echo "  ID: $APP_ID"
+  echo "  Status: $APP_STATUS"
 else
     print_error "Failed to submit application"
     echo $APPLICATION_RESPONSE | jq .
