@@ -15,6 +15,7 @@
     "content-type": "^1.0.5",
     "cookie": "^0.7.2",
     "cookie-signature": "^1.2.2",
+    "cheerio": "^1.0.0-rc.12",
     "cors": "^2.8.6",
     "debug": "^4.4.3",
     "depd": "^2.0.0",
@@ -91,6 +92,9 @@
     "dev": "nodemon server.js",
     "seed": "node seedDatabase.js",
     "seed:clear": "node seedDatabase.js --clear",
+    "fix-seed": "node fixSeedData.js",
+    "seed:clean": "node seedDatabase.clean.js",
+    "extract:pages": "node scripts/extract-from-pages.js",
     "export:swagger": "node scripts/export-swagger.js"
   },
   "keywords": [],

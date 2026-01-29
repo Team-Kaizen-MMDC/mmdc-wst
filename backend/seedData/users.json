@@ -1,0 +1,114 @@
+[
+  {
+    "email": "admin@japanssw.com",
+    "password": "Admin123!",
+    "role": "admin",
+    "isActive": true,
+    "isEmailVerified": true
+  },
+  {
+    "email": "carlos.rivera@example.com",
+    "password": "Test123!",
+    "role": "jobseeker",
+    "isActive": true,
+    "isEmailVerified": true
+  },
+  {
+    "email": "maria.santos@example.com",
+    "password": "Test123!",
+    "role": "jobseeker",
+    "isActive": true,
+    "isEmailVerified": true
+  },
+  {
+    "email": "nguyen.tran@example.com",
+    "password": "Test123!",
+    "role": "jobseeker",
+    "isActive": true,
+    "isEmailVerified": true
+  },
+  {
+    "email": "le.minh@example.com",
+    "password": "Test123!",
+    "role": "jobseeker",
+    "isActive": true,
+    "isEmailVerified": true
+  },
+  {
+    "email": "budi.santoso@example.com",
+    "password": "Test123!",
+    "role": "jobseeker",
+    "isActive": true,
+    "isEmailVerified": true
+  },
+  {
+    "email": "ana.reyes@example.com",
+    "password": "Test123!",
+    "role": "jobseeker",
+    "isActive": true,
+    "isEmailVerified": true
+  },
+  {
+    "email": "pham.van@example.com",
+    "password": "Test123!",
+    "role": "jobseeker",
+    "isActive": true,
+    "isEmailVerified": true
+  },
+  {
+    "email": "jose.garcia@example.com",
+    "password": "Test123!",
+    "role": "jobseeker",
+    "isActive": true,
+    "isEmailVerified": true
+  },
+  {
+    "email": "dewi.putri@example.com",
+    "password": "Test123!",
+    "role": "jobseeker",
+    "isActive": true,
+    "isEmailVerified": true
+  },
+  {
+    "email": "juan.dela.cruz@example.com",
+    "password": "Test123!",
+    "role": "jobseeker",
+    "isActive": true,
+    "isEmailVerified": true
+  },
+  {
+    "email": "employer1@techinnov.com",
+    "password": "Test123!",
+    "role": "employer",
+    "isActive": true,
+    "isEmailVerified": true
+  },
+  {
+    "email": "employer2@careplus.com",
+    "password": "Test123!",
+    "role": "employer",
+    "isActive": true,
+    "isEmailVerified": true
+  },
+  {
+    "email": "employer3@buildcorp.com",
+    "password": "Test123!",
+    "role": "employer",
+    "isActive": true,
+    "isEmailVerified": true
+  },
+  {
+    "email": "employer4@farmfresh.com",
+    "password": "Test123!",
+    "role": "employer",
+    "isActive": true,
+    "isEmailVerified": true
+  },
+  {
+    "email": "employer5@tastyjapan.com",
+    "password": "Test123!",
+    "role": "employer",
+    "isActive": true,
+    "isEmailVerified": true
+  }
+]

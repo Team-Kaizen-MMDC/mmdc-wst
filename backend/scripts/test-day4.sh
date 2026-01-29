@@ -13,6 +13,12 @@ NC='\033[0m' # No Color
 # Allow overriding API base via environment variable, default to localhost:5000
 API_BASE="${API_BASE:-http://localhost:5000/api/v1}"
 
+# Unique suffix to avoid collisions across repeated runs
+SUFFIX="$(date +%s)-$RANDOM"
+JOBSEEKER_EMAIL="testjobseeker+${SUFFIX}@example.com"
+EMPLOYER_EMAIL="testemployer+${SUFFIX}@example.com"
+COMPANY_NAME="Day 4 Test Company ${SUFFIX}"
+
 # Function to print section headers
 print_header() {
     echo -e "\n${YELLOW}========================================${NC}"
@@ -296,6 +302,24 @@ else
     echo $APPLICATION_RESPONSE | jq .
     exit 1
 fi
+
+# Persist artifacts for cleanup or later debugging
+ARTIFACTS_FILE="$(pwd)/.day4_artifacts.json"
+cat > "$ARTIFACTS_FILE" <<JSON
+{
+  "jobseeker_email": "testjobseeker@example.com",
+  "employer_email": "testemployer@example.com",
+  "jobseeker_token": "$JOBSEEKER_TOKEN",
+  "employer_token": "$EMPLOYER_TOKEN",
+  "jobseeker_id": "$JOBSEEKER_ID",
+  "employer_id": "$EMPLOYER_ID",
+  "company_id": "${COMPANY_ID:-}",
+  "job_id": "${JOB_ID:-}",
+  "application_id": "${APP_ID:-}"
+}
+JSON
+
+echo "Artifacts written to $ARTIFACTS_FILE"
 
 # Step 5: Jobseeker views their applications
 print_test "Step 5: Jobseeker views their applications"
