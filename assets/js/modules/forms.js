@@ -345,6 +345,9 @@ export const initializeLoginValidation = () => {
               setCookie("token", data.data.token, 7);
             }
 
+            // Set logged-in status cookie (required for auth check)
+            setCookie("isLoggedIn", "true", 7);
+
             // Save basic profile info and mark existing user
             saveUserProfile({ email: inputElements.email.value });
             setNewUserFlag(false);

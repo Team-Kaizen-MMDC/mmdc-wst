@@ -2410,10 +2410,42 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
         setupLogoutButton(".offcanvas-body .btn-danger");
       });
 
-      // Populate dashboard with user data
-      function populateDashboard() {
-        const profile = getUserProfile();
-        console.log("Populating dashboard with profile:", profile);
+      // Populate dashboard with user data from backend API
+      async function populateDashboard() {
+        console.log("Fetching profile from backend API...");
+        
+        // Get JWT token from cookie
+        const token = document.cookie
+          .split('; ')
+          .find(row => row.startsWith('token='))
+          ?.split('=')[1];
+        
+        if (!token) {
+          console.error("No token found. User not authenticated.");
+          return;
+        }
+
+        try {
+          // Fetch profile from backend API
+          const response = await fetch("/api/v1/profile", {
+            headers: {
+              "Authorization": `Bearer ${token}`,
+              "Content-Type": "application/json"
+            }
+          });
+
+          if (!response.ok) {
+            if (response.status === 404) {
+              console.log("Profile not found. User needs to create a profile.");
+              // Show a message or redirect to profile creation
+              return;
+            }
+            throw new Error(`API error: ${response.status}`);
+          }
+
+          const data = await response.json();
+          const profile = data.data.profile; // API returns { success: true, data: { profile: {...} } }
+          console.log("Profile fetched from API:", profile);
 
         // Update user menu
         const userMenuBtn = document.getElementById("user-menu-btn");
@@ -2421,21 +2453,26 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           ".user-menu-dropdown__userName"
         );
 
+        const firstName = profile.firstName || profile.email?.split('@')[0] || 'User';
+        const displayName = profile.firstName && profile.lastName 
+          ? `${profile.firstName} ${profile.lastName}` 
+          : profile.firstName || profile.email || 'User';
+
         if (userMenuBtn) {
-          userMenuBtn.textContent = getFirstName();
+          userMenuBtn.textContent = firstName;
         }
         if (userName) {
-          userName.textContent = getDisplayName();
+          userName.textContent = displayName;
         }
 
         // Update profile summary section
         const textContent = document.getElementById("text-content");
         const editInput = document.getElementById("edit-input");
-        if (textContent && profile.profileSummary) {
-          textContent.textContent = profile.profileSummary;
+        if (textContent) {
+          textContent.textContent = profile.bio || "This is the default profile description. Click 'Edit' to make changes.";
         }
-        if (editInput && profile.profileSummary) {
-          editInput.value = profile.profileSummary;
+        if (editInput) {
+          editInput.value = profile.bio || "";
         }
 
         // Update basic info section
@@ -2449,28 +2486,26 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
         const infoAge = document.getElementById("info-age");
 
         if (infoName) {
-          infoName.textContent = getDisplayName();
+          infoName.textContent = displayName;
         }
 
         if (infoLocation) {
-          const location =
-            profile.city && profile.prefecture
-              ? `${profile.city}, ${profile.prefecture}`
-              : profile.prefecture || profile.city || "Location not set";
+          const location = profile.city && profile.prefecture
+            ? `${profile.city}, ${profile.prefecture}`
+            : profile.prefecture || profile.city || "Location not set";
           infoLocation.textContent = location;
         }
 
         if (infoVisa) {
-          infoVisa.textContent =
-            profile.visaStatus || profile.visa || "Not specified";
+          infoVisa.textContent = profile.availability?.visaStatus || "Not specified";
         }
 
         if (infoValidity) {
-          infoValidity.textContent = profile.visaValidity || "N/A";
+          infoValidity.textContent = profile.availability?.visaValidUntil || "N/A";
         }
 
         if (infoIndustry) {
-          infoIndustry.textContent = profile.industry || "Not specified";
+          infoIndustry.textContent = profile.availability?.desiredIndustry || "Not specified";
         }
 
         if (infoJapanese) {
@@ -2483,12 +2518,12 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
 
         if (infoAge) {
           // Calculate age from date of birth if available
-          if (profile.dateOfBirth && profile.dateOfBirth.year) {
-            const currentYear = new Date().getFullYear();
-            const age = currentYear - parseInt(profile.dateOfBirth.year);
+          if (profile.dateOfBirth) {
+            const dob = new Date(profile.dateOfBirth);
+            const age = new Date().getFullYear() - dob.getFullYear();
             infoAge.textContent = age > 0 ? age : "N/A";
           } else {
-            infoAge.textContent = profile.age || "N/A";
+            infoAge.textContent = "N/A";
           }
         }
 
@@ -2520,14 +2555,14 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
         if (profile.education && profile.education.length > 0) {
           // Transform education data to match dashboard format
           const transformedEducation = profile.education.map((edu) => ({
-            school: edu.schoolName || "",
-            degree: edu.educationalAttainment || "",
+            school: edu.school || "",
+            degree: edu.degree || "",
             field: edu.fieldOfStudy || "",
-            startMonth: edu.startMonth || "",
-            startYear: edu.startYear || "",
-            endMonth: edu.endMonth || "",
-            endYear: edu.endYear || edu.yearGraduated || "",
-            isCurrent: edu.currentlyStudying || false,
+            startMonth: edu.startDate ? new Date(edu.startDate).toLocaleString('default', { month: 'long' }) : "",
+            startYear: edu.startDate ? new Date(edu.startDate).getFullYear().toString() : "",
+            endMonth: edu.endDate ? new Date(edu.endDate).toLocaleString('default', { month: 'long' }) : "",
+            endYear: edu.endDate ? new Date(edu.endDate).getFullYear().toString() : "",
+            isCurrent: edu.current || false,
             grade: edu.grade || "",
             activities: edu.activities || "",
             description: edu.description || "",
@@ -2548,14 +2583,14 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
         if (profile.experience && profile.experience.length > 0) {
           // Transform experience data to match dashboard format
           const transformedExperience = profile.experience.map((exp) => ({
-            job: exp.jobPosition || "",
-            company: exp.companyName || "",
+            job: exp.title || exp.position || "",
+            company: exp.company || "",
             jobType: exp.employmentType || "",
-            startMonth: exp.startMonth || "",
-            startYear: exp.startYear || "",
-            endMonth: exp.endMonth || "",
-            endYear: exp.endYear || "",
-            isCurrent: exp.currentlyWorking || false,
+            startMonth: exp.startDate ? new Date(exp.startDate).toLocaleString('default', { month: 'long' }) : "",
+            startYear: exp.startDate ? new Date(exp.startDate).getFullYear().toString() : "",
+            endMonth: exp.endDate ? new Date(exp.endDate).toLocaleString('default', { month: 'long' }) : "",
+            endYear: exp.endDate ? new Date(exp.endDate).getFullYear().toString() : "",
+            isCurrent: exp.current || false,
           }));
 
           // Store in localStorage for the existing experience script
@@ -2571,34 +2606,42 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
 
         // Update Skills section
         if (profile.skills && profile.skills.length > 0) {
-          const skillsContainer = document.querySelector(
-            ".card:has(#skillsModal) .card-body"
-          );
-          if (skillsContainer) {
-            // Clear existing content (except the edit link)
-            const editLink = skillsContainer.querySelector(".text-danger");
-            skillsContainer.innerHTML = "";
-
-            // Add skills as badges
-            const skillsWrapper = document.createElement("div");
-            skillsWrapper.className = "d-flex flex-wrap gap-2 mb-3";
-            profile.skills.forEach((skill) => {
-              const badge = document.createElement("span");
-              badge.className = "badge bg-secondary";
-              badge.textContent = skill;
-              skillsWrapper.appendChild(badge);
-            });
-            skillsContainer.appendChild(skillsWrapper);
-
-            // Re-add edit link
-            if (editLink) {
-              skillsContainer.appendChild(editLink);
-            }
+          // Transform skills from {name, level, category} to simple array of names
+          const skillNames = profile.skills.map(skill => skill.name || skill);
+          // Store in localStorage for the existing skills script
+          localStorage.setItem("skillsData", JSON.stringify(skillNames));
+          // Trigger render if function exists
+          if (typeof renderSkillsSection === "function") {
+            renderSkillsSection();
           }
         }
 
-        console.log("Dashboard populated successfully");
+        // Update Availability section
+        if (profile.availability) {
+          // Transform availability from API format to dashboard format
+          const availabilityEntry = {
+            workStatus: profile.availability.visaStatus || "Not specified",
+            preferLocation: profile.city && profile.prefecture 
+              ? `${profile.city}, ${profile.prefecture}` 
+              : profile.prefecture || profile.city || "Anywhere",
+            preferJobType: profile.availability.relocate 
+              ? "Willing to relocate" 
+              : "Local only"
+          };
+          // Store in localStorage for the existing availability script
+          localStorage.setItem("userAvailabilityEntries", JSON.stringify([availabilityEntry]));
+          // Trigger render if function exists
+          if (typeof renderAvailabilitySection === "function") {
+            renderAvailabilitySection();
+          }
+        }
+
+        console.log("Dashboard populated successfully from backend API");
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+        // Optionally show an error message to the user
       }
+    }
 
       // Run on page load
       window.addEventListener("DOMContentLoaded", populateDashboard);

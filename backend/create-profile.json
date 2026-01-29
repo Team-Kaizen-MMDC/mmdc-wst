@@ -1,0 +1,58 @@
+{
+  "firstName": "Carlos",
+  "lastName": "Rivera",
+  "dateOfBirth": "1992-05-15",
+  "gender": "male",
+  "nationality": "Mexico",
+  "phone": "+81-90-1234-5678",
+  "address": {
+    "prefecture": "Tokyo",
+    "city": "Shibuya"
+  },
+  "japaneseLevel": "N3",
+  "languages": [
+    {
+      "language": "Spanish",
+      "level": "Native"
+    },
+    {
+      "language": "Japanese",
+      "level": "N3"
+    }
+  ],
+  "education": [
+    {
+      "institution": "National Autonomous University of Mexico",
+      "degree": "Bachelor",
+      "fieldOfStudy": "Mechanical Engineering",
+      "startDate": "2010-08-01",
+      "endDate": "2014-06-01",
+      "grade": "8.5/10"
+    }
+  ],
+  "experience": [
+    {
+      "company": "Toyota Manufacturing Mexico",
+      "position": "Production Engineer",
+      "startDate": "2015-01-01",
+      "endDate": "2019-12-31",
+      "current": false,
+      "description": "Managed production line optimization"
+    }
+  ],
+  "skills": ["Manufacturing", "Quality Control", "Lean Production"],
+  "certifications": [
+    {
+      "name": "Six Sigma Green Belt",
+      "issuer": "ASQ",
+      "dateObtained": "2016-03-01"
+    }
+  ],
+  "availability": {
+    "visaStatus": "Working Visa",
+    "visaValidUntil": "2026-12-31",
+    "relocate": true,
+    "desiredIndustry": "Manufacturing"
+  },
+  "bio": "Experienced manufacturing engineer with 8+ years in automotive industry."
+}
