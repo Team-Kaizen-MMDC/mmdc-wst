@@ -110,5 +110,40 @@
     "role": "employer",
     "isActive": true,
     "isEmailVerified": true
+  },
+  {
+    "email": "employer6@hotelsunrise.jp",
+    "password": "Test123!",
+    "role": "employer",
+    "isActive": true,
+    "isEmailVerified": true
+  },
+  {
+    "email": "employer7@autoparts.jp",
+    "password": "Test123!",
+    "role": "employer",
+    "isActive": true,
+    "isEmailVerified": true
+  },
+  {
+    "email": "employer8@cleanpro.jp",
+    "password": "Test123!",
+    "role": "employer",
+    "isActive": true,
+    "isEmailVerified": true
+  },
+  {
+    "email": "employer9@seafoodco.jp",
+    "password": "Test123!",
+    "role": "employer",
+    "isActive": true,
+    "isEmailVerified": true
+  },
+  {
+    "email": "employer10@logistics.jp",
+    "password": "Test123!",
+    "role": "employer",
+    "isActive": true,
+    "isEmailVerified": true
   }
 ]

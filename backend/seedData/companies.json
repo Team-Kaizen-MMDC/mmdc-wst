@@ -1,1 +1,182 @@
-[]
+[
+  {
+    "name": "Tech Innovation Japan Corp",
+    "industry": "Manufacturing",
+    "size": "501-1000",
+    "founded": 2010,
+    "website": "https://techinnovation-jp.example.com",
+    "description": "Leading manufacturer of precision electronic components and automotive parts. ISO 9001 certified with state-of-the-art facilities in Tokyo.",
+    "location": {
+      "prefecture": "Tokyo",
+      "city": "Minato",
+      "address": "1-2-3 Shibaura"
+    },
+    "contact": {
+      "email": "hr@techinnovation-jp.example.com",
+      "phone": "+81-3-1234-5678"
+    },
+    "employerEmail": "employer1@techinnov.com"
+  },
+  {
+    "name": "CarePlus Medical Services",
+    "industry": "Healthcare",
+    "size": "201-500",
+    "founded": 2012,
+    "website": "https://careplus-medical.example.com",
+    "description": "Comprehensive nursing care and elderly support services across Osaka region. Specialized in dementia care and rehabilitation services.",
+    "location": {
+      "prefecture": "Osaka",
+      "city": "Osaka",
+      "address": "5-10-20 Umeda"
+    },
+    "contact": {
+      "email": "hr@careplus-medical.example.com",
+      "phone": "+81-6-2345-6789"
+    },
+    "employerEmail": "employer2@careplus.com"
+  },
+  {
+    "name": "BuildCo Construction Ltd",
+    "industry": "Construction",
+    "size": "101-200",
+    "founded": 2008,
+    "website": "https://buildco-construction.example.com",
+    "description": "General contractor specializing in residential and commercial construction. Experienced in traditional and modern building techniques.",
+    "location": {
+      "prefecture": "Aichi",
+      "city": "Nagoya",
+      "address": "3-15-8 Sakae"
+    },
+    "contact": {
+      "email": "hr@buildco-construction.example.com",
+      "phone": "+81-52-3456-7890"
+    },
+    "employerEmail": "employer3@buildcorp.com"
+  },
+  {
+    "name": "FarmGrow Agricultural Co",
+    "industry": "Agriculture",
+    "size": "51-100",
+    "founded": 2015,
+    "website": "https://farmgrow-agri.example.com",
+    "description": "Modern agricultural operations focusing on organic produce and sustainable farming. Operating multiple farms across Hokkaido.",
+    "location": {
+      "prefecture": "Hokkaido",
+      "city": "Sapporo",
+      "address": "7-5-2 Kita"
+    },
+    "contact": {
+      "email": "hr@farmgrow-agri.example.com",
+      "phone": "+81-11-4567-8901"
+    },
+    "employerEmail": "employer4@farmfresh.com"
+  },
+  {
+    "name": "Tasty Japan Restaurant Group",
+    "industry": "Food Service",
+    "size": "101-200",
+    "founded": 2013,
+    "website": "https://tastyjapan-group.example.com",
+    "description": "Chain of Japanese and fusion restaurants across Kyushu region. Committed to authentic flavors and exceptional customer service.",
+    "location": {
+      "prefecture": "Fukuoka",
+      "city": "Fukuoka",
+      "address": "2-8-15 Tenjin"
+    },
+    "contact": {
+      "email": "hr@tastyjapan-group.example.com",
+      "phone": "+81-92-5678-9012"
+    },
+    "employerEmail": "employer5@tastyjapan.com"
+  },
+  {
+    "name": "Sunrise Hotel & Ryokan Co",
+    "industry": "Hospitality",
+    "size": "201-500",
+    "founded": 2005,
+    "website": "https://sunrise-hotels.example.jp",
+    "description": "Premier hotel and ryokan chain offering traditional Japanese hospitality. Operating properties in major tourist destinations across Japan.",
+    "location": {
+      "prefecture": "Kyoto",
+      "city": "Kyoto",
+      "address": "4-12-8 Gion"
+    },
+    "contact": {
+      "email": "careers@sunrise-hotels.example.jp",
+      "phone": "+81-75-1234-5678"
+    },
+    "employerEmail": "employer6@hotelsunrise.jp"
+  },
+  {
+    "name": "Nippon Auto Parts Manufacturing",
+    "industry": "Manufacturing",
+    "size": "501-1000",
+    "founded": 2000,
+    "website": "https://nippon-autoparts.example.jp",
+    "description": "Tier-1 automotive parts supplier specializing in engine components and electrical systems. Supplying major Japanese automakers.",
+    "location": {
+      "prefecture": "Kanagawa",
+      "city": "Yokohama",
+      "address": "6-20-15 Minato Mirai"
+    },
+    "contact": {
+      "email": "recruitment@nippon-autoparts.example.jp",
+      "phone": "+81-45-2345-6789"
+    },
+    "employerEmail": "employer7@autoparts.jp"
+  },
+  {
+    "name": "CleanPro Facility Services",
+    "industry": "Facility Management",
+    "size": "101-200",
+    "founded": 2014,
+    "website": "https://cleanpro-services.example.jp",
+    "description": "Professional building maintenance and industrial cleaning services. Serving commercial, industrial, and institutional facilities.",
+    "location": {
+      "prefecture": "Saitama",
+      "city": "Saitama",
+      "address": "8-5-12 Urawa"
+    },
+    "contact": {
+      "email": "jobs@cleanpro-services.example.jp",
+      "phone": "+81-48-3456-7890"
+    },
+    "employerEmail": "employer8@cleanpro.jp"
+  },
+  {
+    "name": "Pacific Seafood Processing",
+    "industry": "Food Processing",
+    "size": "51-100",
+    "founded": 2011,
+    "website": "https://pacific-seafood.example.jp",
+    "description": "Seafood processing facility specializing in sashimi-grade fish and frozen products. Export-certified with HACCP compliance.",
+    "location": {
+      "prefecture": "Miyagi",
+      "city": "Sendai",
+      "address": "9-3-7 Minato"
+    },
+    "contact": {
+      "email": "hr@pacific-seafood.example.jp",
+      "phone": "+81-22-4567-8901"
+    },
+    "employerEmail": "employer9@seafoodco.jp"
+  },
+  {
+    "name": "Japan Express Logistics",
+    "industry": "Logistics",
+    "size": "201-500",
+    "founded": 2007,
+    "website": "https://japan-express.example.jp",
+    "description": "Comprehensive logistics and warehouse management services. Operating distribution centers nationwide with cold-chain capabilities.",
+    "location": {
+      "prefecture": "Chiba",
+      "city": "Chiba",
+      "address": "10-15-3 Makuhari"
+    },
+    "contact": {
+      "email": "careers@japan-express.example.jp",
+      "phone": "+81-43-5678-9012"
+    },
+    "employerEmail": "employer10@logistics.jp"
+  }
+]

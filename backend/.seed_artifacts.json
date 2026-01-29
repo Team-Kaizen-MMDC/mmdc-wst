@@ -1,9 +1,10 @@
 {
-  "employer_email": "employer+seed@example.com",
-  "jobseeker_email": "jobseeker+seed@example.com",
-  "employer_id": "697aee391007cc52f54c110c",
-  "jobseeker_id": "697aee391007cc52f54c1114",
-  "company_id": "697aee3a1007cc52f54c111e",
-  "job_id": "697aee3a1007cc52f54c1123",
-  "application_id": "697aee3a1007cc52f54c112c"
+  "users": 16,
+  "companies": 1,
+  "jobs": 6,
+  "applications": 20,
+  "admin_email": "admin@japanssw.com",
+  "sample_employer": "employer1@techinnov.com",
+  "sample_jobseeker": "carlos.rivera@example.com",
+  "timestamp": "2026-01-29T06:25:27.832Z"
 }
