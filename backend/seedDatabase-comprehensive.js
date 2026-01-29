@@ -746,6 +746,346 @@ async function seedJobs(companyList) {
         salaryMax: 230000,
       },
     ],
+    Hospitality: [
+      {
+        title: "Hotel Front Desk Staff",
+        category: "Guest Services",
+        summary: "Provide excellent guest service at hotel front desk",
+        responsibilities:
+          "Check-in/check-out guests; Handle reservations; Respond to guest inquiries; Process payments; Coordinate with other departments",
+        requirements:
+          "Customer service experience; Japanese N4 or higher; English conversational; Professional appearance; Computer skills",
+        requiredEducation: "High School",
+        japaneseLevel: "N4",
+        requiredExperience: {
+          years: 1,
+          description: "Customer service or hospitality experience",
+        },
+        requiredSkills: [
+          "Customer Service",
+          "Communication",
+          "Computer Systems",
+        ],
+        salaryMin: 220000,
+        salaryMax: 290000,
+      },
+      {
+        title: "Housekeeping Staff",
+        category: "Room Maintenance",
+        summary: "Maintain cleanliness and comfort of guest rooms",
+        responsibilities:
+          "Clean and prepare guest rooms; Change linens; Restock amenities; Report maintenance issues; Follow hygiene standards",
+        requirements:
+          "Physical stamina; Japanese N5 or higher; Attention to detail; Reliable; Team player",
+        requiredEducation: "High School",
+        japaneseLevel: "N5",
+        requiredExperience: {
+          years: 0,
+          description: "Training provided; housekeeping experience helpful",
+        },
+        requiredSkills: ["Cleaning", "Attention to Detail", "Time Management"],
+        salaryMin: 200000,
+        salaryMax: 260000,
+      },
+      {
+        title: "Restaurant Server (Hotel)",
+        category: "Food & Beverage",
+        summary: "Serve guests in hotel restaurant and banquet facilities",
+        responsibilities:
+          "Take orders and serve meals; Provide menu recommendations; Handle guest requests; Maintain dining area cleanliness",
+        requirements:
+          "Food service experience; Japanese N4 or higher; Customer service skills; Professional demeanor",
+        requiredEducation: "High School",
+        japaneseLevel: "N4",
+        requiredExperience: {
+          years: 1,
+          description: "Restaurant or food service experience",
+        },
+        requiredSkills: ["Food Service", "Customer Service", "Communication"],
+        salaryMin: 210000,
+        salaryMax: 280000,
+      },
+      {
+        title: "Bellhop / Porter",
+        category: "Guest Services",
+        summary: "Assist guests with luggage and provide property information",
+        responsibilities:
+          "Greet guests and assist with luggage; Escort guests to rooms; Provide property information; Arrange transportation; Run errands",
+        requirements:
+          "Physical fitness; Japanese N5 or higher; Friendly personality; Service-oriented; Basic English helpful",
+        requiredEducation: "High School",
+        japaneseLevel: "N5",
+        requiredExperience: {
+          years: 0,
+          description: "Customer service experience preferred",
+        },
+        requiredSkills: [
+          "Customer Service",
+          "Physical Fitness",
+          "Communication",
+        ],
+        salaryMin: 190000,
+        salaryMax: 250000,
+      },
+    ],
+    "Building Cleaning": [
+      {
+        title: "Building Maintenance Technician",
+        category: "Maintenance",
+        summary: "Maintain building systems and facilities",
+        responsibilities:
+          "Perform preventive maintenance; Repair building systems; Respond to maintenance requests; Maintain records; Ensure safety compliance",
+        requirements:
+          "Technical training or 2+ years experience; Japanese N4 or higher; Electrical/plumbing knowledge; Problem-solving skills",
+        requiredEducation: "Vocational",
+        japaneseLevel: "N4",
+        requiredExperience: {
+          years: 2,
+          description: "Building maintenance or facility management",
+        },
+        requiredSkills: [
+          "Building Maintenance",
+          "Electrical Systems",
+          "Plumbing",
+        ],
+        salaryMin: 250000,
+        salaryMax: 330000,
+      },
+      {
+        title: "Industrial Cleaner",
+        category: "Cleaning Services",
+        summary: "Clean and maintain industrial and commercial facilities",
+        responsibilities:
+          "Clean production areas; Operate cleaning equipment; Follow safety protocols; Dispose of waste properly; Maintain cleaning supplies",
+        requirements:
+          "Physical stamina; Japanese N5 or higher; Safety conscious; Reliable; Willingness to work various shifts",
+        requiredEducation: "High School",
+        japaneseLevel: "N5",
+        requiredExperience: {
+          years: 0,
+          description: "Training provided; cleaning experience helpful",
+        },
+        requiredSkills: [
+          "Industrial Cleaning",
+          "Safety Compliance",
+          "Equipment Operation",
+        ],
+        salaryMin: 200000,
+        salaryMax: 260000,
+      },
+      {
+        title: "Facility Supervisor",
+        category: "Management",
+        summary: "Supervise facility maintenance and cleaning operations",
+        responsibilities:
+          "Manage maintenance team; Schedule work orders; Coordinate contractors; Ensure quality standards; Monitor budgets",
+        requirements:
+          "3+ years facility management; Japanese N3 or higher; Leadership skills; Technical knowledge; Budget management",
+        requiredEducation: "Associate",
+        japaneseLevel: "N3",
+        requiredExperience: {
+          years: 3,
+          description: "Facility management or supervisory role",
+        },
+        requiredSkills: [
+          "Team Management",
+          "Facility Operations",
+          "Budget Management",
+        ],
+        salaryMin: 300000,
+        salaryMax: 400000,
+      },
+    ],
+    "Food Processing": [
+      {
+        title: "Seafood Processing Worker",
+        category: "Production",
+        summary: "Process and package seafood products",
+        responsibilities:
+          "Clean and cut fish; Operate processing equipment; Package products; Maintain quality standards; Follow food safety procedures",
+        requirements:
+          "Physical stamina; Japanese N5 or higher; Cold environment tolerance; Knife handling skills; Food safety awareness",
+        requiredEducation: "High School",
+        japaneseLevel: "N5",
+        requiredExperience: {
+          years: 0,
+          description: "Training provided; food processing experience helpful",
+        },
+        requiredSkills: ["Food Processing", "Knife Skills", "Quality Control"],
+        salaryMin: 210000,
+        salaryMax: 280000,
+      },
+      {
+        title: "Quality Control Inspector (Food)",
+        category: "Quality Assurance",
+        summary: "Inspect seafood products for quality and safety",
+        responsibilities:
+          "Inspect raw materials and finished products; Conduct quality tests; Document inspection results; Ensure HACCP compliance; Report issues",
+        requirements:
+          "1+ years QC experience; Japanese N4 or higher; Food safety knowledge; Attention to detail; HACCP training preferred",
+        requiredEducation: "High School",
+        japaneseLevel: "N4",
+        requiredExperience: {
+          years: 1,
+          description: "Food quality control or inspection",
+        },
+        requiredSkills: ["Quality Control", "Food Safety", "HACCP"],
+        salaryMin: 230000,
+        salaryMax: 310000,
+      },
+      {
+        title: "Production Line Supervisor (Food)",
+        category: "Management",
+        summary: "Supervise seafood processing production line",
+        responsibilities:
+          "Manage production team; Monitor output and quality; Ensure safety compliance; Train new workers; Coordinate with management",
+        requirements:
+          "2+ years food production; Japanese N3 or higher; Leadership skills; Food safety certification; Problem-solving ability",
+        requiredEducation: "Associate",
+        japaneseLevel: "N3",
+        requiredExperience: {
+          years: 2,
+          description: "Food processing or supervisory role",
+        },
+        requiredSkills: [
+          "Team Leadership",
+          "Food Production",
+          "Safety Management",
+        ],
+        salaryMin: 280000,
+        salaryMax: 360000,
+      },
+      {
+        title: "Packaging Machine Operator",
+        category: "Operations",
+        summary: "Operate packaging machinery for seafood products",
+        responsibilities:
+          "Set up and operate packaging machines; Monitor machine performance; Perform quality checks; Troubleshoot minor issues; Maintain cleanliness",
+        requirements:
+          "1+ years machine operation; Japanese N5 or higher; Mechanical aptitude; Attention to detail; Shift work flexibility",
+        requiredEducation: "High School",
+        japaneseLevel: "N5",
+        requiredExperience: {
+          years: 1,
+          description: "Machine operation or food packaging",
+        },
+        requiredSkills: [
+          "Machine Operation",
+          "Quality Control",
+          "Troubleshooting",
+        ],
+        salaryMin: 220000,
+        salaryMax: 290000,
+      },
+    ],
+    Logistics: [
+      {
+        title: "Warehouse Worker",
+        category: "Operations",
+        summary: "Handle receiving, storage, and shipping of goods",
+        responsibilities:
+          "Load and unload shipments; Pick and pack orders; Operate forklifts; Maintain inventory accuracy; Keep warehouse organized",
+        requirements:
+          "Physical stamina; Japanese N5 or higher; Forklift license preferred; Basic computer skills; Reliable",
+        requiredEducation: "High School",
+        japaneseLevel: "N5",
+        requiredExperience: {
+          years: 0,
+          description: "Training provided; warehouse experience helpful",
+        },
+        requiredSkills: [
+          "Warehouse Operations",
+          "Forklift Operation",
+          "Physical Labor",
+        ],
+        salaryMin: 210000,
+        salaryMax: 280000,
+      },
+      {
+        title: "Forklift Operator",
+        category: "Equipment Operation",
+        summary: "Operate forklifts and material handling equipment",
+        responsibilities:
+          "Operate forklifts safely; Move materials within warehouse; Load/unload trucks; Perform equipment inspections; Maintain safety standards",
+        requirements:
+          "Forklift license required; 1+ years experience; Japanese N5 or higher; Safety conscious; Good spatial awareness",
+        requiredEducation: "High School",
+        japaneseLevel: "N5",
+        requiredExperience: {
+          years: 1,
+          description: "Forklift operation experience",
+        },
+        requiredSkills: [
+          "Forklift Operation",
+          "Safety Compliance",
+          "Material Handling",
+        ],
+        salaryMin: 230000,
+        salaryMax: 300000,
+      },
+      {
+        title: "Inventory Control Specialist",
+        category: "Operations",
+        summary: "Manage warehouse inventory and stock control",
+        responsibilities:
+          "Track inventory levels; Conduct cycle counts; Update inventory systems; Investigate discrepancies; Generate reports",
+        requirements:
+          "1+ years inventory experience; Japanese N4 or higher; Computer proficiency; Attention to detail; Analytical skills",
+        requiredEducation: "High School",
+        japaneseLevel: "N4",
+        requiredExperience: {
+          years: 1,
+          description: "Inventory control or warehouse operations",
+        },
+        requiredSkills: [
+          "Inventory Management",
+          "Computer Systems",
+          "Data Analysis",
+        ],
+        salaryMin: 240000,
+        salaryMax: 320000,
+      },
+      {
+        title: "Warehouse Supervisor",
+        category: "Management",
+        summary: "Supervise warehouse operations and staff",
+        responsibilities:
+          "Manage warehouse team; Coordinate shipping/receiving; Ensure safety compliance; Monitor productivity; Train new staff",
+        requirements:
+          "3+ years warehouse experience; Japanese N3 or higher; Leadership skills; Computer proficiency; Problem-solving ability",
+        requiredEducation: "Associate",
+        japaneseLevel: "N3",
+        requiredExperience: {
+          years: 3,
+          description: "Warehouse supervision or team lead role",
+        },
+        requiredSkills: [
+          "Team Management",
+          "Warehouse Operations",
+          "Logistics Coordination",
+        ],
+        salaryMin: 300000,
+        salaryMax: 390000,
+      },
+      {
+        title: "Delivery Driver",
+        category: "Transportation",
+        summary: "Deliver goods to customers and businesses",
+        responsibilities:
+          "Drive delivery truck; Load and secure cargo; Follow delivery schedule; Collect signatures; Maintain vehicle; Provide customer service",
+        requirements:
+          "Valid driver's license; Japanese N4 or higher; Clean driving record; Physical fitness; Customer service skills; Route knowledge",
+        requiredEducation: "High School",
+        japaneseLevel: "N4",
+        requiredExperience: {
+          years: 1,
+          description: "Commercial driving or delivery experience",
+        },
+        requiredSkills: ["Driving", "Customer Service", "Time Management"],
+        salaryMin: 240000,
+        salaryMax: 320000,
+      },
+    ],
   };
 
   // Create jobs for each company

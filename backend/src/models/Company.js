@@ -42,6 +42,7 @@ const companySchema = new mongoose.Schema(
         "Auto Repair",
         "Aviation",
         "Accommodation",
+        "Logistics",
         "Other",
       ],
       index: true,

@@ -19,7 +19,7 @@
   },
   {
     "name": "CarePlus Medical Services",
-    "industry": "Healthcare",
+    "industry": "Nursing Care",
     "size": "201-500",
     "founded": 2012,
     "website": "https://careplus-medical.example.com",
@@ -38,7 +38,7 @@
   {
     "name": "BuildCo Construction Ltd",
     "industry": "Construction",
-    "size": "101-200",
+    "size": "51-200",
     "founded": 2008,
     "website": "https://buildco-construction.example.com",
     "description": "General contractor specializing in residential and commercial construction. Experienced in traditional and modern building techniques.",
@@ -56,7 +56,7 @@
   {
     "name": "FarmGrow Agricultural Co",
     "industry": "Agriculture",
-    "size": "51-100",
+    "size": "51-200",
     "founded": 2015,
     "website": "https://farmgrow-agri.example.com",
     "description": "Modern agricultural operations focusing on organic produce and sustainable farming. Operating multiple farms across Hokkaido.",
@@ -74,7 +74,7 @@
   {
     "name": "Tasty Japan Restaurant Group",
     "industry": "Food Service",
-    "size": "101-200",
+    "size": "51-200",
     "founded": 2013,
     "website": "https://tastyjapan-group.example.com",
     "description": "Chain of Japanese and fusion restaurants across Kyushu region. Committed to authentic flavors and exceptional customer service.",
@@ -127,8 +127,8 @@
   },
   {
     "name": "CleanPro Facility Services",
-    "industry": "Facility Management",
-    "size": "101-200",
+    "industry": "Building Cleaning",
+    "size": "51-200",
     "founded": 2014,
     "website": "https://cleanpro-services.example.jp",
     "description": "Professional building maintenance and industrial cleaning services. Serving commercial, industrial, and institutional facilities.",
@@ -146,7 +146,7 @@
   {
     "name": "Pacific Seafood Processing",
     "industry": "Food Processing",
-    "size": "51-100",
+    "size": "51-200",
     "founded": 2011,
     "website": "https://pacific-seafood.example.jp",
     "description": "Seafood processing facility specializing in sashimi-grade fish and frozen products. Export-certified with HACCP compliance.",
