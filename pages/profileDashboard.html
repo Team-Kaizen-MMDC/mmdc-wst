@@ -2497,11 +2497,27 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
         }
 
         if (infoVisa) {
-          infoVisa.textContent = profile.availability?.visaStatus || "Not specified";
+          const visaStatusMap = {
+            'not-applicable': 'Not Applicable',
+            'student': 'Student Visa',
+            'working': 'Working Visa',
+            'ssw-1': 'SSW-1',
+            'ssw-2': 'SSW-2',
+            'spouse': 'Spouse Visa',
+            'pr': 'Permanent Resident',
+            'other': 'Other'
+          };
+          const visaStatus = profile.availability?.visaStatus;
+          infoVisa.textContent = visaStatus ? (visaStatusMap[visaStatus] || visaStatus) : "Not specified";
         }
 
         if (infoValidity) {
-          infoValidity.textContent = profile.availability?.visaValidUntil || "N/A";
+          const validUntil = profile.availability?.visaValidUntil;
+          if (validUntil) {
+            infoValidity.textContent = new Date(validUntil).toLocaleDateString();
+          } else {
+            infoValidity.textContent = "N/A";
+          }
         }
 
         if (infoIndustry) {

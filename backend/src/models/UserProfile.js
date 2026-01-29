@@ -214,6 +214,13 @@ const userProfileSchema = new mongoose.Schema(
           "other",
         ],
       },
+      visaValidUntil: {
+        type: Date,
+      },
+      desiredIndustry: {
+        type: String,
+        trim: true,
+      },
       relocate: {
         type: Boolean,
         default: true,
@@ -222,6 +229,11 @@ const userProfileSchema = new mongoose.Schema(
         type: Boolean,
         default: false,
       },
+    },
+    // Bio / Summary
+    bio: {
+      type: String,
+      maxlength: [1000, "Bio cannot exceed 1000 characters"],
     },
     // File Paths (for future file upload functionality)
     resumePath: {

@@ -154,12 +154,20 @@ async function seedProfiles(userList) {
         phone: profileData.phone,
         address: { prefecture: profileData.prefecture, city: profileData.city },
         japaneseLevel: profileData.japaneseLevel,
+        bio: profileData.bio || null,
         languages: profileData.languages || [],
         education: profileData.education || [],
         experience: profileData.experience || [],
         skills: profileData.skills || [],
         certifications: profileData.certifications || [],
-        availability: profileData.availability || {},
+        availability: {
+          startDate: profileData.availability?.startDate || null,
+          visaStatus: profileData.availability?.visaStatus || null,
+          visaValidUntil: profileData.availability?.visaValidUntil || null,
+          desiredIndustry: profileData.availability?.desiredIndustry || null,
+          relocate: profileData.availability?.relocate ?? true,
+          remote: profileData.availability?.remote ?? false,
+        },
       });
 
       profileCount++;

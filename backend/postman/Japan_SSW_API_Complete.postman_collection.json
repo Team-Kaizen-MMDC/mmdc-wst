@@ -692,7 +692,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"availability\": {\n    \"startDate\": \"2026-04-01\",\n    \"relocate\": true,\n    \"preferredLocations\": [\"Tokyo\", \"Osaka\", \"Nagoya\"]\n  }\n}"
+              "raw": "{\n  \"startDate\": \"2026-04-01\",\n  \"visaStatus\": \"working\",\n  \"visaValidUntil\": \"2028-12-31\",\n  \"desiredIndustry\": \"Manufacturing\",\n  \"relocate\": true,\n  \"remote\": false\n}"
             },
             "url": {
               "raw": "{{BASE_URL}}/profile/availability",
