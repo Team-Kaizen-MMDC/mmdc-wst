@@ -13,7 +13,7 @@ exports.getProfile = asyncHandler(async (req, res, next) => {
   );
 
   if (!profile) {
-    return next(new ApiError("Profile not found", 404));
+    return next(new ApiError(404, "Profile not found"));
   }
 
   res
@@ -30,8 +30,8 @@ exports.createProfile = asyncHandler(async (req, res, next) => {
   if (existingProfile) {
     return next(
       new ApiError(
-        "Profile already exists. Use PUT /api/v1/profile to update",
         400,
+        "Profile already exists. Use PUT /api/v1/profile to update",
       ),
     );
   }
@@ -63,8 +63,8 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
   if (!profile) {
     return next(
       new ApiError(
-        "Profile not found. Use POST /api/v1/profile to create",
         404,
+        "Profile not found. Use POST /api/v1/profile to create",
       ),
     );
   }
@@ -91,7 +91,7 @@ exports.deleteProfile = asyncHandler(async (req, res, next) => {
   const profile = await UserProfile.findOne({ user: req.user.id });
 
   if (!profile) {
-    return next(new ApiError("Profile not found", 404));
+    return next(new ApiError(404, "Profile not found"));
   }
 
   await profile.deleteOne();
@@ -108,7 +108,7 @@ exports.addEducation = asyncHandler(async (req, res, next) => {
   const profile = await UserProfile.findOne({ user: req.user.id });
 
   if (!profile) {
-    return next(new ApiError("Profile not found", 404));
+    return next(new ApiError(404, "Profile not found"));
   }
 
   profile.education.unshift(req.body);
@@ -126,7 +126,7 @@ exports.updateEducation = asyncHandler(async (req, res, next) => {
   const profile = await UserProfile.findOne({ user: req.user.id });
 
   if (!profile) {
-    return next(new ApiError("Profile not found", 404));
+    return next(new ApiError(404, "Profile not found"));
   }
 
   const eduIndex = profile.education.findIndex(
@@ -134,7 +134,7 @@ exports.updateEducation = asyncHandler(async (req, res, next) => {
   );
 
   if (eduIndex === -1) {
-    return next(new ApiError("Education entry not found", 404));
+    return next(new ApiError(404, "Education entry not found"));
   }
 
   // Update education entry
@@ -157,7 +157,7 @@ exports.deleteEducation = asyncHandler(async (req, res, next) => {
   const profile = await UserProfile.findOne({ user: req.user.id });
 
   if (!profile) {
-    return next(new ApiError("Profile not found", 404));
+    return next(new ApiError(404, "Profile not found"));
   }
 
   profile.education = profile.education.filter(
@@ -178,7 +178,7 @@ exports.addExperience = asyncHandler(async (req, res, next) => {
   const profile = await UserProfile.findOne({ user: req.user.id });
 
   if (!profile) {
-    return next(new ApiError("Profile not found", 404));
+    return next(new ApiError(404, "Profile not found"));
   }
 
   profile.experience.unshift(req.body);
@@ -196,7 +196,7 @@ exports.updateExperience = asyncHandler(async (req, res, next) => {
   const profile = await UserProfile.findOne({ user: req.user.id });
 
   if (!profile) {
-    return next(new ApiError("Profile not found", 404));
+    return next(new ApiError(404, "Profile not found"));
   }
 
   const expIndex = profile.experience.findIndex(
@@ -204,7 +204,7 @@ exports.updateExperience = asyncHandler(async (req, res, next) => {
   );
 
   if (expIndex === -1) {
-    return next(new ApiError("Experience entry not found", 404));
+    return next(new ApiError(404, "Experience entry not found"));
   }
 
   // Update experience entry
@@ -227,7 +227,7 @@ exports.deleteExperience = asyncHandler(async (req, res, next) => {
   const profile = await UserProfile.findOne({ user: req.user.id });
 
   if (!profile) {
-    return next(new ApiError("Profile not found", 404));
+    return next(new ApiError(404, "Profile not found"));
   }
 
   profile.experience = profile.experience.filter(
@@ -248,7 +248,7 @@ exports.updateSkills = asyncHandler(async (req, res, next) => {
   const profile = await UserProfile.findOne({ user: req.user.id });
 
   if (!profile) {
-    return next(new ApiError("Profile not found", 404));
+    return next(new ApiError(404, "Profile not found"));
   }
 
   profile.skills = req.body.skills || [];
@@ -266,7 +266,7 @@ exports.updateCertifications = asyncHandler(async (req, res, next) => {
   const profile = await UserProfile.findOne({ user: req.user.id });
 
   if (!profile) {
-    return next(new ApiError("Profile not found", 404));
+    return next(new ApiError(404, "Profile not found"));
   }
 
   profile.certifications = req.body.certifications || [];
@@ -286,7 +286,7 @@ exports.updateLanguages = asyncHandler(async (req, res, next) => {
   const profile = await UserProfile.findOne({ user: req.user.id });
 
   if (!profile) {
-    return next(new ApiError("Profile not found", 404));
+    return next(new ApiError(404, "Profile not found"));
   }
 
   profile.languages = req.body.languages || [];
@@ -304,7 +304,7 @@ exports.updateAvailability = asyncHandler(async (req, res, next) => {
   const profile = await UserProfile.findOne({ user: req.user.id });
 
   if (!profile) {
-    return next(new ApiError("Profile not found", 404));
+    return next(new ApiError(404, "Profile not found"));
   }
 
   profile.availability = {
