@@ -782,6 +782,8 @@ seedDatabase();
 
 ## Environment Variables Checklist
 
+Local development note: macOS may bind port `5000` for system services (AirPlay/AirTunes) and return a 403 for requests to `localhost:5000`. For local development prefer `PORT=3000` (or another free port). Keep `PORT=5000` in production deployment settings.
+
 Required for deployment:
 
 ```env

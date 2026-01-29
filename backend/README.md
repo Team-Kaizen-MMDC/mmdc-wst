@@ -3,7 +3,7 @@
 **Version:** 1.0.0  
 **Node.js:** 18+ required  
 **Database:** MongoDB Atlas  
-**API Documentation:** See [API_REFERENCE.md](./API_REFERENCE.md) and [API_DOCUMENTATION.md](./API_DOCUMENTATION.md)
+**API Documentation:** See [API_REFERENCE.md](./API_REFERENCE.md) and [API_DOCUMENTATION.md](./API_DOCUMENTATION.md). Generated OpenAPI JSON: [backend/api-docs.json](backend/api-docs.json). Postman collections: [backend/postman/Japan_SSW_API_day1_day4.postman_collection.json](backend/postman/Japan_SSW_API_day1_day4.postman_collection.json), [postman/Japan_SSW_API_Complete.postman_collection.json](postman/Japan_SSW_API_Complete.postman_collection.json)
 
 ---
 
@@ -83,7 +83,7 @@ node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 npm start
 ```
 
-Server will start at `http://localhost:5000`
+Server will start at `http://localhost:3000` (recommended for macOS local development)
 
 ---
 
@@ -156,7 +156,7 @@ Copy `.env.example` to `.env` and configure:
 ```bash
 # Server
 NODE_ENV=development
-PORT=5000
+PORT=3000
 
 # Database (MongoDB Atlas)
 MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/japansswdb?retryWrites=true&w=majority
@@ -259,7 +259,7 @@ npm run dev
 npm start
 ```
 
-Server starts at: `http://localhost:5000`
+Server starts at: `http://localhost:3000`
 
 ### Production Mode
 
@@ -289,8 +289,8 @@ npm run export:swagger # Export Swagger to JSON
 
 Once server is running:
 
-- **Swagger UI:** http://localhost:5000/api-docs
-- **API Base URL:** http://localhost:5000/api/v1
+- **Swagger UI:** http://localhost:3000/api-docs
+- **API Base URL:** http://localhost:3000/api/v1
 
 ### Documentation Files
 
@@ -303,15 +303,15 @@ Once server is running:
 
 ```bash
 # Test health check
-curl http://localhost:5000/api/v1/health
+curl http://localhost:3000/api/v1/health
 
 # Register user
-curl -X POST http://localhost:5000/api/v1/auth/register \
+curl -X POST http://localhost:3000/api/v1/auth/register \
   -H "Content-Type: application/json" \
   -d '{"email":"test@example.com","password":"Test123!","role":"jobseeker"}'
 
 # Login
-curl -X POST http://localhost:5000/api/v1/auth/login \
+curl -X POST http://localhost:3000/api/v1/auth/login \
   -H "Content-Type: application/json" \
   -d '{"email":"test@example.com","password":"Test123!"}'
 ```
@@ -397,13 +397,39 @@ npm i -g vercel
 
 # 2. Login
 vercel login
+```
+
+## Troubleshooting
+
+- **Port conflict (macOS 5000):** macOS may reserve port 5000 (AirPlay/AirTunes). Use `PORT=3000` for local development. To check and stop the process binding port 5000:
+  - `lsof -i :5000` — shows PID
+  - `kill <PID>` — stop the process (use `sudo kill -9 <PID>` if required)
+
+- **Server won't start / HTTP 403 on localhost:5000:** change `.env` `PORT` to `3000`, then restart the server (`npm run dev` or `npm start`) and verify with `curl -I http://localhost:3000/pages/about.html` (expect `HTTP/1.1 200 OK`).
+
+- **Mongoose duplicate index warning:** If you see "Duplicate schema index on {\"user\":1} found", fully stop Node processes, then start a clean process. If it persists:
+  - Search models for duplicate `index` declarations and remove the explicit duplicate.
+  - Ensure only one `unique: true` / `schema.index(..., { unique: true })` exists for the field.
+
+- **Regenerate OpenAPI JSON:**
+  - `cd backend && npm run export:swagger` — writes `backend/api-docs.json`.
+
+- **Postman collection:** Import [backend/postman/Japan_SSW_API_day1_day4.postman_collection.json](backend/postman/Japan_SSW_API_day1_day4.postman_collection.json) (or [postman/Japan_SSW_API_Complete.postman_collection.json](postman/Japan_SSW_API_Complete.postman_collection.json)). Set `{{baseUrl}}` to `http://localhost:3000` and run the Authentication → Login request to obtain a token.
+
+- **Quick verify API health:**
+  - `curl http://localhost:3000/api/v1/health` — should return a healthy status.
+
+If you'd like, I can also add a short troubleshooting script (`scripts/check-ports.sh`) to automate the `lsof`/`kill` steps and a Postman environment file for the day1+day4 collection. Want me to add those now?
 
 # 3. Deploy
+
 vercel
 
 # 4. Set environment variables in Vercel dashboard
+
 # Settings → Environment Variables → Add each variable from .env
-```
+
+````
 
 **Create `vercel.json`:**
 
@@ -423,7 +449,7 @@ vercel
     }
   ]
 }
-```
+````
 
 ### Option 3: Heroku
 
@@ -632,7 +658,7 @@ Proprietary - Team Kaizen MMDC
 
 - **Documentation:** [API_REFERENCE.md](./API_REFERENCE.md)
 - **Issues:** Create GitHub issue
-- **Email:** support@japanssw.com (if configured)
+- **Email:** lr.bjcarlos@mmdc.mcl.edu.ph
 
 ---
 

@@ -26,6 +26,7 @@ async function createApp() {
     defaultSrc: ["'self'"],
     scriptSrc: [
       "'self'",
+      "'unsafe-inline'", // Allow inline scripts for page content loading
       "https://cdn.tailwindcss.com",
       "https://cdn.jsdelivr.net",
       "https://unpkg.com",

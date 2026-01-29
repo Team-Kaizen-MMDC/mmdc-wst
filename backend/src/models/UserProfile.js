@@ -247,7 +247,8 @@ const userProfileSchema = new mongoose.Schema(
 );
 
 // Indexes
-userProfileSchema.index({ user: 1 });
+// Note: `user` is declared as `unique: true` on the field above; avoid duplicate index declarations.
+// Removed explicit `user` index to prevent duplicate-index warnings from Mongoose.
 userProfileSchema.index({ nationality: 1 });
 userProfileSchema.index({ japaneseLevel: 1 });
 userProfileSchema.index({ "availability.visaStatus": 1 });
