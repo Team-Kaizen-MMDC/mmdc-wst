@@ -63,31 +63,50 @@ http://localhost:3000/api/v1
 
 ### System Architecture
 
-```
-┌─────────────────────────────────────────────────┐
-│           Frontend Application                   │
-│         (HTML/CSS/JavaScript)                    │
-└──────────────────┬──────────────────────────────┘
-                   │
-                   │ HTTP/REST (JSON)
-                   ▼
-┌─────────────────────────────────────────────────┐
-│         Express.js API Server                    │
-│  ┌──────────────────────────────────────────┐   │
-│  │  Middleware: JWT Auth, Rate Limiting     │   │
-│  │  Routes → Controllers → Models           │   │
-│  │  • Auth    • Jobs      • Companies       │   │
-│  │  • Profile • Applications                │   │
-│  └──────────────────────────────────────────┘   │
-└──────────────────┬──────────────────────────────┘
-                   │
-                   │ Mongoose ODM
-                   ▼
-┌─────────────────────────────────────────────────┐
-│         MongoDB Atlas (Cloud)                    │
-│  Collections: users, profiles, jobs,            │
-│               companies, applications            │
-└─────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph Client["Frontend Application"]
+        A[HTML/CSS/JavaScript]
+    end
+
+    subgraph Server["Express.js API Server (Port 3000)"]
+        B[Middleware Layer]
+        C[JWT Auth]
+        D[Rate Limiting]
+        E[Routes]
+        F[Controllers]
+        G[Models]
+    end
+
+    subgraph Database["MongoDB Atlas Cloud"]
+        H[(users)]
+        I[(profiles)]
+        J[(jobs)]
+        K[(companies)]
+        L[(applications)]
+    end
+
+    A -->|HTTP/REST JSON| B
+    B --> C
+    B --> D
+    C --> E
+    D --> E
+    E --> F
+    F --> G
+    G -->|Mongoose ODM| H
+    G -->|Mongoose ODM| I
+    G -->|Mongoose ODM| J
+    G -->|Mongoose ODM| K
+    G -->|Mongoose ODM| L
+
+    style A fill:#e1f5ff
+    style B fill:#fff4e6
+    style G fill:#e8f5e9
+    style H fill:#f3e5f5
+    style I fill:#f3e5f5
+    style J fill:#f3e5f5
+    style K fill:#f3e5f5
+    style L fill:#f3e5f5
 ```
 
 ### Tested & Verified API Endpoints
@@ -117,58 +136,36 @@ All endpoints below have been **successfully tested** with 100% pass rate (26/26
 
 ### 1. Authentication Workflow
 
-```
-┌─────────────┐
-│   Client    │
-└──────┬──────┘
-       │
-       │ 1. POST /auth/register
-       │    { email, password, role: "jobseeker" }
-       ▼
-┌─────────────────────────────────────┐
-│  Backend: Create User Account       │
-│  • Hash password (bcrypt)           │
-│  • Save to users collection         │
-│  • Generate JWT token               │
-└──────┬──────────────────────────────┘
-       │
-       │ Response: { token, user }
-       ▼
-┌─────────────┐
-│   Client    │ Stores JWT in localStorage/environment
-└──────┬──────┘
-       │
-       │ 2. POST /auth/login
-       │    { email, password }
-       ▼
-┌─────────────────────────────────────┐
-│  Backend: Authenticate User         │
-│  • Find user by email               │
-│  • Compare password hash            │
-│  • Generate new JWT token           │
-└──────┬──────────────────────────────┘
-       │
-       │ Response: { token, user }
-       ▼
-┌─────────────┐
-│   Client    │ Uses token for protected routes
-└──────┬──────┘
-       │
-       │ 3. GET /auth/me
-       │    Authorization: Bearer <token>
-       ▼
-┌─────────────────────────────────────┐
-│  Backend: Verify Token & Get User   │
-│  • Decode JWT token                 │
-│  • Find user by ID from token       │
-│  • Return user data                 │
-└──────┬──────────────────────────────┘
-       │
-       │ Response: { user: {id, email, role} }
-       ▼
-┌─────────────┐
-│   Client    │
-└─────────────┘
+```mermaid
+sequenceDiagram
+    participant C as Client
+    participant A as API Server
+    participant DB as MongoDB
+
+    Note over C,DB: Registration Flow
+    C->>+A: POST /auth/register<br/>{email, password, role}
+    A->>A: Hash password (bcrypt)
+    A->>+DB: Save to users collection
+    DB-->>-A: User created
+    A->>A: Generate JWT token
+    A-->>-C: {token, user}
+    Note over C: Store JWT token
+
+    Note over C,DB: Login Flow
+    C->>+A: POST /auth/login<br/>{email, password}
+    A->>+DB: Find user by email
+    DB-->>-A: User data
+    A->>A: Compare password hash
+    A->>A: Generate JWT token
+    A-->>-C: {token, user}
+    Note over C: Update stored token
+
+    Note over C,DB: Get Current User
+    C->>+A: GET /auth/me<br/>Authorization: Bearer token
+    A->>A: Decode JWT token
+    A->>+DB: Find user by ID
+    DB-->>-A: User data
+    A-->>-C: {user: {id, email, role}}
 ```
 
 **Test Example:**
@@ -203,77 +200,45 @@ Content-Type: application/json
 
 ### 2. Profile CRUD Workflow
 
-```
-┌─────────────┐
-│   Client    │ (Authenticated)
-└──────┬──────┘
-       │
-       │ CREATE: POST /profile
-       │ Headers: Authorization: Bearer <token>
-       │ Body: { firstName, lastName, dateOfBirth, ... }
-       ▼
-┌─────────────────────────────────────┐
-│  Backend: Create Profile            │
-│  • Extract user ID from JWT         │
-│  • Validate required fields         │
-│  • Check if profile already exists  │
-│  • Save profile to DB               │
-└──────┬──────────────────────────────┘
-       │
-       │ Response: { profile } (201 Created)
-       ▼
-┌─────────────┐
-│   Client    │
-└──────┬──────┘
-       │
-       │ READ: GET /profile
-       │ Headers: Authorization: Bearer <token>
-       ▼
-┌─────────────────────────────────────┐
-│  Backend: Get Profile               │
-│  • Extract user ID from JWT         │
-│  • Find profile by user ID          │
-│  • Return profile data              │
-└──────┬──────────────────────────────┘
-       │
-       │ Response: { profile } (200 OK)
-       ▼
-┌─────────────┐
-│   Client    │ Display profile in UI
-└──────┬──────┘
-       │
-       │ UPDATE: PUT /profile
-       │ Headers: Authorization: Bearer <token>
-       │ Body: { phone: "new-phone", japaneseLevel: "N2" }
-       ▼
-┌─────────────────────────────────────┐
-│  Backend: Update Profile            │
-│  • Extract user ID from JWT         │
-│  • Find profile by user ID          │
-│  • Validate updated fields          │
-│  • Save changes to DB               │
-└──────┬──────────────────────────────┘
-       │
-       │ Response: { profile } (200 OK)
-       ▼
-┌─────────────┐
-│   Client    │ Show updated profile
-└──────┬──────┘
-       │
-       │ DELETE: DELETE /profile
-       │ Headers: Authorization: Bearer <token>
-       ▼
-┌─────────────────────────────────────┐
-│  Backend: Delete Profile            │
-│  • Extract user ID from JWT         │
-│  • Find and delete profile          │
-└──────┬──────────────────────────────┘
-       │
-       │ Response: { message } (200 OK)
-       ▼
-┌─────────────┐
-│   Client    │ Profile deleted
-└─────────────┘
+```mermaid
+sequenceDiagram
+    participant C as Client<br/>(Authenticated)
+    participant A as API Server
+    participant DB as MongoDB
+
+    Note over C,DB: CREATE Profile
+    C->>+A: POST /profile<br/>Authorization: Bearer token<br/>{firstName, lastName, ...}
+    A->>A: Extract user ID from JWT
+    A->>A: Validate required fields
+    A->>+DB: Check if profile exists
+    DB-->>-A: No existing profile
+    A->>+DB: Save profile
+    DB-->>-A: Profile created
+    A-->>-C: 201 Created {profile}
+
+    Note over C,DB: READ Profile
+    C->>+A: GET /profile<br/>Authorization: Bearer token
+    A->>A: Extract user ID from JWT
+    A->>+DB: Find profile by user ID
+    DB-->>-A: Profile data
+    A-->>-C: 200 OK {profile}
+
+    Note over C,DB: UPDATE Profile
+    C->>+A: PUT /profile<br/>Authorization: Bearer token<br/>{phone, japaneseLevel}
+    A->>A: Extract user ID from JWT
+    A->>+DB: Find profile by user ID
+    DB-->>-A: Current profile
+    A->>A: Validate updated fields
+    A->>+DB: Save changes
+    DB-->>-A: Updated profile
+    A-->>-C: 200 OK {profile}
+
+    Note over C,DB: DELETE Profile
+    C->>+A: DELETE /profile<br/>Authorization: Bearer token
+    A->>A: Extract user ID from JWT
+    A->>+DB: Find and delete profile
+    DB-->>-A: Deleted
+    A-->>-C: 200 OK {message}
 ```
 
 **Test Examples:**
@@ -448,61 +413,35 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIs...
 
 ### 3. Job Search & Discovery Workflow
 
-```
-┌─────────────┐
-│   Client    │ (Public - No Auth Required)
-└──────┬──────┘
-       │
-       │ 1. GET /jobs?page=1&limit=10
-       │    (List all jobs with pagination)
-       ▼
-┌─────────────────────────────────────┐
-│  Backend: List Jobs                 │
-│  • Parse pagination params          │
-│  • Query jobs collection            │
-│  • Populate company data            │
-│  • Return paginated results         │
-└──────┬──────────────────────────────┘
-       │
-       │ Response: { jobs[], pagination }
-       ▼
-┌─────────────┐
-│   Client    │ Display job cards
-└──────┬──────┘
-       │
-       │ 2. GET /jobs?industry=Manufacturing&prefecture=Tokyo&japaneseLevel=N3
-       │    (Filter jobs by criteria)
-       ▼
-┌─────────────────────────────────────┐
-│  Backend: Filter Jobs               │
-│  • Build MongoDB query filter       │
-│  • Apply industry filter            │
-│  • Apply location filter            │
-│  • Apply Japanese level filter      │
-│  • Return matching jobs             │
-└──────┬──────────────────────────────┘
-       │
-       │ Response: { jobs[] } (filtered)
-       ▼
-┌─────────────┐
-│   Client    │ Show filtered results
-└──────┬──────┘
-       │
-       │ 3. GET /jobs/:jobId
-       │    (Get detailed job info)
-       ▼
-┌─────────────────────────────────────┐
-│  Backend: Get Job Details           │
-│  • Find job by ID                   │
-│  • Populate company info            │
-│  • Return complete job data         │
-└──────┬──────────────────────────────┘
-       │
-       │ Response: { job, company }
-       ▼
-┌─────────────┐
-│   Client    │ Display job detail page
-└─────────────┘
+```mermaid
+sequenceDiagram
+    participant C as Client<br/>(Public)
+    participant A as API Server
+    participant DB as MongoDB
+
+    Note over C,DB: List All Jobs
+    C->>+A: GET /jobs?page=1&limit=10
+    A->>A: Parse pagination params
+    A->>+DB: Query jobs collection
+    DB-->>-A: Jobs (page 1, 10 items)
+    A->>+DB: Populate company data
+    DB-->>-A: Company info
+    A-->>-C: {jobs[], pagination}<br/>Display job cards
+
+    Note over C,DB: Filter Jobs
+    C->>+A: GET /jobs?industry=Manufacturing<br/>&prefecture=Tokyo&japaneseLevel=N3
+    A->>A: Build MongoDB query filter
+    A->>+DB: Query with filters
+    DB-->>-A: Matching jobs
+    A-->>-C: {jobs[]} (filtered)<br/>Show filtered results
+
+    Note over C,DB: Get Job Details
+    C->>+A: GET /jobs/:jobId
+    A->>+DB: Find job by ID
+    DB-->>-A: Job data
+    A->>+DB: Populate company info
+    DB-->>-A: Company details
+    A-->>-C: {job, company}<br/>Display job detail page
 ```
 
 **Test Examples:**
@@ -605,59 +544,35 @@ GET /api/v1/jobs/697b38205d7e6fe346a62753
 
 ### 4. Company Directory Workflow
 
-```
-┌─────────────┐
-│   Client    │ (Public - No Auth Required)
-└──────┬──────┘
-       │
-       │ 1. GET /companies?page=1&limit=10
-       │    (List all companies)
-       ▼
-┌─────────────────────────────────────┐
-│  Backend: List Companies            │
-│  • Parse pagination params          │
-│  • Query companies collection       │
-│  • Count active jobs per company    │
-│  • Return paginated results         │
-└──────┬──────────────────────────────┘
-       │
-       │ Response: { companies[], pagination }
-       ▼
-┌─────────────┐
-│   Client    │ Display company cards
-└──────┬──────┘
-       │
-       │ 2. GET /companies/:companyId
-       │    (Get detailed company info)
-       ▼
-┌─────────────────────────────────────┐
-│  Backend: Get Company Details       │
-│  • Find company by ID               │
-│  • Count active jobs                │
-│  • Return complete company data     │
-└──────┬──────────────────────────────┘
-       │
-       │ Response: { company, jobCount }
-       ▼
-┌─────────────┐
-│   Client    │ Display company profile page
-└──────┬──────┘
-       │
-       │ 3. GET /companies?industry=Manufacturing
-       │    (Filter companies by industry)
-       ▼
-┌─────────────────────────────────────┐
-│  Backend: Filter Companies          │
-│  • Build MongoDB query filter       │
-│  • Apply industry filter            │
-│  • Return matching companies        │
-└──────┬──────────────────────────────┘
-       │
-       │ Response: { companies[] } (filtered)
-       ▼
-┌─────────────┐
-│   Client    │ Show filtered companies
-└─────────────┘
+```mermaid
+sequenceDiagram
+    participant C as Client<br/>(Public)
+    participant A as API Server
+    participant DB as MongoDB
+
+    Note over C,DB: List All Companies
+    C->>+A: GET /companies?page=1&limit=10
+    A->>A: Parse pagination params
+    A->>+DB: Query companies collection
+    DB-->>-A: Companies (page 1)
+    A->>+DB: Count active jobs per company
+    DB-->>-A: Job counts
+    A-->>-C: {companies[], pagination}<br/>Display company cards
+
+    Note over C,DB: Get Company Details
+    C->>+A: GET /companies/:companyId
+    A->>+DB: Find company by ID
+    DB-->>-A: Company data
+    A->>+DB: Count active jobs
+    DB-->>-A: Job count
+    A-->>-C: {company, jobCount}<br/>Display company profile
+
+    Note over C,DB: Filter Companies
+    C->>+A: GET /companies?industry=Manufacturing
+    A->>A: Build MongoDB query filter
+    A->>+DB: Query with industry filter
+    DB-->>-A: Matching companies
+    A-->>-C: {companies[]} (filtered)<br/>Show filtered companies
 ```
 
 **Test Example:**
@@ -689,76 +604,58 @@ GET /api/v1/companies/697b381e5d7e6fe346a626f0
 
 ### 5. Complete User Journey (End-to-End)
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                  JOBSEEKER USER JOURNEY                      │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+graph TD
+    Start([Jobseeker Visits Site]) --> Register
 
-1. REGISTRATION & AUTHENTICATION
-   ┌─────────────┐
-   │  Register   │ POST /auth/register
-   └──────┬──────┘
-          │ ✅ JWT Token Generated
-          ▼
-   ┌─────────────┐
-   │    Login    │ POST /auth/login
-   └──────┬──────┘
-          │ ✅ Token Stored
-          ▼
+    subgraph Auth["1. Registration & Authentication"]
+        Register[Register<br/>POST /auth/register] --> Login[Login<br/>POST /auth/login]
+        Login --> Token[✅ JWT Token Stored]
+    end
 
-2. PROFILE CREATION
-   ┌─────────────┐
-   │ Create      │ POST /profile
-   │ Profile     │ (Personal info, Japanese level, skills)
-   └──────┬──────┘
-          │ ✅ Profile Created
-          ▼
+    Token --> CreateProfile
 
-3. JOB SEARCH & DISCOVERY
-   ┌─────────────┐
-   │ Browse Jobs │ GET /jobs
-   └──────┬──────┘
-          │
-          ▼
-   ┌─────────────┐
-   │ Filter Jobs │ GET /jobs?industry=...&prefecture=...
-   └──────┬──────┘
-          │
-          ▼
-   ┌─────────────┐
-   │ View Job    │ GET /jobs/:id
-   │ Details     │
-   └──────┬──────┘
-          │
-          ▼
+    subgraph Profile["2. Profile Creation"]
+        CreateProfile[Create Profile<br/>POST /profile<br/>Personal info, Japanese level] --> ProfileCreated[✅ Profile Created]
+    end
 
-4. COMPANY RESEARCH
-   ┌─────────────┐
-   │ View        │ GET /companies/:id
-   │ Company     │
-   └──────┬──────┘
-          │
-          ▼
+    ProfileCreated --> Browse
 
-5. APPLICATION (Future Feature)
-   ┌─────────────┐
-   │ Apply to    │ POST /jobs/:id/apply
-   │ Job         │
-   └──────┬──────┘
-          │ ✅ Application Submitted
-          ▼
+    subgraph Jobs["3. Job Search & Discovery"]
+        Browse[Browse Jobs<br/>GET /jobs] --> Filter[Filter Jobs<br/>GET /jobs?filters]
+        Filter --> ViewJob[View Job Details<br/>GET /jobs/:id]
+    end
 
-6. PROFILE MANAGEMENT
-   ┌─────────────┐
-   │ Update      │ PUT /profile
-   │ Profile     │
-   └──────┬──────┘
-          │ ✅ Profile Updated
-          ▼
-   ┌─────────────┐
-   │ View My     │ GET /auth/me
-   │ Account     │
-   └─────────────┘
+    ViewJob --> Company
+
+    subgraph CompanyInfo["4. Company Research"]
+        Company[View Company<br/>GET /companies/:id]
+    end
+
+    Company --> Apply
+
+    subgraph Application["5. Application (Future)"]
+        Apply[Apply to Job<br/>POST /jobs/:id/apply] --> AppSubmitted[✅ Application Submitted]
+    end
+
+    AppSubmitted --> Update
+    Token --> Update
+
+    subgraph Management["6. Profile Management"]
+        Update[Update Profile<br/>PUT /profile] --> ViewAccount[View My Account<br/>GET /auth/me]
+    end
+
+    ViewAccount --> Browse
+
+    style Register fill:#e3f2fd
+    style Login fill:#e3f2fd
+    style CreateProfile fill:#e8f5e9
+    style Browse fill:#fff3e0
+    style Filter fill:#fff3e0
+    style ViewJob fill:#fff3e0
+    style Company fill:#f3e5f5
+    style Apply fill:#fce4ec
+    style Update fill:#e8f5e9
 ```
 
 ---
@@ -1059,109 +956,43 @@ mongodb+srv://japanssw-rw:[password]@japansswcluster0.lvia1ct.mongodb.net/japans
 
 ### Complete Data Flow Architecture
 
-```
-┌──────────────────────────────────────────────────────────────────┐
-│                    CLIENT REQUEST FLOW                            │
-└──────────────────────────────────────────────────────────────────┘
+```mermaid
+sequenceDiagram
+    participant C as 1. Client
+    participant MW as 2. Middleware<br/>(CORS, Rate Limit, JWT)
+    participant R as 3. Route Handler
+    participant CTL as 4. Controller<br/>(Business Logic)
+    participant M as 5. Mongoose Model<br/>(Data Access)
+    participant DB as 6. MongoDB Atlas<br/>(japansswdb)
 
-[1] CLIENT REQUEST
-    │
-    │ POST /api/v1/profile
-    │ Headers: { Authorization: "Bearer eyJhbG..." }
-    │ Body: { firstName: "Carlos", lastName: "Rivera", ... }
-    │
-    ▼
-┌─────────────────────────────────────────────────────────────────┐
-│ [2] EXPRESS MIDDLEWARE CHAIN                                     │
-│                                                                  │
-│  ┌──────────────┐   ┌──────────────┐   ┌──────────────┐        │
-│  │ CORS & JSON  │ → │ Rate Limiter │ → │ JWT Auth     │        │
-│  │ Body Parser  │   │ Check        │   │ Verify Token │        │
-│  └──────────────┘   └──────────────┘   └──────┬───────┘        │
-│                                                │                 │
-│                         Token Valid? ──────────┤                 │
-│                                                │                 │
-└────────────────────────────────────────────────┼─────────────────┘
-                                                 │ ✅ Extract user.id
-                                                 ▼
-┌─────────────────────────────────────────────────────────────────┐
-│ [3] ROUTE HANDLER                                                │
-│                                                                  │
-│  router.post('/profile', protect, profileController.createProfile)│
-│                           ↑              ↑                       │
-│                       Auth MW        Controller Function         │
-└────────────────────────────────────────────┬────────────────────┘
-                                             │
-                                             ▼
-┌─────────────────────────────────────────────────────────────────┐
-│ [4] CONTROLLER LOGIC (Business Logic Layer)                      │
-│                                                                  │
-│  async function createProfile(req, res, next) {                 │
-│    • Extract user ID from req.user (set by JWT middleware)      │
-│    • Validate required fields                                   │
-│    • Check if profile already exists for this user              │
-│    • Prepare profile data object                                │
-│    • Call Model to save data                                    │
-│  }                                                               │
-└────────────────────────────────────────────┬────────────────────┘
-                                             │
-                                             ▼
-┌─────────────────────────────────────────────────────────────────┐
-│ [5] MONGOOSE MODEL (Data Access Layer)                          │
-│                                                                  │
-│  const Profile = mongoose.model('Profile', ProfileSchema);      │
-│                                                                  │
-│  • Schema validation (required fields, types, constraints)      │
-│  • Pre-save hooks (timestamps, defaults)                        │
-│  • Build MongoDB query                                          │
-│  • Execute query with optimistic concurrency                    │
-└────────────────────────────────────────────┬────────────────────┘
-                                             │
-                                             │ MongoDB Wire Protocol
-                                             ▼
-┌─────────────────────────────────────────────────────────────────┐
-│ [6] MONGODB ATLAS (Cloud Database)                              │
-│                                                                  │
-│  Cluster: japansswcluster0 (US-EAST-1)                          │
-│  Database: japansswdb                                           │
-│                                                                  │
-│  Collections:                                                    │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐          │
-│  │   users      │  │   profiles   │  │    jobs      │          │
-│  │   (26 docs)  │  │  (dynamic)   │  │  (44 docs)   │          │
-│  └──────────────┘  └──────────────┘  └──────────────┘          │
-│  ┌──────────────┐  ┌──────────────┐                            │
-│  │  companies   │  │ applications │                            │
-│  │  (10 docs)   │  │  (dynamic)   │                            │
-│  └──────────────┘  └──────────────┘                            │
-│                                                                  │
-│  • Write operation: insertOne()                                 │
-│  • Indexes: user_id (unique), createdAt                         │
-│  • Validation: Schema validation rules                          │
-│  • Transaction: None (single document operation)                │
-└────────────────────────────────────────────┬────────────────────┘
-                                             │
-                                             │ ✅ Document Saved
-                                             │ { _id: "697b...", ... }
-                                             ▼
-┌─────────────────────────────────────────────────────────────────┐
-│ [7] RESPONSE BACK TO CLIENT                                      │
-│                                                                  │
-│  Status: 201 Created                                            │
-│  Body: {                                                         │
-│    "success": true,                                             │
-│    "data": {                                                     │
-│      "profile": {                                               │
-│        "_id": "697b437ad8f661295cf33273",                       │
-│        "user": "697b38175d7e6fe346a626a5",                      │
-│        "firstName": "Carlos",                                   │
-│        "lastName": "Rivera",                                    │
-│        "japaneseLevel": "N3",                                   │
-│        "createdAt": "2026-01-29T11:24:42.016Z"                  │
-│      }                                                           │
-│    }                                                             │
-│  }                                                               │
-└─────────────────────────────────────────────────────────────────┘
+    Note over C: POST /api/v1/profile<br/>Authorization: Bearer token<br/>{firstName, lastName, ...}
+
+    C->>+MW: HTTP Request
+    MW->>MW: Parse JSON body
+    MW->>MW: Check rate limit
+    MW->>MW: Verify JWT token
+    Note over MW: ✅ Extract user.id
+
+    MW->>+R: Request with req.user
+    Note over R: router.post('/profile',<br/>protect, createProfile)
+
+    R->>+CTL: profileController.createProfile()
+    Note over CTL: • Extract user ID<br/>• Validate fields<br/>• Check existing profile<br/>• Prepare data
+
+    CTL->>+M: Profile.create(data)
+    Note over M: • Schema validation<br/>• Pre-save hooks<br/>• Build MongoDB query
+
+    M->>+DB: insertOne() via Wire Protocol
+    Note over DB: Collections:<br/>users (26), profiles (dynamic)<br/>jobs (44), companies (10)
+    Note over DB: • Write operation<br/>• Index: user_id (unique)<br/>• Validation rules
+
+    DB-->>-M: Document Saved<br/>{_id: "697b...", ...}
+    M-->>-CTL: Profile instance
+    CTL-->>-R: Response data
+    R-->>-MW: Response object
+    MW-->>-C: 201 Created<br/>{success: true,<br/>data: {profile}}
+
+    Note over C: ✅ Profile Created<br/>Display in UI
 ```
 
 ### MongoDB Atlas Verification Results
