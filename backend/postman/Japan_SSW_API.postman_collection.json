@@ -1,0 +1,533 @@
+{
+  "info": {
+    "name": "Japan SSW API",
+    "_postman_id": "japan-ssw-api-collection",
+    "description": "Complete API collection for Japan Specified Skilled Worker (SSW) platform",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{JWT_TOKEN}}",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register User (Jobseeker)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.environment.set('JWT_TOKEN', jsonData.data.token);",
+                  "    pm.environment.set('USER_ID', jsonData.data.user.id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"jobseeker@test.com\",\n  \"password\": \"TestPass123!\",\n  \"role\": \"jobseeker\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/auth/register",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "auth", "register"]
+            }
+          }
+        },
+        {
+          "name": "Register User (Employer)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"employer@test.com\",\n  \"password\": \"TestPass123!\",\n  \"role\": \"employer\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/auth/register",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "auth", "register"]
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.environment.set('JWT_TOKEN', jsonData.data.token);",
+                  "    pm.environment.set('USER_ID', jsonData.data.user.id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"jobseeker@test.com\",\n  \"password\": \"TestPass123!\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/auth/login",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Get Current User",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/auth/me",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "auth", "me"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Profile",
+      "item": [
+        {
+          "name": "Create Profile",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Maria\",\n  \"lastName\": \"Santos\",\n  \"dateOfBirth\": \"1995-05-15\",\n  \"gender\": \"female\",\n  \"nationality\": \"Philippines\",\n  \"phone\": \"+81-90-1234-5678\",\n  \"address\": \"1-2-3 Shibuya\",\n  \"prefecture\": \"Tokyo\",\n  \"city\": \"Shibuya\",\n  \"postalCode\": \"150-0002\",\n  \"japaneseLevel\": \"N3\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/profile",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "profile"]
+            }
+          }
+        },
+        {
+          "name": "Get Profile",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/profile",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "profile"]
+            }
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone\": \"+81-90-9999-8888\",\n  \"address\": \"Updated address\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/profile",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "profile"]
+            }
+          }
+        },
+        {
+          "name": "Add Education",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"school\": \"University of Manila\",\n  \"degree\": \"Bachelor\",\n  \"field\": \"Computer Science\",\n  \"startDate\": \"2013-06-01\",\n  \"endDate\": \"2017-03-31\",\n  \"current\": false\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/profile/education",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "profile", "education"]
+            }
+          }
+        },
+        {
+          "name": "Add Experience",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"company\": \"Tech Solutions Inc\",\n  \"title\": \"Software Developer\",\n  \"description\": \"Developed web applications\",\n  \"startDate\": \"2018-04-01\",\n  \"endDate\": \"2024-12-31\",\n  \"current\": false\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/profile/experience",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "profile", "experience"]
+            }
+          }
+        },
+        {
+          "name": "Update Skills",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"skills\": [\n    {\"name\": \"JavaScript\", \"level\": \"Advanced\", \"category\": \"Programming\"},\n    {\"name\": \"React\", \"level\": \"Intermediate\", \"category\": \"Framework\"}\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/profile/skills",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "profile", "skills"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Companies",
+      "item": [
+        {
+          "name": "Get All Companies",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/companies?page=1&limit=10",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "companies"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Company (Employer)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.environment.set('COMPANY_ID', jsonData.data.company._id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Tech Innovation Corp\",\n  \"industry\": \"Manufacturing\",\n  \"size\": \"201-500\",\n  \"description\": \"Leading technology manufacturing company\",\n  \"location\": {\n    \"prefecture\": \"Tokyo\",\n    \"city\": \"Shibuya\",\n    \"postalCode\": \"150-0001\"\n  },\n  \"contact\": {\n    \"email\": \"hr@techinnovation.jp\",\n    \"phone\": \"03-1234-5678\"\n  },\n  \"website\": \"https://techinnovation.jp\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/companies",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "companies"]
+            }
+          }
+        },
+        {
+          "name": "Get Company by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/companies/{{COMPANY_ID}}",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "companies", "{{COMPANY_ID}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Jobs",
+      "item": [
+        {
+          "name": "Get All Jobs",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/jobs?page=1&limit=10",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "jobs"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Search Jobs (Filter by Industry)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/jobs?industry=Manufacturing&prefecture=Tokyo",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "jobs"],
+              "query": [
+                { "key": "industry", "value": "Manufacturing" },
+                { "key": "prefecture", "value": "Tokyo" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Job (Employer)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.environment.set('JOB_ID', jsonData.data.job._id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"company\": \"{{COMPANY_ID}}\",\n  \"title\": \"Manufacturing Engineer\",\n  \"industry\": \"Manufacturing\",\n  \"summary\": \"Join our innovative manufacturing team\",\n  \"responsibilities\": \"Design and improve manufacturing processes\",\n  \"requirements\": \"Experience with industrial equipment\",\n  \"benefits\": \"Competitive salary, health insurance\",\n  \"japaneseLevel\": \"N3\",\n  \"compensation\": {\n    \"salaryMin\": 250000,\n    \"salaryMax\": 350000,\n    \"currency\": \"JPY\",\n    \"period\": \"monthly\",\n    \"overtimePay\": true\n  },\n  \"location\": {\n    \"prefecture\": \"Tokyo\",\n    \"city\": \"Shibuya\",\n    \"remote\": false\n  },\n  \"workConditions\": {\n    \"workHours\": \"9:00-18:00\",\n    \"daysOff\": \"2 days per week\",\n    \"vacation\": \"10 days paid leave\"\n  },\n  \"applicationInfo\": {\n    \"deadline\": \"2026-06-30\",\n    \"startDate\": \"2026-08-01\",\n    \"contactEmail\": \"recruit@techinnovation.jp\",\n    \"applicationMethod\": \"Platform\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/jobs",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "jobs"]
+            }
+          }
+        },
+        {
+          "name": "Get Job by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/jobs/{{JOB_ID}}",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "jobs", "{{JOB_ID}}"]
+            }
+          }
+        },
+        {
+          "name": "Update Job (Employer)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"summary\": \"Updated job summary\",\n  \"benefits\": \"Enhanced benefits package\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/jobs/{{JOB_ID}}",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "jobs", "{{JOB_ID}}"]
+            }
+          }
+        },
+        {
+          "name": "Get Jobs by Company",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/jobs/company/{{COMPANY_ID}}",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "jobs", "company", "{{COMPANY_ID}}"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -71,12 +71,13 @@
 
   /* Typography fonts */
   --font-heading: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --font-body: "Open Sans", system-ui, -apple-system, "Segoe UI", Roboto, Arial,
-    sans-serif;
-  --font-jp: "Yu Gothic", "YuGothic", "Hiragino Kaku Gothic ProN", Meiryo,
-    sans-serif;
-  --font-family-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif;
+  --font-body:
+    "Open Sans", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-jp:
+    "Yu Gothic", "YuGothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+  --font-family-sans:
+    "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif;
   --font-family-mono: "Monaco", "Menlo", "Ubuntu Mono", monospace;
 
   /* Typography scale */
@@ -245,7 +246,9 @@ button {
 }
 
 .site-header__inner {
-  transition: padding 180ms ease, background 180ms ease;
+  transition:
+    padding 180ms ease,
+    background 180ms ease;
   padding-left: 1rem;
   padding-right: 1rem;
   align-items: center; /* keep vertical alignment consistent */
@@ -537,7 +540,9 @@ button {
   background-color: white;
   border: 1px solid #e2e8f0;
   border-radius: 0.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+  box-shadow:
+    0 4px 6px rgba(0, 0, 0, 0.1),
+    0 1px 3px rgba(0, 0, 0, 0.08);
   z-index: 100;
   display: none; /* use block for to show use none for Hidden by default */
   padding: 1rem;
@@ -1001,7 +1006,9 @@ user-menu-dropdown__divider {
   font-weight: 700;
   font-size: 16px;
   line-height: 1.5;
-  transition: top 0.2s ease, background 0.2s ease;
+  transition:
+    top 0.2s ease,
+    background 0.2s ease;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
@@ -1062,7 +1069,9 @@ a:focus-visible {
 .btn:focus,
 .btn:focus-visible {
   transform: translateY(-1px);
-  box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.15), 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow:
+    0 0 0 4px rgba(0, 102, 204, 0.15),
+    0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 /* Navigation focus states */
@@ -1110,7 +1119,9 @@ a:focus-visible {
 .top-company-card:focus-within {
   outline: var(--focus-outline-width) solid var(--focus-color);
   outline-offset: var(--focus-outline-offset);
-  box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.1), 0 8px 24px rgba(0, 0, 0, 0.12);
+  box-shadow:
+    0 0 0 4px rgba(0, 102, 204, 0.1),
+    0 8px 24px rgba(0, 0, 0, 0.12);
 }
 
 /* Company link focus (for cards) */
@@ -1241,7 +1252,8 @@ a:focus-visible {
   .company-grid a {
     color: var(--dark-color);
     text-decoration: none; /* no underline by default */
-    transition: color 160ms var(--transition),
+    transition:
+      color 160ms var(--transition),
       border-bottom-color 160ms var(--transition);
     display: inline-block;
     border-bottom: 1px solid transparent;
@@ -1730,7 +1742,8 @@ button[aria-label="Open menu"] {
   background-repeat: no-repeat;
   z-index: 0;
   /* Animation properties */
-  animation: slideInUp 1.2s ease-out,
+  animation:
+    slideInUp 1.2s ease-out,
     heroBackgroundMove 20s ease-in-out 1.2s infinite;
   transform: scale(1.05);
 }
@@ -2413,7 +2426,9 @@ footer {
   text-decoration: underline; /* Required: visual distinction beyond color */
   text-decoration-thickness: 1px;
   text-underline-offset: 2px;
-  transition: color 180ms ease, text-decoration-color 180ms ease;
+  transition:
+    color 180ms ease,
+    text-decoration-color 180ms ease;
 }
 
 .legal-content .feature-card.feature-wide a:hover {
@@ -2431,7 +2446,9 @@ footer {
 a[href="/pages/privacy.html"] {
   color: var(--dark-color);
   text-decoration: none;
-  transition: color 180ms ease, text-decoration-color 180ms ease;
+  transition:
+    color 180ms ease,
+    text-decoration-color 180ms ease;
   border-bottom: 1px solid transparent;
 }
 
@@ -2452,7 +2469,9 @@ a[href="/pages/privacy.html"]:focus {
   color: var(--footer-link-color, #fff);
   text-decoration: none;
   border-bottom: 1px solid transparent;
-  transition: color 180ms ease, text-decoration-color 180ms ease,
+  transition:
+    color 180ms ease,
+    text-decoration-color 180ms ease,
     border-bottom-color 180ms ease;
 }
 .site-footer a:hover,
@@ -2494,7 +2513,9 @@ a[href="/pages/privacy.html"]:focus {
   text-decoration: underline;
   text-decoration-thickness: 2px;
   text-underline-offset: 3px;
-  transition: color 160ms ease, text-decoration-color 160ms ease;
+  transition:
+    color 160ms ease,
+    text-decoration-color 160ms ease;
 }
 
 .site-footer .btn:hover,
@@ -3788,7 +3809,8 @@ body.company-dashboard .bento-box {
   background-color: white;
   border-radius: 16px;
   /* Shadow converted from Tailwind shadow-2xl */
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
     0 10px 10px -5px rgba(0, 0, 0, 0.04);
   overflow: hidden;
 }
@@ -3889,7 +3911,9 @@ body.company-dashboard .bento-box {
   border: 1px solid #a57668; /* border-gray-300 */
   border-radius: 8px; /* rounded-lg */
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
-  transition: border-color 0.15s, box-shadow 0.15s;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
   box-sizing: border-box;
   resize: none; /* Prevents vertical resizing of textarea */
 }
@@ -3913,12 +3937,15 @@ body.company-dashboard .bento-box {
   font-size: 1rem; /* base */
   font-weight: 500; /* medium */
   border-radius: 8px; /* rounded-lg */
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -2px rgba(0, 0, 0, 0.1); /* shadow-md */
   color: white;
   background-color: #eb0000; /* indigo-600 */
   cursor: pointer;
-  transition: background-color 0.15s, transform 0.15s;
+  transition:
+    background-color 0.15s,
+    transform 0.15s;
 }
 
 .contact-card-container .submit-button:hover {
@@ -3928,7 +3955,9 @@ body.company-dashboard .bento-box {
 
 .contact-card-container .submit-button:focus {
   outline: none;
-  box-shadow: 0 0 0 4px #a5b4fc, 0 0 0 6px #eb0000; /* focus ring */
+  box-shadow:
+    0 0 0 4px #a5b4fc,
+    0 0 0 6px #eb0000; /* focus ring */
 }
 
 .contact-card-container .button-icon {
@@ -4141,7 +4170,9 @@ main
 -------------------------------------- */
 :root,
 [data-bs-theme="dark"] {
-  transition: background-color 0.3s ease, color 0.3s ease,
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
     border-color 0.3s ease;
 }
 
@@ -4567,7 +4598,9 @@ main
   padding: 8px 12px !important;
   border-radius: 6px !important;
   display: inline-block;
-  transition: background-color 0.3s ease, color 0.3s ease,
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
     border-color 0.3s ease;
 }
 /* =====================================================
@@ -4738,20 +4771,23 @@ p.lead {
 .animate-fade-in.animate-active,
 .animate-fade-in-up.animate-active,
 .animate-fade-in-down.animate-active {
-  transition: opacity 0.8s ease-out,
+  transition:
+    opacity 0.8s ease-out,
     transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .animate-slide-up.animate-active,
 .animate-slide-in-left.animate-active,
 .animate-slide-in-right.animate-active {
-  transition: opacity 0.9s ease-out,
+  transition:
+    opacity 0.9s ease-out,
     transform 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .animate-scale-up.animate-active,
 .animate-scale-in.animate-active {
-  transition: opacity 0.7s ease-out,
+  transition:
+    opacity 0.7s ease-out,
     transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
@@ -4814,7 +4850,9 @@ p.lead {
 
 /* Hover Animations (interactive elements) */
 .animate-hover-lift {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .animate-hover-lift:hover {

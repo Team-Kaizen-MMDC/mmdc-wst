@@ -1,0 +1,774 @@
+[
+  {
+    "title": "About Japan SSW",
+    "companyName": "Unknown",
+    "industry": "Other",
+    "category": "General",
+    "summary": "About Japan SSW",
+    "description": "About Japan SSW\n\nAbout our service and mission.\n\nWant to work with us?\n\nWe partner with companies to hire and onboard exceptional\n\ntalent.\n\nContact Us",
+    "postedByEmail": "employer+seed@example.com",
+    "location": {
+      "prefecture": "Tokyo",
+      "city": "Shibuya"
+    },
+    "compensation": {
+      "salaryMin": 200000,
+      "salaryMax": 350000,
+      "currency": "JPY",
+      "period": "monthly"
+    },
+    "applicationInfo": {
+      "deadline": "2026-03-30T04:29:16.361Z",
+      "applicationMethod": "Platform"
+    },
+    "status": "active",
+    "_source": "pages/about.html"
+  },
+  {
+    "title": "Post New Job",
+    "companyName": "Unknown",
+    "industry": "Other",
+    "category": "General",
+    "summary": "Post New Job",
+    "description": "Post New Job\n\nClose\n\n1. Job Basics\n\nCompany Name\n\nCompany name is required.\n\nJob Title\n\nJob title is required.\n\nJob Category\n\nSelect Category...\n\nManufacturing",
+    "postedByEmail": "employer+seed@example.com",
+    "location": {
+      "prefecture": "Tokyo",
+      "city": "Shibuya"
+    },
+    "compensation": {
+      "salaryMin": 200000,
+      "salaryMax": 350000,
+      "currency": "JPY",
+      "period": "monthly"
+    },
+    "applicationInfo": {
+      "deadline": "2026-03-30T04:29:16.362Z",
+      "applicationMethod": "Platform"
+    },
+    "status": "active",
+    "_source": "pages/addEdit/job-post.html"
+  },
+  {
+    "title": "Agency Services and Support Organizations",
+    "companyName": "Unknown",
+    "industry": "Other",
+    "category": "General",
+    "summary": "Agency Services and Support Organizations",
+    "description": "Agency Services and Support Organizations\n\nRegistered Support Organizations\n\nBelow are a selection of organisations and agencies that assist\n\nemployers and candidates with the SSW programme. Click through to\n\nlearn more or contact them directly.\n\nGurutto Corporation (Registration Support Organization)\n\nProvides employer and candidate support under regional programs.\n\nSee their listing and contact information.\n\nVisit Gurutto listing\n\nTHRIVE Business Cooperative Association",
+    "postedByEmail": "employer+seed@example.com",
+    "location": {
+      "prefecture": "Tokyo",
+      "city": "Shibuya"
+    },
+    "compensation": {
+      "salaryMin": 200000,
+      "salaryMax": 350000,
+      "currency": "JPY",
+      "period": "monthly"
+    },
+    "applicationInfo": {
+      "deadline": "2026-03-30T04:29:16.362Z",
+      "applicationMethod": "Platform"
+    },
+    "status": "active",
+    "_source": "pages/agency.html"
+  },
+  {
+    "title": "ANA InterContinental",
+    "companyName": "Unknown",
+    "industry": "Other",
+    "category": "General",
+    "summary": "ANA InterContinental",
+    "description": "ANA InterContinental\n\nANA InterContinental is a leading hospitality group operating luxury hotels across Japan.\n\nThey welcome foreign SSW workers in housekeeping, food and beverage service, front desk,\n\nand facility support roles. ANA InterContinental provides on-the-job training, language support,\n\nand career development programs, helping international staff build a long-term career in Japan’s\n\nhospitality industry.\n\nView jobs\n\nBack to companies",
+    "postedByEmail": "employer+seed@example.com",
+    "location": {
+      "prefecture": "Tokyo",
+      "city": "Shibuya"
+    },
+    "compensation": {
+      "salaryMin": 200000,
+      "salaryMax": 350000,
+      "currency": "JPY",
+      "period": "monthly"
+    },
+    "applicationInfo": {
+      "deadline": "2026-03-30T04:29:16.362Z",
+      "applicationMethod": "Platform"
+    },
+    "status": "active",
+    "_source": "pages/companies/ana-intercontinental.html"
+  },
+  {
+    "title": "All Nippon Airways (ANA)",
+    "companyName": "Unknown",
+    "industry": "Other",
+    "category": "General",
+    "summary": "All Nippon Airways (ANA)",
+    "description": "All Nippon Airways (ANA)\n\nAll Nippon Airways (ANA) is Japan’s largest airline and one of the most trusted aviation\n\nbrands in Asia. They recruit SSW workers for ground handling, customer service, and\n\nmaintenance support roles. ANA provides comprehensive training, cross-cultural workplace\n\nprograms, and long-term career opportunities for foreign staff in the aviation and service\n\nindustries.\n\nView jobs\n\nBack to companies",
+    "postedByEmail": "employer+seed@example.com",
+    "location": {
+      "prefecture": "Tokyo",
+      "city": "Shibuya"
+    },
+    "compensation": {
+      "salaryMin": 200000,
+      "salaryMax": 350000,
+      "currency": "JPY",
+      "period": "monthly"
+    },
+    "applicationInfo": {
+      "deadline": "2026-03-30T04:29:16.362Z",
+      "applicationMethod": "Platform"
+    },
+    "status": "active",
+    "_source": "pages/companies/ana.html"
+  },
+  {
+    "title": "Featured Companies",
+    "companyName": "Unknown",
+    "industry": "Other",
+    "category": "General",
+    "summary": "Featured Companies",
+    "description": "Featured Companies\n\nANA InterContinental\n\nANA InterContinental is a leading hospitality group\n\noperating luxury hotels across Japan.\n\nView Company\n\n5+ Jobs\n\nPrince Hotels\n\nPrince Hotels & Resorts operates hotels, resorts, and\n\nleisure facilities throughout Japan\n\nView Company",
+    "postedByEmail": "employer+seed@example.com",
+    "location": {
+      "prefecture": "Tokyo",
+      "city": "Shibuya"
+    },
+    "compensation": {
+      "salaryMin": 200000,
+      "salaryMax": 350000,
+      "currency": "JPY",
+      "period": "monthly"
+    },
+    "applicationInfo": {
+      "deadline": "2026-03-30T04:29:16.362Z",
+      "applicationMethod": "Platform"
+    },
+    "status": "active",
+    "_source": "pages/companies/company-list.html"
+  },
+  {
+    "title": "Daikin Industries",
+    "companyName": "Unknown",
+    "industry": "Other",
+    "category": "General",
+    "summary": "Daikin Industries",
+    "description": "Daikin Industries\n\nDaikin Industries is a global leader in air conditioning and refrigeration systems.\n\nThey hire SSW workers for roles such as equipment installation, maintenance technician,\n\nand manufacturing support. Daikin offers skill-based training, safety certification\n\nprograms, and opportunities for career advancement—ideal for those pursuing the SSW\n\nConstruction or Manufacturing categories.\n\nView jobs\n\nBack to companies",
+    "postedByEmail": "employer+seed@example.com",
+    "location": {
+      "prefecture": "Tokyo",
+      "city": "Shibuya"
+    },
+    "compensation": {
+      "salaryMin": 200000,
+      "salaryMax": 350000,
+      "currency": "JPY",
+      "period": "monthly"
+    },
+    "applicationInfo": {
+      "deadline": "2026-03-30T04:29:16.362Z",
+      "applicationMethod": "Platform"
+    },
+    "status": "active",
+    "_source": "pages/companies/daikin.html"
+  },
+  {
+    "title": "Kandenko",
+    "companyName": "Unknown",
+    "industry": "Other",
+    "category": "General",
+    "summary": "Kandenko",
+    "description": "Kandenko\n\nKandenko is a major engineering and construction company specializing in electrical,\n\ncommunication, and energy systems. SSW workers can apply for positions as electricians,\n\nsite technicians, and project assistants. The company values teamwork, safety,\n\nand professional growth, offering comprehensive training and technical skill development\n\nfor foreign staff working in Japan’s infrastructure field.\n\nView jobs\n\nBack to companies",
+    "postedByEmail": "employer+seed@example.com",
+    "location": {
+      "prefecture": "Tokyo",
+      "city": "Shibuya"
+    },
+    "compensation": {
+      "salaryMin": 200000,
+      "salaryMax": 350000,
+      "currency": "JPY",
+      "period": "monthly"
+    },
+    "applicationInfo": {
+      "deadline": "2026-03-30T04:29:16.362Z",
+      "applicationMethod": "Platform"
+    },
+    "status": "active",
+    "_source": "pages/companies/kandenko.html"
+  },
+  {
+    "title": "Mitsubishi Heavy Industries",
+    "companyName": "Unknown",
+    "industry": "Other",
+    "category": "General",
+    "summary": "Mitsubishi Heavy Industries",
+    "description": "Mitsubishi Heavy Industries\n\nMitsubishi Heavy Industries is a global engineering and manufacturing leader.\n\nThey offer opportunities for SSW candidates in factory production, machinery\n\noperation, and equipment assembly. MHI supports technical training, workplace\n\nsafety education, and skill development programs, making it a preferred employer\n\nfor skilled foreign workers in the SSW Manufacturing and Engineering sectors.\n\nView jobs\n\nBack to companies",
+    "postedByEmail": "employer+seed@example.com",
+    "location": {
+      "prefecture": "Tokyo",
+      "city": "Shibuya"
+    },
+    "compensation": {
+      "salaryMin": 200000,
+      "salaryMax": 350000,
+      "currency": "JPY",
+      "period": "monthly"
+    },
+    "applicationInfo": {
+      "deadline": "2026-03-30T04:29:16.362Z",
+      "applicationMethod": "Platform"
+    },
+    "status": "active",
+    "_source": "pages/companies/mitsubishi-heavy-industries.html"
+  },
+  {
+    "title": "Nissan Motor Company",
+    "companyName": "Unknown",
+    "industry": "Other",
+    "category": "General",
+    "summary": "Nissan Motor Company",
+    "description": "Nissan Motor Company\n\nNissan Motor Company is a world-renowned automobile manufacturer based in Yokohama.\n\nFor SSW workers, Nissan offers opportunities in factory production, assembly, inspection,\n\nand equipment maintenance. The company provides safe working environments, stable contracts,\n\nand technical training, allowing foreign employees to gain valuable experience in Japan’s\n\nautomotive industry.\n\nView jobs\n\nBack to companies",
+    "postedByEmail": "employer+seed@example.com",
+    "location": {
+      "prefecture": "Tokyo",
+      "city": "Shibuya"
+    },
+    "compensation": {
+      "salaryMin": 200000,
+      "salaryMax": 350000,
+      "currency": "JPY",
+      "period": "monthly"
+    },
+    "applicationInfo": {
+      "deadline": "2026-03-30T04:29:16.362Z",
+      "applicationMethod": "Platform"
+    },
+    "status": "active",
+    "_source": "pages/companies/nissan.html"
+  },
+  {
+    "title": "Prince Hotels",
+    "companyName": "Unknown",
+    "industry": "Other",
+    "category": "General",
+    "summary": "Prince Hotels",
+    "description": "Prince Hotels\n\nPrince Hotels & Resorts operates hotels, resorts, and leisure facilities throughout Japan.\n\nThey hire SSW candidates for guest relations, restaurant service, and facility maintenance.\n\nThe company offers accommodation assistance, uniform support, and Japanese language training,\n\nmaking it one of the most welcoming employers for foreign workers starting their journey in\n\nJapan’s hotel sector.\n\nView jobs\n\nBack to companies",
+    "postedByEmail": "employer+seed@example.com",
+    "location": {
+      "prefecture": "Tokyo",
+      "city": "Shibuya"
+    },
+    "compensation": {
+      "salaryMin": 200000,
+      "salaryMax": 350000,
+      "currency": "JPY",
+      "period": "monthly"
+    },
+    "applicationInfo": {
+      "deadline": "2026-03-30T04:29:16.362Z",
+      "applicationMethod": "Platform"
+    },
+    "status": "active",
+    "_source": "pages/companies/prince-hotels.html"
+  },
+  {
+    "title": "SOMPO Care",
+    "companyName": "Unknown",
+    "industry": "Other",
+    "category": "General",
+    "summary": "SOMPO Care",
+    "description": "SOMPO Care\n\nSOMPO Care is one of Japan’s largest care service providers for the elderly.\n\nThey actively recruit caregivers and nursing support staff under the SSW\n\nCaregiving category. SOMPO Care provides structured training programs, Japanese\n\nlanguage support, and certification assistance, ensuring foreign workers gain\n\nthe skills and knowledge to succeed in Japan’s growing healthcare industry.\n\nView jobs\n\nBack to companies",
+    "postedByEmail": "employer+seed@example.com",
+    "location": {
+      "prefecture": "Tokyo",
+      "city": "Shibuya"
+    },
+    "compensation": {
+      "salaryMin": 200000,
+      "salaryMax": 350000,
+      "currency": "JPY",
+      "period": "monthly"
+    },
+    "applicationInfo": {
+      "deadline": "2026-03-30T04:29:16.362Z",
+      "applicationMethod": "Platform"
+    },
+    "status": "active",
+    "_source": "pages/companies/sompo-care.html"
+  },
+  {
+    "title": "Yoshinoya",
+    "companyName": "Unknown",
+    "industry": "Other",
+    "category": "General",
+    "summary": "Yoshinoya",
+    "description": "Yoshinoya\n\nYoshinoya is one of Japan’s most famous restaurant chains, known for its gyūdon (beef bowls).\n\nThey hire SSW candidates for kitchen, food preparation, and customer service positions.\n\nYoshinoya offers paid training, uniforms, and career growth support, making it a great choice\n\nfor workers under the SSW Food Service category.\n\nView jobs\n\nBack to companies",
+    "postedByEmail": "employer+seed@example.com",
+    "location": {
+      "prefecture": "Tokyo",
+      "city": "Shibuya"
+    },
+    "compensation": {
+      "salaryMin": 200000,
+      "salaryMax": 350000,
+      "currency": "JPY",
+      "period": "monthly"
+    },
+    "applicationInfo": {
+      "deadline": "2026-03-30T04:29:16.362Z",
+      "applicationMethod": "Platform"
+    },
+    "status": "active",
+    "_source": "pages/companies/yoshinoya.html"
+  },
+  {
+    "title": "Company Dashboard",
+    "companyName": "Unknown",
+    "industry": "Construction",
+    "category": "General",
+    "summary": "Company Dashboard",
+    "description": "Company Dashboard\n\nDashboard\n\nJob Management\n\nApplicant Tracking\n\nCompany Profile\n\nSanchez Miguel\n\nAdmin\n\nEdit\n\nPost New Job\n\nView All Applicant",
+    "postedByEmail": "employer+seed@example.com",
+    "location": "Server Restaurant",
+    "compensation": {
+      "salaryMin": 200000,
+      "salaryMax": 350000,
+      "currency": "JPY",
+      "period": "monthly"
+    },
+    "applicationInfo": {
+      "deadline": "2026-03-30T04:29:16.362Z",
+      "applicationMethod": "Platform"
+    },
+    "status": "active",
+    "_source": "pages/companyDashboard.html"
+  },
+  {
+    "title": "Contact Japan SSW",
+    "companyName": "Unknown",
+    "industry": "Other",
+    "category": "General",
+    "summary": "Contact Japan SSW",
+    "description": "Contact Japan SSW\n\nGet in touch\n\nWe'd love to hear from you about jobs, partnerships, or\n\nvisa guidance. Use the form to send a message and we'll\n\nrespond as soon as possible.\n\nAddressShinjuku, Tokyo, Japan\n\n160-0022\n\nEmailsupport@japanssw.com\n\nHoursMon – Fri: 9:00 – 18:00 JST\n\nSend us a message",
+    "postedByEmail": "employer+seed@example.com",
+    "location": {
+      "prefecture": "Tokyo",
+      "city": "Shibuya"
+    },
+    "compensation": {
+      "salaryMin": 200000,
+      "salaryMax": 350000,
+      "currency": "JPY",
+      "period": "monthly"
+    },
+    "applicationInfo": {
+      "deadline": "2026-03-30T04:29:16.362Z",
+      "applicationMethod": "Platform"
+    },
+    "status": "active",
+    "_source": "pages/contact.html"
+  },
+  {
+    "title": "JapanSSW",
+    "companyName": "Unknown",
+    "industry": "Other",
+    "category": "General",
+    "summary": "JapanSSW",
+    "description": "JapanSSW\n\nCreate an account\n\nAlready have an account?\n\nLog in\n\nEmail\n\nPassword\n\nConfirm Password\n\nI agree to the\n\nPrivacy Policy\n\nCreate Account",
+    "postedByEmail": "employer+seed@example.com",
+    "location": {
+      "prefecture": "Tokyo",
+      "city": "Shibuya"
+    },
+    "compensation": {
+      "salaryMin": 200000,
+      "salaryMax": 350000,
+      "currency": "JPY",
+      "period": "monthly"
+    },
+    "applicationInfo": {
+      "deadline": "2026-03-30T04:29:16.362Z",
+      "applicationMethod": "Platform"
+    },
+    "status": "active",
+    "_source": "pages/createAccount.html"
+  },
+  {
+    "title": "Cleaning Staff",
+    "companyName": "Unknown",
+    "industry": "Other",
+    "category": "General",
+    "summary": "Katsuragawa (Kyoto)",
+    "description": "Katsuragawa (Kyoto)\n\nApply now →\n\nCleaning Staff\n\nKatsuragawa (Kyoto) ・ Cleaning Services ・ Full time ・ 2025\n\n2025\n\nConditions\n\n¥9,000/day\n\nWork Hours: 08:00–17:00, 3–6 days per week\n\nTrial Period: 180 days\n\nTransportation: Open to negotiation",
+    "postedByEmail": "employer+seed@example.com",
+    "location": {
+      "prefecture": "Tokyo",
+      "city": "Shibuya"
+    },
+    "compensation": {
+      "salaryMin": 200000,
+      "salaryMax": 350000,
+      "currency": "JPY",
+      "period": "monthly"
+    },
+    "applicationInfo": {
+      "deadline": "2026-03-30T04:29:16.362Z",
+      "applicationMethod": "Platform"
+    },
+    "status": "active",
+    "_source": "pages/jobPost/job-post-1.html"
+  },
+  {
+    "title": "Ground Handling Staff",
+    "companyName": "Unknown",
+    "industry": "Other",
+    "category": "General",
+    "summary": "Narita City, Chiba Prefecture",
+    "description": "Narita City, Chiba Prefecture\n\nApply now →\n\nGround Handling Staff\n\nNarita City (Chiba Prefecture) ・ Aviation Services ・ Contract ・\n\n2025\n\n2025\n\nConditions\n\n¥1,100/hour\n\nWork Hours: 08:00–17:00 | 09:00–18:00\n\nOvertime: 10–20 hours/month",
+    "postedByEmail": "employer+seed@example.com",
+    "location": {
+      "prefecture": "Tokyo",
+      "city": "Shibuya"
+    },
+    "compensation": {
+      "salaryMin": 200000,
+      "salaryMax": 350000,
+      "currency": "JPY",
+      "period": "monthly"
+    },
+    "applicationInfo": {
+      "deadline": "2026-03-30T04:29:16.362Z",
+      "applicationMethod": "Platform"
+    },
+    "status": "active",
+    "_source": "pages/jobPost/job-post-2.html"
+  },
+  {
+    "title": "Ward Nursing Support",
+    "companyName": "Unknown",
+    "industry": "Other",
+    "category": "General",
+    "summary": "Setagaya Ward (Tokyo)",
+    "description": "Setagaya Ward (Tokyo)\n\nApply now →\n\nWard Nursing Support\n\nSetagaya Ward (Tokyo) ・ Medical / Nursing ・ Full Time ・ 2025\n\n2025\n\nConditions\n\n¥184,600–306,100/month\n\nShift system (8 hours actual work, 60-minute break)\n\nDay shift: 8:30–17:30\n\nEarly shift: 7:30–16:30",
+    "postedByEmail": "employer+seed@example.com",
+    "location": {
+      "prefecture": "Tokyo",
+      "city": "Shibuya"
+    },
+    "compensation": {
+      "salaryMin": 200000,
+      "salaryMax": 350000,
+      "currency": "JPY",
+      "period": "monthly"
+    },
+    "applicationInfo": {
+      "deadline": "2026-03-30T04:29:16.362Z",
+      "applicationMethod": "Platform"
+    },
+    "status": "active",
+    "_source": "pages/jobPost/job-post-3.html"
+  },
+  {
+    "title": "Restaurant Waiter / Waitress",
+    "companyName": "Unknown",
+    "industry": "Other",
+    "category": "General",
+    "summary": "Sangenjaya Sta. (Tokyo)",
+    "description": "Sangenjaya Sta. (Tokyo)\n\nApply now →\n\nRestaurant Waiter / Waitress\n\nSangenjaya Sta. (Tokyo) ・ Food Service ・ Part Time ・ 2025\n\n2025\n\nConditions\n\n¥1,200–1,600/hour\n\nTraining: 20 days, ¥1,180–1,500/hour\n\nLocation: Sangenjaya Sta. (Tokyo)\n\nWorking Hours: 9:30–24:00 (3 hours a day or more)",
+    "postedByEmail": "employer+seed@example.com",
+    "location": {
+      "prefecture": "Tokyo",
+      "city": "Shibuya"
+    },
+    "compensation": {
+      "salaryMin": 200000,
+      "salaryMax": 350000,
+      "currency": "JPY",
+      "period": "monthly"
+    },
+    "applicationInfo": {
+      "deadline": "2026-03-30T04:29:16.362Z",
+      "applicationMethod": "Platform"
+    },
+    "status": "active",
+    "_source": "pages/jobPost/job-post-4.html"
+  },
+  {
+    "title": "Construction Worker",
+    "companyName": "Unknown",
+    "industry": "Other",
+    "category": "General",
+    "summary": "Kyoto Prefecture",
+    "description": "Kyoto Prefecture\n\nApply now →\n\nConstruction Worker\n\nKyoto ・ Construction ・ Contract ・ 2025\n\nConditions\n\n¥200,000/month\n\nShift: 08:00–17:00\n\nDormitory provided\n\nRequirements\n\nPhysical fitness required",
+    "postedByEmail": "employer+seed@example.com",
+    "location": {
+      "prefecture": "Tokyo",
+      "city": "Shibuya"
+    },
+    "compensation": {
+      "salaryMin": 200000,
+      "salaryMax": 350000,
+      "currency": "JPY",
+      "period": "monthly"
+    },
+    "applicationInfo": {
+      "deadline": "2026-03-30T04:29:16.362Z",
+      "applicationMethod": "Platform"
+    },
+    "status": "active",
+    "_source": "pages/jobPost/job-post-5.html"
+  },
+  {
+    "title": "Construction Assistant",
+    "companyName": "Unknown",
+    "industry": "Other",
+    "category": "General",
+    "summary": "Daimon Sta. (Tokyo)",
+    "description": "Daimon Sta. (Tokyo)\n\nApply now →\n\nConstruction Assistant\n\nDaimon Sta. (Tokyo) ・ Construction ・ Part-Time ・ 2025\n\n2025\n\nConditions\n\n¥1,400–2,800/hour\n\nDaily Wage: ¥13,000–20,000\n\nWork Location: Daimon Sta. (Tokyo)\n\nOther Locations: Tokyo, Kanagawa, Saitama, Chiba",
+    "postedByEmail": "employer+seed@example.com",
+    "location": {
+      "prefecture": "Tokyo",
+      "city": "Shibuya"
+    },
+    "compensation": {
+      "salaryMin": 200000,
+      "salaryMax": 350000,
+      "currency": "JPY",
+      "period": "monthly"
+    },
+    "applicationInfo": {
+      "deadline": "2026-03-30T04:29:16.362Z",
+      "applicationMethod": "Platform"
+    },
+    "status": "active",
+    "_source": "pages/jobs/construction-worker-site-support.html"
+  },
+  {
+    "title": "Food Service Staff",
+    "companyName": "Unknown",
+    "industry": "Other",
+    "category": "General",
+    "summary": "Osaka",
+    "description": "Osaka\n\nApply now →\n\nFood Service Staff\n\nOsaka ・ Food Service ・ Contract ・ 2025\n\nConditions\n\n¥200,000/month\n\nShift work, evenings and weekends\n\nMeals provided on shift\n\nRequirements\n\nFriendly and customer-focused",
+    "postedByEmail": "employer+seed@example.com",
+    "location": {
+      "prefecture": "Tokyo",
+      "city": "Shibuya"
+    },
+    "compensation": {
+      "salaryMin": 200000,
+      "salaryMax": 350000,
+      "currency": "JPY",
+      "period": "monthly"
+    },
+    "applicationInfo": {
+      "deadline": "2026-03-30T04:29:16.362Z",
+      "applicationMethod": "Platform"
+    },
+    "status": "active",
+    "_source": "pages/jobs/food-service-staff.html"
+  },
+  {
+    "title": "Job Details",
+    "companyName": "Unknown",
+    "industry": "Other",
+    "category": "General",
+    "summary": null,
+    "description": null,
+    "postedByEmail": "employer+seed@example.com",
+    "location": {
+      "prefecture": "Tokyo",
+      "city": "Shibuya"
+    },
+    "compensation": {
+      "salaryMin": 200000,
+      "salaryMax": 350000,
+      "currency": "JPY",
+      "period": "monthly"
+    },
+    "applicationInfo": {
+      "deadline": "2026-03-30T04:29:16.362Z",
+      "applicationMethod": "Platform"
+    },
+    "status": "active",
+    "_source": "pages/jobs/jobDetails.html"
+  },
+  {
+    "title": "Find Your Next Opportunity in Japan",
+    "companyName": "Unknown",
+    "industry": "Other",
+    "category": "General",
+    "summary": "Find Your Next Opportunity in Japan",
+    "description": "Find Your Next Opportunity in Japan\n\nFilter through\n\n0 job\n\nlistings to find your perfect match\n\nSearch Job Listings\n\nSearch by job title, company, location, or Japanese level\n\nSupport\n\nAll\n\nYes\n\nNo",
+    "postedByEmail": "employer+seed@example.com",
+    "location": {
+      "prefecture": "Tokyo",
+      "city": "Shibuya"
+    },
+    "compensation": {
+      "salaryMin": 200000,
+      "salaryMax": 350000,
+      "currency": "JPY",
+      "period": "monthly"
+    },
+    "applicationInfo": {
+      "deadline": "2026-03-30T04:29:16.362Z",
+      "applicationMethod": "Platform"
+    },
+    "status": "active",
+    "_source": "pages/jobs/jobFilter.html"
+  },
+  {
+    "title": "Nursing Care Assistant",
+    "companyName": "Unknown",
+    "industry": "Other",
+    "category": "General",
+    "summary": "Kanagawa",
+    "description": "Kanagawa\n\nApply now →\n\nNursing Care Assistant\n\nKanagawa ・ Nursing Care ・ Contract ・ 2025\n\nConditions\n\n¥220,000/month\n\nShift work with nights\n\nTraining provided\n\nRequirements\n\nJapanese: N3 or above",
+    "postedByEmail": "employer+seed@example.com",
+    "location": {
+      "prefecture": "Tokyo",
+      "city": "Shibuya"
+    },
+    "compensation": {
+      "salaryMin": 200000,
+      "salaryMax": 350000,
+      "currency": "JPY",
+      "period": "monthly"
+    },
+    "applicationInfo": {
+      "deadline": "2026-03-30T04:29:16.362Z",
+      "applicationMethod": "Platform"
+    },
+    "status": "active",
+    "_source": "pages/jobs/nursing-care-assistant.html"
+  },
+  {
+    "title": "Privacy Policy",
+    "companyName": "Unknown",
+    "industry": "Other",
+    "category": "General",
+    "summary": "Privacy Policy",
+    "description": "Privacy Policy\n\nThis Privacy Policy explains how Japan SSW (\"we\", \"us\", or \"our\")\n\ncollects, uses, and shares information when you use our website and\n\nservices. We are committed to protecting your privacy and handling\n\nyour personal information responsibly.\n\n1. Information We Collect\n\nWe collect information you provide directly (for example, when you\n\ncreate an account, apply for a job, or contact us) and\n\nautomatically-collected information (such as browser and device\n\ndata, IP address, and cookies) necessary to provide and improve the",
+    "postedByEmail": "employer+seed@example.com",
+    "location": {
+      "prefecture": "Tokyo",
+      "city": "Shibuya"
+    },
+    "compensation": {
+      "salaryMin": 200000,
+      "salaryMax": 350000,
+      "currency": "JPY",
+      "period": "monthly"
+    },
+    "applicationInfo": {
+      "deadline": "2026-03-30T04:29:16.362Z",
+      "applicationMethod": "Platform"
+    },
+    "status": "active",
+    "_source": "pages/privacy.html"
+  },
+  {
+    "title": "Profile Dashboard",
+    "companyName": "Unknown",
+    "industry": "Other",
+    "category": "General",
+    "summary": "Profile Dashboard",
+    "description": "Profile Dashboard\n\nProfile 80% complete — finish\n\nto boost matches.\n\nProfile Summary\n\nEdit\n\nSave\n\nThis is the default profile description. Click 'Edit' to\n\nmake changes.\n\nThis is the default profile description. Click 'Edit' to make changes.\n\n0 / 170 characters",
+    "postedByEmail": "employer+seed@example.com",
+    "location": {
+      "prefecture": "Tokyo",
+      "city": "Shibuya"
+    },
+    "compensation": {
+      "salaryMin": 200000,
+      "salaryMax": 350000,
+      "currency": "JPY",
+      "period": "monthly"
+    },
+    "applicationInfo": {
+      "deadline": "2026-03-30T04:29:16.362Z",
+      "applicationMethod": "Platform"
+    },
+    "status": "active",
+    "_source": "pages/profileDashboard.html"
+  },
+  {
+    "title": "Our Services",
+    "companyName": "Unknown",
+    "industry": "Other",
+    "category": "General",
+    "summary": "Our Services",
+    "description": "Our Services\n\nDiscover what we can do for you.\n\nList of services and descriptions go here...",
+    "postedByEmail": "employer+seed@example.com",
+    "location": {
+      "prefecture": "Tokyo",
+      "city": "Shibuya"
+    },
+    "compensation": {
+      "salaryMin": 200000,
+      "salaryMax": 350000,
+      "currency": "JPY",
+      "period": "monthly"
+    },
+    "applicationInfo": {
+      "deadline": "2026-03-30T04:29:16.362Z",
+      "applicationMethod": "Platform"
+    },
+    "status": "active",
+    "_source": "pages/services.html"
+  },
+  {
+    "title": "Terms of Service",
+    "companyName": "Unknown",
+    "industry": "Other",
+    "category": "General",
+    "summary": "Terms of Service",
+    "description": "Terms of Service\n\nThese Terms of Service (\"Terms\") govern your access to and use of\n\nJapan SSW (\"we\", \"us\", or \"our\"). By accessing or using our website\n\nand services you agree to be bound by these Terms. If you do not\n\nagree with any part of these Terms, you must not use our services.\n\n1. Use of the Service\n\nJapan SSW provides a platform for job listings and related\n\ninformational resources for foreign workers seeking employment in\n\nJapan under the Specified Skilled Worker (SSW) program. You agree to\n\nuse the service only for lawful purposes and not to post or transmit",
+    "postedByEmail": "employer+seed@example.com",
+    "location": {
+      "prefecture": "Tokyo",
+      "city": "Shibuya"
+    },
+    "compensation": {
+      "salaryMin": 200000,
+      "salaryMax": 350000,
+      "currency": "JPY",
+      "period": "monthly"
+    },
+    "applicationInfo": {
+      "deadline": "2026-03-30T04:29:16.362Z",
+      "applicationMethod": "Platform"
+    },
+    "status": "active",
+    "_source": "pages/terms.html"
+  },
+  {
+    "title": "Visa Guidance for Filipinos Applying for SSW 1 & 2",
+    "companyName": "Unknown",
+    "industry": "Other",
+    "category": "General",
+    "summary": "Visa Guidance for Filipinos Applying for SSW 1 & 2",
+    "description": "Visa Guidance for Filipinos Applying for SSW 1 & 2\n\nWhat is SSW?\n\nThe Specified Skilled Worker (SSW) visa allows foreign nationals\n\nto work in Japan in designated industries. There are two types:\n\nSSW 1: For those with skills in specific\n\nsectors. Requires passing skills and Japanese language tests.\n\nSSW 2: For advanced workers who have experience\n\nunder SSW 1 and meet additional requirements.\n\nEligibility for Filipinos\n\nMust be a Filipino citizen residing in the Philippines.",
+    "postedByEmail": "employer+seed@example.com",
+    "location": {
+      "prefecture": "Tokyo",
+      "city": "Shibuya"
+    },
+    "compensation": {
+      "salaryMin": 200000,
+      "salaryMax": 350000,
+      "currency": "JPY",
+      "period": "monthly"
+    },
+    "applicationInfo": {
+      "deadline": "2026-03-30T04:29:16.362Z",
+      "applicationMethod": "Platform"
+    },
+    "status": "active",
+    "_source": "pages/visaGuidance.html"
+  }
+]

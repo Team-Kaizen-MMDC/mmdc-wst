@@ -1,0 +1,46 @@
+[
+  {
+    "userEmail": "jobseeker+seed@example.com",
+    "firstName": "Profile",
+    "lastName": "Jobseeker",
+    "dateOfBirth": "1995-01-01",
+    "nationality": "Japan",
+    "phone": null,
+    "city": "Tokyo",
+    "prefecture": "Tokyo",
+    "languages": [
+      {
+        "language": "Japanese",
+        "level": "conversational"
+      }
+    ],
+    "availability": {
+      "visaStatus": "not-applicable",
+      "relocate": false
+    },
+    "summary": "← Back\n\nClose\n\n1\n\nProfile\n\n2\n\nContact\n\n3\n\nEducation\n\n4\n\nExperience",
+    "_source": "pages/addEdit/profile.html"
+  },
+  {
+    "userEmail": "jobseeker+seed@example.com",
+    "firstName": "Profile",
+    "lastName": "Dashboard",
+    "dateOfBirth": "1995-01-01",
+    "nationality": "Japan",
+    "phone": null,
+    "city": "Tokyo",
+    "prefecture": "Tokyo",
+    "languages": [
+      {
+        "language": "Japanese",
+        "level": "conversational"
+      }
+    ],
+    "availability": {
+      "visaStatus": "not-applicable",
+      "relocate": false
+    },
+    "summary": "Profile Dashboard\n\nProfile 80% complete — finish\n\nto boost matches.\n\nProfile Summary\n\nEdit\n\nSave\n\nThis is the default profile description. Click 'Edit' to\n\nmake changes.\n\nThis is the default profile description. Click 'Edit' to make changes.\n\n0 / 170 characters",
+    "_source": "pages/profileDashboard.html"
+  }
+]

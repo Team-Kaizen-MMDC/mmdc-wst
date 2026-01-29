@@ -1,6 +1,6 @@
 # Japan SSW
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue.svg) ![HTML5](https://img.shields.io/badge/HTML5-5.2-orange)
+![Version](https://img.shields.io/badge/version-1.1.0-blue.svg) ![HTML5](https://img.shields.io/badge/HTML5-5.2-orange)
 ![CSS3](https://img.shields.io/badge/CSS3-3-blue)
 ![JavaScript](https://img.shields.io/badge/JavaScript-ES6-yellow)
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-purple)
@@ -41,6 +41,12 @@ This repository holds the wireframe-driven static pages and a stylesheet ([asset
 -- **Project overview & site features:** [docs/PROJECT_OVERVIEW.md](docs/PROJECT_OVERVIEW.md) — topic, goals, audience, feature summary, and visitor flows.
 
 For implementation details, testing guidance, and design docs, see the [docs/](docs/) folder.
+
+## Backend API & Docs
+
+- Backend code and API are in the `backend/` folder. See `backend/README.md` for setup and running instructions.
+- Generated OpenAPI JSON: [backend/api-docs.json](backend/api-docs.json) (useful for frontend integration and CI snapshots).
+- Postman collections: [backend/postman/Japan_SSW_API_day1_day4.postman_collection.json](backend/postman/Japan_SSW_API_day1_day4.postman_collection.json) and [postman/Japan_SSW_API_Complete.postman_collection.json](postman/Japan_SSW_API_Complete.postman_collection.json).
 
 ## Technologies
 

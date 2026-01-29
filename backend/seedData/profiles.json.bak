@@ -1,0 +1,540 @@
+[
+  {
+    "userEmail": "carlos.rivera@example.com",
+    "firstName": "Carlos",
+    "lastName": "Rivera",
+    "dateOfBirth": "1995-03-15",
+    "gender": "male",
+    "nationality": "Philippines",
+    "phone": "+63-912-345-6789",
+    "address": "Manila, Philippines",
+    "prefecture": null,
+    "city": null,
+    "postalCode": null,
+    "japaneseLevel": "N3",
+    "education": [
+      {
+        "school": "University of the Philippines",
+        "degree": "Bachelor",
+        "field": "Mechanical Engineering",
+        "startDate": "2013-06-01",
+        "endDate": "2017-04-01",
+        "current": false
+      }
+    ],
+    "experience": [
+      {
+        "company": "ABC Manufacturing (Philippines)",
+        "title": "Production Technician",
+        "description": "Operated CNC machines and performed quality control checks on automotive parts",
+        "startDate": "2017-05-01",
+        "endDate": "2024-12-01",
+        "current": false
+      }
+    ],
+    "skills": [
+      {"name": "CNC Operation", "level": "advanced", "category": "technical"},
+      {"name": "Quality Control", "level": "intermediate", "category": "technical"},
+      {"name": "Blueprint Reading", "level": "advanced", "category": "technical"}
+    ],
+    "certifications": [
+      {"name": "JLPT N3", "issuer": "JEES", "date": "2024-07-15", "expiryDate": null}
+    ],
+    "languages": [
+      {"language": "Tagalog", "level": "native"},
+      {"language": "English", "level": "fluent"},
+      {"language": "Japanese", "level": "intermediate"}
+    ],
+    "availability": {
+      "startDate": "2025-04-01",
+      "visaStatus": "applying",
+      "relocate": true,
+      "remote": false
+    }
+  },
+  {
+    "userEmail": "maria.santos@example.com",
+    "firstName": "Maria",
+    "lastName": "Santos",
+    "dateOfBirth": "1997-08-22",
+    "gender": "female",
+    "nationality": "Philippines",
+    "phone": "+63-918-765-4321",
+    "address": "Cebu, Philippines",
+    "prefecture": null,
+    "city": null,
+    "postalCode": null,
+    "japaneseLevel": "N2",
+    "education": [
+      {
+        "school": "Cebu Doctors' University",
+        "degree": "Bachelor",
+        "field": "Nursing",
+        "startDate": "2015-06-01",
+        "endDate": "2019-04-01",
+        "current": false
+      }
+    ],
+    "experience": [
+      {
+        "company": "St. Luke's Medical Center",
+        "title": "Registered Nurse",
+        "description": "Provided patient care in geriatric ward, administered medications, monitored vital signs",
+        "startDate": "2019-06-01",
+        "endDate": "2024-11-01",
+        "current": false
+      }
+    ],
+    "skills": [
+      {"name": "Patient Care", "level": "advanced", "category": "healthcare"},
+      {"name": "Medication Administration", "level": "advanced", "category": "healthcare"},
+      {"name": "Elderly Care", "level": "intermediate", "category": "healthcare"}
+    ],
+    "certifications": [
+      {"name": "JLPT N2", "issuer": "JEES", "date": "2024-12-01", "expiryDate": null},
+      {"name": "Philippine Registered Nurse", "issuer": "PRC", "date": "2019-06-15", "expiryDate": null}
+    ],
+    "languages": [
+      {"language": "Tagalog", "level": "native"},
+      {"language": "English", "level": "fluent"},
+      {"language": "Japanese", "level": "advanced"}
+    ],
+    "availability": {
+      "startDate": "2025-03-01",
+      "visaStatus": "applying",
+      "relocate": true,
+      "remote": false
+    }
+  },
+  {
+    "userEmail": "nguyen.tran@example.com",
+    "firstName": "Nguyen",
+    "lastName": "Tran",
+    "dateOfBirth": "1994-11-10",
+    "gender": "male",
+    "nationality": "Vietnam",
+    "phone": "+84-90-123-4567",
+    "address": "Ho Chi Minh City, Vietnam",
+    "prefecture": null,
+    "city": null,
+    "postalCode": null,
+    "japaneseLevel": "N3",
+    "education": [
+      {
+        "school": "Ho Chi Minh University of Technology",
+        "degree": "Bachelor",
+        "field": "Civil Engineering",
+        "startDate": "2013-09-01",
+        "endDate": "2017-06-01",
+        "current": false
+      }
+    ],
+    "experience": [
+      {
+        "company": "Vietnam Construction Group",
+        "title": "Construction Supervisor",
+        "description": "Supervised construction sites, managed teams of workers, ensured safety compliance",
+        "startDate": "2017-07-01",
+        "endDate": "2024-12-01",
+        "current": false
+      }
+    ],
+    "skills": [
+      {"name": "Construction Management", "level": "advanced", "category": "technical"},
+      {"name": "Safety Management", "level": "intermediate", "category": "technical"},
+      {"name": "Blueprint Reading", "level": "advanced", "category": "technical"}
+    ],
+    "certifications": [
+      {"name": "JLPT N3", "issuer": "JEES", "date": "2024-07-15", "expiryDate": null},
+      {"name": "Construction Safety Officer", "issuer": "Vietnam Ministry of Labor", "date": "2018-03-01", "expiryDate": null}
+    ],
+    "languages": [
+      {"language": "Vietnamese", "level": "native"},
+      {"language": "English", "level": "intermediate"},
+      {"language": "Japanese", "level": "intermediate"}
+    ],
+    "availability": {
+      "startDate": "2025-05-01",
+      "visaStatus": "applying",
+      "relocate": true,
+      "remote": false
+    }
+  },
+  {
+    "userEmail": "le.minh@example.com",
+    "firstName": "Le",
+    "lastName": "Minh",
+    "dateOfBirth": "1998-05-18",
+    "gender": "male",
+    "nationality": "Vietnam",
+    "phone": "+84-91-234-5678",
+    "address": "Hanoi, Vietnam",
+    "prefecture": null,
+    "city": null,
+    "postalCode": null,
+    "japaneseLevel": "N4",
+    "education": [
+      {
+        "school": "Hanoi Agricultural University",
+        "degree": "Diploma",
+        "field": "Agricultural Science",
+        "startDate": "2016-09-01",
+        "endDate": "2019-06-01",
+        "current": false
+      }
+    ],
+    "experience": [
+      {
+        "company": "Green Farm Vietnam",
+        "title": "Farm Worker",
+        "description": "Cultivated vegetables, operated farm machinery, maintained irrigation systems",
+        "startDate": "2019-07-01",
+        "endDate": "2024-11-01",
+        "current": false
+      }
+    ],
+    "skills": [
+      {"name": "Crop Cultivation", "level": "intermediate", "category": "agriculture"},
+      {"name": "Farm Equipment", "level": "intermediate", "category": "technical"},
+      {"name": "Irrigation Systems", "level": "beginner", "category": "technical"}
+    ],
+    "certifications": [
+      {"name": "JLPT N4", "issuer": "JEES", "date": "2024-07-15", "expiryDate": null}
+    ],
+    "languages": [
+      {"language": "Vietnamese", "level": "native"},
+      {"language": "English", "level": "beginner"},
+      {"language": "Japanese", "level": "beginner"}
+    ],
+    "availability": {
+      "startDate": "2025-06-01",
+      "visaStatus": "not_applied",
+      "relocate": true,
+      "remote": false
+    }
+  },
+  {
+    "userEmail": "budi.santoso@example.com",
+    "firstName": "Budi",
+    "lastName": "Santoso",
+    "dateOfBirth": "1996-02-28",
+    "gender": "male",
+    "nationality": "Indonesia",
+    "phone": "+62-812-345-6789",
+    "address": "Jakarta, Indonesia",
+    "prefecture": null,
+    "city": null,
+    "postalCode": null,
+    "japaneseLevel": "N3",
+    "education": [
+      {
+        "school": "Bandung Institute of Technology",
+        "degree": "Bachelor",
+        "field": "Industrial Engineering",
+        "startDate": "2014-08-01",
+        "endDate": "2018-07-01",
+        "current": false
+      }
+    ],
+    "experience": [
+      {
+        "company": "PT Manufacturing Indonesia",
+        "title": "Quality Control Inspector",
+        "description": "Inspected products for defects, maintained quality records, performed statistical analysis",
+        "startDate": "2018-08-01",
+        "endDate": "2024-12-01",
+        "current": false
+      }
+    ],
+    "skills": [
+      {"name": "Quality Control", "level": "advanced", "category": "technical"},
+      {"name": "Statistical Analysis", "level": "intermediate", "category": "technical"},
+      {"name": "ISO Standards", "level": "intermediate", "category": "compliance"}
+    ],
+    "certifications": [
+      {"name": "JLPT N3", "issuer": "JEES", "date": "2024-07-15", "expiryDate": null},
+      {"name": "Six Sigma Green Belt", "issuer": "ASQ", "date": "2020-05-01", "expiryDate": null}
+    ],
+    "languages": [
+      {"language": "Indonesian", "level": "native"},
+      {"language": "English", "level": "intermediate"},
+      {"language": "Japanese", "level": "intermediate"}
+    ],
+    "availability": {
+      "startDate": "2025-04-01",
+      "visaStatus": "applying",
+      "relocate": true,
+      "remote": false
+    }
+  },
+  {
+    "userEmail": "ana.reyes@example.com",
+    "firstName": "Ana",
+    "lastName": "Reyes",
+    "dateOfBirth": "1999-07-05",
+    "gender": "female",
+    "nationality": "Philippines",
+    "phone": "+63-915-678-9012",
+    "address": "Davao, Philippines",
+    "prefecture": null,
+    "city": null,
+    "postalCode": null,
+    "japaneseLevel": "N4",
+    "education": [
+      {
+        "school": "University of Mindanao",
+        "degree": "Bachelor",
+        "field": "Hotel and Restaurant Management",
+        "startDate": "2017-06-01",
+        "endDate": "2021-04-01",
+        "current": false
+      }
+    ],
+    "experience": [
+      {
+        "company": "Marco Polo Hotel Davao",
+        "title": "Food Service Staff",
+        "description": "Served customers, prepared food items, maintained cleanliness in dining area",
+        "startDate": "2021-06-01",
+        "endDate": "2024-12-01",
+        "current": false
+      }
+    ],
+    "skills": [
+      {"name": "Customer Service", "level": "advanced", "category": "service"},
+      {"name": "Food Preparation", "level": "intermediate", "category": "culinary"},
+      {"name": "Hygiene Standards", "level": "advanced", "category": "compliance"}
+    ],
+    "certifications": [
+      {"name": "JLPT N4", "issuer": "JEES", "date": "2024-07-15", "expiryDate": null},
+      {"name": "Food Safety Certificate", "issuer": "Philippine FDA", "date": "2021-06-01", "expiryDate": "2026-06-01"}
+    ],
+    "languages": [
+      {"language": "Tagalog", "level": "native"},
+      {"language": "English", "level": "fluent"},
+      {"language": "Japanese", "level": "beginner"}
+    ],
+    "availability": {
+      "startDate": "2025-05-01",
+      "visaStatus": "not_applied",
+      "relocate": true,
+      "remote": false
+    }
+  },
+  {
+    "userEmail": "pham.van@example.com",
+    "firstName": "Pham",
+    "lastName": "Van",
+    "dateOfBirth": "1993-12-20",
+    "gender": "male",
+    "nationality": "Vietnam",
+    "phone": "+84-92-345-6789",
+    "address": "Da Nang, Vietnam",
+    "prefecture": null,
+    "city": null,
+    "postalCode": null,
+    "japaneseLevel": "N2",
+    "education": [
+      {
+        "school": "Da Nang University",
+        "degree": "Bachelor",
+        "field": "Nursing",
+        "startDate": "2012-09-01",
+        "endDate": "2016-06-01",
+        "current": false
+      }
+    ],
+    "experience": [
+      {
+        "company": "Da Nang General Hospital",
+        "title": "Registered Nurse",
+        "description": "Provided nursing care to elderly patients, administered treatments, coordinated with medical team",
+        "startDate": "2016-07-01",
+        "endDate": "2024-11-01",
+        "current": false
+      }
+    ],
+    "skills": [
+      {"name": "Patient Care", "level": "advanced", "category": "healthcare"},
+      {"name": "Elderly Care", "level": "advanced", "category": "healthcare"},
+      {"name": "Medical Records", "level": "intermediate", "category": "administrative"}
+    ],
+    "certifications": [
+      {"name": "JLPT N2", "issuer": "JEES", "date": "2024-12-01", "expiryDate": null},
+      {"name": "Vietnam Registered Nurse", "issuer": "Vietnam Ministry of Health", "date": "2016-06-30", "expiryDate": null}
+    ],
+    "languages": [
+      {"language": "Vietnamese", "level": "native"},
+      {"language": "English", "level": "intermediate"},
+      {"language": "Japanese", "level": "advanced"}
+    ],
+    "availability": {
+      "startDate": "2025-03-01",
+      "visaStatus": "applying",
+      "relocate": true,
+      "remote": false
+    }
+  },
+  {
+    "userEmail": "jose.garcia@example.com",
+    "firstName": "Jose",
+    "lastName": "Garcia",
+    "dateOfBirth": "1996-09-12",
+    "gender": "male",
+    "nationality": "Philippines",
+    "phone": "+63-917-890-1234",
+    "address": "Quezon City, Philippines",
+    "prefecture": null,
+    "city": null,
+    "postalCode": null,
+    "japaneseLevel": "N5",
+    "education": [
+      {
+        "school": "Technological University of the Philippines",
+        "degree": "Diploma",
+        "field": "Construction Technology",
+        "startDate": "2014-06-01",
+        "endDate": "2017-04-01",
+        "current": false
+      }
+    ],
+    "experience": [
+      {
+        "company": "ABC Construction Philippines",
+        "title": "Construction Worker",
+        "description": "Performed general construction work, operated hand and power tools, maintained job site safety",
+        "startDate": "2017-05-01",
+        "endDate": "2024-12-01",
+        "current": false
+      }
+    ],
+    "skills": [
+      {"name": "General Construction", "level": "intermediate", "category": "technical"},
+      {"name": "Power Tools", "level": "intermediate", "category": "technical"},
+      {"name": "Safety Procedures", "level": "beginner", "category": "compliance"}
+    ],
+    "certifications": [
+      {"name": "JLPT N5", "issuer": "JEES", "date": "2024-07-15", "expiryDate": null},
+      {"name": "Construction Safety Training", "issuer": "DOLE Philippines", "date": "2017-04-01", "expiryDate": null}
+    ],
+    "languages": [
+      {"language": "Tagalog", "level": "native"},
+      {"language": "English", "level": "intermediate"},
+      {"language": "Japanese", "level": "beginner"}
+    ],
+    "availability": {
+      "startDate": "2025-07-01",
+      "visaStatus": "not_applied",
+      "relocate": true,
+      "remote": false
+    }
+  },
+  {
+    "userEmail": "dewi.putri@example.com",
+    "firstName": "Dewi",
+    "lastName": "Putri",
+    "dateOfBirth": "2000-04-30",
+    "gender": "female",
+    "nationality": "Indonesia",
+    "phone": "+62-813-456-7890",
+    "address": "Surabaya, Indonesia",
+    "prefecture": null,
+    "city": null,
+    "postalCode": null,
+    "japaneseLevel": "N4",
+    "education": [
+      {
+        "school": "Surabaya Culinary Institute",
+        "degree": "Diploma",
+        "field": "Culinary Arts",
+        "startDate": "2018-08-01",
+        "endDate": "2020-07-01",
+        "current": false
+      }
+    ],
+    "experience": [
+      {
+        "company": "Sampoerna Strategic Restaurant",
+        "title": "Kitchen Assistant",
+        "description": "Assisted chefs in food preparation, maintained kitchen cleanliness, managed inventory",
+        "startDate": "2020-08-01",
+        "endDate": "2024-11-01",
+        "current": false
+      }
+    ],
+    "skills": [
+      {"name": "Food Preparation", "level": "intermediate", "category": "culinary"},
+      {"name": "Kitchen Operations", "level": "intermediate", "category": "culinary"},
+      {"name": "Hygiene Standards", "level": "advanced", "category": "compliance"}
+    ],
+    "certifications": [
+      {"name": "JLPT N4", "issuer": "JEES", "date": "2024-07-15", "expiryDate": null},
+      {"name": "Food Handler Certificate", "issuer": "Indonesian Ministry of Health", "date": "2020-08-01", "expiryDate": "2025-08-01"}
+    ],
+    "languages": [
+      {"language": "Indonesian", "level": "native"},
+      {"language": "English", "level": "beginner"},
+      {"language": "Japanese", "level": "beginner"}
+    ],
+    "availability": {
+      "startDate": "2025-06-01",
+      "visaStatus": "not_applied",
+      "relocate": true,
+      "remote": false
+    }
+  },
+  {
+    "userEmail": "juan.dela.cruz@example.com",
+    "firstName": "Juan",
+    "lastName": "Dela Cruz",
+    "dateOfBirth": "1995-01-25",
+    "gender": "male",
+    "nationality": "Philippines",
+    "phone": "+63-920-123-4567",
+    "address": "Makati, Philippines",
+    "prefecture": null,
+    "city": null,
+    "postalCode": null,
+    "japaneseLevel": "N3",
+    "education": [
+      {
+        "school": "De La Salle University",
+        "degree": "Bachelor",
+        "field": "Electronics Engineering",
+        "startDate": "2013-06-01",
+        "endDate": "2017-04-01",
+        "current": false
+      }
+    ],
+    "experience": [
+      {
+        "company": "Philippine Electronics Corp",
+        "title": "Electronics Technician",
+        "description": "Assembled electronic components, tested circuit boards, performed troubleshooting",
+        "startDate": "2017-06-01",
+        "endDate": "2024-12-01",
+        "current": false
+      }
+    ],
+    "skills": [
+      {"name": "Electronics Assembly", "level": "advanced", "category": "technical"},
+      {"name": "Circuit Testing", "level": "advanced", "category": "technical"},
+      {"name": "Soldering", "level": "advanced", "category": "technical"}
+    ],
+    "certifications": [
+      {"name": "JLPT N3", "issuer": "JEES", "date": "2024-07-15", "expiryDate": null},
+      {"name": "IPC-A-610 Certified", "issuer": "IPC", "date": "2018-03-01", "expiryDate": null}
+    ],
+    "languages": [
+      {"language": "Tagalog", "level": "native"},
+      {"language": "English", "level": "fluent"},
+      {"language": "Japanese", "level": "intermediate"}
+    ],
+    "availability": {
+      "startDate": "2025-04-01",
+      "visaStatus": "applying",
+      "relocate": true,
+      "remote": false
+    }
+  }
+]

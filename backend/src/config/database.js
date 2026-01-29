@@ -21,9 +21,10 @@ async function connectMongoose(options = {}) {
     );
   }
   const defaultOptions = {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
     maxPoolSize: 50,
+    minPoolSize: 10,
+    serverSelectionTimeoutMS: 5000,
+    socketTimeoutMS: 45000,
   };
   await mongoose.connect(
     config.MONGODB_URI,

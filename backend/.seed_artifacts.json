@@ -1,0 +1,10 @@
+{
+  "users": 21,
+  "companies": 10,
+  "jobs": 44,
+  "applications": 20,
+  "admin_email": "admin@japanssw.com",
+  "sample_employer": "employer1@techinnov.com",
+  "sample_jobseeker": "carlos.rivera@example.com",
+  "timestamp": "2026-01-29T10:36:18.335Z"
+}
