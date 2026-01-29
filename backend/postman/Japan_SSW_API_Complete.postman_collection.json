@@ -1,0 +1,1466 @@
+{
+  "info": {
+    "name": "Japan SSW Platform API - Complete Collection",
+    "_postman_id": "japan-ssw-complete-api",
+    "description": "Complete consolidated API collection for Japan Specified Skilled Worker (SSW) platform with all endpoints from Days 1-5.\n\n**Features:**\n- 40+ endpoints across 6 major sections\n- Auto-saved environment variables (JWT_TOKEN, USER_ID, COMPANY_ID, JOB_ID, APPLICATION_ID)\n- Test credentials included\n- Request/response examples\n\n**Test Accounts:**\n- Admin: admin@japanssw.com / Admin123!\n- Employer: employer1@techinnov.com / Test123!\n- Jobseeker: carlos.rivera@example.com / Test123!",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{JWT_TOKEN}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "BASE_URL",
+      "value": "http://localhost:5000/api/v1",
+      "type": "default"
+    }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "description": "User authentication endpoints for registration, login, and session management",
+      "item": [
+        {
+          "name": "Register (Jobseeker)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.environment.set('JWT_TOKEN', jsonData.data.token);",
+                  "    pm.environment.set('USER_ID', jsonData.data.user._id);",
+                  "    console.log('✓ JWT token saved to environment');",
+                  "    console.log('✓ User ID saved to environment');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"jobseeker.test@example.com\",\n  \"password\": \"Test123!\",\n  \"role\": \"jobseeker\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/auth/register",
+              "host": ["{{BASE_URL}}"],
+              "path": ["auth", "register"]
+            },
+            "description": "Register a new jobseeker account. Password must be 8+ characters with uppercase, lowercase, number, and special character."
+          },
+          "response": []
+        },
+        {
+          "name": "Register (Employer)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.environment.set('JWT_TOKEN', jsonData.data.token);",
+                  "    pm.environment.set('USER_ID', jsonData.data.user._id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"employer.test@example.com\",\n  \"password\": \"Test123!\",\n  \"role\": \"employer\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/auth/register",
+              "host": ["{{BASE_URL}}"],
+              "path": ["auth", "register"]
+            },
+            "description": "Register a new employer account"
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.environment.set('JWT_TOKEN', jsonData.data.token);",
+                  "    pm.environment.set('USER_ID', jsonData.data.user._id);",
+                  "    console.log('✓ Logged in successfully');",
+                  "    console.log('✓ JWT token: ' + jsonData.data.token.substring(0, 20) + '...');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"carlos.rivera@example.com\",\n  \"password\": \"Test123!\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/auth/login",
+              "host": ["{{BASE_URL}}"],
+              "path": ["auth", "login"]
+            },
+            "description": "Login with existing credentials"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Current User (Me)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/auth/me",
+              "host": ["{{BASE_URL}}"],
+              "path": ["auth", "me"]
+            },
+            "description": "Get currently authenticated user information"
+          },
+          "response": []
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/auth/logout",
+              "host": ["{{BASE_URL}}"],
+              "path": ["auth", "logout"]
+            },
+            "description": "Logout current user session"
+          },
+          "response": []
+        },
+        {
+          "name": "Forgot Password",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"carlos.rivera@example.com\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/auth/forgot-password",
+              "host": ["{{BASE_URL}}"],
+              "path": ["auth", "forgot-password"]
+            },
+            "description": "Request password reset email"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "User Profile",
+      "description": "Jobseeker profile management including education, experience, skills, certifications, and languages",
+      "item": [
+        {
+          "name": "Create Profile",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Maria\",\n  \"lastName\": \"Santos\",\n  \"dateOfBirth\": \"1995-05-15\",\n  \"gender\": \"female\",\n  \"nationality\": \"Philippines\",\n  \"phone\": \"+81-90-1234-5678\",\n  \"address\": \"1-2-3 Shibuya\",\n  \"prefecture\": \"Tokyo\",\n  \"city\": \"Shibuya\",\n  \"postalCode\": \"150-0002\",\n  \"japaneseLevel\": \"N3\",\n  \"bio\": \"Experienced worker looking for opportunities in Japan\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/profile",
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile"]
+            },
+            "description": "Create user profile (jobseeker only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Own Profile",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/profile",
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile"]
+            },
+            "description": "Get currently authenticated user's profile"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone\": \"+81-90-9999-8888\",\n  \"address\": \"5-10-20 Roppongi, Minato-ku\",\n  \"japaneseLevel\": \"N2\",\n  \"bio\": \"Updated professional summary\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/profile",
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile"]
+            },
+            "description": "Update existing profile fields"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Profile",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/profile",
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile"]
+            },
+            "description": "Delete user profile"
+          },
+          "response": []
+        },
+        {
+          "name": "Add Education",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"school\": \"University of Manila\",\n  \"degree\": \"Bachelor\",\n  \"field\": \"Computer Science\",\n  \"startDate\": \"2013-06-01\",\n  \"endDate\": \"2017-03-31\",\n  \"current\": false\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/profile/education",
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile", "education"]
+            },
+            "description": "Add education entry to profile"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Education",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"degree\": \"Bachelor of Science\",\n  \"field\": \"Computer Science (Updated)\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/profile/education/:educationId",
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile", "education", ":educationId"],
+              "variable": [
+                {
+                  "key": "educationId",
+                  "value": "edu_id_here"
+                }
+              ]
+            },
+            "description": "Update specific education entry"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Education",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/profile/education/:educationId",
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile", "education", ":educationId"],
+              "variable": [
+                {
+                  "key": "educationId",
+                  "value": "edu_id_here"
+                }
+              ]
+            },
+            "description": "Delete specific education entry"
+          },
+          "response": []
+        },
+        {
+          "name": "Add Work Experience",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"company\": \"Tech Solutions Inc\",\n  \"title\": \"Software Developer\",\n  \"description\": \"Developed web applications using React and Node.js\",\n  \"startDate\": \"2018-04-01\",\n  \"endDate\": \"2024-12-31\",\n  \"current\": false\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/profile/experience",
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile", "experience"]
+            },
+            "description": "Add work experience entry to profile"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Work Experience",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Senior Software Developer\",\n  \"description\": \"Updated role description\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/profile/experience/:experienceId",
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile", "experience", ":experienceId"],
+              "variable": [
+                {
+                  "key": "experienceId",
+                  "value": "exp_id_here"
+                }
+              ]
+            },
+            "description": "Update specific work experience entry"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Work Experience",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/profile/experience/:experienceId",
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile", "experience", ":experienceId"],
+              "variable": [
+                {
+                  "key": "experienceId",
+                  "value": "exp_id_here"
+                }
+              ]
+            },
+            "description": "Delete specific work experience entry"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Skills",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"skills\": [\n    {\"name\": \"JavaScript\", \"level\": \"Advanced\", \"category\": \"Programming\"},\n    {\"name\": \"React\", \"level\": \"Advanced\", \"category\": \"Framework\"},\n    {\"name\": \"Node.js\", \"level\": \"Intermediate\", \"category\": \"Backend\"},\n    {\"name\": \"MongoDB\", \"level\": \"Intermediate\", \"category\": \"Database\"}\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/profile/skills",
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile", "skills"]
+            },
+            "description": "Update entire skills array (replaces existing)"
+          },
+          "response": []
+        },
+        {
+          "name": "Add Certification",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"AWS Certified Developer\",\n  \"issuer\": \"Amazon Web Services\",\n  \"dateObtained\": \"2024-06-15\",\n  \"expiryDate\": \"2027-06-15\",\n  \"credentialId\": \"AWS-123456789\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/profile/certifications",
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile", "certifications"]
+            },
+            "description": "Add certification to profile"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Certification",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/profile/certifications/:certificationId",
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile", "certifications", ":certificationId"],
+              "variable": [
+                {
+                  "key": "certificationId",
+                  "value": "cert_id_here"
+                }
+              ]
+            },
+            "description": "Delete specific certification"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Languages",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"languages\": [\n    {\"language\": \"English\", \"proficiency\": \"Native\"},\n    {\"language\": \"Japanese\", \"proficiency\": \"Intermediate\"},\n    {\"language\": \"Spanish\", \"proficiency\": \"Basic\"}\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/profile/languages",
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile", "languages"]
+            },
+            "description": "Update languages array (replaces existing)"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Availability",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"availability\": {\n    \"startDate\": \"2026-04-01\",\n    \"relocate\": true,\n    \"preferredLocations\": [\"Tokyo\", \"Osaka\", \"Nagoya\"]\n  }\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/profile/availability",
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile", "availability"]
+            },
+            "description": "Update availability information"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Jobs",
+      "description": "Job posting management and search functionality",
+      "item": [
+        {
+          "name": "Get All Jobs",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/jobs?page=1&limit=10",
+              "host": ["{{BASE_URL}}"],
+              "path": ["jobs"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number"
+                },
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Items per page"
+                },
+                {
+                  "key": "industry",
+                  "value": "Manufacturing",
+                  "disabled": true
+                },
+                {
+                  "key": "prefecture",
+                  "value": "Tokyo",
+                  "disabled": true
+                },
+                {
+                  "key": "japaneseLevel",
+                  "value": "N3",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Get all jobs with optional filtering and pagination"
+          },
+          "response": []
+        },
+        {
+          "name": "Search Jobs (Manufacturing in Tokyo)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/jobs?industry=Manufacturing&prefecture=Tokyo&japaneseLevel=N3",
+              "host": ["{{BASE_URL}}"],
+              "path": ["jobs"],
+              "query": [
+                {
+                  "key": "industry",
+                  "value": "Manufacturing"
+                },
+                {
+                  "key": "prefecture",
+                  "value": "Tokyo"
+                },
+                {
+                  "key": "japaneseLevel",
+                  "value": "N3"
+                }
+              ]
+            },
+            "description": "Search jobs with filters"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Single Job",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/jobs/{{JOB_ID}}",
+              "host": ["{{BASE_URL}}"],
+              "path": ["jobs", "{{JOB_ID}}"]
+            },
+            "description": "Get job details by ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Job (Employer)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.environment.set('JOB_ID', jsonData.data.job._id);",
+                  "    console.log('✓ Job created, ID saved to environment');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"company\": \"{{COMPANY_ID}}\",\n  \"title\": \"Manufacturing Engineer - SSW Visa\",\n  \"industry\": \"Manufacturing\",\n  \"summary\": \"Join our innovative manufacturing team and work with cutting-edge technology\",\n  \"responsibilities\": \"Design and improve manufacturing processes, maintain equipment, ensure quality standards\",\n  \"requirements\": \"Experience with industrial equipment, Japanese language N3 or higher\",\n  \"benefits\": \"Competitive salary, health insurance, transportation allowance, housing support\",\n  \"japaneseLevel\": \"N3\",\n  \"compensation\": {\n    \"salaryMin\": 250000,\n    \"salaryMax\": 350000,\n    \"currency\": \"JPY\",\n    \"period\": \"monthly\",\n    \"overtimePay\": true\n  },\n  \"location\": {\n    \"prefecture\": \"Tokyo\",\n    \"city\": \"Shibuya\",\n    \"remote\": false\n  },\n  \"workConditions\": {\n    \"workHours\": \"9:00-18:00\",\n    \"daysOff\": \"2 days per week (Saturday, Sunday)\",\n    \"vacation\": \"10 days paid leave per year\"\n  },\n  \"applicationInfo\": {\n    \"deadline\": \"2026-06-30\",\n    \"startDate\": \"2026-08-01\",\n    \"contactEmail\": \"recruit@company.jp\",\n    \"applicationMethod\": \"Platform\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/jobs",
+              "host": ["{{BASE_URL}}"],
+              "path": ["jobs"]
+            },
+            "description": "Create new job posting (employer only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Job (Employer)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"summary\": \"Updated job summary with new information\",\n  \"benefits\": \"Enhanced benefits package including relocation assistance\",\n  \"compensation\": {\n    \"salaryMin\": 280000,\n    \"salaryMax\": 380000\n  }\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/jobs/{{JOB_ID}}",
+              "host": ["{{BASE_URL}}"],
+              "path": ["jobs", "{{JOB_ID}}"]
+            },
+            "description": "Update existing job posting (employer only, own jobs)"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Job (Employer)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/jobs/{{JOB_ID}}",
+              "host": ["{{BASE_URL}}"],
+              "path": ["jobs", "{{JOB_ID}}"]
+            },
+            "description": "Delete job posting (employer only, own jobs)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Jobs by Company",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/jobs/company/{{COMPANY_ID}}",
+              "host": ["{{BASE_URL}}"],
+              "path": ["jobs", "company", "{{COMPANY_ID}}"]
+            },
+            "description": "Get all jobs for a specific company"
+          },
+          "response": []
+        },
+        {
+          "name": "Get My Jobs (Employer)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/jobs/my-jobs",
+              "host": ["{{BASE_URL}}"],
+              "path": ["jobs", "my-jobs"]
+            },
+            "description": "Get all jobs posted by current employer"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Applications",
+      "description": "Job application management for jobseekers and employers",
+      "item": [
+        {
+          "name": "Apply to Job (Jobseeker)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.environment.set('APPLICATION_ID', jsonData.data.application._id);",
+                  "    console.log('✓ Application submitted, ID saved');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"job\": \"{{JOB_ID}}\",\n  \"coverLetter\": \"I am very interested in this position and believe my experience in manufacturing aligns perfectly with your requirements. I have 5 years of experience working with industrial equipment and hold a N3 Japanese language certificate.\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/applications",
+              "host": ["{{BASE_URL}}"],
+              "path": ["applications"]
+            },
+            "description": "Submit job application (jobseeker only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get My Applications (Jobseeker)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/applications/my-applications",
+              "host": ["{{BASE_URL}}"],
+              "path": ["applications", "my-applications"]
+            },
+            "description": "Get all applications submitted by current jobseeker"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Single Application",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/applications/{{APPLICATION_ID}}",
+              "host": ["{{BASE_URL}}"],
+              "path": ["applications", "{{APPLICATION_ID}}"]
+            },
+            "description": "Get application details by ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Job Applications (Employer)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/applications/job/{{JOB_ID}}",
+              "host": ["{{BASE_URL}}"],
+              "path": ["applications", "job", "{{JOB_ID}}"]
+            },
+            "description": "Get all applications for a specific job (employer only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Application Status (Employer)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"under-review\",\n  \"notes\": \"Candidate has strong qualifications. Moving to interview stage.\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/applications/{{APPLICATION_ID}}/status",
+              "host": ["{{BASE_URL}}"],
+              "path": ["applications", "{{APPLICATION_ID}}", "status"]
+            },
+            "description": "Update application status (employer only). Status options: pending, under-review, interview-scheduled, rejected, accepted"
+          },
+          "response": []
+        },
+        {
+          "name": "Withdraw Application (Jobseeker)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"Found another opportunity\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/applications/{{APPLICATION_ID}}/withdraw",
+              "host": ["{{BASE_URL}}"],
+              "path": ["applications", "{{APPLICATION_ID}}", "withdraw"]
+            },
+            "description": "Withdraw application (jobseeker only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Application",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/applications/{{APPLICATION_ID}}",
+              "host": ["{{BASE_URL}}"],
+              "path": ["applications", "{{APPLICATION_ID}}"]
+            },
+            "description": "Delete application"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Companies",
+      "description": "Company management for employers",
+      "item": [
+        {
+          "name": "Get All Companies",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/companies?page=1&limit=10",
+              "host": ["{{BASE_URL}}"],
+              "path": ["companies"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "industry",
+                  "value": "Manufacturing",
+                  "disabled": true
+                },
+                {
+                  "key": "size",
+                  "value": "201-500",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Get all companies with optional filtering"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Single Company",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/companies/{{COMPANY_ID}}",
+              "host": ["{{BASE_URL}}"],
+              "path": ["companies", "{{COMPANY_ID}}"]
+            },
+            "description": "Get company details by ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Company (Employer)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.environment.set('COMPANY_ID', jsonData.data.company._id);",
+                  "    console.log('✓ Company created, ID saved');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Tech Innovation Corp\",\n  \"industry\": \"Manufacturing\",\n  \"size\": \"201-500\",\n  \"description\": \"Leading technology manufacturing company specializing in precision equipment and industrial automation solutions. We are committed to providing excellent working conditions for SSW workers.\",\n  \"location\": {\n    \"prefecture\": \"Tokyo\",\n    \"city\": \"Shibuya\",\n    \"address\": \"1-1-1 Shibuya\",\n    \"postalCode\": \"150-0001\"\n  },\n  \"contact\": {\n    \"email\": \"hr@techinnovation.jp\",\n    \"phone\": \"03-1234-5678\"\n  },\n  \"website\": \"https://techinnovation.jp\",\n  \"foundedYear\": 2010,\n  \"benefits\": [\"Health Insurance\", \"Housing Support\", \"Transportation Allowance\", \"Skill Training\"]\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/companies",
+              "host": ["{{BASE_URL}}"],
+              "path": ["companies"]
+            },
+            "description": "Create company profile (employer only, one per employer)"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Company (Employer)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"description\": \"Updated company description with more details\",\n  \"website\": \"https://techinnovation.jp/en\",\n  \"benefits\": [\"Health Insurance\", \"Housing Support\", \"Transportation Allowance\", \"Skill Training\", \"Annual Bonus\"]\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/companies/{{COMPANY_ID}}",
+              "host": ["{{BASE_URL}}"],
+              "path": ["companies", "{{COMPANY_ID}}"]
+            },
+            "description": "Update company profile (employer only, own company)"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Company (Employer)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/companies/{{COMPANY_ID}}",
+              "host": ["{{BASE_URL}}"],
+              "path": ["companies", "{{COMPANY_ID}}"]
+            },
+            "description": "Delete company profile (employer only, own company)"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Users (Admin)",
+      "description": "User management endpoints (admin only)",
+      "item": [
+        {
+          "name": "Get All Users (Admin)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/users?page=1&limit=10",
+              "host": ["{{BASE_URL}}"],
+              "path": ["users"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "role",
+                  "value": "jobseeker",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Get all users (admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Single User (Admin)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/users/{{USER_ID}}",
+              "host": ["{{BASE_URL}}"],
+              "path": ["users", "{{USER_ID}}"]
+            },
+            "description": "Get user by ID (admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Update User (Admin)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"isActive\": false,\n  \"role\": \"jobseeker\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/users/{{USER_ID}}",
+              "host": ["{{BASE_URL}}"],
+              "path": ["users", "{{USER_ID}}"]
+            },
+            "description": "Update user (admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete User (Admin)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/users/{{USER_ID}}",
+              "host": ["{{BASE_URL}}"],
+              "path": ["users", "{{USER_ID}}"]
+            },
+            "description": "Delete user (admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get User Statistics (Admin)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/users/stats",
+              "host": ["{{BASE_URL}}"],
+              "path": ["users", "stats"]
+            },
+            "description": "Get user statistics (admin only)"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
