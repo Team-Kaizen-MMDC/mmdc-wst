@@ -185,9 +185,9 @@ All endpoints below have been **successfully tested** with 100% pass rate (26/26
 ```javascript
 // Token Generation (at login/register)
 const token = jwt.sign(
-  { id: user._id },           // Payload: minimal user data
-  process.env.JWT_SECRET,     // Secret key (256-bit)
-  { expiresIn: '7d' }         // Auto-expiration
+  { id: user._id }, // Payload: minimal user data
+  process.env.JWT_SECRET, // Secret key (256-bit)
+  { expiresIn: "7d" }, // Auto-expiration
 );
 
 // Token Verification (on protected routes)
@@ -209,6 +209,7 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5N2IzODE3NWQ3ZTZmZTM0NmE2MjZhNSI
 **Security Considerations:**
 
 ✅ **What we do:**
+
 - Store JWT_SECRET in environment variables (not committed to Git)
 - Use 256-bit secret key
 - Set reasonable expiration time (7 days)
@@ -216,6 +217,7 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5N2IzODE3NWQ3ZTZmZTM0NmE2MjZhNSI
 - Use HTTPS in production (prevents token interception)
 
 ⚠️ **What we don't store in JWT:**
+
 - Passwords (even hashed)
 - Sensitive personal information
 - Financial data
@@ -223,22 +225,23 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5N2IzODE3NWQ3ZTZmZTM0NmE2MjZhNSI
 
 **Performance Impact:**
 
-| Metric | Session-based | JWT-based | Improvement |
-|--------|--------------|-----------|-------------|
-| Auth validation time | ~50ms | ~5ms | **10x faster** |
-| Database queries per request | 2 (session + user) | 1 (user only) | **50% reduction** |
-| Scalability | Requires sticky sessions | Stateless routing | **Unlimited** |
-| Server memory usage | ~2KB per session | 0KB (client-side) | **100% reduction** |
+| Metric                       | Session-based            | JWT-based         | Improvement        |
+| ---------------------------- | ------------------------ | ----------------- | ------------------ |
+| Auth validation time         | ~50ms                    | ~5ms              | **10x faster**     |
+| Database queries per request | 2 (session + user)       | 1 (user only)     | **50% reduction**  |
+| Scalability                  | Requires sticky sessions | Stateless routing | **Unlimited**      |
+| Server memory usage          | ~2KB per session         | 0KB (client-side) | **100% reduction** |
 
 **Trade-offs:**
 
-| Consideration | Impact | Mitigation |
-|--------------|--------|------------|
+| Consideration                         | Impact                          | Mitigation                          |
+| ------------------------------------- | ------------------------------- | ----------------------------------- |
 | Cannot revoke token before expiration | User stays logged in for 7 days | Implement token blacklist if needed |
-| Token size larger than session ID | ~200 bytes vs 32 bytes | Minimal impact on bandwidth |
-| Must resend token with every request | Slightly higher payload | Standard practice for REST APIs |
+| Token size larger than session ID     | ~200 bytes vs 32 bytes          | Minimal impact on bandwidth         |
+| Must resend token with every request  | Slightly higher payload         | Standard practice for REST APIs     |
 
 **When NOT to use JWT:**
+
 - Need immediate token revocation (use session store instead)
 - Storing large amounts of user state (use separate API calls)
 - High-security financial transactions (consider OAuth2 + JWT)
@@ -246,6 +249,7 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5N2IzODE3NWQ3ZTZmZTM0NmE2MjZhNSI
 **Conclusion:**
 
 JWT perfectly fits our use case:
+
 - RESTful API architecture
 - Mobile + web clients
 - Future horizontal scaling needs
