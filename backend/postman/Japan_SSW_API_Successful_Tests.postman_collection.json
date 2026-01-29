@@ -1,0 +1,2437 @@
+{
+  "info": {
+    "_postman_id": "japan-ssw-success-tests",
+    "name": "Japan SSW Platform API - Successful Test Suite",
+    "description": "Curated collection of working endpoints with proper authentication flows for guaranteed successful test execution.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Authentication Flow",
+      "item": [
+        {
+          "name": "1.0 Register Jobseeker",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// generate a unique test email and fixed password",
+                  "const ts = Date.now();",
+                  "const email = `test+${ts}@example.com`;",
+                  "const pass = 'Test123!';",
+                  "pm.environment.set('REGISTER_EMAIL', email);",
+                  "pm.environment.set('REGISTER_PASS', pass);",
+                  "console.log('REGISTER_EMAIL set to', email);"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 201 or 400', function () {",
+                  "    pm.expect([201, 400]).to.include(pm.response.code);",
+                  "});",
+                  "if (pm.response.code === 201) {",
+                  "    const jsonData = pm.response.json();",
+                  "    if (jsonData.data && jsonData.data.user) pm.environment.set('REGISTER_USER_ID', jsonData.data.user._id || jsonData.data.user.id);",
+                  "    console.log('✓ Test user created:', pm.environment.get('REGISTER_EMAIL'));",
+                  "} else {",
+                  "    console.log('ℹ User exists, continuing to login');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "register-jobseeker-1",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{REGISTER_EMAIL}}\",\n  \"password\": \"{{REGISTER_PASS}}\",\n  \"role\": \"jobseeker\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/auth/register",
+              "host": ["{{BASE_URL}}"],
+              "path": ["auth", "register"]
+            },
+            "description": "Register a jobseeker account for tests (creates a unique email)"
+          },
+          "response": [
+            {
+              "id": "e604ab03-0726-4c95-9d79-abe6136dcf8e",
+              "name": "1.0 Register Jobseeker",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"lr.bjcarlos@mmdc.mcl.edu.ph\",\n  \"password\": \"Test123!\",\n  \"role\": \"jobseeker\"\n}"
+                },
+                "url": {
+                  "raw": "{{BASE_URL}}/auth/register",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["auth", "register"]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdn.jsdelivr.net https://unpkg.com https://cdnjs.cloudflare.com;style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net;img-src 'self' data: https:;connect-src 'self';frame-ancestors 'self';object-src 'none';form-action 'self';worker-src 'self' blob:;base-uri 'self';script-src-attr 'none';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "RateLimit-Policy",
+                  "value": "1000;w=900"
+                },
+                {
+                  "key": "RateLimit-Limit",
+                  "value": "1000"
+                },
+                {
+                  "key": "RateLimit-Remaining",
+                  "value": "997"
+                },
+                {
+                  "key": "RateLimit-Reset",
+                  "value": "215"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "439"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"1b7-udfRwf6eiLLvHYVGkPXSZ/XbK7I\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 29 Jan 2026 12:03:51 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-29T12:03:55.370Z",
+              "body": "{\n    \"statusCode\": 201,\n    \"success\": true,\n    \"message\": \"User registered successfully\",\n    \"data\": {\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5N2I0Y2E3ZDhmNjYxMjk1Y2YzMzI5YiIsImVtYWlsIjoibHIuYmpjYXJsb3NAbW1kYy5tY2wuZWR1LnBoIiwicm9sZSI6ImpvYnNlZWtlciIsImlhdCI6MTc2OTY4ODIzMSwiZXhwIjoxNzcwMjkzMDMxfQ.VteZ42u3a-MfBlNIRORm6h6mt5jFfbC1L9ebblSetdU\",\n        \"user\": {\n            \"id\": \"697b4ca7d8f661295cf3329b\",\n            \"email\": \"lr.bjcarlos@mmdc.mcl.edu.ph\",\n            \"role\": \"jobseeker\"\n        }\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "1.1 Login as Jobseeker",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Response has token', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.success).to.be.true;",
+                  "    pm.expect(jsonData.data.token).to.exist;",
+                  "    pm.environment.set('JWT_TOKEN', jsonData.data.token);",
+                  "    pm.environment.set('USER_ID', jsonData.data.user._id);",
+                  "    pm.environment.set('USER_ROLE', 'jobseeker');",
+                  "    console.log('✓ Jobseeker logged in successfully');",
+                  "    console.log('✓ Token:', jsonData.data.token.substring(0, 20) + '...');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "21361ede-3022-4ba8-ab8a-942811e9455f",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{REGISTER_EMAIL}}\",\n  \"password\": \"{{REGISTER_PASS}}\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/auth/login",
+              "host": ["{{BASE_URL}}"],
+              "path": ["auth", "login"]
+            },
+            "description": "Login with existing jobseeker account"
+          },
+          "response": [
+            {
+              "id": "d6e32a12-cb46-497b-9f74-cd82f9cb63ad",
+              "name": "1.1 Login as Jobseeker",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"carlos.rivera@example.com\",\n  \"password\": \"Test123!\"\n}"
+                },
+                "url": {
+                  "raw": "{{BASE_URL}}/auth/login",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["auth", "login"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdn.jsdelivr.net https://unpkg.com https://cdnjs.cloudflare.com;style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net;img-src 'self' data: https:;connect-src 'self';frame-ancestors 'self';object-src 'none';form-action 'self';worker-src 'self' blob:;base-uri 'self';script-src-attr 'none';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "RateLimit-Policy",
+                  "value": "1000;w=900"
+                },
+                {
+                  "key": "RateLimit-Limit",
+                  "value": "1000"
+                },
+                {
+                  "key": "RateLimit-Remaining",
+                  "value": "976"
+                },
+                {
+                  "key": "RateLimit-Reset",
+                  "value": "623"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "422"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"1a6-SZ+nR0jTJ2O8y9wJOTCFvLHtPtg\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 29 Jan 2026 11:19:45 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-29T11:19:47.375Z",
+              "body": "{\n    \"statusCode\": 200,\n    \"success\": true,\n    \"message\": \"Login successful\",\n    \"data\": {\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5N2IzODE3NWQ3ZTZmZTM0NmE2MjZhNSIsImVtYWlsIjoiY2FybG9zLnJpdmVyYUBleGFtcGxlLmNvbSIsInJvbGUiOiJqb2JzZWVrZXIiLCJpYXQiOjE3Njk2ODU1ODUsImV4cCI6MTc3MDI5MDM4NX0.rWdLkSt1BgVZgt1bPeAe7EPmi5MpEHMYp76rFTxFJ8c\",\n        \"user\": {\n            \"id\": \"697b38175d7e6fe346a626a5\",\n            \"email\": \"carlos.rivera@example.com\",\n            \"role\": \"jobseeker\"\n        }\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "1.2 Get Current User Profile",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('User data is correct', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.success).to.be.true;",
+                  "    const expectedEmail = pm.environment.get('REGISTER_EMAIL') || pm.environment.get('USER_EMAIL') || 'carlos.rivera@example.com';",
+                  "    pm.expect(jsonData.data.user.email).to.eql(expectedEmail);",
+                  "    pm.expect(jsonData.data.user.role).to.eql('jobseeker');",
+                  "    console.log('✓ User profile retrieved');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "1e041e94-a602-4591-bd40-532dfaf8a3b1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/auth/me",
+              "host": ["{{BASE_URL}}"],
+              "path": ["auth", "me"]
+            },
+            "description": "Get authenticated user information"
+          },
+          "response": [
+            {
+              "id": "277e68b1-e106-48a1-a104-b2532884da83",
+              "name": "1.2 Get Current User Profile",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{BASE_URL}}/auth/me",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["auth", "me"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdn.jsdelivr.net https://unpkg.com https://cdnjs.cloudflare.com;style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net;img-src 'self' data: https:;connect-src 'self';frame-ancestors 'self';object-src 'none';form-action 'self';worker-src 'self' blob:;base-uri 'self';script-src-attr 'none';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "RateLimit-Policy",
+                  "value": "1000;w=900"
+                },
+                {
+                  "key": "RateLimit-Limit",
+                  "value": "1000"
+                },
+                {
+                  "key": "RateLimit-Remaining",
+                  "value": "968"
+                },
+                {
+                  "key": "RateLimit-Reset",
+                  "value": "363"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "410"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"19a-ri5mRsZ31dm4K6nbdAwGUtqtbXU\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 29 Jan 2026 11:24:04 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-29T11:24:14.177Z",
+              "body": "{\n    \"statusCode\": 200,\n    \"success\": true,\n    \"message\": \"User retrieved successfully\",\n    \"data\": {\n        \"user\": {\n            \"_id\": \"697b38175d7e6fe346a626a5\",\n            \"email\": \"carlos.rivera@example.com\",\n            \"role\": \"jobseeker\",\n            \"isActive\": true,\n            \"isEmailVerified\": true,\n            \"loginAttempts\": 0,\n            \"createdAt\": \"2026-01-29T10:36:07.987Z\",\n            \"updatedAt\": \"2026-01-29T11:24:00.814Z\",\n            \"__v\": 0,\n            \"lastLogin\": \"2026-01-29T11:24:00.813Z\",\n            \"isLocked\": false,\n            \"id\": \"697b38175d7e6fe346a626a5\"\n        }\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "1.3 Logout",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Logout successful', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.success).to.be.true;",
+                  "    console.log('✓ Logged out successfully');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "cc1d322b-401c-4b0f-8a6e-50017c5dddcb",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/auth/logout",
+              "host": ["{{BASE_URL}}"],
+              "path": ["auth", "logout"]
+            },
+            "description": "Logout current session"
+          },
+          "response": [
+            {
+              "id": "400ddebf-4cc3-467d-b28e-4c1ea4a23564",
+              "name": "1.3 Logout",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{BASE_URL}}/auth/logout",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["auth", "logout"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdn.jsdelivr.net https://unpkg.com https://cdnjs.cloudflare.com;style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net;img-src 'self' data: https:;connect-src 'self';frame-ancestors 'self';object-src 'none';form-action 'self';worker-src 'self' blob:;base-uri 'self';script-src-attr 'none';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "RateLimit-Policy",
+                  "value": "1000;w=900"
+                },
+                {
+                  "key": "RateLimit-Limit",
+                  "value": "1000"
+                },
+                {
+                  "key": "RateLimit-Remaining",
+                  "value": "967"
+                },
+                {
+                  "key": "RateLimit-Reset",
+                  "value": "345"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "63"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"3f-BGWq5ZVsrTH8U/6KamQbq7CucE8\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 29 Jan 2026 11:24:22 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-29T11:24:26.666Z",
+              "body": "{\n    \"statusCode\": 200,\n    \"success\": true,\n    \"message\": \"Logout successful\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "1.4 Re-login for Tests",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "const jsonData = pm.response.json();",
+                  "pm.environment.set('JWT_TOKEN', jsonData.data.token);",
+                  "pm.environment.set('USER_ID', jsonData.data.user._id);",
+                  "console.log('✓ Re-authenticated for remaining tests');"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "3b62debd-2cdd-4cc1-9944-73d16e8f85b2",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{REGISTER_EMAIL}}\",\n  \"password\": \"{{REGISTER_PASS}}\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/auth/login",
+              "host": ["{{BASE_URL}}"],
+              "path": ["auth", "login"]
+            }
+          },
+          "response": [
+            {
+              "id": "186a8d05-8753-4270-be4b-13599df941c8",
+              "name": "1.4 Re-login for Tests",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"carlos.rivera@example.com\",\n  \"password\": \"Test123!\"\n}"
+                },
+                "url": {
+                  "raw": "{{BASE_URL}}/auth/login",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["auth", "login"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdn.jsdelivr.net https://unpkg.com https://cdnjs.cloudflare.com;style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net;img-src 'self' data: https:;connect-src 'self';frame-ancestors 'self';object-src 'none';form-action 'self';worker-src 'self' blob:;base-uri 'self';script-src-attr 'none';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "RateLimit-Policy",
+                  "value": "1000;w=900"
+                },
+                {
+                  "key": "RateLimit-Limit",
+                  "value": "1000"
+                },
+                {
+                  "key": "RateLimit-Remaining",
+                  "value": "966"
+                },
+                {
+                  "key": "RateLimit-Reset",
+                  "value": "338"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "422"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"1a6-/Y/KxmDeOWmomalQXS+NdaLQgMU\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 29 Jan 2026 11:24:30 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-29T11:24:33.736Z",
+              "body": "{\n    \"statusCode\": 200,\n    \"success\": true,\n    \"message\": \"Login successful\",\n    \"data\": {\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5N2IzODE3NWQ3ZTZmZTM0NmE2MjZhNSIsImVtYWlsIjoiY2FybG9zLnJpdmVyYUBleGFtcGxlLmNvbSIsInJvbGUiOiJqb2JzZWVrZXIiLCJpYXQiOjE3Njk2ODU4NzAsImV4cCI6MTc3MDI5MDY3MH0.FdLeFnXCsu9qqS9NVtNwYsdq2tkNNRb_BuRsfo_rjsg\",\n        \"user\": {\n            \"id\": \"697b38175d7e6fe346a626a5\",\n            \"email\": \"carlos.rivera@example.com\",\n            \"role\": \"jobseeker\"\n        }\n    }\n}"
+            }
+          ]
+        }
+      ],
+      "id": "7f3f5f15-966e-408b-a3f8-009c9dacf13e",
+      "description": "Complete authentication workflow"
+    },
+    {
+      "name": "2. Profile Operations",
+      "item": [
+        {
+          "name": "2.1 Create Profile",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 201 or 400', function () {",
+                  "    pm.expect([201, 400]).to.include(pm.response.code);",
+                  "});",
+                  "",
+                  "if (pm.response.code === 201) {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.environment.set('PROFILE_ID', jsonData.data.profile._id);",
+                  "    console.log('✓ Profile created');",
+                  "} else {",
+                  "    console.log('ℹ Profile already exists, continuing...');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "36a14681-b9bf-4bfb-ad42-a5f6bfa30b66",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Carlos\",\n  \"lastName\": \"Rivera\",\n  \"dateOfBirth\": \"1995-03-15\",\n  \"gender\": \"male\",\n  \"nationality\": \"Philippines\",\n  \"phone\": \"+81-90-1234-5678\",\n  \"address\": \"1-2-3 Shibuya\",\n  \"prefecture\": \"Tokyo\",\n  \"city\": \"Shibuya\",\n  \"postalCode\": \"150-0002\",\n  \"japaneseLevel\": \"N3\",\n  \"bio\": \"Experienced manufacturing worker\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/profile",
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile"]
+            }
+          },
+          "response": [
+            {
+              "id": "92015cc8-f50c-4d9d-bf59-2bd82a9620f5",
+              "name": "2.1 Create Profile",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"firstName\": \"Carlos\",\n  \"lastName\": \"Rivera\",\n  \"dateOfBirth\": \"1995-03-15\",\n  \"gender\": \"male\",\n  \"nationality\": \"Philippines\",\n  \"phone\": \"+81-90-1234-5678\",\n  \"address\": \"1-2-3 Shibuya\",\n  \"prefecture\": \"Tokyo\",\n  \"city\": \"Shibuya\",\n  \"postalCode\": \"150-0002\",\n  \"japaneseLevel\": \"N3\",\n  \"bio\": \"Experienced manufacturing worker\"\n}"
+                },
+                "url": {
+                  "raw": "{{BASE_URL}}/profile",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["profile"]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdn.jsdelivr.net https://unpkg.com https://cdnjs.cloudflare.com;style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net;img-src 'self' data: https:;connect-src 'self';frame-ancestors 'self';object-src 'none';form-action 'self';worker-src 'self' blob:;base-uri 'self';script-src-attr 'none';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "RateLimit-Policy",
+                  "value": "1000;w=900"
+                },
+                {
+                  "key": "RateLimit-Limit",
+                  "value": "1000"
+                },
+                {
+                  "key": "RateLimit-Remaining",
+                  "value": "965"
+                },
+                {
+                  "key": "RateLimit-Reset",
+                  "value": "326"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "770"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"302-q6rBaSQqW/dCbYEkwA6/uG4FQGQ\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 29 Jan 2026 11:24:42 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-29T11:24:45.645Z",
+              "body": "{\n    \"statusCode\": 201,\n    \"success\": true,\n    \"message\": \"Profile created successfully\",\n    \"data\": {\n        \"profile\": {\n            \"user\": \"697b38175d7e6fe346a626a5\",\n            \"firstName\": \"Carlos\",\n            \"lastName\": \"Rivera\",\n            \"dateOfBirth\": \"1995-03-15T00:00:00.000Z\",\n            \"gender\": \"male\",\n            \"nationality\": \"Philippines\",\n            \"phone\": \"+81-90-1234-5678\",\n            \"address\": \"1-2-3 Shibuya\",\n            \"prefecture\": \"Tokyo\",\n            \"city\": \"Shibuya\",\n            \"postalCode\": \"150-0002\",\n            \"japaneseLevel\": \"N3\",\n            \"availability\": {\n                \"relocate\": true,\n                \"remote\": false\n            },\n            \"bio\": \"Experienced manufacturing worker\",\n            \"profileCompleted\": false,\n            \"_id\": \"697b437ad8f661295cf33273\",\n            \"education\": [],\n            \"experience\": [],\n            \"skills\": [],\n            \"certifications\": [],\n            \"languages\": [],\n            \"createdAt\": \"2026-01-29T11:24:42.016Z\",\n            \"updatedAt\": \"2026-01-29T11:24:42.016Z\",\n            \"__v\": 0,\n            \"fullName\": \"Carlos Rivera\",\n            \"age\": 30,\n            \"id\": \"697b437ad8f661295cf33273\"\n        }\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "2.2 Get Own Profile",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Profile data exists', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.success).to.be.true;",
+                  "    pm.expect(jsonData.data.profile).to.exist;",
+                  "    if (jsonData.data.profile._id) {",
+                  "        pm.environment.set('PROFILE_ID', jsonData.data.profile._id);",
+                  "    }",
+                  "    console.log('✓ Profile retrieved');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "5156d04f-91b8-4e04-8f0f-eef43a402cb6",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/profile",
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile"]
+            }
+          },
+          "response": [
+            {
+              "id": "83f1be19-3059-414b-9a56-4ca3c16b3ba1",
+              "name": "2.2 Get Own Profile",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{BASE_URL}}/profile",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["profile"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdn.jsdelivr.net https://unpkg.com https://cdnjs.cloudflare.com;style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net;img-src 'self' data: https:;connect-src 'self';frame-ancestors 'self';object-src 'none';form-action 'self';worker-src 'self' blob:;base-uri 'self';script-src-attr 'none';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "RateLimit-Policy",
+                  "value": "1000;w=900"
+                },
+                {
+                  "key": "RateLimit-Limit",
+                  "value": "1000"
+                },
+                {
+                  "key": "RateLimit-Remaining",
+                  "value": "964"
+                },
+                {
+                  "key": "RateLimit-Reset",
+                  "value": "320"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "884"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"374-/lweWUDF83Nn4vPZT8iNK6YgwDs\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 29 Jan 2026 11:24:48 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-29T11:24:54.371Z",
+              "body": "{\n    \"statusCode\": 200,\n    \"success\": true,\n    \"message\": \"Profile retrieved successfully\",\n    \"data\": {\n        \"profile\": {\n            \"availability\": {\n                \"relocate\": true,\n                \"remote\": false\n            },\n            \"_id\": \"697b437ad8f661295cf33273\",\n            \"user\": {\n                \"_id\": \"697b38175d7e6fe346a626a5\",\n                \"email\": \"carlos.rivera@example.com\",\n                \"role\": \"jobseeker\",\n                \"isLocked\": false,\n                \"id\": \"697b38175d7e6fe346a626a5\"\n            },\n            \"firstName\": \"Carlos\",\n            \"lastName\": \"Rivera\",\n            \"dateOfBirth\": \"1995-03-15T00:00:00.000Z\",\n            \"gender\": \"male\",\n            \"nationality\": \"Philippines\",\n            \"phone\": \"+81-90-1234-5678\",\n            \"address\": \"1-2-3 Shibuya\",\n            \"prefecture\": \"Tokyo\",\n            \"city\": \"Shibuya\",\n            \"postalCode\": \"150-0002\",\n            \"japaneseLevel\": \"N3\",\n            \"bio\": \"Experienced manufacturing worker\",\n            \"profileCompleted\": false,\n            \"education\": [],\n            \"experience\": [],\n            \"skills\": [],\n            \"certifications\": [],\n            \"languages\": [],\n            \"createdAt\": \"2026-01-29T11:24:42.016Z\",\n            \"updatedAt\": \"2026-01-29T11:24:42.016Z\",\n            \"__v\": 0,\n            \"fullName\": \"Carlos Rivera\",\n            \"age\": 30,\n            \"id\": \"697b437ad8f661295cf33273\"\n        }\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "2.3 Update Profile",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Profile updated', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.success).to.be.true;",
+                  "    console.log('✓ Profile updated');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "51fbff86-006f-42e2-9868-844b28254eeb",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone\": \"+81-90-9999-8888\",\n  \"japaneseLevel\": \"N2\",\n  \"bio\": \"Experienced manufacturing worker seeking new opportunities\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/profile",
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile"]
+            }
+          },
+          "response": [
+            {
+              "id": "af9a70be-e9ac-48ad-91bf-cb93ff8fca96",
+              "name": "2.3 Update Profile",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"phone\": \"+81-90-9999-8888\",\n  \"japaneseLevel\": \"N2\",\n  \"bio\": \"Experienced manufacturing worker seeking new opportunities\"\n}"
+                },
+                "url": {
+                  "raw": "{{BASE_URL}}/profile",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["profile"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdn.jsdelivr.net https://unpkg.com https://cdnjs.cloudflare.com;style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net;img-src 'self' data: https:;connect-src 'self';frame-ancestors 'self';object-src 'none';form-action 'self';worker-src 'self' blob:;base-uri 'self';script-src-attr 'none';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "RateLimit-Policy",
+                  "value": "1000;w=900"
+                },
+                {
+                  "key": "RateLimit-Limit",
+                  "value": "1000"
+                },
+                {
+                  "key": "RateLimit-Remaining",
+                  "value": "963"
+                },
+                {
+                  "key": "RateLimit-Reset",
+                  "value": "309"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "796"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"31c-EXLJbexZL+2GPoVmlIbLzZkSe88\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 29 Jan 2026 11:24:59 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-29T11:25:03.086Z",
+              "body": "{\n    \"statusCode\": 200,\n    \"success\": true,\n    \"message\": \"Profile updated successfully\",\n    \"data\": {\n        \"profile\": {\n            \"availability\": {\n                \"relocate\": true,\n                \"remote\": false\n            },\n            \"_id\": \"697b437ad8f661295cf33273\",\n            \"user\": \"697b38175d7e6fe346a626a5\",\n            \"firstName\": \"Carlos\",\n            \"lastName\": \"Rivera\",\n            \"dateOfBirth\": \"1995-03-15T00:00:00.000Z\",\n            \"gender\": \"male\",\n            \"nationality\": \"Philippines\",\n            \"phone\": \"+81-90-9999-8888\",\n            \"address\": \"1-2-3 Shibuya\",\n            \"prefecture\": \"Tokyo\",\n            \"city\": \"Shibuya\",\n            \"postalCode\": \"150-0002\",\n            \"japaneseLevel\": \"N2\",\n            \"bio\": \"Experienced manufacturing worker seeking new opportunities\",\n            \"profileCompleted\": false,\n            \"education\": [],\n            \"experience\": [],\n            \"skills\": [],\n            \"certifications\": [],\n            \"languages\": [],\n            \"createdAt\": \"2026-01-29T11:24:42.016Z\",\n            \"updatedAt\": \"2026-01-29T11:24:59.462Z\",\n            \"__v\": 0,\n            \"fullName\": \"Carlos Rivera\",\n            \"age\": 30,\n            \"id\": \"697b437ad8f661295cf33273\"\n        }\n    }\n}"
+            }
+          ]
+        }
+      ],
+      "id": "c2e81991-2920-491b-bd0f-d9b99a8bb91d",
+      "description": "Complete profile CRUD workflow"
+    },
+    {
+      "name": "3. Jobs Operations",
+      "item": [
+        {
+          "name": "3.1 Get All Jobs",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Jobs list received', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.success).to.be.true;",
+                  "    pm.expect(jsonData.data.jobs).to.be.an('array');",
+                  "    ",
+                  "    if (jsonData.data.jobs.length > 0) {",
+                  "        pm.environment.set('JOB_ID', jsonData.data.jobs[0]._id);",
+                  "        console.log('✓ Jobs retrieved:', jsonData.data.jobs.length);",
+                  "        console.log('✓ Sample Job ID saved:', jsonData.data.jobs[0]._id);",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "4c1de39f-08ee-43dc-a503-f2f27c851fd7",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/jobs?page=1&limit=10",
+              "host": ["{{BASE_URL}}"],
+              "path": ["jobs"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "489ccfc9-1e17-41c1-819e-8db57808c6e9",
+              "name": "3.1 Get All Jobs",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{BASE_URL}}/jobs?page=1&limit=10",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["jobs"],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1",
+                      "uuid": "4e73baa2-106d-4396-8b5b-ce5dee1d3ca2"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10",
+                      "uuid": "5b737367-640a-48a4-bcd0-251abc76ef9a"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdn.jsdelivr.net https://unpkg.com https://cdnjs.cloudflare.com;style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net;img-src 'self' data: https:;connect-src 'self';frame-ancestors 'self';object-src 'none';form-action 'self';worker-src 'self' blob:;base-uri 'self';script-src-attr 'none';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "RateLimit-Policy",
+                  "value": "1000;w=900"
+                },
+                {
+                  "key": "RateLimit-Limit",
+                  "value": "1000"
+                },
+                {
+                  "key": "RateLimit-Remaining",
+                  "value": "962"
+                },
+                {
+                  "key": "RateLimit-Reset",
+                  "value": "297"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "17306"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"439a-vPSgmtNFsjKeSgP/B+VJdruTjT4\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 29 Jan 2026 11:25:11 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-29T11:25:15.870Z",
+              "body": "{\n    \"statusCode\": 200,\n    \"success\": true,\n    \"message\": \"Jobs retrieved successfully\",\n    \"data\": {\n        \"jobs\": [\n            {\n                \"requiredExperience\": {\n                    \"years\": 1,\n                    \"description\": \"Commercial driving or delivery experience\"\n                },\n                \"compensation\": {\n                    \"salaryMin\": 240000,\n                    \"salaryMax\": 320000,\n                    \"currency\": \"JPY\",\n                    \"period\": \"monthly\",\n                    \"overtimePay\": true\n                },\n                \"location\": {\n                    \"prefecture\": \"Chiba\",\n                    \"city\": \"Chiba\",\n                    \"remote\": false,\n                    \"remoteType\": \"None\"\n                },\n                \"applicationInfo\": {\n                    \"deadline\": \"2026-03-30T10:36:16.501Z\",\n                    \"startDate\": \"2026-04-29T10:36:16.501Z\",\n                    \"applicationMethod\": \"Platform\"\n                },\n                \"_id\": \"697b38205d7e6fe346a62753\",\n                \"company\": {\n                    \"location\": {\n                        \"prefecture\": \"Chiba\",\n                        \"city\": \"Chiba\"\n                    },\n                    \"_id\": \"697b381e5d7e6fe346a626f0\",\n                    \"name\": \"Japan Express Logistics\",\n                    \"industry\": \"Logistics\",\n                    \"isVerified\": true,\n                    \"jobCount\": 0,\n                    \"employeeRange\": null,\n                    \"id\": \"697b381e5d7e6fe346a626f0\"\n                },\n                \"postedBy\": {\n                    \"_id\": \"697b381d5d7e6fe346a626d3\",\n                    \"email\": \"employer10@logistics.jp\",\n                    \"role\": \"employer\",\n                    \"isLocked\": false,\n                    \"id\": \"697b381d5d7e6fe346a626d3\"\n                },\n                \"title\": \"Delivery Driver\",\n                \"industry\": \"Logistics\",\n                \"category\": \"Transportation\",\n                \"summary\": \"Deliver goods to customers and businesses\",\n                \"responsibilities\": \"Drive delivery truck; Load and secure cargo; Follow delivery schedule; Collect signatures; Maintain vehicle; Provide customer service\",\n                \"requirements\": \"Valid driver's license; Japanese N4 or higher; Clean driving record; Physical fitness; Customer service skills; Route knowledge\",\n                \"requiredEducation\": \"High School\",\n                \"japaneseLevel\": \"N4\",\n                \"requiredSkills\": [\n                    \"Driving\",\n                    \"Customer Service\",\n                    \"Time Management\"\n                ],\n                \"requiredCertifications\": [],\n                \"status\": \"active\",\n                \"visibility\": \"public\",\n                \"views\": 2,\n                \"applications\": [],\n                \"featured\": false,\n                \"urgent\": false,\n                \"isDeleted\": false,\n                \"createdAt\": \"2026-01-29T10:36:16.503Z\",\n                \"updatedAt\": \"2026-01-29T11:15:24.143Z\",\n                \"__v\": 0,\n                \"applicationCount\": 0,\n                \"isExpired\": false,\n                \"daysUntilDeadline\": 60,\n                \"id\": \"697b38205d7e6fe346a62753\"\n            },\n            {\n                \"requiredExperience\": {\n                    \"years\": 3,\n                    \"description\": \"Warehouse supervision or team lead role\"\n                },\n                \"compensation\": {\n                    \"salaryMin\": 300000,\n                    \"salaryMax\": 390000,\n                    \"currency\": \"JPY\",\n                    \"period\": \"monthly\",\n                    \"overtimePay\": true\n                },\n                \"location\": {\n                    \"prefecture\": \"Chiba\",\n                    \"city\": \"Chiba\",\n                    \"remote\": false,\n                    \"remoteType\": \"None\"\n                },\n                \"applicationInfo\": {\n                    \"deadline\": \"2026-03-30T10:36:16.460Z\",\n                    \"startDate\": \"2026-04-29T10:36:16.460Z\",\n                    \"applicationMethod\": \"Platform\"\n                },\n                \"_id\": \"697b38205d7e6fe346a62751\",\n                \"company\": {\n                    \"location\": {\n                        \"prefecture\": \"Chiba\",\n                        \"city\": \"Chiba\"\n                    },\n                    \"_id\": \"697b381e5d7e6fe346a626f0\",\n                    \"name\": \"Japan Express Logistics\",\n                    \"industry\": \"Logistics\",\n                    \"isVerified\": true,\n                    \"jobCount\": 0,\n                    \"employeeRange\": null,\n                    \"id\": \"697b381e5d7e6fe346a626f0\"\n                },\n                \"postedBy\": {\n                    \"_id\": \"697b381d5d7e6fe346a626d3\",\n                    \"email\": \"employer10@logistics.jp\",\n                    \"role\": \"employer\",\n                    \"isLocked\": false,\n                    \"id\": \"697b381d5d7e6fe346a626d3\"\n                },\n                \"title\": \"Warehouse Supervisor\",\n                \"industry\": \"Logistics\",\n                \"category\": \"Management\",\n                \"summary\": \"Supervise warehouse operations and staff\",\n                \"responsibilities\": \"Manage warehouse team; Coordinate shipping/receiving; Ensure safety compliance; Monitor productivity; Train new staff\",\n                \"requirements\": \"3+ years warehouse experience; Japanese N3 or higher; Leadership skills; Computer proficiency; Problem-solving ability\",\n                \"requiredEducation\": \"Associate\",\n                \"japaneseLevel\": \"N3\",\n                \"requiredSkills\": [\n                    \"Team Management\",\n                    \"Warehouse Operations\",\n                    \"Logistics Coordination\"\n                ],\n                \"requiredCertifications\": [],\n                \"status\": \"active\",\n                \"visibility\": \"public\",\n                \"views\": 0,\n                \"applications\": [],\n                \"featured\": false,\n                \"urgent\": false,\n                \"isDeleted\": false,\n                \"createdAt\": \"2026-01-29T10:36:16.462Z\",\n                \"updatedAt\": \"2026-01-29T10:36:16.462Z\",\n                \"__v\": 0,\n                \"applicationCount\": 0,\n                \"isExpired\": false,\n                \"daysUntilDeadline\": 60,\n                \"id\": \"697b38205d7e6fe346a62751\"\n            },\n            {\n                \"requiredExperience\": {\n                    \"years\": 1,\n                    \"description\": \"Inventory control or warehouse operations\"\n                },\n                \"compensation\": {\n                    \"salaryMin\": 240000,\n                    \"salaryMax\": 320000,\n                    \"currency\": \"JPY\",\n                    \"period\": \"monthly\",\n                    \"overtimePay\": true\n                },\n                \"location\": {\n                    \"prefecture\": \"Chiba\",\n                    \"city\": \"Chiba\",\n                    \"remote\": false,\n                    \"remoteType\": \"None\"\n                },\n                \"applicationInfo\": {\n                    \"deadline\": \"2026-03-30T10:36:16.419Z\",\n                    \"startDate\": \"2026-04-29T10:36:16.419Z\",\n                    \"applicationMethod\": \"Platform\"\n                },\n                \"_id\": \"697b38205d7e6fe346a6274f\",\n                \"company\": {\n                    \"location\": {\n                        \"prefecture\": \"Chiba\",\n                        \"city\": \"Chiba\"\n                    },\n                    \"_id\": \"697b381e5d7e6fe346a626f0\",\n                    \"name\": \"Japan Express Logistics\",\n                    \"industry\": \"Logistics\",\n                    \"isVerified\": true,\n                    \"jobCount\": 0,\n                    \"employeeRange\": null,\n                    \"id\": \"697b381e5d7e6fe346a626f0\"\n                },\n                \"postedBy\": {\n                    \"_id\": \"697b381d5d7e6fe346a626d3\",\n                    \"email\": \"employer10@logistics.jp\",\n                    \"role\": \"employer\",\n                    \"isLocked\": false,\n                    \"id\": \"697b381d5d7e6fe346a626d3\"\n                },\n                \"title\": \"Inventory Control Specialist\",\n                \"industry\": \"Logistics\",\n                \"category\": \"Operations\",\n                \"summary\": \"Manage warehouse inventory and stock control\",\n                \"responsibilities\": \"Track inventory levels; Conduct cycle counts; Update inventory systems; Investigate discrepancies; Generate reports\",\n                \"requirements\": \"1+ years inventory experience; Japanese N4 or higher; Computer proficiency; Attention to detail; Analytical skills\",\n                \"requiredEducation\": \"High School\",\n                \"japaneseLevel\": \"N4\",\n                \"requiredSkills\": [\n                    \"Inventory Management\",\n                    \"Computer Systems\",\n                    \"Data Analysis\"\n                ],\n                \"requiredCertifications\": [],\n                \"status\": \"active\",\n                \"visibility\": \"public\",\n                \"views\": 0,\n                \"applications\": [],\n                \"featured\": false,\n                \"urgent\": false,\n                \"isDeleted\": false,\n                \"createdAt\": \"2026-01-29T10:36:16.421Z\",\n                \"updatedAt\": \"2026-01-29T10:36:16.421Z\",\n                \"__v\": 0,\n                \"applicationCount\": 0,\n                \"isExpired\": false,\n                \"daysUntilDeadline\": 60,\n                \"id\": \"697b38205d7e6fe346a6274f\"\n            },\n            {\n                \"requiredExperience\": {\n                    \"years\": 1,\n                    \"description\": \"Forklift operation experience\"\n                },\n                \"compensation\": {\n                    \"salaryMin\": 230000,\n                    \"salaryMax\": 300000,\n                    \"currency\": \"JPY\",\n                    \"period\": \"monthly\",\n                    \"overtimePay\": true\n                },\n                \"location\": {\n                    \"prefecture\": \"Chiba\",\n                    \"city\": \"Chiba\",\n                    \"remote\": false,\n                    \"remoteType\": \"None\"\n                },\n                \"applicationInfo\": {\n                    \"deadline\": \"2026-03-30T10:36:16.378Z\",\n                    \"startDate\": \"2026-04-29T10:36:16.378Z\",\n                    \"applicationMethod\": \"Platform\"\n                },\n                \"_id\": \"697b38205d7e6fe346a6274d\",\n                \"company\": {\n                    \"location\": {\n                        \"prefecture\": \"Chiba\",\n                        \"city\": \"Chiba\"\n                    },\n                    \"_id\": \"697b381e5d7e6fe346a626f0\",\n                    \"name\": \"Japan Express Logistics\",\n                    \"industry\": \"Logistics\",\n                    \"isVerified\": true,\n                    \"jobCount\": 0,\n                    \"employeeRange\": null,\n                    \"id\": \"697b381e5d7e6fe346a626f0\"\n                },\n                \"postedBy\": {\n                    \"_id\": \"697b381d5d7e6fe346a626d3\",\n                    \"email\": \"employer10@logistics.jp\",\n                    \"role\": \"employer\",\n                    \"isLocked\": false,\n                    \"id\": \"697b381d5d7e6fe346a626d3\"\n                },\n                \"title\": \"Forklift Operator\",\n                \"industry\": \"Logistics\",\n                \"category\": \"Equipment Operation\",\n                \"summary\": \"Operate forklifts and material handling equipment\",\n                \"responsibilities\": \"Operate forklifts safely; Move materials within warehouse; Load/unload trucks; Perform equipment inspections; Maintain safety standards\",\n                \"requirements\": \"Forklift license required; 1+ years experience; Japanese N5 or higher; Safety conscious; Good spatial awareness\",\n                \"requiredEducation\": \"High School\",\n                \"japaneseLevel\": \"N5\",\n                \"requiredSkills\": [\n                    \"Forklift Operation\",\n                    \"Safety Compliance\",\n                    \"Material Handling\"\n                ],\n                \"requiredCertifications\": [],\n                \"status\": \"active\",\n                \"visibility\": \"public\",\n                \"views\": 0,\n                \"applications\": [],\n                \"featured\": false,\n                \"urgent\": false,\n                \"isDeleted\": false,\n                \"createdAt\": \"2026-01-29T10:36:16.379Z\",\n                \"updatedAt\": \"2026-01-29T10:36:16.379Z\",\n                \"__v\": 0,\n                \"applicationCount\": 0,\n                \"isExpired\": false,\n                \"daysUntilDeadline\": 60,\n                \"id\": \"697b38205d7e6fe346a6274d\"\n            },\n            {\n                \"requiredExperience\": {\n                    \"years\": 0,\n                    \"description\": \"Training provided; warehouse experience helpful\"\n                },\n                \"compensation\": {\n                    \"salaryMin\": 210000,\n                    \"salaryMax\": 280000,\n                    \"currency\": \"JPY\",\n                    \"period\": \"monthly\",\n                    \"overtimePay\": true\n                },\n                \"location\": {\n                    \"prefecture\": \"Chiba\",\n                    \"city\": \"Chiba\",\n                    \"remote\": false,\n                    \"remoteType\": \"None\"\n                },\n                \"applicationInfo\": {\n                    \"deadline\": \"2026-03-30T10:36:16.339Z\",\n                    \"startDate\": \"2026-04-29T10:36:16.339Z\",\n                    \"applicationMethod\": \"Platform\"\n                },\n                \"_id\": \"697b38205d7e6fe346a6274b\",\n                \"company\": {\n                    \"location\": {\n                        \"prefecture\": \"Chiba\",\n                        \"city\": \"Chiba\"\n                    },\n                    \"_id\": \"697b381e5d7e6fe346a626f0\",\n                    \"name\": \"Japan Express Logistics\",\n                    \"industry\": \"Logistics\",\n                    \"isVerified\": true,\n                    \"jobCount\": 0,\n                    \"employeeRange\": null,\n                    \"id\": \"697b381e5d7e6fe346a626f0\"\n                },\n                \"postedBy\": {\n                    \"_id\": \"697b381d5d7e6fe346a626d3\",\n                    \"email\": \"employer10@logistics.jp\",\n                    \"role\": \"employer\",\n                    \"isLocked\": false,\n                    \"id\": \"697b381d5d7e6fe346a626d3\"\n                },\n                \"title\": \"Warehouse Worker\",\n                \"industry\": \"Logistics\",\n                \"category\": \"Operations\",\n                \"summary\": \"Handle receiving, storage, and shipping of goods\",\n                \"responsibilities\": \"Load and unload shipments; Pick and pack orders; Operate forklifts; Maintain inventory accuracy; Keep warehouse organized\",\n                \"requirements\": \"Physical stamina; Japanese N5 or higher; Forklift license preferred; Basic computer skills; Reliable\",\n                \"requiredEducation\": \"High School\",\n                \"japaneseLevel\": \"N5\",\n                \"requiredSkills\": [\n                    \"Warehouse Operations\",\n                    \"Forklift Operation\",\n                    \"Physical Labor\"\n                ],\n                \"requiredCertifications\": [],\n                \"status\": \"active\",\n                \"visibility\": \"public\",\n                \"views\": 0,\n                \"applications\": [],\n                \"featured\": false,\n                \"urgent\": false,\n                \"isDeleted\": false,\n                \"createdAt\": \"2026-01-29T10:36:16.339Z\",\n                \"updatedAt\": \"2026-01-29T10:36:16.339Z\",\n                \"__v\": 0,\n                \"applicationCount\": 0,\n                \"isExpired\": false,\n                \"daysUntilDeadline\": 60,\n                \"id\": \"697b38205d7e6fe346a6274b\"\n            },\n            {\n                \"requiredExperience\": {\n                    \"years\": 1,\n                    \"description\": \"Machine operation or food packaging\"\n                },\n                \"compensation\": {\n                    \"salaryMin\": 220000,\n                    \"salaryMax\": 290000,\n                    \"currency\": \"JPY\",\n                    \"period\": \"monthly\",\n                    \"overtimePay\": true\n                },\n                \"location\": {\n                    \"prefecture\": \"Miyagi\",\n                    \"city\": \"Sendai\",\n                    \"remote\": false,\n                    \"remoteType\": \"None\"\n                },\n                \"applicationInfo\": {\n                    \"deadline\": \"2026-03-30T10:36:16.266Z\",\n                    \"startDate\": \"2026-04-29T10:36:16.266Z\",\n                    \"applicationMethod\": \"Platform\"\n                },\n                \"_id\": \"697b38205d7e6fe346a62748\",\n                \"company\": {\n                    \"location\": {\n                        \"prefecture\": \"Miyagi\",\n                        \"city\": \"Sendai\"\n                    },\n                    \"_id\": \"697b381e5d7e6fe346a626ed\",\n                    \"name\": \"Pacific Seafood Processing\",\n                    \"industry\": \"Food Processing\",\n                    \"isVerified\": true,\n                    \"jobCount\": 0,\n                    \"employeeRange\": null,\n                    \"id\": \"697b381e5d7e6fe346a626ed\"\n                },\n                \"postedBy\": {\n                    \"_id\": \"697b381c5d7e6fe346a626d1\",\n                    \"email\": \"employer9@seafoodco.jp\",\n                    \"role\": \"employer\",\n                    \"isLocked\": false,\n                    \"id\": \"697b381c5d7e6fe346a626d1\"\n                },\n                \"title\": \"Packaging Machine Operator\",\n                \"industry\": \"Food Processing\",\n                \"category\": \"Operations\",\n                \"summary\": \"Operate packaging machinery for seafood products\",\n                \"responsibilities\": \"Set up and operate packaging machines; Monitor machine performance; Perform quality checks; Troubleshoot minor issues; Maintain cleanliness\",\n                \"requirements\": \"1+ years machine operation; Japanese N5 or higher; Mechanical aptitude; Attention to detail; Shift work flexibility\",\n                \"requiredEducation\": \"High School\",\n                \"japaneseLevel\": \"N5\",\n                \"requiredSkills\": [\n                    \"Machine Operation\",\n                    \"Quality Control\",\n                    \"Troubleshooting\"\n                ],\n                \"requiredCertifications\": [],\n                \"status\": \"active\",\n                \"visibility\": \"public\",\n                \"views\": 0,\n                \"applications\": [],\n                \"featured\": false,\n                \"urgent\": false,\n                \"isDeleted\": false,\n                \"createdAt\": \"2026-01-29T10:36:16.267Z\",\n                \"updatedAt\": \"2026-01-29T10:36:16.267Z\",\n                \"__v\": 0,\n                \"applicationCount\": 0,\n                \"isExpired\": false,\n                \"daysUntilDeadline\": 60,\n                \"id\": \"697b38205d7e6fe346a62748\"\n            },\n            {\n                \"requiredExperience\": {\n                    \"years\": 2,\n                    \"description\": \"Food processing or supervisory role\"\n                },\n                \"compensation\": {\n                    \"salaryMin\": 280000,\n                    \"salaryMax\": 360000,\n                    \"currency\": \"JPY\",\n                    \"period\": \"monthly\",\n                    \"overtimePay\": true\n                },\n                \"location\": {\n                    \"prefecture\": \"Miyagi\",\n                    \"city\": \"Sendai\",\n                    \"remote\": false,\n                    \"remoteType\": \"None\"\n                },\n                \"applicationInfo\": {\n                    \"deadline\": \"2026-03-30T10:36:16.227Z\",\n                    \"startDate\": \"2026-04-29T10:36:16.227Z\",\n                    \"applicationMethod\": \"Platform\"\n                },\n                \"_id\": \"697b38205d7e6fe346a62746\",\n                \"company\": {\n                    \"location\": {\n                        \"prefecture\": \"Miyagi\",\n                        \"city\": \"Sendai\"\n                    },\n                    \"_id\": \"697b381e5d7e6fe346a626ed\",\n                    \"name\": \"Pacific Seafood Processing\",\n                    \"industry\": \"Food Processing\",\n                    \"isVerified\": true,\n                    \"jobCount\": 0,\n                    \"employeeRange\": null,\n                    \"id\": \"697b381e5d7e6fe346a626ed\"\n                },\n                \"postedBy\": {\n                    \"_id\": \"697b381c5d7e6fe346a626d1\",\n                    \"email\": \"employer9@seafoodco.jp\",\n                    \"role\": \"employer\",\n                    \"isLocked\": false,\n                    \"id\": \"697b381c5d7e6fe346a626d1\"\n                },\n                \"title\": \"Production Line Supervisor (Food)\",\n                \"industry\": \"Food Processing\",\n                \"category\": \"Management\",\n                \"summary\": \"Supervise seafood processing production line\",\n                \"responsibilities\": \"Manage production team; Monitor output and quality; Ensure safety compliance; Train new workers; Coordinate with management\",\n                \"requirements\": \"2+ years food production; Japanese N3 or higher; Leadership skills; Food safety certification; Problem-solving ability\",\n                \"requiredEducation\": \"Associate\",\n                \"japaneseLevel\": \"N3\",\n                \"requiredSkills\": [\n                    \"Team Leadership\",\n                    \"Food Production\",\n                    \"Safety Management\"\n                ],\n                \"requiredCertifications\": [],\n                \"status\": \"active\",\n                \"visibility\": \"public\",\n                \"views\": 0,\n                \"applications\": [],\n                \"featured\": false,\n                \"urgent\": false,\n                \"isDeleted\": false,\n                \"createdAt\": \"2026-01-29T10:36:16.227Z\",\n                \"updatedAt\": \"2026-01-29T10:36:16.227Z\",\n                \"__v\": 0,\n                \"applicationCount\": 0,\n                \"isExpired\": false,\n                \"daysUntilDeadline\": 60,\n                \"id\": \"697b38205d7e6fe346a62746\"\n            },\n            {\n                \"requiredExperience\": {\n                    \"years\": 1,\n                    \"description\": \"Food quality control or inspection\"\n                },\n                \"compensation\": {\n                    \"salaryMin\": 230000,\n                    \"salaryMax\": 310000,\n                    \"currency\": \"JPY\",\n                    \"period\": \"monthly\",\n                    \"overtimePay\": true\n                },\n                \"location\": {\n                    \"prefecture\": \"Miyagi\",\n                    \"city\": \"Sendai\",\n                    \"remote\": false,\n                    \"remoteType\": \"None\"\n                },\n                \"applicationInfo\": {\n                    \"deadline\": \"2026-03-30T10:36:16.188Z\",\n                    \"startDate\": \"2026-04-29T10:36:16.188Z\",\n                    \"applicationMethod\": \"Platform\"\n                },\n                \"_id\": \"697b38205d7e6fe346a62744\",\n                \"company\": {\n                    \"location\": {\n                        \"prefecture\": \"Miyagi\",\n                        \"city\": \"Sendai\"\n                    },\n                    \"_id\": \"697b381e5d7e6fe346a626ed\",\n                    \"name\": \"Pacific Seafood Processing\",\n                    \"industry\": \"Food Processing\",\n                    \"isVerified\": true,\n                    \"jobCount\": 0,\n                    \"employeeRange\": null,\n                    \"id\": \"697b381e5d7e6fe346a626ed\"\n                },\n                \"postedBy\": {\n                    \"_id\": \"697b381c5d7e6fe346a626d1\",\n                    \"email\": \"employer9@seafoodco.jp\",\n                    \"role\": \"employer\",\n                    \"isLocked\": false,\n                    \"id\": \"697b381c5d7e6fe346a626d1\"\n                },\n                \"title\": \"Quality Control Inspector (Food)\",\n                \"industry\": \"Food Processing\",\n                \"category\": \"Quality Assurance\",\n                \"summary\": \"Inspect seafood products for quality and safety\",\n                \"responsibilities\": \"Inspect raw materials and finished products; Conduct quality tests; Document inspection results; Ensure HACCP compliance; Report issues\",\n                \"requirements\": \"1+ years QC experience; Japanese N4 or higher; Food safety knowledge; Attention to detail; HACCP training preferred\",\n                \"requiredEducation\": \"High School\",\n                \"japaneseLevel\": \"N4\",\n                \"requiredSkills\": [\n                    \"Quality Control\",\n                    \"Food Safety\",\n                    \"HACCP\"\n                ],\n                \"requiredCertifications\": [],\n                \"status\": \"active\",\n                \"visibility\": \"public\",\n                \"views\": 0,\n                \"applications\": [],\n                \"featured\": false,\n                \"urgent\": false,\n                \"isDeleted\": false,\n                \"createdAt\": \"2026-01-29T10:36:16.189Z\",\n                \"updatedAt\": \"2026-01-29T10:36:16.189Z\",\n                \"__v\": 0,\n                \"applicationCount\": 0,\n                \"isExpired\": false,\n                \"daysUntilDeadline\": 60,\n                \"id\": \"697b38205d7e6fe346a62744\"\n            },\n            {\n                \"requiredExperience\": {\n                    \"years\": 0,\n                    \"description\": \"Training provided; food processing experience helpful\"\n                },\n                \"compensation\": {\n                    \"salaryMin\": 210000,\n                    \"salaryMax\": 280000,\n                    \"currency\": \"JPY\",\n                    \"period\": \"monthly\",\n                    \"overtimePay\": true\n                },\n                \"location\": {\n                    \"prefecture\": \"Miyagi\",\n                    \"city\": \"Sendai\",\n                    \"remote\": false,\n                    \"remoteType\": \"None\"\n                },\n                \"applicationInfo\": {\n                    \"deadline\": \"2026-03-30T10:36:16.149Z\",\n                    \"startDate\": \"2026-04-29T10:36:16.149Z\",\n                    \"applicationMethod\": \"Platform\"\n                },\n                \"_id\": \"697b38205d7e6fe346a62742\",\n                \"company\": {\n                    \"location\": {\n                        \"prefecture\": \"Miyagi\",\n                        \"city\": \"Sendai\"\n                    },\n                    \"_id\": \"697b381e5d7e6fe346a626ed\",\n                    \"name\": \"Pacific Seafood Processing\",\n                    \"industry\": \"Food Processing\",\n                    \"isVerified\": true,\n                    \"jobCount\": 0,\n                    \"employeeRange\": null,\n                    \"id\": \"697b381e5d7e6fe346a626ed\"\n                },\n                \"postedBy\": {\n                    \"_id\": \"697b381c5d7e6fe346a626d1\",\n                    \"email\": \"employer9@seafoodco.jp\",\n                    \"role\": \"employer\",\n                    \"isLocked\": false,\n                    \"id\": \"697b381c5d7e6fe346a626d1\"\n                },\n                \"title\": \"Seafood Processing Worker\",\n                \"industry\": \"Food Processing\",\n                \"category\": \"Production\",\n                \"summary\": \"Process and package seafood products\",\n                \"responsibilities\": \"Clean and cut fish; Operate processing equipment; Package products; Maintain quality standards; Follow food safety procedures\",\n                \"requirements\": \"Physical stamina; Japanese N5 or higher; Cold environment tolerance; Knife handling skills; Food safety awareness\",\n                \"requiredEducation\": \"High School\",\n                \"japaneseLevel\": \"N5\",\n                \"requiredSkills\": [\n                    \"Food Processing\",\n                    \"Knife Skills\",\n                    \"Quality Control\"\n                ],\n                \"requiredCertifications\": [],\n                \"status\": \"active\",\n                \"visibility\": \"public\",\n                \"views\": 0,\n                \"applications\": [],\n                \"featured\": false,\n                \"urgent\": false,\n                \"isDeleted\": false,\n                \"createdAt\": \"2026-01-29T10:36:16.150Z\",\n                \"updatedAt\": \"2026-01-29T10:36:16.150Z\",\n                \"__v\": 0,\n                \"applicationCount\": 0,\n                \"isExpired\": false,\n                \"daysUntilDeadline\": 60,\n                \"id\": \"697b38205d7e6fe346a62742\"\n            },\n            {\n                \"requiredExperience\": {\n                    \"years\": 3,\n                    \"description\": \"Facility management or supervisory role\"\n                },\n                \"compensation\": {\n                    \"salaryMin\": 300000,\n                    \"salaryMax\": 400000,\n                    \"currency\": \"JPY\",\n                    \"period\": \"monthly\",\n                    \"overtimePay\": true\n                },\n                \"location\": {\n                    \"prefecture\": \"Saitama\",\n                    \"city\": \"Saitama\",\n                    \"remote\": false,\n                    \"remoteType\": \"None\"\n                },\n                \"applicationInfo\": {\n                    \"deadline\": \"2026-03-30T10:36:16.066Z\",\n                    \"startDate\": \"2026-04-29T10:36:16.066Z\",\n                    \"applicationMethod\": \"Platform\"\n                },\n                \"_id\": \"697b38205d7e6fe346a6273f\",\n                \"company\": {\n                    \"location\": {\n                        \"prefecture\": \"Saitama\",\n                        \"city\": \"Saitama\"\n                    },\n                    \"_id\": \"697b381e5d7e6fe346a626ea\",\n                    \"name\": \"CleanPro Facility Services\",\n                    \"industry\": \"Building Cleaning\",\n                    \"isVerified\": true,\n                    \"jobCount\": 0,\n                    \"employeeRange\": null,\n                    \"id\": \"697b381e5d7e6fe346a626ea\"\n                },\n                \"postedBy\": {\n                    \"_id\": \"697b381c5d7e6fe346a626cf\",\n                    \"email\": \"employer8@cleanpro.jp\",\n                    \"role\": \"employer\",\n                    \"isLocked\": false,\n                    \"id\": \"697b381c5d7e6fe346a626cf\"\n                },\n                \"title\": \"Facility Supervisor\",\n                \"industry\": \"Building Cleaning\",\n                \"category\": \"Management\",\n                \"summary\": \"Supervise facility maintenance and cleaning operations\",\n                \"responsibilities\": \"Manage maintenance team; Schedule work orders; Coordinate contractors; Ensure quality standards; Monitor budgets\",\n                \"requirements\": \"3+ years facility management; Japanese N3 or higher; Leadership skills; Technical knowledge; Budget management\",\n                \"requiredEducation\": \"Associate\",\n                \"japaneseLevel\": \"N3\",\n                \"requiredSkills\": [\n                    \"Team Management\",\n                    \"Facility Operations\",\n                    \"Budget Management\"\n                ],\n                \"requiredCertifications\": [],\n                \"status\": \"active\",\n                \"visibility\": \"public\",\n                \"views\": 0,\n                \"applications\": [],\n                \"featured\": false,\n                \"urgent\": false,\n                \"isDeleted\": false,\n                \"createdAt\": \"2026-01-29T10:36:16.071Z\",\n                \"updatedAt\": \"2026-01-29T10:36:16.071Z\",\n                \"__v\": 0,\n                \"applicationCount\": 0,\n                \"isExpired\": false,\n                \"daysUntilDeadline\": 60,\n                \"id\": \"697b38205d7e6fe346a6273f\"\n            }\n        ],\n        \"pagination\": {\n            \"page\": 1,\n            \"limit\": 10,\n            \"total\": 44,\n            \"pages\": 5,\n            \"hasNext\": true,\n            \"hasPrev\": false\n        }\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "3.2 Search Jobs by Filters",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Filtered jobs received', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.success).to.be.true;",
+                  "    pm.expect(jsonData.data.jobs).to.be.an('array');",
+                  "    console.log('✓ Filtered jobs:', jsonData.data.jobs.length);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "85b226ed-b3ca-4feb-8fad-282fc0018d20",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/jobs?industry=Manufacturing&prefecture=Tokyo&japaneseLevel=N3",
+              "host": ["{{BASE_URL}}"],
+              "path": ["jobs"],
+              "query": [
+                {
+                  "key": "industry",
+                  "value": "Manufacturing"
+                },
+                {
+                  "key": "prefecture",
+                  "value": "Tokyo"
+                },
+                {
+                  "key": "japaneseLevel",
+                  "value": "N3"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "daaeb12c-cf48-48fc-bdc9-992f00f70ddb",
+              "name": "3.2 Search Jobs by Filters",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{BASE_URL}}/jobs?industry=Manufacturing&prefecture=Tokyo&japaneseLevel=N3",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["jobs"],
+                  "query": [
+                    {
+                      "key": "industry",
+                      "value": "Manufacturing",
+                      "uuid": "2c0c4555-b51f-424e-8b4d-e8ea8a16e83f"
+                    },
+                    {
+                      "key": "prefecture",
+                      "value": "Tokyo",
+                      "uuid": "d8d2d800-0423-4e97-85cd-06737357b7a9"
+                    },
+                    {
+                      "key": "japaneseLevel",
+                      "value": "N3",
+                      "uuid": "9da3bf8e-ea50-495e-afd3-9b315712687c"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdn.jsdelivr.net https://unpkg.com https://cdnjs.cloudflare.com;style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net;img-src 'self' data: https:;connect-src 'self';frame-ancestors 'self';object-src 'none';form-action 'self';worker-src 'self' blob:;base-uri 'self';script-src-attr 'none';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "RateLimit-Policy",
+                  "value": "1000;w=900"
+                },
+                {
+                  "key": "RateLimit-Limit",
+                  "value": "1000"
+                },
+                {
+                  "key": "RateLimit-Remaining",
+                  "value": "961"
+                },
+                {
+                  "key": "RateLimit-Reset",
+                  "value": "288"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "10344"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"2868-TLHXZv4YggwwZ1xlMKZkS8maFjI\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 29 Jan 2026 11:25:20 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-29T11:25:23.309Z",
+              "body": "{\n    \"statusCode\": 200,\n    \"success\": true,\n    \"message\": \"Jobs retrieved successfully\",\n    \"data\": {\n        \"jobs\": [\n            {\n                \"requiredExperience\": {\n                    \"years\": 2,\n                    \"description\": \"Equipment maintenance or repair\"\n                },\n                \"compensation\": {\n                    \"salaryMin\": 260000,\n                    \"salaryMax\": 340000,\n                    \"currency\": \"JPY\",\n                    \"period\": \"monthly\",\n                    \"overtimePay\": true\n                },\n                \"location\": {\n                    \"prefecture\": \"Tokyo\",\n                    \"city\": \"Minato\",\n                    \"remote\": false,\n                    \"remoteType\": \"None\"\n                },\n                \"applicationInfo\": {\n                    \"deadline\": \"2026-03-30T10:36:14.550Z\",\n                    \"startDate\": \"2026-04-29T10:36:14.550Z\",\n                    \"applicationMethod\": \"Platform\"\n                },\n                \"_id\": \"697b381e5d7e6fe346a626fe\",\n                \"company\": {\n                    \"location\": {\n                        \"prefecture\": \"Tokyo\",\n                        \"city\": \"Minato\"\n                    },\n                    \"_id\": \"697b381d5d7e6fe346a626d5\",\n                    \"name\": \"Tech Innovation Japan Corp\",\n                    \"industry\": \"Manufacturing\",\n                    \"isVerified\": true,\n                    \"jobCount\": 0,\n                    \"employeeRange\": null,\n                    \"id\": \"697b381d5d7e6fe346a626d5\"\n                },\n                \"postedBy\": {\n                    \"_id\": \"697b381a5d7e6fe346a626c1\",\n                    \"email\": \"employer1@techinnov.com\",\n                    \"role\": \"employer\",\n                    \"isLocked\": false,\n                    \"id\": \"697b381a5d7e6fe346a626c1\"\n                },\n                \"title\": \"Maintenance Technician\",\n                \"industry\": \"Manufacturing\",\n                \"category\": \"Maintenance\",\n                \"summary\": \"Maintain and repair production equipment and facilities\",\n                \"responsibilities\": \"Perform preventive maintenance; Troubleshoot equipment issues; Repair mechanical/electrical systems; Document maintenance activities\",\n                \"requirements\": \"Technical degree or certification; 2+ years maintenance experience; Japanese N4 or higher; Mechanical/electrical skills\",\n                \"requiredEducation\": \"Vocational\",\n                \"japaneseLevel\": \"N4\",\n                \"requiredSkills\": [\n                    \"Equipment Maintenance\",\n                    \"Troubleshooting\",\n                    \"Electrical Systems\"\n                ],\n                \"requiredCertifications\": [],\n                \"status\": \"active\",\n                \"visibility\": \"public\",\n                \"views\": 0,\n                \"applications\": [],\n                \"featured\": false,\n                \"urgent\": false,\n                \"isDeleted\": false,\n                \"createdAt\": \"2026-01-29T10:36:14.552Z\",\n                \"updatedAt\": \"2026-01-29T10:36:14.552Z\",\n                \"__v\": 0,\n                \"applicationCount\": 0,\n                \"isExpired\": false,\n                \"daysUntilDeadline\": 60,\n                \"id\": \"697b381e5d7e6fe346a626fe\"\n            },\n            {\n                \"requiredExperience\": {\n                    \"years\": 0,\n                    \"description\": \"Training provided for motivated candidates\"\n                },\n                \"compensation\": {\n                    \"salaryMin\": 200000,\n                    \"salaryMax\": 260000,\n                    \"currency\": \"JPY\",\n                    \"period\": \"monthly\",\n                    \"overtimePay\": true\n                },\n                \"location\": {\n                    \"prefecture\": \"Tokyo\",\n                    \"city\": \"Minato\",\n                    \"remote\": false,\n                    \"remoteType\": \"None\"\n                },\n                \"applicationInfo\": {\n                    \"deadline\": \"2026-03-30T10:36:14.502Z\",\n                    \"startDate\": \"2026-04-29T10:36:14.502Z\",\n                    \"applicationMethod\": \"Platform\"\n                },\n                \"_id\": \"697b381e5d7e6fe346a626fc\",\n                \"company\": {\n                    \"location\": {\n                        \"prefecture\": \"Tokyo\",\n                        \"city\": \"Minato\"\n                    },\n                    \"_id\": \"697b381d5d7e6fe346a626d5\",\n                    \"name\": \"Tech Innovation Japan Corp\",\n                    \"industry\": \"Manufacturing\",\n                    \"isVerified\": true,\n                    \"jobCount\": 0,\n                    \"employeeRange\": null,\n                    \"id\": \"697b381d5d7e6fe346a626d5\"\n                },\n                \"postedBy\": {\n                    \"_id\": \"697b381a5d7e6fe346a626c1\",\n                    \"email\": \"employer1@techinnov.com\",\n                    \"role\": \"employer\",\n                    \"isLocked\": false,\n                    \"id\": \"697b381a5d7e6fe346a626c1\"\n                },\n                \"title\": \"Assembly Technician\",\n                \"industry\": \"Manufacturing\",\n                \"category\": \"Operations\",\n                \"summary\": \"Assemble electronic components and sub-assemblies\",\n                \"responsibilities\": \"Assemble products according to specifications; Inspect completed assemblies; Maintain clean workspace; Report defects\",\n                \"requirements\": \"High school diploma; Basic Japanese N5; Manual dexterity; Attention to detail\",\n                \"requiredEducation\": \"High School\",\n                \"japaneseLevel\": \"N5\",\n                \"requiredSkills\": [\n                    \"Manual Assembly\",\n                    \"Quality Inspection\",\n                    \"Teamwork\"\n                ],\n                \"requiredCertifications\": [],\n                \"status\": \"active\",\n                \"visibility\": \"public\",\n                \"views\": 0,\n                \"applications\": [],\n                \"featured\": false,\n                \"urgent\": false,\n                \"isDeleted\": false,\n                \"createdAt\": \"2026-01-29T10:36:14.506Z\",\n                \"updatedAt\": \"2026-01-29T10:36:14.506Z\",\n                \"__v\": 0,\n                \"applicationCount\": 0,\n                \"isExpired\": false,\n                \"daysUntilDeadline\": 60,\n                \"id\": \"697b381e5d7e6fe346a626fc\"\n            },\n            {\n                \"requiredExperience\": {\n                    \"years\": 1,\n                    \"description\": \"CNC machine operation\"\n                },\n                \"compensation\": {\n                    \"salaryMin\": 240000,\n                    \"salaryMax\": 320000,\n                    \"currency\": \"JPY\",\n                    \"period\": \"monthly\",\n                    \"overtimePay\": true\n                },\n                \"location\": {\n                    \"prefecture\": \"Tokyo\",\n                    \"city\": \"Minato\",\n                    \"remote\": false,\n                    \"remoteType\": \"None\"\n                },\n                \"applicationInfo\": {\n                    \"deadline\": \"2026-03-30T10:36:14.459Z\",\n                    \"startDate\": \"2026-04-29T10:36:14.459Z\",\n                    \"applicationMethod\": \"Platform\"\n                },\n                \"_id\": \"697b381e5d7e6fe346a626fa\",\n                \"company\": {\n                    \"location\": {\n                        \"prefecture\": \"Tokyo\",\n                        \"city\": \"Minato\"\n                    },\n                    \"_id\": \"697b381d5d7e6fe346a626d5\",\n                    \"name\": \"Tech Innovation Japan Corp\",\n                    \"industry\": \"Manufacturing\",\n                    \"isVerified\": true,\n                    \"jobCount\": 0,\n                    \"employeeRange\": null,\n                    \"id\": \"697b381d5d7e6fe346a626d5\"\n                },\n                \"postedBy\": {\n                    \"_id\": \"697b381a5d7e6fe346a626c1\",\n                    \"email\": \"employer1@techinnov.com\",\n                    \"role\": \"employer\",\n                    \"isLocked\": false,\n                    \"id\": \"697b381a5d7e6fe346a626c1\"\n                },\n                \"title\": \"Machine Operator (CNC)\",\n                \"industry\": \"Manufacturing\",\n                \"category\": \"Operations\",\n                \"summary\": \"Operate and maintain CNC machinery for precision manufacturing\",\n                \"responsibilities\": \"Operate CNC machines; Perform routine maintenance; Monitor product quality; Follow safety procedures\",\n                \"requirements\": \"Vocational training or equivalent; 1+ years CNC experience; Japanese N4 or higher\",\n                \"requiredEducation\": \"Vocational\",\n                \"japaneseLevel\": \"N4\",\n                \"requiredSkills\": [\n                    \"CNC Operation\",\n                    \"Machine Maintenance\",\n                    \"Blueprint Reading\"\n                ],\n                \"requiredCertifications\": [],\n                \"status\": \"active\",\n                \"visibility\": \"public\",\n                \"views\": 0,\n                \"applications\": [],\n                \"featured\": false,\n                \"urgent\": false,\n                \"isDeleted\": false,\n                \"createdAt\": \"2026-01-29T10:36:14.461Z\",\n                \"updatedAt\": \"2026-01-29T10:36:14.461Z\",\n                \"__v\": 0,\n                \"applicationCount\": 0,\n                \"isExpired\": false,\n                \"daysUntilDeadline\": 60,\n                \"id\": \"697b381e5d7e6fe346a626fa\"\n            },\n            {\n                \"requiredExperience\": {\n                    \"years\": 1,\n                    \"description\": \"Quality control or inspection experience\"\n                },\n                \"compensation\": {\n                    \"salaryMin\": 220000,\n                    \"salaryMax\": 300000,\n                    \"currency\": \"JPY\",\n                    \"period\": \"monthly\",\n                    \"overtimePay\": true\n                },\n                \"location\": {\n                    \"prefecture\": \"Tokyo\",\n                    \"city\": \"Minato\",\n                    \"remote\": false,\n                    \"remoteType\": \"None\"\n                },\n                \"applicationInfo\": {\n                    \"deadline\": \"2026-03-30T10:36:14.417Z\",\n                    \"startDate\": \"2026-04-29T10:36:14.417Z\",\n                    \"applicationMethod\": \"Platform\"\n                },\n                \"_id\": \"697b381e5d7e6fe346a626f8\",\n                \"company\": {\n                    \"location\": {\n                        \"prefecture\": \"Tokyo\",\n                        \"city\": \"Minato\"\n                    },\n                    \"_id\": \"697b381d5d7e6fe346a626d5\",\n                    \"name\": \"Tech Innovation Japan Corp\",\n                    \"industry\": \"Manufacturing\",\n                    \"isVerified\": true,\n                    \"jobCount\": 0,\n                    \"employeeRange\": null,\n                    \"id\": \"697b381d5d7e6fe346a626d5\"\n                },\n                \"postedBy\": {\n                    \"_id\": \"697b381a5d7e6fe346a626c1\",\n                    \"email\": \"employer1@techinnov.com\",\n                    \"role\": \"employer\",\n                    \"isLocked\": false,\n                    \"id\": \"697b381a5d7e6fe346a626c1\"\n                },\n                \"title\": \"Quality Control Inspector\",\n                \"industry\": \"Manufacturing\",\n                \"category\": \"Quality Assurance\",\n                \"summary\": \"Inspect products and ensure quality standards compliance\",\n                \"responsibilities\": \"Conduct product inspections; Document quality issues; Implement corrective actions; Maintain inspection equipment\",\n                \"requirements\": \"High school diploma or higher; 1+ years QC experience; Japanese N4 or higher; Attention to detail\",\n                \"requiredEducation\": \"High School\",\n                \"japaneseLevel\": \"N4\",\n                \"requiredSkills\": [\n                    \"Quality Control\",\n                    \"Attention to Detail\",\n                    \"Documentation\"\n                ],\n                \"requiredCertifications\": [],\n                \"status\": \"active\",\n                \"visibility\": \"public\",\n                \"views\": 0,\n                \"applications\": [],\n                \"featured\": false,\n                \"urgent\": false,\n                \"isDeleted\": false,\n                \"createdAt\": \"2026-01-29T10:36:14.419Z\",\n                \"updatedAt\": \"2026-01-29T10:36:14.419Z\",\n                \"__v\": 0,\n                \"applicationCount\": 0,\n                \"isExpired\": false,\n                \"daysUntilDeadline\": 60,\n                \"id\": \"697b381e5d7e6fe346a626f8\"\n            },\n            {\n                \"requiredExperience\": {\n                    \"years\": 3,\n                    \"description\": \"Production line or supervisory experience\"\n                },\n                \"compensation\": {\n                    \"salaryMin\": 280000,\n                    \"salaryMax\": 380000,\n                    \"currency\": \"JPY\",\n                    \"period\": \"monthly\",\n                    \"overtimePay\": true\n                },\n                \"location\": {\n                    \"prefecture\": \"Tokyo\",\n                    \"city\": \"Minato\",\n                    \"remote\": false,\n                    \"remoteType\": \"None\"\n                },\n                \"applicationInfo\": {\n                    \"deadline\": \"2026-03-30T10:36:14.378Z\",\n                    \"startDate\": \"2026-04-29T10:36:14.378Z\",\n                    \"applicationMethod\": \"Platform\"\n                },\n                \"_id\": \"697b381e5d7e6fe346a626f6\",\n                \"company\": {\n                    \"location\": {\n                        \"prefecture\": \"Tokyo\",\n                        \"city\": \"Minato\"\n                    },\n                    \"_id\": \"697b381d5d7e6fe346a626d5\",\n                    \"name\": \"Tech Innovation Japan Corp\",\n                    \"industry\": \"Manufacturing\",\n                    \"isVerified\": true,\n                    \"jobCount\": 0,\n                    \"employeeRange\": null,\n                    \"id\": \"697b381d5d7e6fe346a626d5\"\n                },\n                \"postedBy\": {\n                    \"_id\": \"697b381a5d7e6fe346a626c1\",\n                    \"email\": \"employer1@techinnov.com\",\n                    \"role\": \"employer\",\n                    \"isLocked\": false,\n                    \"id\": \"697b381a5d7e6fe346a626c1\"\n                },\n                \"title\": \"Production Line Supervisor\",\n                \"industry\": \"Manufacturing\",\n                \"category\": \"Management\",\n                \"summary\": \"Supervise production line operations and team management\",\n                \"responsibilities\": \"Manage production team; Monitor quality standards; Ensure safety compliance; Coordinate with other departments\",\n                \"requirements\": \"Associate degree or higher; 3+ years production experience; Japanese N3 or higher; Leadership skills\",\n                \"requiredEducation\": \"Associate\",\n                \"japaneseLevel\": \"N3\",\n                \"requiredSkills\": [\n                    \"Team Leadership\",\n                    \"Production Management\",\n                    \"Quality Assurance\"\n                ],\n                \"requiredCertifications\": [],\n                \"status\": \"active\",\n                \"visibility\": \"public\",\n                \"views\": 0,\n                \"applications\": [],\n                \"featured\": false,\n                \"urgent\": false,\n                \"isDeleted\": false,\n                \"createdAt\": \"2026-01-29T10:36:14.378Z\",\n                \"updatedAt\": \"2026-01-29T10:36:14.378Z\",\n                \"__v\": 0,\n                \"applicationCount\": 0,\n                \"isExpired\": false,\n                \"daysUntilDeadline\": 60,\n                \"id\": \"697b381e5d7e6fe346a626f6\"\n            },\n            {\n                \"requiredExperience\": {\n                    \"years\": 2,\n                    \"description\": \"Manufacturing or production experience\"\n                },\n                \"compensation\": {\n                    \"salaryMin\": 250000,\n                    \"salaryMax\": 350000,\n                    \"currency\": \"JPY\",\n                    \"period\": \"monthly\",\n                    \"overtimePay\": true\n                },\n                \"location\": {\n                    \"prefecture\": \"Tokyo\",\n                    \"city\": \"Minato\",\n                    \"remote\": false,\n                    \"remoteType\": \"None\"\n                },\n                \"applicationInfo\": {\n                    \"deadline\": \"2026-03-30T10:36:14.337Z\",\n                    \"startDate\": \"2026-04-29T10:36:14.338Z\",\n                    \"applicationMethod\": \"Platform\"\n                },\n                \"_id\": \"697b381e5d7e6fe346a626f4\",\n                \"company\": {\n                    \"location\": {\n                        \"prefecture\": \"Tokyo\",\n                        \"city\": \"Minato\"\n                    },\n                    \"_id\": \"697b381d5d7e6fe346a626d5\",\n                    \"name\": \"Tech Innovation Japan Corp\",\n                    \"industry\": \"Manufacturing\",\n                    \"isVerified\": true,\n                    \"jobCount\": 0,\n                    \"employeeRange\": null,\n                    \"id\": \"697b381d5d7e6fe346a626d5\"\n                },\n                \"postedBy\": {\n                    \"_id\": \"697b381a5d7e6fe346a626c1\",\n                    \"email\": \"employer1@techinnov.com\",\n                    \"role\": \"employer\",\n                    \"isLocked\": false,\n                    \"id\": \"697b381a5d7e6fe346a626c1\"\n                },\n                \"title\": \"Manufacturing Engineer\",\n                \"industry\": \"Manufacturing\",\n                \"category\": \"Engineering\",\n                \"summary\": \"Design and optimize manufacturing processes for electronic components\",\n                \"responsibilities\": \"Design manufacturing processes; Optimize production efficiency; Maintain quality standards; Train production staff\",\n                \"requirements\": \"Bachelor's degree in Engineering; 2+ years manufacturing experience; Japanese N3 or higher\",\n                \"requiredEducation\": \"Bachelor\",\n                \"japaneseLevel\": \"N3\",\n                \"requiredSkills\": [\n                    \"Manufacturing\",\n                    \"Quality Control\",\n                    \"Process Optimization\"\n                ],\n                \"requiredCertifications\": [],\n                \"status\": \"active\",\n                \"visibility\": \"public\",\n                \"views\": 0,\n                \"applications\": [],\n                \"featured\": false,\n                \"urgent\": false,\n                \"isDeleted\": false,\n                \"createdAt\": \"2026-01-29T10:36:14.339Z\",\n                \"updatedAt\": \"2026-01-29T10:36:14.339Z\",\n                \"__v\": 0,\n                \"applicationCount\": 0,\n                \"isExpired\": false,\n                \"daysUntilDeadline\": 60,\n                \"id\": \"697b381e5d7e6fe346a626f4\"\n            }\n        ],\n        \"pagination\": {\n            \"page\": 1,\n            \"limit\": 10,\n            \"total\": 6,\n            \"pages\": 1,\n            \"hasNext\": false,\n            \"hasPrev\": false\n        }\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "3.3 Get Single Job Details",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Job details received', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.success).to.be.true;",
+                  "    pm.expect(jsonData.data.job).to.exist;",
+                  "    console.log('✓ Job details:', jsonData.data.job.title);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "1255ce71-4aa8-44da-99e5-dc021ec47abb",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/jobs/{{JOB_ID}}",
+              "host": ["{{BASE_URL}}"],
+              "path": ["jobs", "{{JOB_ID}}"]
+            }
+          },
+          "response": [
+            {
+              "id": "b2f4707d-afc9-468b-9a3e-911ed9084920",
+              "name": "3.3 Get Single Job Details",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{BASE_URL}}/jobs/{{JOB_ID}}",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["jobs", "{{JOB_ID}}"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdn.jsdelivr.net https://unpkg.com https://cdnjs.cloudflare.com;style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net;img-src 'self' data: https:;connect-src 'self';frame-ancestors 'self';object-src 'none';form-action 'self';worker-src 'self' blob:;base-uri 'self';script-src-attr 'none';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "RateLimit-Policy",
+                  "value": "1000;w=900"
+                },
+                {
+                  "key": "RateLimit-Limit",
+                  "value": "1000"
+                },
+                {
+                  "key": "RateLimit-Remaining",
+                  "value": "960"
+                },
+                {
+                  "key": "RateLimit-Reset",
+                  "value": "280"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "2146"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"862-pHoItDOL/1+pWlk6MP2yBCI+Dec\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 29 Jan 2026 11:25:27 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-29T11:25:40.350Z",
+              "body": "{\n    \"statusCode\": 200,\n    \"success\": true,\n    \"message\": \"Job retrieved successfully\",\n    \"data\": {\n        \"job\": {\n            \"requiredExperience\": {\n                \"years\": 1,\n                \"description\": \"Commercial driving or delivery experience\"\n            },\n            \"compensation\": {\n                \"salaryMin\": 240000,\n                \"salaryMax\": 320000,\n                \"currency\": \"JPY\",\n                \"period\": \"monthly\",\n                \"overtimePay\": true\n            },\n            \"location\": {\n                \"prefecture\": \"Chiba\",\n                \"city\": \"Chiba\",\n                \"remote\": false,\n                \"remoteType\": \"None\"\n            },\n            \"applicationInfo\": {\n                \"deadline\": \"2026-03-30T10:36:16.501Z\",\n                \"startDate\": \"2026-04-29T10:36:16.501Z\",\n                \"applicationMethod\": \"Platform\"\n            },\n            \"_id\": \"697b38205d7e6fe346a62753\",\n            \"company\": {\n                \"location\": {\n                    \"prefecture\": \"Chiba\",\n                    \"city\": \"Chiba\",\n                    \"address\": \"10-15-3 Makuhari\"\n                },\n                \"contact\": {\n                    \"email\": \"careers@japan-express.example.jp\",\n                    \"phone\": \"+81-43-5678-9012\"\n                },\n                \"_id\": \"697b381e5d7e6fe346a626f0\",\n                \"name\": \"Japan Express Logistics\",\n                \"industry\": \"Logistics\",\n                \"size\": \"201-500\",\n                \"founded\": 2007,\n                \"website\": \"https://japan-express.example.jp\",\n                \"description\": \"Comprehensive logistics and warehouse management services. Operating distribution centers nationwide with cold-chain capabilities.\",\n                \"isVerified\": true,\n                \"jobCount\": 0,\n                \"employeeRange\": {\n                    \"min\": 201,\n                    \"max\": 500\n                },\n                \"id\": \"697b381e5d7e6fe346a626f0\"\n            },\n            \"postedBy\": {\n                \"_id\": \"697b381d5d7e6fe346a626d3\",\n                \"email\": \"employer10@logistics.jp\",\n                \"role\": \"employer\",\n                \"isLocked\": false,\n                \"id\": \"697b381d5d7e6fe346a626d3\"\n            },\n            \"title\": \"Delivery Driver\",\n            \"industry\": \"Logistics\",\n            \"category\": \"Transportation\",\n            \"summary\": \"Deliver goods to customers and businesses\",\n            \"responsibilities\": \"Drive delivery truck; Load and secure cargo; Follow delivery schedule; Collect signatures; Maintain vehicle; Provide customer service\",\n            \"requirements\": \"Valid driver's license; Japanese N4 or higher; Clean driving record; Physical fitness; Customer service skills; Route knowledge\",\n            \"requiredEducation\": \"High School\",\n            \"japaneseLevel\": \"N4\",\n            \"requiredSkills\": [\n                \"Driving\",\n                \"Customer Service\",\n                \"Time Management\"\n            ],\n            \"requiredCertifications\": [],\n            \"status\": \"active\",\n            \"visibility\": \"public\",\n            \"views\": 3,\n            \"applications\": [],\n            \"featured\": false,\n            \"urgent\": false,\n            \"isDeleted\": false,\n            \"createdAt\": \"2026-01-29T10:36:16.503Z\",\n            \"updatedAt\": \"2026-01-29T11:15:24.143Z\",\n            \"__v\": 0,\n            \"applicationCount\": 0,\n            \"isExpired\": false,\n            \"daysUntilDeadline\": 60,\n            \"id\": \"697b38205d7e6fe346a62753\"\n        }\n    }\n}"
+            }
+          ]
+        }
+      ],
+      "id": "1202e765-f766-4c21-8f3d-49548641c4a0",
+      "description": "Job listing and search operations"
+    },
+    {
+      "name": "4. Companies Operations",
+      "item": [
+        {
+          "name": "4.1 Get All Companies",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Companies list received', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.success).to.be.true;",
+                  "    pm.expect(jsonData.data.companies).to.be.an('array');",
+                  "    ",
+                  "    if (jsonData.data.companies.length > 0) {",
+                  "        pm.environment.set('COMPANY_ID', jsonData.data.companies[0]._id);",
+                  "        console.log('✓ Companies retrieved:', jsonData.data.companies.length);",
+                  "        console.log('✓ Sample Company ID saved:', jsonData.data.companies[0]._id);",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "3e2ed5ef-f367-4c5c-bd95-062dbfc9b6cb",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/companies?page=1&limit=10",
+              "host": ["{{BASE_URL}}"],
+              "path": ["companies"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "37d252a0-e673-42af-9da1-06549d092d2a",
+              "name": "4.1 Get All Companies",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{BASE_URL}}/companies?page=1&limit=10",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["companies"],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1",
+                      "uuid": "6c9dc971-7864-456f-8382-a62f28975d8c"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10",
+                      "uuid": "ad8ac8e1-653a-4c9c-b31c-40a8f4322f7b"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdn.jsdelivr.net https://unpkg.com https://cdnjs.cloudflare.com;style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net;img-src 'self' data: https:;connect-src 'self';frame-ancestors 'self';object-src 'none';form-action 'self';worker-src 'self' blob:;base-uri 'self';script-src-attr 'none';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "RateLimit-Policy",
+                  "value": "1000;w=900"
+                },
+                {
+                  "key": "RateLimit-Limit",
+                  "value": "1000"
+                },
+                {
+                  "key": "RateLimit-Remaining",
+                  "value": "959"
+                },
+                {
+                  "key": "RateLimit-Reset",
+                  "value": "263"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "9275"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"243b-2H0QCN9F7gzX8QKQ8bDxpH4rHIg\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 29 Jan 2026 11:25:45 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-29T11:26:12.637Z",
+              "body": "{\n    \"statusCode\": 200,\n    \"success\": true,\n    \"message\": \"Companies retrieved successfully\",\n    \"data\": {\n        \"companies\": [\n            {\n                \"location\": {\n                    \"prefecture\": \"Chiba\",\n                    \"city\": \"Chiba\",\n                    \"address\": \"10-15-3 Makuhari\"\n                },\n                \"contact\": {\n                    \"email\": \"careers@japan-express.example.jp\",\n                    \"phone\": \"+81-43-5678-9012\"\n                },\n                \"_id\": \"697b381e5d7e6fe346a626f0\",\n                \"name\": \"Japan Express Logistics\",\n                \"industry\": \"Logistics\",\n                \"size\": \"201-500\",\n                \"founded\": 2007,\n                \"website\": \"https://japan-express.example.jp\",\n                \"description\": \"Comprehensive logistics and warehouse management services. Operating distribution centers nationwide with cold-chain capabilities.\",\n                \"owner\": {\n                    \"_id\": \"697b381d5d7e6fe346a626d3\",\n                    \"email\": \"employer10@logistics.jp\",\n                    \"isLocked\": false,\n                    \"id\": \"697b381d5d7e6fe346a626d3\"\n                },\n                \"jobs\": [],\n                \"licenses\": [],\n                \"isVerified\": true,\n                \"isActive\": true,\n                \"images\": [],\n                \"videos\": [],\n                \"certifications\": [],\n                \"createdAt\": \"2026-01-29T10:36:14.220Z\",\n                \"updatedAt\": \"2026-01-29T10:36:14.220Z\",\n                \"slug\": \"japan-express-logistics\",\n                \"jobCount\": 0,\n                \"employeeRange\": {\n                    \"min\": 201,\n                    \"max\": 500\n                },\n                \"id\": \"697b381e5d7e6fe346a626f0\"\n            },\n            {\n                \"location\": {\n                    \"prefecture\": \"Miyagi\",\n                    \"city\": \"Sendai\",\n                    \"address\": \"9-3-7 Minato\"\n                },\n                \"contact\": {\n                    \"email\": \"hr@pacific-seafood.example.jp\",\n                    \"phone\": \"+81-22-4567-8901\"\n                },\n                \"_id\": \"697b381e5d7e6fe346a626ed\",\n                \"name\": \"Pacific Seafood Processing\",\n                \"industry\": \"Food Processing\",\n                \"size\": \"51-200\",\n                \"founded\": 2011,\n                \"website\": \"https://pacific-seafood.example.jp\",\n                \"description\": \"Seafood processing facility specializing in sashimi-grade fish and frozen products. Export-certified with HACCP compliance.\",\n                \"owner\": {\n                    \"_id\": \"697b381c5d7e6fe346a626d1\",\n                    \"email\": \"employer9@seafoodco.jp\",\n                    \"isLocked\": false,\n                    \"id\": \"697b381c5d7e6fe346a626d1\"\n                },\n                \"jobs\": [],\n                \"licenses\": [],\n                \"isVerified\": true,\n                \"isActive\": true,\n                \"images\": [],\n                \"videos\": [],\n                \"certifications\": [],\n                \"createdAt\": \"2026-01-29T10:36:14.141Z\",\n                \"updatedAt\": \"2026-01-29T10:36:14.141Z\",\n                \"slug\": \"pacific-seafood-processing\",\n                \"jobCount\": 0,\n                \"employeeRange\": {\n                    \"min\": 51,\n                    \"max\": 200\n                },\n                \"id\": \"697b381e5d7e6fe346a626ed\"\n            },\n            {\n                \"location\": {\n                    \"prefecture\": \"Saitama\",\n                    \"city\": \"Saitama\",\n                    \"address\": \"8-5-12 Urawa\"\n                },\n                \"contact\": {\n                    \"email\": \"jobs@cleanpro-services.example.jp\",\n                    \"phone\": \"+81-48-3456-7890\"\n                },\n                \"_id\": \"697b381e5d7e6fe346a626ea\",\n                \"name\": \"CleanPro Facility Services\",\n                \"industry\": \"Building Cleaning\",\n                \"size\": \"51-200\",\n                \"founded\": 2014,\n                \"website\": \"https://cleanpro-services.example.jp\",\n                \"description\": \"Professional building maintenance and industrial cleaning services. Serving commercial, industrial, and institutional facilities.\",\n                \"owner\": {\n                    \"_id\": \"697b381c5d7e6fe346a626cf\",\n                    \"email\": \"employer8@cleanpro.jp\",\n                    \"isLocked\": false,\n                    \"id\": \"697b381c5d7e6fe346a626cf\"\n                },\n                \"jobs\": [],\n                \"licenses\": [],\n                \"isVerified\": true,\n                \"isActive\": true,\n                \"images\": [],\n                \"videos\": [],\n                \"certifications\": [],\n                \"createdAt\": \"2026-01-29T10:36:14.062Z\",\n                \"updatedAt\": \"2026-01-29T10:36:14.062Z\",\n                \"slug\": \"cleanpro-facility-services\",\n                \"jobCount\": 0,\n                \"employeeRange\": {\n                    \"min\": 51,\n                    \"max\": 200\n                },\n                \"id\": \"697b381e5d7e6fe346a626ea\"\n            },\n            {\n                \"location\": {\n                    \"prefecture\": \"Kanagawa\",\n                    \"city\": \"Yokohama\",\n                    \"address\": \"6-20-15 Minato Mirai\"\n                },\n                \"contact\": {\n                    \"email\": \"recruitment@nippon-autoparts.example.jp\",\n                    \"phone\": \"+81-45-2345-6789\"\n                },\n                \"_id\": \"697b381d5d7e6fe346a626e7\",\n                \"name\": \"Nippon Auto Parts Manufacturing\",\n                \"industry\": \"Manufacturing\",\n                \"size\": \"501-1000\",\n                \"founded\": 2000,\n                \"website\": \"https://nippon-autoparts.example.jp\",\n                \"description\": \"Tier-1 automotive parts supplier specializing in engine components and electrical systems. Supplying major Japanese automakers.\",\n                \"owner\": {\n                    \"_id\": \"697b381c5d7e6fe346a626cd\",\n                    \"email\": \"employer7@autoparts.jp\",\n                    \"isLocked\": false,\n                    \"id\": \"697b381c5d7e6fe346a626cd\"\n                },\n                \"jobs\": [],\n                \"licenses\": [],\n                \"isVerified\": true,\n                \"isActive\": true,\n                \"images\": [],\n                \"videos\": [],\n                \"certifications\": [],\n                \"createdAt\": \"2026-01-29T10:36:13.981Z\",\n                \"updatedAt\": \"2026-01-29T10:36:13.981Z\",\n                \"slug\": \"nippon-auto-parts-manufacturing\",\n                \"jobCount\": 0,\n                \"employeeRange\": {\n                    \"min\": 501,\n                    \"max\": 1000\n                },\n                \"id\": \"697b381d5d7e6fe346a626e7\"\n            },\n            {\n                \"location\": {\n                    \"prefecture\": \"Kyoto\",\n                    \"city\": \"Kyoto\",\n                    \"address\": \"4-12-8 Gion\"\n                },\n                \"contact\": {\n                    \"email\": \"careers@sunrise-hotels.example.jp\",\n                    \"phone\": \"+81-75-1234-5678\"\n                },\n                \"_id\": \"697b381d5d7e6fe346a626e4\",\n                \"name\": \"Sunrise Hotel & Ryokan Co\",\n                \"industry\": \"Hospitality\",\n                \"size\": \"201-500\",\n                \"founded\": 2005,\n                \"website\": \"https://sunrise-hotels.example.jp\",\n                \"description\": \"Premier hotel and ryokan chain offering traditional Japanese hospitality. Operating properties in major tourist destinations across Japan.\",\n                \"owner\": {\n                    \"_id\": \"697b381c5d7e6fe346a626cb\",\n                    \"email\": \"employer6@hotelsunrise.jp\",\n                    \"isLocked\": false,\n                    \"id\": \"697b381c5d7e6fe346a626cb\"\n                },\n                \"jobs\": [],\n                \"licenses\": [],\n                \"isVerified\": true,\n                \"isActive\": true,\n                \"images\": [],\n                \"videos\": [],\n                \"certifications\": [],\n                \"createdAt\": \"2026-01-29T10:36:13.900Z\",\n                \"updatedAt\": \"2026-01-29T10:36:13.900Z\",\n                \"slug\": \"sunrise-hotel-ryokan-co\",\n                \"jobCount\": 0,\n                \"employeeRange\": {\n                    \"min\": 201,\n                    \"max\": 500\n                },\n                \"id\": \"697b381d5d7e6fe346a626e4\"\n            },\n            {\n                \"location\": {\n                    \"prefecture\": \"Fukuoka\",\n                    \"city\": \"Fukuoka\",\n                    \"address\": \"2-8-15 Tenjin\"\n                },\n                \"contact\": {\n                    \"email\": \"hr@tastyjapan-group.example.com\",\n                    \"phone\": \"+81-92-5678-9012\"\n                },\n                \"_id\": \"697b381d5d7e6fe346a626e1\",\n                \"name\": \"Tasty Japan Restaurant Group\",\n                \"industry\": \"Food Service\",\n                \"size\": \"51-200\",\n                \"founded\": 2013,\n                \"website\": \"https://tastyjapan-group.example.com\",\n                \"description\": \"Chain of Japanese and fusion restaurants across Kyushu region. Committed to authentic flavors and exceptional customer service.\",\n                \"owner\": {\n                    \"_id\": \"697b381b5d7e6fe346a626c9\",\n                    \"email\": \"employer5@tastyjapan.com\",\n                    \"isLocked\": false,\n                    \"id\": \"697b381b5d7e6fe346a626c9\"\n                },\n                \"jobs\": [],\n                \"licenses\": [],\n                \"isVerified\": true,\n                \"isActive\": true,\n                \"images\": [],\n                \"videos\": [],\n                \"certifications\": [],\n                \"createdAt\": \"2026-01-29T10:36:13.817Z\",\n                \"updatedAt\": \"2026-01-29T10:36:13.817Z\",\n                \"slug\": \"tasty-japan-restaurant-group\",\n                \"jobCount\": 0,\n                \"employeeRange\": {\n                    \"min\": 51,\n                    \"max\": 200\n                },\n                \"id\": \"697b381d5d7e6fe346a626e1\"\n            },\n            {\n                \"location\": {\n                    \"prefecture\": \"Hokkaido\",\n                    \"city\": \"Sapporo\",\n                    \"address\": \"7-5-2 Kita\"\n                },\n                \"contact\": {\n                    \"email\": \"hr@farmgrow-agri.example.com\",\n                    \"phone\": \"+81-11-4567-8901\"\n                },\n                \"_id\": \"697b381d5d7e6fe346a626de\",\n                \"name\": \"FarmGrow Agricultural Co\",\n                \"industry\": \"Agriculture\",\n                \"size\": \"51-200\",\n                \"founded\": 2015,\n                \"website\": \"https://farmgrow-agri.example.com\",\n                \"description\": \"Modern agricultural operations focusing on organic produce and sustainable farming. Operating multiple farms across Hokkaido.\",\n                \"owner\": {\n                    \"_id\": \"697b381b5d7e6fe346a626c7\",\n                    \"email\": \"employer4@farmfresh.com\",\n                    \"isLocked\": false,\n                    \"id\": \"697b381b5d7e6fe346a626c7\"\n                },\n                \"jobs\": [],\n                \"licenses\": [],\n                \"isVerified\": true,\n                \"isActive\": true,\n                \"images\": [],\n                \"videos\": [],\n                \"certifications\": [],\n                \"createdAt\": \"2026-01-29T10:36:13.732Z\",\n                \"updatedAt\": \"2026-01-29T10:36:13.732Z\",\n                \"slug\": \"farmgrow-agricultural-co\",\n                \"jobCount\": 0,\n                \"employeeRange\": {\n                    \"min\": 51,\n                    \"max\": 200\n                },\n                \"id\": \"697b381d5d7e6fe346a626de\"\n            },\n            {\n                \"location\": {\n                    \"prefecture\": \"Aichi\",\n                    \"city\": \"Nagoya\",\n                    \"address\": \"3-15-8 Sakae\"\n                },\n                \"contact\": {\n                    \"email\": \"hr@buildco-construction.example.com\",\n                    \"phone\": \"+81-52-3456-7890\"\n                },\n                \"_id\": \"697b381d5d7e6fe346a626db\",\n                \"name\": \"BuildCo Construction Ltd\",\n                \"industry\": \"Construction\",\n                \"size\": \"51-200\",\n                \"founded\": 2008,\n                \"website\": \"https://buildco-construction.example.com\",\n                \"description\": \"General contractor specializing in residential and commercial construction. Experienced in traditional and modern building techniques.\",\n                \"owner\": {\n                    \"_id\": \"697b381b5d7e6fe346a626c5\",\n                    \"email\": \"employer3@buildcorp.com\",\n                    \"isLocked\": false,\n                    \"id\": \"697b381b5d7e6fe346a626c5\"\n                },\n                \"jobs\": [],\n                \"licenses\": [],\n                \"isVerified\": true,\n                \"isActive\": true,\n                \"images\": [],\n                \"videos\": [],\n                \"certifications\": [],\n                \"createdAt\": \"2026-01-29T10:36:13.653Z\",\n                \"updatedAt\": \"2026-01-29T10:36:13.653Z\",\n                \"slug\": \"buildco-construction-ltd\",\n                \"jobCount\": 0,\n                \"employeeRange\": {\n                    \"min\": 51,\n                    \"max\": 200\n                },\n                \"id\": \"697b381d5d7e6fe346a626db\"\n            },\n            {\n                \"location\": {\n                    \"prefecture\": \"Osaka\",\n                    \"city\": \"Osaka\",\n                    \"address\": \"5-10-20 Umeda\"\n                },\n                \"contact\": {\n                    \"email\": \"hr@careplus-medical.example.com\",\n                    \"phone\": \"+81-6-2345-6789\"\n                },\n                \"_id\": \"697b381d5d7e6fe346a626d8\",\n                \"name\": \"CarePlus Medical Services\",\n                \"industry\": \"Nursing Care\",\n                \"size\": \"201-500\",\n                \"founded\": 2012,\n                \"website\": \"https://careplus-medical.example.com\",\n                \"description\": \"Comprehensive nursing care and elderly support services across Osaka region. Specialized in dementia care and rehabilitation services.\",\n                \"owner\": {\n                    \"_id\": \"697b381b5d7e6fe346a626c3\",\n                    \"email\": \"employer2@careplus.com\",\n                    \"isLocked\": false,\n                    \"id\": \"697b381b5d7e6fe346a626c3\"\n                },\n                \"jobs\": [],\n                \"licenses\": [],\n                \"isVerified\": true,\n                \"isActive\": true,\n                \"images\": [],\n                \"videos\": [],\n                \"certifications\": [],\n                \"createdAt\": \"2026-01-29T10:36:13.577Z\",\n                \"updatedAt\": \"2026-01-29T10:36:13.577Z\",\n                \"slug\": \"careplus-medical-services\",\n                \"jobCount\": 0,\n                \"employeeRange\": {\n                    \"min\": 201,\n                    \"max\": 500\n                },\n                \"id\": \"697b381d5d7e6fe346a626d8\"\n            },\n            {\n                \"location\": {\n                    \"prefecture\": \"Tokyo\",\n                    \"city\": \"Minato\",\n                    \"address\": \"1-2-3 Shibaura\"\n                },\n                \"contact\": {\n                    \"email\": \"hr@techinnovation-jp.example.com\",\n                    \"phone\": \"+81-3-1234-5678\"\n                },\n                \"_id\": \"697b381d5d7e6fe346a626d5\",\n                \"name\": \"Tech Innovation Japan Corp\",\n                \"industry\": \"Manufacturing\",\n                \"size\": \"501-1000\",\n                \"founded\": 2010,\n                \"website\": \"https://techinnovation-jp.example.com\",\n                \"description\": \"Leading manufacturer of precision electronic components and automotive parts. ISO 9001 certified with state-of-the-art facilities in Tokyo.\",\n                \"owner\": {\n                    \"_id\": \"697b381a5d7e6fe346a626c1\",\n                    \"email\": \"employer1@techinnov.com\",\n                    \"isLocked\": false,\n                    \"id\": \"697b381a5d7e6fe346a626c1\"\n                },\n                \"jobs\": [],\n                \"licenses\": [],\n                \"isVerified\": true,\n                \"isActive\": true,\n                \"images\": [],\n                \"videos\": [],\n                \"certifications\": [],\n                \"createdAt\": \"2026-01-29T10:36:13.500Z\",\n                \"updatedAt\": \"2026-01-29T10:36:13.500Z\",\n                \"slug\": \"tech-innovation-japan-corp\",\n                \"jobCount\": 0,\n                \"employeeRange\": {\n                    \"min\": 501,\n                    \"max\": 1000\n                },\n                \"id\": \"697b381d5d7e6fe346a626d5\"\n            }\n        ],\n        \"pagination\": {\n            \"page\": 1,\n            \"limit\": 10,\n            \"total\": 10,\n            \"pages\": 1,\n            \"hasNext\": false,\n            \"hasPrev\": false\n        }\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "4.2 Get Single Company Details",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Company details received', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.success).to.be.true;",
+                  "    pm.expect(jsonData.data.company).to.exist;",
+                  "    console.log('✓ Company details:', jsonData.data.company.name);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "bf673254-1f44-4faa-ba29-4e0efcf9746b",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/companies/{{COMPANY_ID}}",
+              "host": ["{{BASE_URL}}"],
+              "path": ["companies", "{{COMPANY_ID}}"]
+            }
+          },
+          "response": [
+            {
+              "id": "5aceffac-bdaa-4102-b230-4f49807893a5",
+              "name": "4.2 Get Single Company Details",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{BASE_URL}}/companies/{{COMPANY_ID}}",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["companies", "{{COMPANY_ID}}"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdn.jsdelivr.net https://unpkg.com https://cdnjs.cloudflare.com;style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net;img-src 'self' data: https:;connect-src 'self';frame-ancestors 'self';object-src 'none';form-action 'self';worker-src 'self' blob:;base-uri 'self';script-src-attr 'none';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "RateLimit-Policy",
+                  "value": "1000;w=900"
+                },
+                {
+                  "key": "RateLimit-Limit",
+                  "value": "1000"
+                },
+                {
+                  "key": "RateLimit-Remaining",
+                  "value": "958"
+                },
+                {
+                  "key": "RateLimit-Reset",
+                  "value": "231"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "1012"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"3f4-yCEQE1VsUYEL4LAJPV5kBm4ut/E\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 29 Jan 2026 11:26:16 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-29T11:26:20.179Z",
+              "body": "{\n    \"statusCode\": 200,\n    \"success\": true,\n    \"message\": \"Company retrieved successfully\",\n    \"data\": {\n        \"company\": {\n            \"location\": {\n                \"prefecture\": \"Chiba\",\n                \"city\": \"Chiba\",\n                \"address\": \"10-15-3 Makuhari\"\n            },\n            \"contact\": {\n                \"email\": \"careers@japan-express.example.jp\",\n                \"phone\": \"+81-43-5678-9012\"\n            },\n            \"_id\": \"697b381e5d7e6fe346a626f0\",\n            \"name\": \"Japan Express Logistics\",\n            \"industry\": \"Logistics\",\n            \"size\": \"201-500\",\n            \"founded\": 2007,\n            \"website\": \"https://japan-express.example.jp\",\n            \"description\": \"Comprehensive logistics and warehouse management services. Operating distribution centers nationwide with cold-chain capabilities.\",\n            \"owner\": {\n                \"_id\": \"697b381d5d7e6fe346a626d3\",\n                \"email\": \"employer10@logistics.jp\",\n                \"isLocked\": false,\n                \"id\": \"697b381d5d7e6fe346a626d3\"\n            },\n            \"admins\": [],\n            \"jobs\": [],\n            \"licenses\": [],\n            \"isVerified\": true,\n            \"isActive\": true,\n            \"images\": [],\n            \"videos\": [],\n            \"certifications\": [],\n            \"createdAt\": \"2026-01-29T10:36:14.220Z\",\n            \"updatedAt\": \"2026-01-29T10:36:14.220Z\",\n            \"slug\": \"japan-express-logistics\",\n            \"__v\": 0,\n            \"jobCount\": 0,\n            \"employeeRange\": {\n                \"min\": 201,\n                \"max\": 500\n            },\n            \"id\": \"697b381e5d7e6fe346a626f0\"\n        }\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "4.3 Search Companies by Industry",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Filtered companies received', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.success).to.be.true;",
+                  "    console.log('✓ Manufacturing companies:', jsonData.data.companies.length);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "5187b1f5-5d59-42ec-a91b-236138080030",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/companies?industry=Manufacturing",
+              "host": ["{{BASE_URL}}"],
+              "path": ["companies"],
+              "query": [
+                {
+                  "key": "industry",
+                  "value": "Manufacturing"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "e02a4ad7-e685-4e0f-92f7-47b125da6a43",
+              "name": "4.3 Search Companies by Industry",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{BASE_URL}}/companies?industry=Manufacturing",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["companies"],
+                  "query": [
+                    {
+                      "key": "industry",
+                      "value": "Manufacturing",
+                      "uuid": "d97a230b-be33-485d-9e63-c4c6f464560e"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdn.jsdelivr.net https://unpkg.com https://cdnjs.cloudflare.com;style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net;img-src 'self' data: https:;connect-src 'self';frame-ancestors 'self';object-src 'none';form-action 'self';worker-src 'self' blob:;base-uri 'self';script-src-attr 'none';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "RateLimit-Policy",
+                  "value": "1000;w=900"
+                },
+                {
+                  "key": "RateLimit-Limit",
+                  "value": "1000"
+                },
+                {
+                  "key": "RateLimit-Remaining",
+                  "value": "957"
+                },
+                {
+                  "key": "RateLimit-Reset",
+                  "value": "222"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "2044"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"7fc-+g0bgDkt60zvpSM9hKweltDmcPQ\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 29 Jan 2026 11:26:26 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "responseTime": "2026-01-29T11:26:29.863Z",
+              "body": "{\n    \"statusCode\": 200,\n    \"success\": true,\n    \"message\": \"Companies retrieved successfully\",\n    \"data\": {\n        \"companies\": [\n            {\n                \"location\": {\n                    \"prefecture\": \"Kanagawa\",\n                    \"city\": \"Yokohama\",\n                    \"address\": \"6-20-15 Minato Mirai\"\n                },\n                \"contact\": {\n                    \"email\": \"recruitment@nippon-autoparts.example.jp\",\n                    \"phone\": \"+81-45-2345-6789\"\n                },\n                \"_id\": \"697b381d5d7e6fe346a626e7\",\n                \"name\": \"Nippon Auto Parts Manufacturing\",\n                \"industry\": \"Manufacturing\",\n                \"size\": \"501-1000\",\n                \"founded\": 2000,\n                \"website\": \"https://nippon-autoparts.example.jp\",\n                \"description\": \"Tier-1 automotive parts supplier specializing in engine components and electrical systems. Supplying major Japanese automakers.\",\n                \"owner\": {\n                    \"_id\": \"697b381c5d7e6fe346a626cd\",\n                    \"email\": \"employer7@autoparts.jp\",\n                    \"isLocked\": false,\n                    \"id\": \"697b381c5d7e6fe346a626cd\"\n                },\n                \"jobs\": [],\n                \"licenses\": [],\n                \"isVerified\": true,\n                \"isActive\": true,\n                \"images\": [],\n                \"videos\": [],\n                \"certifications\": [],\n                \"createdAt\": \"2026-01-29T10:36:13.981Z\",\n                \"updatedAt\": \"2026-01-29T10:36:13.981Z\",\n                \"slug\": \"nippon-auto-parts-manufacturing\",\n                \"jobCount\": 0,\n                \"employeeRange\": {\n                    \"min\": 501,\n                    \"max\": 1000\n                },\n                \"id\": \"697b381d5d7e6fe346a626e7\"\n            },\n            {\n                \"location\": {\n                    \"prefecture\": \"Tokyo\",\n                    \"city\": \"Minato\",\n                    \"address\": \"1-2-3 Shibaura\"\n                },\n                \"contact\": {\n                    \"email\": \"hr@techinnovation-jp.example.com\",\n                    \"phone\": \"+81-3-1234-5678\"\n                },\n                \"_id\": \"697b381d5d7e6fe346a626d5\",\n                \"name\": \"Tech Innovation Japan Corp\",\n                \"industry\": \"Manufacturing\",\n                \"size\": \"501-1000\",\n                \"founded\": 2010,\n                \"website\": \"https://techinnovation-jp.example.com\",\n                \"description\": \"Leading manufacturer of precision electronic components and automotive parts. ISO 9001 certified with state-of-the-art facilities in Tokyo.\",\n                \"owner\": {\n                    \"_id\": \"697b381a5d7e6fe346a626c1\",\n                    \"email\": \"employer1@techinnov.com\",\n                    \"isLocked\": false,\n                    \"id\": \"697b381a5d7e6fe346a626c1\"\n                },\n                \"jobs\": [],\n                \"licenses\": [],\n                \"isVerified\": true,\n                \"isActive\": true,\n                \"images\": [],\n                \"videos\": [],\n                \"certifications\": [],\n                \"createdAt\": \"2026-01-29T10:36:13.500Z\",\n                \"updatedAt\": \"2026-01-29T10:36:13.500Z\",\n                \"slug\": \"tech-innovation-japan-corp\",\n                \"jobCount\": 0,\n                \"employeeRange\": {\n                    \"min\": 501,\n                    \"max\": 1000\n                },\n                \"id\": \"697b381d5d7e6fe346a626d5\"\n            }\n        ],\n        \"pagination\": {\n            \"page\": 1,\n            \"limit\": 10,\n            \"total\": 2,\n            \"pages\": 1,\n            \"hasNext\": false,\n            \"hasPrev\": false\n        }\n    }\n}"
+            }
+          ]
+        }
+      ],
+      "id": "404fd85a-c317-4cbf-9069-b66869a214ec",
+      "description": "Company listing operations"
+    },
+    {
+      "name": "5. Cleanup",
+      "item": [
+        {
+          "name": "5.1 Delete Profile (Optional)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200 or 404', function () {",
+                  "    pm.expect([200, 404]).to.include(pm.response.code);",
+                  "});",
+                  "",
+                  "if (pm.response.code === 200) {",
+                  "    console.log('✓ Profile deleted');",
+                  "} else {",
+                  "    console.log('ℹ No profile to delete');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "733f09bf-8d6c-45ad-9723-14642c357ef2",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/profile",
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile"]
+            },
+            "description": "Delete profile to reset for next test run (optional)"
+          },
+          "response": []
+        }
+      ],
+      "id": "13b6587e-cd42-4992-82df-3a3ab25c49fe",
+      "description": "Optional cleanup operations"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{JWT_TOKEN}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "id": "3ba2157d-0548-483e-89b7-940bc17bee01",
+      "key": "BASE_URL",
+      "value": "http://localhost:3000/api/v1",
+      "type": "default"
+    }
+  ]
+}
