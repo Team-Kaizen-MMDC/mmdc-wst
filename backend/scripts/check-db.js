@@ -45,9 +45,19 @@ async function run() {
     await client.connect();
     console.log("✅ MongoDB connection successful!");
 
-    const db = client.db();
+    // Choose the database to inspect. Prefer explicit MONGODB_DB, else
+    // try to parse the database name from the connection URI. Fall back to
+    // 'test' if neither is available.
+    let dbName = process.env.MONGODB_DB;
+    if (!dbName) {
+      const m = uri.match(/mongodb(?:\+srv)?:\/\/[^/]+\/([^?]+)/);
+      if (m && m[1]) dbName = m[1];
+    }
+    dbName = dbName || "test";
+
+    const db = client.db(dbName);
     console.log("\n=== Database Information ===");
-    console.log("Database name:", db.databaseName);
+    console.log(`Using database: ${dbName}`);
 
     const collections = await db.listCollections().toArray();
     console.log("\nCollections found:", collections.length);
