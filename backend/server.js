@@ -10,7 +10,7 @@ async function start() {
 
     const server = app.listen(PORT, () => {
       console.log(
-        `Server listening on http://localhost:${PORT} — open /pages/about.html`,
+        `Server listening on http://localhost:${PORT} — open /index.html`,
       );
     });
 
