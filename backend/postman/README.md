@@ -10,7 +10,6 @@ This directory contains the comprehensive Postman collection for the Japan SSW P
 
 - **`Japan_SSW_API_Complete.postman_collection.json`** - Complete consolidated collection with all endpoints (RECOMMENDED)
 - **`Japan_SSW_API.postman_environment.json`** - Environment variables file
-- **`Japan_SSW_API_day1_day4.postman_collection.json`** - Legacy collection (Days 1-4 only)
 - **`Japan_SSW_API.postman_collection.json`** - Legacy collection (partial endpoints)
 
 ---
