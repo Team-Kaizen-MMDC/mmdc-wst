@@ -225,11 +225,11 @@ exports.createJob = asyncHandler(async (req, res) => {
  * @route   PUT /api/v1/jobs/:id
  * @access  Private (Employer - owner only)
  */
-exports.updateJob = asyncHandler(async (req, res) => {
+exports.updateJob = asyncHandler(async (req, res, next) => {
   let job = await Job.findOne({ _id: req.params.id, isDeleted: false });
 
   if (!job) {
-    throw new ApiError(404, "Job not found");
+    return next(new ApiError(404, "Job not found or has been archived"));
   }
 
   // Check ownership
@@ -238,10 +238,8 @@ exports.updateJob = asyncHandler(async (req, res) => {
   }
 
   // Prevent updating certain fields
-  delete req.body.postedBy;
-  delete req.body.company;
-  delete req.body.views;
-  delete req.body.applications;
+  const protectedFields = ['postedBy', 'company', 'views', 'applications'];
+  protectedFields.forEach(field => delete req.body[field]);
 
   job = await Job.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
