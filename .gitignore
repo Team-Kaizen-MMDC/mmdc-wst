@@ -163,3 +163,23 @@ usability-summary.md
 
 # Accessibility generated results
 tests/accessibility/results/
+
+# Terraform
+terraform/.terraform/
+.terraform/
+.terraform.d/
+*.tfstate
+*.tfstate.*
+terraform.tfstate.backup
+*.tfvars
+*.tfvars.*
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraform.lock.hcl
+crash.log
+override.tfvars
+override.tfvars.json
+.terraformrc
+terraform.rc
