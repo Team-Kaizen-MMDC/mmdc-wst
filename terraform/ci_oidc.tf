@@ -81,6 +81,8 @@ data "aws_iam_policy_document" "ci_policy_doc" {
       # existing IAM providers, policies and roles when reconciling state.
       "iam:GetPolicy",
       "iam:ListPolicies",
+      "iam:GetPolicyVersion",
+      "iam:ListPolicyVersions",
       "iam:GetRole",
       "iam:ListRoles",
       "iam:GetRolePolicy",
@@ -88,7 +90,11 @@ data "aws_iam_policy_document" "ci_policy_doc" {
       "iam:GetOpenIDConnectProvider",
       "iam:ListOpenIDConnectProviders"
     ]
-    resources = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/*", "arn:aws:iam::${data.aws_caller_identity.current.account_id}:policy/*"]
+    resources = [
+      "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/*",
+      "arn:aws:iam::${data.aws_caller_identity.current.account_id}:policy/*",
+      "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/*"
+    ]
   }
 }
 
