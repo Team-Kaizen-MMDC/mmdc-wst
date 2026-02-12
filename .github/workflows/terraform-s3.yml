@@ -1,5 +1,9 @@
 name: Terraform S3 lifecycle
 
+permissions:
+  id-token: write
+  contents: read
+
 on:
   workflow_dispatch:
     inputs:
