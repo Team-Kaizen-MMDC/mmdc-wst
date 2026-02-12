@@ -42,22 +42,7 @@ data "aws_iam_policy_document" "ci_policy_doc" {
   statement {
     effect = "Allow"
     actions = [
-      "s3:CreateBucket",
-      "s3:ListBucket",
-      "s3:GetBucketCORS",
-      "s3:GetBucketAcl",
-      "s3:GetBucketPolicy",
-      "s3:GetBucketWebsite",
-      "s3:GetBucketVersioning",
-      "s3:GetBucketLocation",
-      "s3:PutBucketPolicy",
-      "s3:PutBucketVersioning",
-      "s3:PutEncryptionConfiguration",
-      "s3:GetObject",
-      "s3:PutObject",
-      "s3:DeleteObject",
-      "s3:ListBucketMultipartUploads",
-      "s3:AbortMultipartUpload"
+      "s3:*"
     ]
     resources = ["arn:aws:s3:::*", "arn:aws:s3:::*/*"]
   }
