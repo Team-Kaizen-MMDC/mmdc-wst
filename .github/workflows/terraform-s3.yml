@@ -47,51 +47,50 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Configure AWS credentials (OIDC role)
+        id: oidc_config
+        continue-on-error: true
+        if: ${{ inputs.oidc_role_arn != '' || secrets.OIDC_ROLE_ARN != '' }}
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ inputs.oidc_role_arn != '' && inputs.oidc_role_arn || secrets.OIDC_ROLE_ARN }}
+          role-session-name: github-actions-terraform
+          aws-region: ${{ env.AWS_REGION }}
 
-            - name: Configure AWS credentials (OIDC role)
-              id: oidc_config
-              continue-on-error: true
-              if: ${{ inputs.oidc_role_arn != '' || secrets.OIDC_ROLE_ARN != '' }}
-              uses: aws-actions/configure-aws-credentials@v2
-              with:
-                role-to-assume: ${{ inputs.oidc_role_arn != '' && inputs.oidc_role_arn || secrets.OIDC_ROLE_ARN }}
-                role-session-name: github-actions-terraform
-                aws-region: ${{ env.AWS_REGION }}
+      - name: Check credentials after OIDC attempt
+        id: check_creds
+        run: |
+          echo "Checking AWS credentials after OIDC attempt..."
+          if aws sts get-caller-identity >/dev/null 2>&1; then
+            echo "cred_ok=true" >> $GITHUB_OUTPUT
+            echo "AWS credentials available (OIDC succeeded)"
+            aws sts get-caller-identity || true
+          else
+            echo "cred_ok=false" >> $GITHUB_OUTPUT
+            echo "No AWS credentials available after OIDC"
+          fi
 
-            - name: Check credentials after OIDC attempt
-              id: check_creds
-              run: |
-                echo "Checking AWS credentials after OIDC attempt..."
-                if aws sts get-caller-identity >/dev/null 2>&1; then
-                  echo "cred_ok=true" >> $GITHUB_OUTPUT
-                  echo "AWS credentials available (OIDC succeeded)"
-                  aws sts get-caller-identity || true
-                else
-                  echo "cred_ok=false" >> $GITHUB_OUTPUT
-                  echo "No AWS credentials available after OIDC"
-                fi
+      - name: Configure AWS credentials (secrets fallback)
+        if: ${{ steps.check_creds.outputs.cred_ok != 'true' }}
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
 
-            - name: Configure AWS credentials (secrets fallback)
-              if: ${{ steps.check_creds.outputs.cred_ok != 'true' }}
-              uses: aws-actions/configure-aws-credentials@v2
-              with:
-                aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-                aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-                aws-region: ${{ env.AWS_REGION }}
-
-            - name: Validate AWS credentials
-              run: |
-                echo "=== AWS credentials diagnostic ==="
-                echo "Testing AWS credentials with STS..."
-                if aws sts get-caller-identity >/dev/null 2>&1; then
-                  echo "AWS credentials OK"
-                  aws sts get-caller-identity
-                else
-                  echo "ERROR: Could not load AWS credentials after fallback."
-                  echo "- If using OIDC, ensure the role ARN passed via 'oidc_role_arn' is correct and its trust policy allows GitHub OIDC."
-                  echo "- If using secrets, ensure repository secrets AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY are configured."
-                  exit 1
-                fi
+      - name: Validate AWS credentials
+        run: |
+          echo "=== AWS credentials diagnostic ==="
+          echo "Testing AWS credentials with STS..."
+          if aws sts get-caller-identity >/dev/null 2>&1; then
+            echo "AWS credentials OK"
+            aws sts get-caller-identity
+          else
+            echo "ERROR: Could not load AWS credentials after fallback."
+            echo "- If using OIDC, ensure the role ARN passed via 'oidc_role_arn' is correct and its trust policy allows GitHub OIDC."
+            echo "- If using secrets, ensure repository secrets AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY are configured."
+            exit 1
+          fi
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
