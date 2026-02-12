@@ -76,7 +76,17 @@ data "aws_iam_policy_document" "ci_policy_doc" {
       "iam:PutRolePolicy",
       "iam:CreatePolicy",
       "iam:DeletePolicy",
-      "iam:PassRole"
+      "iam:PassRole",
+      # Read/list permissions so Terraform running as this role can inspect
+      # existing IAM providers, policies and roles when reconciling state.
+      "iam:GetPolicy",
+      "iam:ListPolicies",
+      "iam:GetRole",
+      "iam:ListRoles",
+      "iam:GetRolePolicy",
+      "iam:ListRolePolicies",
+      "iam:GetOpenIDConnectProvider",
+      "iam:ListOpenIDConnectProviders"
     ]
     resources = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/*", "arn:aws:iam::${data.aws_caller_identity.current.account_id}:policy/*"]
   }
