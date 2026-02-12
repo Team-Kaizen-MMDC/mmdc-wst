@@ -63,6 +63,29 @@ Security
 
 - The bucket blocks public access and uses server-side encryption (AES256).
 
+CI / GitHub Actions
+
+This repository includes a workflow to run Terraform plan/apply/destroy for the S3 resources: `.github/workflows/terraform-s3.yml`.
+
+Key notes:
+
+- **Trigger:** open the Actions tab and run the `Terraform S3 lifecycle` workflow (or use the `workflow_dispatch` API).
+- **Inputs:** `action` (plan|apply|destroy), optional `bucket_name`, `use_remote_state` (true/false), `state_bucket`, `state_key`, and `confirm` (must be `yes` to perform apply/destroy).
+- **Required repository secrets:** set `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` in repository settings so the workflow can authenticate to AWS.
+- **OIDC best practice:** instead of using long-lived secrets, you can provision an OIDC provider and a dedicated role for the workflow. Apply the Terraform config `ci_oidc.tf` in this folder to create the OIDC provider and role, then pass the role ARN to the workflow via the `oidc_role_arn` input. The workflow will assume the role using GitHub's OIDC tokens.
+- **Remote state:** if you set `use_remote_state=true` and provide `state_bucket`, the workflow will attempt to create that bucket (with versioning) and use it for Terraform backend. Ensure the credentials used by the workflow have permissions to create/list buckets and put objects in the state bucket.
+- **Plan artifact:** the workflow uploads a `tfplan` artifact after planning; the apply step will use the plan file if present.
+- **Safety:** the workflow requires `confirm: yes` to perform destructive actions (`apply` and `destroy`). For destroy operations the README's "Destroying / Cleanup" guidance still applies (empty buckets before destroy or enable `force_destroy` intentionally).
+
+Example: run a non-destructive plan with a custom bucket name
+
+```bash
+# From the repo you can dispatch the workflow using the GitHub CLI (gh) if available:
+gh workflow run terraform-s3.yml --repo Team-Kaizen-MMDC/mmdc-wst -f action=plan -f bucket_name=my-unique-bucket
+```
+
+Add the secrets in the repo settings: `Settings → Secrets and variables → Actions`.
+
 Destroying / Cleanup
 
 Follow these steps to safely destroy the resources created by this module:
