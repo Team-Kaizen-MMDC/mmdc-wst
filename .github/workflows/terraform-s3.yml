@@ -15,9 +15,9 @@ on:
             bucket_name:
                 description: "Optional bucket name to pass to Terraform (overrides generated name)"
                 required: false
-           oidc_role_arn:
-             description: "Optional ARN of an OIDC-assumable IAM role for GitHub Actions (preferred)"
-             required: false
+            oidc_role_arn:
+                description: "Optional ARN of an OIDC-assumable IAM role for GitHub Actions (preferred)"
+                required: false
             use_remote_state:
                 description: "If true, store tfstate in S3. Bucket will be created if missing."
                 required: false
@@ -48,17 +48,17 @@ jobs:
               if: ${{ inputs.oidc_role_arn != '' }}
               uses: aws-actions/configure-aws-credentials@v2
               with:
-                role-to-assume: ${{ inputs.oidc_role_arn }}
-                role-session-name: github-actions-terraform
-                aws-region: ${{ env.AWS_REGION }}
+                  role-to-assume: ${{ inputs.oidc_role_arn }}
+                  role-session-name: github-actions-terraform
+                  aws-region: ${{ env.AWS_REGION }}
 
             - name: Configure AWS credentials (secrets)
               if: ${{ inputs.oidc_role_arn == '' }}
               uses: aws-actions/configure-aws-credentials@v2
               with:
-                aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-                aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-                aws-region: ${{ env.AWS_REGION }}
+                  aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                  aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                  aws-region: ${{ env.AWS_REGION }}
 
             - name: Setup Terraform
               uses: hashicorp/setup-terraform@v2
