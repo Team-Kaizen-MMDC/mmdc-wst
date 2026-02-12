@@ -62,3 +62,50 @@ Notes
 Security
 
 - The bucket blocks public access and uses server-side encryption (AES256).
+
+Destroying / Cleanup
+
+Follow these steps to safely destroy the resources created by this module:
+
+- Inspect planned changes before destroying:
+
+  ```bash
+  cd terraform
+  terraform init
+  terraform plan -destroy -var-file="terraform.tfvars"
+  ```
+
+- Empty the S3 bucket first (recommended) to avoid accidental data loss and speed up destruction. Example using the AWS CLI:
+
+  ```bash
+  # verify bucket name from outputs or AWS console
+  aws s3 ls s3://$(terraform output -raw bucket_name)
+  aws s3 rm s3://$(terraform output -raw bucket_name) --recursive
+  ```
+
+- If you prefer Terraform to remove objects automatically, set `force_destroy = true` on the `aws_s3_bucket` resource in `s3.tf` before running `terraform apply` (note: this will permanently delete all objects).
+
+- Perform the destroy (interactive):
+
+  ```bash
+  terraform destroy -var-file="terraform.tfvars"
+  ```
+
+- Or run non-interactively (use with caution):
+
+  ```bash
+  terraform destroy -var-file="terraform.tfvars" -auto-approve
+  ```
+
+- After destroy, verify no residual IAM policies or roles remain that you do not need. You can list them with:
+
+  ```bash
+  aws iam list-roles | grep mmdc-wst || true
+  aws iam list-policies --scope Local | grep mmdc-wst || true
+  ```
+
+Notes
+
+- Always have backups of any data before deleting buckets. Destroying is irreversible.
+- Use `terraform state show` and `terraform state rm` only if you need to remove a resource from state without deleting the remote resource; be careful when manipulating state files.
+
