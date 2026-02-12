@@ -10,7 +10,7 @@ data "aws_iam_policy_document" "assume_role" {
 }
 
 resource "aws_iam_role" "app_role" {
-  name               = "mmdc-wst-s3-access-role"
+  name               = "mmdc-wst-s3-access-role-${random_id.suffix.hex}"
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
 }
 
@@ -29,7 +29,7 @@ data "aws_iam_policy_document" "s3_policy" {
 }
 
 resource "aws_iam_policy" "s3_access_policy" {
-  name        = "mmdc-wst-s3-access-policy"
+  name        = "mmdc-wst-s3-access-policy-${random_id.suffix.hex}"
   description = "Allow read/write to the mmdc-wst S3 bucket"
   policy      = data.aws_iam_policy_document.s3_policy.json
 }

@@ -83,10 +83,14 @@ data "aws_iam_policy_document" "ci_policy_doc" {
       "iam:ListPolicies",
       "iam:GetPolicyVersion",
       "iam:ListPolicyVersions",
+      "iam:CreatePolicyVersion",
+      "iam:SetDefaultPolicyVersion",
+      "iam:DeletePolicyVersion",
       "iam:GetRole",
       "iam:ListRoles",
       "iam:GetRolePolicy",
       "iam:ListRolePolicies",
+      "iam:ListAttachedRolePolicies",
       "iam:GetOpenIDConnectProvider",
       "iam:ListOpenIDConnectProviders"
     ]
