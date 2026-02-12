@@ -15,6 +15,35 @@ Files created
 Usage
 
 1. Ensure your AWS credentials are available (environment variables or shared credentials file).
+   - Environment variables (temporary): set `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` (and optionally `AWS_SESSION_TOKEN`). Example:
+
+     ```bash
+     export AWS_ACCESS_KEY_ID=AKIA...YOURKEY
+     export AWS_SECRET_ACCESS_KEY=...YOURSECRET
+     # optional: export AWS_SESSION_TOKEN=...YOUR_SESSION_TOKEN
+     ```
+
+   - Shared credentials file (persistent): run `aws configure` or edit `~/.aws/credentials`:
+
+     ```ini
+     [default]
+     aws_access_key_id = AKIA...YOURKEY
+     aws_secret_access_key = ...YOURSECRET
+     ```
+
+   - Use a named profile by setting `AWS_PROFILE` (example `myprofile`):
+
+     ```bash
+     export AWS_PROFILE=myprofile
+     aws sts get-caller-identity
+     ```
+
+   - Verify credentials work with:
+
+     ```bash
+     aws sts get-caller-identity
+     ```
+
 2. From the repository root run:
 
 ```bash
