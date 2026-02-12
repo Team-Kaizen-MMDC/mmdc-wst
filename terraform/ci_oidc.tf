@@ -57,6 +57,15 @@ data "aws_iam_policy_document" "ci_policy_doc" {
     resources = ["arn:aws:s3:::*", "arn:aws:s3:::*/*"]
   }
 
+  # Some S3 actions like CreateBucket require a resource-level of "*".
+  # Add an explicit allow for CreateBucket on the global resource to avoid
+  # AccessDenied when creating new buckets (remote state bucket creation).
+  statement {
+    effect = "Allow"
+    actions = ["s3:CreateBucket"]
+    resources = ["*"]
+  }
+
   statement {
     effect = "Allow"
     actions = [
