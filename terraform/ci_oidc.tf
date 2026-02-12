@@ -47,6 +47,7 @@ data "aws_iam_policy_document" "ci_policy_doc" {
       "s3:GetBucketCORS",
       "s3:GetBucketAcl",
       "s3:GetBucketPolicy",
+      "s3:GetBucketWebsite",
       "s3:GetBucketLocation",
       "s3:PutBucketPolicy",
       "s3:PutBucketVersioning",
