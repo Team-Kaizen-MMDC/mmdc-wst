@@ -44,6 +44,7 @@ data "aws_iam_policy_document" "ci_policy_doc" {
     actions = [
       "s3:CreateBucket",
       "s3:ListBucket",
+      "s3:GetBucketAcl",
       "s3:GetBucketPolicy",
       "s3:GetBucketLocation",
       "s3:PutBucketPolicy",
