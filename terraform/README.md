@@ -90,6 +90,7 @@ gh workflow run terraform-s3.yml --ref fix/s3workflow \
 3. If you prefer to supply the role ARN at dispatch time, you can still pass `-f oidc_role_arn=...` to override the secret.
 
 Security note: storing the role ARN in a secret keeps the workflow configuration tidy; the secret only holds the ARN (not credentials) and is safe to store. Ensure the role's trust policy remains restricted to this repository.
+
 - **Remote state:** if you set `use_remote_state=true` and provide `state_bucket`, the workflow will attempt to create that bucket (with versioning) and use it for Terraform backend. Ensure the credentials used by the workflow have permissions to create/list buckets and put objects in the state bucket.
 - **Plan artifact:** the workflow uploads a `tfplan` artifact after planning; the apply step will use the plan file if present.
 - **Safety:** the workflow requires `confirm: yes` to perform destructive actions (`apply` and `destroy`). For destroy operations the README's "Destroying / Cleanup" guidance still applies (empty buckets before destroy or enable `force_destroy` intentionally).
