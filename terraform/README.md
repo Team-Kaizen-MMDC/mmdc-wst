@@ -108,4 +108,3 @@ Notes
 
 - Always have backups of any data before deleting buckets. Destroying is irreversible.
 - Use `terraform state show` and `terraform state rm` only if you need to remove a resource from state without deleting the remote resource; be careful when manipulating state files.
-
