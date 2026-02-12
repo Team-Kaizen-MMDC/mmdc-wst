@@ -35,33 +35,32 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "this" {
   }
 }
 
-data "aws_iam_policy_document" "bucket_policy" {
-  statement {
-    sid = "AllowListBucket"
+locals {
+  bucket_principals = length(var.allowed_principals) > 0 ? var.allowed_principals : [aws_iam_role.app_role.arn]
 
-    principals {
-      type        = "AWS"
-      identifiers = var.allowed_principals != [] ? var.allowed_principals : [aws_iam_role.app_role.arn]
-    }
-
-    actions = ["s3:ListBucket"]
-    resources = [aws_s3_bucket.this.arn]
-  }
-
-  statement {
-    sid = "AllowObjectActions"
-
-    principals {
-      type        = "AWS"
-      identifiers = var.allowed_principals != [] ? var.allowed_principals : [aws_iam_role.app_role.arn]
-    }
-
-    actions = ["s3:GetObject", "s3:PutObject", "s3:DeleteObject"]
-    resources = ["${aws_s3_bucket.this.arn}/*"]
-  }
+  bucket_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid = "AllowListBucket"
+        Effect = "Allow"
+        Principal = { AWS = local.bucket_principals }
+        Action = ["s3:ListBucket"]
+        Resource = aws_s3_bucket.this.arn
+      },
+      {
+        Sid = "AllowObjectActions"
+        Effect = "Allow"
+        Principal = { AWS = local.bucket_principals }
+        Action = ["s3:GetObject", "s3:PutObject", "s3:DeleteObject"]
+        Resource = "${aws_s3_bucket.this.arn}/*"
+      }
+    ]
+  })
 }
 
 resource "aws_s3_bucket_policy" "this" {
   bucket = aws_s3_bucket.this.id
-  policy = data.aws_iam_policy_document.bucket_policy.json
+  policy = local.bucket_policy
+  depends_on = [aws_iam_role.app_role]
 }
