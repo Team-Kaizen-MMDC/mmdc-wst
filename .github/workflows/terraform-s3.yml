@@ -51,10 +51,10 @@ jobs:
             - name: Configure AWS credentials (OIDC role)
               id: oidc_config
               continue-on-error: true
-              if: ${{ inputs.oidc_role_arn != '' }}
+              if: ${{ inputs.oidc_role_arn != '' || secrets.OIDC_ROLE_ARN != '' }}
               uses: aws-actions/configure-aws-credentials@v2
               with:
-                role-to-assume: ${{ inputs.oidc_role_arn }}
+                role-to-assume: ${{ inputs.oidc_role_arn != '' && inputs.oidc_role_arn || secrets.OIDC_ROLE_ARN }}
                 role-session-name: github-actions-terraform
                 aws-region: ${{ env.AWS_REGION }}
 

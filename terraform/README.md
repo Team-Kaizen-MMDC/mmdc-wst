@@ -73,6 +73,23 @@ Key notes:
 - **Inputs:** `action` (plan|apply|destroy), optional `bucket_name`, `use_remote_state` (true/false), `state_bucket`, `state_key`, and `confirm` (must be `yes` to perform apply/destroy).
 - **Required repository secrets:** set `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` in repository settings so the workflow can authenticate to AWS.
 - **OIDC best practice:** instead of using long-lived secrets, you can provision an OIDC provider and a dedicated role for the workflow. Apply the Terraform config `ci_oidc.tf` in this folder to create the OIDC provider and role, then pass the role ARN to the workflow via the `oidc_role_arn` input. The workflow will assume the role using GitHub's OIDC tokens.
+
+Using the role ARN as a repository secret
+
+If you prefer to keep the role ARN in repository settings (so you don't need to paste it when running the workflow), add it as a repository secret and let the workflow read it automatically.
+
+1. Add a repo secret named `OIDC_ROLE_ARN` (Settings → Secrets and variables → Actions → New repository secret) with the value `arn:aws:iam::182371258083:role/mmdc-wst-github-actions-role`.
+
+2. The workflow is configured to use the input `oidc_role_arn` if provided, otherwise it will use the `GITHUB_OIDC_ROLE_ARN` secret automatically. Example run (CLI):
+
+```bash
+gh workflow run terraform-s3.yml --ref fix/s3workflow \
+  -f action=plan
+```
+
+3. If you prefer to supply the role ARN at dispatch time, you can still pass `-f oidc_role_arn=...` to override the secret.
+
+Security note: storing the role ARN in a secret keeps the workflow configuration tidy; the secret only holds the ARN (not credentials) and is safe to store. Ensure the role's trust policy remains restricted to this repository.
 - **Remote state:** if you set `use_remote_state=true` and provide `state_bucket`, the workflow will attempt to create that bucket (with versioning) and use it for Terraform backend. Ensure the credentials used by the workflow have permissions to create/list buckets and put objects in the state bucket.
 - **Plan artifact:** the workflow uploads a `tfplan` artifact after planning; the apply step will use the plan file if present.
 - **Safety:** the workflow requires `confirm: yes` to perform destructive actions (`apply` and `destroy`). For destroy operations the README's "Destroying / Cleanup" guidance still applies (empty buckets before destroy or enable `force_destroy` intentionally).
