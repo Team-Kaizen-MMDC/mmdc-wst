@@ -42,19 +42,18 @@ data "aws_iam_policy_document" "ci_policy_doc" {
   statement {
     effect = "Allow"
     actions = [
-      "s3:CreateBucket",
-      "s3:ListBucket",
-      "s3:GetBucketLocation",
-      "s3:PutBucketPolicy",
-      "s3:PutBucketVersioning",
-      "s3:PutEncryptionConfiguration",
-      "s3:GetObject",
-      "s3:PutObject",
-      "s3:DeleteObject",
-      "s3:ListBucketMultipartUploads",
-      "s3:AbortMultipartUpload"
+      "s3:*"
     ]
     resources = ["arn:aws:s3:::*", "arn:aws:s3:::*/*"]
+  }
+
+  # Some S3 actions like CreateBucket require a resource-level of "*".
+  # Add an explicit allow for CreateBucket on the global resource to avoid
+  # AccessDenied when creating new buckets (remote state bucket creation).
+  statement {
+    effect = "Allow"
+    actions = ["s3:CreateBucket"]
+    resources = ["*"]
   }
 
   statement {
@@ -67,9 +66,29 @@ data "aws_iam_policy_document" "ci_policy_doc" {
       "iam:PutRolePolicy",
       "iam:CreatePolicy",
       "iam:DeletePolicy",
-      "iam:PassRole"
+      "iam:PassRole",
+      # Read/list permissions so Terraform running as this role can inspect
+      # existing IAM providers, policies and roles when reconciling state.
+      "iam:GetPolicy",
+      "iam:ListPolicies",
+      "iam:GetPolicyVersion",
+      "iam:ListPolicyVersions",
+      "iam:CreatePolicyVersion",
+      "iam:SetDefaultPolicyVersion",
+      "iam:DeletePolicyVersion",
+      "iam:GetRole",
+      "iam:ListRoles",
+      "iam:GetRolePolicy",
+      "iam:ListRolePolicies",
+      "iam:ListAttachedRolePolicies",
+      "iam:GetOpenIDConnectProvider",
+      "iam:ListOpenIDConnectProviders"
     ]
-    resources = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/*", "arn:aws:iam::${data.aws_caller_identity.current.account_id}:policy/*"]
+    resources = [
+      "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/*",
+      "arn:aws:iam::${data.aws_caller_identity.current.account_id}:policy/*",
+      "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/*"
+    ]
   }
 }
 
