@@ -1,0 +1,153 @@
+name: Terraform S3 lifecycle
+
+on:
+    workflow_dispatch:
+        inputs:
+            action:
+                description: "Action to perform: plan | apply | destroy"
+                required: true
+                default: "plan"
+                type: choice
+                options:
+                    - plan
+                    - apply
+                    - destroy
+            bucket_name:
+                description: "Optional bucket name to pass to Terraform (overrides generated name)"
+                required: false
+            oidc_role_arn:
+                description: "Optional ARN of an OIDC-assumable IAM role for GitHub Actions (preferred)"
+                required: false
+            use_remote_state:
+                description: "If true, store tfstate in S3. Bucket will be created if missing."
+                required: false
+                default: "false"
+            state_bucket:
+                description: "S3 bucket to use for remote state (required when use_remote_state is true)"
+                required: false
+            state_key:
+                description: "Object key for tfstate (default: terraform/terraform.tfstate)"
+                required: false
+            confirm:
+                description: 'Type "yes" to confirm apply or destroy operations'
+                required: false
+
+jobs:
+    terraform:
+        name: Terraform (plan/apply/destroy)
+        runs-on: ubuntu-latest
+        env:
+            TF_IN_AUTOMATION: true
+            AWS_REGION: ap-southeast-1
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Configure AWS credentials (OIDC role)
+              if: ${{ inputs.oidc_role_arn != '' }}
+              uses: aws-actions/configure-aws-credentials@v2
+              with:
+                  role-to-assume: ${{ inputs.oidc_role_arn }}
+                  role-session-name: github-actions-terraform
+                  aws-region: ${{ env.AWS_REGION }}
+
+            - name: Configure AWS credentials (secrets)
+              if: ${{ inputs.oidc_role_arn == '' }}
+              uses: aws-actions/configure-aws-credentials@v2
+              with:
+                  aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                  aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                  aws-region: ${{ env.AWS_REGION }}
+
+            - name: Setup Terraform
+              uses: hashicorp/setup-terraform@v2
+              with:
+                  terraform_version: "1.5.0"
+
+            - name: Ensure remote state bucket exists (optional)
+              if: ${{ inputs.use_remote_state == 'true' && inputs.state_bucket != '' }}
+              run: |
+                  set -euo pipefail
+                  BUCKET=${{ inputs.state_bucket }}
+                  REGION=${{ env.AWS_REGION }}
+                  # Create the bucket if it doesn't exist
+                  if aws s3api head-bucket --bucket "$BUCKET" 2>/dev/null; then
+                    echo "Remote state bucket $BUCKET already exists"
+                  else
+                    echo "Creating remote state bucket $BUCKET in $REGION"
+                    if [ "$REGION" = "us-east-1" ]; then
+                      aws s3api create-bucket --bucket "$BUCKET"
+                    else
+                      aws s3api create-bucket --bucket "$BUCKET" --create-bucket-configuration LocationConstraint=$REGION
+                    fi
+                    aws s3api put-bucket-versioning --bucket "$BUCKET" --versioning-configuration Status=Enabled
+                    echo "Created and enabled versioning on $BUCKET"
+                  fi
+
+            - name: Terraform init
+              run: |
+                  cd terraform
+                  if [ "${{ inputs.use_remote_state }}" = "true" ] && [ "${{ inputs.state_bucket }}" != "" ]; then
+                    KEY=${{ inputs.state_key || 'terraform/terraform.tfstate' }}
+                    terraform init -backend-config="bucket=${{ inputs.state_bucket }}" -backend-config="key=${KEY}" -backend-config="region=${AWS_REGION}"
+                  else
+                    terraform init
+                  fi
+
+            - name: Terraform plan
+              if: ${{ inputs.action == 'plan' || inputs.action == 'apply' }}
+              run: |
+                  cd terraform
+                  PLAN_ARGS=( -out=tfplan )
+                  if [ "${{ inputs.bucket_name }}" != "" ]; then
+                    terraform plan "${PLAN_ARGS[@]}" -var "bucket_name=${{ inputs.bucket_name }}"
+                  else
+                    terraform plan "${PLAN_ARGS[@]}"
+                  fi
+              continue-on-error: false
+
+            - name: Upload plan artifact
+              if: ${{ inputs.action == 'plan' || inputs.action == 'apply' }}
+              uses: actions/upload-artifact@v4
+              with:
+                  name: tfplan
+                  path: terraform/tfplan
+
+            - name: Terraform apply
+              if: ${{ inputs.action == 'apply' }}
+              run: |
+                  cd terraform
+                  if [ "${{ inputs.confirm }}" != "yes" ]; then
+                    echo "To perform an apply you must set the 'confirm' input to 'yes' in the dispatch form. Aborting."
+                    exit 1
+                  fi
+                  if [ -f tfplan ]; then
+                    terraform apply -auto-approve tfplan
+                  else
+                    if [ "${{ inputs.bucket_name }}" != "" ]; then
+                      terraform apply -auto-approve -var "bucket_name=${{ inputs.bucket_name }}"
+                    else
+                      terraform apply -auto-approve
+                    fi
+                  fi
+
+            - name: Terraform destroy
+              if: ${{ inputs.action == 'destroy' }}
+              run: |
+                  cd terraform
+                  if [ "${{ inputs.confirm }}" != "yes" ]; then
+                    echo "To perform a destroy you must set the 'confirm' input to 'yes' in the dispatch form. Aborting."
+                    exit 1
+                  fi
+                  if [ "${{ inputs.bucket_name }}" != "" ]; then
+                    terraform destroy -auto-approve -var "bucket_name=${{ inputs.bucket_name }}"
+                  else
+                    terraform destroy -auto-approve
+                  fi
+
+            - name: Terraform outputs
+              if: ${{ inputs.action != 'destroy' }}
+              run: |
+                  cd terraform
+                  terraform output || true
