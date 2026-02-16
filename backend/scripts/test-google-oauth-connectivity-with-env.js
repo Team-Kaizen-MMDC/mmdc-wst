@@ -1,40 +1,23 @@
 #!/usr/bin/env node
 /**
- * test-google-oauth-connectivity.js
- * Quick script to verify outbound connectivity to Google's OAuth/OpenID endpoints.
- * - Loads `backend/.env` if present and prints configured GOOGLE_* values (secret is masked)
- * - Fetches OpenID Connect discovery document
- * - Fetches jwks_uri from the discovery document
+ * test-google-oauth-connectivity-with-env.js
+ * Loads `backend/.env` (if present), prints configured GOOGLE_CLIENT_ID (and masked secret),
+ * then fetches Google's OpenID Connect discovery document and JWKS to verify connectivity.
  *
- * Usage: node backend/scripts/test-google-oauth-connectivity.js
+ * Usage: node backend/scripts/test-google-oauth-connectivity-with-env.js
  */
 
 const https = require("https");
 const { URL } = require("url");
 const path = require("path");
 
-// Load backend/.env if present so the script can print configured GOOGLE_* values
+// Load backend/.env if present
 try {
   const dotenvPath = path.resolve(__dirname, "..", ".env");
   require("dotenv").config({ path: dotenvPath });
 } catch (e) {
-  // ignore if dotenv not installed or file missing
+  // ignore
 }
-
-function fetchJson(url, timeoutMs = 8000) {
-  return new Promise((resolve, reject) => {
-#!/usr/bin/env node
-/**
- * test-google-oauth-connectivity.js
- * Quick script to verify outbound connectivity to Google's OAuth/OpenID endpoints.
- * - Fetches OpenID Connect discovery document
- * - Fetches jwks_uri from the discovery document
- *
- * Usage: node backend/scripts/test-google-oauth-connectivity.js
- */
-
-const https = require("https");
-const { URL } = require("url");
 
 function fetchJson(url, timeoutMs = 8000) {
   return new Promise((resolve, reject) => {
@@ -79,9 +62,26 @@ function fetchJson(url, timeoutMs = 8000) {
 }
 
 async function main() {
+  const clientId = process.env.GOOGLE_CLIENT_ID || "<not-set>";
+  const clientSecret = process.env.GOOGLE_CLIENT_SECRET || "<not-set>";
+  const redirectUris = process.env.GOOGLE_REDIRECT_URIS || "<not-set>";
+
+  function maskSecret(s) {
+    if (!s || s === "<not-set>") return s;
+    if (s.length <= 8) return "*****";
+    return s.slice(0, 4) + "..." + s.slice(-4);
+  }
+
+  console.log("Configured GOOGLE_CLIENT_ID:", clientId);
+  console.log("Configured GOOGLE_CLIENT_SECRET:", maskSecret(clientSecret));
+  console.log("Configured GOOGLE_REDIRECT_URIS:", redirectUris);
+
   const discoveryUrl =
     "https://accounts.google.com/.well-known/openid-configuration";
-  console.log("Fetching OpenID Connect discovery document from", discoveryUrl);
+  console.log(
+    "\nFetching OpenID Connect discovery document from",
+    discoveryUrl,
+  );
 
   try {
     const discovery = await fetchJson(discoveryUrl);
@@ -107,7 +107,6 @@ async function main() {
     console.log("JWKS status:", jwks.statusCode);
     if (jwks.body.keys && Array.isArray(jwks.body.keys)) {
       console.log("Number of keys in JWKS:", jwks.body.keys.length);
-      // Print the kid values (truncated) to help manual verification
       const kids = jwks.body.keys.map((k) => k.kid || "<no-kid>");
       console.log("Key IDs:", kids.join(", "));
       process.exitCode = 0;
