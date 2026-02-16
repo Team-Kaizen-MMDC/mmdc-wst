@@ -349,6 +349,52 @@ curl http://localhost:5000/api/v1/auth/me \
   -H "Authorization: Bearer TOKEN"
 ```
 
+## Google OAuth (developer helpers & testing)
+
+This project includes small developer helpers to make it easy to obtain Google OAuth tokens (id_token) for local testing and to exercise the server-side ID token verification flow.
+
+Important environment variables (add to `backend/.env`):
+
+- `GOOGLE_CLIENT_ID` — your Google OAuth Client ID
+- `GOOGLE_CLIENT_SECRET` — your Google OAuth Client Secret
+- `GOOGLE_REDIRECT_URI` — redirect uri used when generating consent URL (defaults to `http://localhost:3000/api/v1/auth/google/callback`)
+
+Available developer helpers
+
+- CLI helper: `backend/scripts/exchange-code-for-token.js`
+  - Usage:
+    - Print consent URL: `node backend/scripts/exchange-code-for-token.js` (or `npm run oauth:consent` from `backend` if scripts are installed)
+    - Exchange a code for tokens: `node backend/scripts/exchange-code-for-token.js --code YOUR_CODE`
+  - The script prints a JSON blob that includes `id_token` you can pass to the backend.
+
+- Dev-only routes (mounted under `/api/v1/auth`):
+  - `POST /api/v1/auth/google` — server endpoint that accepts a Google `id_token` (in JSON body `{ idToken: "..." }`), verifies it server-side, and returns the application's JWT on success. This is the production-facing contract used by the frontend to sign-in with Google tokens.
+  - `GET /api/v1/auth/google/start` — developer helper that redirects your browser to Google's OAuth consent screen to obtain an authorization code.
+  - `GET /api/v1/auth/google/callback` — developer helper that exchanges the authorization code for tokens and returns them as JSON. Useful when testing locally without a frontend.
+
+Safety and deployment notes
+
+- The `start` and `callback` helper routes and the CLI script are intended for local development only. They should be disabled or guarded before deploying to production. Recommended patterns:
+  - Only register the helper routes when `NODE_ENV !== 'production'` or when a `DEV_HELPERS=true` environment flag is set.
+  - Do not expose `GOOGLE_CLIENT_SECRET` or returned tokens in public logs or error messages.
+
+Testing the flow locally
+
+1. Add Google credentials to `backend/.env` and set `GOOGLE_REDIRECT_URI` if you changed the default.
+2. From the repo root:
+
+```bash
+cd backend
+npm install
+npm run oauth:consent   # prints consent URL or use the script directly
+```
+
+3. Open the consent URL in a browser, approve the test account, then either copy the returned code and run the CLI to exchange it, or use the `/api/v1/auth/google/callback` helper which will return tokens directly.
+
+4. Call `POST /api/v1/auth/google` with `{ "idToken": "<ID_TOKEN>" }` to sign in via Google and receive the app JWT.
+
+See the tests (unit + integration) for example usage: `src/utils/__tests__/googleAuth.test.js` and `tests/integration/auth.google.test.js`.
+
 ---
 
 ## Deployment

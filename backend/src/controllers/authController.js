@@ -273,3 +273,59 @@ exports.googleAuth = asyncHandler(async (req, res, next) => {
     }),
   );
 });
+
+/**
+ * @desc    Start Google OAuth consent flow (redirect URL)
+ * @route   GET /auth/google/start
+ * @access  Public
+ */
+exports.googleStart = asyncHandler(async (req, res, next) => {
+  const { OAuth2Client } = require("google-auth-library");
+  const client = new OAuth2Client(
+    process.env.GOOGLE_CLIENT_ID,
+    process.env.GOOGLE_CLIENT_SECRET,
+    process.env.GOOGLE_REDIRECT_URI ||
+      "http://localhost:3000/api/v1/auth/google/callback",
+  );
+
+  const url = client.generateAuthUrl({
+    access_type: "offline",
+    scope: ["openid", "email", "profile"],
+    prompt: "consent",
+  });
+
+  // Redirect the user to Google's consent screen
+  res.redirect(url);
+});
+
+/**
+ * @desc    OAuth callback: exchange code for tokens and return id_token
+ * @route   GET /auth/google/callback
+ * @access  Public
+ */
+exports.googleCallback = asyncHandler(async (req, res, next) => {
+  const code = req.query.code;
+  if (!code) {
+    return next(new ApiError(400, "Missing code parameter"));
+  }
+
+  const { OAuth2Client } = require("google-auth-library");
+  const client = new OAuth2Client(
+    process.env.GOOGLE_CLIENT_ID,
+    process.env.GOOGLE_CLIENT_SECRET,
+    process.env.GOOGLE_REDIRECT_URI ||
+      "http://localhost:3000/api/v1/auth/google/callback",
+  );
+
+  try {
+    const r = await client.getToken(code);
+    const tokens = r.tokens || r; // google-auth-library returns { tokens }
+
+    // For convenience, respond with the id_token so the developer can copy it
+    // to test the backend `/api/v1/auth/google` endpoint or paste into the
+    // verify helper. In production you would verify and create a session here.
+    res.status(200).json({ success: true, tokens });
+  } catch (err) {
+    return next(new ApiError(500, "Failed to exchange code for tokens"));
+  }
+});

@@ -11,6 +11,30 @@ const { protect } = require("../middleware/auth");
 
 const router = express.Router();
 
+// Development / local testing helpers for Google OAuth
+// These routes are intended for local development only. They must be
+// guarded so they are not reachable in production environments.
+// See backend/README.md for details.
+const _enableDevOAuthHelpers =
+  (process.env.NODE_ENV || "development") !== "production" ||
+  String(process.env.DEV_HELPERS).toLowerCase() === "true";
+
+if (_enableDevOAuthHelpers) {
+  router.get("/google/start", (req, res, next) => {
+    // Delegate to controller that constructs the consent URL
+    const { googleStart } = require("../controllers/authController");
+    return googleStart(req, res, next);
+  });
+
+  router.get("/google/callback", (req, res, next) => {
+    const { googleCallback } = require("../controllers/authController");
+    return googleCallback(req, res, next);
+  });
+} else {
+  // No-op in production: keep the route definitions out of the router to
+  // avoid exposing developer tooling. This is intentionally silent.
+}
+
 /**
  * @swagger
  * /api/v1/auth/register:
