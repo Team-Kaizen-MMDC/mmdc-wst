@@ -31,12 +31,14 @@ async function createApp() {
       "https://cdn.jsdelivr.net",
       "https://unpkg.com",
       "https://cdnjs.cloudflare.com",
+      "https://accounts.google.com", // Google Sign-In library
     ],
     styleSrc: [
       "'self'",
       "https://fonts.googleapis.com",
       "https://cdn.jsdelivr.net",
       "'unsafe-inline'",
+      "https://accounts.google.com", // Google Sign-In styles
     ],
     fontSrc: [
       "'self'",
@@ -44,8 +46,14 @@ async function createApp() {
       "https://cdn.jsdelivr.net",
     ],
     imgSrc: ["'self'", "data:", "https:"],
-    connectSrc: ["'self'"],
+    connectSrc: [
+      "'self'",
+      "https://accounts.google.com", // Google OAuth API calls
+      "https://cdn.jsdelivr.net", // CDN resources
+      "https://*.gstatic.com", // Google static resources
+    ],
     frameAncestors: ["'self'"],
+    frameSrc: ["https://accounts.google.com"], // Google OAuth popup
     objectSrc: ["'none'"],
     formAction: ["'self'"],
     workerSrc: ["'self'", "blob:"],

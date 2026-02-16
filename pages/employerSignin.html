@@ -88,6 +88,38 @@
                         </button>
                     </div>
                 </form>
+
+                <!-- Divider -->
+                <div class="relative my-6">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-gray-300"></div>
+                    </div>
+                    <div class="relative flex justify-center text-sm">
+                        <span class="px-2 bg-white text-gray-500">Or continue with</span>
+                    </div>
+                </div>
+
+                <!-- Google Sign-In Button Container -->
+                <div class="w-full mb-6">
+                    <div id="g_id_onload"
+                         data-client_id="376360171005-rehu48ffj43e6ncv27epo6h8hhblajib.apps.googleusercontent.com"
+                         data-context="signin"
+                         data-ux_mode="popup"
+                         data-callback="handleGoogleSignIn"
+                         data-auto_prompt="false">
+                    </div>
+                    
+                    <div class="g_id_signin"
+                         data-type="standard"
+                         data-shape="rectangular"
+                         data-theme="outline"
+                         data-text="signin_with"
+                         data-size="large"
+                         data-logo_alignment="left"
+                         style="width: 100%;">
+                    </div>
+                </div>
+
                 <p class="mt-4 text-center text-sm text-gray-600">
                     Don't have an account? 
                     <a href="employerCreateAccount.html" class="font-medium text-red-600 hover:text-red-500">Sign up here</a>
@@ -152,6 +184,12 @@
                     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
                     crossorigin="anonymous"
                 ></script>
+
+                <!-- Google Sign-In Library -->
+                <script src="https://accounts.google.com/gsi/client" async defer></script>
+                
+                <!-- Google Auth Handler -->
+                <script src="../assets/js/googleAuth.js"></script>
 
                 <script type="module">
                     import { initializeLoginValidation } from '../assets/js/modules/forms.js';

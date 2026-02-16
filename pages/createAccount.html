@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -212,6 +212,41 @@
                 </button>
               </div>
             </form>
+
+            <!-- Divider -->
+            <div class="relative my-6">
+              <div class="absolute inset-0 flex items-center">
+                <div class="w-full border-t border-gray-300"></div>
+              </div>
+              <div class="relative flex justify-center text-sm">
+                <span class="px-2 bg-white text-gray-500"
+                  >Or continue with</span
+                >
+              </div>
+            </div>
+
+            <!-- Google Sign-Up Button Container -->
+            <div class="w-full mb-6">
+              <div
+                id="g_id_onload"
+                data-client_id="376360171005-rehu48ffj43e6ncv27epo6h8hhblajib.apps.googleusercontent.com"
+                data-context="signup"
+                data-ux_mode="popup"
+                data-callback="handleGoogleSignUp"
+                data-auto_prompt="false"
+              ></div>
+
+              <div
+                class="g_id_signin"
+                data-type="standard"
+                data-shape="rectangular"
+                data-theme="outline"
+                data-text="signup_with"
+                data-size="large"
+                data-logo_alignment="left"
+                style="width: 100%"
+              ></div>
+            </div>
           </div>
         </div>
       </div>
@@ -276,6 +311,12 @@
       crossorigin="anonymous"
     ></script>
 
+    <!-- Google Sign-In Library -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+    <!-- Google Auth Handler -->
+    <script src="../assets/js/googleAuth.js"></script>
+
     <!-- Direct JS module import and initialization -->
     <script type="module">
       import { initializeSignupValidation } from "../assets/js/modules/forms.js";
@@ -285,7 +326,7 @@
         initializeSignupValidation();
         window.getCookie = getCookie;
         console.log(
-          "getCookie is temporarily available in the console for testing."
+          "getCookie is temporarily available in the console for testing.",
         );
       });
     </script>
