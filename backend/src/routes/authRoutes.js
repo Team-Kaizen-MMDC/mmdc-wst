@@ -5,6 +5,7 @@ const {
   getMe,
   logout,
   forgotPassword,
+  googleAuth,
 } = require("../controllers/authController");
 const { protect } = require("../middleware/auth");
 
@@ -136,6 +137,32 @@ router.post("/login", login);
  *         description: Password reset email sent
  */
 router.post("/forgot-password", forgotPassword);
+
+/**
+ * @swagger
+ * /api/v1/auth/google:
+ *   post:
+ *     summary: Authenticate or register using Google ID token
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - googleToken
+ *             properties:
+ *               googleToken:
+ *                 type: string
+ *               role:
+ *                 type: string
+ *                 enum: [jobseeker, employer]
+ *     responses:
+ *       200:
+ *         description: Authentication successful
+ */
+router.post("/google", googleAuth);
 
 /**
  * @swagger

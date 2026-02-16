@@ -14,9 +14,31 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: [true, "Password is required"],
+      // Password is not strictly required at the schema level because
+      // OAuth users will not have a password. Registration endpoint
+      // enforces password presence for local signups.
       minlength: [8, "Password must be at least 8 characters"],
       select: false, // Don't return password by default
+    },
+    // Authentication provider: 'local' (email/password) or 'google'
+    authProvider: {
+      type: String,
+      enum: ["local", "google"],
+      default: "local",
+    },
+    // Google-specific fields
+    googleId: {
+      type: String,
+      index: true,
+    },
+    googleProfile: {
+      id: String,
+      email: String,
+      name: String,
+      given_name: String,
+      family_name: String,
+      picture: String,
+      locale: String,
     },
     role: {
       type: String,
@@ -60,16 +82,18 @@ const userSchema = new mongoose.Schema(
 // Indexes (email index is auto-created by unique: true)
 userSchema.index({ role: 1 });
 userSchema.index({ isActive: 1 });
+userSchema.index({ googleId: 1 });
+userSchema.index({ authProvider: 1 });
 
 // Virtual for checking if account is locked
 userSchema.virtual("isLocked").get(function () {
   return !!(this.lockUntil && this.lockUntil > Date.now());
 });
 
-// Hash password before saving
-// Hash password before saving - Mongoose 8.x async/await style (no next callback)
+// Hash password before saving — only when password is present and modified
 userSchema.pre("save", async function () {
   if (!this.isModified("password")) return;
+  if (!this.password) return; // nothing to hash for OAuth users
 
   const salt = await bcrypt.genSalt(12);
   this.password = await bcrypt.hash(this.password, salt);
@@ -77,6 +101,8 @@ userSchema.pre("save", async function () {
 
 // Method to check password
 userSchema.methods.comparePassword = async function (candidatePassword) {
+  // If user doesn't have a password (OAuth user), always return false
+  if (!this.password) return false;
   return await bcrypt.compare(candidatePassword, this.password);
 };
 

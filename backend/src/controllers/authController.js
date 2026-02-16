@@ -3,6 +3,7 @@ const ApiError = require("../utils/ApiError");
 const ApiResponse = require("../utils/ApiResponse");
 const User = require("../models/User");
 const logger = require("../utils/logger");
+const { verifyGoogleToken } = require("../utils/googleAuth");
 
 /**
  * @desc    Register new user
@@ -90,6 +91,17 @@ exports.login = asyncHandler(async (req, res, next) => {
     return next(new ApiError(401, "Account has been deactivated"));
   }
 
+  // If this account is an OAuth (Google) account with no password,
+  // instruct the client to sign in via Google instead of password.
+  if (user.authProvider === "google" && !user.password) {
+    return next(
+      new ApiError(
+        401,
+        "This account is linked to Google. Please sign in using Google Sign-In.",
+      ),
+    );
+  }
+
   // Verify password
   const isPasswordMatch = await user.comparePassword(password);
 
@@ -97,6 +109,17 @@ exports.login = asyncHandler(async (req, res, next) => {
     // Increment login attempts
     await user.incLoginAttempts();
     return next(new ApiError(401, "Invalid credentials"));
+  }
+
+  // If this account is an OAuth (Google) account with no password,
+  // instruct the client to sign in via Google instead of password.
+  if (user.authProvider === "google" && !user.password) {
+    return next(
+      new ApiError(
+        401,
+        "This account is linked to Google. Please sign in using Google Sign-In.",
+      ),
+    );
   }
 
   // Reset login attempts on successful login
@@ -166,4 +189,87 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
     .json(
       new ApiResponse(501, "Password reset functionality coming soon", null),
     );
+});
+
+/**
+ * @desc    Authenticate with Google OAuth (ID token)
+ * @route   POST /api/v1/auth/google
+ * @access  Public
+ */
+exports.googleAuth = asyncHandler(async (req, res, next) => {
+  const { googleToken, role } = req.body;
+
+  if (!googleToken) {
+    return next(new ApiError(400, "googleToken is required"));
+  }
+
+  // Verify token with Google
+  let payload;
+  try {
+    payload = await verifyGoogleToken(googleToken);
+  } catch (err) {
+    // Log underlying verification error for easier debugging in dev
+    logger &&
+      logger.error &&
+      logger.error("Google token verification error:", err.message || err);
+    return next(new ApiError(401, "Invalid Google token"));
+  }
+
+  const email = payload.email;
+  const googleId = payload.sub;
+  const profile = {
+    id: payload.sub,
+    email: payload.email,
+    name: payload.name,
+    given_name: payload.given_name,
+    family_name: payload.family_name,
+    picture: payload.picture,
+    locale: payload.locale,
+  };
+
+  // Find existing user by googleId or email
+  let user = await User.findOne({ $or: [{ googleId }, { email }] });
+
+  if (user) {
+    // If user exists but is a local account, ask to link or sign in with password
+    if (user.authProvider === "local" && !user.googleId) {
+      return next(
+        new ApiError(
+          400,
+          "An account with this email already exists. Please sign in with your password and link Google from account settings.",
+        ),
+      );
+    }
+
+    // Update google fields if needed
+    user.googleId = googleId;
+    user.googleProfile = profile;
+    user.authProvider = "google";
+    await user.save();
+  } else {
+    // Create a new user for Google-authenticated user
+    user = await User.create({
+      email,
+      role: role || "jobseeker",
+      authProvider: "google",
+      googleId,
+      googleProfile: profile,
+    });
+  }
+
+  // Generate JWT for the user
+  const token = user.getSignedJwtToken();
+
+  logger.info(`User authenticated via Google: ${email}`);
+
+  res.status(200).json(
+    new ApiResponse(200, "Authentication successful", {
+      token,
+      user: {
+        id: user._id,
+        email: user.email,
+        role: user.role,
+      },
+    }),
+  );
 });
