@@ -88,7 +88,7 @@
     "wrappy": "^1.0.2"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --runInBand",
     "start": "node server.js",
     "dev": "nodemon server.js",
     "seed": "node seedDatabase.js",
@@ -105,6 +105,7 @@
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
+    "jest": "^30.2.0",
     "nodemon": "^3.1.11"
   }
 }

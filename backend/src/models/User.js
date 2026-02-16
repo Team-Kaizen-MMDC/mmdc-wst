@@ -29,7 +29,6 @@ const userSchema = new mongoose.Schema(
     // Google-specific fields
     googleId: {
       type: String,
-      index: true,
     },
     googleProfile: {
       id: String,
