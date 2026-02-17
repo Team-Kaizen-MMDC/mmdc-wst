@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="referrer" content="origin" />
+    <title>Google Sign-In (GSI) Test</title>
+    <style>
+      body {
+        font-family: Inter, system-ui, Arial, sans-serif;
+        padding: 24px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Google Identity Services — Test</h1>
+    <p>
+      This page loads the GSI button for origin validation. Replace the
+      <em>data-client_id</em> value with a different client ID if you create a
+      new one.
+    </p>
+
+    <div
+      id="g_id_onload"
+      data-client_id="376360171005-rehu48ffj43e6ncv27epo6h8hhblajib.apps.googleusercontent.com"
+      data-callback="onGoogleSignIn"
+      data-auto_prompt="false"
+    ></div>
+
+    <div class="g_id_signin"></div>
+
+    <script>
+      function onGoogleSignIn(response) {
+        console.log("GSI callback response:", response);
+        var out = document.createElement("pre");
+        out.textContent = JSON.stringify(response, null, 2);
+        document.body.appendChild(out);
+      }
+    </script>
+
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+  </body>
+</html>
