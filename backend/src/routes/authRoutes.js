@@ -5,10 +5,17 @@ const {
   getMe,
   logout,
   forgotPassword,
+  googleLogin, // new google login controller
 } = require("../controllers/authController");
+
+
+
 const { protect } = require("../middleware/auth");
 
+
 const router = express.Router();
+
+
 
 /**
  * @swagger
@@ -178,5 +185,34 @@ router.get("/me", protect, getMe);
  *         description: Logged out successfully
  */
 router.post("/logout", protect, logout);
+
+
+
+/**
+ * @swagger
+ * /api/v1/auth/google:
+ *   post:
+ *     summary: Login/Register using Google ID token
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - credential
+ *             properties:
+ *               credential:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Google login successful
+ *       401:
+ *         description: Invalid Google token
+ */
+router.post("/google", googleLogin); // new route for Google login
+
+
 
 module.exports = router;

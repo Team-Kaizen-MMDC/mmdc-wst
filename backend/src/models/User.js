@@ -12,10 +12,42 @@ const userSchema = new mongoose.Schema(
       trim: true,
       match: [/^\S+@\S+\.\S+$/, "Please provide a valid email"],
     },
+
+    /**
+     * authProvider tells us how the user authneticates:
+     * - "local" : normal email/password login
+     * - "google" : Google Sign-in login (no password needed)
+     * 
+     * This makes it easy to support multiple auth methods safely
+     */
+
+    authProvider: {
+      type: String,
+      enum: ["local", "google"],
+      default: "local",
+      index: true,
+    },
+
+    /**
+     * googleId stores the unique Google user ID (payload.sub)
+     * We keep it optional because local users won't have it.
+     */
+
+    googleId: {
+      type: String,
+      unique: true,
+      sparse: true, // Allows multiple docs to have null without unique/index issues
+    },
+
+    /**
+     * Password is only required for local auth users. For Google auth users, it can be null and won't be used.
+     */
     password: {
       type: String,
-      required: [true, "Password is required"],
-      minlength: [8, "Password must be at least 8 characters"],
+      required: function () {
+        return this.authProvider === "local";
+      },
+      minlength: [8, "Password must be at least 8 characters long"],
       select: false, // Don't return password by default
     },
     role: {
@@ -35,10 +67,16 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+
+    /**
+     * For Google sign in, email is already verified by Google
+     * so we can safely set this to tru when creating/logging-in Google users
+     */
     isEmailVerified: {
       type: Boolean,
       default: false,
     },
+
     emailVerificationToken: String,
     emailVerificationExpire: Date,
     resetPasswordToken: String,
@@ -76,7 +114,9 @@ userSchema.pre("save", async function () {
 });
 
 // Method to check password
+// For Google accounts (no password stored), return false
 userSchema.methods.comparePassword = async function (candidatePassword) {
+  if (!this.password) return false;
   return await bcrypt.compare(candidatePassword, this.password);
 };
 

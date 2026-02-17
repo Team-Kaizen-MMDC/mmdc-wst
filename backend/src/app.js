@@ -31,6 +31,8 @@ async function createApp() {
       "https://cdn.jsdelivr.net",
       "https://unpkg.com",
       "https://cdnjs.cloudflare.com",
+      // Google Identity Services script
+      "https://accounts.google.com/gsi/client",
     ],
     styleSrc: [
       "'self'",
@@ -45,7 +47,9 @@ async function createApp() {
     ],
     imgSrc: ["'self'", "data:", "https:"],
     connectSrc: ["'self'"],
-    frameAncestors: ["'self'"],
+
+    // allow Google iframe used by Sign-in
+    frameAncestors: ["'self'", "https://accounts.google.com"],
     objectSrc: ["'none'"],
     formAction: ["'self'"],
     workerSrc: ["'self'", "blob:"],
