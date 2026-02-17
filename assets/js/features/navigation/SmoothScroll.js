@@ -19,7 +19,7 @@ export class SmoothScroll {
       link.addEventListener("click", (e) => this.handleClick(e));
     });
 
-    console.log("✅ SmoothScroll initialized");
+
   }
 
   handleClick(e) {

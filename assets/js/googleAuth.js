@@ -13,7 +13,7 @@ const API_BASE_URL =
  * @param {Object} response - Google Sign-In response object containing credential
  */
 async function handleGoogleSignIn(response) {
-  console.log("Google Sign-In initiated");
+
 
   try {
     // The response.credential contains the JWT ID token
@@ -49,7 +49,7 @@ async function handleGoogleSignIn(response) {
     localStorage.setItem("token", data.data.token);
     localStorage.setItem("user", JSON.stringify(data.data.user));
 
-    console.log("Google Sign-In successful:", data.data.user);
+
 
     // Redirect based on user role
     redirectToDashboard(data.data.user.role);
@@ -65,7 +65,7 @@ async function handleGoogleSignIn(response) {
  * @param {Object} response - Google Sign-In response object containing credential
  */
 async function handleGoogleSignUp(response) {
-  console.log("Google Sign-Up initiated");
+
 
   try {
     const googleToken = response.credential;
@@ -103,7 +103,7 @@ async function handleGoogleSignUp(response) {
     localStorage.setItem("token", data.data.token);
     localStorage.setItem("user", JSON.stringify(data.data.user));
 
-    console.log("Google Sign-Up successful:", data.data.user);
+
 
     // Redirect to dashboard
     redirectToDashboard(role);
@@ -273,20 +273,16 @@ function showError(message) {
  * Call this on page load to set up the Google button
  */
 function initializeGoogleSignIn() {
-  console.log("Initializing Google Sign-In");
-
   // Wait for Google library to load
   const checkGoogleLoaded = setInterval(() => {
     if (window.google && window.google.accounts) {
       clearInterval(checkGoogleLoaded);
-      console.log("Google Sign-In library loaded successfully");
 
       // Manually render buttons if they haven't auto-rendered
       setTimeout(() => {
         const buttons = document.querySelectorAll(".g_id_signin");
         buttons.forEach((button, index) => {
           if (!button.children.length) {
-            console.log(`Manually rendering Google button ${index + 1}`);
             try {
               google.accounts.id.renderButton(button, {
                 type: "standard",

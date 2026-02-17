@@ -164,6 +164,10 @@ usability-summary.md
 # Accessibility generated results
 tests/accessibility/results/
 
+# Gemini-related files
+.gemini/
+.geminiignore
+
 # Terraform
 terraform/.terraform/
 .terraform/

@@ -20,12 +20,16 @@
   "homepage": "https://github.com/Team-Kaizen-MMDC/mmdc-wst#readme",
   "devDependencies": {
     "@playwright/test": "^1.40.0",
+    "autoprefixer": "^10.4.24",
     "glob": "^10.4.5",
     "jsdom": "^22.1.0",
-    "playwright": "^1.40.0"
+    "playwright": "^1.40.0",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.1"
   },
   "dependencies": {
     "argparse": "^2.0.1",
+    "bcryptjs": "^2.4.3",
     "braces": "^3.0.3",
     "character-entities": "^2.0.2",
     "character-entities-legacy": "^3.0.0",
@@ -98,8 +102,7 @@
     "slash": "^5.1.0",
     "to-regex-range": "^5.0.1",
     "uc.micro": "^2.1.0",
-    "unicorn-magic": "^0.3.0",
-    "bcryptjs": "^2.4.3"
+    "unicorn-magic": "^0.3.0"
   },
   "scripts": {
     "playwright:install": "npx playwright install",
@@ -127,6 +130,8 @@
     "test:accessibility": "node tests/accessibility/runAxe.js",
     "test:keyboard": "npx playwright test keyboard-navigation.spec.js",
     "test:usability": "npm run test:accessibility && npm run test:keyboard",
-    "usability:summary": "node .github/workflows/scripts/format-usability-summary.js"
+    "usability:summary": "node .github/workflows/scripts/format-usability-summary.js",
+    "build:tailwind": "tailwindcss -i ./assets/css/tailwind_input.css -o ./assets/css/dist.css --minify",
+    "watch:tailwind": "tailwindcss -i ./assets/css/tailwind_input.css -o ./assets/css/dist.css --watch"
   }
 }

@@ -13,21 +13,21 @@ import { getUserProfile, getFirstName } from "./userProfile.js";
  * - Updates both desktop and mobile navigation
  */
 export function updateHeaderAuthState() {
-  console.log("🔍 Checking user authentication status...");
+
   const isLoggedIn = getCookie("isLoggedIn") === "true";
-  console.log("IsLoggedIn cookie:", isLoggedIn);
+
 
   if (!isLoggedIn) {
-    console.log("User not logged in - showing default header");
+  
     return;
   }
 
   const profile = getUserProfile();
-  console.log("User profile:", profile);
+
   const userName =
     getFirstName() || profile.email?.split("@")[0] || "Juan Dela Cruz";
 
-  console.log("✅ Updating header for logged-in user:", userName);
+
 
   // Update Desktop Navigation
   updateDesktopNav(userName);
@@ -49,7 +49,7 @@ function updateDesktopNav(userName) {
 
   // Check if already updated (user section exists)
   if (desktopActions.querySelector(".user-auth-section")) {
-    console.log("Desktop header already showing user greeting");
+
     return;
   }
 
@@ -75,9 +75,9 @@ function updateDesktopNav(userName) {
     // Remove the login button
     loginBtn.remove();
 
-    console.log("✅ Desktop header updated with user greeting");
+
   } else {
-    console.log("Desktop header: Signup/Login buttons already replaced");
+
   }
 }
 
@@ -94,7 +94,7 @@ function updateMobileNav(userName) {
 
   // Check if already updated (user section exists)
   if (mobileActions.querySelector(".user-auth-section")) {
-    console.log("Mobile header already showing user greeting");
+
     return;
   }
 
@@ -123,9 +123,9 @@ function updateMobileNav(userName) {
     // Remove login button
     loginBtn.remove();
 
-    console.log("✅ Mobile header updated with user greeting");
+
   } else {
-    console.log("Mobile header: Signup/Login buttons already replaced");
+
   }
 }
 
@@ -158,19 +158,19 @@ function getProfileDashboardPath() {
  * Initialize header auth state on page load
  */
 export function initHeaderAuth() {
-  console.log("🚀 HeaderAuth module initializing...");
-  console.log("Document ready state:", document.readyState);
+
+
 
   // Check if DOM is already loaded
   if (document.readyState === "loading") {
-    console.log("DOM still loading, waiting for DOMContentLoaded...");
+
     // DOM is still loading, wait for DOMContentLoaded
     window.addEventListener("DOMContentLoaded", () => {
-      console.log("DOMContentLoaded fired, updating header...");
+
       updateHeaderAuthState();
     });
   } else {
-    console.log("DOM already loaded, updating header immediately...");
+
     // DOM is already loaded, update immediately
     updateHeaderAuthState();
   }

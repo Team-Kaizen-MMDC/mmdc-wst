@@ -11,7 +11,7 @@ export class MobileNav {
     this.toggler = document.querySelector(".navbar-toggler");
 
     if (!this.navbar || !this.toggler) {
-      console.warn("MobileNav: Navigation elements not found");
+
       return;
     }
 
@@ -25,7 +25,7 @@ export class MobileNav {
     // Close menu on link click (better UX on mobile)
     this.addLinkClickHandlers();
 
-    console.log("✅ MobileNav initialized");
+
   }
 
   addEventListeners() {

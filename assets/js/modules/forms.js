@@ -209,13 +209,11 @@ export const initializeSignupValidation = () => {
     event.preventDefault();
     event.stopPropagation();
 
-    console.log("Submission detected. Preventing default form action.");
+
 
     // Run FULL form validation on submit
     if (checkFormValidity(inputElements)) {
-      console.log(
-        "Sign-up validation successful. Saving cookies and redirecting...",
-      );
+
 
       // --- COOKIE SAVING ---
       setCookie("email", inputElements.email.value);
@@ -228,14 +226,10 @@ export const initializeSignupValidation = () => {
       saveUserProfile({ email: inputElements.email.value });
       setNewUserFlag(true);
 
-      console.log(
-        "Cookies saved successfully. Logged-in status set. User profile initialized.",
-      );
+
       window.location.href = "addEdit/profile.html";
     } else {
-      console.log(
-        "Sign-up validation failed. Errors displayed. Staying on page.",
-      );
+
     }
   };
 
@@ -264,10 +258,6 @@ export const initializeSignupValidation = () => {
     validatePrivacyPolicy(inputElements),
   );
 
-  console.log(
-    "Sign-up Module: Per-field validation listeners successfully attached.",
-  );
-
   // --- Password Visibility Toggle Setup ---
   setupPasswordToggle("password", "togglePassword", "eye-icon-password");
   setupPasswordToggle(
@@ -276,9 +266,7 @@ export const initializeSignupValidation = () => {
     "eye-icon-passwordConfirm",
   );
 
-  console.log(
-    "Sign-up Module: Per-field validation listeners successfully attached.",
-  );
+
 };
 
 // ===================================================================
@@ -286,7 +274,7 @@ export const initializeSignupValidation = () => {
 // ===================================================================
 
 export const initializeLoginValidation = () => {
-  console.log("Login Module: initializeLoginValidation is running.");
+
   const form = document.getElementById("loginForm");
 
   if (!form) {
@@ -304,7 +292,7 @@ export const initializeLoginValidation = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     event.stopPropagation();
-    console.log("Login Module: Handling submit event. Default prevented.");
+
 
     let formValid = true;
 
@@ -321,7 +309,7 @@ export const initializeLoginValidation = () => {
     if (!isPasswordValid) formValid = false;
 
     if (formValid) {
-      console.log("Login validation successful. Sending credentials to API...");
+
 
       const submitBtn = form.querySelector('button[type="submit"]');
       if (submitBtn) submitBtn.disabled = true;
@@ -387,22 +375,17 @@ export const initializeLoginValidation = () => {
           if (submitBtn) submitBtn.disabled = false;
         });
     } else {
-      console.log("Login validation failed. Errors displayed.");
+  
     }
   };
 
   // Main event listener to the form submission
   form.addEventListener("submit", handleSubmit, false);
-  console.log(
-    "Login Module: Validation listener successfully attached to loginForm.",
-  );
 
   // PASSWORD TOGGLE FUNCTION
   setupPasswordToggle("password", "togglePassword", "eye-icon-password");
 
-  console.log(
-    "Login Module: Validation listener successfully attached to loginForm.",
-  );
+
 };
 
 // ===================================================================
