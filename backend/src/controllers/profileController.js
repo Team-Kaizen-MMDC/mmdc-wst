@@ -9,7 +9,7 @@ const ApiResponse = require("../utils/ApiResponse");
 exports.getProfile = asyncHandler(async (req, res, next) => {
   const profile = await UserProfile.findOne({ user: req.user.id }).populate(
     "user",
-    "email role",
+    "email role googleProfile",
   );
 
   if (!profile) {

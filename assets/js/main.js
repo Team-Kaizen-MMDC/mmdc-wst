@@ -18,7 +18,6 @@ import { initHeaderAuth } from "./modules/headerAuth.js";
     link.href =
       "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css";
     document.head.appendChild(link);
-    console.log("✅ Bootstrap Icons loaded dynamically");
   }
 })();
 
@@ -40,8 +39,6 @@ class App {
   }
 
   initFeatures() {
-    console.log("🚀 Japan SSW Phase 2 - Initializing...");
-
     // Initialize header authentication state
     initHeaderAuth();
 
@@ -63,7 +60,7 @@ class App {
     const offcanvasEl = document.getElementById("siteOffcanvas");
     if (offcanvasEl) {
       const toggler = document.querySelector(
-        '[data-bs-toggle="offcanvas"][data-bs-target="#siteOffcanvas"]'
+        '[data-bs-toggle="offcanvas"][data-bs-target="#siteOffcanvas"]',
       );
       offcanvasEl.addEventListener("hidden.bs.offcanvas", () => {
         if (toggler) toggler.focus();
@@ -119,19 +116,11 @@ class App {
         // We'll create a unique token on the anchor so subsequent clicks
         // or re-entrancy won't trigger the same navigation twice.
         if (anchor._deferredNavFired) {
-          console.debug(
-            "Offcanvas: deferred nav already fired for this anchor",
-            href
-          );
           return;
         }
         anchor._deferredNavFired = true;
 
         const doNavigate = () => {
-          console.debug(
-            "Offcanvas: performing deferred navigation to",
-            targetUrl.href
-          );
           // If navigation is a hash-only change on the same page, use pushState
           if (
             targetUrl.hash &&
@@ -169,7 +158,7 @@ class App {
         } catch (err) {
           console.warn(
             "Offcanvas: error while trying to hide offcanvas, triggering navigation fallback",
-            err
+            err,
           );
           // Fallback: remove show and dispatch hidden event synchronously
           offcanvasEl.classList.remove("show");
@@ -180,21 +169,18 @@ class App {
     }
 
     // Log successful initialization
-    console.log("✅ All features initialized successfully");
   }
 
   //Nav Tab color link Active
   initDashboardTabs() {
     const tabButtons = document.querySelectorAll(
-      '#dashboardTabs button[data-bs-toggle="tab"]'
+      '#dashboardTabs button[data-bs-toggle="tab"]',
     );
 
     if (tabButtons.length === 0) {
       // Not on a dashboard page, skip
       return;
     }
-
-    console.log("✅ Dashboard tabs found:", tabButtons.length);
 
     tabButtons.forEach((button) => {
       button.addEventListener("shown.bs.tab", function () {
@@ -227,9 +213,6 @@ class App {
         // Prefer appending into the navbar if present so layout is consistent
         const navbar = header.querySelector(".navbar") || header;
         navbar.appendChild(headerActions);
-        console.log(
-          "ℹ️ Created missing .site-header__actions container for language toggle"
-        );
       } else {
         // No header found; nothing we can do
         return;
@@ -423,13 +406,8 @@ document.addEventListener("DOMContentLoaded", () => {
       setTimeout(() => {
         successMessage.style.opacity = "1";
       }, 10); // Small delay to trigger transition
-
-      console.log("Form submitted successfully (simulated)!");
     } else {
       // Form is invalid: Display error messages
-      console.log(
-        "Validation failed. Please fill out all required fields correctly."
-      );
     }
   });
 
@@ -458,10 +436,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // --- Profile Summary Inline Edit Logic ---
 function initializeApp() {
-  console.log(
-    "main.js script loaded successfully from assets/js/ - Initializing Dashboard Logic."
-  );
-
   // --- DOM Element References ---
   const readDisplay = document.getElementById("read-display");
   const textContent = document.getElementById("text-content");
@@ -480,7 +454,7 @@ function initializeApp() {
     !saveBtn
   ) {
     console.error(
-      "One or more required profile dashboard elements are missing. Aborting initialization."
+      "One or more required profile dashboard elements are missing. Aborting initialization.",
     );
     return;
   }
@@ -529,7 +503,7 @@ function initializeApp() {
       editInput.focus();
       editInput.setSelectionRange(
         editInput.value.length,
-        editInput.value.length
+        editInput.value.length,
       );
     } else {
       // --- SWITCH TO READ/SAVE MODE ---
@@ -549,14 +523,17 @@ function initializeApp() {
       saveBtn.classList.add("d-none");
       editBtn.classList.remove("d-none");
 
-      console.log("Content Saved:", newContent);
       // NOTE: Add your Firestore update logic here in a real app.
     }
   };
 }
 
 // Listen for the DOMContentLoaded event to safely run the initialization function
-document.addEventListener("DOMContentLoaded", initializeApp);
+document.addEventListener("DOMContentLoaded", () => {
+  if (document.getElementById("read-display")) {
+    initializeApp();
+  }
+});
 
 //userMenu dropdown
 document.addEventListener("DOMContentLoaded", () => {
@@ -566,6 +543,31 @@ document.addEventListener("DOMContentLoaded", () => {
   // Only run if elements exist (company dashboard page)
   if (!userMenuBtn || !userMenuDropdown) {
     return;
+  }
+
+  // Apply cached profile for instant header update (if available)
+  try {
+    const cached = localStorage.getItem("userProfile");
+    if (cached) {
+      const lp = JSON.parse(cached);
+      const first = lp.firstName || "";
+      const last = lp.lastName || "";
+      const display =
+        first || last
+          ? `${first} ${last}`.trim()
+          : lp.email || userMenuBtn.textContent;
+      const nameEl = userMenuDropdown.querySelector(
+        ".user-menu-dropdown__userName",
+      );
+      const greetEl = userMenuDropdown.querySelector(
+        ".user-menu-dropdown__greeting",
+      );
+      if (userMenuBtn && first) userMenuBtn.textContent = first;
+      if (nameEl) nameEl.textContent = display;
+      if (greetEl) greetEl.textContent = `Welcome back, ${first || "User"}!`;
+    }
+  } catch (e) {
+    // non-fatal
   }
 
   // Function to toggle the menu's visibility
@@ -582,7 +584,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Event listener to close the menu when clicking anywhere else on the page
   document.addEventListener("click", (e) => {
-    if (!userMenuDropdown.contains(e.target) && e.target !== userMenuBtn) {
+    // Check if the dropdown or button exists before checking contains/target
+    if (
+      userMenuDropdown &&
+      userMenuBtn &&
+      !userMenuDropdown.contains(e.target) &&
+      e.target !== userMenuBtn
+    ) {
       userMenuDropdown.classList.remove("is-active");
     }
   });
@@ -648,7 +656,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const isLoggedIn = sessionStorage.getItem("isLoggedIn") === "true";
 
   if (!isLoggedIn) {
-    console.log("Dark/Light toggle hidden — user not logged in");
     return; // exit early, skip toggle injection entirely
   }
 
@@ -694,8 +701,6 @@ document.addEventListener("DOMContentLoaded", function () {
       localStorage.removeItem("isLoggedIn");
       sessionStorage.removeItem("isLoggedIn");
       localStorage.removeItem("userEmail");
-
-      console.log("User logged out — clearing session and redirecting.");
 
       // Optional: Add a small delay for a smoother UX
       setTimeout(() => {
@@ -836,65 +841,67 @@ const filters = document.querySelectorAll("[data-filter-group]");
 const searchInput = document.getElementById("searchInput");
 const clearBtn = document.getElementById("clearFilters");
 
-// helper: render jobs
-function renderJobs(jobs) {
-  jobListings.innerHTML = "";
-  resultCountEl.textContent = jobs.length;
+// Only initialize job filtering and rendering if jobListings element exists
+if (jobListings) {
+  // helper: render jobs
+  function renderJobs(jobs) {
+    jobListings.innerHTML = "";
+    resultCountEl.textContent = jobs.length;
 
-  if (!jobs.length) {
-    noResults.classList.remove("d-none");
-    // Announce to screen readers
+    if (!jobs.length) {
+      noResults.classList.remove("d-none");
+      // Announce to screen readers
+      if (filterAnnouncement) {
+        filterAnnouncement.textContent =
+          "No jobs found. Try adjusting your filters.";
+      }
+      return;
+    }
+    noResults.classList.add("d-none");
+
+    // Announce results to screen readers
     if (filterAnnouncement) {
-      filterAnnouncement.textContent =
-        "No jobs found. Try adjusting your filters.";
+      filterAnnouncement.textContent = `${jobs.length} job${
+        jobs.length === 1 ? "" : "s"
+      } found`;
     }
-    return;
-  }
-  noResults.classList.add("d-none");
 
-  // Announce results to screen readers
-  if (filterAnnouncement) {
-    filterAnnouncement.textContent = `${jobs.length} job${
-      jobs.length === 1 ? "" : "s"
-    } found`;
-  }
+    jobs.forEach((job) => {
+      const col = document.createElement("div");
+      col.className = "col-md-6 col-lg-6";
+      col.setAttribute("role", "listitem");
 
-  jobs.forEach((job) => {
-    const col = document.createElement("div");
-    col.className = "col-md-6 col-lg-6";
-    col.setAttribute("role", "listitem");
-
-    // --- Determine detail page URL: prefer explicit slug (static page),
-    // otherwise fall back to dynamic detail page with query id ---
-    const jobSlug = job.slug || createSlug(job.title);
-    let detailUrl;
-    if (job.slug) {
-      // static page exists under pages/jobs/{slug}.html
-      // Build a relative URL (no leading slash) so GitHub Pages' repo path
-      // prefixes are preserved and links don't resolve to the site root.
-      // Use `includes` because `window.location.pathname` may contain
-      // the segment anywhere (e.g. when served from a subpath), and
-      // startsWith could fail if the path contains additional prefix.
-      if (window.location.pathname.includes("/pages/jobs/")) {
-        detailUrl = `./${job.slug}.html`;
+      // --- Determine detail page URL: prefer explicit slug (static page),
+      // otherwise fall back to dynamic detail page with query id ---
+      const jobSlug = job.slug || createSlug(job.title);
+      let detailUrl;
+      if (job.slug) {
+        // static page exists under pages/jobs/{slug}.html
+        // Build a relative URL (no leading slash) so GitHub Pages' repo path
+        // prefixes are preserved and links don't resolve to the site root.
+        // Use `includes` because `window.location.pathname` may contain
+        // the segment anywhere (e.g. when served from a subpath), and
+        // startsWith could fail if the path contains additional prefix.
+        if (window.location.pathname.includes("/pages/jobs/")) {
+          detailUrl = `./${job.slug}.html`;
+        } else {
+          detailUrl = `pages/jobs/${job.slug}.html`;
+        }
       } else {
-        detailUrl = `pages/jobs/${job.slug}.html`;
+        // fallback to a dynamic detail page handled by jobDetails.html
+        if (window.location.pathname.includes("/pages/jobs/")) {
+          detailUrl = `./jobDetails.html?id=${encodeURIComponent(
+            String(job.id),
+          )}`;
+        } else {
+          detailUrl = `pages/jobs/jobDetails.html?id=${encodeURIComponent(
+            String(job.id),
+          )}`;
+        }
       }
-    } else {
-      // fallback to a dynamic detail page handled by jobDetails.html
-      if (window.location.pathname.includes("/pages/jobs/")) {
-        detailUrl = `./jobDetails.html?id=${encodeURIComponent(
-          String(job.id)
-        )}`;
-      } else {
-        detailUrl = `pages/jobs/jobDetails.html?id=${encodeURIComponent(
-          String(job.id)
-        )}`;
-      }
-    }
-    // ---------------------------------------------
+      // ---------------------------------------------
 
-    col.innerHTML = `
+      col.innerHTML = `
             <div class="card h-100 shadow-sm border-0 job-card">
               <div class="card-body">
                 <div class="d-flex justify-content-between">
@@ -902,17 +909,17 @@ function renderJobs(jobs) {
            
                 </div>
                 <p class="text-muted mb-2">${escapeHtml(
-                  job.company
+                  job.company,
                 )} · ${capitalize(job.location)}</p>
                 <p class="small mb-1"><strong>Industry:</strong> ${capitalize(
-                  job.industry
+                  job.industry,
                 )}</p>
                 <p class="small mb-1"><strong>Salary:</strong> ¥${job.salary.toLocaleString()}</p>
                      <p class="small mb-1"><strong>Industry:</strong> ${capitalize(
-                       job.japaneseLevel
+                       job.japaneseLevel,
                      )}</p>
                 <p class="small mb-1"><strong>Visa Support:</strong> ${capitalize(
-                  job.support
+                  job.support,
                 )}</p>
               </div>
               <div class="card-footer bg-transparent border-0">
@@ -920,251 +927,263 @@ function renderJobs(jobs) {
             </div>
             </div>
           `;
-    jobListings.appendChild(col);
-  });
-}
-
-// helpers
-function capitalize(str) {
-  if (!str) return "";
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
-function escapeHtml(unsafe) {
-  return unsafe.replace(/[&<"'>]/g, function (m) {
-    return {
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      '"': "&quot;",
-      "'": "&#39;",
-    }[m];
-  });
-}
-/**
- * Converts a string (like a title) into a URL-friendly slug.
- * @param {string} title
- * @returns {string} The URL slug.
- */
-function createSlug(title) {
-  if (!title) return "";
-  return (
-    title
-      .toLowerCase()
-      // Replace non-alphanumeric characters (except spaces/dashes) with nothing
-      .replace(/[^a-z0-9\s-]/g, "")
-      // Trim leading/trailing whitespace
-      .trim()
-      // Replace all spaces with a single hyphen
-      .replace(/\s+/g, "-")
-  );
-}
-
-// update button styles for a group
-function updateButtons(groupKey) {
-  const container = document.querySelector(`[data-filter-group="${groupKey}"]`);
-  if (!container) return;
-  container.querySelectorAll("button[data-value]").forEach((btn) => {
-    const val = String(btn.dataset.value).toLowerCase();
-    const salary = parseInt(btn.dataset.salary || "0", 10);
-    const active =
-      groupKey === "minSalary"
-        ? state[groupKey].includes(salary)
-        : state[groupKey].includes(val);
-
-    // Update visual state
-    if (active) {
-      btn.classList.remove("btn-outline-secondary");
-      btn.classList.add("btn-outline-primary", "active");
-    } else {
-      btn.classList.remove("btn-primary", "btn-outline-primary", "active");
-      btn.classList.add("btn-outline-secondary");
-    }
-
-    // Update ARIA pressed state for accessibility
-    btn.setAttribute("aria-pressed", active ? "true" : "false");
-  });
-}
-
-// main filter function
-function filterJobs() {
-  const search = state.search;
-  const isSupportAll = state.support.includes("all");
-  const isJapaneseAny = state.japaneseLevel.includes("any");
-  const isLocationAll = state.location.includes("all");
-  const isIndustryAll = state.industry.includes("all");
-  const minSalaryValue = Math.max(...state.minSalary);
-
-  const filtered = jobData.filter((job) => {
-    // search (title, company, location, japaneseLevel)
-    if (search) {
-      const hay = (
-        job.title +
-        " " +
-        job.company +
-        " " +
-        job.location +
-        " " +
-        job.japaneseLevel
-      ).toLowerCase();
-      if (!hay.includes(search)) return false;
-    }
-
-    // support
-    if (!isSupportAll && !state.support.includes(job.support)) return false;
-
-    // japanese level
-    if (!isJapaneseAny && !state.japaneseLevel.includes(job.japaneseLevel))
-      return false;
-
-    // location
-    if (!isLocationAll && !state.location.includes(job.location)) return false;
-
-    // industry
-    if (!isIndustryAll && !state.industry.includes(job.industry)) return false;
-
-    // salary
-    if (job.salary < minSalaryValue) return false;
-
-    return true;
-  });
-
-  renderJobs(filtered);
-}
-
-// wire up filter buttons (delegated per group)
-filters.forEach((groupEl) => {
-  const groupKey = groupEl.dataset.filterGroup;
-  groupEl.addEventListener("click", (e) => {
-    const btn = e.target.closest("button[data-value]");
-    if (!btn) return;
-
-    const rawVal = btn.dataset.value;
-    const val = String(rawVal).toLowerCase();
-    const salary = parseInt(btn.dataset.salary || "0", 10);
-
-    // determine key and whether clicked is reset/all option
-    const isMinSalary = groupKey === "minSalary";
-    const isReset =
-      val === "all" ||
-      val === "any" ||
-      (!isMinSalary && val === "") ||
-      (isMinSalary && salary === 0);
-
-    const key = isMinSalary ? salary : val;
-
-    // toggle selection
-    if (state[groupKey].includes(key)) {
-      // if more than 1 selected, remove; else keep (prevent empty)
-      if (state[groupKey].length > 1) {
-        state[groupKey] = state[groupKey].filter((v) => v !== key);
-      }
-    } else {
-      // add new selection
-      state[groupKey].push(key);
-    }
-
-    // if reset/all clicked and is now selected -> set alone
-    if (isReset && state[groupKey].includes(key)) {
-      state[groupKey] = [key];
-    }
-
-    // when non-reset selected, remove any 'all' default
-    if (!isReset && state[groupKey].length > 1) {
-      state[groupKey] = state[groupKey].filter((v) => {
-        return !(v === "all" || v === "any" || v === 0);
-      });
-    }
-
-    // ensure at least one default remains
-    if (state[groupKey].length === 0) {
-      if (groupKey === "support") state[groupKey] = ["all"];
-      if (groupKey === "japaneseLevel") state[groupKey] = ["any"];
-      if (groupKey === "location") state[groupKey] = ["all"];
-      if (groupKey === "industry") state[groupKey] = ["all"];
-      if (groupKey === "minSalary") state[groupKey] = [0];
-    }
-
-    updateButtons(groupKey);
-    filterJobs();
-  });
-});
-
-// search input
-if (searchInput) {
-  searchInput.addEventListener("input", () => {
-    state.search = searchInput.value.toLowerCase().trim();
-    filterJobs();
-  });
-
-  // Keyboard shortcuts for search input
-  searchInput.addEventListener("keydown", (e) => {
-    // Escape key clears the search
-    if (e.key === "Escape") {
-      searchInput.value = "";
-      state.search = "";
-      filterJobs();
-      if (filterAnnouncement) {
-        filterAnnouncement.textContent = "Search cleared";
-      }
-    }
-  });
-}
-
-// clear filters
-if (clearBtn) {
-  clearBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    state.support = ["all"];
-    state.japaneseLevel = ["any"];
-    state.location = ["all"];
-    state.industry = ["all"];
-    state.minSalary = [0];
-
-    // update all button groups visually
-    ["support", "japaneseLevel", "location", "industry", "minSalary"].forEach(
-      (k) => updateButtons(k)
-    );
-    if (searchInput) {
-      searchInput.value = "";
-      state.search = "";
-    }
-    filterJobs();
-
-    // Announce to screen readers
-    if (filterAnnouncement) {
-      filterAnnouncement.textContent = "All filters cleared. Showing all jobs.";
-    }
-
-    // Return focus to search input for keyboard users
-    if (searchInput) {
-      searchInput.focus();
-    }
-  });
-}
-
-// Global keyboard shortcut: Ctrl+K or Cmd+K to focus search
-document.addEventListener("keydown", (e) => {
-  if ((e.ctrlKey || e.metaKey) && e.key === "k") {
-    e.preventDefault();
-    searchInput.focus();
-    searchInput.select();
+      jobListings.appendChild(col);
+    });
   }
-});
 
-// initial render
-window.addEventListener("DOMContentLoaded", () => {
-  // ensure all groups reflect initial active button styles
-  ["support", "japaneseLevel", "location", "industry", "minSalary"].forEach(
-    (k) => updateButtons(k)
-  );
-  filterJobs();
-});
+  // helpers
+  function capitalize(str) {
+    if (!str) return "";
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+  function escapeHtml(unsafe) {
+    return unsafe.replace(/[&<"'>]/g, function (m) {
+      return {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;",
+      }[m];
+    });
+  }
+  /**
+   * Converts a string (like a title) into a URL-friendly slug.
+   * @param {string} title
+   * @returns {string} The URL slug.
+   */
+  function createSlug(title) {
+    if (!title) return "";
+    return (
+      title
+        .toLowerCase()
+        // Replace non-alphanumeric characters (except spaces/dashes) with nothing
+        .replace(/[^a-z0-9\s-]/g, "")
+        // Trim leading/trailing whitespace
+        .trim()
+        // Replace all spaces with a single hyphen
+        .replace(/\s+/g, "-")
+    );
+  }
+
+  // update button styles for a group
+  function updateButtons(groupKey) {
+    const container = document.querySelector(
+      `[data-filter-group="${groupKey}"]`,
+    );
+    if (!container) return;
+    container.querySelectorAll("button[data-value]").forEach((btn) => {
+      const val = String(btn.dataset.value).toLowerCase();
+      const salary = parseInt(btn.dataset.salary || "0", 10);
+      const active =
+        groupKey === "minSalary"
+          ? state[groupKey].includes(salary)
+          : state[groupKey].includes(val);
+
+      // Update visual state
+      if (active) {
+        btn.classList.remove("btn-outline-secondary");
+        btn.classList.add("btn-outline-primary", "active");
+      } else {
+        btn.classList.remove("btn-primary", "btn-outline-primary", "active");
+        btn.classList.add("btn-outline-secondary");
+      }
+
+      // Update ARIA pressed state for accessibility
+      btn.setAttribute("aria-pressed", active ? "true" : "false");
+    });
+  }
+
+  // main filter function
+  function filterJobs() {
+    const search = state.search;
+    const isSupportAll = state.support.includes("all");
+    const isJapaneseAny = state.japaneseLevel.includes("any");
+    const isLocationAll = state.location.includes("all");
+    const isIndustryAll = state.industry.includes("all");
+    const minSalaryValue = Math.max(...state.minSalary);
+
+    const filtered = jobData.filter((job) => {
+      // search (title, company, location, japaneseLevel)
+      if (search) {
+        const hay = (
+          job.title +
+          " " +
+          job.company +
+          " " +
+          job.location +
+          " " +
+          job.japaneseLevel
+        ).toLowerCase();
+        if (!hay.includes(search)) return false;
+      }
+
+      // support
+      if (!isSupportAll && !state.support.includes(job.support)) return false;
+
+      // japanese level
+      if (!isJapaneseAny && !state.japaneseLevel.includes(job.japaneseLevel))
+        return false;
+
+      // location
+      if (!isLocationAll && !state.location.includes(job.location))
+        return false;
+
+      // industry
+      if (!isIndustryAll && !state.industry.includes(job.industry))
+        return false;
+
+      // salary
+      if (job.salary < minSalaryValue) return false;
+
+      return true;
+    });
+
+    renderJobs(filtered);
+  }
+
+  // wire up filter buttons (delegated per group)
+  filters.forEach((groupEl) => {
+    const groupKey = groupEl.dataset.filterGroup;
+    groupEl.addEventListener("click", (e) => {
+      const btn = e.target.closest("button[data-value]");
+      if (!btn) return;
+
+      const rawVal = btn.dataset.value;
+      const val = String(rawVal).toLowerCase();
+      const salary = parseInt(btn.dataset.salary || "0", 10);
+
+      // determine key and whether clicked is reset/all option
+      const isMinSalary = groupKey === "minSalary";
+      const isReset =
+        val === "all" ||
+        val === "any" ||
+        (!isMinSalary && val === "") ||
+        (isMinSalary && salary === 0);
+
+      const key = isMinSalary ? salary : val;
+
+      // toggle selection
+      if (state[groupKey].includes(key)) {
+        // if more than 1 selected, remove; else keep (prevent empty)
+        if (state[groupKey].length > 1) {
+          state[groupKey] = state[groupKey].filter((v) => v !== key);
+        }
+      } else {
+        // add new selection
+        state[groupKey].push(key);
+      }
+
+      // if reset/all clicked and is now selected -> set alone
+      if (isReset && state[groupKey].includes(key)) {
+        state[groupKey] = [key];
+      }
+
+      // when non-reset selected, remove any 'all' default
+      if (!isReset && state[groupKey].length > 1) {
+        state[groupKey] = state[groupKey].filter((v) => {
+          return !(v === "all" || v === "any" || v === 0);
+        });
+      }
+
+      // ensure at least one default remains
+      if (state[groupKey].length === 0) {
+        if (groupKey === "support") state[groupKey] = ["all"];
+        if (groupKey === "japaneseLevel") state[groupKey] = ["any"];
+        if (groupKey === "location") state[groupKey] = ["all"];
+        if (groupKey === "industry") state[groupKey] = ["all"];
+        if (groupKey === "minSalary") state[groupKey] = [0];
+      }
+
+      updateButtons(groupKey);
+      filterJobs();
+    });
+  });
+
+  // search input
+  if (searchInput) {
+    searchInput.addEventListener("input", () => {
+      state.search = searchInput.value.toLowerCase().trim();
+      filterJobs();
+    });
+
+    // Keyboard shortcuts for search input
+    searchInput.addEventListener("keydown", (e) => {
+      // Escape key clears the search
+      if (e.key === "Escape") {
+        searchInput.value = "";
+        state.search = "";
+        filterJobs();
+        if (filterAnnouncement) {
+          filterAnnouncement.textContent = "Search cleared";
+        }
+      }
+    });
+  }
+
+  // clear filters
+  if (clearBtn) {
+    clearBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      state.support = ["all"];
+      state.japaneseLevel = ["any"];
+      state.location = ["all"];
+      state.industry = ["all"];
+      state.minSalary = [0];
+
+      // update all button groups visually
+      ["support", "japaneseLevel", "location", "industry", "minSalary"].forEach(
+        (k) => updateButtons(k),
+      );
+      if (searchInput) {
+        searchInput.value = "";
+        state.search = "";
+      }
+      filterJobs();
+
+      // Announce to screen readers
+      if (filterAnnouncement) {
+        filterAnnouncement.textContent =
+          "All filters cleared. Showing all jobs.";
+      }
+
+      // Return focus to search input for keyboard users
+      if (searchInput) {
+        searchInput.focus();
+      }
+    });
+  }
+
+  // Global keyboard shortcut: Ctrl+K or Cmd+K to focus search
+  document.addEventListener("keydown", (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+      e.preventDefault();
+      searchInput.focus();
+      searchInput.select();
+    }
+  });
+
+  // initial render
+  window.addEventListener("DOMContentLoaded", () => {
+    // ensure all groups reflect initial active button styles
+    ["support", "japaneseLevel", "location", "industry", "minSalary"].forEach(
+      (k) => updateButtons(k),
+    );
+    filterJobs();
+  });
+}
+
 //  JOB ALERT
 document.addEventListener("DOMContentLoaded", () => {
   // 1. Get references to the elements
   const emailInput = document.getElementById("newsletter-email");
   const signupButton = document.getElementById("signup-button");
   const jobAlertToastEl = document.getElementById("jobAlertToast");
+
+  // Only run if elements exist
+  if (!emailInput || !signupButton || !jobAlertToastEl) {
+    return;
+  }
 
   // 2. Initialize the Bootstrap Toast component
   // Note: bootstrap is available globally since the bundle script is loaded above
@@ -1201,99 +1220,13 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-document.addEventListener("DOMContentLoaded"),
-  () => {
-    // --- Profile Summary Toggle (Preserved as requested) ---
-    function toggleEditMode(isEditing) {
-      const readDisplay = document.getElementById("read-display");
-      const editInput = document.getElementById("edit-input");
-      const editBtn = document.getElementById("edit-btn");
-      const saveBtn = document.getElementById("save-btn");
-
-      if (isEditing) {
-        readView.classList.add("d-none");
-        editView.classList.remove("d-none");
-        editBtn.classList.add("d-none");
-        saveBtn.classList.remove("d-none");
-      } else {
-        // In a real app, logic to save content would go here
-        editView.classList.add("d-none");
-        readView.classList.remove("d-none");
-        saveBtn.classList.add("d-none");
-        editBtn.classList.remove("d-none");
-        console.log("Profile summary saved.");
-      }
-    }
-
-    // --- Modal Save/Add Placeholder Functions ---
-    // These functions simulate saving and close the modal (handled by form submit + data-bs-dismiss="modal" or JS)
-
-    function saveBasicInfo() {
-      // Placeholder: Logic to save Basic Info fields via API call
-      console.log("Basic Information saved via Modal.");
-      // Manually hide modal if not using data-bs-dismiss
-      const modalElement = document.getElementById("basicInfoModal");
-      const modal = bootstrap.Modal.getInstance(modalElement);
-      if (modal) modal.hide();
-    }
-
-    function saveExperience() {
-      // Placeholder: Logic to save all Experience entries
-      console.log("Experience entries saved via Modal.");
-      const modalElement = document.getElementById("experienceModal");
-      const modal = bootstrap.Modal.getInstance(modalElement);
-      if (modal) modal.hide();
-    }
-
-    function saveSkills() {
-      // Placeholder: Logic to save Skills entries
-      console.log("Skills saved via Modal.");
-      const modalElement = document.getElementById("skillsModal");
-      const modal = bootstrap.Modal.getInstance(modalElement);
-      if (modal) modal.hide();
-    }
-
-    function saveEducation() {
-      // Placeholder: Logic to save Education entries
-      console.log("Education entries saved via Modal.");
-      const modalElement = document.getElementById("educationModal");
-      const modal = bootstrap.Modal.getInstance(modalElement);
-      if (modal) modal.hide();
-    }
-
-    function saveAvailability() {
-      // Placeholder: Logic to save Availability/Preferences
-      console.log("Availability/Preferences saved via Modal.");
-      const modalElement = document.getElementById("availabilityModal");
-      const modal = bootstrap.Modal.getInstance(modalElement);
-      if (modal) modal.hide();
-    }
-
-    // Additional Add placeholders for console logging
-    function addNewExperience() {
-      console.log("Preparing modal to add new experience...");
-    }
-    function addNewExperienceEntry() {
-      console.log("New experience entry added to form (client-side)");
-    }
-    function addNewSkill() {
-      console.log("Preparing modal to add new skill...");
-    }
-    function addNewEducation() {
-      console.log("Preparing modal to add new education...");
-    }
-    function addNewEducationEntry() {
-      console.log("New education entry added to form (client-side)");
-    }
-  };
-
 // --- Small, conservative utilities: active-nav auto-detect + aria fallbacks ---
 (function () {
   // Active nav auto-detection: mark nav link matching current path as .active
   function applyActiveNav() {
     try {
       const links = document.querySelectorAll(
-        ".navbar a.nav-link, .nav-link, nav a[href]"
+        ".navbar a.nav-link, .nav-link, nav a[href]",
       );
       if (!links || links.length === 0) return;
 

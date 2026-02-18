@@ -240,6 +240,7 @@
                       "
                     />
                     <img
+                      id="profileAvatarImg"
                       src="../assets/images/aiImages/Applying1.jpg"
                       alt="User Avatar"
                       class="rounded-circle"
@@ -2427,6 +2428,94 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
 
         try {
           // Fetch profile from backend API
+          // If the URL contains a `token` parameter (redirect from OAuth),
+          // prioritize fetching `/api/v1/auth/me` with that token to populate
+          // the UI immediately. Otherwise, fall back to any cached localProfile.
+          try {
+            const params = new URLSearchParams(window.location.search);
+            const urlToken = params.get('token');
+            if (urlToken) {
+              // Persist token cookie for subsequent API calls
+              document.cookie = `token=${urlToken}; path=/`;
+              // Remove token from URL to keep things clean
+              try { history.replaceState(null, '', window.location.pathname + window.location.hash); } catch {}
+
+              // Fetch basic user info and cache minimal profile for instant UI update
+              try {
+                const meRes = await fetch('/api/v1/auth/me', {
+                  headers: { Authorization: `Bearer ${urlToken}` },
+                });
+                if (meRes.ok) {
+                  const meData = await meRes.json();
+                  const user = meData.data.user;
+                  const gp = user?.googleProfile || {};
+                  const localProfile = {
+                    firstName: gp.given_name || gp.name?.split(' ')[0] || '',
+                    lastName: gp.family_name || (gp.name && gp.name.split(' ').slice(1).join(' ')) || '',
+                    email: gp.email || user?.email || '',
+                    picture: gp.picture || '',
+                    city: gp.city || '',
+                    prefecture: gp.prefecture || '',
+                    nationality: '',
+                    japaneseLevel: '',
+                  };
+                  localStorage.setItem('userProfile', JSON.stringify(localProfile));
+
+                  // Apply immediately to UI
+                  const userMenuBtn = document.getElementById('user-menu-btn');
+                  const userName = document.querySelector('.user-menu-dropdown__userName');
+                  const avatarImg = document.getElementById('profileAvatarImg');
+                  const infoName = document.getElementById('info-name');
+                  const first = localProfile.firstName || '';
+                  const last = localProfile.lastName || '';
+                  const display = (first || last) ? `${first} ${last}`.trim() : (localProfile.email || 'User');
+                  if (userMenuBtn) userMenuBtn.textContent = first || userMenuBtn.textContent;
+                  if (userName) userName.textContent = display;
+                  if (infoName) infoName.textContent = display;
+                  if (localProfile.picture && avatarImg) {
+                    const pic = avatarImg.closest('picture');
+                    const imgHtml = `<img id="profileAvatarImg" src="${localProfile.picture}" alt="User Avatar" class="rounded-circle" style="width: 100px; height: 100px; object-fit: cover; object-position: center;" loading="lazy" onerror="this.src='https://placehold.co/100x100/fecaca/991b1b?text=JD';"/>`;
+                    if (pic) pic.innerHTML = imgHtml;
+                    else avatarImg.src = localProfile.picture;
+                  }
+                }
+              } catch (meErr) {
+                console.warn('auth/me fetch during OAuth redirect failed:', meErr);
+              }
+            } else {
+              // No token in URL — safe to apply cached profile for instant UI
+              try {
+                const cached = localStorage.getItem('userProfile');
+                if (cached) {
+                  const lp = JSON.parse(cached);
+                  const userMenuBtn = document.getElementById("user-menu-btn");
+                  const userName = document.querySelector(".user-menu-dropdown__userName");
+                  const avatarImg = document.getElementById("profileAvatarImg");
+                  const infoName = document.getElementById("info-name");
+
+                  const first = lp.firstName || '';
+                  const last = lp.lastName || '';
+                  const display = (first || last) ? `${first} ${last}`.trim() : (lp.email || 'User');
+
+                  if (userMenuBtn) userMenuBtn.textContent = first || userMenuBtn.textContent;
+                  if (userName) userName.textContent = display;
+                  if (infoName) infoName.textContent = display;
+
+                  if (lp.picture && avatarImg) {
+                    const pic = avatarImg.closest('picture');
+                    const imgHtml = `<img id="profileAvatarImg" src="${lp.picture}" alt="User Avatar" class="rounded-circle" style="width: 100px; height: 100px; object-fit: cover; object-position: center;" loading="lazy" onerror="this.src='https://placehold.co/100x100/fecaca/991b1b?text=JD';"/>`;
+                    if (pic) pic.innerHTML = imgHtml;
+                    else avatarImg.src = lp.picture;
+                  }
+                }
+              } catch (e) {
+                console.warn('Could not apply cached local profile:', e);
+              }
+            }
+          } catch (e) {
+            console.warn('Could not apply cached local profile logic:', e);
+          }
+
           const response = await fetch("/api/v1/profile", {
             headers: {
               "Authorization": `Bearer ${token}`,
@@ -2437,6 +2526,51 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           if (!response.ok) {
             if (response.status === 404) {
               console.log("Profile not found. User needs to create a profile.");
+              // Try to fetch basic user info (fallback) so we can at least show avatar
+              try {
+                const meRes = await fetch("/api/v1/auth/me", {
+                  headers: { Authorization: `Bearer ${token}` },
+                });
+                if (meRes.ok) {
+                  const meData = await meRes.json();
+                  const user = meData.data.user;
+                  const avatarImg = document.getElementById("profileAvatarImg");
+                  const avatarUrl = user?.googleProfile?.picture;
+                  if (avatarUrl && avatarImg) {
+                    const pic = avatarImg.closest("picture");
+                    const imgHtml = `\
+                      <img id="profileAvatarImg" src="${avatarUrl}" alt="User Avatar" class="rounded-circle" style="width: 100px; height: 100px; object-fit: cover; object-position: center;" loading="lazy" onerror="this.src='https://placehold.co/100x100/fecaca/991b1b?text=JD';"/>`;
+                    if (pic) {
+                      pic.innerHTML = imgHtml;
+                    } else {
+                      avatarImg.src = avatarUrl;
+                      avatarImg.onerror = function () {
+                        this.src = 'https://placehold.co/100x100/fecaca/991b1b?text=JD';
+                      };
+                    }
+                  }
+                  // Persist minimal profile info to localStorage so other UI modules
+                  // (which read the userProfile key) will show updated name/email.
+                  try {
+                    const gp = user?.googleProfile;
+                    const localProfile = {
+                      firstName: gp?.given_name || gp?.name?.split(' ')[0] || '',
+                      lastName: gp?.family_name || (gp?.name && gp.name.split(' ').slice(1).join(' ')) || '',
+                      email: gp?.email || user?.email || '',
+                      picture: gp?.picture || user?.picture || '',
+                      city: '',
+                      prefecture: '',
+                      nationality: '',
+                      japaneseLevel: '',
+                    };
+                    localStorage.setItem('userProfile', JSON.stringify(localProfile));
+                  } catch (e) {
+                    console.warn('Could not persist local profile from /auth/me fallback', e);
+                  }
+                }
+              } catch (err) {
+                console.warn("Fallback /auth/me failed:", err);
+              }
               // Show a message or redirect to profile creation
               return;
             }
@@ -2447,16 +2581,104 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           const profile = data.data.profile; // API returns { success: true, data: { profile: {...} } }
           console.log("Profile fetched from API:", profile);
 
+          // If the browser has a cached local profile from Google sign-in, prefer
+          // those values for display so the UI reflects the signed-in identity
+          // even when the server-side profile is older.
+          try {
+            const cached = localStorage.getItem('userProfile');
+            if (cached) {
+              const lp = JSON.parse(cached);
+              if (lp.firstName) profile.firstName = lp.firstName;
+              if (lp.lastName) profile.lastName = lp.lastName;
+              if (lp.email) profile.email = lp.email;
+              if (!profile.user) profile.user = {};
+              if (!profile.user.googleProfile) profile.user.googleProfile = {};
+              if (lp.picture) profile.user.googleProfile.picture = lp.picture;
+            }
+          } catch (e) {
+            console.warn('Could not apply cached local profile to server profile object', e);
+          }
+
+          // If the user has a Google profile picture, use it for the avatar.
+          // Replace the surrounding <picture> (which contains local srcsets)
+          // with a single <img> pointing to the external Google URL so the
+          // browser doesn't pick the local sources instead.
+          try {
+            const avatarUrl = profile?.user?.googleProfile?.picture;
+            const avatarImg = document.getElementById("profileAvatarImg");
+            if (avatarUrl && avatarImg) {
+              const pic = avatarImg.closest("picture");
+              const imgHtml = `\
+                <img id="profileAvatarImg" src="${avatarUrl}" alt="User Avatar" class="rounded-circle" style="width: 100px; height: 100px; object-fit: cover; object-position: center;" loading="lazy" onerror="this.src='https://placehold.co/100x100/fecaca/991b1b?text=JD';"/>`;
+              if (pic) {
+                pic.innerHTML = imgHtml;
+              } else {
+                avatarImg.src = avatarUrl;
+                avatarImg.onerror = function () {
+                  this.src = 'https://placehold.co/100x100/fecaca/991b1b?text=JD';
+                };
+              }
+            }
+          } catch (e) {
+            console.warn("Could not set avatar from profile:", e);
+          }
+
+          // Merge Google profile fields into `profile` where applicable
+          try {
+            const userObj = profile.user || profile.user;
+            const gp = userObj?.googleProfile;
+            if (gp) {
+              // Prefer explicit profile fields, fall back to Google values
+              profile.email = profile.email || gp.email || userObj.email;
+              profile.firstName =
+                profile.firstName || gp.given_name || (gp.name && gp.name.split(" ")[0]);
+              profile.lastName =
+                profile.lastName || gp.family_name || (gp.name && gp.name.split(" ").slice(1).join(" "));
+              profile.locale = profile.locale || gp.locale;
+              // If the dashboard uses `profile.user` elsewhere, ensure it's populated
+              if (!profile.user) profile.user = userObj;
+            }
+          } catch (e) {
+            console.warn("Could not merge Google profile fields:", e);
+          }
+
+          // Persist merged profile to localStorage so other modules (e.g. header)
+          // reflect the updated Google name/email immediately.
+          try {
+            const localProfile = {
+              firstName: profile.firstName || (profile.user && profile.user.googleProfile && (profile.user.googleProfile.given_name || profile.user.googleProfile.name && profile.user.googleProfile.name.split(' ')[0])) || '',
+              lastName: profile.lastName || (profile.user && profile.user.googleProfile && profile.user.googleProfile.family_name) || '',
+              email: profile.email || (profile.user && profile.user.email) || '',
+              picture: (profile.user && profile.user.googleProfile && profile.user.googleProfile.picture) || '',
+              city: profile.city || '',
+              prefecture: profile.prefecture || '',
+              nationality: profile.nationality || '',
+              japaneseLevel: profile.japaneseLevel || '',
+            };
+            localStorage.setItem('userProfile', JSON.stringify(localProfile));
+          } catch (e) {
+            console.warn('Could not persist merged profile to localStorage', e);
+          }
+
         // Update user menu
         const userMenuBtn = document.getElementById("user-menu-btn");
         const userName = document.querySelector(
           ".user-menu-dropdown__userName"
         );
 
-        const firstName = profile.firstName || profile.email?.split('@')[0] || 'User';
-        const displayName = profile.firstName && profile.lastName 
-          ? `${profile.firstName} ${profile.lastName}` 
-          : profile.firstName || profile.email || 'User';
+        // Prefer Google profile fields when available so sign-in updates show immediately
+        const gpAvailable = !!(profile.user && profile.user.googleProfile);
+        const gp = profile.user && profile.user.googleProfile ? profile.user.googleProfile : null;
+
+        const firstName = (gp && (gp.given_name || gp.name))
+          ? (gp.given_name || gp.name.split(' ')[0])
+          : (profile.firstName || profile.email?.split('@')[0] || 'User');
+
+        const displayName = (gp && (gp.given_name || gp.family_name || gp.name))
+          ? ((gp.given_name || (gp.name && gp.name.split(' ')[0])) + (gp.family_name ? ` ${gp.family_name}` : (gp.name && gp.name.split(' ').slice(1).join(' ') ? ` ${gp.name.split(' ').slice(1).join(' ')}` : ''))).trim()
+          : (profile.firstName && profile.lastName
+             ? `${profile.firstName} ${profile.lastName}`
+             : profile.firstName || profile.email || 'User');
 
         if (userMenuBtn) {
           userMenuBtn.textContent = firstName;
