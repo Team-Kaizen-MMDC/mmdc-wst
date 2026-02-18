@@ -2,6 +2,7 @@ const asyncHandler = require("../middleware/asyncHandler");
 const ApiError = require("../utils/ApiError");
 const ApiResponse = require("../utils/ApiResponse");
 const User = require("../models/User");
+const UserProfile = require("../models/UserProfile");
 const logger = require("../utils/logger");
 const { verifyGoogleToken } = require("../utils/googleAuth");
 
@@ -255,6 +256,35 @@ exports.googleAuth = asyncHandler(async (req, res, next) => {
       googleId,
       googleProfile: profile,
     });
+  }
+
+  // If a UserProfile already exists for this user, merge Google fields into it
+  try {
+    const existingProfile = await UserProfile.findOne({ user: user._id });
+    if (existingProfile) {
+      let changed = false;
+      if (!existingProfile.firstName && profile.given_name) {
+        existingProfile.firstName = profile.given_name;
+        changed = true;
+      }
+      if (!existingProfile.lastName && profile.family_name) {
+        existingProfile.lastName = profile.family_name;
+        changed = true;
+      }
+      // Save avatar URL into photoPath if not set
+      if (!existingProfile.photoPath && profile.picture) {
+        existingProfile.photoPath = profile.picture;
+        changed = true;
+      }
+      if (changed) await existingProfile.save();
+    }
+  } catch (err) {
+    logger &&
+      logger.warn &&
+      logger.warn(
+        "Could not merge Google profile into UserProfile:",
+        err.message || err,
+      );
   }
 
   // Generate JWT for the user

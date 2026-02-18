@@ -7,6 +7,7 @@
 const express = require("express");
 const passport = require("passport");
 const logger = require("../utils/logger");
+const UserProfile = require("../models/UserProfile");
 
 const router = express.Router();
 
@@ -69,6 +70,37 @@ router.get(
       // Generate JWT token for API authentication
       const token = user.getSignedJwtToken();
       logger.info(`Generated JWT token for user: ${user.email}`);
+
+      // If a UserProfile exists for this user, merge Google fields so the
+      // dashboard reflects Google profile data immediately.
+      try {
+        const existingProfile = await UserProfile.findOne({ user: user._id });
+        const gp = user.googleProfile || {};
+        let changed = false;
+        if (existingProfile) {
+          if (!existingProfile.firstName && (gp.given_name || gp.name)) {
+            existingProfile.firstName =
+              gp.given_name || (gp.name && gp.name.split(" ")[0]);
+            changed = true;
+          }
+          if (!existingProfile.lastName && gp.family_name) {
+            existingProfile.lastName = gp.family_name;
+            changed = true;
+          }
+          if (!existingProfile.photoPath && gp.picture) {
+            existingProfile.photoPath = gp.picture;
+            changed = true;
+          }
+          if (changed) await existingProfile.save();
+        }
+      } catch (err) {
+        logger &&
+          logger.warn &&
+          logger.warn(
+            "Could not merge Google profile into UserProfile (oauth callback):",
+            err.message || err,
+          );
+      }
 
       // Store token in session for client-side retrieval
       req.session.authToken = token;
