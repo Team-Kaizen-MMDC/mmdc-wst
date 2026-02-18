@@ -403,24 +403,52 @@ exports.googleCallback = asyncHandler(async (req, res, next) => {
         user.googleId = user.googleId || googleId;
         user.googleProfile = { ...user.googleProfile, ...profileObj };
         user.authProvider = "google";
-        await user.save();
+        try {
+          await user.save();
+          logger.info(
+            `Linked Google to existing local user: ${user.email} (${user._id})`,
+          );
+        } catch (saveErr) {
+          logger.error(
+            `Failed linking Google to user ${email}: ${saveErr.message || saveErr}`,
+          );
+          throw saveErr;
+        }
       } else {
         user.googleId = googleId;
         user.googleProfile = { ...user.googleProfile, ...profileObj };
         user.authProvider = "google";
         user.lastLogin = Date.now();
-        await user.save();
+        try {
+          await user.save();
+          logger.info(`Updated Google user: ${user.email} (${user._id})`);
+        } catch (saveErr) {
+          logger.error(
+            `Failed updating Google user ${email}: ${saveErr.message || saveErr}`,
+          );
+          throw saveErr;
+        }
       }
     } else {
-      user = await User.create({
-        email,
-        role: req.session?.pendingRole || "jobseeker",
-        authProvider: "google",
-        googleId,
-        googleProfile: profileObj,
-        isEmailVerified: true,
-        lastLogin: Date.now(),
-      });
+      try {
+        user = await User.create({
+          email,
+          role: req.session?.pendingRole || "jobseeker",
+          authProvider: "google",
+          googleId,
+          googleProfile: profileObj,
+          isEmailVerified: true,
+          lastLogin: Date.now(),
+        });
+        logger.info(
+          `Created user in googleCallback: ${user.email} (${user._id})`,
+        );
+      } catch (createErr) {
+        logger.error(
+          `Failed to create user in googleCallback for ${email}: ${createErr.message || createErr}`,
+        );
+        throw createErr;
+      }
     }
 
     // Enrich via People API if we have an access token

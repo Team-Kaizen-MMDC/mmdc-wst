@@ -81,7 +81,17 @@ function configurePassport(app) {
               user.googleProfile = googleProfile;
             }
             user.lastLogin = new Date();
-            await user.save();
+            try {
+              await user.save();
+              logger.info(
+                `Saved existing user (updated Google fields): ${user.email} (${user._id})`,
+              );
+            } catch (saveErr) {
+              logger.error(
+                `Failed saving existing user ${email}: ${saveErr.message || saveErr}`,
+              );
+              throw saveErr;
+            }
           } else {
             // New user - determine role from session (set by pre-auth page)
             // Default to jobseeker if not specified
@@ -90,15 +100,23 @@ function configurePassport(app) {
             logger.info(
               `Creating new Google user: ${email} with role: ${role}`,
             );
-            user = await User.create({
-              email,
-              role,
-              authProvider: "google",
-              googleId,
-              googleProfile,
-              isEmailVerified: true, // Google emails are verified
-              lastLogin: new Date(),
-            });
+            try {
+              user = await User.create({
+                email,
+                role,
+                authProvider: "google",
+                googleId,
+                googleProfile,
+                isEmailVerified: true, // Google emails are verified
+                lastLogin: new Date(),
+              });
+              logger.info(`Created new user: ${user.email} (${user._id})`);
+            } catch (createErr) {
+              logger.error(
+                `Error creating new Google user ${email}: ${createErr.message || createErr}`,
+              );
+              throw createErr;
+            }
           }
 
           // Clear pending role from session
