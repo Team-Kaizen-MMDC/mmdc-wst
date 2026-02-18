@@ -22,7 +22,7 @@
 
     <div
       id="g_id_onload"
-      data-client_id="376360171005-rehu48ffj43e6ncv27epo6h8hhblajib.apps.googleusercontent.com"
+      data-client_id=""
       data-callback="onGoogleSignIn"
       data-auto_prompt="false"
     ></div>
@@ -38,6 +38,47 @@
       }
     </script>
 
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script>
+      (async function () {
+        try {
+          const resp = await fetch("/config");
+          const cfg = await resp.json();
+          const onloadDiv = document.getElementById("g_id_onload");
+          if (onloadDiv && cfg && cfg.googleClientId) {
+            onloadDiv.setAttribute("data-client_id", cfg.googleClientId);
+          }
+          // Log and show the final client_id value before loading GSI
+          console.log('Resolved g_id_onload data-client_id =>', (onloadDiv && onloadDiv.getAttribute('data-client_id')) || cfg.googleClientId);
+          try {
+            const dbg = document.createElement('div');
+            dbg.textContent = 'Google client: ' + ((onloadDiv && onloadDiv.getAttribute('data-client_id')) || cfg.googleClientId || '(none)');
+            dbg.style.cssText = 'position:fixed;bottom:8px;right:8px;background:#fff;border:1px solid #ddd;padding:6px 8px;font-size:12px;z-index:9999;box-shadow:0 2px 6px rgba(0,0,0,0.08);';
+            document.body.appendChild(dbg);
+          } catch (e) {}
+          // Notify server of the intended GSI request for debugging
+          try {
+            await fetch('/debug/log-gsi', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                clientId: (onloadDiv && onloadDiv.getAttribute('data-client_id')) || cfg.googleClientId || null,
+                origin: window.location.origin,
+                href: window.location.href,
+                referrer: document.referrer || null,
+              }),
+            });
+          } catch (e) {
+            console.warn('Failed to send GSI debug log', e);
+          }
+          const s = document.createElement("script");
+          s.src = "https://accounts.google.com/gsi/client";
+          s.async = true;
+          s.defer = true;
+          document.head.appendChild(s);
+        } catch (err) {
+          console.error("Failed to fetch /config for Google client id", err);
+        }
+      })();
+    </script>
   </body>
 </html>

@@ -116,6 +116,45 @@ async function createApp() {
   // Serve repository root as static so pages/*.html are reachable at /pages/*.html
   app.use(express.static(path.join(__dirname, "..", "..")));
 
+  // Expose minimal runtime config for frontend pages (safe to expose client IDs)
+  // This allows static pages to dynamically obtain the Google Client ID from
+  // server environment without embedding .env values directly into source.
+  app.get("/config", (req, res) => {
+    res.json({
+      googleClientId: process.env.GOOGLE_CLIENT_ID || null,
+    });
+  });
+
+  // Debug endpoint: allow pages to POST the client_id and origin they will
+  // use to request GSI resources so we can log and inspect mismatches.
+  app.post("/debug/log-gsi", (req, res) => {
+    try {
+      const clientId = req.body && req.body.clientId ? req.body.clientId : null;
+      const origin = req.headers.origin || (req.body && req.body.origin) || req.get("referer") || req.ip;
+      const ua = req.get("user-agent") || "";
+      const info = {
+        time: new Date().toISOString(),
+        clientId,
+        origin,
+        ip: req.ip,
+        userAgent: ua,
+      };
+      if (logger && typeof logger.info === "function") {
+        logger.info(`GSI debug: ${JSON.stringify(info)}`);
+      } else {
+        // Fallback to console for development
+        // eslint-disable-next-line no-console
+        console.log("GSI debug:", info);
+      }
+      // Keep response minimal
+      res.status(204).end();
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error("Error logging GSI debug info", err);
+      res.status(500).json({ error: "failed to log" });
+    }
+  });
+
   // API Documentation with Swagger UI
   app.use(
     "/api-docs",
