@@ -10,6 +10,8 @@ const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const User = require("../models/User");
 const logger = require("../utils/logger");
+const axios = require("axios");
+const UserProfile = require("../models/UserProfile");
 
 /**
  * Configure Passport with Google OAuth 2.0 Strategy
@@ -102,6 +104,161 @@ function configurePassport(app) {
           // Clear pending role from session
           if (req.session?.pendingRole) {
             delete req.session.pendingRole;
+          }
+
+          // Attempt to enrich user data by calling Google People API using
+          // the access token provided by the OAuth flow. This fetches
+          // additional fields (birthdays, phoneNumbers, addresses, etc.)
+          // and attempts to merge them into `user.googleProfile` and the
+          // existing `UserProfile` record (if present).
+          try {
+            if (accessToken) {
+              const peopleUrl =
+                "https://people.googleapis.com/v1/people/me?personFields=names,emailAddresses,photos,birthdays,phoneNumbers,addresses,genders,organizations,locales";
+              const resp = await axios.get(peopleUrl, {
+                headers: { Authorization: `Bearer ${accessToken}` },
+                timeout: 5000,
+              });
+
+              const people = resp.data;
+              // Map a few useful fields into googleProfile
+              try {
+                // names[0]
+                const names = people.names || [];
+                if (names.length) {
+                  const n = names[0];
+                  user.googleProfile.name =
+                    n.displayName || user.googleProfile.name;
+                  user.googleProfile.given_name =
+                    n.givenName || user.googleProfile.given_name;
+                  user.googleProfile.family_name =
+                    n.familyName || user.googleProfile.family_name;
+                }
+
+                // photos[0]
+                const photos = people.photos || [];
+                if (photos.length && photos[0].url) {
+                  user.googleProfile.picture = photos[0].url;
+                }
+
+                // emailAddresses[0]
+                const emails = people.emailAddresses || [];
+                if (emails.length && emails[0].value) {
+                  user.googleProfile.email = emails[0].value;
+                }
+
+                // birthdays -> try to pick a full date
+                const birthdays = people.birthdays || [];
+                if (birthdays.length) {
+                  const bd = birthdays.find((b) => b.date && b.date.year);
+                  const bdAny = bd || birthdays[0];
+                  if (bdAny && bdAny.date) {
+                    const { year, month, day } = bdAny.date;
+                    if (year && month && day) {
+                      // store as ISO date string
+                      const dob = new Date(year, month - 1, day).toISOString();
+                      user.googleProfile.dateOfBirth = dob;
+                    }
+                  }
+                }
+
+                // phoneNumbers
+                const phones = people.phoneNumbers || [];
+                if (phones.length && phones[0].value) {
+                  user.googleProfile.phone = phones[0].value;
+                }
+
+                // addresses -> map to city/prefecture/country
+                const addresses = people.addresses || [];
+                if (addresses.length) {
+                  const a = addresses[0];
+                  if (a.city) user.googleProfile.city = a.city;
+                  if (a.region) user.googleProfile.prefecture = a.region;
+                  if (a.country) user.googleProfile.country = a.country;
+                }
+              } catch (mapErr) {
+                logger &&
+                  logger.warn &&
+                  logger.warn(
+                    "Error mapping People API fields:",
+                    mapErr.message || mapErr,
+                  );
+              }
+
+              // Save user (if any googleProfile fields changed)
+              try {
+                await user.save();
+              } catch (saveErr) {
+                logger &&
+                  logger.warn &&
+                  logger.warn(
+                    "Could not save user after People API enrich:",
+                    saveErr.message || saveErr,
+                  );
+              }
+
+              // Merge into existing UserProfile (do not create new profile)
+              try {
+                const existingProfile = await UserProfile.findOne({
+                  user: user._id,
+                });
+                if (existingProfile) {
+                  let changed = false;
+                  if (
+                    !existingProfile.firstName &&
+                    user.googleProfile.given_name
+                  ) {
+                    existingProfile.firstName = user.googleProfile.given_name;
+                    changed = true;
+                  }
+                  if (
+                    !existingProfile.lastName &&
+                    user.googleProfile.family_name
+                  ) {
+                    existingProfile.lastName = user.googleProfile.family_name;
+                    changed = true;
+                  }
+                  if (
+                    !existingProfile.photoPath &&
+                    user.googleProfile.picture
+                  ) {
+                    existingProfile.photoPath = user.googleProfile.picture;
+                    changed = true;
+                  }
+                  if (
+                    !existingProfile.dateOfBirth &&
+                    user.googleProfile.dateOfBirth
+                  ) {
+                    existingProfile.dateOfBirth =
+                      user.googleProfile.dateOfBirth;
+                    changed = true;
+                  }
+                  if (!existingProfile.phone && user.googleProfile.phone) {
+                    existingProfile.phone = user.googleProfile.phone;
+                    changed = true;
+                  }
+                  if (!existingProfile.city && user.googleProfile.city) {
+                    existingProfile.city = user.googleProfile.city;
+                    changed = true;
+                  }
+                  if (changed) await existingProfile.save();
+                }
+              } catch (mergeErr) {
+                logger &&
+                  logger.warn &&
+                  logger.warn(
+                    "Could not merge People API data into UserProfile:",
+                    mergeErr.message || mergeErr,
+                  );
+              }
+            }
+          } catch (err) {
+            logger &&
+              logger.warn &&
+              logger.warn(
+                "People API fetch failed (non-fatal):",
+                err.message || err,
+              );
           }
 
           return done(null, user);

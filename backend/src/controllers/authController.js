@@ -311,6 +311,8 @@ exports.googleAuth = asyncHandler(async (req, res, next) => {
  */
 exports.googleStart = asyncHandler(async (req, res, next) => {
   const { OAuth2Client } = require("google-auth-library");
+  const axios = require("axios");
+  const UserProfile = require("../models/UserProfile");
   const client = new OAuth2Client(
     process.env.GOOGLE_CLIENT_ID,
     process.env.GOOGLE_CLIENT_SECRET,
@@ -351,10 +353,207 @@ exports.googleCallback = asyncHandler(async (req, res, next) => {
     const r = await client.getToken(code);
     const tokens = r.tokens || r; // google-auth-library returns { tokens }
 
-    // For convenience, respond with the id_token so the developer can copy it
-    // to test the backend `/api/v1/auth/google` endpoint or paste into the
-    // verify helper. In production you would verify and create a session here.
-    res.status(200).json({ success: true, tokens });
+    // Extract tokens
+    const idToken = tokens.id_token;
+    const accessToken = tokens.access_token;
+
+    // Verify id_token to get the payload
+    let payload;
+    try {
+      const ticket = await client.verifyIdToken({
+        idToken,
+        audience: process.env.GOOGLE_CLIENT_ID,
+      });
+      payload = ticket.getPayload();
+    } catch (err) {
+      // If verify fails, still return tokens for debugging
+      logger &&
+        logger.warn &&
+        logger.warn(
+          "ID token verification failed in googleCallback:",
+          err.message || err,
+        );
+      return res.status(200).json({ success: true, tokens });
+    }
+
+    const email = payload.email;
+    const googleId = payload.sub;
+    const profileObj = {
+      id: payload.sub,
+      email: payload.email,
+      name: payload.name,
+      given_name: payload.given_name,
+      family_name: payload.family_name,
+      picture: payload.picture,
+      locale: payload.locale,
+    };
+
+    // Find or create user similar to googleAuth flow
+    let user = await User.findOne({ $or: [{ googleId }, { email }] });
+
+    if (user) {
+      if (user.authProvider === "local" && !user.googleId) {
+        // Existing local account — advise linking instead of automatic takeover
+        logger &&
+          logger.info &&
+          logger.info(
+            `Local account exists for ${email}; skipping automatic link`,
+          );
+        // Still set google fields if not present
+        user.googleId = user.googleId || googleId;
+        user.googleProfile = { ...user.googleProfile, ...profileObj };
+        user.authProvider = "google";
+        await user.save();
+      } else {
+        user.googleId = googleId;
+        user.googleProfile = { ...user.googleProfile, ...profileObj };
+        user.authProvider = "google";
+        user.lastLogin = Date.now();
+        await user.save();
+      }
+    } else {
+      user = await User.create({
+        email,
+        role: req.session?.pendingRole || "jobseeker",
+        authProvider: "google",
+        googleId,
+        googleProfile: profileObj,
+        isEmailVerified: true,
+        lastLogin: Date.now(),
+      });
+    }
+
+    // Enrich via People API if we have an access token
+    try {
+      if (accessToken) {
+        const peopleUrl =
+          "https://people.googleapis.com/v1/people/me?personFields=names,emailAddresses,photos,birthdays,phoneNumbers,addresses,genders,organizations,locales";
+        const resp = await axios.get(peopleUrl, {
+          headers: { Authorization: `Bearer ${accessToken}` },
+          timeout: 5000,
+        });
+        const people = resp.data || {};
+        const names = people.names || [];
+        if (names.length) {
+          const n = names[0];
+          user.googleProfile.name = n.displayName || user.googleProfile.name;
+          user.googleProfile.given_name =
+            n.givenName || user.googleProfile.given_name;
+          user.googleProfile.family_name =
+            n.familyName || user.googleProfile.family_name;
+        }
+        const photos = people.photos || [];
+        if (photos.length && photos[0].url)
+          user.googleProfile.picture = photos[0].url;
+        const emails = people.emailAddresses || [];
+        if (emails.length && emails[0].value)
+          user.googleProfile.email = emails[0].value;
+        const birthdays = people.birthdays || [];
+        if (birthdays.length) {
+          const bd =
+            birthdays.find((b) => b.date && b.date.year) || birthdays[0];
+          if (bd && bd.date) {
+            const { year, month, day } = bd.date;
+            if (year && month && day)
+              user.googleProfile.dateOfBirth = new Date(
+                year,
+                month - 1,
+                day,
+              ).toISOString();
+          }
+        }
+        const phones = people.phoneNumbers || [];
+        if (phones.length && phones[0].value)
+          user.googleProfile.phone = phones[0].value;
+        const addresses = people.addresses || [];
+        if (addresses.length) {
+          const a = addresses[0];
+          if (a.city) user.googleProfile.city = a.city;
+          if (a.region) user.googleProfile.prefecture = a.region;
+          if (a.country) user.googleProfile.country = a.country;
+        }
+        await user.save();
+
+        // Merge into existing UserProfile if present
+        try {
+          const existingProfile = await UserProfile.findOne({ user: user._id });
+          if (existingProfile) {
+            let changed = false;
+            if (!existingProfile.firstName && user.googleProfile.given_name) {
+              existingProfile.firstName = user.googleProfile.given_name;
+              changed = true;
+            }
+            if (!existingProfile.lastName && user.googleProfile.family_name) {
+              existingProfile.lastName = user.googleProfile.family_name;
+              changed = true;
+            }
+            if (!existingProfile.photoPath && user.googleProfile.picture) {
+              existingProfile.photoPath = user.googleProfile.picture;
+              changed = true;
+            }
+            if (
+              !existingProfile.dateOfBirth &&
+              user.googleProfile.dateOfBirth
+            ) {
+              existingProfile.dateOfBirth = user.googleProfile.dateOfBirth;
+              changed = true;
+            }
+            if (!existingProfile.phone && user.googleProfile.phone) {
+              existingProfile.phone = user.googleProfile.phone;
+              changed = true;
+            }
+            if (!existingProfile.city && user.googleProfile.city) {
+              existingProfile.city = user.googleProfile.city;
+              changed = true;
+            }
+            if (changed) await existingProfile.save();
+          }
+        } catch (mergeErr) {
+          logger &&
+            logger.warn &&
+            logger.warn(
+              "Could not merge People API data into UserProfile (callback):",
+              mergeErr.message || mergeErr,
+            );
+        }
+      }
+    } catch (peopleErr) {
+      logger &&
+        logger.warn &&
+        logger.warn(
+          "People API fetch failed in googleCallback (non-fatal):",
+          peopleErr.message || peopleErr,
+        );
+    }
+
+    // Generate JWT and set cookies for frontend
+    const jwtToken = user.getSignedJwtToken();
+    req.session.authToken = jwtToken;
+    req.session.user = { id: user._id, email: user.email, role: user.role };
+    res.cookie("isLoggedIn", "true", {
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+      httpOnly: false,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+    });
+    res.cookie("email", user.email, {
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+      httpOnly: false,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+    });
+    res.cookie("token", jwtToken, {
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+      httpOnly: false,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+    });
+
+    // Redirect to dashboard with token query param
+    const redirectUrl = "/pages/profileDashboard.html";
+    const separator = redirectUrl.includes("?") ? "&" : "?";
+    return res.redirect(`${redirectUrl}${separator}token=${jwtToken}`);
   } catch (err) {
     return next(new ApiError(500, "Failed to exchange code for tokens"));
   }

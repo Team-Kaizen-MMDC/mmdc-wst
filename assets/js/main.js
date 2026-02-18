@@ -18,7 +18,6 @@ import { initHeaderAuth } from "./modules/headerAuth.js";
     link.href =
       "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css";
     document.head.appendChild(link);
-
   }
 })();
 
@@ -40,8 +39,6 @@ class App {
   }
 
   initFeatures() {
-
-
     // Initialize header authentication state
     initHeaderAuth();
 
@@ -63,7 +60,7 @@ class App {
     const offcanvasEl = document.getElementById("siteOffcanvas");
     if (offcanvasEl) {
       const toggler = document.querySelector(
-        '[data-bs-toggle="offcanvas"][data-bs-target="#siteOffcanvas"]'
+        '[data-bs-toggle="offcanvas"][data-bs-target="#siteOffcanvas"]',
       );
       offcanvasEl.addEventListener("hidden.bs.offcanvas", () => {
         if (toggler) toggler.focus();
@@ -119,13 +116,11 @@ class App {
         // We'll create a unique token on the anchor so subsequent clicks
         // or re-entrancy won't trigger the same navigation twice.
         if (anchor._deferredNavFired) {
-  
           return;
         }
         anchor._deferredNavFired = true;
 
         const doNavigate = () => {
-
           // If navigation is a hash-only change on the same page, use pushState
           if (
             targetUrl.hash &&
@@ -163,7 +158,7 @@ class App {
         } catch (err) {
           console.warn(
             "Offcanvas: error while trying to hide offcanvas, triggering navigation fallback",
-            err
+            err,
           );
           // Fallback: remove show and dispatch hidden event synchronously
           offcanvasEl.classList.remove("show");
@@ -174,21 +169,18 @@ class App {
     }
 
     // Log successful initialization
-
   }
 
   //Nav Tab color link Active
   initDashboardTabs() {
     const tabButtons = document.querySelectorAll(
-      '#dashboardTabs button[data-bs-toggle="tab"]'
+      '#dashboardTabs button[data-bs-toggle="tab"]',
     );
 
     if (tabButtons.length === 0) {
       // Not on a dashboard page, skip
       return;
     }
-
-
 
     tabButtons.forEach((button) => {
       button.addEventListener("shown.bs.tab", function () {
@@ -221,7 +213,6 @@ class App {
         // Prefer appending into the navbar if present so layout is consistent
         const navbar = header.querySelector(".navbar") || header;
         navbar.appendChild(headerActions);
-
       } else {
         // No header found; nothing we can do
         return;
@@ -415,11 +406,8 @@ document.addEventListener("DOMContentLoaded", () => {
       setTimeout(() => {
         successMessage.style.opacity = "1";
       }, 10); // Small delay to trigger transition
-
-
     } else {
       // Form is invalid: Display error messages
-
     }
   });
 
@@ -448,8 +436,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // --- Profile Summary Inline Edit Logic ---
 function initializeApp() {
-
-
   // --- DOM Element References ---
   const readDisplay = document.getElementById("read-display");
   const textContent = document.getElementById("text-content");
@@ -468,7 +454,7 @@ function initializeApp() {
     !saveBtn
   ) {
     console.error(
-      "One or more required profile dashboard elements are missing. Aborting initialization."
+      "One or more required profile dashboard elements are missing. Aborting initialization.",
     );
     return;
   }
@@ -517,7 +503,7 @@ function initializeApp() {
       editInput.focus();
       editInput.setSelectionRange(
         editInput.value.length,
-        editInput.value.length
+        editInput.value.length,
       );
     } else {
       // --- SWITCH TO READ/SAVE MODE ---
@@ -536,7 +522,6 @@ function initializeApp() {
       // 4. Toggle Buttons (Show edit button, Hide save button)
       saveBtn.classList.add("d-none");
       editBtn.classList.remove("d-none");
-
 
       // NOTE: Add your Firestore update logic here in a real app.
     }
@@ -560,6 +545,31 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
+  // Apply cached profile for instant header update (if available)
+  try {
+    const cached = localStorage.getItem("userProfile");
+    if (cached) {
+      const lp = JSON.parse(cached);
+      const first = lp.firstName || "";
+      const last = lp.lastName || "";
+      const display =
+        first || last
+          ? `${first} ${last}`.trim()
+          : lp.email || userMenuBtn.textContent;
+      const nameEl = userMenuDropdown.querySelector(
+        ".user-menu-dropdown__userName",
+      );
+      const greetEl = userMenuDropdown.querySelector(
+        ".user-menu-dropdown__greeting",
+      );
+      if (userMenuBtn && first) userMenuBtn.textContent = first;
+      if (nameEl) nameEl.textContent = display;
+      if (greetEl) greetEl.textContent = `Welcome back, ${first || "User"}!`;
+    }
+  } catch (e) {
+    // non-fatal
+  }
+
   // Function to toggle the menu's visibility
   function toggleMenu() {
     userMenuDropdown.classList.toggle("is-active");
@@ -575,7 +585,12 @@ document.addEventListener("DOMContentLoaded", () => {
   // Event listener to close the menu when clicking anywhere else on the page
   document.addEventListener("click", (e) => {
     // Check if the dropdown or button exists before checking contains/target
-    if (userMenuDropdown && userMenuBtn && !userMenuDropdown.contains(e.target) && e.target !== userMenuBtn) {
+    if (
+      userMenuDropdown &&
+      userMenuBtn &&
+      !userMenuDropdown.contains(e.target) &&
+      e.target !== userMenuBtn
+    ) {
       userMenuDropdown.classList.remove("is-active");
     }
   });
@@ -641,7 +656,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const isLoggedIn = sessionStorage.getItem("isLoggedIn") === "true";
 
   if (!isLoggedIn) {
-
     return; // exit early, skip toggle injection entirely
   }
 
@@ -687,8 +701,6 @@ document.addEventListener("DOMContentLoaded", function () {
       localStorage.removeItem("isLoggedIn");
       sessionStorage.removeItem("isLoggedIn");
       localStorage.removeItem("userEmail");
-
-
 
       // Optional: Add a small delay for a smoother UX
       setTimeout(() => {
@@ -879,11 +891,11 @@ if (jobListings) {
         // fallback to a dynamic detail page handled by jobDetails.html
         if (window.location.pathname.includes("/pages/jobs/")) {
           detailUrl = `./jobDetails.html?id=${encodeURIComponent(
-            String(job.id)
+            String(job.id),
           )}`;
         } else {
           detailUrl = `pages/jobs/jobDetails.html?id=${encodeURIComponent(
-            String(job.id)
+            String(job.id),
           )}`;
         }
       }
@@ -897,17 +909,17 @@ if (jobListings) {
            
                 </div>
                 <p class="text-muted mb-2">${escapeHtml(
-                  job.company
+                  job.company,
                 )} · ${capitalize(job.location)}</p>
                 <p class="small mb-1"><strong>Industry:</strong> ${capitalize(
-                  job.industry
+                  job.industry,
                 )}</p>
                 <p class="small mb-1"><strong>Salary:</strong> ¥${job.salary.toLocaleString()}</p>
                      <p class="small mb-1"><strong>Industry:</strong> ${capitalize(
-                       job.japaneseLevel
+                       job.japaneseLevel,
                      )}</p>
                 <p class="small mb-1"><strong>Visa Support:</strong> ${capitalize(
-                  job.support
+                  job.support,
                 )}</p>
               </div>
               <div class="card-footer bg-transparent border-0">
@@ -957,7 +969,7 @@ if (jobListings) {
   // update button styles for a group
   function updateButtons(groupKey) {
     const container = document.querySelector(
-      `[data-filter-group="${groupKey}"]`
+      `[data-filter-group="${groupKey}"]`,
     );
     if (!container) return;
     container.querySelectorAll("button[data-value]").forEach((btn) => {
@@ -1121,7 +1133,7 @@ if (jobListings) {
 
       // update all button groups visually
       ["support", "japaneseLevel", "location", "industry", "minSalary"].forEach(
-        (k) => updateButtons(k)
+        (k) => updateButtons(k),
       );
       if (searchInput) {
         searchInput.value = "";
@@ -1131,7 +1143,8 @@ if (jobListings) {
 
       // Announce to screen readers
       if (filterAnnouncement) {
-        filterAnnouncement.textContent = "All filters cleared. Showing all jobs.";
+        filterAnnouncement.textContent =
+          "All filters cleared. Showing all jobs.";
       }
 
       // Return focus to search input for keyboard users
@@ -1154,7 +1167,7 @@ if (jobListings) {
   window.addEventListener("DOMContentLoaded", () => {
     // ensure all groups reflect initial active button styles
     ["support", "japaneseLevel", "location", "industry", "minSalary"].forEach(
-      (k) => updateButtons(k)
+      (k) => updateButtons(k),
     );
     filterJobs();
   });
@@ -1188,7 +1201,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 4. Enable/Disable the button based on input
   emailInput.addEventListener("input", updateButtonState);
-  
+
   // Run once on load in case the browser pre-fills the input
   updateButtonState();
 
@@ -1207,14 +1220,13 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-
 // --- Small, conservative utilities: active-nav auto-detect + aria fallbacks ---
 (function () {
   // Active nav auto-detection: mark nav link matching current path as .active
   function applyActiveNav() {
     try {
       const links = document.querySelectorAll(
-        ".navbar a.nav-link, .nav-link, nav a[href]"
+        ".navbar a.nav-link, .nav-link, nav a[href]",
       );
       if (!links || links.length === 0) return;
 

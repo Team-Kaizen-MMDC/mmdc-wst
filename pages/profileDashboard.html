@@ -2428,33 +2428,92 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
 
         try {
           // Fetch profile from backend API
-          // --- QUICK UI PATCH: apply any cached localStorage userProfile immediately
+          // If the URL contains a `token` parameter (redirect from OAuth),
+          // prioritize fetching `/api/v1/auth/me` with that token to populate
+          // the UI immediately. Otherwise, fall back to any cached localProfile.
           try {
-            const cached = localStorage.getItem('userProfile');
-            if (cached) {
-              const lp = JSON.parse(cached);
-              const userMenuBtn = document.getElementById("user-menu-btn");
-              const userName = document.querySelector(".user-menu-dropdown__userName");
-              const avatarImg = document.getElementById("profileAvatarImg");
-              const infoName = document.getElementById("info-name");
+            const params = new URLSearchParams(window.location.search);
+            const urlToken = params.get('token');
+            if (urlToken) {
+              // Persist token cookie for subsequent API calls
+              document.cookie = `token=${urlToken}; path=/`;
+              // Remove token from URL to keep things clean
+              try { history.replaceState(null, '', window.location.pathname + window.location.hash); } catch {}
 
-              const first = lp.firstName || '';
-              const last = lp.lastName || '';
-              const display = (first || last) ? `${first} ${last}`.trim() : (lp.email || 'User');
+              // Fetch basic user info and cache minimal profile for instant UI update
+              try {
+                const meRes = await fetch('/api/v1/auth/me', {
+                  headers: { Authorization: `Bearer ${urlToken}` },
+                });
+                if (meRes.ok) {
+                  const meData = await meRes.json();
+                  const user = meData.data.user;
+                  const gp = user?.googleProfile || {};
+                  const localProfile = {
+                    firstName: gp.given_name || gp.name?.split(' ')[0] || '',
+                    lastName: gp.family_name || (gp.name && gp.name.split(' ').slice(1).join(' ')) || '',
+                    email: gp.email || user?.email || '',
+                    picture: gp.picture || '',
+                    city: gp.city || '',
+                    prefecture: gp.prefecture || '',
+                    nationality: '',
+                    japaneseLevel: '',
+                  };
+                  localStorage.setItem('userProfile', JSON.stringify(localProfile));
 
-              if (userMenuBtn) userMenuBtn.textContent = first || userMenuBtn.textContent;
-              if (userName) userName.textContent = display;
-              if (infoName) infoName.textContent = display;
+                  // Apply immediately to UI
+                  const userMenuBtn = document.getElementById('user-menu-btn');
+                  const userName = document.querySelector('.user-menu-dropdown__userName');
+                  const avatarImg = document.getElementById('profileAvatarImg');
+                  const infoName = document.getElementById('info-name');
+                  const first = localProfile.firstName || '';
+                  const last = localProfile.lastName || '';
+                  const display = (first || last) ? `${first} ${last}`.trim() : (localProfile.email || 'User');
+                  if (userMenuBtn) userMenuBtn.textContent = first || userMenuBtn.textContent;
+                  if (userName) userName.textContent = display;
+                  if (infoName) infoName.textContent = display;
+                  if (localProfile.picture && avatarImg) {
+                    const pic = avatarImg.closest('picture');
+                    const imgHtml = `<img id="profileAvatarImg" src="${localProfile.picture}" alt="User Avatar" class="rounded-circle" style="width: 100px; height: 100px; object-fit: cover; object-position: center;" loading="lazy" onerror="this.src='https://placehold.co/100x100/fecaca/991b1b?text=JD';"/>`;
+                    if (pic) pic.innerHTML = imgHtml;
+                    else avatarImg.src = localProfile.picture;
+                  }
+                }
+              } catch (meErr) {
+                console.warn('auth/me fetch during OAuth redirect failed:', meErr);
+              }
+            } else {
+              // No token in URL — safe to apply cached profile for instant UI
+              try {
+                const cached = localStorage.getItem('userProfile');
+                if (cached) {
+                  const lp = JSON.parse(cached);
+                  const userMenuBtn = document.getElementById("user-menu-btn");
+                  const userName = document.querySelector(".user-menu-dropdown__userName");
+                  const avatarImg = document.getElementById("profileAvatarImg");
+                  const infoName = document.getElementById("info-name");
 
-              if (lp.picture && avatarImg) {
-                const pic = avatarImg.closest('picture');
-                const imgHtml = `<img id="profileAvatarImg" src="${lp.picture}" alt="User Avatar" class="rounded-circle" style="width: 100px; height: 100px; object-fit: cover; object-position: center;" loading="lazy" onerror="this.src='https://placehold.co/100x100/fecaca/991b1b?text=JD';"/>`;
-                if (pic) pic.innerHTML = imgHtml;
-                else avatarImg.src = lp.picture;
+                  const first = lp.firstName || '';
+                  const last = lp.lastName || '';
+                  const display = (first || last) ? `${first} ${last}`.trim() : (lp.email || 'User');
+
+                  if (userMenuBtn) userMenuBtn.textContent = first || userMenuBtn.textContent;
+                  if (userName) userName.textContent = display;
+                  if (infoName) infoName.textContent = display;
+
+                  if (lp.picture && avatarImg) {
+                    const pic = avatarImg.closest('picture');
+                    const imgHtml = `<img id="profileAvatarImg" src="${lp.picture}" alt="User Avatar" class="rounded-circle" style="width: 100px; height: 100px; object-fit: cover; object-position: center;" loading="lazy" onerror="this.src='https://placehold.co/100x100/fecaca/991b1b?text=JD';"/>`;
+                    if (pic) pic.innerHTML = imgHtml;
+                    else avatarImg.src = lp.picture;
+                  }
+                }
+              } catch (e) {
+                console.warn('Could not apply cached local profile:', e);
               }
             }
           } catch (e) {
-            console.warn('Could not apply cached local profile:', e);
+            console.warn('Could not apply cached local profile logic:', e);
           }
 
           const response = await fetch("/api/v1/profile", {
