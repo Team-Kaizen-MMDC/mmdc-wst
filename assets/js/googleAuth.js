@@ -13,8 +13,6 @@ const API_BASE_URL =
  * @param {Object} response - Google Sign-In response object containing credential
  */
 async function handleGoogleSignIn(response) {
-
-
   try {
     // The response.credential contains the JWT ID token
     const googleToken = response.credential;
@@ -49,7 +47,11 @@ async function handleGoogleSignIn(response) {
     localStorage.setItem("token", data.data.token);
     localStorage.setItem("user", JSON.stringify(data.data.user));
 
-
+    // Also set cookies so pages that read cookies (legacy) work
+    const cookieMaxAge = 7 * 24 * 60 * 60; // 7 days in seconds
+    document.cookie = `token=${encodeURIComponent(data.data.token)}; max-age=${cookieMaxAge}; path=/; samesite=lax`;
+    document.cookie = `isLoggedIn=true; max-age=${cookieMaxAge}; path=/; samesite=lax`;
+    document.cookie = `email=${encodeURIComponent(data.data.user.email)}; max-age=${cookieMaxAge}; path=/; samesite=lax`;
 
     // Redirect based on user role
     redirectToDashboard(data.data.user.role);
@@ -65,8 +67,6 @@ async function handleGoogleSignIn(response) {
  * @param {Object} response - Google Sign-In response object containing credential
  */
 async function handleGoogleSignUp(response) {
-
-
   try {
     const googleToken = response.credential;
 
@@ -103,7 +103,11 @@ async function handleGoogleSignUp(response) {
     localStorage.setItem("token", data.data.token);
     localStorage.setItem("user", JSON.stringify(data.data.user));
 
-
+    // Also set cookies so pages that read cookies (legacy) work
+    const cookieMaxAge2 = 7 * 24 * 60 * 60; // 7 days
+    document.cookie = `token=${encodeURIComponent(data.data.token)}; max-age=${cookieMaxAge2}; path=/; samesite=lax`;
+    document.cookie = `isLoggedIn=true; max-age=${cookieMaxAge2}; path=/; samesite=lax`;
+    document.cookie = `email=${encodeURIComponent(data.data.user.email)}; max-age=${cookieMaxAge2}; path=/; samesite=lax`;
 
     // Redirect to dashboard
     redirectToDashboard(role);

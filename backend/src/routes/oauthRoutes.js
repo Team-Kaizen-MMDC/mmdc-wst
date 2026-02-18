@@ -57,10 +57,18 @@ router.get(
       // User authenticated successfully
       const user = req.user;
 
-      logger.info(`User authenticated via Google: ${user.email}`);
+      if (!user) {
+        logger.error("OAuth callback: No user object received");
+        return res.redirect("/pages/signin.html?error=no_user");
+      }
+
+      logger.info(
+        `User authenticated via Google: ${user.email} (${user.role})`,
+      );
 
       // Generate JWT token for API authentication
       const token = user.getSignedJwtToken();
+      logger.info(`Generated JWT token for user: ${user.email}`);
 
       // Store token in session for client-side retrieval
       req.session.authToken = token;
@@ -69,6 +77,32 @@ router.get(
         email: user.email,
         role: user.role,
       };
+
+      // Set isLoggedIn cookie for frontend auth checks
+      res.cookie("isLoggedIn", "true", {
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+        httpOnly: false, // Allow JS access
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+      });
+
+      // Set email cookie (for frontend display)
+      res.cookie("email", user.email, {
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        httpOnly: false,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+      });
+
+      // Set token cookie so frontend can call protected APIs (not httpOnly
+      // because frontend reads it via `document.cookie`).
+      res.cookie("token", token, {
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        httpOnly: false,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        path: "/",
+      });
 
       // Determine redirect URL
       let redirectUrl = req.session.authRedirect;
@@ -86,9 +120,11 @@ router.get(
       const separator = redirectUrl.includes("?") ? "&" : "?";
       const finalUrl = `${redirectUrl}${separator}token=${token}`;
 
+      logger.info(`Redirecting user ${user.email} to: ${finalUrl}`);
       res.redirect(finalUrl);
     } catch (error) {
       logger.error("OAuth callback error:", error);
+      console.error("OAuth callback error stack:", error.stack);
       res.redirect("/pages/signin.html?error=auth_error");
     }
   },
@@ -114,6 +150,11 @@ router.get("/logout", (req, res) => {
       }
 
       logger.info(`User logged out: ${userEmail}`);
+      // Clear client-side auth cookies
+      res.cookie("isLoggedIn", "", { expires: new Date(0), path: "/" });
+      res.cookie("email", "", { expires: new Date(0), path: "/" });
+      res.cookie("token", "", { expires: new Date(0), path: "/" });
+
       res.redirect("/pages/signin.html?message=logged_out");
     });
   });
