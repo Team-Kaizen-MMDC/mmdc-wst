@@ -4,9 +4,9 @@ const helmet = require("helmet");
 const cors = require("cors");
 const session = require("express-session");
 const crypto = require("crypto");
-const { google } = require("googleapis");
 const { OAuth2Client } = require("google-auth-library");
 const jwt = require("jsonwebtoken");
+const configurePassport = require("./config/passport");
 // Note: express-mongo-sanitize v2.x is incompatible with Express 5
 // TODO: Upgrade to v3.x when available or use alternative sanitization
 // const mongoSanitize = require("express-mongo-sanitize");
@@ -206,85 +206,46 @@ async function createApp() {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "lax",
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
       },
     }),
   );
 
+  // Initialize Passport for OAuth
+  configurePassport(app);
+
   // Serve repository root as static so pages/*.html are reachable at /pages/*.html
   app.use(express.static(path.join(__dirname, "..", "..")));
 
-  // ---- Google OAuth2 routes (minimal dev integration) ----
-  const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || null;
-  const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET || null;
-  const OAUTH_REDIRECT_URI =
-    process.env.GOOGLE_OAUTH_REDIRECT_URI ||
-    `${process.env.BASE_URL || `http://localhost:${process.env.PORT || 3000}`}/auth/google/callback`;
+  // OAuth routes (Passport-based Google OAuth 2.0)
+  const oauthRoutes = require("./routes/oauthRoutes");
+  app.use("/auth", oauthRoutes);
 
-  const oauth2Client = new google.auth.OAuth2(
-    GOOGLE_CLIENT_ID,
-    GOOGLE_CLIENT_SECRET,
-    OAUTH_REDIRECT_URI,
-  );
-
-  const oauthScopes = [
-    "https://www.googleapis.com/auth/userinfo.profile",
-    "https://www.googleapis.com/auth/userinfo.email",
-  ];
-
-  // Start OAuth flow
-  app.get("/auth/google", (req, res) => {
-    const state = crypto.randomBytes(16).toString("hex");
-    req.session.oauthState = state;
-    req.session.save((err) => {
-      if (err) console.error("session save error:", err);
-      const url = oauth2Client.generateAuthUrl({
-        access_type: "offline",
-        scope: oauthScopes,
-        prompt: "select_account",
-        state,
-      });
-      res.redirect(url);
+  // Debug session endpoint
+  app.get("/debug/session", (req, res) => {
+    res.json({
+      session: req.session || null,
+      authenticated: req.isAuthenticated ? req.isAuthenticated() : false,
+      user: req.user || null,
     });
   });
 
-  // Debug session
-  app.get("/debug/session", (req, res) => {
-    res.json({ session: req.session || null });
-  });
-
-  // OAuth callback
-  app.get("/auth/google/callback", async (req, res) => {
-    try {
-      const { code, error, state } = req.query;
-      if (error) return res.status(400).json({ error, details: req.query });
-      const expected = req.session && req.session.oauthState;
-      if (expected && state !== expected) {
-        return res.status(400).json({ error: "invalid_state" });
-      }
-      if (!code) return res.status(400).json({ error: "missing_code" });
-      const { tokens } = await oauth2Client.getToken(code);
-      oauth2Client.setCredentials(tokens);
-      req.session.tokens = tokens;
-      // fetch basic profile
-      const oauth2 = google.oauth2({ auth: oauth2Client, version: "v2" });
-      const userinfo = await oauth2.userinfo.get();
-      req.session.user = userinfo.data;
-      // Redirect to a static page that exists in the repo
-      res.redirect("/pages/profileDashboard.html");
-    } catch (err) {
-      console.error("OAuth callback error:", err);
-      res.status(500).json({ error: "authentication_error" });
-    }
-  });
-
-  // POST endpoint to accept GSI ID tokens from client and mint local JWT
-  // Matches client-side `googleAuth.js` expectation at POST /api/v1/auth/google
+  // LEGACY: POST endpoint to accept GSI ID tokens from client (kept for backward compatibility)
+  // New implementation uses OAuth redirect flow via /auth/google
+  // This endpoint can be removed if you want to fully deprecate GSI
   app.post("/api/v1/auth/google", async (req, res) => {
     try {
       const idToken =
         req.body && req.body.googleToken ? req.body.googleToken : null;
       if (!idToken)
         return res.status(400).json({ message: "missing_google_token" });
+
+      const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || null;
+      if (!GOOGLE_CLIENT_ID) {
+        return res
+          .status(500)
+          .json({ message: "google_client_id_not_configured" });
+      }
 
       const client = new OAuth2Client(GOOGLE_CLIENT_ID);
       const ticket = await client.verifyIdToken({
