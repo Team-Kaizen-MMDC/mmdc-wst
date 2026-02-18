@@ -2,6 +2,11 @@ const express = require("express");
 const path = require("path");
 const helmet = require("helmet");
 const cors = require("cors");
+const session = require("express-session");
+const crypto = require("crypto");
+const { google } = require("googleapis");
+const { OAuth2Client } = require("google-auth-library");
+const jwt = require("jsonwebtoken");
 // Note: express-mongo-sanitize v2.x is incompatible with Express 5
 // TODO: Upgrade to v3.x when available or use alternative sanitization
 // const mongoSanitize = require("express-mongo-sanitize");
@@ -64,6 +69,27 @@ async function createApp() {
       contentSecurityPolicy: {
         directives: cspDirectives,
       },
+      // Disable upgrade-insecure-requests in development (incompatible with localhost)
+      contentSecurityPolicy:
+        process.env.NODE_ENV === "production"
+          ? {
+              directives: cspDirectives,
+            }
+          : {
+              directives: {
+                ...cspDirectives,
+                upgradeInsecureRequests: null, // Don't force HTTPS in dev
+              },
+            },
+      // Allow cross-origin for Google OAuth in development
+      crossOriginOpenerPolicy:
+        process.env.NODE_ENV === "production"
+          ? { policy: "same-origin" }
+          : false,
+      crossOriginResourcePolicy:
+        process.env.NODE_ENV === "production"
+          ? { policy: "same-origin" }
+          : false,
     }),
   );
 
@@ -86,6 +112,62 @@ async function createApp() {
   // Body parser middleware
   app.use(express.json({ limit: "10mb" }));
   app.use(express.urlencoded({ extended: true, limit: "10mb" }));
+
+  // Temporary request logger for OAuth/GSI debugging
+  app.use((req, res, next) => {
+    try {
+      const smallBody =
+        req.body && Object.keys(req.body).length
+          ? JSON.stringify(req.body)
+          : "<empty>";
+      console.log(
+        `REQ_LOG ${new Date().toISOString()} ${req.method} ${req.originalUrl} - body=${smallBody}`,
+      );
+      // Show important headers without sensitive cookies
+      const hdrs = {
+        origin: req.headers.origin || null,
+        referer: req.headers.referer || null,
+        host: req.headers.host || null,
+        "user-agent": req.headers["user-agent"] || null,
+      };
+      console.log("REQ_LOG headers:", hdrs);
+    } catch (e) {
+      // ignore logging errors
+    }
+    next();
+  });
+
+  // Temporary request logger for OAuth/GSI debugging
+  app.use((req, res, next) => {
+    try {
+      const relevant =
+        req.originalUrl &&
+        (req.originalUrl.startsWith("/api/") ||
+          req.originalUrl.startsWith("/auth/") ||
+          req.originalUrl.startsWith("/debug/"));
+      if (relevant) {
+        const info = {
+          time: new Date().toISOString(),
+          method: req.method,
+          url: req.originalUrl,
+          origin: req.get("origin") || null,
+          referer: req.get("referer") || null,
+          headers: {
+            cookie: req.get("cookie") || null,
+            host: req.get("host") || null,
+            referer: req.get("referer") || null,
+            "user-agent": req.get("user-agent") || null,
+          },
+          body: req.body || null,
+        };
+        // eslint-disable-next-line no-console
+        console.log("[REQ-DEBUG]", JSON.stringify(info));
+      }
+    } catch (err) {
+      // ignore logging errors
+    }
+    return next();
+  });
 
   // Sanitize data - temporarily disabled due to Express 5 compatibility
   // app.use(mongoSanitize());
@@ -113,8 +195,131 @@ async function createApp() {
     );
   }
 
+  // Session middleware (development-friendly defaults)
+  app.use(
+    session({
+      name: "jssw.sid",
+      secret: process.env.SESSION_SECRET || "dev-session-secret",
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+      },
+    }),
+  );
+
   // Serve repository root as static so pages/*.html are reachable at /pages/*.html
   app.use(express.static(path.join(__dirname, "..", "..")));
+
+  // ---- Google OAuth2 routes (minimal dev integration) ----
+  const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || null;
+  const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET || null;
+  const OAUTH_REDIRECT_URI =
+    process.env.GOOGLE_OAUTH_REDIRECT_URI ||
+    `${process.env.BASE_URL || `http://localhost:${process.env.PORT || 3000}`}/auth/google/callback`;
+
+  const oauth2Client = new google.auth.OAuth2(
+    GOOGLE_CLIENT_ID,
+    GOOGLE_CLIENT_SECRET,
+    OAUTH_REDIRECT_URI,
+  );
+
+  const oauthScopes = [
+    "https://www.googleapis.com/auth/userinfo.profile",
+    "https://www.googleapis.com/auth/userinfo.email",
+  ];
+
+  // Start OAuth flow
+  app.get("/auth/google", (req, res) => {
+    const state = crypto.randomBytes(16).toString("hex");
+    req.session.oauthState = state;
+    req.session.save((err) => {
+      if (err) console.error("session save error:", err);
+      const url = oauth2Client.generateAuthUrl({
+        access_type: "offline",
+        scope: oauthScopes,
+        prompt: "select_account",
+        state,
+      });
+      res.redirect(url);
+    });
+  });
+
+  // Debug session
+  app.get("/debug/session", (req, res) => {
+    res.json({ session: req.session || null });
+  });
+
+  // OAuth callback
+  app.get("/auth/google/callback", async (req, res) => {
+    try {
+      const { code, error, state } = req.query;
+      if (error) return res.status(400).json({ error, details: req.query });
+      const expected = req.session && req.session.oauthState;
+      if (expected && state !== expected) {
+        return res.status(400).json({ error: "invalid_state" });
+      }
+      if (!code) return res.status(400).json({ error: "missing_code" });
+      const { tokens } = await oauth2Client.getToken(code);
+      oauth2Client.setCredentials(tokens);
+      req.session.tokens = tokens;
+      // fetch basic profile
+      const oauth2 = google.oauth2({ auth: oauth2Client, version: "v2" });
+      const userinfo = await oauth2.userinfo.get();
+      req.session.user = userinfo.data;
+      // Redirect to a static page that exists in the repo
+      res.redirect("/pages/profileDashboard.html");
+    } catch (err) {
+      console.error("OAuth callback error:", err);
+      res.status(500).json({ error: "authentication_error" });
+    }
+  });
+
+  // POST endpoint to accept GSI ID tokens from client and mint local JWT
+  // Matches client-side `googleAuth.js` expectation at POST /api/v1/auth/google
+  app.post("/api/v1/auth/google", async (req, res) => {
+    try {
+      const idToken =
+        req.body && req.body.googleToken ? req.body.googleToken : null;
+      if (!idToken)
+        return res.status(400).json({ message: "missing_google_token" });
+
+      const client = new OAuth2Client(GOOGLE_CLIENT_ID);
+      const ticket = await client.verifyIdToken({
+        idToken,
+        audience: GOOGLE_CLIENT_ID,
+      });
+      const payload = ticket.getPayload();
+
+      // Basic user object
+      const user = {
+        id: payload.sub,
+        email: payload.email,
+        name: payload.name,
+        picture: payload.picture,
+        locale: payload.locale,
+        verified_email: payload.email_verified,
+      };
+
+      // Mint app JWT
+      const token = jwt.sign(
+        { sub: user.id, email: user.email, name: user.name },
+        process.env.JWT_SECRET || "dev-jwt-secret",
+        {
+          expiresIn: process.env.JWT_EXPIRE || "7d",
+        },
+      );
+
+      return res.json({ data: { token, user } });
+    } catch (err) {
+      console.error("/api/v1/auth/google verification error:", err);
+      return res
+        .status(500)
+        .json({ message: "google_token_verification_failed" });
+    }
+  });
 
   // Expose minimal runtime config for frontend pages (safe to expose client IDs)
   // This allows static pages to dynamically obtain the Google Client ID from
@@ -130,7 +335,11 @@ async function createApp() {
   app.post("/debug/log-gsi", (req, res) => {
     try {
       const clientId = req.body && req.body.clientId ? req.body.clientId : null;
-      const origin = req.headers.origin || (req.body && req.body.origin) || req.get("referer") || req.ip;
+      const origin =
+        req.headers.origin ||
+        (req.body && req.body.origin) ||
+        req.get("referer") ||
+        req.ip;
       const ua = req.get("user-agent") || "";
       const info = {
         time: new Date().toISOString(),
