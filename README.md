@@ -46,7 +46,8 @@ For implementation details, testing guidance, and design docs, see the [docs/](d
 
 - Backend code and API are in the `backend/` folder. See `backend/README.md` for setup and running instructions.
 - Generated OpenAPI JSON: [backend/api-docs.json](backend/api-docs.json) (useful for frontend integration and CI snapshots).
-- Postman collections: [backend/postman/Japan_SSW_API_day1_day4.postman_collection.json](backend/postman/Japan_SSW_API_day1_day4.postman_collection.json) and [postman/Japan_SSW_API_Complete.postman_collection.json](postman/Japan_SSW_API_Complete.postman_collection.json).
+- Postman collections: [backend/postman/Japan_SSW_API_day1_day4.postman_collection.json](backend/postman/Japan_SSW_API_day1_day4.postman_collection.json) and [backend/postman/Japan_SSW_API_Complete.postman_collection.json](backend/postman/Japan_SSW_API_Complete.postman_collection.json).
+- Backend default port: `3000`. Swagger UI (when server running): `http://localhost:3000/api-docs`
 
 ## Technologies
 

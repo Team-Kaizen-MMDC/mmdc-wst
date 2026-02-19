@@ -99,7 +99,7 @@ npm install --save-dev jest supertest
 
 ## Project Structure
 
-```text
+````text
 backend/
 ├── src/
 │   ├── config/
@@ -150,55 +150,58 @@ backend/
 ├── tests/
 │   ├── unit/
 │   ├── integration/
-│   └── e2e/
-├── .env                          # Environment variables
-├── .env.example                  # Environment template
-├── .gitignore
-├── package.json
-├── README.md
-└── server.js                     # Entry point
-```
+```bash
+# Health Check
+curl http://localhost:3000/api/v1/health
 
-## Installation & Configuration
+# Register User
+curl -X POST http://localhost:3000/api/v1/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "test@example.com",
+    "password": "password123",
+    "role": "jobseeker"
+  }'
 
-1. Create `.gitignore`
+# Login
+curl -X POST http://localhost:3000/api/v1/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "test@example.com",
+    "password": "password123"
+  }'
 
-```text
-node_modules/
-.env
-.env.local
-.DS_Store
-logs/
-uploads/
-*.log
-coverage/
-.vscode/
-.idea/
-dist/
-build/
-```
+# Get All Jobs (with token)
+curl http://localhost:3000/api/v1/jobs \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
 
-1. Update `package.json` Scripts
+# Create Job (Employer)
+curl -X POST http://localhost:3000/api/v1/jobs \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+  -d '{
+    "jobInfo": {
+      "title": "Software Engineer",
+      "industry": "Manufacturing"
+    },
+    "description": {
+      "summary": "We are looking for..."}
+  }'
+````
 
-```json
-{
-  "name": "japanssw-backend",
-  "version": "1.0.0",
-  "description": "REST API for Japan SSW Platform",
-  "main": "server.js",
-  "scripts": {
-    "start": "node server.js",
     "dev": "nodemon server.js",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
     "lint": "eslint .",
     "format": "prettier --write \"**/*.js\""
-  },
-  "keywords": ["rest-api", "nodejs", "mongodb", "express"],
-  "author": "Team Kaizen MMDC",
-  "license": "ISC"
+
+},
+"keywords": ["rest-api", "nodejs", "mongodb", "express"],
+"author": "Team Kaizen MMDC",
+"license": "ISC"
 }
-```
+
+````
 
 1. Create `.env.example`
 
@@ -207,7 +210,7 @@ Use the repo's canonical backend template at `backend/.env.example` and copy it 
 ```env
 # Node / server
 NODE_ENV=development
-PORT=5000
+PORT=3000
 
 # MongoDB Atlas (preferred: full SRV URI)
 MONGODB_URI=
@@ -243,7 +246,7 @@ FROM_NAME="Japan SSW Platform"
 # Logging
 LOG_LEVEL=info
 LOG_FILE=logs/app.log
-```
+````
 
 ## MongoDB Connection Setup
 

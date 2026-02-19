@@ -29,14 +29,14 @@ This directory contains the comprehensive Postman collection for the Japan SSW P
 
 1. In Postman, look for the environment dropdown (top right)
 2. Select **"Japan SSW API - Local"**
-3. Verify `BASE_URL` is set to `http://localhost:5000/api/v1`
+3. Verify `BASE_URL` is set to `http://localhost:3000/api/v1`
 
 ### 3. Start Backend Server
 
 ```bash
 cd backend
 npm start
-# Server should run on http://localhost:5000
+# Server should run on http://localhost:3000
 ```
 
 ### 4. Test Authentication Flow
@@ -199,8 +199,9 @@ If your backend runs on a different port:
 1. Click **Environments** in Postman sidebar
 2. Select **"Japan SSW API - Local"**
 3. Edit `BASE_URL` value:
-   - Local: `http://localhost:5000/api/v1`
-   - Production: `https://your-domain.com/api/v1`
+
+- Local: `http://localhost:3000/api/v1`
+- Production: `https://your-domain.com/api/v1`
 
 ### View Saved Variables
 

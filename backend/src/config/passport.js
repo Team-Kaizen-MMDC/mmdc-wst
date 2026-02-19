@@ -81,7 +81,17 @@ function configurePassport(app) {
               user.googleProfile = googleProfile;
             }
             user.lastLogin = new Date();
-            await user.save();
+            try {
+              await user.save();
+              logger.info(
+                `Saved existing user (updated Google fields): ${user.email} (${user._id})`,
+              );
+            } catch (saveErr) {
+              logger.error(
+                `Failed saving existing user ${email}: ${saveErr.message || saveErr}`,
+              );
+              throw saveErr;
+            }
           } else {
             // New user - determine role from session (set by pre-auth page)
             // Default to jobseeker if not specified
@@ -90,15 +100,63 @@ function configurePassport(app) {
             logger.info(
               `Creating new Google user: ${email} with role: ${role}`,
             );
-            user = await User.create({
-              email,
-              role,
-              authProvider: "google",
-              googleId,
-              googleProfile,
-              isEmailVerified: true, // Google emails are verified
-              lastLogin: new Date(),
-            });
+            try {
+              user = await User.create({
+                email,
+                role,
+                authProvider: "google",
+                googleId,
+                googleProfile,
+                isEmailVerified: true, // Google emails are verified
+                lastLogin: new Date(),
+              });
+              logger.info(`Created new user: ${user.email} (${user._id})`);
+            } catch (createErr) {
+              logger.error(
+                `Error creating new Google user ${email}: ${createErr.message || createErr}`,
+              );
+              throw createErr;
+            }
+
+            // Create minimal UserProfile for new user so UI has a profile document
+            try {
+              const existingProfile = await UserProfile.findOne({
+                user: user._id,
+              });
+              if (!existingProfile) {
+                const profileData = {
+                  user: user._id,
+                  firstName:
+                    googleProfile.given_name || googleProfile.name || "",
+                  lastName: googleProfile.family_name || "",
+                  dateOfBirth: googleProfile.dateOfBirth
+                    ? new Date(googleProfile.dateOfBirth)
+                    : new Date("1970-01-01"),
+                  nationality: googleProfile.locale
+                    ? String(googleProfile.locale).split("-").pop()
+                    : "",
+                  photoPath: googleProfile.picture || undefined,
+                  availability: { visaStatus: "not-applicable" },
+                };
+                try {
+                  await UserProfile.create(profileData);
+                  logger.info(`Created UserProfile for new user ${user._id}`);
+                } catch (upErr) {
+                  logger &&
+                    logger.warn &&
+                    logger.warn(
+                      `Could not create UserProfile for user ${user._id}: ${upErr.message || upErr}`,
+                    );
+                }
+              }
+            } catch (err) {
+              logger &&
+                logger.warn &&
+                logger.warn(
+                  "Error checking/creating UserProfile in passport strategy:",
+                  err.message || err,
+                );
+            }
           }
 
           // Clear pending role from session
