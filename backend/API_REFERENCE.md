@@ -1,7 +1,7 @@
 # Japan SSW Platform — Complete API Reference
 
 **Version:** 1.0  
-**Base URL:** `http://localhost:5000/api/v1`  
+**Base URL:** `http://localhost:3000/api/v1`  
 **Production URL:** `https://your-domain.com/api/v1`  
 **Last Updated:** January 29, 2026
 
@@ -51,7 +51,7 @@ Creates a new user account and returns a JWT token.
 
 - `email`: Valid email format, unique in database
 - `password`: Minimum 8 characters, must contain uppercase, lowercase, number, and special character
-- `role`: Must be either `jobseeker` or `employer`
+- `role`: Must be one of `jobseeker`, `employer`, `admin`, or `rso`
 
 **Success Response (201 Created):**
 
