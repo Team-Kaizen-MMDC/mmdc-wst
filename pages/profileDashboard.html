@@ -1015,8 +1015,6 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           <div class="modal-body p-4">
             <form
               id="educationForm"
-              onsubmit="saveEducationEntry(); 
-                     return false;"
               novalidate
             >
               <input type="hidden" id="editingIndex" value="-1" />
@@ -1592,6 +1590,34 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
       // Ensure Bootstrap's Modal class is accessible (defined in the bundle linked above)
       const { Modal } = bootstrap;
 
+      // Helper: get JWT token from cookie
+      function getAuthToken() {
+        return document.cookie
+          .split('; ')
+          .find((row) => row.startsWith('token='))
+          ?.split('=')[1];
+      }
+
+      // Helper: simplified API request to backend /api/v1 routes
+      async function apiRequest(path, method = 'GET', body = null) {
+        const token = getAuthToken();
+        const headers = { 'Content-Type': 'application/json' };
+        if (token) headers['Authorization'] = `Bearer ${token}`;
+
+        const res = await fetch(`/api/v1${path}`, {
+          method,
+          headers,
+          body: body ? JSON.stringify(body) : undefined,
+        });
+
+        if (!res.ok) {
+          const text = await res.text();
+          throw new Error(text || `${res.status} ${res.statusText}`);
+        }
+
+        return res.json();
+      }
+
       // Define the default data structure for reference
       const DEFAULT_BASIC_INFO = {
         name: "Dela Cruz Juan",
@@ -1911,7 +1937,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
       /**
        * Saves education entry (add or edit).
        */
-      function saveEducationEntry() {
+      async function saveEducationEntry() {
         const form = document.getElementById("educationForm");
         form.classList.remove("was-validated");
 
@@ -1943,18 +1969,53 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
             : document.getElementById("eduEndYear").value,
         };
 
-        // Add or update
-        if (index === -1) {
-          // Adding new entry
-          dataArray.push(newData);
-        } else if (index >= 0 && index < dataArray.length) {
-          // Editing existing entry
-          dataArray[index] = newData;
+        // Add or update via API if possible
+        function monthNameToNumberEdu(monthName) {
+          return (MONTH_NAMES.indexOf(monthName) + 1).toString().padStart(2, '0');
         }
 
-        // Save and update UI
-        localStorage.setItem(EDUCATION_STORAGE_KEY, JSON.stringify(dataArray));
-        renderEducationSection();
+        const startDate = `${newData.startYear}-${monthNameToNumberEdu(newData.startMonth)}-01`;
+        const endDate = newData.isCurrent || newData.endMonth === 'N/A' ? null : `${newData.endYear}-${monthNameToNumberEdu(newData.endMonth)}-01`;
+
+        try {
+          if (index === -1) {
+            // Create
+            await apiRequest('/profile/education', 'POST', {
+              school: newData.school,
+              degree: newData.degree,
+              field: newData.field,
+              startDate,
+              endDate,
+              current: newData.isCurrent,
+            });
+          } else {
+            const existing = dataArray[index];
+            if (existing && existing.id) {
+              await apiRequest(`/profile/education/${existing.id}`, 'PUT', {
+                school: newData.school,
+                degree: newData.degree,
+                field: newData.field,
+                startDate,
+                endDate,
+                current: newData.isCurrent,
+              });
+            } else {
+              // Fallback local update
+              if (index === -1) dataArray.push(newData);
+              else dataArray[index] = newData;
+              localStorage.setItem(EDUCATION_STORAGE_KEY, JSON.stringify(dataArray));
+            }
+          }
+
+          // Refresh from backend to reflect canonical state
+          await populateDashboard();
+        } catch (err) {
+          console.error('Failed to save education via API, falling back to localStorage:', err);
+          if (index === -1) dataArray.push(newData);
+          else dataArray[index] = newData;
+          localStorage.setItem(EDUCATION_STORAGE_KEY, JSON.stringify(dataArray));
+          renderEducationSection();
+        }
 
         // Close modal
         const modalElement = document.getElementById(EDUCATION_MODAL_ID);
@@ -2028,7 +2089,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
       /**
        * Deletes the currently edited education entry.
        */
-      function deleteEducationEntry() {
+      async function deleteEducationEntry() {
         const index = parseInt(
           document.getElementById("editingIndex").value,
           10
@@ -2043,15 +2104,23 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
             return;
           }
 
-          // Remove entry
-          dataArray.splice(index, 1);
-
-          // Save and update
-          localStorage.setItem(
-            EDUCATION_STORAGE_KEY,
-            JSON.stringify(dataArray)
-          );
-          renderEducationSection();
+          // Attempt server delete if id present, else remove locally
+          const entry = dataArray[index];
+          try {
+            if (entry && entry.id) {
+              await apiRequest(`/profile/education/${entry.id}`, 'DELETE');
+              await populateDashboard();
+            } else {
+              dataArray.splice(index, 1);
+              localStorage.setItem(EDUCATION_STORAGE_KEY, JSON.stringify(dataArray));
+              renderEducationSection();
+            }
+          } catch (err) {
+            console.error('Failed to delete education via API, falling back to localStorage:', err);
+            dataArray.splice(index, 1);
+            localStorage.setItem(EDUCATION_STORAGE_KEY, JSON.stringify(dataArray));
+            renderEducationSection();
+          }
 
           // Close modal
           const modalElement = document.getElementById(EDUCATION_MODAL_ID);
@@ -2087,6 +2156,15 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
         const deleteBtn = document.getElementById("deleteEducationBtn");
         if (deleteBtn) {
           deleteBtn.addEventListener("click", deleteEducationEntry);
+        }
+
+        // Handle form submission
+        const educationForm = document.getElementById("educationForm");
+        if (educationForm) {
+          educationForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            await saveEducationEntry();
+          });
         }
 
         // Handle modal events
@@ -2260,7 +2338,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
       window.openExperienceModal = openExperienceModal;
 
       /* Save Entry */
-      function saveExperienceEntry() {
+      async function saveExperienceEntry() {
         const form = document.getElementById("experienceForm");
 
         if (!form.checkValidity() || !validateExperienceDates()) {
@@ -2289,11 +2367,48 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
             : document.getElementById("expEndYear").value,
         };
 
-        if (index === -1) data.push(entry);
-        else data[index] = entry;
+        // Map to API payload
+        function monthNameToNumber(monthName) {
+          return (EXP_MONTH_NAMES.indexOf(monthName) + 1).toString().padStart(2, '0');
+        }
 
-        localStorage.setItem(EXPERIENCE_STORAGE_KEY, JSON.stringify(data));
-        renderExperienceSection();
+        const startDate = `${entry.startYear}-${monthNameToNumber(entry.startMonth)}-01`;
+        const endDate = entry.isCurrent || entry.endMonth === 'N/A' ? null : `${entry.endYear}-${monthNameToNumber(entry.endMonth)}-01`;
+
+        try {
+          if (index === -1 || !data[index] || !data[index].id) {
+            // Create
+            await apiRequest('/profile/experience', 'POST', {
+              company: entry.company,
+              title: entry.job,
+              employmentType: entry.jobType,
+              startDate,
+              endDate,
+              current: entry.isCurrent,
+            });
+          } else {
+            // Update existing
+            const expId = data[index].id;
+            await apiRequest(`/profile/experience/${expId}`, 'PUT', {
+              company: entry.company,
+              title: entry.job,
+              employmentType: entry.jobType,
+              startDate,
+              endDate,
+              current: entry.isCurrent,
+            });
+          }
+
+          // Refresh from backend to ensure IDs and canonical data are stored
+          await populateDashboard();
+        } catch (err) {
+          // Fallback to localStorage if API fails
+          console.error('Failed to save experience via API, falling back to localStorage:', err);
+          if (index === -1) data.push(entry);
+          else data[index] = entry;
+          localStorage.setItem(EXPERIENCE_STORAGE_KEY, JSON.stringify(data));
+          renderExperienceSection();
+        }
 
         const modal = bootstrap.Modal.getInstance(
           document.getElementById(EXPERIENCE_MODAL_ID)
@@ -2355,7 +2470,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
       }
 
       /* Delete Entry */
-      function deleteExperienceEntry() {
+      async function deleteExperienceEntry() {
         const index = +document.getElementById("expEditingIndex").value;
         const data = getExperienceData();
 
@@ -2364,9 +2479,24 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           index < data.length &&
           confirm("Delete this entry?")
         ) {
-          data.splice(index, 1);
-          localStorage.setItem(EXPERIENCE_STORAGE_KEY, JSON.stringify(data));
-          renderExperienceSection();
+          const entry = data[index];
+          try {
+            if (entry && entry.id) {
+              await apiRequest(`/profile/experience/${entry.id}`, 'DELETE');
+              await populateDashboard();
+            } else {
+              // Fallback: local-only remove
+              data.splice(index, 1);
+              localStorage.setItem(EXPERIENCE_STORAGE_KEY, JSON.stringify(data));
+              renderExperienceSection();
+            }
+          } catch (err) {
+            console.error('Failed to delete experience via API, falling back to localStorage:', err);
+            data.splice(index, 1);
+            localStorage.setItem(EXPERIENCE_STORAGE_KEY, JSON.stringify(data));
+            renderExperienceSection();
+          }
+
           const modal = bootstrap.Modal.getInstance(
             document.getElementById(EXPERIENCE_MODAL_ID)
           );
@@ -2806,10 +2936,12 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
             description: edu.description || "",
           }));
 
+          // Include backend id so edits/deletes map to DB entries
+          const transformedEducationWithId = transformedEducation.map((edu, i) => ({ ...edu, id: profile.education[i]._id }));
           // Store in localStorage for the existing education script
           localStorage.setItem(
             "educationData",
-            JSON.stringify(transformedEducation)
+            JSON.stringify(transformedEducationWithId)
           );
           // Trigger render if function exists
           if (typeof renderEducationSection === "function") {
@@ -2831,10 +2963,12 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
             isCurrent: exp.current || false,
           }));
 
+          // Include backend id so edits/deletes map to DB entries
+          const transformedExperienceWithId = transformedExperience.map((exp, i) => ({ ...exp, id: profile.experience[i]._id }));
           // Store in localStorage for the existing experience script
           localStorage.setItem(
             "experienceData",
-            JSON.stringify(transformedExperience)
+            JSON.stringify(transformedExperienceWithId)
           );
           // Trigger render if function exists
           if (typeof renderExperienceSection === "function") {
@@ -2844,10 +2978,8 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
 
         // Update Skills section
         if (profile.skills && profile.skills.length > 0) {
-          // Transform skills from {name, level, category} to simple array of names
-          const skillNames = profile.skills.map(skill => skill.name || skill);
-          // Store in localStorage for the existing skills script
-          localStorage.setItem("skillsData", JSON.stringify(skillNames));
+          // Keep skill objects (name, level, category) so frontend can send full objects back
+          localStorage.setItem("skillsData", JSON.stringify(profile.skills));
           // Trigger render if function exists
           if (typeof renderSkillsSection === "function") {
             renderSkillsSection();
@@ -3095,7 +3227,12 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
          * Renders ALL skills entries on the main page.
          */
         function renderSkillsSection() {
-            const dataArray = getSkillsData().filter(skill => skill && skill.trim() !== ""); // Filter out empty/null skills
+            const dataArray = getSkillsData().filter(skill => {
+                if (!skill) return false;
+                if (typeof skill === 'string') return skill.trim() !== '';
+                if (typeof skill === 'object') return (skill.name && String(skill.name).trim() !== '');
+                return false;
+              }); // Filter out empty/null skills
             const displayContainer = document.getElementById("skills-list-container");
 
             if (dataArray.length === 0) {
@@ -3108,9 +3245,12 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
             }
 
             // Generate HTML for skills, grouping them in a single paragraph or list
-            const skillsHTML = dataArray.map(skill => `
-                <span class="badge bg-primary-subtle text-primary-emphasis rounded-pill px-3 py-2 m-1 fw-semibold">${skill}</span>
-            `).join('');
+            const skillsHTML = dataArray.map(skill => {
+              const name = typeof skill === 'string' ? skill : (skill.name || '');
+              return `
+                <span class="badge bg-primary-subtle text-primary-emphasis rounded-pill px-3 py-2 m-1 fw-semibold">${name}</span>
+              `;
+            }).join('');
 
             displayContainer.innerHTML = `
                 <div class="p-4 d-flex flex-wrap justify-content-start align-items-center">
@@ -3208,7 +3348,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
         /**
          * Saves all skills entries from the modal inputs.
          */
-        function saveSkillsEntry() {
+        async function saveSkillsEntry() {
             const form = document.getElementById("skillsForm");
             
             // Collect all skill values from the dynamic inputs
@@ -3234,18 +3374,27 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                 return;
             }
 
-            // Remove duplicates and save the clean array
-            const uniqueSkills = [...new Set(newSkillsArray)];
-            
-            localStorage.setItem(SKILLS_STORAGE_KEY, JSON.stringify(uniqueSkills));
-            renderSkillsSection();
+              // Remove duplicates and build skill objects
+              const uniqueSkills = [...new Set(newSkillsArray)];
+              const skillObjects = uniqueSkills.map(name => ({ name: name.trim(), level: 'intermediate' }));
 
-            // Close modal
-            const modalElement = document.getElementById(SKILLS_MODAL_ID);
-            const modal = bootstrap.Modal.getInstance(modalElement);
-            if (modal) modal.hide();
+              try {
+                // Save to backend (PUT /api/v1/profile/skills)
+                await apiRequest('/profile/skills', 'PUT', { skills: skillObjects });
+                // Refresh local cache from backend
+                await populateDashboard();
+              } catch (err) {
+                console.error('Failed to save skills via API, falling back to localStorage:', err);
+                localStorage.setItem(SKILLS_STORAGE_KEY, JSON.stringify(uniqueSkills));
+                renderSkillsSection();
+              }
 
-            form.classList.remove("was-validated");
+              // Close modal
+              const modalElement = document.getElementById(SKILLS_MODAL_ID);
+              const modal = bootstrap.Modal.getInstance(modalElement);
+              if (modal) modal.hide();
+
+              form.classList.remove("was-validated");
         }
         window.saveSkillsEntry = saveSkillsEntry; // Make globally accessible
 

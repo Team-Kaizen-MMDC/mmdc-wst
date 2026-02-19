@@ -258,6 +258,48 @@ exports.googleAuth = asyncHandler(async (req, res, next) => {
     });
   }
 
+  // Attempt to create a minimal UserProfile for newly-created users so
+  // the frontend has a profile document to work with. If a profile
+  // already exists we merge below; if creation fails we'll log and continue.
+  try {
+    const existingProfile = await UserProfile.findOne({ user: user._id });
+    if (!existingProfile) {
+      const profileData = {
+        user: user._id,
+        firstName: profile.given_name || profile.name || "",
+        lastName: profile.family_name || "",
+        // Use provided date if available; otherwise set a harmless placeholder
+        dateOfBirth: profile.dateOfBirth
+          ? new Date(profile.dateOfBirth)
+          : new Date("1970-01-01"),
+        nationality: profile.locale
+          ? String(profile.locale).split("-").pop()
+          : "",
+        photoPath: profile.picture || undefined,
+        // minimal availability to satisfy schema shapes if needed
+        availability: { visaStatus: "not-applicable" },
+      };
+
+      try {
+        await UserProfile.create(profileData);
+        logger &&
+          logger.info &&
+          logger.info(`Created UserProfile for user ${user._id}`);
+      } catch (createErr) {
+        // Don't throw — profile creation is optional here; log for debugging
+        logger &&
+          logger.warn &&
+          logger.warn(
+            `Could not create UserProfile for user ${user._id}: ${createErr.message || createErr}`,
+          );
+      }
+    }
+  } catch (err) {
+    logger &&
+      logger.warn &&
+      logger.warn("Error checking/creating UserProfile:", err.message || err);
+  }
+
   // If a UserProfile already exists for this user, merge Google fields into it
   try {
     const existingProfile = await UserProfile.findOne({ user: user._id });
@@ -448,6 +490,47 @@ exports.googleCallback = asyncHandler(async (req, res, next) => {
           `Failed to create user in googleCallback for ${email}: ${createErr.message || createErr}`,
         );
         throw createErr;
+      }
+
+      // Create a minimal UserProfile for the newly-created user where possible.
+      try {
+        const existingProfile = await UserProfile.findOne({ user: user._id });
+        if (!existingProfile) {
+          const up = {
+            user: user._id,
+            firstName: profileObj.given_name || profileObj.name || "",
+            lastName: profileObj.family_name || "",
+            dateOfBirth: profileObj.dateOfBirth
+              ? new Date(profileObj.dateOfBirth)
+              : new Date("1970-01-01"),
+            nationality: profileObj.locale
+              ? String(profileObj.locale).split("-").pop()
+              : "",
+            photoPath: profileObj.picture || undefined,
+            availability: { visaStatus: "not-applicable" },
+          };
+          try {
+            await UserProfile.create(up);
+            logger &&
+              logger.info &&
+              logger.info(
+                `Created UserProfile for user ${user._id} (googleCallback)`,
+              );
+          } catch (createErr) {
+            logger &&
+              logger.warn &&
+              logger.warn(
+                `Could not create UserProfile in googleCallback: ${createErr.message || createErr}`,
+              );
+          }
+        }
+      } catch (err) {
+        logger &&
+          logger.warn &&
+          logger.warn(
+            "Error creating/merging UserProfile in googleCallback:",
+            err.message || err,
+          );
       }
     }
 

@@ -117,6 +117,46 @@ function configurePassport(app) {
               );
               throw createErr;
             }
+
+            // Create minimal UserProfile for new user so UI has a profile document
+            try {
+              const existingProfile = await UserProfile.findOne({
+                user: user._id,
+              });
+              if (!existingProfile) {
+                const profileData = {
+                  user: user._id,
+                  firstName:
+                    googleProfile.given_name || googleProfile.name || "",
+                  lastName: googleProfile.family_name || "",
+                  dateOfBirth: googleProfile.dateOfBirth
+                    ? new Date(googleProfile.dateOfBirth)
+                    : new Date("1970-01-01"),
+                  nationality: googleProfile.locale
+                    ? String(googleProfile.locale).split("-").pop()
+                    : "",
+                  photoPath: googleProfile.picture || undefined,
+                  availability: { visaStatus: "not-applicable" },
+                };
+                try {
+                  await UserProfile.create(profileData);
+                  logger.info(`Created UserProfile for new user ${user._id}`);
+                } catch (upErr) {
+                  logger &&
+                    logger.warn &&
+                    logger.warn(
+                      `Could not create UserProfile for user ${user._id}: ${upErr.message || upErr}`,
+                    );
+                }
+              }
+            } catch (err) {
+              logger &&
+                logger.warn &&
+                logger.warn(
+                  "Error checking/creating UserProfile in passport strategy:",
+                  err.message || err,
+                );
+            }
           }
 
           // Clear pending role from session
