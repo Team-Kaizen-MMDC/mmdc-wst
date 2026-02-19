@@ -609,35 +609,74 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           </div>
           <div class="modal-body">
             <!-- Basic Info Edit View (Moved from original inline HTML) -->
-            <form onsubmit="saveBasicInfo(); return false;">
-              <div class="mb-3">
-                <label for="modal-name" class="form-label small fw-semibold"
-                  >Full name</label
-                >
-                <input
-                  id="modal-name"
-                  class="form-control"
-                  type="text"
-                  value="Dela Cruz Juan"
-                  required
-                />
+            <form id="basicInfoForm" novalidate>
+              <div class="row">
+                <div class="col-6 mb-3">
+                  <label for="modal-firstName" class="form-label small fw-semibold"
+                    >First Name*</label
+                  >
+                  <input
+                    id="modal-firstName"
+                    class="form-control"
+                    type="text"
+                    required
+                  />
+                </div>
+                <div class="col-6 mb-3">
+                  <label for="modal-lastName" class="form-label small fw-semibold"
+                    >Last Name*</label
+                  >
+                  <input
+                    id="modal-lastName"
+                    class="form-control"
+                    type="text"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6 mb-3">
+                  <label class="form-label small fw-semibold">City</label>
+                  <input
+                    type="text"
+                    id="modal-city"
+                    class="form-control"
+                  />
+                </div>
+                <div class="col-6 mb-3">
+                  <label class="form-label small fw-semibold">Prefecture</label>
+                  <input
+                    type="text"
+                    id="modal-prefecture"
+                    class="form-control"
+                  />
+                </div>
               </div>
               <div class="mb-3">
-                <a
-                  href="addEdit/education.html"
-                  class="text-contrast-danger small ms-2"
-                  >Add</a
-                >
-              </div>
-              <div class="mb-3">
-                <label class="form-label small fw-semibold">Location</label>
+                <label class="form-label small fw-semibold">Address</label>
                 <input
                   type="text"
-                  id="modal-location"
+                  id="modal-address"
                   class="form-control"
-                  value="Osaka, Japan"
-                  required=""
                 />
+              </div>
+              <div class="row">
+                <div class="col-6 mb-3">
+                  <label class="form-label small fw-semibold">Postal Code</label>
+                  <input
+                    type="text"
+                    id="modal-postalCode"
+                    class="form-control"
+                  />
+                </div>
+                <div class="col-6 mb-3">
+                  <label class="form-label small fw-semibold">Phone</label>
+                  <input
+                    type="tel"
+                    id="modal-phone"
+                    class="form-control"
+                  />
+                </div>
               </div>
               <div class="row">
                 <div class="col-6 mb-3">
@@ -645,11 +684,14 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                     >Visa Type</label
                   >
                   <select id="modal-visa" class="form-select">
-                    <option selected="">Special Skilled Worker 1</option>
-                    <option>Special Skilled Worker 2</option>
-                    <option>Student</option>
-                    <option>Designated Visa</option>
-                    <option>Other</option>
+                    <option value="not-applicable">Not Applicable</option>
+                    <option value="student">Student Visa</option>
+                    <option value="working">Working Visa</option>
+                    <option value="ssw-1">SSW-1</option>
+                    <option value="ssw-2">SSW-2</option>
+                    <option value="spouse">Spouse Visa</option>
+                    <option value="pr">Permanent Resident</option>
+                    <option value="other">Other</option>
                   </select>
                 </div>
                 <div class="col-6 mb-3">
@@ -657,62 +699,74 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                     >Valid Until</label
                   >
                   <input
-                    type="month"
+                    type="date"
                     id="modal-validity"
                     class="form-control"
-                    value="2026-05"
                   />
                 </div>
                 <div class="col-6 mb-3">
-                  <label
-                    class="form-label small fw-semibold"
-                    for="modal-industry"
-                    >Industry</label
+                  <label class="form-label small fw-semibold" for="modal-industry"
+                    >Desired Industry</label
                   >
                   <select id="modal-industry" class="form-select">
-                    <option selected="">Food Service</option>
-                    <option>Aviation</option>
-                    <option>Caregiver</option>
-                    <option>Automotive</option>
-                    <option>Other</option>
+                    <option value="">Not specified</option>
+                    <option value="Food Service">Food Service</option>
+                    <option value="Aviation">Aviation</option>
+                    <option value="Caregiver">Caregiver</option>
+                    <option value="Automotive">Automotive</option>
+                    <option value="Construction">Construction</option>
+                    <option value="Agriculture">Agriculture</option>
+                    <option value="Manufacturing">Manufacturing</option>
+                    <option value="Hospitality">Hospitality</option>
+                    <option value="IT">Information Technology</option>
+                    <option value="Other">Other</option>
                   </select>
                 </div>
-                <div class="col-6 mb-3">
+                <div class="col-6 mb-3"
+>
                   <label
                     class="form-label small fw-semibold"
                     for="modal-japanese"
-                    >Japanese</label
+                    >Japanese Level</label
                   >
                   <select id="modal-japanese" class="form-select">
-                    <option selected="">Beginner / N5</option>
-                    <option>Basic / N4</option>
-                    <option>Conversational / N3</option>
-                    <option>Business / N2</option>
-                    <option>Fluent / N1</option>
+                    <option value="N5">Beginner / N5</option>
+                    <option value="N4">Basic / N4</option>
+                    <option value="N3">Conversational / N3</option>
+                    <option value="N2">Business / N2</option>
+                    <option value="N1">Fluent / N1</option>
+                    <option value="Native">Native</option>
                   </select>
                 </div>
                 <div class="col-6 mb-3">
                   <label
                     class="form-label small fw-semibold"
                     for="modal-nationality"
-                    >Nationality</label
+                    >Nationality*</label
                   >
-                  <select id="modal-nationality" class="form-select">
-                    <option selected="">Filipino</option>
-                    <option>Indonesian</option>
-                    <option>Vietnamese</option>
-                    <option>Thailand</option>
-                    <option>Nepalese</option>
-                  </select>
+                  <input
+                    type="text"
+                    id="modal-nationality"
+                    class="form-control"
+                    required
+                  />
                 </div>
                 <div class="col-6 mb-3">
-                  <label class="form-label small fw-semibold">Age</label>
+                  <label class="form-label small fw-semibold">Date of Birth</label>
                   <input
-                    type="number"
-                    id="modal-age"
+                    type="date"
+                    id="modal-dateOfBirth"
                     class="form-control"
-                    value="31"
                   />
+                </div>
+                <div class="col-6 mb-3">
+                  <label class="form-label small fw-semibold">Gender</label>
+                  <select id="modal-gender" class="form-select">
+                    <option value="">Prefer not to say</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                  </select>
                 </div>
               </div>
               <div class="d-flex justify-content-end mt-3">
@@ -756,8 +810,6 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           <div class="modal-body p-4">
             <form
               id="experienceForm"
-              onsubmit="saveExperienceEntry(); 
-                     return false;"
               novalidate
             >
               <input type="hidden" id="expEditingIndex" value="-1" />
@@ -952,8 +1004,6 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
             <!-- Body -->
           <div class="modal-body p-4">
             <form id="skillsForm"
-            onsubmit="saveSkillsEntry();
-                return false;"
               novalidate >
               <!-- Skills Entry -->
                <div class="p-3 mb-4 border rounded-4 bg-light shadow-sm">
@@ -1207,8 +1257,6 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
          <div class="modal-body p-4">
             <form
               id="availabilityForm"
-              onsubmit="saveAvailabilityEntry(); 
-                     return false;"
               novalidate
             >
               <input type="hidden" id="avaiEditingIndex" value="-1" />
@@ -1618,111 +1666,93 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
         return res.json();
       }
 
-      // Define the default data structure for reference
-      const DEFAULT_BASIC_INFO = {
-        name: "Dela Cruz Juan",
-        location: "Osaka, Japan",
-        visa: "Special Skill Worker 1",
-        validity: "2026-05", // YYYY-MM format for input type="month"
-        industry: "Food Service",
-        japanese: "Beginner / N5",
-        nationality: "Filipino",
-        age: "31",
-      };
-
       // ------------------------------------------------------------------
       // DYNAMIC BASIC INFO LOGIC
       // ------------------------------------------------------------------
+      // Note: Basic info is now populated from backend via populateDashboard()
 
-      // --- 1. Load data from localStorage or default ---
-      function initializeBasicInfo() {
-        let storedData = localStorage.getItem("basicInfoData");
-        let data = storedData ? JSON.parse(storedData) : DEFAULT_BASIC_INFO;
+      // --- 2. Load current profile data into modal fields ---
+      async function loadBasicInfoToModal() {
+        try {
+          const response = await apiRequest('/profile', 'GET');
+          const profile = response.data.profile;
 
-        // Ensure the validity is in the YYYY-MM format for the modal, but display differently
+          // Populate modal fields from backend data
+          document.getElementById("modal-firstName").value = profile.firstName || '';
+          document.getElementById("modal-lastName").value = profile.lastName || '';
+          document.getElementById("modal-city").value = profile.city || '';
+          document.getElementById("modal-prefecture").value = profile.prefecture || '';
+          document.getElementById("modal-address").value = profile.address || '';
+          document.getElementById("modal-postalCode").value = profile.postalCode || '';
+          document.getElementById("modal-phone").value = profile.phone || '';
+          document.getElementById("modal-visa").value = profile.availability?.visaStatus || 'not-applicable';
+          document.getElementById("modal-validity").value = profile.availability?.visaValidUntil ? new Date(profile.availability.visaValidUntil).toISOString().split('T')[0] : '';
+          document.getElementById("modal-industry").value = profile.availability?.desiredIndustry || '';
+          document.getElementById("modal-japanese").value = profile.japaneseLevel || 'N5';
+          document.getElementById("modal-nationality").value = profile.nationality || '';
+          document.getElementById("modal-dateOfBirth").value = profile.dateOfBirth ? new Date(profile.dateOfBirth).toISOString().split('T')[0] : '';
+          document.getElementById("modal-gender").value = profile.gender || '';
 
-        // Update Display Fields
-        document.getElementById("info-name").textContent = data.name;
-        document.getElementById("info-location").textContent = data.location;
-        document.getElementById("info-visa").textContent = data.visa;
-        document.getElementById("info-validity").textContent =
-          data.validity.replace("-", "/"); // Convert YYYY-MM to YYYY/MM for display
-        document.getElementById("info-industry").textContent = data.industry;
-        document.getElementById("info-japanese").textContent = data.japanese;
-        document.getElementById("info-nationality").textContent =
-          data.nationality;
-        document.getElementById("info-age").textContent = data.age;
-
-        console.log("Basic Info initialized from local storage.");
+          console.log("Basic Info Modal loaded with profile data from backend.");
+        } catch (err) {
+          console.error('Failed to load profile data for modal:', err);
+        }
       }
 
-      // --- 2. Load current display data into modal fields ---
-      function loadBasicInfoToModal() {
-        // Read current values from the displayed profile
-        const currentData = {
-          name: document.getElementById("info-name").textContent,
-          location: document.getElementById("info-location").textContent,
-          visa: document.getElementById("info-visa").textContent,
-          // Convert YYYY/MM display format back to YYYY-MM for the input type="month"
-          validity: document
-            .getElementById("info-validity")
-            .textContent.replace("/", "-"),
-          industry: document.getElementById("info-industry").textContent,
-          japanese: document.getElementById("info-japanese").textContent,
-          nationality: document.getElementById("info-nationality").textContent,
-          age: document.getElementById("info-age").textContent,
+      // --- 3. Save data from modal fields to backend ---
+      async function saveBasicInfo() {
+        const form = document.getElementById('basicInfoForm');
+        
+        if (!form.checkValidity()) {
+          form.classList.add('was-validated');
+          return;
+        }
+
+        // Collect data from modal inputs
+        const profileData = {
+          firstName: document.getElementById("modal-firstName").value.trim(),
+          lastName: document.getElementById("modal-lastName").value.trim(),
+          city: document.getElementById("modal-city").value.trim(),
+          prefecture: document.getElementById("modal-prefecture").value.trim(),
+          address: document.getElementById("modal-address").value.trim(),
+          postalCode: document.getElementById("modal-postalCode").value.trim(),
+          phone: document.getElementById("modal-phone").value.trim(),
+          nationality: document.getElementById("modal-nationality").value.trim(),
+          japaneseLevel: document.getElementById("modal-japanese").value,
+          gender: document.getElementById("modal-gender").value,
+          dateOfBirth: document.getElementById("modal-dateOfBirth").value || undefined,
+          availability: {
+            visaStatus: document.getElementById("modal-visa").value,
+            visaValidUntil: document.getElementById("modal-validity").value || undefined,
+            desiredIndustry: document.getElementById("modal-industry").value || undefined,
+          },
         };
 
-        // Populate modal fields
-        document.getElementById("modal-name").value = currentData.name;
-        document.getElementById("modal-location").value = currentData.location;
-        document.getElementById("modal-visa").value = currentData.visa;
-        document.getElementById("modal-validity").value = currentData.validity;
-        document.getElementById("modal-industry").value = currentData.industry;
-        document.getElementById("modal-japanese").value = currentData.japanese;
-        document.getElementById("modal-nationality").value =
-          currentData.nationality;
-        document.getElementById("modal-age").value = currentData.age;
+        try {
+          // Save to backend
+          await apiRequest('/profile', 'PUT', profileData);
+          
+          // Refresh dashboard from backend
+          await populateDashboard();
+          
+          console.log("Basic Information saved to database.");
+        } catch (err) {
+          console.error('Failed to save basic info via API:', err);
+          alert('Failed to save profile. Please try again.');
+          return;
+        }
 
-        console.log("Basic Info Modal loaded with current profile data.");
-      }
-
-      // --- 3. Save data from modal fields to display and localStorage ---
-      function saveBasicInfo() {
-        // 1. Collect new data from modal inputs
-        const newData = {
-          name: document.getElementById("modal-name").value,
-          location: document.getElementById("modal-location").value,
-          visa: document.getElementById("modal-visa").value,
-          validity: document.getElementById("modal-validity").value, // This is YYYY-MM
-          industry: document.getElementById("modal-industry").value,
-          japanese: document.getElementById("modal-japanese").value,
-          nationality: document.getElementById("modal-nationality").value,
-          age: document.getElementById("modal-age").value,
-        };
-
-        // 2. Update the main profile display (uses initialize function logic)
-        // Store the data in localStorage
-        localStorage.setItem("basicInfoData", JSON.stringify(newData));
-
-        // Re-run the initialization function to update the DOM
-        initializeBasicInfo();
-
-        console.log("Basic Information saved and display updated.");
-
-        // 3. Close the modal
+        // Close the modal
         const modalElement = document.getElementById("basicInfoModal");
         const modal = Modal.getInstance(modalElement);
         if (modal) modal.hide();
+        form.classList.remove('was-validated');
       }
 
       // ------------------------------------------------------------------
       // INITIALIZATION & EVENT LISTENERS
       // ------------------------------------------------------------------
       document.addEventListener("DOMContentLoaded", () => {
-        // Run once on page load to set initial data
-        initializeBasicInfo();
-
         // Attach event listener to load data into modal just before it's displayed
         const basicInfoModal = document.getElementById("basicInfoModal");
         if (basicInfoModal) {
@@ -1730,6 +1760,15 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
             "show.bs.modal",
             loadBasicInfoToModal
           );
+        }
+
+        // Handle form submission
+        const basicInfoForm = document.getElementById('basicInfoForm');
+        if (basicInfoForm) {
+          basicInfoForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            await saveBasicInfo();
+          });
         }
 
         // --- NOTE: Add other DOmContentLoaded listeners here if needed ---
@@ -2514,6 +2553,15 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
         document
           .getElementById("deleteExperienceBtn")
           .addEventListener("click", deleteExperienceEntry);
+        
+        // Handle form submission
+        const experienceForm = document.getElementById("experienceForm");
+        if (experienceForm) {
+          experienceForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            await saveExperienceEntry();
+          });
+        }
       });
     </script>
 
@@ -3013,6 +3061,9 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
       }
     }
 
+      // Make populateDashboard globally accessible for other scripts
+      window.populateDashboard = populateDashboard;
+
       // Run on page load
       window.addEventListener("DOMContentLoaded", populateDashboard);
     </script>
@@ -3117,14 +3168,13 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
         }
 
         /**
-         * Saves the availability entry (new or updated) to local storage.
-         * @returns {boolean} Always returns false to prevent default form submission.
+         * Saves the availability entry (new or updated) to backend and local storage.
          */
-        function saveAvailabilityEntry() {
+        async function saveAvailabilityEntry() {
             const form = document.getElementById("availabilityForm");
             if (!form.checkValidity()) {
                 form.classList.add("was-validated");
-                return false;
+                return;
             }
             
             // Get index (or -1 for new entry)
@@ -3132,29 +3182,40 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
 
             // Collect data
             const newItem = {
-                workStatus: document.getElementById("workStatus").value, // Value from text input
+                workStatus: document.getElementById("workStatus").value,
                 preferLocation: document.getElementById("preferLocation").value,
                 preferJobType: document.getElementById("preferJobType").value,
             };
 
-            let availabilities = getAvailabilities();
+            try {
+                // Save availability to backend (update the main profile's availability object)
+                await apiRequest('/profile', 'PUT', {
+                    availability: {
+                        visaStatus: newItem.workStatus || 'not-applicable',
+                        relocate: newItem.preferJobType?.toLowerCase().includes('relocate') || false,
+                        remote: newItem.preferJobType?.toLowerCase().includes('remote') || false,
+                    },
+                    city: newItem.preferLocation?.split(',')[0]?.trim() || '',
+                    prefecture: newItem.preferLocation?.split(',')[1]?.trim() || '',
+                });
 
-            if (index === -1) {
-                // Add new entry to the end
-                availabilities.push(newItem);
-            } else {
-                // Update existing entry
-                availabilities[index] = newItem;
+                // Refresh from backend
+                await populateDashboard();
+            } catch (err) {
+                console.error('Failed to save availability via API, falling back to localStorage:', err);
+                let availabilities = getAvailabilities();
+                if (index === -1) {
+                    availabilities.push(newItem);
+                } else {
+                    availabilities[index] = newItem;
+                }
+                localStorage.setItem(AVAILABILITY_STORAGE_KEY, JSON.stringify(availabilities));
+                renderAvailabilitySection();
             }
-
-            localStorage.setItem(AVAILABILITY_STORAGE_KEY, JSON.stringify(availabilities));
-            renderAvailabilitySection();
 
             // Hide the modal using Bootstrap's API
             const modal = bootstrap.Modal.getInstance(availabilityModalElement);
             if (modal) modal.hide();
-            
-            return false;
         }
 
         /**
@@ -3195,6 +3256,15 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
             if (availabilityModalElement) {
                 availabilityModalElement.addEventListener("hidden.bs.modal", () => {
                     document.getElementById("availabilityForm").classList.remove("was-validated");
+                });
+            }
+
+            // Handle form submission
+            const availabilityForm = document.getElementById("availabilityForm");
+            if (availabilityForm) {
+                availabilityForm.addEventListener("submit", async (e) => {
+                    e.preventDefault();
+                    await saveAvailabilityEntry();
                 });
             }
         });
@@ -3411,6 +3481,15 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                 skillsModal.addEventListener("hidden.bs.modal", () => {
                     document.getElementById("skillsForm").classList.remove("was-validated");
                     // No newSkillInput to clear
+                });
+            }
+
+            // 3. Handle form submission
+            const skillsForm = document.getElementById("skillsForm");
+            if (skillsForm) {
+                skillsForm.addEventListener("submit", async (e) => {
+                    e.preventDefault();
+                    await saveSkillsEntry();
                 });
             }
         });
