@@ -2,7 +2,7 @@
   "info": {
     "name": "Japan SSW Platform API - Complete Collection",
     "_postman_id": "japan-ssw-complete-api",
-    "description": "Complete consolidated API collection for Japan Specified Skilled Worker (SSW) platform with all endpoints from Days 1-5.\n\n**Features:**\n- 40+ endpoints across 6 major sections\n- Auto-saved environment variables (JWT_TOKEN, USER_ID, COMPANY_ID, JOB_ID, APPLICATION_ID)\n- Test credentials included\n- Request/response examples\n\n**Test Accounts:**\n- Admin: admin@japanssw.com / Admin123!\n- Employer: employer1@techinnov.com / Test123!\n- Jobseeker: carlos.rivera@example.com / Test123!",
+    "description": "Complete consolidated API collection for Japan Specified Skilled Worker (SSW) platform with all endpoints from Days 1-5.\n\n**Features:**\n- 40+ endpoints across 6 major sections\n- Auto-saved environment variables (JWT_TOKEN, USER_ID, COMPANY_ID, JOB_ID, APPLICATION_ID)\n- Test credentials included\n- Request/response examples\n\n**Test Accounts:**\n- Admin: admin@japanssw.com / Admin123!\n- Employer: employer1@techinnov.com / Test123!\n- Jobseeker: carlos.rivera@example.com / Test123!\n\n**Notes for automated runs:**\n- If running with Newman in CI or locally against a seeded DB, skip registration requests (users already seeded).\n- To reduce rate-limit failures, run Newman with --delay-request 200 (ms) or a similar value.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "version": "1.0.0"
   },
@@ -28,84 +28,6 @@
       "name": "Authentication",
       "description": "User authentication endpoints for registration, login, and session management",
       "item": [
-        {
-          "name": "Register (Jobseeker)",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "if (pm.response.code === 201) {",
-                  "    const jsonData = pm.response.json();",
-                  "    pm.environment.set('JWT_TOKEN', jsonData.data.token);",
-                  "    pm.environment.set('USER_ID', jsonData.data.user._id);",
-                  "    console.log('✓ JWT token saved to environment');",
-                  "    console.log('✓ User ID saved to environment');",
-                  "}"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"email\": \"jobseeker.test@example.com\",\n  \"password\": \"Test123!\",\n  \"role\": \"jobseeker\"\n}"
-            },
-            "url": {
-              "raw": "{{BASE_URL}}/auth/register",
-              "host": ["{{BASE_URL}}"],
-              "path": ["auth", "register"]
-            },
-            "description": "Register a new jobseeker account. Password must be 8+ characters with uppercase, lowercase, number, and special character."
-          },
-          "response": []
-        },
-        {
-          "name": "Register (Employer)",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "if (pm.response.code === 201) {",
-                  "    const jsonData = pm.response.json();",
-                  "    pm.environment.set('JWT_TOKEN', jsonData.data.token);",
-                  "    pm.environment.set('USER_ID', jsonData.data.user._id);",
-                  "}"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"email\": \"employer.test@example.com\",\n  \"password\": \"Test123!\",\n  \"role\": \"employer\"\n}"
-            },
-            "url": {
-              "raw": "{{BASE_URL}}/auth/register",
-              "host": ["{{BASE_URL}}"],
-              "path": ["auth", "register"]
-            },
-            "description": "Register a new employer account"
-          },
-          "response": []
-        },
         {
           "name": "Login",
           "event": [
