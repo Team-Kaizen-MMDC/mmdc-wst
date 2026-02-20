@@ -1242,7 +1242,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                 <!-- status Title -->
                 <div class="mb-3">
                   <label for="workStatus" class="form-label small fw-semibold"
-                    >Status*</label
+                    >Preferred Work</label
                   >
                   <input
                     id="workStatus"
@@ -1517,7 +1517,8 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
 
     <script>
       // --- Profile Summary Toggle (Preserved as requested) ---
-      function toggleEditMode(isEditing) {
+      async function toggleEditMode(isEditing) {
+        console.log('toggleEditMode called:', isEditing);
         // The DOM in this page uses 'read-display' and 'edit-input' IDs
         const readView = document.getElementById("read-display");
         const editView = document.getElementById("edit-input");
@@ -1539,12 +1540,40 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           editBtn.setAttribute("aria-pressed", "true");
           if (saveBtn) saveBtn.classList.remove("d-none");
         } else {
-          // In a real app, logic to save content would go here
+          // Save the profile summary (bio) to backend, then switch views
+          const textEl = document.getElementById('text-content');
+          const newText = (editView.value || '').trim();
+
+          // Basic client-side validation: respect maxlength on textarea
+          const max = parseInt(editView.getAttribute('maxlength') || '1000', 10);
+          if (newText.length > max) {
+            alert(`Profile summary must be ${max} characters or fewer.`);
+            return;
+          }
+
+          try {
+            // Send updated bio to backend
+            console.log('Saving profile summary to server:', newText);
+            const resp = await apiRequest('/profile', 'PUT', { bio: newText });
+            console.log('Profile update response:', resp);
+
+            // Optimistically update read view
+            if (textEl) textEl.textContent = newText || 'No profile summary provided.';
+
+            // Refresh other dashboard fields that may depend on profile
+            if (typeof populateDashboard === 'function') await populateDashboard();
+
+            console.log('Profile summary saved to database.');
+          } catch (err) {
+            console.error('Failed to save profile summary:', err);
+            alert('Failed to save profile summary. Please try again.');
+            return;
+          }
+
           editView.classList.add("d-none");
           readView.classList.remove("d-none");
           if (saveBtn) saveBtn.classList.add("d-none");
           editBtn.setAttribute("aria-pressed", "false");
-          console.log("Profile summary saved.");
         }
       }
 
@@ -3068,7 +3097,8 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
         if (profile.availability) {
           // Transform availability from API format to dashboard format
           const availabilityEntry = {
-            workStatus: profile.availability.visaStatus || "Not specified",
+            // Prefer desiredIndustry (user's preferred work) over visaStatus
+            workStatus: profile.availability.desiredIndustry || profile.availability.visaStatus || "Not specified",
             preferLocation: profile.city && profile.prefecture 
               ? `${profile.city}, ${profile.prefecture}` 
               : profile.prefecture || profile.city || "Anywhere",
@@ -3090,6 +3120,9 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
         // Optionally show an error message to the user
       }
     }
+
+      // Expose to window in case other scripts need to call it
+      try { window.toggleEditMode = toggleEditMode; } catch (e) { /* ignore in restricted contexts */ }
 
       // Make populateDashboard globally accessible for other scripts
       window.populateDashboard = populateDashboard;
@@ -3145,10 +3178,14 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
             availabilities.forEach((item, index) => {
                 const entry = document.createElement('div');
                 entry.className = 'list-item p-3';
-                entry.innerHTML = `
+              // Title-case the workStatus for nicer display
+              const displayWork = item.workStatus && String(item.workStatus).trim()
+                ? String(item.workStatus).trim().replace(/\b\w/g, (c) => c.toUpperCase())
+                : 'Not specified';
+              entry.innerHTML = `
                     <div class="d-flex justify-content-between align-items-start">
                         <div>
-                            <h6 class="mb-1 fw-semibold text-dark">${item.workStatus}</h6>
+                    <h6 class="mb-1 fw-semibold text-dark">${displayWork}</h6>
                             <p class="mb-1 small text-muted">Location: ${item.preferLocation}</p>
                             <p class="mb-0 small text-secondary">Job Type: ${item.preferJobType}</p>
                         </div>
@@ -3230,34 +3267,47 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
             };
 
             try {
-                // Save availability to backend (update the main profile's availability object)
-                await apiRequest('/profile', 'PUT', {
-                    availability: {
-                        visaStatus: newItem.workStatus || 'not-applicable',
-                        relocate: newItem.preferJobType?.toLowerCase().includes('relocate') || false,
-                        remote: newItem.preferJobType?.toLowerCase().includes('remote') || false,
-                    },
-                    city: newItem.preferLocation?.split(',')[0]?.trim() || '',
-                    prefecture: newItem.preferLocation?.split(',')[1]?.trim() || '',
-                });
+            // Build availability payload — only include work preference fields
+            const availabilityPayload = {
+              desiredIndustry: newItem.workStatus || undefined,
+              relocate: newItem.preferJobType?.toLowerCase().includes('relocate') || false,
+              remote: newItem.preferJobType?.toLowerCase().includes('remote') || false,
+            };
 
-                // Refresh from backend
-                await populateDashboard();
-            } catch (err) {
-                console.error('Failed to save availability via API, falling back to localStorage:', err);
-                let availabilities = getAvailabilities();
-                if (index === -1) {
-                    availabilities.push(newItem);
-                } else {
-                    availabilities[index] = newItem;
-                }
-                localStorage.setItem(AVAILABILITY_STORAGE_KEY, JSON.stringify(availabilities));
-                renderAvailabilitySection();
+            // Update availability using the dedicated endpoint (merges into profile.availability)
+            console.log('Saving availabilityPayload to server:', availabilityPayload);
+            const availResp = await apiRequest('/profile/availability', 'PUT', availabilityPayload);
+            console.log('Availability API response:', availResp);
+
+            // If the preferLocation contains city/prefecture, update the top-level profile fields
+            const city = newItem.preferLocation?.split(',')[0]?.trim() || '';
+            const prefecture = newItem.preferLocation?.split(',')[1]?.trim() || '';
+            if (city || prefecture) {
+              console.log('Updating profile city/prefecture:', { city, prefecture });
+              const profileResp = await apiRequest('/profile', 'PUT', { city, prefecture });
+              console.log('Profile update response:', profileResp);
             }
 
-            // Hide the modal using Bootstrap's API
-            const modal = bootstrap.Modal.getInstance(availabilityModalElement);
-            if (modal) modal.hide();
+            // Refresh from backend
+            await populateDashboard();
+          } catch (err) {
+            console.error('Failed to save availability via API, falling back to localStorage:', err);
+            let availabilities = getAvailabilities();
+            if (index === -1) {
+              availabilities.push(newItem);
+            } else {
+              availabilities[index] = newItem;
+            }
+            localStorage.setItem(AVAILABILITY_STORAGE_KEY, JSON.stringify(availabilities));
+            renderAvailabilitySection();
+          }
+
+            // Hide the modal using Bootstrap's API (ensure instance exists)
+            const el = document.getElementById('availabilityModal');
+            if (el) {
+              const modal = bootstrap.Modal.getInstance(el) || new bootstrap.Modal(el);
+              try { modal.hide(); } catch (e) { console.warn('Failed to hide availability modal:', e); }
+            }
         }
 
         /**
@@ -3603,10 +3653,37 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           if (resumeLink) resumeLink.addEventListener('click', (e) => { e.preventDefault(); document.getElementById('resumeUpload').click(); });
 
           // Attach edit/save toggle handlers
-          const editBtn = document.getElementById('edit-btn');
-          const saveBtn = document.getElementById('save-btn');
-          if (editBtn) editBtn.addEventListener('click', () => toggleEditMode(true));
-          if (saveBtn) saveBtn.addEventListener('click', () => toggleEditMode(false));
+            const editBtn = document.getElementById('edit-btn');
+            const saveBtn = document.getElementById('save-btn');
+            if (editBtn) {
+              editBtn.addEventListener('click', (e) => {
+                console.log('edit-btn clicked', e, 'toggleEditMode type:', typeof toggleEditMode);
+                if (typeof toggleEditMode === 'function') toggleEditMode(true);
+                else console.warn('toggleEditMode is not a function');
+              });
+              console.log('Attached click handler to edit-btn');
+            }
+            if (saveBtn) {
+              saveBtn.addEventListener('click', (e) => {
+                console.log('save-btn clicked', e, 'toggleEditMode type:', typeof toggleEditMode);
+                if (typeof toggleEditMode === 'function') toggleEditMode(false);
+                else console.warn('toggleEditMode is not a function');
+              });
+              // Direct save handler (temporary): bypass toggleEditMode to verify request
+              saveBtn.addEventListener('click', async (e) => {
+                try {
+                  console.log('direct save handler invoked');
+                  const editInputEl = document.getElementById('edit-input');
+                  const val = editInputEl ? (editInputEl.value || '').trim() : '';
+                  console.log('direct save payload:', val);
+                  const resp = await apiRequest('/profile', 'PUT', { bio: val });
+                  console.log('direct save response:', resp);
+                } catch (err) {
+                  console.error('direct save handler error:', err);
+                }
+              });
+              console.log('Attached click handler to save-btn');
+            }
             const deleteAvailBtn = document.getElementById('deleteAvailabilityBtn');
             if (deleteAvailBtn) deleteAvailBtn.addEventListener('click', () => deleteAvailabilityEntry());
             // Attach image error fallbacks (CSP-safe)

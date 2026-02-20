@@ -69,19 +69,35 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
     );
   }
 
-  // Update profile
-  profile = await UserProfile.findOneAndUpdate(
-    { user: req.user.id },
-    req.body,
-    {
-      new: true,
-      runValidators: true,
-    },
-  );
+  // Merge incoming fields into the profile document and save to ensure
+  // mongoose `save` middleware runs (triggers profileCompleted recalculation).
+  try {
+    // Log incoming update for debugging
+    // eslint-disable-next-line no-console
+    console.log(
+      `profileController.updateProfile: user=${req.user && req.user.id} updating fields:`,
+      Object.keys(req.body),
+    );
 
-  res
-    .status(200)
-    .json(new ApiResponse(200, "Profile updated successfully", { profile }));
+    Object.keys(req.body).forEach((key) => {
+      // Protect against replacing the user reference
+      if (key === "user") return;
+      profile[key] = req.body[key];
+    });
+
+    await profile.save();
+
+    res
+      .status(200)
+      .json(new ApiResponse(200, "Profile updated successfully", { profile }));
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error(
+      "profileController.updateProfile: failed to save profile:",
+      err && err.message ? err.message : err,
+    );
+    return next(new ApiError(500, "Failed to update profile"));
+  }
 });
 
 // @desc    Delete user profile
