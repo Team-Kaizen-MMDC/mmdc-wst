@@ -157,7 +157,47 @@ Developer checklist (first week tasks)
 
 ## Production REST API (Days 1-4 Implementation)
 
+## Resume upload & S3 (IAM Role)
+
+- The backend now stores user resumes in an S3 bucket and uses IAM role-based credentials instead of long-lived access keys. This improves security and supports using instance/task roles in production.
+
+- Required environment variables (add to your `.env` in `backend/`):
+  - `AWS_REGION` — region where the S3 bucket lives (example: `ap-southeast-1`).
+  - `RESUME_S3_BUCKET` — S3 bucket name used for resume storage.
+  - `AWS_ROLE_ARN` — (optional) ARN of a role to assume for local development. In production, prefer instance/task execution roles and leave `AWS_ROLE_ARN` unset.
+
+- Verification: A helper script `backend/verify-aws-config.js` checks env, STS identity, assumes role (if configured) and performs a small Put/Get/Delete test against the resume bucket. A npm script `verify:aws` is available in `backend/package.json`:
+
+```bash
+cd backend
+npm run verify:aws
+```
+
+- Controller notes: `src/controllers/profileController.js` was updated to use the centralized S3 client (`src/utils/awsS3.js`). Uploaded file keys are saved to the user profile (`profile.resumePath`). Endpoints:
+  - `POST /api/v1/profile/resume` — multipart upload (file field `resume`) saves file to S3 and stores key in profile.
+  - `GET /api/v1/profile/resume` — returns a presigned GET URL if `profile.resumePath` exists.
+  - `DELETE /api/v1/profile/resume` — deletes the S3 object and clears `profile.resumePath`.
+
+- When working locally you may need to allow your developer principal to assume the role used by the backend (or configure `AWS_ROLE_ARN` to an appropriate role). See `backend/AWS_IAM_SETUP.md` and the Terraform notes in the `terraform/` folder for guidance on `allowed_principals` and trust policies.
+
 The backend now includes a production-ready REST API with JWT authentication, user profiles, job listings, and applications. This section provides a quick overview — see [README.md](README.md) for complete documentation.
+
+## Google OAuth (Optional)
+
+- The backend supports Google OAuth 2.0 for user sign-in. Add these env vars to `backend/.env` (or `.env.example`):
+  - `GOOGLE_CLIENT_ID`
+  - `GOOGLE_CLIENT_SECRET`
+  - `GOOGLE_REDIRECT_URI` (callback URL registered in Google Cloud)
+
+- Typical routes to implement / wire up:
+  - `GET /api/v1/auth/google` — starts OAuth by redirecting to Google's authorization endpoint.
+  - `GET /api/v1/auth/google/callback` — receives the authorization `code`, exchanges it for tokens, fetches profile info, finds/creates local user, and issues the app JWT.
+
+- Implementation tips:
+  - Request scopes: `profile email` to receive the user's name, email, and `email_verified` flag.
+  - Persist provider metadata on the user (e.g., `provider: 'google'`, `providerId`).
+  - Validate `email_verified` before automatically enabling accounts.
+  - For local development, register a redirect URI such as `http://localhost:3000/api/v1/auth/google/callback` in the Google Cloud Console.
 
 ### Available APIs (Day 1-4)
 

@@ -263,7 +263,8 @@
               accept="image/*"
               hidden=""
             />
-                  loading="lazy"
+            <input
+              type="file"
               id="avatarImageUpload"
               accept="image/*"
               hidden=""
@@ -382,11 +383,11 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
               </div>
 
               <div id="resume-container">
-                <!-- Hidden File Input for upload resume -->
+                <!-- Hidden File Input for upload resume (accept docs) -->
                 <input
                   type="file"
                   id="resumeUpload"
-                  accept="image/*"
+                  accept=".pdf,.doc,.docx"
                   style="display: none"
                 />
 
@@ -398,6 +399,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
 
                 <div id="view-section" style="display: none; margin-top: 10px">
                   <a id="view-link" href="#" target="_blank">View Resume →</a>
+                  <span id="view-loading" style="display:none; margin-left:8px; color: #666; font-size:0.9rem">Loading…</span>
                   <button id="remove-button" style="margin-left: 10px">
                     X
                   </button>
@@ -2818,6 +2820,21 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           const profile = data.data.profile; // API returns { success: true, data: { profile: {...} } }
           console.log("Profile fetched from API:", profile);
 
+          // If the signed-in user changed since the last page load, clear
+          // per-user cached localStorage keys to avoid showing another user's
+          // stale data (experience, skills, education, etc.). Then persist
+          // the current user's id so future checks can detect changes.
+          try {
+            const prevUid = localStorage.getItem('currentUserId');
+            const newUid = profile && profile.user && (profile.user._id || profile.user.id || profile.user);
+            if (newUid && prevUid && prevUid !== String(newUid)) {
+              ['experienceData','educationData','skillsData','userProfile','applicationsData'].forEach(k => localStorage.removeItem(k));
+            }
+            if (newUid) localStorage.setItem('currentUserId', String(newUid));
+          } catch (e) {
+            console.warn('Could not update per-user local cache state', e);
+          }
+
           // If the browser has a cached local profile from Google sign-in, prefer
           // those values for display so the UI reflects the signed-in identity
           // even when the server-side profile is older.
@@ -3114,6 +3131,33 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           }
         }
 
+        // If a resume is stored for this profile, fetch a presigned URL to show the "View Resume" link
+        if (profile.resumePath) {
+          const viewLoading = document.getElementById('view-loading');
+          if (viewLoading) viewLoading.style.display = 'inline-block';
+          try {
+            const token = typeof getAuthToken === 'function' ? getAuthToken() : (typeof getCookie === 'function' ? getCookie('token') : '');
+            const res = await fetch('/api/v1/profile/resume', {
+              method: 'GET',
+              headers: token ? { 'Authorization': `Bearer ${token}` } : {},
+            });
+            const json = await res.json();
+            if (res.ok && json.data && json.data.resumeUrl) {
+              const viewSection = document.getElementById('view-section');
+              const viewLink = document.getElementById('view-link');
+              if (viewLink) viewLink.href = json.data.resumeUrl;
+              if (viewLoading) viewLoading.style.display = 'none';
+              if (viewSection) viewSection.style.display = 'block';
+            } else {
+              if (viewLoading) viewLoading.style.display = 'none';
+            }
+          } catch (err) {
+            if (viewLoading) viewLoading.style.display = 'none';
+            // eslint-disable-next-line no-console
+            console.warn('Could not fetch resume URL', err);
+          }
+        }
+
         console.log("Dashboard populated successfully from backend API");
       } catch (error) {
         console.error("Error fetching profile:", error);
@@ -3134,6 +3178,87 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
      <script>
         // ====================================================================
         // Availability and Preferences
+      // Resume upload handlers
+      (function () {
+        function getCookie(name) {
+          const v = `; ${document.cookie}`;
+          const parts = v.split(`; ${name}=`);
+          if (parts.length === 2) return parts.pop().split(';').shift();
+          return "";
+        }
+
+        const uploadLink = document.getElementById('resumeUploadLink');
+        const fileInput = document.getElementById('resumeUpload');
+        const viewSection = document.getElementById('view-section');
+        const viewLink = document.getElementById('view-link');
+        const removeBtn = document.getElementById('remove-button');
+
+        if (uploadLink && fileInput) {
+          uploadLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            fileInput.click();
+          });
+
+          fileInput.addEventListener('change', async (e) => {
+            const file = e.target.files && e.target.files[0];
+            if (!file) return;
+
+            // Basic client-side validation
+            const allowed = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+            if (!allowed.includes(file.type)) {
+              alert('Please upload a PDF or Word document (doc/docx).');
+              return;
+            }
+
+            const form = new FormData();
+            form.append('resume', file);
+
+            const token = typeof getAuthToken === 'function' ? getAuthToken() : (typeof getCookie === 'function' ? getCookie('token') : '');
+
+            try {
+              const res = await fetch('/api/v1/profile/resume', {
+                method: 'POST',
+                headers: token ? { 'Authorization': `Bearer ${token}` } : {},
+                body: form,
+              });
+
+              const data = await res.json();
+              if (!res.ok) throw new Error(data.message || 'Upload failed');
+
+              if (data && data.data && data.data.resumeUrl) {
+                viewLink.href = data.data.resumeUrl;
+                viewSection.style.display = 'block';
+              }
+            } catch (err) {
+              // eslint-disable-next-line no-console
+              console.error('Resume upload failed', err);
+              alert('Failed to upload resume. Try again.');
+            }
+          });
+        }
+
+        if (removeBtn) {
+          removeBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const token = typeof getAuthToken === 'function' ? getAuthToken() : (typeof getCookie === 'function' ? getCookie('token') : '');
+            try {
+              const res = await fetch('/api/v1/profile/resume', {
+                method: 'DELETE',
+                headers: token ? { 'Authorization': `Bearer ${token}` } : {},
+              });
+              const data = await res.json();
+              if (!res.ok) throw new Error(data.message || 'Delete failed');
+              viewLink.href = '#';
+              viewSection.style.display = 'none';
+              fileInput.value = '';
+              alert('Resume deleted');
+            } catch (err) {
+              console.error('Failed to delete resume', err);
+              alert('Failed to delete resume. Try again.');
+            }
+          });
+        }
+      })();
         // ====================================================================
         const AVAILABILITY_STORAGE_KEY = "userAvailabilityEntries";
         const availabilityModalElement = document.getElementById("availabilityModal");
@@ -3649,8 +3774,8 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           if (coverBtn) coverBtn.addEventListener('click', () => document.getElementById('coverImageUpload').click());
           const avatarBtn = document.getElementById('avatarImageBtn');
           if (avatarBtn) avatarBtn.addEventListener('click', (e) => { e.preventDefault(); document.getElementById('avatarImageUpload').click(); });
-          const resumeLink = document.getElementById('resumeUploadLink');
-          if (resumeLink) resumeLink.addEventListener('click', (e) => { e.preventDefault(); document.getElementById('resumeUpload').click(); });
+          // resume upload listener is attached in the availability/resume handler block
+          // at page scripts earlier to ensure the full upload flow is available.
 
           // Attach edit/save toggle handlers
             const editBtn = document.getElementById('edit-btn');

@@ -805,6 +805,41 @@ exports.protect = asyncHandler(async (req, res, next) => {
     return next(new ApiError(401, "Invalid or expired token"));
   }
 });
+
+### Google OAuth (Sign-in with Google)
+
+This project supports optional Google OAuth sign-in. The flow is:
+
+- User clicks "Sign in with Google" on the frontend.
+- Frontend navigates to a backend endpoint that initiates the OAuth flow (e.g., `/api/v1/auth/google`).
+- After the user consents, Google redirects back to the configured callback (`/api/v1/auth/google/callback`) with an authorization `code`.
+- The backend exchanges the `code` for tokens, fetches the user's profile (`scope=profile email`), finds or creates a local user record, and returns the application's JWT to the client.
+
+Required environment variables (add to `backend/.env`):
+
+- `GOOGLE_CLIENT_ID` — OAuth client ID from Google Cloud Console.
+- `GOOGLE_CLIENT_SECRET` — OAuth client secret (keep this private).
+- `GOOGLE_REDIRECT_URI` — Redirect URI registered in Google Cloud (e.g., `http://localhost:3000/api/v1/auth/google/callback`).
+
+Backend implementation notes:
+
+- Routes: typically `GET /api/v1/auth/google` (init) and `GET /api/v1/auth/google/callback` (callback).
+- Scopes: request `profile` and `email` to obtain the user's name and verified email.
+- When creating a user, store provider metadata (`provider: 'google'`, `providerId: googleId`) to support repeat logins.
+- Consider `email_verified` before auto-creating accounts.
+
+Testing locally:
+
+1. Create credentials in Google Cloud Console (OAuth consent screen, Web application credentials).
+2. Configure redirect URI for local dev (`http://localhost:3000/api/v1/auth/google/callback`).
+3. Add `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, and `GOOGLE_REDIRECT_URI` to `backend/.env`.
+4. Start the backend and trigger the flow from the frontend sign-in page.
+
+Security guidance:
+
+- Never commit `GOOGLE_CLIENT_SECRET` to source control. Use a secrets manager in production.
+- Use HTTPS in production for redirect URIs.
+- Limit allowed redirect URIs to those you control.
 ```
 
 ### Role-Based Authorization

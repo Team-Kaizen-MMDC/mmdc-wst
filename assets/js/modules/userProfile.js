@@ -3,9 +3,23 @@
 // ===================================================================
 // Centralized module for managing user profile data across the application
 // Uses localStorage for persistent storage of user profile information
+// Keys are namespaced per-user using the `email` cookie to avoid leaking
+// profile data between different signed-in users on the same browser.
 
-const USER_PROFILE_KEY = "userProfile";
-const IS_NEW_USER_KEY = "isNewUser";
+import { getCookie } from "./storage.js";
+
+const GLOBAL_FALLBACK_KEY = "userProfile";
+const GLOBAL_NEW_USER_KEY = "isNewUser";
+
+function getUserStorageKey() {
+  const email = getCookie("email") || "";
+  return email ? `userProfile:${email}` : GLOBAL_FALLBACK_KEY;
+}
+
+function getNewUserKey() {
+  const email = getCookie("email") || "";
+  return email ? `isNewUser:${email}` : GLOBAL_NEW_USER_KEY;
+}
 
 /**
  * Get the default/empty user profile structure
@@ -83,7 +97,7 @@ export function saveUserProfile(profileData) {
       ...profileData,
       lastUpdated: new Date().toISOString(),
     };
-    localStorage.setItem(USER_PROFILE_KEY, JSON.stringify(updatedProfile));
+    localStorage.setItem(getUserStorageKey(), JSON.stringify(updatedProfile));
     console.log("User profile saved successfully:", updatedProfile);
     return true;
   } catch (error) {
@@ -98,7 +112,7 @@ export function saveUserProfile(profileData) {
  */
 export function getUserProfile() {
   try {
-    const profileJson = localStorage.getItem(USER_PROFILE_KEY);
+    const profileJson = localStorage.getItem(getUserStorageKey());
     if (profileJson) {
       const profile = JSON.parse(profileJson);
       console.log("User profile retrieved:", profile);
@@ -134,8 +148,18 @@ export function hasCompletedProfile() {
  */
 export function clearUserProfile() {
   try {
-    localStorage.removeItem(USER_PROFILE_KEY);
-    localStorage.removeItem(IS_NEW_USER_KEY);
+    // Remove the profile and new-user flag for the current user
+    localStorage.removeItem(getUserStorageKey());
+    localStorage.removeItem(getNewUserKey());
+    // Clear additional cached per-user keys (shared/global fallback)
+    [
+      "userProfile",
+      "currentUserId",
+      "experienceData",
+      "educationData",
+      "skillsData",
+      "applicationsData",
+    ].forEach((k) => localStorage.removeItem(k));
     console.log("User profile cleared");
   } catch (error) {
     console.error("Error clearing user profile:", error);
@@ -158,7 +182,7 @@ export function markProfileComplete() {
  * @returns {boolean} True if user just registered
  */
 export function isNewUser() {
-  return localStorage.getItem(IS_NEW_USER_KEY) === "true";
+  return localStorage.getItem(getNewUserKey()) === "true";
 }
 
 /**
@@ -166,7 +190,7 @@ export function isNewUser() {
  * @param {boolean} value - True if new user, false otherwise
  */
 export function setNewUserFlag(value) {
-  localStorage.setItem(IS_NEW_USER_KEY, value ? "true" : "false");
+  localStorage.setItem(getNewUserKey(), value ? "true" : "false");
 }
 
 /**

@@ -15,6 +15,9 @@ const {
   updateCertifications,
   updateLanguages,
   updateAvailability,
+  uploadResume,
+  getResume,
+  deleteResume,
 } = require("../controllers/profileController");
 const { protect } = require("../middleware/auth");
 
@@ -298,5 +301,44 @@ router.route("/certifications").put(updateCertifications);
  *         description: Availability updated
  */
 router.route("/availability").put(updateAvailability);
+
+/**
+ * @swagger
+ * /api/v1/profile/resume:
+ *   post:
+ *     summary: Upload or overwrite resume
+ *     tags: [Profile]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               resume:
+ *                 type: string
+ *                 format: binary
+ *     responses:
+ *       200:
+ *         description: Resume uploaded
+ *   get:
+ *     summary: Get presigned URL for resume
+ *     tags: [Profile]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Resume URL
+ */
+// Use explicit route handlers to support middleware arrays
+// Helper to normalize handler(s) (support arrays exported from controller)
+const _ensureHandlers = (h) => (Array.isArray(h) ? h : [h]);
+
+router.post("/resume", ..._ensureHandlers(uploadResume));
+router.get("/resume", ..._ensureHandlers(getResume));
+router.put("/resume", ..._ensureHandlers(uploadResume));
+router.delete("/resume", ..._ensureHandlers(deleteResume));
 
 module.exports = router;

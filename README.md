@@ -42,12 +42,93 @@ This repository holds the wireframe-driven static pages and a stylesheet ([asset
 
 For implementation details, testing guidance, and design docs, see the [docs/](docs/) folder.
 
+## Application Flow
+
+A high-level diagram showing how the static frontend, backend API, and storage interact.
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Frontend
+    participant Google
+    participant API
+    participant MongoDB
+    participant S3
+
+    User->>Frontend: Visit site
+
+    alt Google OAuth Login
+        User->>Frontend: Click Google Sign-In
+        Frontend->>Google: Redirect to OAuth
+        Google->>User: Authenticate
+        Google->>API: Return auth token
+        API->>Google: Verify token
+        Google-->>API: User info
+        API->>MongoDB: Store/update user
+        API-->>User: Return JWT token
+    else Traditional Login
+        User->>API: Email/Password login
+        API->>MongoDB: Verify credentials
+        API-->>User: Return JWT token
+    end
+
+    User->>API: Update profile
+    API->>MongoDB: Update user data
+    API-->>User: Success response
+
+    User->>API: Upload resume
+    API->>S3: Store resume file
+    S3-->>API: Confirm upload
+    API->>MongoDB: Save resume metadata
+    API-->>User: Success response
+
+    alt Jobseeker Flow
+        User->>API: Browse/search jobs
+        API->>MongoDB: Query jobs with filters
+        API-->>User: Return job listings
+
+        User->>API: Apply to job
+        API->>MongoDB: Create application
+        API-->>User: Application submitted
+
+        User->>API: View my applications
+        API->>MongoDB: Fetch user applications
+        API-->>User: Return applications
+    else Employer Flow
+        User->>API: Post new job
+        API->>MongoDB: Create job listing
+        API-->>User: Job posted
+
+        User->>API: View applications for job
+        API->>MongoDB: Fetch job applications
+        API-->>User: Return applications
+
+        User->>API: Update application status
+        API->>MongoDB: Update status
+        API-->>User: Status updated
+    end
+
+    User->>Frontend: View dashboard
+    Frontend->>API: Get profile + resume URL
+    API->>MongoDB: Fetch user data
+    API->>S3: Generate presigned URL
+    S3-->>API: Return presigned URL
+    API-->>Frontend: Profile data + URL
+    Frontend-->>User: Display dashboard
+```
+
 ## Backend API & Docs
 
 - Backend code and API are in the `backend/` folder. See `backend/README.md` for setup and running instructions.
 - Generated OpenAPI JSON: [backend/api-docs.json](backend/api-docs.json) (useful for frontend integration and CI snapshots).
 - Postman collections: [backend/postman/Japan_SSW_API_day1_day4.postman_collection.json](backend/postman/Japan_SSW_API_day1_day4.postman_collection.json) and [backend/postman/Japan_SSW_API_Complete.postman_collection.json](backend/postman/Japan_SSW_API_Complete.postman_collection.json).
 - Backend default port: `3000`. Swagger UI (when server running): `http://localhost:3000/api-docs`
+
+Additional backend notes (resume upload & AWS S3)
+
+- **Resume uploads use IAM Roles:** Resume file uploads are stored in S3 and the backend has been updated to use IAM role-based credentials (no long-lived access keys). See [backend/AWS_IAM_SETUP.md](backend/AWS_IAM_SETUP.md) for setup and troubleshooting.
+- **Verify AWS config locally:** A verification script is available at `backend/verify-aws-config.js` and a convenience npm script `verify:aws` was added to `backend/package.json`. Run `cd backend && npm run verify:aws` to validate environment variables, assume-role, and basic S3 Put/Get/Delete operations.
+- **Frontend integration:** The frontend now fetches a presigned URL for viewing an uploaded resume on dashboard load (if present). See [backend/S3_RESUME_UPLOAD_GUIDE.md](backend/S3_RESUME_UPLOAD_GUIDE.md) and the frontend integration guide for usage.
 
 ## Technologies
 

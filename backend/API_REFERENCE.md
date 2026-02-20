@@ -3,7 +3,7 @@
 **Version:** 1.0  
 **Base URL:** `http://localhost:3000/api/v1`  
 **Production URL:** `https://your-domain.com/api/v1`  
-**Last Updated:** January 29, 2026
+**Last Updated:** February 20, 2026
 
 > **Note:** For interactive Swagger documentation, see [API_DOCUMENTATION.md](./API_DOCUMENTATION.md) or visit `http://localhost:3000/api-docs`
 
@@ -166,6 +166,82 @@ Logs out the current user.
 
 **`GET /profile`**  
 **Access:** Protected (Jobseeker only)
+
+### Profile Resume
+
+- Upload, view, and delete a user's resume stored in S3. The backend stores the S3 object key in `profile.resumePath` and returns presigned GET URLs for safe browser access.
+
+- All endpoints below are **Protected** (Jobseeker only) and require a JWT in the `Authorization: Bearer <token>` header.
+
+#### Upload Resume
+
+**`POST /profile/resume`**
+**Access:** Protected (Jobseeker only)
+
+Multipart form upload. Field name: `resume` (file). Accepts PDF and Word doc types.
+
+Example cURL:
+
+```bash
+curl -X POST http://localhost:3000/api/v1/profile/resume \
+  -H "Authorization: Bearer $TOKEN" \
+  -F "resume=@/path/to/resume.pdf"
+```
+
+Success Response (200 OK):
+
+```json
+{
+  "success": true,
+  "message": "Resume uploaded",
+  "data": {
+    "resumePath": "resumes/<userId>/resume.pdf",
+    "resumeUrl": "https://s3....amazonaws.com/...presigned-url..."
+  }
+}
+```
+
+#### Get Resume (presigned URL)
+
+**`GET /profile/resume`**
+**Access:** Protected (Jobseeker only)
+
+Returns a JSON payload containing a presigned GET URL valid for a short time when a resume exists for the authenticated user's profile.
+
+Success Response (200 OK):
+
+```json
+{
+  "success": true,
+  "data": {
+    "resumeUrl": "https://...presigned-url..."
+  }
+}
+```
+
+#### Delete Resume
+
+**`DELETE /profile/resume`**
+**Access:** Protected (Jobseeker only)
+
+Deletes the S3 object and clears `profile.resumePath` from the user's profile. Returns 200 on success.
+
+Example cURL:
+
+```bash
+curl -X DELETE http://localhost:3000/api/v1/profile/resume \
+  -H "Authorization: Bearer $TOKEN"
+```
+
+Success Response (200 OK):
+
+```json
+{
+  "success": true,
+  "message": "Resume deleted",
+  "data": {}
+}
+```
 
 Retrieves the authenticated user's complete profile.
 
