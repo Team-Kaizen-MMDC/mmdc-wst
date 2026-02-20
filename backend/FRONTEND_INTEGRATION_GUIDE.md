@@ -145,6 +145,21 @@ class AuthService {
     localStorage.removeItem("user");
   }
 }
+
+### Sign in with Google (Frontend)
+
+Add a "Sign in with Google" button that navigates the user to the backend OAuth start endpoint (for example: `/api/v1/auth/google`). The backend should redirect to Google's consent page and ultimately back to your configured callback which issues the application JWT.
+
+Frontend notes:
+
+- Button action: `window.location = '/api/v1/auth/google'` (or open in a popup if you prefer a popup flow).
+- After successful OAuth, the backend can either redirect to the frontend with a temporary token in the query string or set an HttpOnly cookie with the JWT — coordinate with backend implementation.
+- Example: if backend redirects to `/pages/signin.html?token=<jwt>`, the frontend should read `token` from `location.search`, store it (e.g., `localStorage`), and then call `GET /api/v1/auth/me` to fetch user info.
+
+Testing & redirect URIs:
+
+- Ensure the Google OAuth redirect URI used by the backend is registered in Google Cloud Console. For local development use `http://localhost:3000/api/v1/auth/google/callback` or an agreed frontend landing page that receives the token.
+- If using a popup, implement postMessage communication to send the JWT back to the opener window securely.
 ```
 
 ---

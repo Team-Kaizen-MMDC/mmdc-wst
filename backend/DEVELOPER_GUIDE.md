@@ -182,6 +182,23 @@ npm run verify:aws
 
 The backend now includes a production-ready REST API with JWT authentication, user profiles, job listings, and applications. This section provides a quick overview — see [README.md](README.md) for complete documentation.
 
+## Google OAuth (Optional)
+
+- The backend supports Google OAuth 2.0 for user sign-in. Add these env vars to `backend/.env` (or `.env.example`):
+  - `GOOGLE_CLIENT_ID`
+  - `GOOGLE_CLIENT_SECRET`
+  - `GOOGLE_REDIRECT_URI` (callback URL registered in Google Cloud)
+
+- Typical routes to implement / wire up:
+  - `GET /api/v1/auth/google` — starts OAuth by redirecting to Google's authorization endpoint.
+  - `GET /api/v1/auth/google/callback` — receives the authorization `code`, exchanges it for tokens, fetches profile info, finds/creates local user, and issues the app JWT.
+
+- Implementation tips:
+  - Request scopes: `profile email` to receive the user's name, email, and `email_verified` flag.
+  - Persist provider metadata on the user (e.g., `provider: 'google'`, `providerId`).
+  - Validate `email_verified` before automatically enabling accounts.
+  - For local development, register a redirect URI such as `http://localhost:3000/api/v1/auth/google/callback` in the Google Cloud Console.
+
 ### Available APIs (Day 1-4)
 
 **Day 1: Authentication** (`/api/v1/auth`)
