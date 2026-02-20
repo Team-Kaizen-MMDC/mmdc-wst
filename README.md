@@ -42,6 +42,31 @@ This repository holds the wireframe-driven static pages and a stylesheet ([asset
 
 For implementation details, testing guidance, and design docs, see the [docs/](docs/) folder.
 
+## Application Flow
+
+A high-level diagram showing how the static frontend, backend API, and storage interact.
+
+```mermaid
+flowchart LR
+  Browser[Browser / User]
+  Static[Static site — pages/index.html]
+  Assets[Assets — assets/*]
+  Backend[Backend — Node/Express]
+  DB[(MongoDB)]
+  S3[(AWS S3 - resumes)]
+  Swagger[OpenAPI / Swagger UI]
+  Auth[Auth — JWT]
+
+  Browser -->|requests pages| Static
+  Static -->|serves assets| Assets
+  Browser -->|API requests| Backend
+  Backend --> DB
+  Backend --> S3
+  Backend --> Swagger
+  Backend --> Auth
+  Browser -->|fetch presigned URL| S3
+```
+
 ## Backend API & Docs
 
 - Backend code and API are in the `backend/` folder. See `backend/README.md` for setup and running instructions.
