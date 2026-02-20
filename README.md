@@ -49,6 +49,12 @@ For implementation details, testing guidance, and design docs, see the [docs/](d
 - Postman collections: [backend/postman/Japan_SSW_API_day1_day4.postman_collection.json](backend/postman/Japan_SSW_API_day1_day4.postman_collection.json) and [backend/postman/Japan_SSW_API_Complete.postman_collection.json](backend/postman/Japan_SSW_API_Complete.postman_collection.json).
 - Backend default port: `3000`. Swagger UI (when server running): `http://localhost:3000/api-docs`
 
+Additional backend notes (resume upload & AWS S3)
+
+- **Resume uploads use IAM Roles:** Resume file uploads are stored in S3 and the backend has been updated to use IAM role-based credentials (no long-lived access keys). See [backend/AWS_IAM_SETUP.md](backend/AWS_IAM_SETUP.md) for setup and troubleshooting.
+- **Verify AWS config locally:** A verification script is available at `backend/verify-aws-config.js` and a convenience npm script `verify:aws` was added to `backend/package.json`. Run `cd backend && npm run verify:aws` to validate environment variables, assume-role, and basic S3 Put/Get/Delete operations.
+- **Frontend integration:** The frontend now fetches a presigned URL for viewing an uploaded resume on dashboard load (if present). See [backend/S3_RESUME_UPLOAD_GUIDE.md](backend/S3_RESUME_UPLOAD_GUIDE.md) and the frontend integration guide for usage.
+
 ## Technologies
 
 - HTML5

@@ -548,6 +548,18 @@ function renderApplications(applications) {
 
 // Load dashboard on page load
 document.addEventListener("DOMContentLoaded", loadDashboard);
+
+### Profile Resume (upload / view / delete)
+
+- Endpoints:
+  - `POST /api/v1/profile/resume` — multipart form upload; field name: `resume`. Protected endpoint, requires auth token.
+  - `GET /api/v1/profile/resume` — returns JSON with a presigned GET URL when a resume exists for the profile.
+  - `DELETE /api/v1/profile/resume` — deletes the stored resume from S3 and clears the profile field.
+
+- Frontend behavior and notes:
+  - After uploading, the backend saves the S3 object key in `profile.resumePath`. The dashboard requests the presigned URL on page load when `profile.resumePath` exists and shows a `View Resume` link.
+  - Use the auth helper `getAuthToken()` (preferred) and fall back to `getCookie('token')` only if necessary — some pages were updated to prefer `getAuthToken()` to avoid ReferenceErrors in modular contexts.
+  - See [backend/S3_RESUME_UPLOAD_GUIDE.md](backend/S3_RESUME_UPLOAD_GUIDE.md) for example upload flow and sample client code.
 ```
 
 ---

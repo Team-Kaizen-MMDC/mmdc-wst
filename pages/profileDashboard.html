@@ -399,6 +399,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
 
                 <div id="view-section" style="display: none; margin-top: 10px">
                   <a id="view-link" href="#" target="_blank">View Resume →</a>
+                  <span id="view-loading" style="display:none; margin-left:8px; color: #666; font-size:0.9rem">Loading…</span>
                   <button id="remove-button" style="margin-left: 10px">
                     X
                   </button>
@@ -3132,6 +3133,8 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
 
         // If a resume is stored for this profile, fetch a presigned URL to show the "View Resume" link
         if (profile.resumePath) {
+          const viewLoading = document.getElementById('view-loading');
+          if (viewLoading) viewLoading.style.display = 'inline-block';
           try {
             const token = typeof getAuthToken === 'function' ? getAuthToken() : (typeof getCookie === 'function' ? getCookie('token') : '');
             const res = await fetch('/api/v1/profile/resume', {
@@ -3143,9 +3146,13 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
               const viewSection = document.getElementById('view-section');
               const viewLink = document.getElementById('view-link');
               if (viewLink) viewLink.href = json.data.resumeUrl;
+              if (viewLoading) viewLoading.style.display = 'none';
               if (viewSection) viewSection.style.display = 'block';
+            } else {
+              if (viewLoading) viewLoading.style.display = 'none';
             }
           } catch (err) {
+            if (viewLoading) viewLoading.style.display = 'none';
             // eslint-disable-next-line no-console
             console.warn('Could not fetch resume URL', err);
           }
@@ -3206,7 +3213,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
             const form = new FormData();
             form.append('resume', file);
 
-            const token = getCookie('token');
+            const token = typeof getAuthToken === 'function' ? getAuthToken() : (typeof getCookie === 'function' ? getCookie('token') : '');
 
             try {
               const res = await fetch('/api/v1/profile/resume', {
@@ -3233,7 +3240,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
         if (removeBtn) {
           removeBtn.addEventListener('click', async (e) => {
             e.preventDefault();
-            const token = getCookie('token');
+            const token = typeof getAuthToken === 'function' ? getAuthToken() : (typeof getCookie === 'function' ? getCookie('token') : '');
             try {
               const res = await fetch('/api/v1/profile/resume', {
                 method: 'DELETE',
