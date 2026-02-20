@@ -91,28 +91,10 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
   // Merge incoming fields into the profile document and save to ensure
   // mongoose `save` middleware runs (triggers profileCompleted recalculation).
 
-// @desc    Delete resume from S3 and clear profile reference
-// @route   DELETE /api/v1/profile/resume
-// @access  Private
-exports.deleteResume = asyncHandler(async (req, res, next) => {
-  const profile = await UserProfile.findOne({ user: req.user.id });
-  if (!profile || !profile.resumePath) return next(new ApiError(404, "No resume uploaded"));
+  // @desc    Delete resume from S3 and clear profile reference
+  // @route   DELETE /api/v1/profile/resume
+  // @access  Private
 
-  try {
-    const delCmd = new DeleteObjectCommand({ Bucket: S3_BUCKET, Key: profile.resumePath });
-    await s3.send(delCmd);
-
-    // Clear profile field
-    profile.resumePath = undefined;
-    await profile.save();
-
-    res.status(200).json(new ApiResponse(200, "Resume deleted successfully", {}));
-  } catch (err) {
-    // eslint-disable-next-line no-console
-    console.error("deleteResume: failed to delete", err && err.message ? err.message : err);
-    return next(new ApiError(500, "Failed to delete resume"));
-  }
-});
   try {
     // Log incoming update for debugging
     // eslint-disable-next-line no-console
@@ -423,14 +405,12 @@ exports.uploadResume = [
       const getCmd = new GetObjectCommand({ Bucket: S3_BUCKET, Key: key });
       const url = await getSignedUrl(s3, getCmd, { expiresIn: 60 * 5 }); // 5 minutes
 
-      res
-        .status(200)
-        .json(
-          new ApiResponse(200, "Resume uploaded successfully", {
-            resumeUrl: url,
-            resumeKey: key,
-          }),
-        );
+      res.status(200).json(
+        new ApiResponse(200, "Resume uploaded successfully", {
+          resumeUrl: url,
+          resumeKey: key,
+        }),
+      );
     } catch (err) {
       // eslint-disable-next-line no-console
       console.error(
@@ -456,14 +436,12 @@ exports.getResume = asyncHandler(async (req, res, next) => {
       Key: profile.resumePath,
     });
     const url = await getSignedUrl(s3, getCmd, { expiresIn: 60 * 5 });
-    res
-      .status(200)
-      .json(
-        new ApiResponse(200, "Resume URL generated", {
-          resumeUrl: url,
-          resumeKey: profile.resumePath,
-        }),
-      );
+    res.status(200).json(
+      new ApiResponse(200, "Resume URL generated", {
+        resumeUrl: url,
+        resumeKey: profile.resumePath,
+      }),
+    );
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error(
@@ -471,5 +449,37 @@ exports.getResume = asyncHandler(async (req, res, next) => {
       err && err.message ? err.message : err,
     );
     return next(new ApiError(500, "Failed to retrieve resume"));
+  }
+});
+
+// @desc    Delete resume from S3 and clear profile reference
+// @route   DELETE /api/v1/profile/resume
+// @access  Private
+exports.deleteResume = asyncHandler(async (req, res, next) => {
+  const profile = await UserProfile.findOne({ user: req.user.id });
+  if (!profile || !profile.resumePath)
+    return next(new ApiError(404, "No resume uploaded"));
+
+  try {
+    const delCmd = new DeleteObjectCommand({
+      Bucket: S3_BUCKET,
+      Key: profile.resumePath,
+    });
+    await s3.send(delCmd);
+
+    // Clear profile field
+    profile.resumePath = undefined;
+    await profile.save();
+
+    res
+      .status(200)
+      .json(new ApiResponse(200, "Resume deleted successfully", {}));
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error(
+      "deleteResume: failed to delete",
+      err && err.message ? err.message : err,
+    );
+    return next(new ApiError(500, "Failed to delete resume"));
   }
 });
