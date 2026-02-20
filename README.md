@@ -59,6 +59,10 @@ sequenceDiagram
     API->>MongoDB: Store user data
     API-->>User: Return JWT token
 
+    User->>API: Update profile
+    API->>MongoDB: Update user data
+    API-->>User: Success response
+
     User->>API: Upload resume
     API->>S3: Store resume file
     S3-->>API: Confirm upload
