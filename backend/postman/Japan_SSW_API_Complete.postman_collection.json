@@ -138,6 +138,70 @@
             "description": "Request password reset email"
           },
           "response": []
+        },
+        {
+          "name": "Upload Resume",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{JWT_TOKEN}}", "type": "string" }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [{ "key": "resume", "type": "file", "src": "" }]
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/profile/resume",
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile", "resume"]
+            },
+            "description": "Upload resume (multipart form-data). Field: resume"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Resume (presigned URL)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{JWT_TOKEN}}", "type": "string" }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/profile/resume",
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile", "resume"]
+            },
+            "description": "Retrieve a presigned URL for the authenticated user's resume"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Resume",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{JWT_TOKEN}}", "type": "string" }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/profile/resume",
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile", "resume"]
+            },
+            "description": "Delete the authenticated user's resume"
+          },
+          "response": []
         }
       ]
     },
