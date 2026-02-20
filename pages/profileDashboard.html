@@ -383,11 +383,11 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
               </div>
 
               <div id="resume-container">
-                <!-- Hidden File Input for upload resume -->
+                <!-- Hidden File Input for upload resume (accept docs) -->
                 <input
                   type="file"
                   id="resumeUpload"
-                  accept="image/*"
+                  accept=".pdf,.doc,.docx"
                   style="display: none"
                 />
 
@@ -3135,6 +3135,87 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
      <script>
         // ====================================================================
         // Availability and Preferences
+      // Resume upload handlers
+      (function () {
+        function getCookie(name) {
+          const v = `; ${document.cookie}`;
+          const parts = v.split(`; ${name}=`);
+          if (parts.length === 2) return parts.pop().split(';').shift();
+          return "";
+        }
+
+        const uploadLink = document.getElementById('resumeUploadLink');
+        const fileInput = document.getElementById('resumeUpload');
+        const viewSection = document.getElementById('view-section');
+        const viewLink = document.getElementById('view-link');
+        const removeBtn = document.getElementById('remove-button');
+
+        if (uploadLink && fileInput) {
+          uploadLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            fileInput.click();
+          });
+
+          fileInput.addEventListener('change', async (e) => {
+            const file = e.target.files && e.target.files[0];
+            if (!file) return;
+
+            // Basic client-side validation
+            const allowed = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+            if (!allowed.includes(file.type)) {
+              alert('Please upload a PDF or Word document (doc/docx).');
+              return;
+            }
+
+            const form = new FormData();
+            form.append('resume', file);
+
+            const token = getCookie('token');
+
+            try {
+              const res = await fetch('/api/v1/profile/resume', {
+                method: 'POST',
+                headers: token ? { 'Authorization': `Bearer ${token}` } : {},
+                body: form,
+              });
+
+              const data = await res.json();
+              if (!res.ok) throw new Error(data.message || 'Upload failed');
+
+              if (data && data.data && data.data.resumeUrl) {
+                viewLink.href = data.data.resumeUrl;
+                viewSection.style.display = 'block';
+              }
+            } catch (err) {
+              // eslint-disable-next-line no-console
+              console.error('Resume upload failed', err);
+              alert('Failed to upload resume. Try again.');
+            }
+          });
+        }
+
+        if (removeBtn) {
+          removeBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const token = getCookie('token');
+            try {
+              const res = await fetch('/api/v1/profile/resume', {
+                method: 'DELETE',
+                headers: token ? { 'Authorization': `Bearer ${token}` } : {},
+              });
+              const data = await res.json();
+              if (!res.ok) throw new Error(data.message || 'Delete failed');
+              viewLink.href = '#';
+              viewSection.style.display = 'none';
+              fileInput.value = '';
+              alert('Resume deleted');
+            } catch (err) {
+              console.error('Failed to delete resume', err);
+              alert('Failed to delete resume. Try again.');
+            }
+          });
+        }
+      })();
         // ====================================================================
         const AVAILABILITY_STORAGE_KEY = "userAvailabilityEntries";
         const availabilityModalElement = document.getElementById("availabilityModal");
