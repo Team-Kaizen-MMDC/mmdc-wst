@@ -124,17 +124,35 @@ function configurePassport(app) {
                 user: user._id,
               });
               if (!existingProfile) {
+                // Ensure required fields are non-empty to satisfy UserProfile schema
+                let firstName = googleProfile.given_name || "";
+                let lastName = googleProfile.family_name || "";
+
+                // If only a full name is provided, try splitting it
+                if (!firstName && googleProfile.name) {
+                  const parts = String(googleProfile.name).trim().split(/\s+/);
+                  if (parts.length === 1) {
+                    firstName = parts[0];
+                  } else if (parts.length > 1) {
+                    firstName = parts.slice(0, -1).join(" ");
+                    lastName = lastName || parts.slice(-1).join(" ");
+                  }
+                }
+
+                // Final fallbacks to avoid empty required fields
+                if (!firstName) firstName = "User";
+                if (!lastName) lastName = "";
+
                 const profileData = {
                   user: user._id,
-                  firstName:
-                    googleProfile.given_name || googleProfile.name || "",
-                  lastName: googleProfile.family_name || "",
+                  firstName,
+                  lastName,
                   dateOfBirth: googleProfile.dateOfBirth
                     ? new Date(googleProfile.dateOfBirth)
                     : new Date("1970-01-01"),
                   nationality: googleProfile.locale
                     ? String(googleProfile.locale).split("-").pop()
-                    : "",
+                    : "not-applicable",
                   photoPath: googleProfile.picture || undefined,
                   availability: { visaStatus: "not-applicable" },
                 };
