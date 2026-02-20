@@ -47,18 +47,31 @@ For implementation details, testing guidance, and design docs, see the [docs/](d
 A high-level diagram showing how the static frontend, backend API, and storage interact.
 
 ```mermaid
-flowchart TB
-  User[User Browser]
-  Frontend[Static Frontend]
-  API[Backend API]
-  DB[(MongoDB)]
-  S3[(AWS S3)]
+sequenceDiagram
+    participant User
+    participant Frontend
+    participant API
+    participant MongoDB
+    participant S3
 
-  User -->|Visit site| Frontend
-  User -->|API calls| API
-  API --> DB
-  API --> S3
-  User -->|Fetch resume| S3
+    User->>Frontend: Visit site
+    User->>API: Register/Login
+    API->>MongoDB: Store user data
+    API-->>User: Return JWT token
+
+    User->>API: Upload resume
+    API->>S3: Store resume file
+    S3-->>API: Confirm upload
+    API->>MongoDB: Save resume metadata
+    API-->>User: Success response
+
+    User->>Frontend: View dashboard
+    Frontend->>API: Get profile + resume URL
+    API->>MongoDB: Fetch user data
+    API->>S3: Generate presigned URL
+    S3-->>API: Return presigned URL
+    API-->>Frontend: Profile data + URL
+    Frontend-->>User: Display dashboard
 ```
 
 ## Backend API & Docs
