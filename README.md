@@ -50,18 +50,27 @@ A high-level diagram showing how the static frontend, backend API, and storage i
 sequenceDiagram
     participant User
     participant Frontend
+    participant Google
     participant API
     participant MongoDB
     participant S3
 
     User->>Frontend: Visit site
-    User->>API: Register/Login
-    API->>MongoDB: Store user data
-    API-->>User: Return JWT token
 
-    User->>API: Update profile
-    API->>MongoDB: Update user data
-    API-->>User: Success response
+    alt Google OAuth Login
+        User->>Frontend: Click Google Sign-In
+        Frontend->>Google: Redirect to OAuth
+        Google->>User: Authenticate
+        Google->>API: Return auth token
+        API->>Google: Verify token
+        Google-->>API: User info
+        API->>MongoDB: Store/update user
+        API-->>User: Return JWT token
+    else Traditional Login
+        User->>API: Email/Password login
+        API->>MongoDB: Verify credentials
+        API-->>User: Return JWT token
+    end
 
     User->>API: Upload resume
     API->>S3: Store resume file
