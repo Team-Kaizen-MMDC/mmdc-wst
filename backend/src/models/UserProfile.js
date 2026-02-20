@@ -308,4 +308,31 @@ userProfileSchema.pre("save", function () {
   this.profileCompleted = this.checkProfileCompletion();
 });
 
+// Helper: recalc profileCompleted after query-based updates
+async function _recalcProfileCompletedAndSave(doc) {
+  if (!doc) return;
+  try {
+    if (typeof doc.checkProfileCompletion === "function") {
+      doc.profileCompleted = doc.checkProfileCompletion();
+    }
+    await doc.save();
+  } catch (err) {
+    // Best-effort only — log to console to aid debugging in development
+    // eslint-disable-next-line no-console
+    console.warn(
+      "UserProfile: failed to recalc profileCompleted:",
+      err && err.message ? err.message : err,
+    );
+  }
+}
+
+// Post hooks for query update helpers that do not trigger `save` middleware
+userProfileSchema.post("findOneAndUpdate", function (doc) {
+  _recalcProfileCompletedAndSave(doc);
+});
+
+userProfileSchema.post("findByIdAndUpdate", function (doc) {
+  _recalcProfileCompletedAndSave(doc);
+});
+
 module.exports = mongoose.model("UserProfile", userProfileSchema);
