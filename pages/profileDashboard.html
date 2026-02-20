@@ -206,7 +206,6 @@
                     object-position: center;
                   "
                   loading="lazy"
-                  onerror="this.src='https://placehold.co/1000x200/0d6efd/ffffff?text=Cover+Image';"
                 />
               </picture>
 
@@ -214,7 +213,7 @@
               <button
                 type="button"
                 class="btn btn-sm btn-light position-absolute top-0 end-0 m-2"
-                onclick="document.getElementById('coverImageUpload').click();"
+                id="coverImageBtn"
                 title="Change cover photo"
               >
                 <i class="bi bi-camera"></i>
@@ -227,8 +226,8 @@
               >
                 <a
                   href="#"
+                  id="avatarImageBtn"
                   class="d-inline-block rounded-circle border border-4 border-white shadow-sm overflow-hidden text-decoration-none"
-                  onclick="document.getElementById('avatarImageUpload').click(); return false;"
                 >
                   <picture>
                     <!-- WebP format for optimized loading -->
@@ -250,8 +249,7 @@
                         object-fit: cover;
                         object-position: center;
                       "
-                      loading="lazy"
-                      onerror="this.src='https://placehold.co/100x100/fecaca/991b1b?text=JD';"
+                        loading="lazy"
                     />
                   </picture>
                 </a>
@@ -265,8 +263,7 @@
               accept="image/*"
               hidden=""
             />
-            <input
-              type="file"
+                  loading="lazy"
               id="avatarImageUpload"
               accept="image/*"
               hidden=""
@@ -295,7 +292,6 @@
                   type="button"
                   class="btn btn-link text-contrast-danger small ms-2 p-0 shadow-none"
                   id="edit-btn"
-                  onclick="toggleEditMode(true)"
                 >
                   Edit
                 </button>
@@ -304,7 +300,6 @@
                   type="button"
                   class="btn btn-link text-contrast-danger small ms-2 d-none p-0 shadow-none"
                   id="save-btn"
-                  onclick="toggleEditMode(false)"
                 >
                   Save
                 </button>
@@ -397,10 +392,9 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
 
                 <a
                   href="#"
+                  id="resumeUploadLink"
                   class="d-block mt-3 text-secondary fw-semibold"
-                  onclick="document.getElementById('resumeUpload').click(); return false;"
-                  >Upload Resume →</a
-                >
+                  >Upload Resume →</a>
 
                 <div id="view-section" style="display: none; margin-top: 10px">
                   <a id="view-link" href="#" target="_blank">View Resume →</a>
@@ -485,10 +479,8 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
               <!-- ADD button is always visible and opens the modal for a NEW entry (-1 index) -->
               <a
                 href="#"
+                id="addExperienceBtn"
                 class="small text-decoration-none fw-semibold"
-                data-bs-toggle="modal"
-                data-bs-target="#experienceModal"
-                onclick="openExperienceModal(-1)"
                 >Add
               </a>
             </div>
@@ -512,10 +504,8 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
               <!-- ADD button is always visible and opens the modal for a NEW entry (-1 index) -->
               <a
                 href="#"
+                id="openSkillsBtn"
                 class="small text-decoration-none fw-semibold"
-                data-bs-toggle="modal"
-                data-bs-target="#skillsModal"
-                onclick="openSkillsModal(-1)"
                 >Add
               </a>
             </div>
@@ -539,10 +529,8 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
               <!-- ADD button is always visible and opens the modal for a NEW entry (-1 index) -->
               <a
                 href="#"
+                id="addEducationBtn"
                 class="small text-decoration-none fw-semibold"
-                data-bs-toggle="modal"
-                data-bs-target="#educationModal"
-                onclick="openEducationModal(-1)"
                 >Add
               </a>
             </div>
@@ -566,10 +554,8 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
               <!-- ADD button is always visible and opens the modal for a NEW entry (-1 index) -->
               <a
                 href="#"
+                id="addAvailabilityBtn"
                 class="small text-decoration-none fw-semibold"
-                data-bs-toggle="modal"
-                data-bs-target="#availabilityModal"
-                onclick="openAvailabilityModal(-1)"
                 >Add
               </a>
             </div>
@@ -1015,7 +1001,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                         </div>
 
                              <!-- Button to add new skills (Option 1 Implementation) -->
-                        <button type="button" class="btn btn-outline-danger w-100 mb-4" onclick="addSkillInput('')">
+                        <button type="button" id="addSkillBtn" class="btn btn-outline-danger w-100 mb-4">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-plus-lg me-1" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd" d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"/>
                             </svg>
@@ -1027,14 +1013,12 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                   type="button"
                   class="btn btn-outline-secondary border me-2"
                   data-bs-dismiss="modal"
-                >
-                  Cancel
-                </button>
-                <button type="submit" class="btn btn-danger">
-                  Save Skills
-                </button>
-              </div>
-              
+                <a
+                  href="#"
+                  id="addExperienceBtn"
+                  class="small text-decoration-none fw-semibold"
+                  >Add
+                </a>
             </form>
           </div>
         </div>
@@ -1328,7 +1312,6 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                   type="button"
                   class="btn btn-outline-danger me-2 rounded-md"
                   id="deleteAvailabilityBtn"
-                  onclick="deleteAvailabilityEntry()" 
                   style="display: none"
                 >
                   Delete Entry
@@ -1771,6 +1754,20 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           });
         }
 
+        // Image error fallbacks (attach via JS to be CSP-compliant)
+        const coverImg = document.getElementById('profileCoverImage');
+        if (coverImg) {
+          coverImg.addEventListener('error', function () {
+            this.src = 'https://placehold.co/1000x200/0d6efd/ffffff?text=Cover+Image';
+          });
+        }
+
+        document.querySelectorAll('#profileAvatarImg').forEach((img) => {
+          img.addEventListener('error', function () {
+            this.src = 'https://placehold.co/100x100/fecaca/991b1b?text=JD';
+          });
+        });
+
         // --- NOTE: Add other DOmContentLoaded listeners here if needed ---
       });
 
@@ -2103,11 +2100,11 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                     <div class="small ${dateClass}">${datesText}</div>
                 </div>
                 <a href="#" 
-                    class="small text-decoration-none ms-3 flex-shrink-0" 
-                    onclick="openEducationModal(${index}); return false;"
-                    data-bs-toggle="modal" 
-                    data-bs-target="#educationModal">
-                    Edit
+                  class="small text-decoration-none ms-3 flex-shrink-0 edit-education" 
+                  data-index="${index}"
+                  data-bs-toggle="modal" 
+                  data-bs-target="#educationModal">
+                  Edit
                 </a>
             </div>
         `;
@@ -2116,6 +2113,18 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
 
         // 3. Insert the entire combined HTML string into the container at once
         displayContainer.innerHTML = educationHTML;
+
+        // Attach listeners to Edit links (CSP-safe)
+        const editEducationLinks = displayContainer.querySelectorAll('.edit-education');
+        editEducationLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const idx = parseInt(link.getAttribute('data-index'));
+                openEducationModal(idx);
+                const el = document.getElementById('educationModal');
+                if (el) new bootstrap.Modal(el).show();
+            });
+        });
 
         // Optional: Remove border-bottom from last entry
         const lastEntry = displayContainer.querySelector(
@@ -2497,11 +2506,23 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           <div class="text-muted small">${d.company} — ${d.jobType}</div>
           <div class="small">${d.startMonth} ${d.startYear} – ${endText}</div>
         </div>
-        <a href="#" class="small" onclick="openExperienceModal(${i})" data-bs-toggle="modal" data-bs-target="#experienceModal">Edit</a>
+            <a href="#" class="small edit-experience" data-index="${i}" data-bs-toggle="modal" data-bs-target="#experienceModal">Edit</a>
       </div>
     `;
           })
           .join("");
+
+        // Attach event listeners to generated Edit links (CSP-safe)
+        const editLinks = container.querySelectorAll('.edit-experience');
+        editLinks.forEach(link => {
+          link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const idx = parseInt(link.getAttribute('data-index'));
+            openExperienceModal(idx);
+            const el = document.getElementById('experienceModal');
+            if (el) new bootstrap.Modal(el).show();
+          });
+        });
 
         const rows = container.querySelectorAll(".experience-entry-row");
         if (rows.length)
@@ -2652,9 +2673,12 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                   if (infoName) infoName.textContent = display;
                   if (localProfile.picture && avatarImg) {
                     const pic = avatarImg.closest('picture');
-                    const imgHtml = `<img id="profileAvatarImg" src="${localProfile.picture}" alt="User Avatar" class="rounded-circle" style="width: 100px; height: 100px; object-fit: cover; object-position: center;" loading="lazy" onerror="this.src='https://placehold.co/100x100/fecaca/991b1b?text=JD';"/>`;
-                    if (pic) pic.innerHTML = imgHtml;
-                    else avatarImg.src = localProfile.picture;
+                    const imgHtml = `<img id="profileAvatarImg" src="${localProfile.picture}" alt="User Avatar" class="rounded-circle" style="width: 100px; height: 100px; object-fit: cover; object-position: center;" loading="lazy"/>`;
+                    if (pic) {
+                      pic.innerHTML = imgHtml;
+                      const newImg = pic.querySelector('#profileAvatarImg');
+                      if (newImg) newImg.onerror = function () { this.src = 'https://placehold.co/100x100/fecaca/991b1b?text=JD'; };
+                    } else avatarImg.src = localProfile.picture;
                   }
                 }
               } catch (meErr) {
@@ -2681,9 +2705,12 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
 
                   if (lp.picture && avatarImg) {
                     const pic = avatarImg.closest('picture');
-                    const imgHtml = `<img id="profileAvatarImg" src="${lp.picture}" alt="User Avatar" class="rounded-circle" style="width: 100px; height: 100px; object-fit: cover; object-position: center;" loading="lazy" onerror="this.src='https://placehold.co/100x100/fecaca/991b1b?text=JD';"/>`;
-                    if (pic) pic.innerHTML = imgHtml;
-                    else avatarImg.src = lp.picture;
+                    const imgHtml = `<img id="profileAvatarImg" src="${lp.picture}" alt="User Avatar" class="rounded-circle" style="width: 100px; height: 100px; object-fit: cover; object-position: center;" loading="lazy"/>`;
+                    if (pic) {
+                      pic.innerHTML = imgHtml;
+                      const newImg = pic.querySelector('#profileAvatarImg');
+                      if (newImg) newImg.onerror = function () { this.src = 'https://placehold.co/100x100/fecaca/991b1b?text=JD'; };
+                    } else avatarImg.src = lp.picture;
                   }
                 }
               } catch (e) {
@@ -2715,17 +2742,19 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                   const avatarImg = document.getElementById("profileAvatarImg");
                   const avatarUrl = user?.googleProfile?.picture;
                   if (avatarUrl && avatarImg) {
-                    const pic = avatarImg.closest("picture");
-                    const imgHtml = `\
-                      <img id="profileAvatarImg" src="${avatarUrl}" alt="User Avatar" class="rounded-circle" style="width: 100px; height: 100px; object-fit: cover; object-position: center;" loading="lazy" onerror="this.src='https://placehold.co/100x100/fecaca/991b1b?text=JD';"/>`;
-                    if (pic) {
-                      pic.innerHTML = imgHtml;
-                    } else {
-                      avatarImg.src = avatarUrl;
-                      avatarImg.onerror = function () {
-                        this.src = 'https://placehold.co/100x100/fecaca/991b1b?text=JD';
-                      };
-                    }
+                  const pic = avatarImg.closest("picture");
+                  const imgHtml = `\
+                    <img id="profileAvatarImg" src="${avatarUrl}" alt="User Avatar" class="rounded-circle" style="width: 100px; height: 100px; object-fit: cover; object-position: center;" loading="lazy"/>`;
+                  if (pic) {
+                    pic.innerHTML = imgHtml;
+                    const newImg = pic.querySelector('#profileAvatarImg');
+                    if (newImg) newImg.onerror = function () { this.src = 'https://placehold.co/100x100/fecaca/991b1b?text=JD'; };
+                  } else {
+                    avatarImg.src = avatarUrl;
+                    avatarImg.onerror = function () {
+                      this.src = 'https://placehold.co/100x100/fecaca/991b1b?text=JD';
+                    };
+                  }
                   }
                   // Persist minimal profile info to localStorage so other UI modules
                   // (which read the userProfile key) will show updated name/email.
@@ -2787,7 +2816,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
             if (avatarUrl && avatarImg) {
               const pic = avatarImg.closest("picture");
               const imgHtml = `\
-                <img id="profileAvatarImg" src="${avatarUrl}" alt="User Avatar" class="rounded-circle" style="width: 100px; height: 100px; object-fit: cover; object-position: center;" loading="lazy" onerror="this.src='https://placehold.co/100x100/fecaca/991b1b?text=JD';"/>`;
+                <img id="profileAvatarImg" src="${avatarUrl}" alt="User Avatar" class="rounded-circle" style="width: 100px; height: 100px; object-fit: cover; object-position: center;" loading="lazy"/>`;
               if (pic) {
                 pic.innerHTML = imgHtml;
               } else {
@@ -3122,17 +3151,29 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                             <p class="mb-1 small text-muted">Location: ${item.preferLocation}</p>
                             <p class="mb-0 small text-secondary">Job Type: ${item.preferJobType}</p>
                         </div>
-                        <a href="#" 
-                            class="small text-decoration-none text-blue-600 fw-semibold"
-                            data-bs-toggle="modal"
-                            data-bs-target="#availabilityModal"
-                            onclick="openAvailabilityModal(${index})"
-                            >Edit
-                        </a>
+                    <a href="#" 
+                      class="small text-decoration-none text-blue-600 fw-semibold edit-availability"
+                      data-index="${index}"
+                      data-bs-toggle="modal"
+                      data-bs-target="#availabilityModal"
+                      >Edit
+                    </a>
                     </div>
                 `;
                 container.appendChild(entry);
             });
+
+              // Attach listeners to edit links
+              const editAvailLinks = container.querySelectorAll('.edit-availability');
+              editAvailLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                  e.preventDefault();
+                  const idx = parseInt(link.getAttribute('data-index'));
+                  openAvailabilityModal(idx);
+                  const el = document.getElementById('availabilityModal');
+                  if (el) new bootstrap.Modal(el).show();
+                });
+              });
         }
 
         /**
@@ -3338,38 +3379,46 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
          * @param {string} skillValue - The initial value for the input field.
          */
         function addSkillInput(skillValue = "") {
-            const container = document.getElementById("dynamicSkillsContainer");
+          const container = document.getElementById("dynamicSkillsContainer");
 
-            // Create a list-group-item element to contain the input and remove button
-            const listItem = document.createElement("div");
-            listItem.className = "list-group-item d-flex align-items-center";
+          // Create a list-group-item element to contain the input and remove button
+          const listItem = document.createElement("div");
+          listItem.className = "list-group-item d-flex align-items-center gap-2";
 
-            // HTML for the input field and remove button
-            listItem.innerHTML = `
-                <input
-                    type="text"
-                    value="${skillValue.trim()}"
-                    placeholder="Enter skill"
-                    class="form-control border-0 bg-transparent skill-input"
-                    required
-                />
-                <button 
-                    type="button" 
-                    class="btn btn-outline-danger btn-sm flex-shrink-0"
-                    onclick="removeSkillInput(this)"
-                    aria-label="Remove skill"
-                >
-                    &times;
-                </button>
-            `;
-            
-            container.appendChild(listItem);
+          // Create the input element
+          const input = document.createElement("input");
+          input.type = "text";
+          input.placeholder = "Enter skill";
+          input.className = "form-control border-0 bg-transparent skill-input";
+          input.required = true;
+          // Normalize skillValue: accept string or object { name }
+          let normalized = "";
+          if (typeof skillValue === "string") {
+            normalized = skillValue.trim();
+          } else if (skillValue && typeof skillValue === "object") {
+            normalized = String(skillValue.name || skillValue.skill || "").trim();
+          } else {
+            normalized = "";
+          }
+          input.value = normalized;
 
-            // Set focus on the newly added input field for better flow
-            const newInput = listItem.querySelector('.skill-input');
-            if (newInput) {
-                newInput.focus();
-            }
+          // Create the remove button and attach an event listener
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "btn btn-outline-danger btn-sm flex-shrink-0";
+          btn.setAttribute("aria-label", "Remove skill");
+          btn.innerHTML = "&times;";
+          btn.addEventListener("click", () => {
+            removeSkillInput(btn);
+          });
+
+          // Append input and button to the list item
+          listItem.appendChild(input);
+          listItem.appendChild(btn);
+
+          container.appendChild(listItem);
+
+            // Do not focus here — focus will be set after modal is shown
         }
         window.addSkillInput = addSkillInput; // Make globally accessible for the button
 
@@ -3405,13 +3454,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                 dataArray.forEach(skill => addSkillInput(skill));
             }
             
-            // Set focus to the first dynamically created input, if available
-            setTimeout(() => {
-                const firstInput = dynamicSkillsContainer.querySelector('.skill-input');
-                if (firstInput) {
-                    firstInput.focus();
-                }
-            }, 300);
+            // Focus will occur after the modal is shown (handled by 'shown.bs.modal')
         }
         window.openSkillsModal = openSkillsModal; // Make globally accessible
 
@@ -3475,13 +3518,95 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
             // 1. Initial render of the main skills list
             renderSkillsSection();
 
+          // 1.5 Attach click handler for the Add button (CSP-safe)
+          const openSkillsBtn = document.getElementById("openSkillsBtn");
+          if (openSkillsBtn) {
+            openSkillsBtn.addEventListener("click", (e) => {
+              e.preventDefault();
+              openSkillsModal();
+              const el = document.getElementById(SKILLS_MODAL_ID);
+              if (el) {
+                const modal = new bootstrap.Modal(el);
+                modal.show();
+              }
+            });
+          }
+          // Attach Add Skill button handler
+          const addSkillBtn = document.getElementById('addSkillBtn');
+          if (addSkillBtn) {
+            addSkillBtn.addEventListener('click', (e) => {
+              e.preventDefault();
+              addSkillInput('');
+            });
+          }
+
+          // Attach Add Experience button handler
+          const addExpBtn = document.getElementById('addExperienceBtn');
+          if (addExpBtn) {
+            addExpBtn.addEventListener('click', (e) => {
+              e.preventDefault();
+              openExperienceModal(-1);
+              const el = document.getElementById('experienceModal');
+              if (el) new bootstrap.Modal(el).show();
+            });
+          }
+
+          // Attach Add Education button handler
+          const addEduBtn = document.getElementById('addEducationBtn');
+          if (addEduBtn) {
+            addEduBtn.addEventListener('click', (e) => {
+              e.preventDefault();
+              openEducationModal(-1);
+              const el = document.getElementById('educationModal');
+              if (el) new bootstrap.Modal(el).show();
+            });
+          }
+
+          // Attach Add Availability button handler
+          const addAvailBtn = document.getElementById('addAvailabilityBtn');
+          if (addAvailBtn) {
+            addAvailBtn.addEventListener('click', (e) => {
+              e.preventDefault();
+              openAvailabilityModal(-1);
+              const el = document.getElementById('availabilityModal');
+              if (el) new bootstrap.Modal(el).show();
+            });
+          }
+
+          // Attach cover/avatar/resume upload triggers
+          const coverBtn = document.getElementById('coverImageBtn');
+          if (coverBtn) coverBtn.addEventListener('click', () => document.getElementById('coverImageUpload').click());
+          const avatarBtn = document.getElementById('avatarImageBtn');
+          if (avatarBtn) avatarBtn.addEventListener('click', (e) => { e.preventDefault(); document.getElementById('avatarImageUpload').click(); });
+          const resumeLink = document.getElementById('resumeUploadLink');
+          if (resumeLink) resumeLink.addEventListener('click', (e) => { e.preventDefault(); document.getElementById('resumeUpload').click(); });
+
+          // Attach edit/save toggle handlers
+          const editBtn = document.getElementById('edit-btn');
+          const saveBtn = document.getElementById('save-btn');
+          if (editBtn) editBtn.addEventListener('click', () => toggleEditMode(true));
+          if (saveBtn) saveBtn.addEventListener('click', () => toggleEditMode(false));
+            const deleteAvailBtn = document.getElementById('deleteAvailabilityBtn');
+            if (deleteAvailBtn) deleteAvailBtn.addEventListener('click', () => deleteAvailabilityEntry());
+            // Attach image error fallbacks (CSP-safe)
+            const coverImg = document.getElementById('profileCoverImage');
+            if (coverImg) coverImg.addEventListener('error', function () { this.src = 'https://placehold.co/1000x200/0d6efd/ffffff?text=Cover+Image'; });
+            const avatarImg = document.getElementById('profileAvatarImg');
+            if (avatarImg) avatarImg.addEventListener('error', function () { this.src = 'https://placehold.co/100x100/fecaca/991b1b?text=JD'; });
+
             // 2. Clear validation state when modal closes
             const skillsModal = document.getElementById(SKILLS_MODAL_ID);
             if (skillsModal) {
-                skillsModal.addEventListener("hidden.bs.modal", () => {
-                    document.getElementById("skillsForm").classList.remove("was-validated");
-                    // No newSkillInput to clear
-                });
+              // Clear validation when modal hides
+              skillsModal.addEventListener("hidden.bs.modal", () => {
+                document.getElementById("skillsForm").classList.remove("was-validated");
+              });
+
+              // After modal is fully shown, focus the first skill input for accessibility
+              skillsModal.addEventListener("shown.bs.modal", () => {
+                const firstInput = document.querySelector('#dynamicSkillsContainer .skill-input');
+                if (firstInput) firstInput.focus();
+              });
             }
 
             // 3. Handle form submission
