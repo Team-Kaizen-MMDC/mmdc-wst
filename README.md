@@ -47,24 +47,18 @@ For implementation details, testing guidance, and design docs, see the [docs/](d
 A high-level diagram showing how the static frontend, backend API, and storage interact.
 
 ```mermaid
-flowchart LR
-  Browser[Browser / User]
-  Static[Static site — pages/index.html]
-  Assets[Assets — assets/*]
-  Backend[Backend — Node/Express]
+flowchart TB
+  User[User Browser]
+  Frontend[Static Frontend]
+  API[Backend API]
   DB[(MongoDB)]
-  S3[(AWS S3 - resumes)]
-  Swagger[OpenAPI / Swagger UI]
-  Auth[Auth — JWT]
+  S3[(AWS S3)]
 
-  Browser -->|requests pages| Static
-  Static -->|serves assets| Assets
-  Browser -->|API requests| Backend
-  Backend --> DB
-  Backend --> S3
-  Backend --> Swagger
-  Backend --> Auth
-  Browser -->|fetch presigned URL| S3
+  User -->|Visit site| Frontend
+  User -->|API calls| API
+  API --> DB
+  API --> S3
+  User -->|Fetch resume| S3
 ```
 
 ## Backend API & Docs
