@@ -1704,6 +1704,14 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           },
         };
 
+        // Remove empty enum fields to avoid Mongoose enum validation errors
+        if (profileData.japaneseLevel === "" || profileData.japaneseLevel === null) {
+          delete profileData.japaneseLevel;
+        }
+        if (profileData.gender === "" || profileData.gender === null) {
+          delete profileData.gender;
+        }
+
         try {
           // Save to backend
           await apiRequest('/profile', 'PUT', profileData);
@@ -3490,8 +3498,19 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                 console.info('Saving skills to backend:', skillObjects);
                 const resp = await apiRequest('/profile/skills', 'PUT', { skills: skillObjects });
                 console.info('Server response for skills update:', resp);
-                // Refresh local cache from backend
-                await populateDashboard();
+                // Close modal first to avoid focus/aria-hidden conflicts, then refresh dashboard
+                const modalElement = document.getElementById(SKILLS_MODAL_ID);
+                const modalInstance = modalElement ? bootstrap.Modal.getInstance(modalElement) : null;
+                if (modalInstance) {
+                  modalInstance.hide();
+                  const onHidden = async () => {
+                    try { await populateDashboard(); } catch (e) { console.warn('populateDashboard failed after hiding modal:', e); }
+                    modalElement.removeEventListener('hidden.bs.modal', onHidden);
+                  };
+                  modalElement.addEventListener('hidden.bs.modal', onHidden);
+                } else {
+                  await populateDashboard();
+                }
               } catch (err) {
                 console.error('Failed to save skills via API, falling back to localStorage. Error:', err);
                 // Preserve user input locally so UI still updates
