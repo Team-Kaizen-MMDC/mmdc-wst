@@ -2819,6 +2819,21 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           const profile = data.data.profile; // API returns { success: true, data: { profile: {...} } }
           console.log("Profile fetched from API:", profile);
 
+          // If the signed-in user changed since the last page load, clear
+          // per-user cached localStorage keys to avoid showing another user's
+          // stale data (experience, skills, education, etc.). Then persist
+          // the current user's id so future checks can detect changes.
+          try {
+            const prevUid = localStorage.getItem('currentUserId');
+            const newUid = profile && profile.user && (profile.user._id || profile.user.id || profile.user);
+            if (newUid && prevUid && prevUid !== String(newUid)) {
+              ['experienceData','educationData','skillsData','userProfile','applicationsData'].forEach(k => localStorage.removeItem(k));
+            }
+            if (newUid) localStorage.setItem('currentUserId', String(newUid));
+          } catch (e) {
+            console.warn('Could not update per-user local cache state', e);
+          }
+
           // If the browser has a cached local profile from Google sign-in, prefer
           // those values for display so the UI reflects the signed-in identity
           // even when the server-side profile is older.
