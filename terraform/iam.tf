@@ -7,6 +7,18 @@ data "aws_iam_policy_document" "assume_role" {
       identifiers = ["ec2.amazonaws.com"]
     }
   }
+
+  dynamic "statement" {
+    for_each = length(var.allowed_principals) > 0 ? [1] : []
+    content {
+      effect = "Allow"
+      actions = ["sts:AssumeRole"]
+      principals {
+        type        = "AWS"
+        identifiers = var.allowed_principals
+      }
+    }
+  }
 }
 
 resource "aws_iam_role" "app_role" {

@@ -5,12 +5,12 @@ const ApiResponse = require("../utils/ApiResponse");
 const multer = require("multer");
 const path = require("path");
 const {
-  S3Client,
   PutObjectCommand,
   GetObjectCommand,
   DeleteObjectCommand,
 } = require("@aws-sdk/client-s3");
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
+const { getS3Client, getResumeBucket } = require("../utils/awsS3");
 
 // Multer memory storage for small file uploads
 const upload = multer({
@@ -18,9 +18,10 @@ const upload = multer({
   limits: { fileSize: 10 * 1024 * 1024 },
 }); // 10MB
 
-// S3 client configuration (reads credentials from env)
-const S3_BUCKET = process.env.RESUME_S3_BUCKET || "japanssw-s3-84cafb59";
-const s3 = new S3Client({ region: process.env.AWS_REGION || "ap-northeast-1" });
+// Get S3 client and bucket from the centralized AWS utility
+// This uses IAM roles instead of access keys for better security
+const s3 = getS3Client();
+const S3_BUCKET = getResumeBucket();
 
 // @desc    Get current user's profile
 // @route   GET /api/v1/profile
