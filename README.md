@@ -72,11 +72,41 @@ sequenceDiagram
         API-->>User: Return JWT token
     end
 
+    User->>API: Update profile
+    API->>MongoDB: Update user data
+    API-->>User: Success response
+
     User->>API: Upload resume
     API->>S3: Store resume file
     S3-->>API: Confirm upload
     API->>MongoDB: Save resume metadata
     API-->>User: Success response
+
+    alt Jobseeker Flow
+        User->>API: Browse/search jobs
+        API->>MongoDB: Query jobs with filters
+        API-->>User: Return job listings
+
+        User->>API: Apply to job
+        API->>MongoDB: Create application
+        API-->>User: Application submitted
+
+        User->>API: View my applications
+        API->>MongoDB: Fetch user applications
+        API-->>User: Return applications
+    else Employer Flow
+        User->>API: Post new job
+        API->>MongoDB: Create job listing
+        API-->>User: Job posted
+
+        User->>API: View applications for job
+        API->>MongoDB: Fetch job applications
+        API-->>User: Return applications
+
+        User->>API: Update application status
+        API->>MongoDB: Update status
+        API-->>User: Status updated
+    end
 
     User->>Frontend: View dashboard
     Frontend->>API: Get profile + resume URL
