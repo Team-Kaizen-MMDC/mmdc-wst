@@ -3130,6 +3130,27 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           }
         }
 
+        // If a resume is stored for this profile, fetch a presigned URL to show the "View Resume" link
+        if (profile.resumePath) {
+          try {
+            const token = typeof getAuthToken === 'function' ? getAuthToken() : (typeof getCookie === 'function' ? getCookie('token') : '');
+            const res = await fetch('/api/v1/profile/resume', {
+              method: 'GET',
+              headers: token ? { 'Authorization': `Bearer ${token}` } : {},
+            });
+            const json = await res.json();
+            if (res.ok && json.data && json.data.resumeUrl) {
+              const viewSection = document.getElementById('view-section');
+              const viewLink = document.getElementById('view-link');
+              if (viewLink) viewLink.href = json.data.resumeUrl;
+              if (viewSection) viewSection.style.display = 'block';
+            }
+          } catch (err) {
+            // eslint-disable-next-line no-console
+            console.warn('Could not fetch resume URL', err);
+          }
+        }
+
         console.log("Dashboard populated successfully from backend API");
       } catch (error) {
         console.error("Error fetching profile:", error);
@@ -3746,8 +3767,8 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           if (coverBtn) coverBtn.addEventListener('click', () => document.getElementById('coverImageUpload').click());
           const avatarBtn = document.getElementById('avatarImageBtn');
           if (avatarBtn) avatarBtn.addEventListener('click', (e) => { e.preventDefault(); document.getElementById('avatarImageUpload').click(); });
-          const resumeLink = document.getElementById('resumeUploadLink');
-          if (resumeLink) resumeLink.addEventListener('click', (e) => { e.preventDefault(); document.getElementById('resumeUpload').click(); });
+          // resume upload listener is attached in the availability/resume handler block
+          // at page scripts earlier to ensure the full upload flow is available.
 
           // Attach edit/save toggle handlers
             const editBtn = document.getElementById('edit-btn');
