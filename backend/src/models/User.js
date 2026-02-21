@@ -14,7 +14,8 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: [true, "Password is required"],
+      //required: [true, "Password is required"], disabling this bec google doesnt provide one while mongoose we setup requires it
+      required: false,
       minlength: [8, "Password must be at least 8 characters"],
       select: false, // Don't return password by default
     },

@@ -10,6 +10,9 @@ const { protect } = require("../middleware/auth");
 
 const router = express.Router();
 
+const passport = require('passport');
+
+
 /**
  * @swagger
  * /api/v1/auth/register:
@@ -178,5 +181,50 @@ router.get("/me", protect, getMe);
  *         description: Logged out successfully
  */
 router.post("/logout", protect, logout);
+
+
+
+/**
+ * @swagger
+ * /api/v1/auth/google:
+ * get:
+ * summary: Redirect to Google OAuth
+ * tags: [Authentication]
+ */
+router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+/**
+ * @swagger
+ * /api/v1/auth/google/callback:
+ * get:
+ * summary: Google OAuth callback
+ * tags: [Authentication]
+ */
+router.get('/', 
+  passport.authenticate('google', { session: false, failureRedirect: '/pages/signin.html' }),
+  (req, res) => {
+    const token = req.user.getSignedJwtToken();
+    
+    // Redirect back to signin.html with the actual JWT token
+    res.redirect(`/pages/signin.html?token=${token}`);
+  }
+);
+
+// This catches the redirect from Google to http://localhost:3000/
+router.get('/', (req, res, next) => {
+    if (req.query.code) {
+        return passport.authenticate('google', { 
+            session: false, 
+            failureRedirect: '/pages/signin.html' 
+        })(req, res, next);
+    }
+    next();
+}, (req, res) => {
+    if (req.user && typeof req.user.getSignedJwtToken === 'function') {
+        const token = req.user.getSignedJwtToken();
+        return res.redirect(`/pages/signin.html?token=${token}`);
+    }
+    res.redirect('/pages/signin.html');
+});
 
 module.exports = router;

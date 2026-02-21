@@ -14,6 +14,9 @@ const dbHelper = require("./config/database");
 const registerRoutes = require("./routes");
 const errorHandler = require("./middleware/errorHandler");
 const logger = require("./utils/logger");
+const session = require('express-session');
+const passport = require('passport');
+require('./config/passport')(passport);
 
 async function createApp() {
   const app = express();
@@ -31,6 +34,7 @@ async function createApp() {
       "https://cdn.jsdelivr.net",
       "https://unpkg.com",
       "https://cdnjs.cloudflare.com",
+      "https://accounts.google.com",
     ],
     styleSrc: [
       "'self'",
@@ -43,11 +47,11 @@ async function createApp() {
       "https://fonts.gstatic.com",
       "https://cdn.jsdelivr.net",
     ],
-    imgSrc: ["'self'", "data:", "https:"],
-    connectSrc: ["'self'"],
+    imgSrc: ["'self'", "data:", "https:", "https://lh3.googleusercontent.com"],
+    connectSrc: ["'self'", "https://accounts.google.com"],
     frameAncestors: ["'self'"],
     objectSrc: ["'none'"],
-    formAction: ["'self'"],
+    formAction: ["'self'", "https://accounts.google.com"],
     workerSrc: ["'self'", "blob:"],
   };
 
@@ -79,6 +83,16 @@ async function createApp() {
   app.use(express.json({ limit: "10mb" }));
   app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
+  // Session Middleware (for Google O-Auth)
+  app.use(session({
+    secret: process.env.SESSION_SECRET || 'secret',
+    resave: false,
+    saveUninitialized: false
+  }));
+
+  app.use(passport.initialize());
+  app.use(passport.session());
+
   // Sanitize data - temporarily disabled due to Express 5 compatibility
   // app.use(mongoSanitize());
 
@@ -105,9 +119,6 @@ async function createApp() {
     );
   }
 
-  // Serve repository root as static so pages/*.html are reachable at /pages/*.html
-  app.use(express.static(path.join(__dirname, "..", "..")));
-
   // API Documentation with Swagger UI
   app.use(
     "/api-docs",
@@ -124,6 +135,7 @@ async function createApp() {
     res.send(swaggerSpec);
   });
 
+
   // Shortcut for local development checks: skip DB/connect and route registration
   // when SKIP_DB=true to allow starting the server for static file and header
   // verification without needing a MongoDB connection.
@@ -134,23 +146,41 @@ async function createApp() {
   // Connect using Mongoose if requested (USE_MONGOOSE=true). Otherwise use the
   // native driver. We pass a `context` object to route registrars so they can
   // pick mongoose-backed controllers when available.
-  const useMongoose = process.env.USE_MONGOOSE === "true";
   let context = {};
-  if (useMongoose) {
-    const mongoose = await dbHelper.connectMongoose();
-    // expose mongoose on app.locals for other modules/tests
-    app.locals.mongoose = mongoose;
-    context.mongoose = mongoose;
-  } else {
-    const { client, db } = await dbHelper.connectNative();
-    app.locals.dbClient = client;
-    app.locals.db = db;
-    context.db = db;
-    context.client = client;
+  if (process.env.SKIP_DB !== "true") {
+    const useMongoose = process.env.USE_MONGOOSE === "true";
+    if (useMongoose) {
+      // If using Mongoose, wait for connection and set context
+      const mongoose = await dbHelper.connectMongoose();
+      app.locals.mongoose = mongoose;
+      context.mongoose = mongoose;
+    } else {
+      // If using Native driver
+      const { client, db } = await dbHelper.connectNative();
+      app.locals.dbClient = client;
+      app.locals.db = db;
+      context.db = db;
+      context.client = client;
+    }
   }
 
-  // Register modular routes (pass context so routes can pick native or mongoose)
   registerRoutes(app, context);
+
+//Check root path for Google code before serving index.html
+app.get('/', (req, res, next) => {
+    if (req.query.code) {
+      return passport.authenticate('google', { 
+        session: false, 
+        failureRedirect: '/pages/signin.html' 
+      })(req, res, next);
+    }
+    next();
+  }, (req, res) => {
+    const token = req.user.getSignedJwtToken();
+    res.redirect(`/pages/signin.html?token=${token}`);
+  });
+
+  app.use(express.static(path.join(__dirname, "..", "..")));  
 
   // Health check endpoint
   app.get("/health", (req, res) => {
