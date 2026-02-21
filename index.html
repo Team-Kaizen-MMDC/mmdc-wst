@@ -13,6 +13,7 @@
         - Phase 2 placeholders for Bootstrap/JS are present as commented blocks.
         - Keep link paths at the root (e.g., `pages/about.html`) when editing from root.
     -->
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="description" content="Japan SSW - Jobs & Community" />
@@ -1000,8 +1001,7 @@
             Reach qualified candidates under the SSW programme.
           </p>
           <div class="footer-cta-actions site-footer__cta-actions d-flex gap-2">
-            <a class="btn btn-secondary" href="pages/employerSignin.html" data-i18n="nav.employer_login">Employer Login</a>
-            <a class="btn btn-primary" href="#" data-i18n="btn.post_job">Post a Job</a>
+
           </div>
         </div>
 
@@ -1108,6 +1108,29 @@
     
     <!-- Animation Controller -->
     <script src="assets/js/features/animations.js"></script>
+
+    <script>
+  // This runs after main.js has finished its work
+  window.addEventListener('load', () => {
+    const hasToken = new URLSearchParams(window.location.search).has('token') || localStorage.getItem('token');
+    
+    if (!hasToken) {
+      console.log("No token found. Force-hiding user menu.");
+      
+      // Target the exact items your teammates' main.js creates
+      const userMenu = document.querySelector('.site-header__user-menu');
+      const loginButtons = document.querySelector('.site-header__actions');
+
+      if (userMenu) {
+        userMenu.style.setProperty('display', 'none', 'important');
+      }
+      if (loginButtons) {
+        loginButtons.style.setProperty('display', 'flex', 'important');
+      }
+    }
+  });
+</script>
+    
   </body>
 </html>
 

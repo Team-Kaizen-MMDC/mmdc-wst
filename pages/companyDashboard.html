@@ -76,28 +76,24 @@
 
             <!-- Actions (user menu for logged-in users) -->
             <div class="d-flex align-items-center gap-2 site-header__actions">
-              <div class="site-header__user-menu">
-                <a
-                  id="user-menu-btn"
-                  class="btn btn-secondary site-header__user-menu-btn"
-                  href="#"
-                  >Juan</a
-                >
+            <div class="site-header__user-menu">
+              <a
+                id="user-menu-btn"
+                class="btn btn-secondary site-header__user-menu-btn"
+                href="#"
+                >Admin</a
+              >
 
                 <!-- User Menu Dropdown (non-Bootstrap custom dropdown) -->
                 <div id="user-menu-dropdown" class="user-menu-dropdown">
-                  <h4 class="user-menu-dropdown__greeting">Welcome Back!</h4>
-                  <h3 class="user-menu-dropdown__userName">Juan Dela Cruz</h3>
-                  <a href="#" class="user-menu-dropdown__link">View Profile</a>
-                  <a href="#" class="user-menu-dropdown__link">Message</a>
-                  <hr class="user-menu-dropdown__divider" />
-                  <a href="#" class="user-menu-dropdown__link">Language</a>
-                  <a href="#" class="user-menu-dropdown__link">Help</a>
-                  <a href="#" class="user-menu-dropdown__link">Settings</a>
-                  <button type="button" class="user-menu-dropdown__link">
-                    Sign out
-                  </button>
-                </div>
+                <h4 class="user-menu-dropdown__greeting">Welcome Back!</h4>
+                <h3 class="user-menu-dropdown__userName" id="user-menu-name">Admin User</h3>
+                <a href="#" class="user-menu-dropdown__link">Profile</a>
+                <a href="#" class="user-menu-dropdown__link">Message</a>
+                <hr class="user-menu-dropdown__divider" />
+                <a href="#" class="user-menu-dropdown__link">Help</a>
+                <a href="#" class="user-menu-dropdown__link">Settings</a>
+                <button type="button" id="sign-out-btn" class="user-menu-dropdown__link">Sign out</button>
               </div>
             </div>
           </div>
@@ -264,7 +260,7 @@
                     class="d-flex justify-content-between align-items-start mb-3"
                   >
                     <div>
-                      <h2 class="card-title fw-bold mb-1">Sanchez Miguel</h2>
+                      <h2 class="card-title fw-bold mb-1" id="dash-profile-name">Sanchez Miguel</h2>
                       <p class="text-muted small mb-0">Admin</p>
                     </div>
                     <a href="#" class="text-danger small ms-2">Edit</a>
@@ -1333,12 +1329,8 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
             Reach qualified candidates under the SSW programme.
           </p>
           <div class="footer-cta-actions site-footer__cta-actions">
-            <a class="btn btn-secondary" href="#" data-i18n="nav.employer_login"
-              >Employer Login</a
-            >
-            <a class="btn btn-primary" href="#" data-i18n="btn.post_job"
-              >Post a Job</a
-            >
+
+
           </div>
         </div>
 
@@ -2068,10 +2060,59 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
         }
 
         // --- INITIALIZATION ---
-        // Render the initial list when the window loads
-        window.onload = function() {
-            renderJobList(jobData);
-        };
+        window.onload = async function() {
+        renderJobList(jobData);
+            
+        const params = new URLSearchParams(window.location.search);
+        const token = params.get('token');
+            
+        if (token) {
+            try {
+                const response = await fetch('/api/v1/auth/me', {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+              
+                if (response.ok) {
+                    const result = await response.json();
+                    const user = result.data;
+                
+                    const fullName = user.googleProfile?.displayName || 
+                                     user.googleProfile?.name ||
+                                     user.name || 
+                                     user.email.split('@')[0];
+                
+                    // Update name based on Google login
+                    const menuBtn = document.getElementById('user-menu-btn');
+                    if (menuBtn) menuBtn.textContent = fullName;
+                
+                    const menuName = document.querySelector('.user-menu-dropdown__userName');
+                    if (menuName) menuName.textContent = fullName;
+                
+                    const dashName = document.getElementById('dash-profile-name');
+                    if (dashName) dashName.textContent = fullName;
+                
+                    // Sign-out - clean browser memory then redirect
+                    const signOutBtn = document.getElementById('sign-out-btn');
+                    if (signOutBtn) {
+                        signOutBtn.onclick = function(e) {
+                          console.log('geal brosedijndso')
+                          document.cookie = 'isLoggedIn' + '=; Max-Age=-99999999; path=/;';
+                          document.cookie = 'email' + '=; Max-Age=-99999999; path=/;';
+                          document.cookie = 'token' + '=; Max-Age=-99999999; path=/;';
+
+                          localStorage.clear();
+                          window.location.replace('/index.html');
+                      };
+                    }
+                }
+            } catch (err) {
+                console.error("Failed to fetch user data:", err);
+            }
+        } else {
+            console.warn("No token found in URL. Staying as Sanchez Miguel.");
+        }
+    };
+
     </script>
   </body>
 </html>
