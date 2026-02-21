@@ -154,24 +154,42 @@ function getProfileDashboardPath() {
   return "pages/profileDashboard.html";
 }
 
+
 /**
  * Initialize header auth state on page load
  */
 export function initHeaderAuth() {
-  console.log("🚀 HeaderAuth module initializing...");
+  console.log("HeaderAuth module initializing...");
   console.log("Document ready state:", document.readyState);
 
-  // Check if DOM is already loaded
-  if (document.readyState === "loading") {
-    console.log("DOM still loading, waiting for DOMContentLoaded...");
-    // DOM is still loading, wait for DOMContentLoaded
-    window.addEventListener("DOMContentLoaded", () => {
-      console.log("DOMContentLoaded fired, updating header...");
-      updateHeaderAuthState();
-    });
-  } else {
-    console.log("DOM already loaded, updating header immediately...");
-    // DOM is already loaded, update immediately
-    updateHeaderAuthState();
+  handleSignOut(); 
+  if (window.location.search.includes('token=') || document.cookie.includes('isLoggedIn=true')) {
+    console.log("✅ Token detected. Preventing crash-redirect.");
+    window.onbeforeunload = null; 
   }
+const runInit = () => {
+    updateHeaderAuthState();
+  };
+
+  if (document.readyState === "loading") {
+    window.addEventListener("DOMContentLoaded", runInit);
+  } else {
+    runInit();
+  }
+}
+
+
+function handleSignOut() {
+  document.addEventListener('click', (e) => {
+    const target = e.target.closest('button, a');
+    if (target && target.textContent.trim() === 'Sign out') {
+      e.preventDefault();
+      console.log("👋 Signing out...");
+      document.cookie = "isLoggedIn=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      document.cookie = "isLoggedIn=false; path=/;"; 
+      localStorage.removeItem('userToken');
+      localStorage.removeItem('userProfile');
+      window.location.href = "../index.html";
+    }
+  });
 }
