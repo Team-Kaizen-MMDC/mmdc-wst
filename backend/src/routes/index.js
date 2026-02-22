@@ -6,6 +6,8 @@ const jobRoutes = require("./jobRoutes");
 const companyRoutes = require("./companyRoutes");
 const applicationRoutes = require("./applicationRoutes");
 const userRoutes = require("./userRoutes");
+console.log("✅ routes/index.js loaded");
+
 
 module.exports = function registerRoutes(app, context) {
   // Mount API v1 routes
