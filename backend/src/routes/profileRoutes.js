@@ -75,7 +75,7 @@ router.use(protect);
  *     tags: [Profile]
  *     security:
  *       - bearerAuth: []
- *     responses:/pages/profileDashboard.html
+ *     responses:
  *       200:
  *         description: Profile deleted
  */
