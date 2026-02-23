@@ -55,6 +55,7 @@ class App {
 
     // Initialize dashboard tab styling (ADD THIS)
     this.initDashboardTabs();
+    
 
     // Accessibility: return focus to toggler after offcanvas closes (if present)
     const offcanvasEl = document.getElementById("siteOffcanvas");

@@ -25,7 +25,7 @@ export function updateHeaderAuthState() {
   const profile = getUserProfile();
 
   const userName =
-    getFirstName() || profile.email?.split("@")[0] || "Juan Dela Cruz";
+    getFirstName() || profile.email?.split("@")[0] || "-";
 
 
 
