@@ -148,7 +148,7 @@ router.post("/login", login);
  *       required: true
  *       content:
  *         application/json:
- *           schema:backend/src/routes/authRoutes.js
+ *           schema:
  *             type: object
  *             required:
  *               - email
