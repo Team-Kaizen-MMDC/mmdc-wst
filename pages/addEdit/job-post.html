@@ -62,7 +62,10 @@
       </div>
 
       <!-- Job Post Form -->
-      <form class="needs-validation" novalidate="">
+      <form id="jobPostForm" class="needs-validation" novalidate="">
+        <input type="hidden" name="company-id" id="company-id" value="PASTE_COMPANY_ID_HERE">
+        <input type="hidden" name="user-id" id="user-id" value="PASTE_USER_ID_HERE">
+        
         <!-- Section 1: Basic Information -->
         <div class="card mb-4 border-0 shadow-sm">
           <div class="card-header bg-light fw-bold h5">1. Job Basics</div>
@@ -423,9 +426,27 @@
             // ignore
           }
           // Fallback target: profile dashboard
-          window.location.href = "../profileDashboard.html";
+          window.location.href = "../companyDashboard.html#job-pane";
         });
       })();
     </script>
+    
+    <script type="module" src="../../assets/js/main.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Check if there is a hash in the URL (e.g., #job-pane)
+    const hash = window.location.hash;
+    if (hash) {
+      // Find the tab button that corresponds to that pane
+      const targetTab = document.querySelector(`[data-bs-target="${hash}"]`);
+      if (targetTab) {
+        // Use Bootstrap's Tab constructor to show it
+        const tab = new bootstrap.Tab(targetTab);
+        tab.show();
+      }
+    }
+  });
+</script>
+
   </body>
 </html>

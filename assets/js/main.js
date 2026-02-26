@@ -9,6 +9,7 @@ import { MobileNav } from "./features/navigation/MobileNav.js";
 import { SmoothScroll } from "./features/navigation/SmoothScroll.js";
 import I18n from "./i18n.js";
 import { initHeaderAuth } from "./modules/headerAuth.js";
+import { initJobPost } from "./features/jobPost.js";
 
 /* Ensure Bootstrap Icons CSS is loaded globally (MK) */
 (function ensureBootstrapIcons() {
@@ -55,6 +56,8 @@ class App {
 
     // Initialize dashboard tab styling (ADD THIS)
     this.initDashboardTabs();
+
+    initJobPost();
 
     // Accessibility: return focus to toggler after offcanvas closes (if present)
     const offcanvasEl = document.getElementById("siteOffcanvas");
