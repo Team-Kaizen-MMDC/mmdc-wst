@@ -21,16 +21,22 @@ const adminJobSchema = new mongoose.Schema(
       city: { type: String }
     },
     compensation: {
-      // Adjusted to match your jobPost.js payload
       salaryMin: { type: Number },
       salaryMax: { type: Number },
       currency: { type: String, default: "JPY" }
     },
-    // Matches the keys in your jobPost.js payload
-    summary: { type: String },
-    responsibilities: { type: String },
-    
-    // Kept these for your logic
+    summary: { type: String }, // Maps to "Job Description"
+    employmentType: {
+        type: String,
+        enum: ["Full-time", "Part-time", "Contract"],
+        default: "Full-time"
+    },
+    // FLATTENED FIELDS (No more nesting)
+    preferWorkLocation: { type: String }, 
+    supportSponsorship: { type: String },
+    japaneseLanguage: { type: String },
+    nativeLanguage: { type: String },
+
     status: {
       type: String,
       enum: ["active", "closed", "archived"],

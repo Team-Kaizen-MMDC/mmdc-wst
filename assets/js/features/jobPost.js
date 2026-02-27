@@ -20,12 +20,20 @@ export function initJobPost() {
         // --- QUICK TEST HACK END ---
 
         industry: data["job-category"], 
-        summary: data["job-description"], // Matches <textarea name="job-description">
-        responsibilities: data["job-description"], // Using same field for now
+        summary: data["job-description"], //modal-department-overview -  name="job-description">
+      
+
+        // SENDS DIRECTLY (Matching flattened schema)
+        preferWorkLocation: data["Prefer-location"],
+        supportSponsorship: data["support-detail"],
+        japaneseLanguage: data["japanese-language"],
+        nativeLanguage: data["other-language"],
+
         location: {
             prefecture: data["prefecture"], 
             city: data["location-detail"] 
         },
+
         compensation: {
             // Note: Your HTML has one 'salary' input, not min/max.
             // Mapping 'salary' to both for now to avoid validation errors.

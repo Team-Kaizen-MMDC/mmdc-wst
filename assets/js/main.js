@@ -10,6 +10,7 @@ import { SmoothScroll } from "./features/navigation/SmoothScroll.js";
 import I18n from "./i18n.js";
 import { initHeaderAuth } from "./modules/headerAuth.js";
 import { initJobPost } from "./features/jobPost.js";
+import { initDashboard } from "./features/dashboardLoader.js";
 
 /* Ensure Bootstrap Icons CSS is loaded globally (MK) */
 (function ensureBootstrapIcons() {
@@ -58,6 +59,10 @@ class App {
     this.initDashboardTabs();
 
     initJobPost();
+
+    if (document.getElementById('dashboard-pane') || document.getElementById('job-list-body')) {
+        initDashboard();
+    }
 
     // Accessibility: return focus to toggler after offcanvas closes (if present)
     const offcanvasEl = document.getElementById("siteOffcanvas");

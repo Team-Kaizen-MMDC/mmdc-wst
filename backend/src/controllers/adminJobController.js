@@ -25,3 +25,52 @@ exports.getAdminJobs = asyncHandler(async (req, res) => {
         new ApiResponse(200, "Admin jobs retrieved successfully", { jobs })
     );
 });
+
+/**
+ * @desc    Get a single job by ID for the modal
+ */
+exports.getAdminJob = asyncHandler(async (req, res) => {
+    // We look for the ID that comes from the URL (req.params.id)
+    const job = await AdminJob.findById(req.params.id);
+
+    if (!job) {
+        return res.status(404).json(new ApiResponse(404, "Job not found"));
+    }
+
+    res.status(200).json(
+        new ApiResponse(200, "Job retrieved successfully", { job })
+    );
+});
+
+/**
+ * @desc    Update job details from the modal (Save button)
+ */
+exports.updateAdminJob = asyncHandler(async (req, res) => {
+    const job = await AdminJob.findByIdAndUpdate(req.params.id, req.body, {
+        new: true, // Return the updated document
+        runValidators: true
+    });
+
+    if (!job) {
+        return res.status(404).json(new ApiResponse(404, "Job not found"));
+    }
+
+    res.status(200).json(
+        new ApiResponse(200, "Job updated successfully", { job })
+    );
+});
+
+/**
+ * @desc    Delete job (Remove button)
+ */
+exports.deleteAdminJob = asyncHandler(async (req, res) => {
+    const job = await AdminJob.findByIdAndDelete(req.params.id);
+
+    if (!job) {
+        return res.status(404).json(new ApiResponse(404, "Job not found"));
+    }
+
+    res.status(200).json(
+        new ApiResponse(200, "Job removed successfully", null)
+    );
+});
