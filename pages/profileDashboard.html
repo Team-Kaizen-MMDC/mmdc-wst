@@ -1458,12 +1458,6 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
             Reach qualified candidates under the SSW programme.
           </p>
           <div class="footer-cta-actions site-footer__cta-actions">
-            <a class="btn btn-secondary" href="#" data-i18n="nav.employer_login"
-              >Employer Login</a
-            >
-            <a class="btn btn-primary" href="#" data-i18n="btn.post_job"
-              >Post a Job</a
-            >
           </div>
         </div>
 
@@ -2656,6 +2650,30 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           console.error("No token found. User not authenticated.");
           return;
         }
+        //checks for admin access
+        try {
+          const params = new URLSearchParams(window.location.search);
+            const urlToken = params.get('token');
+                const meRes = await fetch('/api/v1/auth/me', {
+                  headers: { Authorization: `Bearer ${urlToken}` },
+                }); 
+                if (meRes.ok) {
+                  console.log("iffffffffffffffffffffffff")
+                  const meData = await meRes.json();
+                  const user_id = meData.data.id;
+                  const user_email = meData.data.email;
+                  const user_role = meData.data.role;
+                  if (user_role === "admin") {
+                  const params = new URLSearchParams(window.location.search);
+                  const urlToken = params.get('token');
+                  window.location.href = `/pages/companyDashboard.html?token=${urlToken}`;
+                  }
+                } else {
+                  console.log("Failed to fetch user data");
+                }
+              } catch (err) {
+                console.log("Error in auth check:", err);
+              }
 
         try {
           // Fetch profile from backend API
@@ -2671,6 +2689,8 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
               // Remove token from URL to keep things clean
               try { history.replaceState(null, '', window.location.pathname + window.location.hash); } catch {}
 
+
+              console.log("nuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu")
               // Fetch basic user info and cache minimal profile for instant UI update
               try {
                 const meRes = await fetch('/api/v1/auth/me', {

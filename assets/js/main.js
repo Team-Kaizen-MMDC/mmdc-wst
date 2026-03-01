@@ -57,6 +57,7 @@ class App {
 
     // Initialize dashboard tab styling (ADD THIS)
     this.initDashboardTabs();
+    
 
     initJobPost();
 

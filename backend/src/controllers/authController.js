@@ -156,12 +156,19 @@ exports.login = asyncHandler(async (req, res, next) => {
  */
 exports.getMe = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user.id)
-    .populate("profile")
-    .populate("company");
+// Determine the landing page based on role
+  let targetDashboard = '/profileDashboard';
+  if (user.role === 'admin') {
+    targetDashboard = '/companyProfile';
+  } else if (user.role === 'employer') {
+    targetDashboard = '/employerDashboard';
+  }
 
-  res
-    .status(200)
-    .json(new ApiResponse(200, "User retrieved successfully", { user }));
+  res.status(200).json({
+    success: true,
+    data: user,
+    redirectTo: targetDashboard
+  });
 });
 
 /**
