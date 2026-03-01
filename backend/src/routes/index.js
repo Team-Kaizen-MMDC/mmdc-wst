@@ -3,6 +3,7 @@ const contentRoutes = require("./contentRoutes");
 const authRoutes = require("./authRoutes");
 const profileRoutes = require("./profileRoutes");
 const jobRoutes = require("./jobRoutes");
+const adminJobRoutes = require("./adminJobRoutes");
 const companyRoutes = require("./companyRoutes");
 const applicationRoutes = require("./applicationRoutes");
 const userRoutes = require("./userRoutes");
@@ -14,6 +15,7 @@ module.exports = function registerRoutes(app, context) {
   app.use("/api/v1/auth", authRoutes);
   app.use("/api/v1/profile", profileRoutes);
   app.use("/api/v1/jobs", jobRoutes);
+  app.use("/api/v1/admin-jobs", adminJobRoutes);
   app.use("/api/v1/companies", companyRoutes);
   app.use("/api/v1/applications", applicationRoutes);
   app.use("/api/v1/users", userRoutes);
