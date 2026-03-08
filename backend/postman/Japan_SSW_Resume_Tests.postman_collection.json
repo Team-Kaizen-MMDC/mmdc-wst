@@ -1,0 +1,719 @@
+{
+  "info": {
+    "_postman_id": "japan-ssw-resume-s3-tests-v1",
+    "name": "Japan SSW — Resume S3 Tests",
+    "description": "Complete test suite for the resume upload, retrieval, and deletion feature (AWS S3 integration).\n\n## Setup\n1. Start the backend server (`npm run dev` from `backend/`)\n2. Ensure AWS credentials are configured in your `.env` (`AWS_REGION`, `RESUME_S3_BUCKET`)\n3. In **Collection Variables**, set:\n   - `TEST_RESUME_PATH` → absolute path to a PDF/DOC/DOCX file on your machine  \n     e.g. `/Users/you/sample-resume.pdf`\n   - `TEST_INVALID_PATH` → absolute path to any `.txt` file  \n     e.g. `/tmp/invalid-resume.txt`\n4. Run the folder **in order** via Postman Runner or Newman\n\n## Test Accounts\n| Role | Email | Password |\n|------|-------|----------|\n| Jobseeker | carlos.rivera@example.com | Test123! |\n\n## Endpoints Covered\n| # | Method | Path | Scenario | Expected |\n|---|--------|------|----------|----------|\n| 0 | POST | /auth/login | Valid credentials | 200 + JWT |\n| 1 | POST | /profile/resume | Upload valid PDF | 200 + presigned URL |\n| 2 | GET | /profile/resume | Get presigned URL | 200 + resumeUrl |\n| 3 | DELETE | /profile/resume | Delete resume | 200 |\n| 4 | GET | /profile/resume | Verify deletion | 404 |\n| 5 | POST | /profile/resume | Upload .txt (invalid type) | 400 |\n| 6 | POST | /profile/resume | No Authorization header | 401 |\n\n## Newman CLI\n```bash\ncd backend\nnewman run postman/Japan_SSW_Resume_Tests.postman_collection.json \\\n  -e postman/Japan_SSW_API.postman_environment.json \\\n  --delay-request 300 \\\n  --reporters cli,json \\\n  --reporter-json-export postman/resume-test-results.json\n```\n\n## Payload Reference\n- Upload: `multipart/form-data`, field name **`resume`**, file types: `.pdf`, `.doc`, `.docx`, max **10 MB**\n- Get / Delete: no body required, only `Authorization: Bearer <JWT>` header",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "variable": [
+    {
+      "key": "BASE_URL",
+      "value": "http://localhost:3000/api/v1",
+      "type": "default",
+      "description": "API base URL. Override in your environment file."
+    },
+    {
+      "key": "JWT_TOKEN",
+      "value": "",
+      "type": "secret",
+      "description": "Auto-populated by the Login request."
+    },
+    {
+      "key": "RESUME_KEY",
+      "value": "",
+      "type": "default",
+      "description": "Auto-populated by Upload Resume (e.g. resumes/<userId>/resume.pdf)."
+    },
+    {
+      "key": "TEST_RESUME_PATH",
+      "value": "",
+      "type": "default",
+      "description": "REQUIRED — Absolute path to a valid PDF/DOC/DOCX file. Example: /Users/you/sample-resume.pdf"
+    },
+    {
+      "key": "TEST_INVALID_PATH",
+      "value": "",
+      "type": "default",
+      "description": "REQUIRED for negative test — Absolute path to a .txt file. Example: /tmp/invalid-resume.txt"
+    }
+  ],
+  "item": [
+    {
+      "name": "Resume Management",
+      "description": "End-to-end S3 resume upload, retrieval, and deletion — happy-path and negative tests run in sequence.",
+      "item": [
+        {
+          "name": "0 — Login (Jobseeker)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 200 — Login successful', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Returns JWT token and user object', function () {",
+                  "    const body = pm.response.json();",
+                  "    pm.expect(body.success).to.be.true;",
+                  "    pm.expect(body.data).to.have.property('token').that.is.a('string').and.is.not.empty;",
+                  "    pm.expect(body.data.user).to.have.property('role').that.equals('jobseeker');",
+                  "    // Persist token for subsequent requests",
+                  "    pm.collectionVariables.set('JWT_TOKEN', body.data.token);",
+                  "    console.log('✓ JWT_TOKEN saved');",
+                  "});",
+                  "",
+                  "pm.test('Response time under 2000ms', function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"carlos.rivera@example.com\",\n  \"password\": \"Test123!\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/auth/login",
+              "host": ["{{BASE_URL}}"],
+              "path": ["auth", "login"]
+            },
+            "description": "Authenticate as the seeded jobseeker and capture the JWT token. The test script auto-saves `JWT_TOKEN` as a collection variable."
+          },
+          "response": [
+            {
+              "name": "Login — 200 Success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"carlos.rivera@example.com\",\n  \"password\": \"Test123!\"\n}"
+                },
+                "url": {
+                  "raw": "{{BASE_URL}}/auth/login",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["auth", "login"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                { "key": "Content-Type", "value": "application/json" }
+              ],
+              "body": "{\n  \"statusCode\": 200,\n  \"success\": true,\n  \"message\": \"Logged in successfully\",\n  \"data\": {\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5OTcxZGNlMzJmZjJmYzA1ZTdlODAzYSIsImVtYWlsIjoiY2FybG9zLnJpdmVyYUBleGFtcGxlLmNvbSIsInJvbGUiOiJqb2JzZWVrZXIiLCJpYXQiOjE3NzE1MTEyOTMsImV4cCI6MTc3MjExNjA5M30.EXAMPLE_SIGNATURE\",\n    \"user\": {\n      \"_id\": \"6997xxxx\",\n      \"name\": \"Carlos Rivera\",\n      \"email\": \"carlos.rivera@example.com\",\n      \"role\": \"jobseeker\"\n    }\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "1 — Upload Resume (PDF) ✅ Happy Path",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Warn if the test file path has not been set",
+                  "const testPath = pm.collectionVariables.get('TEST_RESUME_PATH');",
+                  "if (!testPath) {",
+                  "    console.warn('⚠️  TEST_RESUME_PATH collection variable is not set.');",
+                  "    console.warn('   Set it to the absolute path of a PDF/DOC/DOCX file.');",
+                  "    console.warn('   Example: /Users/you/sample-resume.pdf');",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 200 — Upload successful', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('success=true and correct message', function () {",
+                  "    const body = pm.response.json();",
+                  "    pm.expect(body.success).to.be.true;",
+                  "    pm.expect(body.message).to.equal('Resume uploaded successfully');",
+                  "});",
+                  "",
+                  "pm.test('Returns resumeUrl (presigned S3 URL) and resumeKey', function () {",
+                  "    const body = pm.response.json();",
+                  "    pm.expect(body.data).to.have.property('resumeUrl').that.is.a('string');",
+                  "    pm.expect(body.data.resumeUrl).to.include('https://');",
+                  "    pm.expect(body.data).to.have.property('resumeKey').that.is.a('string');",
+                  "    pm.expect(body.data.resumeKey).to.match(/^resumes\\/.+\\/resume\\.(pdf|doc|docx)$/);",
+                  "    // Save the S3 key for downstream tests",
+                  "    pm.collectionVariables.set('RESUME_KEY', body.data.resumeKey);",
+                  "    console.log('✓ RESUME_KEY saved:', body.data.resumeKey);",
+                  "});",
+                  "",
+                  "pm.test('Presigned URL contains AWS Signature params', function () {",
+                  "    const body = pm.response.json();",
+                  "    pm.expect(body.data.resumeUrl).to.satisfy(function (url) {",
+                  "        return url.includes('X-Amz-Signature') || url.includes('x-amz-signature');",
+                  "    }, 'Expected presigned URL to include X-Amz-Signature');",
+                  "});",
+                  "",
+                  "pm.test('Response time under 5000ms (S3 upload)', function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(5000);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{JWT_TOKEN}}", "type": "string" }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "resume",
+                  "type": "file",
+                  "src": "{{TEST_RESUME_PATH}}",
+                  "description": "Select a PDF, DOC, or DOCX file (max 10 MB). Set TEST_RESUME_PATH collection variable to the absolute file path."
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/profile/resume",
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile", "resume"]
+            },
+            "description": "Upload a resume file to S3. Uses `multipart/form-data` with the field name **`resume`**.\n\n**Payload**\n```\nContent-Type: multipart/form-data\nField name : resume\nFile types : .pdf, .doc, .docx\nMax size   : 10 MB\n```\n\n**Important:** In Postman, go to the Body tab → form-data, click the *Select Files* button next to the `resume` key, and choose a local file. Do **not** send a `Content-Type` header manually — Postman sets the multipart boundary automatically.\n\n**Behaviour:** Each upload overwrites the previous resume for that user (S3 key is fixed per user: `resumes/{userId}/resume{ext}`)."
+          },
+          "response": [
+            {
+              "name": "Upload Resume — 200 Success",
+              "originalRequest": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{JWT_TOKEN}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "resume",
+                      "type": "file",
+                      "src": "/path/to/resume.pdf"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{BASE_URL}}/profile/resume",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["profile", "resume"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                { "key": "Content-Type", "value": "application/json" }
+              ],
+              "body": "{\n  \"statusCode\": 200,\n  \"success\": true,\n  \"message\": \"Resume uploaded successfully\",\n  \"data\": {\n    \"resumeUrl\": \"https://japanssw-s3-84cafb59.s3.ap-northeast-1.amazonaws.com/resumes/6997xxxx/resume.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=...&X-Amz-Date=20260308T000000Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&X-Amz-Signature=...\",\n    \"resumeKey\": \"resumes/6997xxxx/resume.pdf\"\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "2 — Get Resume (Presigned URL) ✅ Happy Path",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 200 — Resume URL retrieved', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('success=true and correct message', function () {",
+                  "    const body = pm.response.json();",
+                  "    pm.expect(body.success).to.be.true;",
+                  "    pm.expect(body.message).to.equal('Resume URL generated');",
+                  "});",
+                  "",
+                  "pm.test('resumeKey matches previously uploaded key', function () {",
+                  "    const body = pm.response.json();",
+                  "    const expectedKey = pm.collectionVariables.get('RESUME_KEY');",
+                  "    pm.expect(body.data.resumeKey).to.equal(expectedKey);",
+                  "});",
+                  "",
+                  "pm.test('resumeUrl is a valid HTTPS presigned URL', function () {",
+                  "    const body = pm.response.json();",
+                  "    pm.expect(body.data.resumeUrl).to.be.a('string').and.include('https://');",
+                  "    pm.expect(body.data.resumeUrl).to.satisfy(function (url) {",
+                  "        return url.includes('X-Amz-Signature') || url.includes('x-amz-signature');",
+                  "    }, 'Expected a valid AWS presigned URL');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{JWT_TOKEN}}", "type": "string" }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/profile/resume",
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile", "resume"]
+            },
+            "description": "Generates and returns a **5-minute presigned GET URL** for the authenticated user's resume stored in S3.\n\nNo request body is required — only the `Authorization: Bearer <JWT>` header."
+          },
+          "response": [
+            {
+              "name": "Get Resume — 200 Success",
+              "originalRequest": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{JWT_TOKEN}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{BASE_URL}}/profile/resume",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["profile", "resume"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                { "key": "Content-Type", "value": "application/json" }
+              ],
+              "body": "{\n  \"statusCode\": 200,\n  \"success\": true,\n  \"message\": \"Resume URL generated\",\n  \"data\": {\n    \"resumeUrl\": \"https://japanssw-s3-84cafb59.s3.ap-northeast-1.amazonaws.com/resumes/6997xxxx/resume.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=...&X-Amz-Date=20260308T000000Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&X-Amz-Signature=...\",\n    \"resumeKey\": \"resumes/6997xxxx/resume.pdf\"\n  }\n}"
+            },
+            {
+              "name": "Get Resume — 404 No Resume Uploaded",
+              "originalRequest": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{JWT_TOKEN}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{BASE_URL}}/profile/resume",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["profile", "resume"]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                { "key": "Content-Type", "value": "application/json" }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"No resume uploaded\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "3 — Delete Resume ✅ Happy Path",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 200 — Resume deleted', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('success=true and correct message', function () {",
+                  "    const body = pm.response.json();",
+                  "    pm.expect(body.success).to.be.true;",
+                  "    pm.expect(body.message).to.equal('Resume deleted successfully');",
+                  "});",
+                  "",
+                  "pm.test('Response data is an empty object', function () {",
+                  "    const body = pm.response.json();",
+                  "    pm.expect(body.data).to.deep.equal({});",
+                  "});",
+                  "",
+                  "// Clear the saved resume key — resume no longer exists",
+                  "pm.collectionVariables.unset('RESUME_KEY');",
+                  "console.log('✓ RESUME_KEY cleared from collection variables');"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{JWT_TOKEN}}", "type": "string" }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/profile/resume",
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile", "resume"]
+            },
+            "description": "Deletes the resume from S3 and clears the `resumePath` field from the user's profile.\n\nNo request body is required — only the `Authorization: Bearer <JWT>` header.\n\nReturns `404` if no resume has been uploaded yet."
+          },
+          "response": [
+            {
+              "name": "Delete Resume — 200 Success",
+              "originalRequest": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{JWT_TOKEN}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{BASE_URL}}/profile/resume",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["profile", "resume"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                { "key": "Content-Type", "value": "application/json" }
+              ],
+              "body": "{\n  \"statusCode\": 200,\n  \"success\": true,\n  \"message\": \"Resume deleted successfully\",\n  \"data\": {}\n}"
+            },
+            {
+              "name": "Delete Resume — 404 No Resume to Delete",
+              "originalRequest": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{JWT_TOKEN}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{BASE_URL}}/profile/resume",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["profile", "resume"]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                { "key": "Content-Type", "value": "application/json" }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"No resume uploaded\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "4 — Verify Resume Deleted (GET → 404) ✅",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 404 — Resume no longer exists', function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});",
+                  "",
+                  "pm.test('success=false with correct error message', function () {",
+                  "    const body = pm.response.json();",
+                  "    pm.expect(body.success).to.be.false;",
+                  "    pm.expect(body.message).to.equal('No resume uploaded');",
+                  "});",
+                  "",
+                  "console.log('✓ Confirmed: GET after DELETE returns 404 as expected');"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{JWT_TOKEN}}", "type": "string" }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/profile/resume",
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile", "resume"]
+            },
+            "description": "Confirms that after deletion the resume endpoint returns **404 Not Found**. This request always follows step 3 (Delete Resume) in the runner sequence."
+          },
+          "response": [
+            {
+              "name": "Verify Deleted — 404 Confirmed",
+              "originalRequest": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{JWT_TOKEN}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{BASE_URL}}/profile/resume",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["profile", "resume"]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                { "key": "Content-Type", "value": "application/json" }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"No resume uploaded\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "5 — Upload Invalid File Type (.txt → 400) ❌ Negative",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const invalidPath = pm.collectionVariables.get('TEST_INVALID_PATH');",
+                  "if (!invalidPath) {",
+                  "    console.warn('⚠️  TEST_INVALID_PATH not set — this test may not behave as expected.');",
+                  "    console.warn('   Set it to the absolute path of a .txt file, e.g. /tmp/invalid-resume.txt');",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 400 — Invalid file type rejected', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test('success=false with unsupported-type message', function () {",
+                  "    const body = pm.response.json();",
+                  "    pm.expect(body.success).to.be.false;",
+                  "    pm.expect(body.message).to.equal('Unsupported file type. Use PDF or DOC/DOCX.');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{JWT_TOKEN}}", "type": "string" }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "resume",
+                  "type": "file",
+                  "src": "{{TEST_INVALID_PATH}}",
+                  "description": "Point this to any .txt or .jpg file. The server should reject it with 400."
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/profile/resume",
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile", "resume"]
+            },
+            "description": "**Negative test:** Attempts to upload a `.txt` file to verify the server rejects unsupported file types.\n\nSet `TEST_INVALID_PATH` collection variable to any non-PDF/DOC file path, e.g. `/tmp/invalid-resume.txt`.\n\nExpected: `400 Bad Request` with `\"Unsupported file type. Use PDF or DOC/DOCX.\"`"
+          },
+          "response": [
+            {
+              "name": "Upload Invalid Type — 400 Bad Request",
+              "originalRequest": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{JWT_TOKEN}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "resume",
+                      "type": "file",
+                      "src": "/tmp/invalid-resume.txt"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{BASE_URL}}/profile/resume",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["profile", "resume"]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                { "key": "Content-Type", "value": "application/json" }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"Unsupported file type. Use PDF or DOC/DOCX.\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "6 — Upload Without Auth (→ 401) ❌ Negative",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 401 — Unauthorized without JWT', function () {",
+                  "    pm.response.to.have.status(401);",
+                  "});",
+                  "",
+                  "pm.test('success=false with auth error message', function () {",
+                  "    const body = pm.response.json();",
+                  "    pm.expect(body.success).to.be.false;",
+                  "    pm.expect(body.message).to.be.a('string').and.not.empty;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "resume",
+                  "type": "file",
+                  "src": "{{TEST_RESUME_PATH}}",
+                  "description": "File content does not matter — request must fail at auth before multer runs."
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/profile/resume",
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile", "resume"]
+            },
+            "description": "**Negative test:** Sends an upload request with **no** `Authorization` header.\n\nExpected: `401 Unauthorized` — the `protect` middleware should reject the request before it reaches the upload handler."
+          },
+          "response": [
+            {
+              "name": "Upload Without Auth — 401 Unauthorized",
+              "originalRequest": {
+                "auth": { "type": "noauth" },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "resume",
+                      "type": "file",
+                      "src": "/path/to/any-file.pdf"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{BASE_URL}}/profile/resume",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["profile", "resume"]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                { "key": "Content-Type", "value": "application/json" }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"Not authorized, no token\"\n}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -8,10 +8,13 @@ This directory contains the comprehensive Postman collection for the Japan SSW P
 
 ## 🗂️ Files
 
-- **`Japan_SSW_API_Complete.postman_collection.json`** - Complete consolidated collection with all endpoints (RECOMMENDED)
-- **`Japan_SSW_API.postman_environment.json`** - Environment variables file
-- **`Japan_SSW_API_day1_day4.postman_collection.json`** - Legacy collection (Days 1-4 only)
-- **`Japan_SSW_API.postman_collection.json`** - Legacy collection (partial endpoints)
+| File                                                     | Purpose                                                                      |
+| -------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `Japan_SSW_API_Complete.postman_collection.json`         | Complete consolidated collection — 40+ endpoints **(RECOMMENDED)**           |
+| `Japan_SSW_Resume_Tests.postman_collection.json`         | Focused S3 resume upload/delete test suite — 7 requests with full assertions |
+| `Japan_SSW_API_Successful_Tests.postman_collection.json` | Curated passing tests from January 2026 run                                  |
+| `Japan_SSW_API.postman_collection.json`                  | Legacy collection (partial endpoints)                                        |
+| `Japan_SSW_API.postman_environment.json`                 | Shared environment variables file                                            |
 
 ---
 
@@ -58,6 +61,115 @@ npm start
 1. Open **Authentication → Register (Jobseeker)**
 2. Modify email to unique value
 3. Click **Send** - JWT token will auto-save to environment
+
+---
+
+## � Resume S3 Upload / Delete Tests
+
+> **Collection:** `Japan_SSW_Resume_Tests.postman_collection.json`  
+> **Covers:** `POST /profile/resume` · `GET /profile/resume` · `DELETE /profile/resume`
+
+### Prerequisites
+
+1. **Backend running** with AWS credentials in `.env`:
+   ```env
+   AWS_REGION=ap-northeast-1
+   RESUME_S3_BUCKET=japanssw-s3-84cafb59
+   # AWS credentials supplied via IAM role, AWS_PROFILE, or instance metadata
+   ```
+2. **Seeded database** — the jobseeker `carlos.rivera@example.com` must exist  
+   (run `npm run seed` from `backend/` if starting fresh)
+3. **A local test file** — any PDF, DOC, or DOCX under 10 MB on your machine
+
+### Step-by-Step: Postman UI
+
+**Step 1 — Import the collection**
+
+1. Open Postman → click **Import**
+2. Select `backend/postman/Japan_SSW_Resume_Tests.postman_collection.json`
+3. Also import `Japan_SSW_API.postman_environment.json` if not already present
+
+**Step 2 — Set Collection Variables**
+
+1. Click the collection name **"Japan SSW — Resume S3 Tests"**
+2. Go to the **Variables** tab
+3. Fill in the two required values:
+
+   | Variable            | Example Value             | Notes                                                |
+   | ------------------- | ------------------------- | ---------------------------------------------------- |
+   | `TEST_RESUME_PATH`  | `/Users/you/resume.pdf`   | Absolute path to a `.pdf`, `.doc`, or `.docx`        |
+   | `TEST_INVALID_PATH` | `/tmp/invalid-resume.txt` | Absolute path to any `.txt` file (for negative test) |
+
+4. Click **Save**
+
+> **Tip:** `JWT_TOKEN` and `RESUME_KEY` are auto-populated by the test scripts — do not set them manually.
+
+**Step 3 — Select the Environment**  
+Top-right dropdown → **Japan SSW API - Local** (ensures `BASE_URL = http://localhost:3000/api/v1`)
+
+**Step 4 — Run in sequence with the Collection Runner**
+
+1. Click the **▶ Run** button next to the collection
+2. Confirm the folder **"Resume Management"** is selected
+3. Ensure **Keep variable values** is checked
+4. Set **Delay** to `300 ms` (avoids S3 rate-limit edge cases)
+5. Click **Run Japan SSW — Resume S3 Tests**
+
+### Expected Results
+
+| #   | Request                    | Expected Status | Key Assertion                                                                 |
+| --- | -------------------------- | --------------- | ----------------------------------------------------------------------------- |
+| 0   | Login (Jobseeker)          | `200`           | JWT saved to `JWT_TOKEN`                                                      |
+| 1   | Upload Resume (PDF)        | `200`           | `resumeUrl` contains `https://`, `resumeKey` matches `resumes/.../resume.pdf` |
+| 2   | Get Resume (Presigned URL) | `200`           | `resumeKey` matches step 1, URL contains `X-Amz-Signature`                    |
+| 3   | Delete Resume              | `200`           | `message` = `"Resume deleted successfully"`, `data` = `{}`                    |
+| 4   | Verify Resume Deleted      | `404`           | `message` = `"No resume uploaded"`                                            |
+| 5   | Upload Invalid File (.txt) | `400`           | `message` = `"Unsupported file type. Use PDF or DOC/DOCX."`                   |
+| 6   | Upload Without Auth        | `401`           | `success` = `false`                                                           |
+
+### Run via Newman (CLI)
+
+```bash
+# Install Newman once (if not already installed)
+npm install -g newman
+
+# From repo root
+newman run backend/postman/Japan_SSW_Resume_Tests.postman_collection.json \
+  -e backend/postman/Japan_SSW_API.postman_environment.json \
+  --env-var "TEST_RESUME_PATH=/absolute/path/to/resume.pdf" \
+  --env-var "TEST_INVALID_PATH=/tmp/invalid-resume.txt" \
+  --delay-request 300 \
+  --reporters cli,json \
+  --reporter-json-export backend/postman/resume-test-results.json
+```
+
+> **Note:** Newman cannot interactively pick files via the `formdata` file type.  
+> The `TEST_RESUME_PATH` variable sets the `src` for the `resume` form field automatically.
+
+### Payload Reference
+
+**Upload (`POST /api/v1/profile/resume`)**
+
+```
+Authorization : Bearer <JWT_TOKEN>
+Content-Type  : multipart/form-data  ← set automatically by Postman/Newman
+Body field    : resume   (type: file)
+Allowed types : .pdf  .doc  .docx
+Max file size : 10 MB
+```
+
+**Get (`GET /api/v1/profile/resume`)** — no body, auth header only  
+**Delete (`DELETE /api/v1/profile/resume`)** — no body, auth header only
+
+### Troubleshooting
+
+| Symptom                                         | Likely Cause                                  | Fix                                           |
+| ----------------------------------------------- | --------------------------------------------- | --------------------------------------------- |
+| Test 1 fails with `400 No file uploaded`        | `TEST_RESUME_PATH` not set or file not found  | Set the variable to an **absolute** path      |
+| Test 1 fails with `400 Unsupported file type`   | Wrong file extension                          | Use a `.pdf`, `.doc`, or `.docx` file         |
+| All tests fail with `401`                       | `JWT_TOKEN` not saved                         | Ensure test 0 (Login) ran first and passed    |
+| Test 1 fails with `500 Failed to upload resume` | AWS credentials invalid or bucket unreachable | Check `.env` and AWS CLI config (`aws s3 ls`) |
+| Test 2 fails with `404`                         | Step 1 upload failed earlier                  | Re-run from step 0                            |
 
 ---
 
@@ -387,6 +499,6 @@ For complete endpoint testing including non-implemented features:
 
 ---
 
-**Last Updated:** January 29, 2026  
-**Collection Version:** 2.0.0 (Successful Tests) | 1.0.0 (Complete Collection)  
+**Last Updated:** March 8, 2026  
+**Collection Version:** 2.0.0 (Successful Tests) | 1.0.0 (Complete Collection) | 1.0.0 (Resume S3 Tests)  
 **API Version:** v1
