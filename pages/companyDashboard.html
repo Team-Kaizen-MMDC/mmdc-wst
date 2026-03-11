@@ -494,20 +494,20 @@
         <div class="modal-dialog modal-xl modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="jobDetailModalLabel">Job Details: <span id="modal-job-title"></span></h5>
+                    <h5 class="modal-title" id="jobDetailModalLabel">Job Details: <span id="modal-job-title-header"></span></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-4">
                     <!-- Job Card Header -->
                     <article class="job-card" aria-labelledby="job-title-h1">
                         <header class="job-card__head">
-                            <div class="job-card__crumb text-muted" aria-label="Company" id="modal-company-name">
-                               
+                            <div class="job-card__crumb text-muted" aria-label="Company" id="modal-company-name-container">
+                              <span id="modal-company-name-text"></span> 
                             </div>
                         </header>
-
+                        <div id="modal-title-container">
                         <h1 id="job-title-h1" class="job-card__title display-6 mb-3">Job Title</h1>
-
+                          </div>
                         <p class="job-card__meta text-muted mb-4" id="modal-job-meta">
                             Location ・ Industry ・ Full time ・ Year
                         </p>
@@ -531,8 +531,10 @@
                         <!-- Body copy -->
                         <div class="job-body mt-4" id="modal-job-body">
                             <section>
+                              <div id="modal-overview-container">
                                 <h2 class="h4 fw-bold text-dark">Job Overview</h2>
                                 <p id="modal-department-overview"></p>
+                                </div>
                             </section>
 
                         </div>
@@ -545,8 +547,9 @@
                     </button>
                     <div>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" onclick="handleJobSave()">
-                            <i class="fas fa-save me-2"></i> Save Changes
+                        
+                         <button type="button" class="btn btn-primary" id="modal-edit-toggle-btn">
+                        <i class="fas fa-edit me-2"></i> Edit
                         </button>
                     </div>
                 </div>
