@@ -209,8 +209,10 @@ async function saveJobChanges(jobId) {
 
             isEditMode = false;
 
+             restoreModalView();
+             
             // restore view layout
-            restoreModalView();
+            await loadJobDetails(jobId); // reload fresh data first
 
             // reset button
             const editBtn = document.getElementById('modal-edit-toggle-btn');
@@ -218,8 +220,6 @@ async function saveJobChanges(jobId) {
             editBtn.classList.remove('btn-success');
             editBtn.classList.add('btn-primary');
 
-            // reload job info
-            await loadJobDetails(jobId);
             initDashboard();
 
         }
@@ -232,7 +232,7 @@ async function saveJobChanges(jobId) {
 function restoreModalView() {
 
     document.getElementById('modal-title-container').innerHTML =
-        `<h1 id="job-title-h1"></h1>`;
+        `<h1 id="job-title-h1" class="job-card__title display-6 mb-3"></h1>`;
 
     document.getElementById('modal-overview-container').innerHTML =
         `<p id="modal-department-overview"></p>`;
