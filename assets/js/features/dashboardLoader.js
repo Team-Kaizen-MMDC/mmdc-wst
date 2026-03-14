@@ -12,9 +12,12 @@ async function loadJobDetails(jobId) {
     const condList = document.getElementById('modal-conditions-list');
     const reqList = document.getElementById('modal-requirements-list');
     const editBtn = document.getElementById('modal-edit-toggle-btn');
+    const removeBtn = document.getElementById('modal-remove-button');
+
     editBtn.onclick = null;
     editBtn.onclick = () => handleEditToggle(jobId);
-
+    removeBtn.onclick = () => removeJob(jobId);
+    
     try {
         const response = await fetch(`http://localhost:3000/api/v1/admin-jobs/${jobId}`);
         const result = await response.json();
@@ -136,6 +139,13 @@ function renderManagementTable(jobs, container) {
             const jobId = link.getAttribute('data-id');
             loadJobDetails(jobId);
         }
+
+        const removeBtn = e.target.closest('.remove-job-btn');
+    if (removeBtn) {
+        const jobId = removeBtn.getAttribute('data-id');
+        removeJob(jobId);
+    }
+
     });
 }
 
@@ -239,4 +249,34 @@ function restoreModalView() {
 
     document.getElementById('modal-company-name-container').innerHTML =
         `<span id="modal-company-name-text"></span>`;
+}
+
+async function removeJob(jobId) {
+
+    const confirmDelete = confirm("Are you sure you want to delete this job?");
+
+    if (!confirmDelete) return;
+
+    try {
+
+        const response = await fetch(`http://localhost:3000/api/v1/admin-jobs/${jobId}`, {
+            method: "DELETE"
+        });
+
+        if (response.ok) {
+
+            alert("Job removed successfully");
+
+            // refresh dashboard
+            initDashboard();
+
+            // close modal if open
+            const modal = bootstrap.Modal.getInstance(document.getElementById('jobDetailModal'));
+            if (modal) modal.hide();
+
+        }
+
+    } catch (err) {
+        console.error("Delete Error:", err);
+    }
 }
