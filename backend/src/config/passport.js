@@ -41,7 +41,7 @@ function configurePassport(app) {
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         callbackURL:
           process.env.GOOGLE_OAUTH_REDIRECT_URI ||
-          `${process.env.BASE_URL || `http://localhost:${process.env.PORT || 3000}`}/auth/google/callback`,
+          `${process.env.BASE_URL || (process.env.RAILWAY_PUBLIC_DOMAIN ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}` : `http://localhost:${process.env.PORT || 3000}`)}/auth/google/callback`,
         scope: ["profile", "email"],
         passReqToCallback: true, // Pass request to callback for accessing session
       },

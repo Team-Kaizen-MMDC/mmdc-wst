@@ -366,9 +366,8 @@ exports.googleStart = asyncHandler(async (req, res, next) => {
     process.env.GOOGLE_CLIENT_ID,
     process.env.GOOGLE_CLIENT_SECRET,
     process.env.GOOGLE_REDIRECT_URI ||
-      "http://localhost:3000/api/v1/auth/google/callback",
+      `${process.env.BASE_URL || (process.env.RAILWAY_PUBLIC_DOMAIN ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}` : `http://localhost:${process.env.PORT || 3000}`)}/api/v1/auth/google/callback`,
   );
-
   const url = client.generateAuthUrl({
     access_type: "offline",
     scope: ["openid", "email", "profile"],
@@ -395,7 +394,7 @@ exports.googleCallback = asyncHandler(async (req, res, next) => {
     process.env.GOOGLE_CLIENT_ID,
     process.env.GOOGLE_CLIENT_SECRET,
     process.env.GOOGLE_REDIRECT_URI ||
-      "http://localhost:3000/api/v1/auth/google/callback",
+      `${process.env.BASE_URL || (process.env.RAILWAY_PUBLIC_DOMAIN ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}` : `http://localhost:${process.env.PORT || 3000}`)}/api/v1/auth/google/callback`,
   );
 
   try {

@@ -105,6 +105,8 @@
     "unicorn-magic": "^0.3.0"
   },
   "scripts": {
+    "start": "node backend/server.js",
+    "postinstall": "cd backend && npm install",
     "playwright:install": "npx playwright install",
     "server": "python3 -m http.server 8000",
     "fix:html": "node ./scripts/fix-html-usability.js",
