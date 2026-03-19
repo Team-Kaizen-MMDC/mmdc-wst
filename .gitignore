@@ -188,3 +188,6 @@ override.tfvars
 override.tfvars.json
 .terraformrc
 terraform.rc
+
+SKILLS.md
+
