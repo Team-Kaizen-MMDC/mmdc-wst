@@ -377,9 +377,41 @@ git push origin feature/your-change
 
 ## Deployment
 
-This repository includes a GitHub Actions workflow that publishes the repository root to the `gh-pages` branch on pushes to `main`. A `.nojekyll` file is included to ensure files are served as-is.
+### Railway (production)
 
-The site will be available at:
+The backend API and static frontend are deployed together on [Railway](https://railway.app). The live site is at:
+
+```text
+https://mmdc-wst-production.up.railway.app
+```
+
+Railway runs `npm install` at the repo root (which also installs `backend/` dependencies via the `postinstall` script) and then starts the server with `npm start` (`node backend/server.js`).
+
+**Required Railway environment variables:**
+
+| Variable | Example value |
+|---|---|
+| `NODE_ENV` | `production` |
+| `BASE_URL` | `https://mmdc-wst-production.up.railway.app` |
+| `GOOGLE_OAUTH_REDIRECT_URI` | `https://mmdc-wst-production.up.railway.app/auth/google/callback` |
+| `GOOGLE_REDIRECT_URI` | `https://mmdc-wst-production.up.railway.app/api/v1/auth/google/callback` |
+| `FRONTEND_URL` | `https://mmdc-wst-production.up.railway.app` |
+| `GOOGLE_CLIENT_ID` | *(from Google Cloud Console)* |
+| `GOOGLE_CLIENT_SECRET` | *(from Google Cloud Console)* |
+| `MONGODB_URI` | *(Atlas connection string)* |
+| `JWT_SECRET` | *(32+ random chars)* |
+
+**Google Cloud Console setup:**
+Add both of the following as Authorized Redirect URIs in your OAuth 2.0 client
+(*APIs & Services → Credentials → your OAuth client*):
+```
+https://mmdc-wst-production.up.railway.app/auth/google/callback
+https://mmdc-wst-production.up.railway.app/api/v1/auth/google/callback
+```
+
+### GitHub Pages (static frontend only)
+
+This repository includes a GitHub Actions workflow that publishes the repository root to the `gh-pages` branch on pushes to `main`. A `.nojekyll` file is included to ensure files are served as-is.
 
 ```text
 https://Team-Kaizen-MMDC.github.io/mmdc-wst/

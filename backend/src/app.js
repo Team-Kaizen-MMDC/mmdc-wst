@@ -97,7 +97,10 @@ async function createApp() {
   const corsOptions = {
     origin:
       process.env.NODE_ENV === "production"
-        ? process.env.FRONTEND_URL
+        ? process.env.FRONTEND_URL ||
+          (process.env.RAILWAY_PUBLIC_DOMAIN
+            ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}`
+            : undefined)
         : [
             "http://localhost:3000",
             "http://localhost:5173",
