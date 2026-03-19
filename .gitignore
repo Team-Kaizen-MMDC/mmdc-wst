@@ -190,6 +190,10 @@ override.tfvars.json
 terraform.rc
 
 SKILLS.md
+SKILL.md
+
 
 .github/COPILOT_GUIDES.md
 .github/copilot-instructions.md
+.github/skills
+.github/skills/*
