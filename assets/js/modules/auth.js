@@ -34,6 +34,7 @@ export function logoutAndRedirect(redirectPath = "signin.html") {
   document.cookie = `isLoggedIn=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/`;
   document.cookie = `email=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/`;
   document.cookie = `password=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/`;
+  document.cookie = `token=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/`;
 
   // Clear session storage
   sessionStorage.clear();
