@@ -1,3 +1,5 @@
+//latestJob.js
+
 const API_BASE_URL = "http://localhost:3000/api/v1";
 
 const latestJobsList = document.getElementById("latest-jobs-list");
@@ -25,7 +27,7 @@ function createJobItem(job) {
 
 async function loadLatestJobs() {
   try {
-    const response = await fetch(`${API_BASE_URL}/admin-jobs`);
+    const response = await fetch(`${API_BASE_URL}/jobs?limit=5&sort=-createdAt`);
     const result = await response.json();
 
     // ✅ THIS IS THE FIX
