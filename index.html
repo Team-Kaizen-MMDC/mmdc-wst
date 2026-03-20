@@ -279,113 +279,11 @@
               <!-- Main Job Panel Card -->
               <div class="card shadow-lg rounded-4 overflow-hidden animate-fade-in-up animate-on-scroll">
                 <!-- Flush List Group for Job Items -->
-                <ul class="list-group list-group-flush">
-                  <!-- Job Item 1: Mechanic -->
-                  <!-- list-group-item-action adds hover effect, d-flex for alignment -->
-                  <li
-                    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5 animate-hover-lift"
-                  >
-                    <div class="job-details me-auto">
-                      <h3 class="h5 mb-1 fw-bold text-primary-dark">
-                        Ground Handling Staff
-                      </h3>
-                      <p class="text-secondary small mb-0">
-                        Aviation — Narita City, Chiba Prefecture
-                      </p>
-                    </div>
-                    <a
-                      class="btn btn-primary rounded-pill px-3"
-                      style="border-color: btn btn-primary; color: #fff"
-                      href="pages/jobs/mechanic-ground-support-haneda.html"
-                      data-i18n="btn.apply"
-                      >Apply</a
-                    >
-                  </li>
-
-                  <!-- Job Item 2: Cleaner -->
-                  <li
-                    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5 animate-hover-lift"
-                  >
-                    <div class="job-details me-auto">
-                      <h3 class="h5 mb-1 fw-bold text-primary-dark">
-                        Cleaning Staff
-                      </h3>
-                      <p class="text-secondary small mb-0">
-                        Building Cleaning — Katsuragawa (Kyoto)
-                      </p>
-                    </div>
-                    <a
-                      class="btn btn-primary btn-outline-primary rounded-pill px-3"
-                      style="border-color: var(--bs-primary-dark); color: #fff"
-                      href="pages/jobs/cleaner-facilities-maintenance.html"
-                      data-i18n="btn.apply"
-                      >Apply</a
-                    >
-                  </li>
-
-                  <!-- Job Item 3: Construction Worker -->
-                  <li
-                    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5 animate-hover-lift"
-                  >
-                    <div class="job-details me-auto">
-                      <h3 class="h5 mb-1 fw-bold text-primary-dark">
-                        Construction Assistant
-                      </h3>
-                      <p class="text-secondary small mb-0">
-                        Construction — Daimon Sta. (Tokyo)
-                      </p>
-                    </div>
-                    <a
-                      class="btn btn-primary btn-outline-primary rounded-pill px-3"
-                      style="border-color: var(--bs-primary-dark); color: #fff"
-                      href="pages/jobs/construction-worker-site-support.html"
-                      data-i18n="btn.apply"
-                      >Apply</a
-                    >
-                  </li>
-
-                  <!-- Job Item 4: Server -->
-                  <li
-                    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5 animate-hover-lift"
-                  >
-                    <div class="job-details me-auto">
-                      <h3 class="h5 mb-1 fw-bold text-primary-dark">
-                        Restaurant Waiter / Waitress
-                      </h3>
-                      <p class="text-secondary small mb-0">
-                        Food and Beverages — Sangenjaya Sta. (Tokyo)
-                      </p>
-                    </div>
-                    <a
-                      class="btn btn-primary btn-outline-primary rounded-pill px-3"
-                      style="border-color: var(--bs-primary-dark); color: #fff"
-                      href="pages/jobs/server-hospitality.html"
-                      data-i18n="btn.apply"
-                      >Apply</a
-                    >
-                  </li>
-
-                  <!-- Job Item 5: Ward Nursing Support (Nursing/Care Sector) -->
-                  <li
-                    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 py-md-4 px-4 px-lg-5 animate-hover-lift"
-                  >
-                    <div class="job-details me-auto">
-                      <h3 class="h5 mb-1 fw-bold text-primary-dark">
-                        Ward Nursing Support
-                      </h3>
-                      <p class="text-secondary small mb-0">
-                        Nursing Care — Setagaya Ward (Tokyo)
-                      </p>
-                    </div>
-                    <a
-                      class="btn btn-primary btn-outline-primary rounded-pill px-3"
-                      style="border-color: var(--bs-primary-dark); color: #fff"
-                      href="pages/jobs/ward-nursing-support.html"
-                      data-i18n="btn.apply"
-                      >Apply</a
-                    >
-                  </li>
-                </ul>
+                <ul id="latest-jobs-list" class="list-group list-group-flush">
+              <li class="list-group-item py-4 px-4 px-lg-5 text-center text-muted">
+                Loading latest jobs...
+              </li>
+            </ul>
               </div>
             </div>
           </div>
@@ -1130,6 +1028,8 @@
     }
   });
 </script>
+
+<script type="module" src="assets/js/features/latestJobs.js"></script>
     
   </body>
 </html>
