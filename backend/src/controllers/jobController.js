@@ -1,3 +1,5 @@
+//jobController.js
+
 const Job = require("../models/Job");
 const Company = require("../models/Company");
 const ApiResponse = require("../utils/ApiResponse");
@@ -31,7 +33,11 @@ exports.getJobs = asyncHandler(async (req, res) => {
   } = req.query;
 
   // Build query
-  const query = { isDeleted: false };
+    const query = {
+      isDeleted: false,
+      visibility: "public",
+    };
+
 
   // Industry filter
   if (industry) {
@@ -73,11 +79,11 @@ exports.getJobs = asyncHandler(async (req, res) => {
   }
 
   // Status filter (default to active for public access)
-  if (status) {
-    query.status = status;
-  } else {
-    query.status = "active";
-  }
+if (status) {
+  query.status = status;
+} else {
+  query.status = "active";
+}
 
   // Featured filter
   if (featured !== undefined) {
@@ -143,8 +149,14 @@ exports.getJobs = asyncHandler(async (req, res) => {
  * @route   GET /api/v1/jobs/:id
  * @access  Public
  */
+
 exports.getJob = asyncHandler(async (req, res) => {
-  const job = await Job.findOne({ _id: req.params.id, isDeleted: false })
+  const job = await Job.findOne({
+    _id: req.params.id,
+    isDeleted: false,
+    status: "active",
+    visibility: "public",
+  })
     .populate({
       path: "company",
       select:
@@ -159,11 +171,7 @@ exports.getJob = asyncHandler(async (req, res) => {
     throw new ApiError(404, "Job not found");
   }
 
-  // Increment views (fire and forget)
-  job
-    .incrementViews()
-    .catch((err) => console.error("Failed to increment views:", err));
-
+  
   res
     .status(200)
     .json(new ApiResponse(200, "Job retrieved successfully", { job }));

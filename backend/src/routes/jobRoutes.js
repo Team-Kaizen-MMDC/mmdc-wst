@@ -1,3 +1,5 @@
+// jobRoutes.js
+
 const express = require("express");
 const {
   getJobs,
@@ -17,6 +19,36 @@ const { protect, authorize } = require("../middleware/auth");
 const { validateApplication } = require("../validators/applicationValidator");
 
 const router = express.Router();
+
+// Public routes
+router.get("/", getJobs);
+router.get("/company/:companyId", getJobsByCompany);
+router.get("/:id", getJob);
+
+// Everything below requires auth
+router.use(protect);
+
+router.get("/my/jobs", getMyJobs);
+router.get("/admin/stats", authorize("admin"), getJobStats);
+
+router.post("/", authorize("employer", "admin"), createJob);
+router.put("/:id", authorize("employer", "admin"), updateJob);
+router.delete("/:id", authorize("employer", "admin"), deleteJob);
+
+router.post(
+  "/:jobId/apply",
+  authorize("jobseeker"),
+  validateApplication,
+  applyToJob,
+);
+
+router.get(
+  "/:jobId/applications",
+  authorize("employer", "admin"),
+  getJobApplications,
+);
+
+module.exports = router;
 
 /**
  * @swagger
