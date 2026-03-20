@@ -64,6 +64,9 @@ class App {
     if (document.getElementById('dashboard-pane') || document.getElementById('job-list-body')) {
         initDashboard();
     }
+    if (document.getElementById('dashboard-latest-job') || document.getElementById('job-list-body')) {
+    initDashboard();
+}
 
     // Accessibility: return focus to toggler after offcanvas closes (if present)
     const offcanvasEl = document.getElementById("siteOffcanvas");
