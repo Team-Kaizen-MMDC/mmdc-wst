@@ -157,11 +157,9 @@ exports.login = asyncHandler(async (req, res, next) => {
 exports.getMe = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user.id)
 // Determine the landing page based on role
-  let targetDashboard = '/profileDashboard';
-  if (user.role === 'admin') {
-    targetDashboard = '/companyProfile';
-  } else if (user.role === 'employer') {
-    targetDashboard = '/employerDashboard';
+  let targetDashboard = '/pages/profileDashboard.html';
+  if (user.role === 'admin' || user.role === 'employer') {
+    targetDashboard = '/pages/companyDashboard.html';
   }
 
   res.status(200).json({
