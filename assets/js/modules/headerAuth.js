@@ -3,7 +3,7 @@
 // Updates header navigation based on user login status
 // ===================================================================
 
-import { getCookie } from "./storage.js";
+import { getCookie, getRoleFromToken } from "./storage.js";
 import { getUserProfile, getFirstName } from "./userProfile.js";
 
 /**
@@ -130,28 +130,26 @@ function updateMobileNav(userName) {
 }
 
 /**
- * Determines the correct path to profile dashboard based on current page location
+ * Returns the correct dashboard path based on the user's role and current page depth.
+ * admin / employer → companyDashboard.html
+ * everyone else    → profileDashboard.html
  */
 function getProfileDashboardPath() {
+  const role = getRoleFromToken();
+  const dashboardFile =
+    role === "admin" || role === "employer"
+      ? "companyDashboard.html"
+      : "profileDashboard.html";
+
   const currentPath = window.location.pathname;
 
-  // If we're in the pages directory or subdirectories
   if (currentPath.includes("/pages/")) {
-    // Count how many slashes after /pages/ to determine depth
     const afterPages = currentPath.split("/pages/")[1];
     const slashCount = (afterPages.match(/\//g) || []).length;
-
-    // If we're in a subdirectory (pages/addEdit/, pages/companies/, pages/jobs/, etc.)
-    if (slashCount > 0) {
-      return "../profileDashboard.html";
-    }
-
-    // If we're directly in pages/ (pages/about.html, pages/contact.html, etc.)
-    return "profileDashboard.html";
+    return slashCount > 0 ? `../${dashboardFile}` : dashboardFile;
   }
 
-  // If we're at root level (index.html)
-  return "pages/profileDashboard.html";
+  return `pages/${dashboardFile}`;
 }
 
 /**

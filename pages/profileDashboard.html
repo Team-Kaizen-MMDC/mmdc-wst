@@ -2650,30 +2650,29 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           console.error("No token found. User not authenticated.");
           return;
         }
-        //checks for admin access
+        //checks for admin/employer access — redirect them to companyDashboard
         try {
           const params = new URLSearchParams(window.location.search);
-            const urlToken = params.get('token');
-                const meRes = await fetch('/api/v1/auth/me', {
-                  headers: { Authorization: `Bearer ${urlToken}` },
-                }); 
-                if (meRes.ok) {
-                  console.log("iffffffffffffffffffffffff")
-                  const meData = await meRes.json();
-                  const user_id = meData.data.id;
-                  const user_email = meData.data.email;
-                  const user_role = meData.data.role;
-                  if (user_role === "admin") {
-                  const params = new URLSearchParams(window.location.search);
-                  const urlToken = params.get('token');
-                  window.location.href = `/pages/companyDashboard.html?token=${urlToken}`;
-                  }
-                } else {
-                  console.log("Failed to fetch user data");
-                }
-              } catch (err) {
-                console.log("Error in auth check:", err);
+          const urlToken = params.get('token');
+          // Prefer URL token (OAuth redirect), fall back to cookie
+          const guardToken = urlToken ||
+            (document.cookie.split('; ').find(r => r.startsWith('token='))
+              ?.split('=')[1]);
+          if (guardToken) {
+            try {
+              const payload = JSON.parse(atob(guardToken.split('.')[1]));
+              if (payload.role === 'admin' || payload.role === 'employer') {
+                const dest = urlToken
+                  ? `/pages/companyDashboard.html?token=${urlToken}`
+                  : '/pages/companyDashboard.html';
+                window.location.replace(dest);
+                return;
               }
+            } catch (_) {}
+          }
+        } catch (err) {
+          console.log("Error in role guard:", err);
+        }
 
         try {
           // Fetch profile from backend API

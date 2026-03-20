@@ -36,3 +36,20 @@ export function getCookie(name) {
 export function deleteCookie(name) { 
   document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/`;
 }
+
+/**
+ * Decode the role from the stored JWT token cookie without verifying the
+ * signature (UI-only — actual auth is enforced server-side).
+ * @returns {string|null} role string or null if no token / decode fails
+ */
+export function getRoleFromToken() {
+  const match = document.cookie.split("; ").find((r) => r.startsWith("token="));
+  const token = match ? decodeURIComponent(match.split("=")[1]) : null;
+  if (!token) return null;
+  try {
+    const payload = JSON.parse(atob(token.split(".")[1]));
+    return payload.role || null;
+  } catch (_) {
+    return null;
+  }
+}
