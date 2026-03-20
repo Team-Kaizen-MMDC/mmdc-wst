@@ -4,7 +4,10 @@
 // ===================================================================
 
 import { getCookie, getRoleFromToken } from "./storage.js";
-import { getUserProfile, getFirstName } from "./userProfile.js";
+import { getUserProfile, getFirstName, saveUserProfile } from "./userProfile.js";
+
+const _API =
+  window.location.port === "8000" ? "http://localhost:3000/api/v1" : "/api/v1";
 
 /**
  * Updates the header to show logged-in user state
@@ -12,20 +15,44 @@ import { getUserProfile, getFirstName } from "./userProfile.js";
  * - Adds link to profile dashboard
  * - Updates both desktop and mobile navigation
  */
-export function updateHeaderAuthState() {
+export async function updateHeaderAuthState() {
 
   const isLoggedIn = getCookie("isLoggedIn") === "true";
+  const token = document.cookie
+    .split("; ")
+    .find((r) => r.startsWith("token="))
+    ?.split("=")[1];
 
-
-  if (!isLoggedIn) {
-  
+  if (!isLoggedIn && !token) {
     return;
   }
 
-  const profile = getUserProfile();
+  // If firstName not in localStorage, fetch from API and cache it
+  if (!getFirstName() || getFirstName() === "User") {
+    if (token) {
+      try {
+        const res = await fetch(`${_API}/profile`, {
+          headers: { Authorization: `Bearer ${decodeURIComponent(token)}` },
+        });
+        if (res.ok) {
+          const data = await res.json();
+          const p = data?.data?.profile;
+          if (p?.firstName) {
+            saveUserProfile({
+              firstName: p.firstName,
+              lastName: p.lastName || "",
+              email: p.user?.email || getCookie("email") || "",
+            });
+          }
+        }
+      } catch (_) {
+        // non-critical — fall through to render with what we have
+      }
+    }
+  }
 
-  const userName =
-    getFirstName() || profile.email?.split("@")[0] || "-";
+  const profile = getUserProfile();
+  const userName = getFirstName() || profile.email?.split("@")[0] || "-";
 
 
 
