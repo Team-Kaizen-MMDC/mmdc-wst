@@ -279,9 +279,7 @@ async function createApp() {
       return res.json({ data: { token, user } });
     } catch (err) {
       console.error("/api/v1/auth/google verification error:", err);
-      return res
-        .status(500)
-        .json({ message: "google_token_verification_failed" });
+      return res.status(401).json({ message: "Invalid Google token" });
     }
   });
 
