@@ -1,6 +1,9 @@
 /**
  * dashboardLoader.js
  */
+const _API = window.location.port === "8000"
+  ? "http://localhost:3000/api/v1"
+  : "/api/v1";
 let isEditMode = false;
 async function loadJobDetails(jobId) {
     console.log("Fetching job details for ID:", jobId);     
@@ -19,7 +22,7 @@ async function loadJobDetails(jobId) {
     removeBtn.onclick = () => removeJob(jobId);
     
     try {
-        const response = await fetch(`http://localhost:3000/api/v1/admin-jobs/${jobId}`);
+        const response = await fetch(`${_API}/admin-jobs/${jobId}`);
         const result = await response.json();
 
         if (result.success) {
@@ -90,7 +93,7 @@ export async function initDashboard() {
     if (!tableBody) return;
 
     try {
-        const response = await fetch('http://localhost:3000/api/v1/admin-jobs');
+        const response = await fetch(`${_API}/admin-jobs`);
         const result = await response.json();
 
         if (result.success) {
@@ -209,7 +212,7 @@ async function saveJobChanges(jobId) {
 
     try {
 
-        const response = await fetch(`http://localhost:3000/api/v1/admin-jobs/${jobId}`, {
+        const response = await fetch(`${_API}/admin-jobs/${jobId}`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(updatedData)
@@ -259,7 +262,7 @@ async function removeJob(jobId) {
 
     try {
 
-        const response = await fetch(`http://localhost:3000/api/v1/admin-jobs/${jobId}`, {
+        const response = await fetch(`${_API}/admin-jobs/${jobId}`, {
             method: "DELETE"
         });
 

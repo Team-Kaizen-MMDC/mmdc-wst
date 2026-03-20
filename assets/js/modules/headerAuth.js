@@ -3,8 +3,11 @@
 // Updates header navigation based on user login status
 // ===================================================================
 
-import { getCookie } from "./storage.js";
-import { getUserProfile, getFirstName } from "./userProfile.js";
+import { getCookie, getRoleFromToken } from "./storage.js";
+import { getUserProfile, getFirstName, saveUserProfile } from "./userProfile.js";
+
+const _API =
+  window.location.port === "8000" ? "http://localhost:3000/api/v1" : "/api/v1";
 
 /**
  * Updates the header to show logged-in user state
@@ -12,20 +15,44 @@ import { getUserProfile, getFirstName } from "./userProfile.js";
  * - Adds link to profile dashboard
  * - Updates both desktop and mobile navigation
  */
-export function updateHeaderAuthState() {
+export async function updateHeaderAuthState() {
 
   const isLoggedIn = getCookie("isLoggedIn") === "true";
+  const token = document.cookie
+    .split("; ")
+    .find((r) => r.startsWith("token="))
+    ?.split("=")[1];
 
-
-  if (!isLoggedIn) {
-  
+  if (!isLoggedIn && !token) {
     return;
   }
 
-  const profile = getUserProfile();
+  // If firstName not in localStorage, fetch from API and cache it
+  if (!getFirstName() || getFirstName() === "User") {
+    if (token) {
+      try {
+        const res = await fetch(`${_API}/profile`, {
+          headers: { Authorization: `Bearer ${decodeURIComponent(token)}` },
+        });
+        if (res.ok) {
+          const data = await res.json();
+          const p = data?.data?.profile;
+          if (p?.firstName) {
+            saveUserProfile({
+              firstName: p.firstName,
+              lastName: p.lastName || "",
+              email: p.user?.email || getCookie("email") || "",
+            });
+          }
+        }
+      } catch (_) {
+        // non-critical — fall through to render with what we have
+      }
+    }
+  }
 
-  const userName =
-    getFirstName() || profile.email?.split("@")[0] || "-";
+  const profile = getUserProfile();
+  const userName = getFirstName() || profile.email?.split("@")[0] || "-";
 
 
 
@@ -130,28 +157,26 @@ function updateMobileNav(userName) {
 }
 
 /**
- * Determines the correct path to profile dashboard based on current page location
+ * Returns the correct dashboard path based on the user's role and current page depth.
+ * admin / employer → companyDashboard.html
+ * everyone else    → profileDashboard.html
  */
 function getProfileDashboardPath() {
+  const role = getRoleFromToken();
+  const dashboardFile =
+    role === "admin" || role === "employer"
+      ? "companyDashboard.html"
+      : "profileDashboard.html";
+
   const currentPath = window.location.pathname;
 
-  // If we're in the pages directory or subdirectories
   if (currentPath.includes("/pages/")) {
-    // Count how many slashes after /pages/ to determine depth
     const afterPages = currentPath.split("/pages/")[1];
     const slashCount = (afterPages.match(/\//g) || []).length;
-
-    // If we're in a subdirectory (pages/addEdit/, pages/companies/, pages/jobs/, etc.)
-    if (slashCount > 0) {
-      return "../profileDashboard.html";
-    }
-
-    // If we're directly in pages/ (pages/about.html, pages/contact.html, etc.)
-    return "profileDashboard.html";
+    return slashCount > 0 ? `../${dashboardFile}` : dashboardFile;
   }
 
-  // If we're at root level (index.html)
-  return "pages/profileDashboard.html";
+  return `pages/${dashboardFile}`;
 }
 
 /**

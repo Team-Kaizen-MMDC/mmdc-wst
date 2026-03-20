@@ -1828,7 +1828,11 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
   <script type="module">
     import { setupLogoutButton } from "../assets/js/modules/auth.js";
 
-    const API_BASE = "http://localhost:3000/api/v1";
+    // Local dev: frontend on :8000, backend on :3000 → absolute URL needed.
+    // Production (Railway): Express serves both on the same origin → relative URL.
+    const API_BASE = window.location.port === "8000"
+      ? "http://localhost:3000/api/v1"
+      : "/api/v1";
 
     // Get JWT token — prefer URL query param (OAuth redirect), then cookie.
     function getToken() {
