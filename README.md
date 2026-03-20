@@ -172,6 +172,40 @@ php -S localhost:8000
 
 Open `http://localhost:8000` in your browser.
 
+## Local Test Accounts
+
+A pre-seeded **superadmin** account is available for testing CRUD flows without requiring Google OAuth.
+
+| Field    | Value                  |
+|----------|------------------------|
+| Email    | `admin@mmdc.local`     |
+| Password | `SuperAdmin@1234`      |
+| Role     | `admin`                |
+
+### Login (get a JWT token)
+
+```bash
+curl -s -X POST http://localhost:3000/api/v1/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"admin@mmdc.local","password":"SuperAdmin@1234"}' | jq .data.token
+```
+
+Or sign in via `pages/signin.html` in the browser — the dashboard will redirect to `pages/companyDashboard.html`.
+
+### Re-create / reset the account
+
+```bash
+cd backend && npm run seed:admin
+```
+
+The script is idempotent — safe to run any time to reset the password or re-link the UserProfile. To use different credentials, pass env vars:
+
+```bash
+ADMIN_EMAIL=me@test.local ADMIN_PASSWORD=MyPass@99 npm run seed:admin
+```
+
+> **Note:** This account exists in MongoDB Atlas (`japansswdb`). Do not use these credentials in production.
+
 ## Development
 
 - HTML files live in the repo root and [pages/](pages/)

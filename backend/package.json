@@ -106,6 +106,7 @@
     "seed:full:verbose": "node seedDatabase-comprehensive.js --clear --verbose",
     "fix-seed": "node fixSeedData.js",
     "seed:clean": "node seedDatabase.clean.js",
+    "seed:admin": "node scripts/create-admin.js",
     "extract:pages": "node scripts/extract-from-pages.js",
     "export:swagger": "node scripts/export-swagger.js",
     "oauth:consent": "node scripts/exchange-code-for-token.js",
