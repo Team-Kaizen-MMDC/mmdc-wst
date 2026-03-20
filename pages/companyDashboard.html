@@ -397,42 +397,8 @@
                     >
                   </div>
 
-                  <div class="list-group list-group-flush">
-                    <div class="list-group-item px-0 py-3">
-                      <div class="d-flex align-items-center">
-                        <div
-                          class="bg-light rounded me-3"
-                          style="width: 40px; height: 40px"
-                        ></div>
-                        <div class="flex-grow-1">
-                          <p class="mb-0 fw-semibold small">
-                            Cook and Customer Service
-                          </p>
-                          <small class="text-muted d-block"
-                            >Tokyo - Food Service</small
-                          >
-                          <small class="text-muted">250,000 yen</small>
-                        </div>
-                        <a href="#" class="text-danger small ms-2">view</a>
-                      </div>
-                    </div>
-
-                    <div class="list-group-item px-0 py-3">
-                      <div class="d-flex align-items-center">
-                        <div
-                          class="bg-light rounded me-3"
-                          style="width: 40px; height: 40px"
-                        ></div>
-                        <div class="flex-grow-1">
-                          <p class="mb-0 fw-semibold small">Machine Operate</p>
-                          <small class="text-muted d-block"
-                            >Chiba - Automotive</small
-                          >
-                          <small class="text-muted">JLPT N3</small>
-                        </div>
-                        <a href="#" class="text-danger small ms-2">view</a>
-                      </div>
-                    </div>
+                  <div class="list-group list-group-flush" id="job-summary-list">
+                    <!-- Job summary items will be populated here by JS -->
                   </div>
                 </div>
               </div>
@@ -1937,23 +1903,126 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
 
     // Load profile once the DOM is ready.
     async function loadCompanyJobs() {
+      console.debug('loadCompanyJobs: start');
       const token = getToken();
-      if (!token) return;
+      console.debug('loadCompanyJobs: token present?', !!token);
+      const tbody = document.getElementById('job-list-body');
+      if (!tbody) {
+        console.debug('loadCompanyJobs: tbody not found');
+        return;
+      }
+
+      // Goal: show jobs belonging to the company this admin/employer manages.
+      // Strategy: If token present, call /auth/me to get user's company id, then
+      // call /jobs/company/:companyId. Fallback to /jobs/my-jobs, then to public jobs.
       try {
-        const res = await fetch(`${API_BASE}/jobs/my-jobs`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        if (!res.ok) {
-          console.warn('Failed to load company jobs', res.status);
-          return;
+        let jobs = [];
+
+        if (token) {
+          try {
+            const meRes = await fetch(`${API_BASE}/auth/me`, {
+              headers: { Authorization: `Bearer ${token}` },
+            });
+            console.debug('loadCompanyJobs: /auth/me status', meRes.status);
+            if (meRes.ok) {
+              const me = await meRes.json();
+              const user = me.data || {};
+              const companyId = user.company || (user.profile && user.profile.company) || null;
+              if (companyId) {
+                const r = await fetch(`${API_BASE}/jobs/company/${companyId}`, {
+                  headers: { Authorization: `Bearer ${token}` },
+                });
+                console.debug('loadCompanyJobs: /jobs/company status', r.status);
+                if (r.ok) {
+                  const p = await r.json();
+                  jobs = p?.data?.jobs || [];
+                  console.debug('loadCompanyJobs: company jobs count', jobs.length);
+                }
+              }
+            }
+          } catch (e) {
+            console.debug('loadCompanyJobs: /auth/me or company jobs fetch failed', e);
+          }
+
+          // If still no jobs for company, try my-jobs (postedBy)
+          if (!jobs.length) {
+            try {
+              const res = await fetch(`${API_BASE}/jobs/my-jobs`, {
+                headers: { Authorization: `Bearer ${token}` },
+              });
+              console.debug('loadCompanyJobs: my-jobs status', res.status);
+              if (res.ok) {
+                const payload = await res.json();
+                jobs = payload?.data?.jobs || [];
+                console.debug('loadCompanyJobs: my-jobs count', jobs.length);
+              }
+            } catch (e) {
+              console.debug('loadCompanyJobs: my-jobs fetch failed', e);
+            }
+          }
         }
-        const payload = await res.json();
-        const jobs = payload?.data?.jobs || [];
-        const tbody = document.getElementById('job-list-body');
-        if (!tbody) return;
+
+        // Final fallback: public active jobs (recent)
+        if (!jobs.length) {
+          try {
+            const resPublic = await fetch(`${API_BASE}/jobs?status=active&limit=5`);
+            console.debug('loadCompanyJobs: public jobs status', resPublic.status);
+            if (resPublic.ok) {
+              const p = await resPublic.json();
+              jobs = p?.data?.jobs || [];
+              console.debug('loadCompanyJobs: public jobs count', jobs.length);
+            }
+          } catch (e) {
+            console.debug('loadCompanyJobs: public jobs fetch failed', e);
+          }
+        }
+
         if (!jobs.length) {
           tbody.innerHTML = '<tr><td colspan="5" class="text-muted">No jobs found.</td></tr>';
+          // Also clear summary
+          const sum = document.getElementById('job-summary-list');
+          if (sum) sum.innerHTML = '<div class="list-group-item px-0 py-3"><div class="text-muted">No recent jobs.</div></div>';
           return;
+        }
+
+        // Populate summary (first 3 jobs)
+        const summaryEl = document.getElementById('job-summary-list');
+        if (summaryEl) {
+          summaryEl.innerHTML = jobs.slice(0,3).map(j => {
+            const t = j.title || 'Untitled';
+            const loc = (j.location && (j.location.prefecture || j.location.city)) ? `${j.location.prefecture || ''}${j.location.prefecture && j.location.city ? ' - ' : ''}${j.location.city || ''}` : (j.company && j.company.location && (j.company.location.prefecture || j.company.location.city)) ? `${j.company.location.prefecture || ''}${j.company.location.prefecture && j.company.location.city ? ' - ' : ''}${j.company.location.city || ''}` : '-';
+            const meta = j.compensation && j.compensation.salaryMin ? `${j.compensation.salaryMin.toLocaleString()} ${j.compensation.currency || 'JPY'}` : (j.japaneseLevel || '');
+            return `<div class="list-group-item px-0 py-3"><div class="d-flex align-items-center"><div class="bg-light rounded me-3" style="width:40px;height:40px"></div><div class="flex-grow-1"><p class="mb-0 fw-semibold small">${escapeHtml(t)}</p><small class="text-muted d-block">${escapeHtml(loc)}</small><small class="text-muted">${escapeHtml(meta)}</small></div><a href="#" class="text-danger small ms-2 view-job-summary" data-id="${j._id}">view</a></div></div>`;
+          }).join('');
+
+          // Wire up summary view links
+          summaryEl.querySelectorAll('.view-job-summary').forEach(a => {
+            a.addEventListener('click', async (e) => {
+              e.preventDefault();
+              const id = e.currentTarget.getAttribute('data-id');
+              try {
+                const r = await fetch(`${API_BASE}/jobs/${id}`);
+                if (!r.ok) throw new Error('Failed to load job');
+                const { data } = await r.json();
+                const job = data?.job;
+                if (!job) return;
+                document.getElementById('modal-job-title-header').textContent = job.title || '';
+                document.getElementById('job-title-h1').textContent = job.title || '';
+                document.getElementById('modal-company-name-text').textContent = (job.company && job.company.name) || '';
+                document.getElementById('modal-job-meta').textContent = `${job.location?.prefecture || ''} ・ ${job.industry || ''} ・ ${job.visibility || ''}`;
+                const condList = document.getElementById('modal-conditions-list');
+                if (condList) {
+                  condList.innerHTML = '';
+                  if (job.workConditions) {
+                    Object.entries(job.workConditions).forEach(([k, v]) => { if (v) condList.insertAdjacentHTML('beforeend', `<li class="job-spec__item">${escapeHtml(k)}: ${escapeHtml(String(v))}</li>`); });
+                  }
+                }
+                const modalEl = document.getElementById('jobDetailModal');
+                const modal = new bootstrap.Modal(modalEl);
+                modal.show();
+              } catch (err) { console.error('Failed to load job summary', err); }
+            });
+          });
         }
 
         tbody.innerHTML = jobs
