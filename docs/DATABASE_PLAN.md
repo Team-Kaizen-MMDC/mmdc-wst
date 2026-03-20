@@ -1,9 +1,21 @@
-# Database Plan - Japan SSW Job Matching Platform
+# Database Plan — Japan SSW Job Matching Platform
 
-**Project:** MMDC WST (Web Systems and Technology)  
-**Database:** MongoDB Atlas  
-**Database Name:** japansswdb  
-**Last Updated:** January 31, 2026
+**Project:** MMDC WST (Web Systems and Technology)
+**Database:** MongoDB Atlas
+**Cluster:** `japansswcluster0.lvia1ct.mongodb.net`
+**Database Name:** `japansswdb`
+**Last Updated:** March 20, 2026
+**Document Version:** 2.0
+
+![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-green)
+![Mongoose](https://img.shields.io/badge/Mongoose-v9-red)
+![Node.js](https://img.shields.io/badge/Node.js-18-green)
+
+> **v2.0 Change Summary:** Added `adminjobs` collection, Google OAuth fields on `users`,
+> `cvPath`/`photoPath`/`availability` updates on `userprofiles`, restructured `jobs`
+> (`salary→compensation`, `workConditions`, `visibility`, soft-delete), updated `companies`
+> (`owner`, `admins`, `jobs`, `isVerified`, `verifiedBy`), updated `contents` (paragraphs
+> structure), new indexes across all collections, and `create-admin.js` seed script.
 
 ---
 
@@ -11,10 +23,12 @@
 
 1. [Collections and Documents](#1-collections-and-documents)
 2. [CRUD Operations](#2-crud-operations)
-3. [UI and Data Flow](#3-ui-and-data-flow)
-4. [Database Relationships](#4-database-relationships)
-5. [Indexes and Performance](#5-indexes-and-performance)
-6. [Data Validation Rules](#6-data-validation-rules)
+3. [Sample API Requests](#3-sample-api-requests)
+4. [UI and Data Flow](#4-ui-and-data-flow)
+5. [Database Relationships](#5-database-relationships)
+6. [Indexes and Performance](#6-indexes-and-performance)
+7. [Data Validation Rules](#7-data-validation-rules)
+8. [Appendix](#appendix)
 
 ---
 
@@ -22,35 +36,286 @@
 
 ### User Domain
 
-| Collection Name  | Document Structure                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **users**        | `{ "_id": ObjectId, "email": "user@example.com", "password": "hashed_password", "role": "jobseeker" \| "employer" \| "admin" \| "rso", "profile": ObjectId, "company": ObjectId, "isActive": true, "isEmailVerified": false, "lastLogin": Date, "loginAttempts": 0, "lockUntil": Date, "createdAt": Date, "updatedAt": Date }`                                                                                                                                                                                                                                                                                                                                                                                    |
-| **userprofiles** | `{ "_id": ObjectId, "user": ObjectId, "firstName": "John", "lastName": "Doe", "phone": "+81-90-1234-5678", "dateOfBirth": Date, "nationality": "Japanese", "currentLocation": { "country": "Japan", "city": "Tokyo", "prefecture": "Tokyo" }, "languages": [{ "language": "Japanese", "proficiency": "native" }], "education": [{ "school": "Tokyo University", "degree": "Bachelor", "field": "Computer Science", "startDate": Date, "endDate": Date }], "experience": [{ "company": "ABC Corp", "title": "Software Engineer", "startDate": Date, "endDate": Date, "current": false }], "skills": [{ "name": "JavaScript", "level": "advanced" }], "resume": "https://...", "bio": "Experienced developer..." }` |
+#### `users`
+
+| Field | Type | Notes |
+|---|---|---|
+| `_id` | ObjectId | Primary key |
+| `email` | String | Required, unique, lowercase |
+| `password` | String | bcrypt-hashed (12 rounds); `select: false`; not set for OAuth users |
+| `authProvider` | String | `"local"` \| `"google"` (default `"local"`) |
+| `googleId` | String | Google OAuth user ID |
+| `googleProfile` | Object | `{ id, email, name, given_name, family_name, picture, locale }` |
+| `role` | String | `"jobseeker"` \| `"employer"` \| `"admin"` \| `"rso"` (default `"jobseeker"`) |
+| `profile` | ObjectId → `userprofiles` | Linked UserProfile document |
+| `company` | ObjectId → `companies` | Linked Company (employers only) |
+| `isActive` | Boolean | default `true` |
+| `isEmailVerified` | Boolean | default `false` |
+| `emailVerificationToken` | String | `select: false` |
+| `emailVerificationExpire` | Date | — |
+| `resetPasswordToken` | String | `select: false` |
+| `resetPasswordExpire` | Date | — |
+| `lastLogin` | Date | Updated on every login |
+| `loginAttempts` | Number | default `0`; auto-locks after 5 failures |
+| `lockUntil` | Date | 2-hour lockout window |
+| `createdAt` | Date | auto (timestamps) |
+| `updatedAt` | Date | auto (timestamps) |
+
+**Virtual:** `isLocked` → `true` when `lockUntil > Date.now()`
+
+**Instance methods:** `comparePassword()`, `getSignedJwtToken()`, `incLoginAttempts()`, `resetLoginAttempts()`
+
+---
+
+#### `userprofiles`
+
+| Field | Type | Notes |
+|---|---|---|
+| `_id` | ObjectId | Primary key |
+| `user` | ObjectId → `users` | Required, unique |
+| `firstName` | String | Required, max 50 chars |
+| `lastName` | String | Required, max 50 chars |
+| `dateOfBirth` | Date | Required |
+| `gender` | String | `"male"` \| `"female"` \| `"other"` \| `"prefer-not-to-say"` |
+| `nationality` | String | Required |
+| `phone` | String | — |
+| `address` | String | — |
+| `prefecture` | String | — |
+| `city` | String | — |
+| `postalCode` | String | — |
+| `education` | Array | See subdocument schema below |
+| `experience` | Array | See subdocument schema below |
+| `skills` | Array | See subdocument schema below |
+| `certifications` | Array | See subdocument schema below |
+| `languages` | Array | See subdocument schema below |
+| `japaneseLevel` | String | `"none"` \| `"N5"` \| `"N4"` \| `"N3"` \| `"N2"` \| `"N1"` |
+| `availability.startDate` | Date | — |
+| `availability.visaStatus` | String | `"not-applicable"` \| `"student"` \| `"working"` \| `"ssw-1"` \| `"ssw-2"` \| `"spouse"` \| `"pr"` \| `"other"` |
+| `availability.visaValidUntil` | Date | — |
+| `availability.desiredIndustry` | String | — |
+| `availability.relocate` | Boolean | default `true` |
+| `availability.remote` | Boolean | default `false` |
+| `bio` | String | max 1000 chars |
+| `resumePath` | String | S3 key / URL |
+| `cvPath` | String | S3 key / URL |
+| `photoPath` | String | URL (Google picture or uploaded avatar) |
+| `profileCompleted` | Boolean | default `false`; auto-recalculated on save |
+| `createdAt` | Date | auto |
+| `updatedAt` | Date | auto |
+
+**Virtuals:** `fullName` (firstName + lastName), `age` (from dateOfBirth)
+
+**Pre-save hook:** Recalculates `profileCompleted` — requires firstName, lastName, dateOfBirth, nationality, phone, plus education and at least one of experience/skills.
+
+**Post-query hooks:** `findOneAndUpdate`, `findByIdAndUpdate` — also recalculate `profileCompleted`.
+
+**Subdocument schemas:**
+
+```
+education[]      : { school*, degree*, field, startDate*, endDate, current, description }
+experience[]     : { company*, title*, description, startDate*, endDate, current }
+skills[]         : { name*, level (beginner|intermediate|advanced|expert), category }
+certifications[] : { name*, issuer, date, expiryDate, credentialId }
+languages[]      : { language*, level (native|fluent|conversational|basic) }
+```
+
+*(* = required)*
+
+---
 
 ### Company Domain
 
-| Collection Name | Document Structure                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **companies**   | `{ "_id": ObjectId, "name": "Tech Corp", "slug": "tech-corp", "logo": "https://...", "industry": "Manufacturing" \| "Nursing Care" \| "Construction" \| etc., "size": "51-200", "founded": 2010, "website": "https://company.com", "description": "Leading company...", "tagline": "Innovation first", "address": { "street": "123 Main St", "city": "Tokyo", "prefecture": "Tokyo", "postalCode": "100-0001", "country": "Japan" }, "contactEmail": "hr@company.com", "contactPhone": "+81-3-1234-5678", "socialMedia": { "linkedin": "...", "facebook": "..." }, "benefits": ["Health Insurance", "Visa Support"], "verified": false, "isActive": true, "createdAt": Date, "updatedAt": Date }` |
+#### `companies`
+
+| Field | Type | Notes |
+|---|---|---|
+| `_id` | ObjectId | Primary key |
+| `name` | String | Required, unique, max 200 chars |
+| `slug` | String | Unique, URL-safe, auto-generated from name |
+| `logo` | String | URL |
+| `industry` | String | Required; enum of 16 industries (see §7) |
+| `size` | String | `"1-10"` \| `"11-50"` \| `"51-200"` \| `"201-500"` \| `"501-1000"` \| `"1000+"` |
+| `founded` | Number | Year |
+| `website` | String | URL |
+| `description` | String | max 2000 chars |
+| `tagline` | String | max 200 chars |
+| `address.street` | String | — |
+| `address.city` | String | — |
+| `address.prefecture` | String | — |
+| `address.postalCode` | String | — |
+| `address.country` | String | default `"Japan"` |
+| `contactEmail` | String | — |
+| `contactPhone` | String | — |
+| `socialMedia.linkedin` | String | — |
+| `socialMedia.facebook` | String | — |
+| `socialMedia.twitter` | String | — |
+| `benefits` | [String] | e.g. `["Health Insurance", "Visa Sponsorship"]` |
+| `owner` | ObjectId → `users` | Required; employer who created the company |
+| `admins` | [ObjectId → `users`] | Additional admin users |
+| `jobs` | [ObjectId → `jobs`] | Denormalized list of company job IDs |
+| `isVerified` | Boolean | default `false` |
+| `verifiedBy` | ObjectId → `users` | Admin who verified the company |
+| `isActive` | Boolean | default `true` |
+| `createdAt` | Date | auto |
+| `updatedAt` | Date | auto |
+
+**Virtuals:** `jobCount` (jobs array length), `employeeRange` (human-readable size string)
+
+**Instance method:** `verify(userId)` — sets `isVerified: true`, records `verifiedBy`
+
+**Query helper:** `.verified()` — filters to `isVerified: true`
+
+---
 
 ### Job Domain
 
-| Collection Name | Document Structure                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **jobs**        | `{ "_id": ObjectId, "company": ObjectId, "postedBy": ObjectId, "title": "Software Engineer", "industry": "Manufacturing", "category": "Technology", "summary": "Looking for...", "responsibilities": "Develop and maintain...", "requirements": "3+ years experience...", "benefits": "Competitive salary...", "requiredEducation": "Bachelor", "requiredExperience": "2-5 years", "japaneseLevel": "N3", "location": { "city": "Tokyo", "prefecture": "Tokyo", "address": "..." }, "salary": { "min": 3000000, "max": 5000000, "currency": "JPY", "period": "year" }, "employmentType": "full-time", "visaSponsorship": true, "workSchedule": { "hoursPerWeek": 40, "shift": "day" }, "applicationDeadline": Date, "startDate": Date, "numberOfPositions": 2, "status": "active", "featured": false, "views": 0, "createdAt": Date, "updatedAt": Date }` |
+#### `jobs`
+
+| Field | Type | Notes |
+|---|---|---|
+| `_id` | ObjectId | Primary key |
+| `company` | ObjectId → `companies` | Required |
+| `postedBy` | ObjectId → `users` | Required |
+| `title` | String | Required, max 200 chars |
+| `industry` | String | Required; enum of 16 industries |
+| `category` | String | — |
+| `summary` | String | Job description / overview |
+| `responsibilities` | String | — |
+| `requirements` | String | — |
+| `benefits` | String | — |
+| `requiredEducation` | String | `"None"` \| `"High School"` \| `"Vocational"` \| `"Associate"` \| `"Bachelor"` \| `"Master"` \| `"Doctorate"` |
+| `requiredExperience` | String | — |
+| `japaneseLevel` | String | `"None"` \| `"N5"` \| `"N4"` \| `"N3"` \| `"N2"` \| `"N1"` |
+| `location.prefecture` | String | Required |
+| `location.city` | String | Required |
+| `location.address` | String | — |
+| `location.remote` | Boolean | default `false` |
+| `location.remoteType` | String | `"None"` \| `"Partial"` \| `"Full"` (default `"None"`) |
+| `compensation.salaryMin` | Number | — |
+| `compensation.salaryMax` | Number | Must be ≥ salaryMin |
+| `compensation.currency` | String | `"JPY"` \| `"USD"` \| `"EUR"` \| `"PHP"` \| `"VND"` \| `"IDR"` (default `"JPY"`) |
+| `compensation.period` | String | `"hourly"` \| `"daily"` \| `"monthly"` \| `"yearly"` (default `"monthly"`) |
+| `compensation.bonuses` | String | — |
+| `compensation.overtimePay` | Boolean | default `true` |
+| `workConditions.workHours` | String | — |
+| `workConditions.daysOff` | String | — |
+| `workConditions.vacation` | String | — |
+| `workConditions.insurance` | String | — |
+| `workConditions.probationPeriod` | String | — |
+| `applicationInfo.deadline` | Date | Must not be in the past (new jobs) |
+| `applicationInfo.startDate` | Date | Must be after `deadline` |
+| `applicationInfo.numberOfPositions` | Number | — |
+| `applicationInfo.applicationMethod` | String | `"Platform"` \| `"Email"` \| `"External URL"` \| `"Phone"` |
+| `applicationInfo.applicationUrl` | String | External application URL |
+| `applicationInfo.contactPhone` | String | — |
+| `applications` | [ObjectId → `applications`] | Denormalized application IDs |
+| `status` | String | `"draft"` \| `"active"` \| `"closed"` \| `"filled"` \| `"archived"` (default `"draft"`) |
+| `visibility` | String | `"public"` \| `"private"` \| `"rso-only"` (default `"public"`) |
+| `featured` | Boolean | default `false` |
+| `views` | Number | default `0` |
+| `isDeleted` | Boolean | default `false`; soft-delete flag |
+| `deletedAt` | Date | Set on soft-delete |
+| `createdAt` | Date | auto |
+| `updatedAt` | Date | auto |
+
+**Virtuals:** `applicationCount`, `isExpired`, `daysUntilDeadline`
+
+**Instance methods:** `incrementViews()`, `softDelete()`
+
+**Query helper:** `.notDeleted()` — excludes `isDeleted: true` documents
+
+**Pre-save hooks:**
+- Validates `applicationInfo.deadline` is not in the past (new jobs only)
+- Validates `applicationInfo.startDate` is after `applicationInfo.deadline`
+- Auto-sets `status = "closed"` when deadline has passed and status is `"active"`
+
+---
+
+#### `adminjobs`
+
+Admin-managed job postings with a simplified flat structure — no company/user foreign keys.
+
+| Field | Type | Notes |
+|---|---|---|
+| `_id` | ObjectId | Primary key |
+| `title` | String | Required |
+| `companyName` | String | Required (plain text, no FK) |
+| `industry` | String | Required |
+| `location.prefecture` | String | Required |
+| `location.city` | String | — |
+| `compensation.salaryMin` | Number | — |
+| `compensation.salaryMax` | Number | — |
+| `compensation.currency` | String | default `"JPY"` |
+| `summary` | String | Job description |
+| `employmentType` | String | `"Full-time"` \| `"Part-time"` \| `"Contract"` (default `"Full-time"`) |
+| `preferWorkLocation` | String | Preferred work location note |
+| `supportSponsorship` | String | Visa sponsorship info |
+| `japaneseLanguage` | String | Japanese language requirement |
+| `nativeLanguage` | String | Native language requirement |
+| `status` | String | `"active"` \| `"closed"` \| `"archived"` (default `"active"`) |
+| `isAdminPost` | Boolean | Always `true` |
+| `createdAt` | Date | auto |
+| `updatedAt` | Date | auto |
+
+> Managed exclusively via `POST/PATCH/DELETE /api/v1/admin-jobs`. Displayed in `pages/companyDashboard.html`.
+
+---
 
 ### Application Domain
 
-| Collection Name  | Document Structure                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **applications** | `{ "_id": ObjectId, "applicant": ObjectId, "job": ObjectId, "status": "submitted" \| "reviewing" \| "interview" \| "offer" \| "accepted" \| "rejected" \| "withdrawn", "coverLetter": "I am interested in...", "resumePath": "https://...", "statusHistory": [{ "status": "submitted", "changedBy": ObjectId, "date": Date, "notes": "Application received" }], "employerNotes": "Strong candidate...", "interview": { "date": Date, "location": "Office", "notes": "...", "interviewers": ["John Doe"] }, "rejectionReason": "Position filled", "createdAt": Date, "updatedAt": Date }` |
+#### `applications`
 
-### Content Domain (Legacy)
+| Field | Type | Notes |
+|---|---|---|
+| `_id` | ObjectId | Primary key |
+| `applicant` | ObjectId → `users` | Required |
+| `job` | ObjectId → `jobs` | Required |
+| `status` | String | `"submitted"` \| `"reviewing"` \| `"interview"` \| `"offer"` \| `"accepted"` \| `"rejected"` \| `"withdrawn"` (default `"submitted"`) |
+| `coverLetter` | String | max 2000 chars |
+| `resumePath` | String | S3 URL |
+| `statusHistory` | Array | `[{ status, changedBy (ObjectId→users), date, notes }]` |
+| `employerNotes` | String | Internal; not visible to applicant |
+| `interview.date` | Date | — |
+| `interview.location` | String | — |
+| `interview.notes` | String | — |
+| `interview.interviewers` | [String] | — |
+| `rejectionReason` | String | — |
+| `createdAt` | Date | auto |
+| `updatedAt` | Date | auto |
 
-| Collection Name | Document Structure                                                                                                                                                                                              |
-| --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **contents**    | `{ "_id": ObjectId, "title": "Page Title", "slug": "page-slug", "content": "HTML content...", "type": "page" \| "article", "language": "en" \| "ja", "published": true, "createdAt": Date, "updatedAt": Date }` |
-| **about**       | `{ "_id": ObjectId, "section": "mission", "content": "Our mission...", "language": "en" \| "ja", "order": 1 }`                                                                                                  |
+**Unique constraint:** `{ applicant: 1, job: 1 }` — prevents duplicate applications.
+
+**Virtual:** `daysSinceApplication`
+
+**Instance methods:** `canWithdraw()`, `canUpdateStatus()`
+
+---
+
+### Content Domain
+
+#### `contents`
+
+| Field | Type | Notes |
+|---|---|---|
+| `_id` | ObjectId | Primary key |
+| `title` | String | — |
+| `slug` | String | URL-safe identifier |
+| `paragraphs` | Array | `[{ type: "mission"\|"vision"\|…, text: String }]` |
+| `type` | String | `"page"` \| `"article"` |
+| `language` | String | `"en"` \| `"ja"` |
+| `published` | Boolean | default `false` |
+| `createdAt` | Date | auto |
+| `updatedAt` | Date | auto |
+
+#### `about`
+
+| Field | Type | Notes |
+|---|---|---|
+| `_id` | ObjectId | Primary key |
+| `section` | String | e.g. `"mission"` |
+| `content` | String | — |
+| `language` | String | `"en"` \| `"ja"` |
+| `order` | Number | Display order |
 
 ---
 
@@ -58,119 +323,96 @@
 
 ### Authentication & User Management
 
-| Feature Name                    | Operation | Description                                                                  | API Endpoint                                                            |
-| ------------------------------- | --------- | ---------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
-| **User Account (Signup/Login)** | Create    | Create a new user account during signup                                      | `POST /api/v1/auth/register`                                            |
-|                                 | Read      | Authenticate user credentials during login and fetch account status/role     | `POST /api/v1/auth/login`<br>`GET /api/v1/auth/me`                      |
-|                                 | Update    | Allow user to change password and update account status (e.g., verify email) | `PUT /api/v1/users/update-password`<br>`POST /api/v1/auth/verify-email` |
-|                                 | Delete    | Allow admin to deactivate/delete user accounts if needed                     | `DELETE /api/v1/users/:id`                                              |
+| Feature | Operation | Description | Endpoint |
+|---|---|---|---|
+| **Register** | Create | New local user (jobseeker or employer only) | `POST /api/v1/auth/register` |
+| **Login** | Read | Verify credentials, return JWT + role | `POST /api/v1/auth/login` |
+| **Google OAuth** | Create/Read | OAuth2 login via Passport.js | `GET /auth/google` → `GET /auth/google/callback` |
+| **Get Current User** | Read | Return user doc + role-based `redirectTo` | `GET /api/v1/auth/me` |
+| **Logout (OAuth)** | Delete | Destroy Passport session + clear cookies | `GET /auth/logout` |
+| **Logout (JWT)** | Delete | Client-side token removal | `POST /api/v1/auth/logout` |
+| **Forgot Password** | Update | Send reset email | `POST /api/v1/auth/forgot-password` |
+| **Delete Account** | Delete | Admin deactivates user | `DELETE /api/v1/users/:id` |
+
+**Role-based redirect after login:**
+
+| Role | Redirects to |
+|---|---|
+| `admin` | `pages/companyDashboard.html` |
+| `employer` | `pages/companyDashboard.html` |
+| `jobseeker` | `pages/profileDashboard.html` |
+| `rso` | `pages/profileDashboard.html` |
 
 ### User Profile Management
 
-| Feature Name           | Operation | Description                                                             | API Endpoint                                                                                    |
-| ---------------------- | --------- | ----------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
-| **Job Seeker Profile** | Create    | Create initial profile after registration                               | `POST /api/v1/profile`                                                                          |
-|                        | Read      | View own profile or view public profiles                                | `GET /api/v1/profile/me`<br>`GET /api/v1/profile/:id`                                           |
-|                        | Update    | Update personal info, add education, experience, skills, certifications | `PUT /api/v1/profile/me`<br>`PUT /api/v1/profile/education`<br>`PUT /api/v1/profile/experience` |
-|                        | Delete    | Remove education/experience entries or deactivate profile               | `DELETE /api/v1/profile/education/:id`                                                          |
+| Feature | Operation | Description | Endpoint |
+|---|---|---|---|
+| **Profile** | Create | Create profile after registration | `POST /api/v1/profile` |
+| | Read | Fetch own profile | `GET /api/v1/profile` |
+| | Update | Update personal info | `PUT /api/v1/profile` |
+| | Delete | Remove profile | `DELETE /api/v1/profile` |
+| **Education** | Create | Add entry | `POST /api/v1/profile/education` |
+| | Update | Edit entry | `PUT /api/v1/profile/education/:edu_id` |
+| | Delete | Remove entry | `DELETE /api/v1/profile/education/:edu_id` |
+| **Experience** | Create | Add entry | `POST /api/v1/profile/experience` |
+| **Skills** | Update | Replace skills array | `PUT /api/v1/profile/skills` |
+| **Languages** | Update | Replace languages array | `PUT /api/v1/profile/languages` |
+| **Certifications** | Update | Replace certifications array | `PUT /api/v1/profile/certifications` |
+| **Availability** | Update | Update visa/availability info | `PUT /api/v1/profile/availability` |
+| **Resume** | Create/Read/Delete | Upload to S3, get presigned URL | `POST/GET/DELETE /api/v1/profile/resume` |
 
 ### Company Management
 
-| Feature Name        | Operation | Description                                                    | API Endpoint                                           |
-| ------------------- | --------- | -------------------------------------------------------------- | ------------------------------------------------------ |
-| **Company Profile** | Create    | Employer creates company profile during registration           | `POST /api/v1/companies`                               |
-|                     | Read      | View company details and public company profiles               | `GET /api/v1/companies/:id`<br>`GET /api/v1/companies` |
-|                     | Update    | Update company information, logo, benefits, contact details    | `PUT /api/v1/companies/:id`                            |
-|                     | Delete    | Admin can deactivate companies or employers can close accounts | `DELETE /api/v1/companies/:id`                         |
+| Feature | Operation | Description | Endpoint |
+|---|---|---|---|
+| **Company** | Create | Employer creates company | `POST /api/v1/companies` |
+| | Read | View company / list all | `GET /api/v1/companies/:id` / `GET /api/v1/companies` |
+| | Update | Update company info | `PUT /api/v1/companies/:id` |
+| | Delete | Admin deactivates company | `DELETE /api/v1/companies/:id` |
 
 ### Job Posting Management
 
-| Feature Name     | Operation | Description                                                       | API Endpoint                                 |
-| ---------------- | --------- | ----------------------------------------------------------------- | -------------------------------------------- |
-| **Job Postings** | Create    | Employer posts new job openings                                   | `POST /api/v1/jobs`                          |
-|                  | Read      | Job seekers search and view job listings                          | `GET /api/v1/jobs`<br>`GET /api/v1/jobs/:id` |
-|                  | Update    | Employer updates job details, status (active/closed), or deadline | `PUT /api/v1/jobs/:id`                       |
-|                  | Delete    | Employer removes outdated job postings                            | `DELETE /api/v1/jobs/:id`                    |
+| Feature | Operation | Description | Endpoint |
+|---|---|---|---|
+| **Jobs** | Create | Employer posts a job | `POST /api/v1/jobs` |
+| | Read | Search / view listings | `GET /api/v1/jobs` / `GET /api/v1/jobs/:id` |
+| | Update | Edit job details | `PUT /api/v1/jobs/:id` |
+| | Delete | Soft-delete job | `DELETE /api/v1/jobs/:id` |
+| **Admin Jobs** | Create | Admin posts a job | `POST /api/v1/admin-jobs` |
+| | Read | List / view admin jobs | `GET /api/v1/admin-jobs` / `GET /api/v1/admin-jobs/:id` |
+| | Update | Edit admin job | `PATCH /api/v1/admin-jobs/:id` |
+| | Delete | Remove admin job | `DELETE /api/v1/admin-jobs/:id` |
 
 ### Application Management
 
-| Feature Name         | Operation | Description                                                                           | API Endpoint                                                                  |
-| -------------------- | --------- | ------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| **Job Applications** | Create    | Job seeker submits application to job posting                                         | `POST /api/v1/applications`                                                   |
-|                      | Read      | Job seeker views their applications; Employer views applications for their jobs       | `GET /api/v1/applications/me`<br>`GET /api/v1/applications/job/:jobId`        |
-|                      | Update    | Employer updates application status (reviewing, interview, offer, etc.) or adds notes | `PUT /api/v1/applications/:id/status`<br>`PUT /api/v1/applications/:id/notes` |
-|                      | Delete    | Job seeker can withdraw application                                                   | `DELETE /api/v1/applications/:id`                                             |
+| Feature | Operation | Description | Endpoint |
+|---|---|---|---|
+| **Applications** | Create | Jobseeker submits application | `POST /api/v1/applications` |
+| | Read (own) | Jobseeker views own applications | `GET /api/v1/applications/me` |
+| | Read (job) | Employer views job applications | `GET /api/v1/applications/job/:jobId` |
+| | Update (status) | Employer updates status | `PUT /api/v1/applications/:id/status` |
+| | Update (notes) | Employer adds notes | `PUT /api/v1/applications/:id/notes` |
+| | Delete | Jobseeker withdraws | `DELETE /api/v1/applications/:id` |
 
 ### Content Management (Admin)
 
-| Feature Name     | Operation | Description                                                | API Endpoint                 |
-| ---------------- | --------- | ---------------------------------------------------------- | ---------------------------- |
-| **Site Content** | Create    | Admin creates new pages or articles                        | `POST /api/v1/content`       |
-|                  | Read      | All users can view published content pages                 | `GET /api/v1/content/:slug`  |
-|                  | Update    | Admin updates content, translations, or publication status | `PUT /api/v1/content/:id`    |
-|                  | Delete    | Admin removes outdated content                             | `DELETE /api/v1/content/:id` |
+| Feature | Operation | Description | Endpoint |
+|---|---|---|---|
+| **Content** | Create | Admin creates page/article | `POST /api/v1/content` |
+| | Read | View published content | `GET /api/v1/content/:slug` |
+| | Update | Edit content/translations | `PUT /api/v1/content/:id` |
+| | Delete | Remove content | `DELETE /api/v1/content/:id` |
 
 ---
 
 ## 3. Sample API Requests
 
-### Authentication & User Management
-
-#### Register New User
-
-```bash
-# cURL Request
-curl -X POST http://localhost:3000/api/v1/auth/register \
-  -H "Content-Type: application/json" \
-  -d '{
-    "email": "john.doe@example.com",
-    "password": "SecurePass123",
-    "role": "jobseeker"
-  }'
-```
-
-```javascript
-// JavaScript (Fetch API)
-const response = await fetch("http://localhost:3000/api/v1/auth/register", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({
-    email: "john.doe@example.com",
-    password: "SecurePass123",
-    role: "jobseeker",
-  }),
-});
-const data = await response.json();
-console.log(data.data.token); // Save this token
-```
-
-**Response (201 Created):**
-
-```json
-{
-  "success": true,
-  "statusCode": 201,
-  "message": "User registered successfully",
-  "data": {
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-    "user": {
-      "id": "67e83b793cdca5ee7a411e2f",
-      "email": "john.doe@example.com",
-      "role": "jobseeker"
-    }
-  }
-}
-```
-
-#### Login User
+### Login (local superadmin)
 
 ```bash
 curl -X POST http://localhost:3000/api/v1/auth/login \
   -H "Content-Type: application/json" \
-  -d '{
-    "email": "john.doe@example.com",
-    "password": "SecurePass123"
-  }'
+  -d '{"email":"admin@mmdc.local","password":"SuperAdmin@1234"}'
 ```
 
 **Response (200 OK):**
@@ -182,513 +424,174 @@ curl -X POST http://localhost:3000/api/v1/auth/login \
   "message": "Login successful",
   "data": {
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-    "user": {
-      "id": "67e83b793cdca5ee7a411e2f",
-      "email": "john.doe@example.com",
-      "role": "jobseeker",
-      "lastLogin": "2026-01-31T10:30:00.000Z"
-    }
+    "user": { "id": "69bd0fab7ba8c3d0b3125732", "email": "admin@mmdc.local", "role": "admin" }
   }
 }
 ```
 
-#### Get Current User
+### Get Current User
 
 ```bash
-curl -X GET http://localhost:3000/api/v1/auth/me \
-  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+curl http://localhost:3000/api/v1/auth/me \
+  -H "Authorization: Bearer <token>"
 ```
 
-**Response (200 OK):**
+**Response:**
 
 ```json
 {
   "success": true,
-  "statusCode": 200,
-  "message": "User retrieved successfully",
-  "data": {
-    "user": {
-      "_id": "67e83b793cdca5ee7a411e2f",
-      "email": "john.doe@example.com",
-      "role": "jobseeker",
-      "profile": "67e83b7a3cdca5ee7a411e30",
-      "isActive": true,
-      "isEmailVerified": false,
-      "createdAt": "2026-01-30T08:00:00.000Z"
-    }
-  }
+  "data": { "_id": "...", "email": "admin@mmdc.local", "role": "admin" },
+  "redirectTo": "/pages/companyDashboard.html"
 }
 ```
 
-### User Profile Management
-
-#### Create Profile
+### Create Profile
 
 ```bash
 curl -X POST http://localhost:3000/api/v1/profile \
-  -H "Authorization: Bearer YOUR_TOKEN_HERE" \
+  -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{
-    "firstName": "John",
-    "lastName": "Doe",
-    "phone": "+81-90-1234-5678",
-    "dateOfBirth": "1995-03-15",
-    "nationality": "American",
-    "currentLocation": {
-      "country": "Japan",
-      "city": "Tokyo",
-      "prefecture": "Tokyo"
-    },
-    "languages": [
-      { "language": "English", "proficiency": "native" },
-      { "language": "Japanese", "proficiency": "conversational" }
-    ],
-    "bio": "Experienced software developer looking for opportunities in Japan"
-  }'
-```
-
-**Response (201 Created):**
-
-```json
-{
-  "success": true,
-  "statusCode": 201,
-  "message": "Profile created successfully",
-  "data": {
-    "profile": {
-      "_id": "67e83b7a3cdca5ee7a411e30",
-      "user": "67e83b793cdca5ee7a411e2f",
-      "firstName": "John",
-      "lastName": "Doe",
-      "phone": "+81-90-1234-5678",
-      "currentLocation": {
-        "country": "Japan",
-        "city": "Tokyo",
-        "prefecture": "Tokyo"
-      },
-      "languages": [...],
-      "bio": "Experienced software developer..."
-    }
-  }
-}
-```
-
-#### Update Profile
-
-```bash
-curl -X PUT http://localhost:3000/api/v1/profile/me \
-  -H "Authorization: Bearer YOUR_TOKEN_HERE" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "phone": "+81-90-9876-5432",
-    "bio": "Updated bio with new information"
-  }'
-```
-
-#### Add Education
-
-```bash
-curl -X PUT http://localhost:3000/api/v1/profile/education \
-  -H "Authorization: Bearer YOUR_TOKEN_HERE" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "school": "Tokyo University",
-    "degree": "Bachelor of Science",
-    "field": "Computer Science",
-    "startDate": "2013-04-01",
-    "endDate": "2017-03-31",
-    "current": false,
-    "description": "Focused on software engineering and AI"
-  }'
-```
-
-### Company Management
-
-#### Create Company Profile
-
-```bash
-curl -X POST http://localhost:3000/api/v1/companies \
-  -H "Authorization: Bearer EMPLOYER_TOKEN_HERE" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "name": "Tech Innovations Japan",
-    "industry": "Manufacturing",
-    "size": "51-200",
-    "founded": 2010,
-    "website": "https://techinnovations.jp",
-    "description": "Leading technology company specializing in IoT and AI solutions",
-    "tagline": "Innovation for a better tomorrow",
-    "address": {
-      "street": "1-2-3 Shibuya",
-      "city": "Tokyo",
-      "prefecture": "Tokyo",
-      "postalCode": "150-0001",
-      "country": "Japan"
-    },
-    "contactEmail": "hr@techinnovations.jp",
-    "contactPhone": "+81-3-1234-5678",
-    "benefits": ["Health Insurance", "Visa Sponsorship", "Housing Allowance"]
-  }'
-```
-
-**Response (201 Created):**
-
-```json
-{
-  "success": true,
-  "statusCode": 201,
-  "message": "Company created successfully",
-  "data": {
-    "company": {
-      "_id": "67e83b8a3cdca5ee7a411e31",
-      "name": "Tech Innovations Japan",
-      "slug": "tech-innovations-japan",
-      "industry": "Manufacturing",
-      "size": "51-200",
-      "verified": false,
-      "isActive": true,
-      "createdAt": "2026-01-31T10:00:00.000Z"
-    }
-  }
-}
-```
-
-#### Get All Companies (Public)
-
-```bash
-curl -X GET "http://localhost:3000/api/v1/companies?limit=10&page=1"
-```
-
-### Job Posting Management
-
-#### Create Job Posting
-
-```bash
-curl -X POST http://localhost:3000/api/v1/jobs \
-  -H "Authorization: Bearer EMPLOYER_TOKEN_HERE" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "title": "Software Engineer",
-    "industry": "Manufacturing",
-    "category": "Technology",
-    "summary": "Looking for experienced software engineer to join our IoT team",
-    "responsibilities": "Develop and maintain IoT solutions, collaborate with hardware team, write clean code",
-    "requirements": "3+ years experience, proficiency in JavaScript/Python, good communication skills",
-    "benefits": "Competitive salary, health insurance, visa sponsorship available",
-    "requiredEducation": "Bachelor",
-    "requiredExperience": "2-5 years",
+    "firstName": "Taro", "lastName": "Yamada",
+    "dateOfBirth": "1995-06-15",
+    "nationality": "Filipino",
+    "phone": "+63-912-345-6789",
     "japaneseLevel": "N3",
-    "location": {
-      "city": "Tokyo",
-      "prefecture": "Tokyo",
-      "address": "1-2-3 Shibuya, Tokyo"
-    },
-    "salary": {
-      "min": 4000000,
-      "max": 6000000,
-      "currency": "JPY",
-      "period": "year"
-    },
-    "employmentType": "full-time",
-    "visaSponsorship": true,
-    "workSchedule": {
-      "hoursPerWeek": 40,
-      "shift": "day",
-      "flexibleHours": true
-    },
-    "applicationDeadline": "2026-03-31",
-    "startDate": "2026-04-01",
-    "numberOfPositions": 2
+    "availability": { "visaStatus": "ssw-1" }
   }'
 ```
 
-**Response (201 Created):**
-
-```json
-{
-  "success": true,
-  "statusCode": 201,
-  "message": "Job created successfully",
-  "data": {
-    "job": {
-      "_id": "67e83b9b3cdca5ee7a411e32",
-      "company": "67e83b8a3cdca5ee7a411e31",
-      "postedBy": "67e83b793cdca5ee7a411e2f",
-      "title": "Software Engineer",
-      "industry": "Manufacturing",
-      "status": "active",
-      "views": 0,
-      "createdAt": "2026-01-31T10:15:00.000Z"
-    }
-  }
-}
-```
-
-#### Search Jobs with Filters
+### Create Admin Job
 
 ```bash
-# Search with multiple filters
-curl -X GET "http://localhost:3000/api/v1/jobs?industry=Manufacturing&location=Tokyo&visaSponsorship=true&minSalary=3000000&page=1&limit=20"
-```
-
-**Response (200 OK):**
-
-```json
-{
-  "success": true,
-  "statusCode": 200,
-  "message": "Jobs retrieved successfully",
-  "data": {
-    "jobs": [
-      {
-        "_id": "67e83b9b3cdca5ee7a411e32",
-        "title": "Software Engineer",
-        "company": {
-          "_id": "67e83b8a3cdca5ee7a411e31",
-          "name": "Tech Innovations Japan",
-          "logo": "https://..."
-        },
-        "industry": "Manufacturing",
-        "location": { "city": "Tokyo", "prefecture": "Tokyo" },
-        "salary": { "min": 4000000, "max": 6000000, "currency": "JPY" },
-        "visaSponsorship": true,
-        "status": "active",
-        "views": 15,
-        "createdAt": "2026-01-31T10:15:00.000Z"
-      }
-    ],
-    "pagination": {
-      "currentPage": 1,
-      "totalPages": 3,
-      "totalJobs": 45,
-      "limit": 20
-    }
-  }
-}
-```
-
-#### Get Job Details
-
-```bash
-curl -X GET http://localhost:3000/api/v1/jobs/67e83b9b3cdca5ee7a411e32
-```
-
-### Application Management
-
-#### Submit Job Application
-
-```bash
-curl -X POST http://localhost:3000/api/v1/applications \
-  -H "Authorization: Bearer JOBSEEKER_TOKEN_HERE" \
+curl -X POST http://localhost:3000/api/v1/admin-jobs \
+  -H "Authorization: Bearer <admin_token>" \
   -H "Content-Type: application/json" \
   -d '{
-    "job": "67e83b9b3cdca5ee7a411e32",
-    "coverLetter": "I am very interested in this position. With 5 years of experience in software development and IoT systems, I believe I would be a great fit for your team. I am currently studying Japanese and have reached N3 level proficiency."
+    "title": "Factory Worker",
+    "companyName": "Yamamoto Manufacturing",
+    "industry": "Manufacturing",
+    "location": { "prefecture": "Aichi", "city": "Nagoya" },
+    "compensation": { "salaryMin": 200000, "salaryMax": 250000, "currency": "JPY" },
+    "employmentType": "Full-time",
+    "japaneseLanguage": "N4",
+    "supportSponsorship": "Yes"
   }'
 ```
 
-**Response (201 Created):**
-
-```json
-{
-  "success": true,
-  "statusCode": 201,
-  "message": "Application submitted successfully",
-  "data": {
-    "application": {
-      "_id": "67e83bac3cdca5ee7a411e33",
-      "applicant": "67e83b793cdca5ee7a411e2f",
-      "job": "67e83b9b3cdca5ee7a411e32",
-      "status": "submitted",
-      "coverLetter": "I am very interested...",
-      "statusHistory": [
-        {
-          "status": "submitted",
-          "date": "2026-01-31T11:00:00.000Z"
-        }
-      ],
-      "createdAt": "2026-01-31T11:00:00.000Z"
-    }
-  }
-}
-```
-
-#### Get My Applications (Job Seeker)
+### Search Jobs
 
 ```bash
-curl -X GET http://localhost:3000/api/v1/applications/me \
-  -H "Authorization: Bearer JOBSEEKER_TOKEN_HERE"
+curl "http://localhost:3000/api/v1/jobs?industry=Manufacturing&page=1&limit=20"
 ```
 
-**Response (200 OK):**
-
-```json
-{
-  "success": true,
-  "statusCode": 200,
-  "message": "Applications retrieved successfully",
-  "data": {
-    "applications": [
-      {
-        "_id": "67e83bac3cdca5ee7a411e33",
-        "status": "submitted",
-        "job": {
-          "_id": "67e83b9b3cdca5ee7a411e32",
-          "title": "Software Engineer",
-          "company": {
-            "name": "Tech Innovations Japan",
-            "logo": "https://..."
-          }
-        },
-        "createdAt": "2026-01-31T11:00:00.000Z"
-      }
-    ]
-  }
-}
-```
-
-#### Update Application Status (Employer)
+### Update Application Status
 
 ```bash
-curl -X PUT http://localhost:3000/api/v1/applications/67e83bac3cdca5ee7a411e33/status \
-  -H "Authorization: Bearer EMPLOYER_TOKEN_HERE" \
+curl -X PUT http://localhost:3000/api/v1/applications/<id>/status \
+  -H "Authorization: Bearer <employer_token>" \
   -H "Content-Type: application/json" \
-  -d '{
-    "status": "interview",
-    "notes": "Strong candidate. Schedule interview for next week."
-  }'
-```
-
-**Response (200 OK):**
-
-```json
-{
-  "success": true,
-  "statusCode": 200,
-  "message": "Application status updated",
-  "data": {
-    "application": {
-      "_id": "67e83bac3cdca5ee7a411e33",
-      "status": "interview",
-      "employerNotes": "Strong candidate. Schedule interview for next week.",
-      "statusHistory": [
-        {
-          "status": "submitted",
-          "date": "2026-01-31T11:00:00.000Z"
-        },
-        {
-          "status": "interview",
-          "changedBy": "67e83b793cdca5ee7a411e2f",
-          "date": "2026-01-31T14:30:00.000Z",
-          "notes": "Strong candidate. Schedule interview for next week."
-        }
-      ]
-    }
-  }
-}
-```
-
-#### Get Applications for Job (Employer)
-
-```bash
-curl -X GET http://localhost:3000/api/v1/applications/job/67e83b9b3cdca5ee7a411e32 \
-  -H "Authorization: Bearer EMPLOYER_TOKEN_HERE"
-```
-
-### Error Responses
-
-#### 400 Bad Request (Validation Error)
-
-```json
-{
-  "success": false,
-  "statusCode": 400,
-  "message": "Validation Error",
-  "errors": [
-    {
-      "field": "email",
-      "message": "Please provide a valid email"
-    }
-  ]
-}
-```
-
-#### 401 Unauthorized (Missing/Invalid Token)
-
-```json
-{
-  "success": false,
-  "statusCode": 401,
-  "message": "Not authorized to access this route"
-}
-```
-
-#### 403 Forbidden (Insufficient Permissions)
-
-```json
-{
-  "success": false,
-  "statusCode": 403,
-  "message": "User role 'jobseeker' is not authorized to access this route"
-}
-```
-
-#### 404 Not Found
-
-```json
-{
-  "success": false,
-  "statusCode": 404,
-  "message": "Resource not found"
-}
+  -d '{"status":"interview","notes":"Strong candidate."}'
 ```
 
 ---
 
 ## 4. UI and Data Flow
 
-### UI Elements and Their Functions
+### UI Elements and Their Collections
 
-| UI Element                  | Functionality                                                                           | Related Collection               |
-| --------------------------- | --------------------------------------------------------------------------------------- | -------------------------------- |
-| **Signup Form (Register)**  | Allow new users to register by entering email, password, and role (jobseeker/employer)  | `users`                          |
-| **Login Form**              | Allows existing users to sign in to access their profile and features                   | `users`                          |
-| **Profile Dashboard**       | Display user profile info with edit capabilities (personal details, experience, skills) | `users`, `userprofiles`          |
-| **Profile Edit Form**       | Multi-section form for updating personal info, education, experience, skills            | `userprofiles`                   |
-| **Company Dashboard**       | Employer view to manage company profile and job postings                                | `companies`, `jobs`              |
-| **Company Edit Form**       | Update company details, logo, benefits, contact information                             | `companies`                      |
-| **Job Posting Form**        | Employer creates/edits job listings with all required fields                            | `jobs`                           |
-| **Job Search & Listing**    | Search interface with filters (industry, location, salary, visa sponsorship)            | `jobs`                           |
-| **Job Detail Page**         | Display full job information with "Apply" button                                        | `jobs`                           |
-| **Application Form**        | Job seeker submits application with cover letter and resume                             | `applications`                   |
-| **My Applications Page**    | Job seeker views status of all submitted applications                                   | `applications`                   |
-| **Applications Management** | Employer reviews, filters, and updates application statuses                             | `applications`                   |
-| **Admin Panel**             | Manage users, companies, content, and approve verifications                             | `users`, `companies`, `contents` |
+| UI Element | Functionality | Collections |
+|---|---|---|
+| **Sign In Form** | Local email/password or Google OAuth login | `users` |
+| **Create Account** | Register as jobseeker or employer | `users` |
+| **Profile Dashboard** | View/edit jobseeker profile, resume, experience | `users`, `userprofiles` |
+| **Company Dashboard** | Admin/employer manages jobs and company info | `companies`, `adminjobs`, `jobs` |
+| **Job Search & Listing** | Filter by industry, location, visa, salary | `jobs` |
+| **Job Detail Page** | Full job info + Apply button | `jobs`, `applications` |
+| **Application Form** | Submit cover letter + resume | `applications` |
+| **My Applications** | Jobseeker tracks application statuses | `applications` |
+| **Applications Management** | Employer reviews and updates statuses | `applications` |
+| **Admin Panel** | Manage users, companies, content, verify | `users`, `companies`, `contents` |
 
-### Data Flow Diagrams
-
-#### User Registration Flow
+### Authentication Flow
 
 ```mermaid
 sequenceDiagram
     participant User
-    participant UI as Registration Form
+    participant UI as Sign In Page
     participant API as Backend API
     participant DB as MongoDB
 
-    User->>UI: Fill registration form (email, password, role)
-    UI->>UI: Validate form inputs
-    UI->>API: POST /api/v1/auth/register
-    API->>API: Validate data & check duplicate email
-    API->>DB: Insert into users collection
-    DB-->>API: Return user document
-    API->>API: Generate JWT token
-    API-->>UI: Return { token, user }
-    UI->>UI: Store token in localStorage
-    UI-->>User: Redirect to profile/dashboard
+    User->>UI: Enter email + password
+    UI->>API: POST /api/v1/auth/login
+    API->>DB: Find user by email (select +password)
+    DB-->>API: Return user doc
+
+    alt Account locked
+        API-->>UI: 401 Account temporarily locked
+    else Password wrong
+        API->>DB: incLoginAttempts()
+        API-->>UI: 401 Invalid credentials
+    else Password correct
+        API->>DB: resetLoginAttempts(), update lastLogin
+        API->>API: Generate JWT (id, email, role)
+        API-->>UI: 200 { token, user: { role } }
+        UI->>UI: Set cookies (token, isLoggedIn, email)
+        alt role is admin or employer
+            UI-->>User: Redirect to companyDashboard.html
+        else role is jobseeker or rso
+            UI-->>User: Redirect to profileDashboard.html
+        end
+    end
 ```
 
-#### Job Application Flow
+### Google OAuth Flow
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant UI as Frontend
+    participant API as Backend (Passport.js)
+    participant Google
+    participant DB as MongoDB
+
+    User->>UI: Click "Sign in with Google"
+    UI->>API: GET /auth/google
+    API->>Google: Redirect to OAuth consent screen
+    Google-->>API: GET /auth/google/callback (code)
+    API->>Google: Exchange code for profile
+    Google-->>API: given_name, family_name, picture, email
+    API->>DB: Upsert User (authProvider: google)
+    API->>DB: Merge Google fields into UserProfile
+    API->>API: Generate JWT
+    API-->>User: Set cookies + redirect to companyDashboard.html?token=...
+```
+
+### Profile Update Flow
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant UI as Profile Dashboard
+    participant API as Backend API
+    participant DB as MongoDB
+
+    User->>UI: Open profile page
+    UI->>API: GET /api/v1/profile (Bearer token)
+    API->>DB: UserProfile.findOne({ user: id }).populate(user)
+    DB-->>API: Profile + user.googleProfile
+    API-->>UI: firstName, lastName, photoPath
+    UI-->>User: Render dashboard with real name and avatar
+
+    User->>UI: Edit fields and save
+    UI->>API: PUT /api/v1/profile
+    API->>DB: findOneAndUpdate + recalc profileCompleted
+    DB-->>API: Updated profile
+    API-->>UI: success + updated profile
+```
+
+### Job Application Flow
 
 ```mermaid
 sequenceDiagram
@@ -698,148 +601,47 @@ sequenceDiagram
     participant DB as MongoDB
     participant EM as Employer
 
-    JS->>UI: Click "Apply" on job listing
-    UI->>UI: Display application form
-    JS->>UI: Fill cover letter & upload resume
-    UI->>API: POST /api/v1/applications<br/>{applicant, job, coverLetter, resume}
-    API->>API: Verify JWT & user permissions
-    API->>DB: Insert into applications collection
-    DB-->>API: Return application document
-    API->>DB: Update job's application count
-    API-->>UI: Return success { application }
-    UI-->>JS: Show "Application submitted!"
+    JS->>UI: Click Apply on job listing
+    JS->>UI: Fill cover letter
+    UI->>API: POST /api/v1/applications { job, coverLetter }
+    API->>DB: Check unique constraint (applicant + job)
+    API->>DB: Insert application + push to Job.applications[]
+    DB-->>API: Return application doc
+    API-->>UI: 201 application submitted
 
-    Note over EM: Employer Dashboard
     EM->>API: GET /api/v1/applications/job/:jobId
-    API->>DB: Query applications for job
-    DB-->>API: Return applications list
-    API-->>EM: Display applications
-    EM->>UI: Update application status
-    UI->>API: PUT /api/v1/applications/:id/status
-    API->>DB: Update application & add status history
-    DB-->>API: Return updated application
-    API-->>EM: Confirmation
-```
-
-#### Job Search Flow
-
-```mermaid
-sequenceDiagram
-    participant User
-    participant UI as Job Search Page
-    participant API as Backend API
-    participant DB as MongoDB
-
-    User->>UI: Open job search page
-    UI->>API: GET /api/v1/jobs
-    API->>DB: Query jobs (default: active, limit 20)
-    DB-->>API: Return job listings
-    API-->>UI: Display jobs { jobs: [...] }
-    UI-->>User: Show job cards
-
-    User->>UI: Apply filters (industry, location, salary)
-    UI->>API: GET /api/v1/jobs?industry=Manufacturing&location=Tokyo
-    API->>DB: Query with filters & sort
-    DB-->>API: Return filtered results
-    API-->>UI: Update job listings
-    UI-->>User: Display filtered jobs
-
-    User->>UI: Click on job card
-    UI->>API: GET /api/v1/jobs/:id
-    API->>DB: Find job by ID & populate company
-    API->>DB: Increment view count
-    DB-->>API: Return job details with company info
-    API-->>UI: Display job detail page
-    UI-->>User: Show full job information + Apply button
-```
-
-#### Profile Update Flow
-
-```mermaid
-sequenceDiagram
-    participant User
-    participant UI as Profile Form
-    participant API as Backend API
-    participant DB as MongoDB
-
-    User->>UI: Navigate to profile page
-    UI->>API: GET /api/v1/profile/me<br/>Header: Authorization: Bearer token
-    API->>API: Verify JWT token
-    API->>DB: Find profile by user ID
-    DB-->>API: Return profile document
-    API-->>UI: Display profile data
-    UI-->>User: Show editable form with current data
-
-    User->>UI: Edit fields & click "Save"
-    UI->>UI: Validate form data
-    UI->>API: PUT /api/v1/profile/me<br/>{firstName, lastName, phone, ...}
-    API->>API: Verify token & validate data
-    API->>DB: Update userprofiles document
-    DB-->>API: Return updated profile
-    API-->>UI: Return success { profile }
-    UI-->>User: Show "Profile updated!" message
-```
-
-#### Authentication Flow (Login)
-
-```mermaid
-sequenceDiagram
-    participant User
-    participant UI as Login Form
-    participant API as Auth API
-    participant DB as MongoDB
-
-    User->>UI: Enter email & password
-    UI->>UI: Client-side validation
-    UI->>API: POST /api/v1/auth/login<br/>{email, password}
-    API->>DB: Find user by email (with password field)
-    DB-->>API: Return user document
-
-    alt User not found
-        API-->>UI: 401 Invalid credentials
-        UI-->>User: Show error message
-    else User found
-        API->>API: Compare password with bcrypt
-        alt Password incorrect
-            API->>DB: Increment loginAttempts
-            API-->>UI: 401 Invalid credentials
-            UI-->>User: Show error message
-        else Password correct
-            API->>DB: Reset loginAttempts, update lastLogin
-            API->>API: Generate JWT token
-            API-->>UI: 200 { token, user }
-            UI->>UI: Store token in localStorage
-            UI-->>User: Redirect to dashboard
-        end
-    end
+    EM->>API: PUT /api/v1/applications/:id/status { status: "interview" }
+    API->>DB: Update status + push to statusHistory[]
+    API-->>EM: 200 updated application
 ```
 
 ---
 
-## 4. Database Relationships
+## 5. Database Relationships
 
 ### Entity Relationship Diagram
 
 ```mermaid
 erDiagram
     User ||--o| UserProfile : "has one"
-    User ||--o| Company : "owns (employer)"
-    User ||--o{ Application : "creates (jobseeker)"
-    User ||--o{ Job : "posts (employer)"
-
+    User ||--o| Company : "owns"
+    User ||--o{ Application : "submits"
+    User ||--o{ Job : "posts"
     Company ||--o{ Job : "has many"
-
-    Job ||--o{ Application : "receives many"
+    Company }o--o{ User : "admins"
+    Job ||--o{ Application : "receives"
 
     User {
         ObjectId _id PK
         String email UK
-        String password
+        String authProvider
+        Object googleProfile
         String role
         ObjectId profile FK
         ObjectId company FK
         Boolean isActive
-        Date createdAt
+        Number loginAttempts
+        Date lockUntil
     }
 
     UserProfile {
@@ -847,20 +649,24 @@ erDiagram
         ObjectId user FK
         String firstName
         String lastName
-        String phone
+        String photoPath
+        String japaneseLevel
+        Object availability
         Array education
         Array experience
         Array skills
+        Boolean profileCompleted
     }
 
     Company {
         ObjectId _id PK
         String name UK
         String slug UK
-        String industry
-        String description
-        Object address
-        Boolean verified
+        ObjectId owner FK
+        Array admins
+        Array jobs
+        Boolean isVerified
+        ObjectId verifiedBy FK
     }
 
     Job {
@@ -868,11 +674,13 @@ erDiagram
         ObjectId company FK
         ObjectId postedBy FK
         String title
-        String industry
-        Object salary
+        Object compensation
         Object location
+        Object workConditions
+        Object applicationInfo
         String status
-        Date applicationDeadline
+        String visibility
+        Boolean isDeleted
     }
 
     Application {
@@ -880,132 +688,142 @@ erDiagram
         ObjectId applicant FK
         ObjectId job FK
         String status
-        String coverLetter
         Array statusHistory
-        Date createdAt
+    }
+
+    AdminJob {
+        ObjectId _id PK
+        String title
+        String companyName
+        Object compensation
+        String status
     }
 ```
 
 ### Relationship Summary
 
-| Relationship       | Type        | Description                                    |
-| ------------------ | ----------- | ---------------------------------------------- |
-| User → UserProfile | One-to-One  | Each user (jobseeker) has one extended profile |
-| User → Company     | One-to-One  | Each employer user owns one company profile    |
-| User → Application | One-to-Many | Job seekers can submit multiple applications   |
-| User → Job         | One-to-Many | Employers can post multiple job listings       |
-| Company → Job      | One-to-Many | Each company can have multiple job openings    |
-| Job → Application  | One-to-Many | Each job receives multiple applications        |
+| Relationship | Type | Description |
+|---|---|---|
+| User → UserProfile | One-to-One | Each user has one extended profile |
+| User → Company (owner) | One-to-One | Each employer owns one company |
+| Company ↔ User (admins) | Many-to-Many | Additional admin users per company |
+| User → Application | One-to-Many | Jobseekers submit many applications |
+| User → Job (postedBy) | One-to-Many | Employers post many jobs |
+| Company → Job | One-to-Many | Company has many job postings |
+| Job → Application | One-to-Many | Job receives many applications |
+| AdminJob | Standalone | No foreign key references |
 
 ---
 
-## 5. Indexes and Performance
+## 6. Indexes and Performance
 
-### Collection Indexes
-
-#### users
+### `users`
 
 ```javascript
-{
-  email: 1,        // Unique index (auto-created)
-  role: 1,         // For role-based queries
-  isActive: 1      // Filter active users
-}
+{ email: 1 }       // unique (auto)
+{ role: 1 }
+{ isActive: 1 }
+{ googleId: 1 }
+{ authProvider: 1 }
 ```
 
-#### userprofiles
+### `userprofiles`
 
 ```javascript
-{
-  user: 1,         // Unique - one profile per user
-  'skills.name': 1 // Search by skills
-}
+{ user: 1 }                          // unique
+{ nationality: 1 }
+{ japaneseLevel: 1 }
+{ "availability.visaStatus": 1 }
 ```
 
-#### companies
+### `companies`
 
 ```javascript
-{
-  name: 1,         // Unique index
-  slug: 1,         // Unique for URLs
-  industry: 1,     // Filter by industry
-  isActive: 1      // Filter active companies
-}
+{ name: 1 }                                        // unique
+{ slug: 1 }                                        // unique
+{ industry: 1, isActive: 1, isVerified: 1 }        // compound
+{ "location.prefecture": 1, isActive: 1 }           // compound
+{ name: "text", description: "text" }               // full-text search
 ```
 
-#### jobs
+### `jobs`
 
 ```javascript
-{
-  company: 1,          // Jobs by company
-  postedBy: 1,         // Jobs by poster
-  title: 1,            // Search by title
-  industry: 1,         // Filter by industry
-  status: 1,           // Filter active/closed jobs
-  'location.city': 1,  // Search by location
-  createdAt: -1        // Sort by newest
-}
-
-// Compound indexes for common queries
-{
-  status: 1,
-  industry: 1,
-  'location.city': 1
-}
+{ company: 1 }
+{ postedBy: 1 }
+{ createdAt: -1 }
+{ title: "text", summary: "text", responsibilities: "text" }  // full-text
+{ industry: 1, status: 1, isDeleted: 1 }                      // compound
+{ "location.prefecture": 1, status: 1, isDeleted: 1 }          // compound
+{ "compensation.salaryMin": 1, "compensation.salaryMax": 1 }   // salary range
+{ japaneseLevel: 1, status: 1 }
+{ "applicationInfo.deadline": 1, status: 1 }
+{ featured: 1, status: 1, createdAt: -1 }
 ```
 
-#### applications
+### `applications`
 
 ```javascript
-{
-  applicant: 1,    // Applications by user
-  job: 1,          // Applications for job
-  status: 1,       // Filter by status
-  createdAt: -1    // Sort by date
-}
-
-// Compound index for employer dashboard
-{
-  job: 1,
-  status: 1,
-  createdAt: -1
-}
+{ applicant: 1, job: 1 }   // unique compound — prevents duplicate applications
+{ status: 1 }
+{ createdAt: -1 }
 ```
 
-### Performance Optimization Strategies
+### `contents`
 
-1. **Use `.populate()` selectively** - Only populate needed fields
-2. **Implement pagination** - Limit results to 20-50 per page
-3. **Add text search** - For job title/description full-text search
-4. **Cache frequent queries** - Redis for job listings, company profiles
-5. **Use projections** - Select only needed fields in queries
-6. **Monitor slow queries** - Enable MongoDB profiling
+```javascript
+{ title: "text", "paragraphs.text": "text" }   // full-text search
+```
+
+### Performance Notes
+
+1. Use `.populate()` with field projection — only select needed fields
+2. Always apply `.notDeleted()` query helper on `jobs` queries
+3. Paginate all list endpoints (default 20–50 per page)
+4. Prefer full-text indexes over regex for job/company search
+5. Monitor slow queries via MongoDB Atlas Performance Advisor
 
 ---
 
-## 6. Data Validation Rules
+## 7. Data Validation Rules
 
 ### Field Validation Summary
 
-| Collection       | Field                   | Validation Rule                                                             |
-| ---------------- | ----------------------- | --------------------------------------------------------------------------- |
-| **users**        | email                   | Required, unique, valid email format                                        |
-|                  | password                | Required, min 8 characters, hashed with bcrypt                              |
-|                  | role                    | Enum: jobseeker, employer, admin, rso                                       |
-| **userprofiles** | phone                   | Valid phone number format                                                   |
-|                  | dateOfBirth             | Valid date, user must be 18+                                                |
-|                  | languages[].proficiency | Enum: native, fluent, conversational, basic                                 |
-| **companies**    | name                    | Required, unique, max 200 chars                                             |
-|                  | industry                | Required, enum of 16 industries                                             |
-|                  | website                 | Valid URL format                                                            |
-|                  | contactEmail            | Valid email format                                                          |
-| **jobs**         | title                   | Required, max 200 chars                                                     |
-|                  | industry                | Required, matches company industry enum                                     |
-|                  | salary.min              | Must be less than salary.max                                                |
-|                  | japaneseLevel           | Enum: N5, N4, N3, N2, N1, Native, None                                      |
-|                  | status                  | Enum: draft, active, closed, expired                                        |
-| **applications** | status                  | Enum: submitted, reviewing, interview, offer, accepted, rejected, withdrawn |
-|                  | coverLetter             | Max 2000 chars                                                              |
+| Collection | Field | Validation |
+|---|---|---|
+| **users** | `email` | Required, unique, valid format |
+| | `password` | Min 8 chars; bcrypt 12 rounds; `select: false` |
+| | `role` | Enum: `jobseeker`, `employer`, `admin`, `rso` |
+| | `authProvider` | Enum: `local`, `google` |
+| **userprofiles** | `firstName`, `lastName` | Required, max 50 chars |
+| | `dateOfBirth` | Required, valid Date |
+| | `nationality` | Required |
+| | `japaneseLevel` | Enum: `none`, `N5`, `N4`, `N3`, `N2`, `N1` |
+| | `availability.visaStatus` | Enum: `not-applicable`, `student`, `working`, `ssw-1`, `ssw-2`, `spouse`, `pr`, `other` |
+| | `bio` | max 1000 chars |
+| **companies** | `name` | Required, unique, max 200 chars |
+| | `industry` | Required; one of 16 SSW industries |
+| | `owner` | Required ObjectId ref |
+| | `website`, `contactEmail` | Valid URL / email format |
+| **jobs** | `title` | Required, max 200 chars |
+| | `compensation.salaryMax` | Must be ≥ `salaryMin` |
+| | `japaneseLevel` | Enum: `None`, `N5`, `N4`, `N3`, `N2`, `N1` |
+| | `status` | Enum: `draft`, `active`, `closed`, `filled`, `archived` |
+| | `visibility` | Enum: `public`, `private`, `rso-only` |
+| | `applicationInfo.deadline` | Must not be in the past (new jobs) |
+| | `applicationInfo.startDate` | Must be after `deadline` |
+| **adminjobs** | `title`, `companyName`, `industry` | Required |
+| | `employmentType` | Enum: `Full-time`, `Part-time`, `Contract` |
+| | `status` | Enum: `active`, `closed`, `archived` |
+| **applications** | `status` | Enum: `submitted`, `reviewing`, `interview`, `offer`, `accepted`, `rejected`, `withdrawn` |
+| | `coverLetter` | max 2000 chars |
+| | `{ applicant, job }` | Unique compound — no duplicate applications |
+
+### Supported Industries (16)
+
+Manufacturing, Nursing Care, Construction, Agriculture, Food Service, Hospitality,
+Food Processing, Industrial Machinery, Electric & Electronics, Building Cleaning,
+Shipbuilding, Auto Repair, Aviation, Accommodation, Logistics, Other
 
 ### Business Logic Validation
 
@@ -1014,42 +832,27 @@ graph TD
     A[User Registration] --> B{Role?}
     B -->|jobseeker| C[Create User + UserProfile]
     B -->|employer| D[Create User + Company]
-    B -->|admin/rso| E[Create User only]
+    B -->|admin via seed| E[run seed:admin script]
 
-    F[Job Application] --> G{User is jobseeker?}
-    G -->|No| H[Reject: Employers cannot apply]
-    G -->|Yes| I{Already applied?}
-    I -->|Yes| J[Reject: Duplicate application]
-    I -->|No| K{Job is active?}
-    K -->|No| L[Reject: Job closed]
-    K -->|Yes| M[Create Application]
+    F[Login] --> G{Auth check}
+    G -->|locked| H[401 Account locked]
+    G -->|valid| I{Role?}
+    I -->|admin or employer| J[Redirect to companyDashboard.html]
+    I -->|jobseeker or rso| K[Redirect to profileDashboard.html]
 
-    N[Job Posting] --> O{User is employer?}
-    O -->|No| P[Reject: Only employers can post]
-    O -->|Yes| Q{Has company profile?}
-    Q -->|No| R[Reject: Create company first]
-    Q -->|Yes| S[Create Job]
-```
+    L[Job Application] --> M{Is jobseeker?}
+    M -->|No| N[403 Forbidden]
+    M -->|Yes| O{Already applied?}
+    O -->|Yes| P[409 Duplicate]
+    O -->|No| Q{Job active and not deleted?}
+    Q -->|No| R[400 Job closed]
+    Q -->|Yes| S[Create Application]
 
-### Validation Error Messages
-
-```javascript
-// Standardized error responses
-{
-  "success": false,
-  "statusCode": 400,
-  "message": "Validation Error",
-  "errors": [
-    {
-      "field": "email",
-      "message": "Email is already registered"
-    },
-    {
-      "field": "password",
-      "message": "Password must be at least 8 characters"
-    }
-  ]
-}
+    T[Job Posting] --> U{Is employer?}
+    U -->|No| V[403 Forbidden]
+    U -->|Yes| W{Has company?}
+    W -->|No| X[400 Create company first]
+    W -->|Yes| Y[Create Job]
 ```
 
 ---
@@ -1059,40 +862,80 @@ graph TD
 ### Environment Variables
 
 ```bash
-# MongoDB Configuration
-MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/japansswdb
+# MongoDB
+MONGODB_URI=mongodb+srv://<user>:<pass>@japansswcluster0.lvia1ct.mongodb.net/japansswdb
 MONGODB_DB=japansswdb
-
-# Collections (optional overrides)
 CONTENT_COLLECTION=contents
 ABOUT_COLLECTION=about
+USE_MONGOOSE=true
 
-# Authentication
-JWT_SECRET=your-secret-key-here
+# Auth
+JWT_SECRET=<node -e "console.log(require('crypto').randomBytes(32).toString('hex'))">
 JWT_EXPIRE=7d
+JWT_COOKIE_EXPIRE=7
 
-# Application
+# Google OAuth
+GOOGLE_CLIENT_ID=<from Google Cloud Console>
+BASE_URL=http://localhost:3000
+
+# AWS S3
+AWS_REGION=ap-southeast-1
+RESUME_S3_BUCKET=japanssw-s3-bucket
+AWS_ROLE_ARN=arn:aws:iam::182371258083:role/mmdc-wst-s3-access-role-84cafb59
+
+# Server
 NODE_ENV=development
 PORT=3000
+FRONTEND_URL=http://localhost:3000
 ```
 
-### Migration Scripts
+### Seed & Utility Scripts
 
-Location: `backend/scripts/`
+Location: `backend/` and `backend/scripts/`
 
-- `list-collections.js` - Audit database collections
-- `check-collection-sizes.js` - Check storage usage
-- `seedDatabase.js` - Populate database with sample data
-- `remove-unused-collections.js` - Clean up unused collections
+| Script | npm Command | Description |
+|---|---|---|
+| `seedDatabase.js` | `npm run seed` | Basic seed data |
+| `seedDatabase-comprehensive.js` | `npm run seed:full` | Full seed (clears first) |
+| `seedDatabase.clean.js` | `npm run seed:clean` | Clean, safe seed |
+| `scripts/create-admin.js` | `npm run seed:admin` | Create / reset superadmin User + UserProfile |
+| `scripts/list-collections.js` | — | Audit collections |
+| `scripts/check-db.js` | — | Check DB connectivity |
+
+#### `create-admin.js` — Superadmin Seed
+
+Creates or resets the platform superadmin account. Idempotent — safe to run multiple times.
+
+| Field | Default | Override with |
+|---|---|---|
+| Email | `admin@mmdc.local` | `ADMIN_EMAIL` env var |
+| Password | `SuperAdmin@1234` | `ADMIN_PASSWORD` env var |
+| Role | `admin` | — |
+| authProvider | `local` | — |
+
+```bash
+# Default credentials
+cd backend && npm run seed:admin
+
+# Custom credentials
+ADMIN_EMAIL=me@test.local ADMIN_PASSWORD=MyPass@99 npm run seed:admin
+```
+
+**What it creates / updates:**
+- `User` — `{ email, password (bcrypt 12r), role: "admin", authProvider: "local", isActive: true, isEmailVerified: true }`
+- `UserProfile` — `{ firstName: "Super", lastName: "Admin", nationality: "Filipino", profileCompleted: true, … }`
+- Sets `User.profile → UserProfile._id`
+
+> ⚠️ This account lives in `japansswdb` on MongoDB Atlas. Do not use in production.
 
 ### Backup Strategy
 
-1. **Automated Daily Backups** - MongoDB Atlas automatic backups
-2. **Pre-Deployment Snapshot** - Manual backup before major changes
-3. **Retention Policy** - Keep daily backups for 7 days, weekly for 4 weeks
+1. **Automated Continuous Backups** — MongoDB Atlas automatic backups
+2. **Pre-Deployment Snapshot** — Manual backup before schema migrations
+3. **Retention Policy** — Daily for 7 days, weekly for 4 weeks
 
 ---
 
-**Document Version:** 1.0  
-**Last Review:** January 31, 2026  
-**Next Review:** As needed with schema changes
+**Document Version:** 2.0
+**Last Updated:** March 20, 2026
+**Next Review:** On any schema change
