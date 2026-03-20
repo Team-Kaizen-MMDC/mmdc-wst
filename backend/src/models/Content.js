@@ -15,7 +15,7 @@ const ContentSchema = new mongoose.Schema(
     updatedAt: { type: Date, default: Date.now },
   },
   {
-    collection: "contents",
+    collection: "about",
   },
 );
 
