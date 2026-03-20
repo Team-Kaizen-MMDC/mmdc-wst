@@ -40,6 +40,8 @@ This repository holds the wireframe-driven static pages and a stylesheet ([asset
 
 -- **Project overview & site features:** [docs/PROJECT_OVERVIEW.md](docs/PROJECT_OVERVIEW.md) — topic, goals, audience, feature summary, and visitor flows.
 
+-- **Backend API test guide:** [docs/BACKEND_API_TESTING.md](docs/BACKEND_API_TESTING.md) — backend Jest coverage, integration test harness, commands, and Postman usage.
+
 For implementation details, testing guidance, and design docs, see the [docs/](docs/) folder.
 
 ## Application Flow
@@ -121,7 +123,8 @@ sequenceDiagram
 
 - Backend code and API are in the `backend/` folder. See `backend/README.md` for setup and running instructions.
 - Generated OpenAPI JSON: [backend/api-docs.json](backend/api-docs.json) (useful for frontend integration and CI snapshots).
-- Postman collections: [backend/postman/Japan_SSW_API_day1_day4.postman_collection.json](backend/postman/Japan_SSW_API_day1_day4.postman_collection.json) and [backend/postman/Japan_SSW_API_Complete.postman_collection.json](backend/postman/Japan_SSW_API_Complete.postman_collection.json).
+- Postman collections: [backend/postman/Japan_SSW_API_day1_day4.postman_collection.json](backend/postman/Japan_SSW_API_day1_day4.postman_collection.json), [backend/postman/Japan_SSW_API_Complete.postman_collection.json](backend/postman/Japan_SSW_API_Complete.postman_collection.json), and [backend/postman/Japan_SSW_Backend_API_Testing.postman_collection.json](backend/postman/Japan_SSW_Backend_API_Testing.postman_collection.json).
+- Backend API testing guide: [docs/BACKEND_API_TESTING.md](docs/BACKEND_API_TESTING.md).
 - Backend default port: `3000`. Swagger UI (when server running): `http://localhost:3000/api-docs`
 
 Additional backend notes (resume upload & AWS S3)
@@ -241,11 +244,19 @@ npx playwright test --config=tests/playwright/playwright.config.js
 npm run test:playwright:with-server
 ```
 
+Backend API tests use Jest, Supertest, and `mongodb-memory-server` from the `backend/` folder:
+
+```bash
+cd backend
+npm test
+```
+
 Notes:
 
 - If Playwright reports "Cannot navigate to invalid URL" for goto(`/`), make sure you pass the Playwright config (it provides baseURL) or use the convenience script above.
 - The Python static server can show BrokenPipe/ConnectionReset noise when Playwright runs many workers; this is expected for that server under concurrent load. Use `npx http-server` or a small Node static server for quieter logs if desired.
 - If npm scripts surface shell startup errors (for example from `.zshrc`), guard optional tool initializations in your rc file (for example `if command -v jenv >/dev/null; then jenv init; fi`).
+- Root `npm test` is reserved for Playwright and is now explicitly scoped to `tests/playwright/playwright.config.js` so backend Jest suites do not get picked up by the frontend runner.
 
 ## Testing documentation
 
