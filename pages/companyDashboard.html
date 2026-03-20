@@ -1947,7 +1947,7 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
           // If still no jobs for company, try my-jobs (postedBy)
           if (!jobs.length) {
             try {
-              const res = await fetch(`${API_BASE}/jobs/my-jobs`, {
+              const res = await fetch(`${API_BASE}/jobs/my/jobs`, {
                 headers: { Authorization: `Bearer ${token}` },
               });
               console.debug('loadCompanyJobs: my-jobs status', res.status);
