@@ -336,18 +336,27 @@ export const initializeLoginValidation = () => {
             // Set logged-in status cookie (required for auth check)
             setCookie("isLoggedIn", "true", 7);
 
+            // Set email cookie so dashboard profile lookups work
+            setCookie("email", inputElements.email.value, 7);
+
             // Save basic profile info and mark existing user
             saveUserProfile({ email: inputElements.email.value });
             setNewUserFlag(false);
 
-            const formRedirect =
-              (form.getAttribute && form.getAttribute("data-redirect")) ||
-              (form.getAttribute && form.getAttribute("action"));
-            const defaultRedirect = "profileDashboard.html";
-            const redirectUrl =
-              formRedirect && formRedirect.trim() !== ""
-                ? formRedirect
-                : defaultRedirect;
+            // Role-based redirect: admin/employer → companyDashboard, everyone else → profileDashboard
+            const role = data.data && data.data.user && data.data.user.role;
+            let redirectUrl;
+            if (role === "admin" || role === "employer") {
+              redirectUrl = "companyDashboard.html";
+            } else {
+              const formRedirect =
+                (form.getAttribute && form.getAttribute("data-redirect")) ||
+                (form.getAttribute && form.getAttribute("action"));
+              redirectUrl =
+                formRedirect && formRedirect.trim() !== "" && formRedirect !== "profileDashboard.html"
+                  ? formRedirect
+                  : "profileDashboard.html";
+            }
 
             window.location.href = redirectUrl;
           } else {

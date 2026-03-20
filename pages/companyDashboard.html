@@ -1824,5 +1824,109 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
 </script>
 
  <script type="module" src="../assets/js/main.js"></script>
+
+  <script type="module">
+    import { setupLogoutButton } from "../assets/js/modules/auth.js";
+
+    const API_BASE = "http://localhost:3000/api/v1";
+
+    // Get JWT token — prefer URL query param (OAuth redirect), then cookie.
+    function getToken() {
+      const params = new URLSearchParams(window.location.search);
+      const urlToken = params.get("token");
+      if (urlToken) {
+        // Persist to cookie and clean up the URL bar.
+        document.cookie = `token=${urlToken}; path=/; max-age=${7 * 24 * 60 * 60}`;
+        try {
+          history.replaceState(null, "", window.location.pathname);
+        } catch (_) {}
+        return urlToken;
+      }
+      const match = document.cookie
+        .split("; ")
+        .find((r) => r.startsWith("token="));
+      return match ? decodeURIComponent(match.split("=")[1]) : null;
+    }
+
+    // Update the three profile name elements with data from the API.
+    function applyProfileToUI(firstName, lastName) {
+      const first = (firstName || "").trim();
+      const last = (lastName || "").trim();
+      const full = [first, last].filter(Boolean).join(" ") || "Admin";
+
+      const menuBtn = document.getElementById("user-menu-btn");
+      const menuName = document.getElementById("user-menu-name");
+      const dashName = document.getElementById("dash-profile-name");
+
+      if (menuBtn) menuBtn.textContent = first || "Admin";
+      if (menuName) menuName.textContent = full;
+      if (dashName) dashName.textContent = full;
+    }
+
+    // Fetch the Mongoose UserProfile for the signed-in user.
+    // Falls back to /auth/me (raw Google profile) when no UserProfile exists yet.
+    async function loadProfile() {
+      const token = getToken();
+      if (!token) return;
+
+      try {
+        const res = await fetch(`${API_BASE}/profile`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (res.ok) {
+          const {
+            data: { profile },
+          } = await res.json();
+          const gp = profile?.user?.googleProfile || {};
+          const first =
+            profile.firstName ||
+            gp.given_name ||
+            (gp.name && gp.name.split(" ")[0]) ||
+            "";
+          const last =
+            profile.lastName ||
+            gp.family_name ||
+            (gp.name && gp.name.split(" ").slice(1).join(" ")) ||
+            "";
+          applyProfileToUI(first, last);
+          return;
+        }
+
+        // No UserProfile yet — fall back to raw user record (/auth/me).
+        if (res.status === 404) {
+          const meRes = await fetch(`${API_BASE}/auth/me`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          if (meRes.ok) {
+            const { data: user } = await meRes.json();
+            const gp = user?.googleProfile || {};
+            const first =
+              gp.given_name ||
+              (gp.name && gp.name.split(" ")[0]) ||
+              user.email?.split("@")[0] ||
+              "";
+            const last =
+              gp.family_name ||
+              (gp.name && gp.name.split(" ").slice(1).join(" ")) ||
+              "";
+            applyProfileToUI(first, last);
+          }
+        }
+      } catch (err) {
+        console.warn("companyDashboard: profile load failed", err);
+      }
+    }
+
+    // Wire up the Sign Out button.
+    setupLogoutButton("#sign-out-btn");
+
+    // Load profile once the DOM is ready.
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", loadProfile);
+    } else {
+      loadProfile();
+    }
+  </script>
   </body>
 </html>
