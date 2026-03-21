@@ -1986,9 +1986,6 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
         const totalApplications = summaryJson.data?.totalApplications || 0;
         const statusSummary = summaryJson.data?.statusSummary || [];
         const recentApplications = summaryJson.data?.recentApplications || [];
-        // initialize debug payload early so the panel can render even if no jobs
-        window._companyDebug = { jobs: jobs, summary: summaryJson.data };
-
         if (!jobs.length) {
           const recentEl = document.getElementById('recentApplicantsList');
           if (recentEl) recentEl.innerHTML = '<div class="text-muted small">No jobs posted yet.</div>';
@@ -2240,63 +2237,7 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
       if (dashboardTabBtn) {
         dashboardTabBtn.addEventListener('shown.bs.tab', loadCompanyApplicants);
       }
-
-      // Debug UI: persistent toggle button + hidden panel
-      var dbgBtn = document.createElement('button');
-      dbgBtn.id = 'company-debug-btn';
-      dbgBtn.className = 'btn btn-sm btn-outline-secondary';
-      dbgBtn.textContent = 'Show API Debug';
-      dbgBtn.style.position = 'fixed';
-      dbgBtn.style.right = '12px';
-      dbgBtn.style.bottom = '12px';
-      dbgBtn.style.zIndex = 9999;
-      dbgBtn.style.opacity = 0.9;
-      document.body.appendChild(dbgBtn);
-
-      var dbgPanel = document.createElement('div');
-      dbgPanel.id = 'company-dashboard-debug-panel';
-      dbgPanel.style.position = 'fixed';
-      dbgPanel.style.right = '12px';
-      dbgPanel.style.bottom = '52px';
-      dbgPanel.style.zIndex = 9999;
-      dbgPanel.style.width = '480px';
-      dbgPanel.style.maxHeight = '60vh';
-      dbgPanel.style.overflow = 'auto';
-      dbgPanel.style.background = 'white';
-      dbgPanel.style.border = '1px solid #ddd';
-      dbgPanel.style.padding = '12px';
-      dbgPanel.style.boxShadow = '0 6px 18px rgba(0,0,0,0.1)';
-      dbgPanel.style.display = 'none';
-      document.body.appendChild(dbgPanel);
-
-      dbgBtn.addEventListener('click', function(){
-        if (dbgPanel.style.display === 'none') dbgPanel.style.display = 'block'; else dbgPanel.style.display = 'none';
-      });
     });
-
-    function attachDebugPanel(jobs, responses) {
-      try {
-        // Store debug payload globally so the toggle button can render it later
-        window._companyDebug = { jobs: jobs || [], responses: responses || [] };
-        var panel = document.getElementById('company-dashboard-debug-panel');
-        if (!panel) return;
-        var jobsHtml = window._companyDebug.jobs && window._companyDebug.jobs.length
-          ? '<pre style="font-size:11px;white-space:pre-wrap;">'+escapeHtml(JSON.stringify(window._companyDebug.jobs,null,2))+'</pre>'
-          : '<div class="text-muted small">No jobs data captured.</div>';
-        var respHtml = window._companyDebug.responses && window._companyDebug.responses.length
-          ? '<pre style="font-size:11px;white-space:pre-wrap;">'+escapeHtml(JSON.stringify(window._companyDebug.responses,null,2))+'</pre>'
-          : '<div class="text-muted small">No responses captured.</div>';
-
-        var html = '<h6>Jobs (' + (window._companyDebug.jobs.length || 0) + ')</h6>' + jobsHtml + '<h6>Responses</h6>' + respHtml;
-        panel.innerHTML = html;
-      } catch(e){
-        console.warn('attachDebugPanel error', e);
-        try {
-          var panel = document.getElementById('company-dashboard-debug-panel');
-          if (panel) panel.innerHTML = '<div class="text-danger small">Debug render error</div>';
-        } catch(_){}
-      }
-    }
   </script>
   </body>
 </html>
