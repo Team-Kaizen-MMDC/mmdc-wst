@@ -1969,6 +1969,13 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
 
     // Load company applicants summary (dashboard)
     async function loadCompanyApplicants() {
+      // Only run when Dashboard tab is visible
+      const dashboardPane = document.getElementById('dashboard-pane');
+      if (dashboardPane && !dashboardPane.classList.contains('show') && !dashboardPane.classList.contains('active')) {
+        console.debug('loadCompanyApplicants: dashboard pane not visible; skipping');
+        return;
+      }
+
       const token = getToken();
       if (!token) {
         console.warn('loadCompanyApplicants: no token available');
@@ -2025,12 +2032,32 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
           return;
         }
 
-        // Compute counts from statusSummary
+        // Compute counts from statusSummary (normalize keys)
         const statusMap = {};
-        statusSummary.forEach(s => { statusMap[s._id] = s.count; });
+        (statusSummary || []).forEach(s => {
+          const key = String(s._id || '').toLowerCase();
+          if (key.includes('submit') || key.includes('applic')) {
+            statusMap['submitted'] = (statusMap['submitted'] || 0) + (s.count || 0);
+          } else if (key.includes('review')) {
+            statusMap['reviewing'] = (statusMap['reviewing'] || 0) + (s.count || 0);
+          } else if (key.includes('interview')) {
+            statusMap['interview'] = (statusMap['interview'] || 0) + (s.count || 0);
+          } else if (key.includes('reject')) {
+            statusMap['rejected'] = (statusMap['rejected'] || 0) + (s.count || 0);
+          } else if (key.includes('hire') || key.includes('accept') || key.includes('offer')) {
+            // treat hired/accepted/offer as accepted for dashboard
+            statusMap['accepted'] = (statusMap['accepted'] || 0) + (s.count || 0);
+          } else {
+            // Unknown statuses accumulate under 'other'
+            statusMap['other'] = (statusMap['other'] || 0) + (s.count || 0);
+          }
+        });
+
         const pending = (statusMap['submitted'] || 0) + (statusMap['reviewing'] || 0);
         const interview = statusMap['interview'] || 0;
         const rejected = statusMap['rejected'] || 0;
+        const accepted = statusMap['accepted'] || 0;
+        const total = totalApplications || Object.values(statusMap).reduce((s,v)=>s+v,0);
 
 
         // Update UI
