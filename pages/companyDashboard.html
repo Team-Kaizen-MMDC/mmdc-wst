@@ -288,6 +288,32 @@
 
 
 
+            <!-- Applicant Tracking Card (dynamic) -->
+            <div class="col-lg-3 col-md-6">
+              <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                  <h3 class="card-title fw-bold mb-3">Applicant Tracking</h3>
+                  <ul class="list-unstyled small mb-0">
+                    <li class="mb-2">
+                      <span class="fw-semibold">Applicants:</span> <span id="stat-applied-company">–</span>
+                    </li>
+                    <li class="mb-2">
+                      <span class="fw-semibold">Reviewed:</span> <span id="stat-pending-company">–</span>
+                    </li>
+                    <li class="mb-2">
+                      <span class="fw-semibold">Interview:</span> <span id="stat-interview-company">–</span>
+                    </li>
+                    <li class="mb-2">
+                      <span class="fw-semibold">Hired:</span> <span id="stat-hired-company">–</span>
+                    </li>
+                    <li class="mb-2">
+                      <span class="fw-semibold">Rejected:</span> <span id="stat-rejected-company">–</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
             <!-- Job Metric Card-->
             <div class="col-lg-3 col-md-6">
               <div class="card h-100 shadow-sm">
@@ -875,46 +901,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                 </div>
               </div>
 
-              <!-- APPLICATION + NOTIFICATIONS -->
-              <!-- Applicant Tracking (Dashboard-only dynamic) -->
-              <div class="col-12 col-md-6">
-                <div class="card shadow-sm h-100">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                      <h3 class="card-title fw-bold mb-0">Applicant Tracking</h3>
-                      <a href="#" class="small text-decoration-none" id="viewAllApplicantsLink">View All Applicants</a>
-                    </div>
 
-                    <ul class="list-unstyled small mb-3">
-                      <li class="mb-2">
-                        <span class="fw-semibold">Applicants:</span>
-                        <span id="stat-applied-company">–</span>
-                      </li>
-                      <li class="mb-2">
-                        <span class="fw-semibold">Reviewed:</span>
-                        <span id="stat-pending-company">–</span>
-                      </li>
-                      <li class="mb-2">
-                        <span class="fw-semibold">Interview:</span>
-                        <span id="stat-interview-company">–</span>
-                      </li>
-                      <li class="mb-2">
-                        <span class="fw-semibold">Hired:</span>
-                        <span id="stat-hired-company">–</span>
-                      </li>
-                      <li class="mb-2">
-                        <span class="fw-semibold">Rejected:</span>
-                        <span id="stat-rejected-company">–</span>
-                      </li>
-                    </ul>
-
-                    <h6 class="fw-bold mb-2">Recent Applicants</h6>
-                    <div id="recentApplicantsList" class="list-group list-group-flush small">
-                      <div class="text-muted">Loading…</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
               <div class="col-12 col-md-6">
                 <div class="card shadow-sm h-100">
                   <div class="card-body">
