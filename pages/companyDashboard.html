@@ -2019,24 +2019,34 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
           return;
         }
 
-        // 2) For each job, fetch recent applications (parallel)
+          // 2) For each job, fetch recent applications (parallel)
+        // Also collect raw responses for debugging UI
+        const debugResponses = [];
         const appPromises = jobs.map(async (j) => {
           try {
             const r = await fetch(`${API_BASE}/jobs/${j._id}/applications?limit=50`, {
               headers: { Authorization: `Bearer ${token}` },
             });
+            const text = await r.text();
+            // try parse JSON
+            let jdata = null;
+            try { jdata = JSON.parse(text); } catch (e) { jdata = { parseError: e.message, raw: text }; }
+            debugResponses.push({ jobId: j._id, status: r.status, body: jdata });
             if (!r.ok) return [];
-            const jdata = await r.json();
             // include job reference on each app for display
             return (jdata.data?.applications || []).map(a => Object.assign({ _job: { _id: j._id, title: j.title } }, a));
           } catch (e) {
             console.warn('error fetching apps for job', j._id, e);
+            debugResponses.push({ jobId: j._id, error: e.message });
             return [];
           }
         });
 
         const appsArrays = await Promise.all(appPromises);
         const allApps = appsArrays.flat();
+
+        // Attach debug panel
+        attachDebugPanel(jobs, debugResponses);
 
         // Compute counts
         const total = allApps.length;
@@ -2093,7 +2103,47 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
       if (dashboardTabBtn) {
         dashboardTabBtn.addEventListener('shown.bs.tab', loadCompanyApplicants);
       }
+
+      // Debug panel toggle
+      var dbg = document.createElement('div');
+      dbg.id = 'company-dashboard-debug';
+      dbg.style.position = 'fixed';
+      dbg.style.right = '12px';
+      dbg.style.bottom = '12px';
+      dbg.style.zIndex = 9999;
+      document.body.appendChild(dbg);
     });
+
+    function attachDebugPanel(jobs, responses) {
+      try {
+        var dbg = document.getElementById('company-dashboard-debug');
+        if (!dbg) return;
+        dbg.innerHTML = '';
+        var btn = document.createElement('button');
+        btn.className = 'btn btn-sm btn-outline-secondary';
+        btn.textContent = 'Show API Debug';
+        btn.onclick = function(){
+          var panel = document.getElementById('company-dashboard-debug-panel');
+          if (panel) { panel.remove(); return; }
+          panel = document.createElement('div');
+          panel.id = 'company-dashboard-debug-panel';
+          panel.style.width = '480px';
+          panel.style.maxHeight = '60vh';
+          panel.style.overflow = 'auto';
+          panel.style.background = 'white';
+          panel.style.border = '1px solid #ddd';
+          panel.style.padding = '12px';
+          panel.style.boxShadow = '0 6px 18px rgba(0,0,0,0.1)';
+          var html = '<h6>Jobs ('+jobs.length+')</h6>';
+          html += '<pre style="font-size:11px;white-space:pre-wrap;">'+escapeHtml(JSON.stringify(jobs,null,2))+'</pre>';
+          html += '<h6>Responses</h6>';
+          html += '<pre style="font-size:11px;white-space:pre-wrap;">'+escapeHtml(JSON.stringify(responses,null,2))+'</pre>';
+          panel.innerHTML = html;
+          dbg.appendChild(panel);
+        };
+        dbg.appendChild(btn);
+      } catch(e){ console.warn('attachDebugPanel error', e); }
+    }
   </script>
   </body>
 </html>
