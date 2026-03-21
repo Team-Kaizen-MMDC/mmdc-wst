@@ -523,6 +523,34 @@
         </div>
     </div>
 
+        <!-- Applicant Detail Modal -->
+        <div class="modal fade" id="applicantDetailModal" tabindex="-1" aria-labelledby="applicantDetailModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="applicantDetailModalLabel">Applicant Profile</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div id="applicantDetailContent">
+                  <p class="mb-1"><strong>Name:</strong> <span id="applicant-name">-</span></p>
+                  <p class="mb-1"><strong>Email:</strong> <span id="applicant-email">-</span></p>
+                  <p class="mb-1"><strong>Applied For:</strong> <span id="applicant-job">-</span></p>
+                  <p class="mb-1"><strong>Location:</strong> <span id="applicant-location">-</span></p>
+                  <p class="mb-1"><strong>Applied On:</strong> <span id="applicant-date">-</span></p>
+                  <p class="mb-1"><strong>Status:</strong> <span id="applicant-status">-</span></p>
+                  <div id="applicant-resume" class="mt-3"></div>
+                  <pre id="applicant-raw" class="small bg-light p-2 mt-3 d-none" style="max-height:240px;overflow:auto"></pre>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a id="applicant-open-resume" class="btn btn-danger d-none" target="_blank" href="#">Open Resume</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Applicant Tracking Tab Pane -->
         <div
           class="tab-pane fade p-0"
@@ -552,102 +580,8 @@
                     <th scope="col" style="width: 15%">Action</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <!--Row 1-->
-                  <tr>
-                    <td>
-                      <!--scalable to Profile Image-->
-                      <p class="FullName fw-semibold mb-0">Dela Cruz, Juan</p>
-                    </td>
-                    <td class="location">Server Restaurant</td>
-                    <td class="text-left">Quezon City, Philippines</td>
-                    <td class="text-left">Oct 10, 2025</td>
-                    <!--Review, Interview Scheduled, Final Stage,Hired, Rejected-->
-                    <td><span class="badge text-bg-light">Review</span></td>
-                    <td>
-                      <button class="btn btn-sm btn-outline-primary me-2">
-                        View Profile
-                      </button>
-                    </td>
-                  </tr>
-                  <!--Row 2-->
-                  <tr>
-                    <td>
-                      <!--scalable to Profile Image-->
-                      <p class="FullName fw-semibold mb-0">John Doe, Lenon</p>
-                    </td>
-                    <td class="location">House Construction</td>
-                    <td class="text-left">Yokohama, Kanagawa</td>
-                    <td class="text-left">Sept 24, 2025</td>
-                    <!--Review, Interview Scheduled, Final Stage,Hired, Rejected-->
-                    <td>
-                      <span class="badge text-bg-dark"
-                        >Interview Scheduled</span
-                      >
-                    </td>
-                    <td>
-                      <button class="btn btn-sm btn-outline-primary me-2">
-                        View Profile
-                      </button>
-                    </td>
-                  </tr>
-                  <!--Row 3-->
-                  <tr>
-                    <td>
-                      <!--scalable to Profile Image-->
-                      <p class="FullName fw-semibold mb-0">Levi, Cabalon</p>
-                    </td>
-                    <td class="location">Mechanic Ground Support</td>
-                    <td class="text-left">Haneda, Tokyo</td>
-                    <td class="text-left">Sept 24, 2025</td>
-                    <!--Review, Interview Scheduled, Final Stage,Hired, Rejected-->
-                    <td>
-                      <span class="badge text-bg-warning">Final Stage</span>
-                    </td>
-                    <td>
-                      <button class="btn btn-sm btn-outline-primary me-2">
-                        View Profile
-                      </button>
-                    </td>
-                  </tr>
-                  <!--Row 4-->
-                  <tr>
-                    <td>
-                      <!--scalable to Profile Image-->
-                      <p class="FullName fw-semibold mb-0">
-                        Mellisa, Sebastian
-                      </p>
-                    </td>
-                    <td class="location">Ward Nursing</td>
-                    <td class="text-left">Shibuya, Tokyo</td>
-                    <td class="text-left">Sept 02, 2025</td>
-                    <!--Review, Interview Scheduled, Final Stage,Hired, Rejected-->
-                    <td><span class="badge text-bg-success">Hired</span></td>
-                    <td>
-                      <button class="btn btn-sm btn-outline-primary me-2">
-                        View Profile
-                      </button>
-                    </td>
-                  </tr>
-                  <!--Row 4-->
-                  <tr>
-                    <td>
-                      <!--scalable to Profile Image-->
-                      <p class="FullName fw-semibold mb-0">Mendez, Castillo</p>
-                    </td>
-                    <td class="location">Machine Operator</td>
-                    <td class="text-left">Iwata, Shizuoka</td>
-                    <td class="text-left">Oct 15, 2025</td>
-                    <!--Review, Interview Scheduled, Final Stage,Hired, Rejected-->
-                    <td>
-                      <span class="badge text-bg-secondary">Rejected</span>
-                    </td>
-                    <td>
-                      <button class="btn btn-sm btn-outline-primary me-2">
-                        View Profile
-                      </button>
-                    </td>
-                  </tr>
+                        <tbody id="applicantTableBody">
+                  <!-- Populated dynamically by loadCompanyApplicants() -->
                 </tbody>
               </table>
             </div>
@@ -2043,8 +1977,108 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
               const applicant = (a.applicant && (a.applicant.profile ? (a.applicant.profile.firstName || '') + ' ' + (a.applicant.profile.lastName || '') : a.applicant.email)) || 'Applicant';
               const jobTitle = (a.job && a.job.title) ? a.job.title : (a._job && a._job.title) ? a._job.title : 'Job';
               const status = a.status || '-';
-              return `<div class="list-group-item px-0 py-3"><div class="d-flex align-items-center mb-3"><div class="bg-light rounded me-3" style="width: 40px; height: 40px"></div><div class="flex-grow-1"><p class="mb-0 fw-semibold small">${escapeHtml(applicant)}</p><small class="text-muted d-block">${escapeHtml(jobTitle)}</small><small class="text-muted">${escapeHtml(status)}</small></div><a href="#" class="btn btn-sm btn-outline-danger">view</a></div></div>`;
+              const id = a._id || a.id || '';
+              return `<div class="list-group-item px-0 py-3"><div class="d-flex align-items-center mb-3"><div class="bg-light rounded me-3" style="width: 40px; height: 40px"></div><div class="flex-grow-1"><p class="mb-0 fw-semibold small">${escapeHtml(applicant)}</p><small class="text-muted d-block">${escapeHtml(jobTitle)}</small><small class="text-muted">${escapeHtml(status)}</small></div><button data-app-id="${escapeHtml(id)}" class="btn btn-sm btn-outline-danger view-app-btn">View</button></div></div>`;
             }).join('');
+
+            // attach handlers for the small card view buttons
+            setTimeout(()=>{
+              document.querySelectorAll('.view-app-btn').forEach(btn=>{
+                btn.addEventListener('click', (e)=>{
+                  e.preventDefault();
+                  const id = btn.getAttribute('data-app-id');
+                  const app = (recentApplications || []).find(x => (x._id||x.id||'') === id);
+                  if (app) showApplicantDetail(app);
+                });
+              });
+            }, 0);
+          }
+        }
+
+        // Populate Applicant Tracking Table (full list in Applicant Tracking tab)
+        const applicantTableBody = document.getElementById('applicantTableBody');
+        if (applicantTableBody) {
+          if (!recentApplications || recentApplications.length === 0) {
+            applicantTableBody.innerHTML = '<tr><td colspan="6" class="text-muted small">No applicants yet.</td></tr>';
+          } else {
+            const rows = recentApplications.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt)).map(a=>{
+              const id = a._id || a.id || '';
+              const applicant = (a.applicant && (a.applicant.profile ? (a.applicant.profile.firstName || '') + ' ' + (a.applicant.profile.lastName || '') : a.applicant.email)) || 'Applicant';
+              const jobTitle = (a.job && a.job.title) ? a.job.title : (a._job && a._job.title) ? a._job.title : 'Job';
+              const location = (a.job && a.job.location) || (a._job && a._job.location) || '';
+              const date = a.createdAt ? new Date(a.createdAt).toLocaleDateString() : '–';
+              const status = a.status || '-';
+              return `<tr data-app-id="${escapeHtml(id)}"><td><p class="FullName fw-semibold mb-0">${escapeHtml(applicant)}</p></td><td class="location">${escapeHtml(jobTitle)}</td><td class="text-left">${escapeHtml(location)}</td><td class="text-left">${escapeHtml(date)}</td><td><span class="badge text-bg-light">${escapeHtml(status)}</span></td><td><button class="btn btn-sm btn-outline-primary me-2 view-table-app-btn" data-app-id="${escapeHtml(id)}">View Profile</button></td></tr>`;
+            }).join('');
+            applicantTableBody.innerHTML = rows;
+
+            // attach click handlers for table view buttons
+            setTimeout(()=>{
+              document.querySelectorAll('.view-table-app-btn').forEach(btn=>{
+                btn.addEventListener('click', (e)=>{
+                  e.preventDefault();
+                  const id = btn.getAttribute('data-app-id');
+                  const app = (recentApplications || []).find(x => (x._id||x.id||'') === id);
+                  if (app) showApplicantDetail(app);
+                });
+              });
+            },0);
+          }
+        }
+
+        // Wire View All links: open Applicant Tracking tab and refresh
+        document.querySelectorAll('#viewAllApplicantsLink').forEach(el=>{
+          el.addEventListener('click', (e)=>{
+            e.preventDefault();
+            const tabEl = document.getElementById('applicant-tab');
+            if (tabEl && typeof bootstrap !== 'undefined' && bootstrap.Tab) {
+              new bootstrap.Tab(tabEl).show();
+            }
+            // ensure full list is loaded
+            loadCompanyApplicants();
+          });
+        });
+
+        // Helper to show applicant modal
+        function showApplicantDetail(app) {
+          try {
+            const name = (app.applicant && app.applicant.profile && ((app.applicant.profile.firstName||'') + ' ' + (app.applicant.profile.lastName||''))) || app.applicant?.email || 'Applicant';
+            const email = app.applicant?.email || (app.applicant && app.applicant.profile && app.applicant.profile.email) || '-';
+            const jobTitle = (app.job && app.job.title) || (app._job && app._job.title) || '-';
+            const location = (app.job && app.job.location) || (app._job && app._job.location) || '-';
+            const date = app.createdAt ? new Date(app.createdAt).toLocaleString() : '-';
+            const status = app.status || '-';
+
+            document.getElementById('applicant-name').textContent = name;
+            document.getElementById('applicant-email').textContent = email;
+            document.getElementById('applicant-job').textContent = jobTitle;
+            document.getElementById('applicant-location').textContent = location;
+            document.getElementById('applicant-date').textContent = date;
+            document.getElementById('applicant-status').textContent = status;
+
+            // resume link if exists
+            const resumeEl = document.getElementById('applicant-resume');
+            const openResume = document.getElementById('applicant-open-resume');
+            const resumeUrl = app.resumeUrl || app.cvUrl || app.resume || (app.applicant && app.applicant.profile && app.applicant.profile.resumeUrl) || '';
+            if (resumeUrl) {
+              resumeEl.innerHTML = `<a href="${escapeHtml(resumeUrl)}" target="_blank" class="text-decoration-none">Open resume / CV</a>`;
+              openResume.href = resumeUrl;
+              openResume.classList.remove('d-none');
+            } else {
+              resumeEl.innerHTML = '';
+              openResume.classList.add('d-none');
+            }
+
+            // show raw payload for debugging
+            const rawEl = document.getElementById('applicant-raw');
+            rawEl.textContent = JSON.stringify(app, null, 2);
+            rawEl.classList.remove('d-none');
+
+            const modalEl = document.getElementById('applicantDetailModal');
+            const modal = new bootstrap.Modal(modalEl);
+            modal.show();
+          } catch (err) {
+            console.warn('showApplicantDetail error', err);
           }
         }
 
