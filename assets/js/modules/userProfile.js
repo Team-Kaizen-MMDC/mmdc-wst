@@ -107,6 +107,28 @@ export function saveUserProfile(profileData) {
 }
 
 /**
+ * Replace the current user's cached profile with a fresh base profile.
+ * Useful when a new login should not inherit stale identity fields.
+ * @param {Object} profileData - The profile data to seed into the fresh profile
+ * @returns {boolean} True if save was successful
+ */
+export function replaceUserProfile(profileData) {
+  try {
+    const updatedProfile = {
+      ...getDefaultProfile(),
+      ...profileData,
+      lastUpdated: new Date().toISOString(),
+    };
+    localStorage.setItem(getUserStorageKey(), JSON.stringify(updatedProfile));
+    console.log("User profile replaced successfully:", updatedProfile);
+    return true;
+  } catch (error) {
+    console.error("Error replacing user profile:", error);
+    return false;
+  }
+}
+
+/**
  * Get user profile from localStorage
  * @returns {Object} User profile object or default profile if none exists
  */

@@ -1813,18 +1813,27 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
           const {
             data: { profile },
           } = await res.json();
-          const gp = profile?.user?.googleProfile || {};
+          const authProvider = profile?.user?.authProvider || "local";
+          const shouldUseGoogleProfile = authProvider === "google";
+          const gp = shouldUseGoogleProfile ? profile?.user?.googleProfile || {} : {};
           const role = profile?.user?.role || profile?.role || "Admin";
-          const photoUrl = profile?.photoPath || gp.picture || profile?.user?.photoPath || "";
+          const photoUrl =
+            profile?.photoPath ||
+            (shouldUseGoogleProfile ? gp.picture : "") ||
+            profile?.user?.photoPath ||
+            "";
           const first =
             profile.firstName ||
-            gp.given_name ||
-            (gp.name && gp.name.split(" ")[0]) ||
+            (shouldUseGoogleProfile
+              ? gp.given_name || (gp.name && gp.name.split(" ")[0])
+              : "") ||
+            profile?.user?.email?.split("@")[0] ||
             "";
           const last =
             profile.lastName ||
-            gp.family_name ||
-            (gp.name && gp.name.split(" ").slice(1).join(" ")) ||
+            (shouldUseGoogleProfile
+              ? gp.family_name || (gp.name && gp.name.split(" ").slice(1).join(" "))
+              : "") ||
             "";
           applyProfileToUI(first, last, role, photoUrl);
           return;
@@ -1837,17 +1846,24 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
           });
           if (meRes.ok) {
             const { data: user } = await meRes.json();
-            const gp = user?.googleProfile || {};
+            const authProvider = user?.authProvider || "local";
+            const shouldUseGoogleProfile = authProvider === "google";
+            const gp = shouldUseGoogleProfile ? user?.googleProfile || {} : {};
             const role = user?.role || "Admin";
-            const photoUrl = gp.picture || user?.photoPath || "";
+            const photoUrl =
+              (shouldUseGoogleProfile ? gp.picture : "") ||
+              user?.photoPath ||
+              "";
             const first =
-              gp.given_name ||
-              (gp.name && gp.name.split(" ")[0]) ||
+              (shouldUseGoogleProfile
+                ? gp.given_name || (gp.name && gp.name.split(" ")[0])
+                : "") ||
               user.email?.split("@")[0] ||
               "";
             const last =
-              gp.family_name ||
-              (gp.name && gp.name.split(" ").slice(1).join(" ")) ||
+              (shouldUseGoogleProfile
+                ? gp.family_name || (gp.name && gp.name.split(" ").slice(1).join(" "))
+                : "") ||
               "";
             applyProfileToUI(first, last, role, photoUrl);
           }

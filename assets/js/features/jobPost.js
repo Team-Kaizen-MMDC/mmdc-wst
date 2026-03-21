@@ -60,11 +60,43 @@ export function initJobPost() {
 
     // Basic preflight checks
     const token = getToken();
+    // allow session cookie auth (Passport) or JWT token
+    const hasSession = document.cookie.includes('sessionid') || document.cookie.includes('demo.sid') || document.cookie.includes('isLoggedIn=') || document.cookie.includes('jssw.sid');
+
+    // If company id missing, attempt to create company (admins) using company name from form
     if (!payload.company) {
-      alert('Company ID missing. Set the hidden company-id field to your Company ObjectId.');
-      return;
+      const companyName = data['company-name'] || data['company'] || '';
+      if (!companyName) {
+        alert('Company ID and company name missing. Please provide a company name or set the hidden company-id.');
+        return;
+      }
+
+      try {
+        const createHeaders = { 'Content-Type': 'application/json' };
+        if (token) createHeaders.Authorization = `Bearer ${token}`;
+
+        const createResp = await fetch(`${API_BASE}/companies`, {
+          method: 'POST',
+          headers: createHeaders,
+          credentials: 'include',
+          body: JSON.stringify({ name: companyName, industry: payload.industry })
+        });
+        const createResult = await createResp.json().catch(() => null);
+        if (createResp.ok && (createResult?.data?.company || createResult?.data)) {
+          const companyObj = createResult.data.company || createResult.data;
+          payload.company = companyObj._id || companyObj.id || companyObj;
+        } else {
+          alert(createResult?.message || 'Failed to create company for job.');
+          return;
+        }
+      } catch (err) {
+        console.error('Error creating company:', err);
+        alert('Network error while creating company.');
+        return;
+      }
     }
-    if (!token && !document.cookie.includes('token=')) {
+
+    if (!token && !hasSession) {
       alert('Authentication required. Please sign in.');
       return;
     }
