@@ -444,6 +444,7 @@
                     </tbody>
                 </table>
             </div>
+            <div id="jobTablePagination" class="mt-3"></div>
             
             <p class="mt-4 text-muted fst-italic text-sm">
                 * Click 'Edit' or a Job Title to open the details modal.
@@ -1926,19 +1927,35 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
           return;
         }
 
-        const rows = jobs.map(job => {
-          const id = job._id || job.id || '';
-          const title = escapeHtml(job.title || 'Untitled');
-          const company = escapeHtml((job.company && job.company.name) || job.companyName || 'Company');
-          const apps = job.applicationCount != null ? String(job.applicationCount) : '-';
-          const loc = formatJobLocation(job.location || job.jobLocation || null);
-          const status = job.isExpired ? 'Expired' : (job.isDraft ? 'Draft' : 'Active');
+        // Paginate Job Management table
+        const jobTablePagination = document.getElementById('jobTablePagination');
+        const pageSizeTable = 10;
+        const renderJobTablePage = (page) => {
+          window._companyJobsTablePage = page;
+          const pageJobs = jobs.slice((page - 1) * pageSizeTable, page * pageSizeTable);
+          const rowsHtml = pageJobs.map(job => {
+            const id = job._id || job.id || '';
+            const title = escapeHtml(job.title || 'Untitled');
+            const company = escapeHtml((job.company && job.company.name) || job.companyName || 'Company');
+            const apps = job.applicationCount != null ? String(job.applicationCount) : '-';
+            const loc = formatJobLocation(job.location || job.jobLocation || null);
+            const status = job.isExpired ? 'Expired' : (job.isDraft ? 'Draft' : 'Active');
+            return `<tr data-job-id="${escapeHtml(id)}"><td><a href="jobs/jobDetails.html?id=${encodeURIComponent(id)}" class="text-decoration-none">${title}</a><div class="text-muted small">${company}</div></td><td>${escapeHtml(loc)}</td><td class="text-center">${escapeHtml(apps)}</td><td class="text-center">${escapeHtml(status)}</td><td class="text-center"><a class="btn btn-sm btn-outline-primary" href="addEdit/job-post.html?edit=${encodeURIComponent(id)}">Edit</a><button type="button" class="btn btn-sm btn-outline-danger ms-2 remove-job-btn" data-job-id="${escapeHtml(id)}">Remove</button></td></tr>`;
+          }).join('');
+          tbody.innerHTML = rowsHtml || '<tr><td colspan="5" class="text-muted small">No jobs found.</td></tr>';
 
-          // Align with table headers: Job Title (with company), Location, Applicants, Status, Action
-          return `<tr data-job-id="${escapeHtml(id)}"><td><a href="jobs/jobDetails.html?id=${encodeURIComponent(id)}" class="text-decoration-none">${title}</a><div class="text-muted small">${company}</div></td><td>${escapeHtml(loc)}</td><td class="text-center">${escapeHtml(apps)}</td><td class="text-center">${escapeHtml(status)}</td><td class="text-center"><a class="btn btn-sm btn-outline-primary" href="addEdit/job-post.html?edit=${encodeURIComponent(id)}">Edit</a></td></tr>`;
-        }).join('');
+          renderListPagination(jobTablePagination, {
+            currentPage: page,
+            totalItems: jobs.length,
+            pageSize: pageSizeTable,
+            label: 'jobs',
+            onPageChange: renderJobTablePage,
+          });
+        };
 
-        tbody.innerHTML = rows;
+        const totalPagesTable = Math.max(1, Math.ceil(jobs.length / pageSizeTable));
+        const initialTablePage = Math.min(Math.max(window._companyJobsTablePage || 1, 1), totalPagesTable);
+        renderJobTablePage(initialTablePage);
 
         // Also populate the small dashboard Job List preview (if present)
         if (dashList) {
