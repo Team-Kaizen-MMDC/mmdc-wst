@@ -3975,6 +3975,83 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           }
         }
 
+        // Generate PDF and trigger download using jsPDF + autoTable (client-side)
+        function generateApplicationsPDF(apps) {
+          apps = apps || [];
+          function loadScript(src) {
+            return new Promise(function(resolve, reject){
+              var s = document.createElement('script');
+              s.src = src;
+              s.onload = resolve;
+              s.onerror = reject;
+              document.head.appendChild(s);
+            });
+          }
+
+          var jspdfUrl = 'https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js';
+          var autoUrl = 'https://cdn.jsdelivr.net/npm/jspdf-autotable@3.5.28/dist/jspdf.plugin.autotable.min.js';
+
+          (function ensureLibs(){
+            var p = Promise.resolve();
+            if (!window.jspdf) p = p.then(function(){ return loadScript(jspdfUrl); });
+            p = p.then(function(){ return loadScript(autoUrl); });
+            return p;
+          })().then(function(){
+            try {
+              var jsPDF = window.jspdf && window.jspdf.jsPDF ? window.jspdf.jsPDF : (window.jsPDF || null);
+              if (!jsPDF) throw new Error('jsPDF not available');
+              var doc = new jsPDF('p','pt','a4');
+              var title = 'Applications Report';
+              var now = new Date();
+              var meta = 'Generated: ' + now.toLocaleString();
+              doc.setFontSize(14);
+              doc.text(title, 40, 40);
+              doc.setFontSize(9);
+              doc.text(meta, 40, 56);
+
+              var columns = ['Job Title','Company','Location','Date Applied','Status','Interview Date','Interview Location','Employer Notes'];
+              var rows = apps.map(function(a){
+                var jobTitle = a.job && a.job.title ? a.job.title : '';
+                var company = a.job && a.job.company && a.job.company.name ? a.job.company.name : '';
+                var prefecture = a.job && a.job.location && a.job.location.prefecture ? a.job.location.prefecture : '';
+                var city = a.job && a.job.location && a.job.location.city ? a.job.location.city : '';
+                var location = city ? city + ', ' + prefecture : prefecture;
+                var date = a.createdAt ? new Date(a.createdAt).toLocaleDateString() : '';
+                var status = a.status || '';
+                var interviewDate = a.interview && a.interview.date ? new Date(a.interview.date).toLocaleDateString() : '';
+                var interviewLoc = a.interview && a.interview.location ? a.interview.location : '';
+                var notes = a.employerNotes || '';
+                return [jobTitle, company, location, date, status, interviewDate, interviewLoc, notes];
+              });
+
+              if (doc.autoTable) {
+                doc.autoTable({ head: [columns], body: rows, startY: 72, styles: { fontSize: 8 }, headStyles: { fillColor: [22,78,135] } });
+                doc.save('applications-report-' + now.toISOString().slice(0,10) + '.pdf');
+              } else if (window.jspdfAutoTable) {
+                window.jspdfAutoTable(doc, { head: [columns], body: rows, startY: 72 });
+                doc.save('applications-report-' + now.toISOString().slice(0,10) + '.pdf');
+              } else {
+                var y = 72;
+                doc.setFontSize(8);
+                rows.forEach(function(r){
+                  var line = r.join(' | ');
+                  doc.text(line, 40, y);
+                  y += 12;
+                  if (y > 800) { doc.addPage(); y = 40; }
+                });
+                doc.save('applications-report-' + now.toISOString().slice(0,10) + '.pdf');
+              }
+
+            } catch(e) {
+              console.warn('Generate PDF error', e);
+              alert('Unable to generate PDF report: ' + e.message);
+            }
+          }).catch(function(err){
+            console.warn('Load jsPDF error', err);
+            alert('Failed to load PDF libraries. Try again later.');
+          });
+        }
+
         async function loadApplications() {
           var token = document.cookie.split('; ').find(function(r){ return r.startsWith('token='); });
           if (!token) return;
@@ -4080,7 +4157,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
             modal.addEventListener('show.bs.modal', loadApplications);
           }
 
-          // Download report button handler
+          // Download report button handler (PDF)
           var dl = document.getElementById('downloadReportBtn');
           if (dl) {
             dl.addEventListener('click', function() {
@@ -4088,12 +4165,12 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
               if (!apps || apps.length === 0) {
                 // Reload then download
                 loadApplications().then(function() {
-                  generateApplicationsCSV(window._applicationsForReport || []);
+                  generateApplicationsPDF(window._applicationsForReport || []);
                 }).catch(function(){
-                  generateApplicationsCSV(window._applicationsForReport || []);
+                  generateApplicationsPDF(window._applicationsForReport || []);
                 });
               } else {
-                generateApplicationsCSV(apps);
+                generateApplicationsPDF(apps);
               }
             });
           }
