@@ -126,6 +126,35 @@ if (status) {
   // Get total count
   const total = await Job.countDocuments(query);
 
+  // Compute application counts per job (attach as applicationCount)
+  let jobsWithCounts = jobs;
+  try {
+    const Application = require("../models/Application");
+    const jobIds = jobs.map((j) => j._id);
+    if (jobIds.length) {
+      const counts = await Application.aggregate([
+        { $match: { job: { $in: jobIds } } },
+        { $group: { _id: "$job", count: { $sum: 1 } } },
+      ]);
+      const countsMap = counts.reduce((m, c) => {
+        m[c._id.toString()] = c.count;
+        return m;
+      }, {});
+
+      jobsWithCounts = jobs.map((j) => {
+        // convert to plain object so we can safely attach a field
+        const obj = j.toObject ? j.toObject() : JSON.parse(JSON.stringify(j));
+        obj.applicationCount = countsMap[j._id.toString()] || 0;
+        return obj;
+      });
+    } else {
+      jobsWithCounts = jobs.map((j) => (j.toObject ? j.toObject() : JSON.parse(JSON.stringify(j))));
+    }
+  } catch (err) {
+    // If anything goes wrong, fall back to original jobs array
+    jobsWithCounts = jobs.map((j) => (j.toObject ? j.toObject() : JSON.parse(JSON.stringify(j))));
+  }
+
   // Pagination info
   const pagination = {
     page: pageNum,
@@ -138,7 +167,7 @@ if (status) {
 
   res.status(200).json(
     new ApiResponse(200, "Jobs retrieved successfully", {
-      jobs,
+      jobs: jobsWithCounts,
       pagination,
     }),
   );
