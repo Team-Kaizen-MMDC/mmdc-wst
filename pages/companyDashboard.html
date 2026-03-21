@@ -1995,63 +1995,42 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
           return;
         }
 
-        // 1) Get employer's jobs
-        const jobsRes = await fetch(`${API_BASE}/jobs/my/jobs`, {
+        // 1) Get aggregated company applications summary
+        const summaryRes = await fetch(`${API_BASE}/jobs/my/applications/summary`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        if (!jobsRes.ok) {
-          console.warn('loadCompanyApplicants: failed to fetch jobs', jobsRes.status);
+        if (!summaryRes.ok) {
+          console.warn('loadCompanyApplicants: failed to fetch company summary', summaryRes.status);
           const recentEl = document.getElementById('recentApplicantsList');
-          if (recentEl) recentEl.innerHTML = '<div class="text-muted small">Failed to load jobs.</div>';
+          if (recentEl) recentEl.innerHTML = '<div class="text-muted small">Failed to load applicants summary.</div>';
           return;
         }
-        const jobsJson = await jobsRes.json();
-        console.log('loadCompanyApplicants: jobsJson:', jobsJson);
-        const jobs = jobsJson.data?.jobs || [];
+        const summaryJson = await summaryRes.json();
+        console.log('loadCompanyApplicants: summaryJson:', summaryJson);
+        const jobs = summaryJson.data?.jobs || [];
+        const totalApplications = summaryJson.data?.totalApplications || 0;
+        const statusSummary = summaryJson.data?.statusSummary || [];
+        const recentApplications = summaryJson.data?.recentApplications || [];
         // initialize debug payload early so the panel can render even if no jobs
-        window._companyDebug = { jobs: jobs, responses: [] };
+        window._companyDebug = { jobs: jobs, summary: summaryJson.data };
 
         if (!jobs.length) {
           const recentEl = document.getElementById('recentApplicantsList');
           if (recentEl) recentEl.innerHTML = '<div class="text-muted small">No jobs posted yet.</div>';
-          // Zero counts
-          document.getElementById('stat-applied-company').textContent = '0';
+          // Zero counts (but show totalApplications if any)
+          document.getElementById('stat-applied-company').textContent = String(totalApplications || 0);
           document.getElementById('stat-pending-company').textContent = '0';
           document.getElementById('stat-interview-company').textContent = '0';
           document.getElementById('stat-rejected-company').textContent = '0';
           return;
         }
 
-          // 2) For each job, fetch recent applications (parallel)
-        // Also collect raw responses for debugging UI
-        const debugResponses = [];
-        const appPromises = jobs.map(async (j) => {
-          try {
-            const r = await fetch(`${API_BASE}/jobs/${j._id}/applications?limit=50`, {
-              headers: { Authorization: `Bearer ${token}` },
-            });
-            const text = await r.text();
-            // try parse JSON
-            let jdata = null;
-            try { jdata = JSON.parse(text); } catch (e) { jdata = { parseError: e.message, raw: text }; }
-            debugResponses.push({ jobId: j._id, status: r.status, body: jdata });
-            if (!r.ok) return [];
-            // include job reference on each app for display
-            return (jdata.data?.applications || []).map(a => Object.assign({ _job: { _id: j._id, title: j.title } }, a));
-          } catch (e) {
-            console.warn('error fetching apps for job', j._id, e);
-            debugResponses.push({ jobId: j._id, error: e.message });
-            return [];
-          }
-        });
-
-        const appsArrays = await Promise.all(appPromises);
-        const allApps = appsArrays.flat();
-
-        // Attach debug panel
-        attachDebugPanel(jobs, debugResponses);
-
-        // Compute counts
+        // Compute counts from statusSummary
+        const statusMap = {};
+        statusSummary.forEach(s => { statusMap[s._id] = s.count; });
+        const pending = (statusMap['submitted'] || 0) + (statusMap['reviewing'] || 0);
+        const interview = statusMap['interview'] || 0;
+        const rejected = statusMap['rejected'] || 0;
         const total = allApps.length;
         const pending = allApps.filter(a => ['submitted','reviewing'].includes(a.status)).length;
         const interview = allApps.filter(a => a.status === 'interview').length;
@@ -2062,21 +2041,21 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
         const elPending = document.getElementById('stat-pending-company');
         const elInterview = document.getElementById('stat-interview-company');
         const elRejected = document.getElementById('stat-rejected-company');
-        if (elApplied) elApplied.textContent = total;
-        if (elPending) elPending.textContent = pending;
-        if (elInterview) elInterview.textContent = interview;
-        if (elRejected) elRejected.textContent = rejected;
+        if (elApplied) elApplied.textContent = String(totalApplications);
+        if (elPending) elPending.textContent = String(pending);
+        if (elInterview) elInterview.textContent = String(interview);
+        if (elRejected) elRejected.textContent = String(rejected);
 
-        // Render recent applicants (most recent first)
+        // Render recent applicants (most recent first) from aggregated endpoint
         const recentEl = document.getElementById('recentApplicantsList');
         if (recentEl) {
-          if (allApps.length === 0) {
+          if (!recentApplications || recentApplications.length === 0) {
             recentEl.innerHTML = '<div class="text-muted small">No applicants yet.</div>';
           } else {
-            const sorted = allApps.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0,8);
+            const sorted = recentApplications.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0,8);
             recentEl.innerHTML = sorted.map(a => {
               const applicant = (a.applicant && (a.applicant.profile ? (a.applicant.profile.firstName || '') + ' ' + (a.applicant.profile.lastName || '') : a.applicant.email)) || 'Applicant';
-              const jobTitle = a._job && a._job.title ? a._job.title : (a.job && a.job.title ? a.job.title : 'Job');
+              const jobTitle = (a.job && a.job.title) ? a.job.title : (a._job && a._job.title) ? a._job.title : 'Job';
               const date = a.createdAt ? new Date(a.createdAt).toLocaleDateString() : '–';
               const status = a.status || '-';
               return `<a href="#" class="list-group-item list-group-item-action py-2"><div class="fw-semibold">${escapeHtml(jobTitle)} — ${escapeHtml(applicant)}</div><div class="small text-muted">${escapeHtml(date)} · ${escapeHtml(status)}</div></a>`;
