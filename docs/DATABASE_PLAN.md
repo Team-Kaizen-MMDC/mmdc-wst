@@ -378,10 +378,10 @@ Admin-managed job postings with a simplified flat structure — no company/user 
 | | Read | Search / view listings | `GET /api/v1/jobs` / `GET /api/v1/jobs/:id` |
 | | Update | Edit job details | `PUT /api/v1/jobs/:id` |
 | | Delete | Soft-delete job | `DELETE /api/v1/jobs/:id` |
-| **Admin Jobs** | Create | Admin posts a job | `POST /api/v1/admin-jobs` |
-| | Read | List / view admin jobs | `GET /api/v1/admin-jobs` / `GET /api/v1/admin-jobs/:id` |
-| | Update | Edit admin job | `PATCH /api/v1/admin-jobs/:id` |
-| | Delete | Remove admin job | `DELETE /api/v1/admin-jobs/:id` |
+| **Admin Jobs** | Create | Admin posts a job (preferred via jobs endpoint) | `POST /api/v1/jobs` |
+| | Read | List / view admin jobs (legacy endpoint) | `GET /api/v1/admin-jobs` / `GET /api/v1/admin-jobs/:id` |
+| | Update | Edit admin job (legacy endpoint) | `PATCH /api/v1/admin-jobs/:id` |
+| | Delete | Remove admin job (legacy endpoint) | `DELETE /api/v1/admin-jobs/:id` |
 
 ### Application Management
 
@@ -463,21 +463,21 @@ curl -X POST http://localhost:3000/api/v1/profile \
   }'
 ```
 
-### Create Admin Job
+### Create Admin Job (Admin or employer)
 
 ```bash
-curl -X POST http://localhost:3000/api/v1/admin-jobs \
+curl -X POST http://localhost:3000/api/v1/jobs \
   -H "Authorization: Bearer <admin_token>" \
   -H "Content-Type: application/json" \
   -d '{
     "title": "Factory Worker",
-    "companyName": "Yamamoto Manufacturing",
+    "company": "<company_id_or_name>",
     "industry": "Manufacturing",
     "location": { "prefecture": "Aichi", "city": "Nagoya" },
     "compensation": { "salaryMin": 200000, "salaryMax": 250000, "currency": "JPY" },
     "employmentType": "Full-time",
-    "japaneseLanguage": "N4",
-    "supportSponsorship": "Yes"
+    "japaneseLevel": "N4",
+    "supportSponsorship": true
   }'
 ```
 

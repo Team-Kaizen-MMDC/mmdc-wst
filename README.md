@@ -218,6 +218,23 @@ ADMIN_EMAIL=me@test.local ADMIN_PASSWORD=MyPass@99 npm run seed:admin
 
 > **Note:** This account exists in MongoDB Atlas (`japansswdb`). Do not use these credentials in production.
 
+### Posting jobs as admin / import script
+
+Admins can create job listings via the main jobs endpoint (preferred):
+
+POST /api/v1/jobs (Authorization: Bearer <admin_token>) — the request body must include a valid company ObjectId in `company`. If an admin provides a company name or omits `company`, the frontend/importer supports auto-creating a company with required contact fields and then posting the job.
+
+To import the provided japansswdb seed files (companies + jobs):
+
+```bash
+# from repo root (ensure backend/.env contains MONGODB_URI)
+node backend/scripts/import_japansswdb.js --companies ~/Downloads/japansswdb.companies.json --jobs ~/Downloads/japansswdb.jobs.json
+```
+
+Import results are written to `backend/scripts/import_report.json`.
+
+(See docs/DATABASE_PLAN.md for updated API examples.)
+
 ## Development
 
 - HTML files live in the repo root and [pages/](pages/)
