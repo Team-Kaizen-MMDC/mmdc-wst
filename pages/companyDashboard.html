@@ -1883,7 +1883,7 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
           const status = job.isExpired ? 'Expired' : (job.isDraft ? 'Draft' : 'Active');
 
           // Align with table headers: Job Title (with company), Location, Applicants, Status, Action
-          return `<tr data-job-id="${escapeHtml(id)}"><td><a href="../jobs/jobDetails.html?id=${encodeURIComponent(id)}" class="text-decoration-none">${title}</a><div class="text-muted small">${company}</div></td><td>${escapeHtml(loc)}</td><td class="text-center">${escapeHtml(apps)}</td><td class="text-center">${escapeHtml(status)}</td><td class="text-center"><a class="btn btn-sm btn-outline-primary" href="../jobs/postJob.html?edit=${encodeURIComponent(id)}">Edit</a></td></tr>`;
+          return `<tr data-job-id="${escapeHtml(id)}"><td><a href="jobs/jobDetails.html?id=${encodeURIComponent(id)}" class="text-decoration-none">${title}</a><div class="text-muted small">${company}</div></td><td>${escapeHtml(loc)}</td><td class="text-center">${escapeHtml(apps)}</td><td class="text-center">${escapeHtml(status)}</td><td class="text-center"><a class="btn btn-sm btn-outline-primary" href="../jobs/postJob.html?edit=${encodeURIComponent(id)}">Edit</a></td></tr>`;
         }).join('');
 
         tbody.innerHTML = rows;
@@ -1896,7 +1896,7 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
             const title = escapeHtml(job.title || 'Untitled');
             const loc = escapeHtml(formatJobLocation(job.location || job.jobLocation || null));
             const meta = escapeHtml(job.japaneseLevel || job.industry || '');
-            return `<div class="list-group-item px-0 py-3"><div class="d-flex align-items-center"><div class="bg-light rounded me-3" style="width: 40px; height: 40px"></div><div class="flex-grow-1"><p class="mb-0 fw-semibold small">${title}</p><small class="text-muted d-block">${loc}</small><small class="text-muted">${meta}</small></div><a href="../jobs/jobDetails.html?id=${encodeURIComponent(id)}" class="text-danger small ms-2">view</a></div></div>`;
+            return `<div class="list-group-item px-0 py-3"><div class="d-flex align-items-center"><div class="bg-light rounded me-3" style="width: 40px; height: 40px"></div><div class="flex-grow-1"><p class="mb-0 fw-semibold small">${title}</p><small class="text-muted d-block">${loc}</small><small class="text-muted">${meta}</small></div><a href="jobs/jobDetails.html?id=${encodeURIComponent(id)}" class="text-danger small ms-2">view</a></div></div>`;
           }).join('');
           dashList.innerHTML = preview;
         }
