@@ -1944,6 +1944,14 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
           }).join('');
           tbody.innerHTML = rowsHtml || '<tr><td colspan="5" class="text-muted small">No jobs found.</td></tr>';
 
+          // Attach remove handlers to newly rendered rows
+          tbody.querySelectorAll('.remove-job-btn').forEach(btn => {
+            btn.addEventListener('click', async (e) => {
+              const jobId = btn.getAttribute('data-job-id');
+              await deleteJob(jobId);
+            });
+          });
+
           renderListPagination(jobTablePagination, {
             currentPage: page,
             totalItems: jobs.length,
@@ -2002,6 +2010,31 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
     } else {
       loadCompanyJobs();
     }
+    async function deleteJob(jobId) {
+      if (!jobId) return;
+      if (!confirm('Are you sure you want to remove this job? This will archive the job.')) return;
+      const token = getToken();
+      const headers = token ? { Authorization: `Bearer ${token}` } : {};
+      try {
+        const res = await fetch(`${API_BASE}/jobs/${encodeURIComponent(jobId)}`, {
+          method: 'DELETE',
+          headers,
+        });
+        const body = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          showTemporaryMessage(body.message || 'Failed to remove job', 'bg-red-600');
+          return;
+        }
+        // Remove row from the table
+        const row = document.querySelector(`tr[data-job-id="${jobId}"]`);
+        if (row) row.remove();
+        showTemporaryMessage(body.message || 'Job removed', 'bg-indigo-600');
+      } catch (err) {
+        console.error('deleteJob error', err);
+        showTemporaryMessage('Error removing job', 'bg-red-600');
+      }
+    }
+
     function getApplicantDisplayName(entity) {
           if (!entity) return 'Applicant';
           const profile = entity.profile || {}; 
