@@ -2104,44 +2104,48 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
         dashboardTabBtn.addEventListener('shown.bs.tab', loadCompanyApplicants);
       }
 
-      // Debug panel toggle
-      var dbg = document.createElement('div');
-      dbg.id = 'company-dashboard-debug';
-      dbg.style.position = 'fixed';
-      dbg.style.right = '12px';
-      dbg.style.bottom = '12px';
-      dbg.style.zIndex = 9999;
-      document.body.appendChild(dbg);
+      // Debug UI: persistent toggle button + hidden panel
+      var dbgBtn = document.createElement('button');
+      dbgBtn.id = 'company-debug-btn';
+      dbgBtn.className = 'btn btn-sm btn-outline-secondary';
+      dbgBtn.textContent = 'Show API Debug';
+      dbgBtn.style.position = 'fixed';
+      dbgBtn.style.right = '12px';
+      dbgBtn.style.bottom = '12px';
+      dbgBtn.style.zIndex = 9999;
+      dbgBtn.style.opacity = 0.9;
+      document.body.appendChild(dbgBtn);
+
+      var dbgPanel = document.createElement('div');
+      dbgPanel.id = 'company-dashboard-debug-panel';
+      dbgPanel.style.position = 'fixed';
+      dbgPanel.style.right = '12px';
+      dbgPanel.style.bottom = '52px';
+      dbgPanel.style.zIndex = 9999;
+      dbgPanel.style.width = '480px';
+      dbgPanel.style.maxHeight = '60vh';
+      dbgPanel.style.overflow = 'auto';
+      dbgPanel.style.background = 'white';
+      dbgPanel.style.border = '1px solid #ddd';
+      dbgPanel.style.padding = '12px';
+      dbgPanel.style.boxShadow = '0 6px 18px rgba(0,0,0,0.1)';
+      dbgPanel.style.display = 'none';
+      document.body.appendChild(dbgPanel);
+
+      dbgBtn.addEventListener('click', function(){
+        if (dbgPanel.style.display === 'none') dbgPanel.style.display = 'block'; else dbgPanel.style.display = 'none';
+      });
     });
 
     function attachDebugPanel(jobs, responses) {
       try {
-        var dbg = document.getElementById('company-dashboard-debug');
-        if (!dbg) return;
-        dbg.innerHTML = '';
-        var btn = document.createElement('button');
-        btn.className = 'btn btn-sm btn-outline-secondary';
-        btn.textContent = 'Show API Debug';
-        btn.onclick = function(){
-          var panel = document.getElementById('company-dashboard-debug-panel');
-          if (panel) { panel.remove(); return; }
-          panel = document.createElement('div');
-          panel.id = 'company-dashboard-debug-panel';
-          panel.style.width = '480px';
-          panel.style.maxHeight = '60vh';
-          panel.style.overflow = 'auto';
-          panel.style.background = 'white';
-          panel.style.border = '1px solid #ddd';
-          panel.style.padding = '12px';
-          panel.style.boxShadow = '0 6px 18px rgba(0,0,0,0.1)';
-          var html = '<h6>Jobs ('+jobs.length+')</h6>';
-          html += '<pre style="font-size:11px;white-space:pre-wrap;">'+escapeHtml(JSON.stringify(jobs,null,2))+'</pre>';
-          html += '<h6>Responses</h6>';
-          html += '<pre style="font-size:11px;white-space:pre-wrap;">'+escapeHtml(JSON.stringify(responses,null,2))+'</pre>';
-          panel.innerHTML = html;
-          dbg.appendChild(panel);
-        };
-        dbg.appendChild(btn);
+        var panel = document.getElementById('company-dashboard-debug-panel');
+        if (!panel) return;
+        var html = '<h6>Jobs ('+jobs.length+')</h6>';
+        html += '<pre style="font-size:11px;white-space:pre-wrap;">'+escapeHtml(JSON.stringify(jobs,null,2))+'</pre>';
+        html += '<h6>Responses</h6>';
+        html += '<pre style="font-size:11px;white-space:pre-wrap;">'+escapeHtml(JSON.stringify(responses,null,2))+'</pre>';
+        panel.innerHTML = html;
       } catch(e){ console.warn('attachDebugPanel error', e); }
     }
   </script>
