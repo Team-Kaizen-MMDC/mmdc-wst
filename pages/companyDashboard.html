@@ -363,7 +363,7 @@
                     >
                   </div>
 
-                  <div class="list-group list-group-flush">
+                  <div id="dashboardJobList" class="list-group list-group-flush">
                     <div class="list-group-item px-0 py-3">
                       <div class="d-flex align-items-center">
                         <div
@@ -1887,6 +1887,19 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
         }).join('');
 
         tbody.innerHTML = rows;
+
+        // Also populate the small dashboard Job List preview (if present)
+        const dashList = document.getElementById('dashboardJobList');
+        if (dashList) {
+          const preview = jobs.slice(0,6).map(job => {
+            const id = job._id || job.id || '';
+            const title = escapeHtml(job.title || 'Untitled');
+            const loc = escapeHtml(formatJobLocation(job.location || job.jobLocation || null));
+            const meta = escapeHtml(job.japaneseLevel || job.industry || '');
+            return `<div class="list-group-item px-0 py-3"><div class="d-flex align-items-center"><div class="bg-light rounded me-3" style="width: 40px; height: 40px"></div><div class="flex-grow-1"><p class="mb-0 fw-semibold small">${title}</p><small class="text-muted d-block">${loc}</small><small class="text-muted">${meta}</small></div><a href="../jobs/jobDetails.html?id=${encodeURIComponent(id)}" class="text-danger small ms-2">view</a></div></div>`;
+          }).join('');
+          dashList.innerHTML = preview;
+        }
       } catch (err) {
         console.warn('loadCompanyJobs: error', err);
         tbody.innerHTML = '<tr><td colspan="6" class="text-muted small">Error loading jobs.</td></tr>';
