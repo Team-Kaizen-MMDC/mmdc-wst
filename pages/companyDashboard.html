@@ -2139,14 +2139,26 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
 
     function attachDebugPanel(jobs, responses) {
       try {
+        // Store debug payload globally so the toggle button can render it later
+        window._companyDebug = { jobs: jobs || [], responses: responses || [] };
         var panel = document.getElementById('company-dashboard-debug-panel');
         if (!panel) return;
-        var html = '<h6>Jobs ('+jobs.length+')</h6>';
-        html += '<pre style="font-size:11px;white-space:pre-wrap;">'+escapeHtml(JSON.stringify(jobs,null,2))+'</pre>';
-        html += '<h6>Responses</h6>';
-        html += '<pre style="font-size:11px;white-space:pre-wrap;">'+escapeHtml(JSON.stringify(responses,null,2))+'</pre>';
+        var jobsHtml = window._companyDebug.jobs && window._companyDebug.jobs.length
+          ? '<pre style="font-size:11px;white-space:pre-wrap;">'+escapeHtml(JSON.stringify(window._companyDebug.jobs,null,2))+'</pre>'
+          : '<div class="text-muted small">No jobs data captured.</div>';
+        var respHtml = window._companyDebug.responses && window._companyDebug.responses.length
+          ? '<pre style="font-size:11px;white-space:pre-wrap;">'+escapeHtml(JSON.stringify(window._companyDebug.responses,null,2))+'</pre>'
+          : '<div class="text-muted small">No responses captured.</div>';
+
+        var html = '<h6>Jobs (' + (window._companyDebug.jobs.length || 0) + ')</h6>' + jobsHtml + '<h6>Responses</h6>' + respHtml;
         panel.innerHTML = html;
-      } catch(e){ console.warn('attachDebugPanel error', e); }
+      } catch(e){
+        console.warn('attachDebugPanel error', e);
+        try {
+          var panel = document.getElementById('company-dashboard-debug-panel');
+          if (panel) panel.innerHTML = '<div class="text-danger small">Debug render error</div>';
+        } catch(_){}
+      }
     }
   </script>
   </body>
