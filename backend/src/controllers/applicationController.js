@@ -248,9 +248,15 @@ exports.getCompanyApplicationsSummary = asyncHandler(async (req, res, next) => {
   const { companyId } = req.query;
   let company = null;
 
-  if (req.user.role === "admin" && companyId) {
-    company = companyId;
+  if (req.user.role === "admin") {
+    // Admins can optionally pass companyId; if not provided, aggregate across all jobs
+    if (companyId) {
+      company = companyId;
+    } else {
+      company = null; // interpret as "all companies"
+    }
   } else {
+    // Employers must be associated with a company
     if (!req.user.company) {
       return next(new ApiError(400, "No company associated with user"));
     }
