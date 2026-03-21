@@ -387,12 +387,13 @@ Admin-managed job postings with a simplified flat structure — no company/user 
 
 | Feature | Operation | Description | Endpoint |
 |---|---|---|---|
-| **Applications** | Create | Jobseeker submits application | `POST /api/v1/applications` |
+| **Applications** | Create | Jobseeker submits application | `POST /api/v1/jobs/:jobId/apply` |
 | | Read (own) | Jobseeker views own applications | `GET /api/v1/applications/me` |
-| | Read (job) | Employer views job applications | `GET /api/v1/applications/job/:jobId` |
+| | Read (single) | Applicant or employer views one application | `GET /api/v1/applications/:id` |
+| | Read (job) | Employer views all applications for a job | `GET /api/v1/jobs/:jobId/applications` |
 | | Update (status) | Employer updates status | `PUT /api/v1/applications/:id/status` |
-| | Update (notes) | Employer adds notes | `PUT /api/v1/applications/:id/notes` |
-| | Delete | Jobseeker withdraws | `DELETE /api/v1/applications/:id` |
+| | Update (notes) | Employer adds private notes | `PUT /api/v1/applications/:id/notes` |
+| | Withdraw | Jobseeker withdraws application | `PUT /api/v1/applications/:id/withdraw` |
 
 ### Content Management (Admin)
 

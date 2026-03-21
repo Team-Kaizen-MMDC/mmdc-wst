@@ -1376,6 +1376,47 @@ curl -X POST http://localhost:5000/api/v1/jobs \
       "applicationDeadline": "2026-12-31"
     }
   }'
+
+# Apply to Job (Jobseeker)
+curl -X POST http://localhost:5000/api/v1/jobs/65job123abc456def/apply \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+  -d '{
+    "coverLetter": "I am very interested in this position and have 3 years of relevant experience.",
+    "resumePath": "https://japanssw-s3-bucket.s3.ap-southeast-1.amazonaws.com/resumes/abc123.pdf"
+  }'
+
+# Get My Applications (Jobseeker) — optional filters: ?status=reviewing&page=1&limit=10
+curl http://localhost:5000/api/v1/applications/me \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+
+# Get Single Application
+curl http://localhost:5000/api/v1/applications/65app123abc456def \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+
+# Withdraw Application (Jobseeker)
+curl -X PUT http://localhost:5000/api/v1/applications/65app123abc456def/withdraw \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+
+# Update Application Status (Employer)
+curl -X PUT http://localhost:5000/api/v1/applications/65app123abc456def/status \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+  -d '{
+    "status": "interview",
+    "notes": "Shortlisted — scheduling interview",
+    "interview": {
+      "date": "2026-02-05T10:00:00.000Z",
+      "location": "Company Office, Meeting Room A",
+      "notes": "Please bring your resume"
+    }
+  }'
+
+# Add Employer Notes
+curl -X PUT http://localhost:5000/api/v1/applications/65app123abc456def/notes \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+  -d '{"notes": "Strong candidate — schedule final interview."}'
 ```
 
 ## Using Postman

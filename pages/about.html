@@ -342,51 +342,110 @@
     <!-- Animation Controller -->
     <script src="../assets/js/features/animations.js"></script>
 
-    <!-- Client-side: load About content from backend API -->
+    <!-- Client-side: load About content from backend API (with i18n fallback) -->
     <script>
-      (async function () {
+      (function () {
         function escapeHtml(str) {
           return String(str)
             .replace(/&/g, "&amp;")
             .replace(/</g, "&lt;")
             .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
+            .replace(/\"/g, "&quot;")
             .replace(/'/g, "&#39;");
         }
 
         const container = document.getElementById("about-content");
         if (!container) return;
 
-        try {
-          // Fetch all documents; prefer the one with slug 'about'
-          const res = await fetch("/api/abouts");
-          if (!res.ok) throw new Error(`API error ${res.status}`);
-          const docs = await res.json();
-          if (!Array.isArray(docs) || docs.length === 0) {
-            container.innerHTML =
-              '<p class="text-danger">No about content available.</p>';
-            return;
+        // Utility: try loading locale JSON from multiple candidate paths
+        async function loadLocaleJson(lang) {
+          if (!lang || lang === 'en') return null;
+          const candidates = [
+            `./locales/${lang}.json`,
+            `../locales/${lang}.json`,
+            `/locales/${lang}.json`,
+            `./i18n/${lang}.json`,
+            `../i18n/${lang}.json`,
+            `/i18n/${lang}.json`,
+            `../../locales/${lang}.json`,
+          ];
+          for (const c of candidates) {
+            try {
+              const res = await fetch(c);
+              if (res && res.ok) return await res.json();
+            } catch (e) {
+              // try next
+            }
           }
-
-          const data = docs.find((d) => d && d.slug === "about") || docs[0];
-
-          const paragraphs = (data.paragraphs || [])
-            .map((p) => `<p class="about-card__text">${escapeHtml(p)}</p>`)
-            .join("");
-
-          container.innerHTML = `
-            <h1 class="about-card__title">${escapeHtml(data.title || "About Us")}</h1>
-            ${paragraphs}
-            <h2 class="about-card__subtitle">Our Mission</h2>
-            <p class="about-card__text">${escapeHtml(data.mission || "")}</p>
-            <h2 class="about-card__subtitle">Our Vision</h2>
-            <p class="about-card__text">${escapeHtml(data.vision || "")}</p>
-          `;
-        } catch (err) {
-          console.error("Failed to load about content", err);
-          container.innerHTML =
-            '<p class="text-danger">Failed to load content. Please try again later.</p>';
+          return null;
         }
+
+        async function renderAbout() {
+          try {
+            // Fetch about documents from API
+            const res = await fetch("/api/abouts");
+            if (!res.ok) throw new Error(`API error ${res.status}`);
+            const docs = await res.json();
+            if (!Array.isArray(docs) || docs.length === 0) {
+              container.innerHTML =
+                '<p class="text-danger">No about content available.</p>';
+              return;
+            }
+
+            const data = docs.find((d) => d && d.slug === "about") || docs[0];
+
+            // Determine desired language: prefer stored preference, then document.lang
+            const preferred = (function(){
+              try { return localStorage.getItem('preferred_language') || document.documentElement.lang || 'en'; } catch(e){ return document.documentElement.lang || 'en'; }
+            })();
+
+            let locale = null;
+            if (preferred && preferred !== 'en') {
+              locale = await loadLocaleJson(preferred);
+            }
+
+            function t(key, fallback) {
+              if (locale && typeof locale[key] !== 'undefined') return locale[key];
+              return fallback || '';
+            }
+
+            // Build paragraphs: prefer translated keys like 'about.paragraphs.0' or 'about.lead'
+            let paragraphsHtml = '';
+            if (locale) {
+              if (locale['about.lead']) {
+                paragraphsHtml += `<p class="about-card__text">${escapeHtml(locale['about.lead'])}</p>`;
+              } else {
+                let i = 0;
+                while (locale[`about.paragraphs.${i}`]) {
+                  paragraphsHtml += `<p class="about-card__text">${escapeHtml(locale[`about.paragraphs.${i}`])}</p>`;
+                  i++;
+                }
+              }
+            }
+
+            if (!paragraphsHtml) {
+              const paragraphs = (data.paragraphs || []).map((p) => `<p class="about-card__text">${escapeHtml(p.text || p)}</p>`).join('');
+              paragraphsHtml = paragraphs;
+            }
+
+            const title = t('about.title', data.title || 'About Us');
+            const mission = t('about.mission', data.mission || '');
+            const vision = t('about.vision', data.vision || '');
+
+            container.innerHTML = `\n              <h1 class="about-card__title">${escapeHtml(title)}</h1>\n              ${paragraphsHtml}\n              <h2 class="about-card__subtitle">${escapeHtml(t('about.mission_label','Our Mission'))}</h2>\n              <p class="about-card__text">${escapeHtml(mission)}</p>\n              <h2 class="about-card__subtitle">${escapeHtml(t('about.vision_label','Our Vision'))}</h2>\n              <p class="about-card__text">${escapeHtml(vision)}</p>\n            `;
+
+          } catch (err) {
+            console.error("Failed to load about content", err);
+            container.innerHTML =
+              '<p class="text-danger">Failed to load content. Please try again later.</p>';
+          }
+        }
+
+        // Initial render
+        renderAbout();
+
+        // Re-render when i18n changes
+        document.addEventListener('i18n:languageChanged', function () { renderAbout(); });
       })();
     </script>
   </body>

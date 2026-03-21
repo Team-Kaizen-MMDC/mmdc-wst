@@ -1,11 +1,17 @@
-//jobDetails.js
+// assets/js/features/jobDetails.js
+// Job details page: loads job data and handles authenticated apply flow for jobseekers.
 
-const API_BASE_URL = "http://localhost:3000/api/v1";
+import { getCookie, getRoleFromToken } from "../modules/storage.js";
+
+const API_BASE =
+  window.location.port === "8000" ? "http://localhost:3000/api/v1" : "/api/v1";
+
 const jobDetail = document.getElementById("jobDetail");
 
+// ─── Helpers ────────────────────────────────────────────────────────────────
+
 function getQueryParam(name) {
-  const params = new URLSearchParams(window.location.search);
-  return params.get(name);
+  return new URLSearchParams(window.location.search).get(name);
 }
 
 function escapeHTML(value = "") {
@@ -22,15 +28,9 @@ function formatSalary(job) {
   const max = job.compensation?.salaryMax;
   const currency = job.compensation?.currency || "JPY";
   const period = job.compensation?.period || "monthly";
-
-  if (min && max) {
-    return `${currency} ${Number(min).toLocaleString()} - ${Number(max).toLocaleString()} / ${period}`;
-  }
-
-  if (min) {
-    return `${currency} ${Number(min).toLocaleString()} / ${period}`;
-  }
-
+  if (min && max)
+    return `${currency} ${Number(min).toLocaleString()} – ${Number(max).toLocaleString()} / ${period}`;
+  if (min) return `${currency} ${Number(min).toLocaleString()} / ${period}`;
   return "Not specified";
 }
 
@@ -40,17 +40,72 @@ function formatLocation(job) {
   return [city, prefecture].filter(Boolean).join(", ") || "Not specified";
 }
 
+function getAuthHeaders() {
+  const token = getCookie("token");
+  const headers = { "Content-Type": "application/json" };
+  if (token) headers["Authorization"] = `Bearer ${decodeURIComponent(token)}`;
+  return headers;
+}
+
+// ─── Auth state ─────────────────────────────────────────────────────────────
+
+function getAuthState() {
+  const isLoggedIn = getCookie("isLoggedIn") === "true";
+  const token = getCookie("token");
+  const role = getRoleFromToken();
+  return { isLoggedIn: isLoggedIn || !!token, role };
+}
+
+// ─── Already-applied check ───────────────────────────────────────────────────
+
+async function checkAlreadyApplied(jobId) {
+  try {
+    const res = await fetch(`${API_BASE}/applications/me?limit=100`, {
+      headers: getAuthHeaders(),
+    });
+    if (!res.ok) return false;
+    const data = await res.json();
+    const apps = data.data?.applications || [];
+    return apps.some((a) => (a.job?._id || a.job) === jobId);
+  } catch {
+    return false;
+  }
+}
+
+// ─── Apply CTA html ──────────────────────────────────────────────────────────
+
+function applyButtonHtml(isLoggedIn, role, alreadyApplied) {
+  if (!isLoggedIn) {
+    return `<a href="../signin.html" class="btn btn-primary rounded-pill px-4">Login to Apply</a>`;
+  }
+  if (role === "jobseeker") {
+    if (alreadyApplied) {
+      return `<button class="btn btn-success rounded-pill px-4" disabled aria-disabled="true">✓ Already Applied</button>`;
+    }
+    return `<button
+        id="applyBtn"
+        class="btn btn-primary rounded-pill px-4"
+        data-bs-toggle="modal"
+        data-bs-target="#applyModal"
+        aria-label="Open application form"
+      >Apply Now</button>`;
+  }
+  // employer / admin — no apply button shown
+  return "";
+}
+
+// ─── Render ──────────────────────────────────────────────────────────────────
+
 function renderError(message) {
   jobDetail.innerHTML = `
     <div class="card shadow-sm rounded-4">
       <div class="card-body p-4 p-lg-5 text-center text-danger">
         ${escapeHTML(message)}
       </div>
-    </div>
-  `;
+    </div>`;
 }
 
-function renderJob(job) {
+function renderJob(job, applyHtml) {
   const title = escapeHTML(job.title || "Untitled Job");
   const companyName = escapeHTML(job.company?.name || "Company not specified");
   const location = escapeHTML(formatLocation(job));
@@ -61,12 +116,15 @@ function renderJob(job) {
   const category = escapeHTML(job.category || "Not specified");
   const requirements = escapeHTML(job.requirements || "Not specified");
   const responsibilities = escapeHTML(job.responsibilities || "Not specified");
+  const deadline = job.applicationDeadline
+    ? escapeHTML(new Date(job.applicationDeadline).toLocaleDateString())
+    : "Not specified";
 
   jobDetail.innerHTML = `
     <div class="card shadow-sm rounded-4">
       <div class="card-body p-4 p-lg-5">
         <div class="mb-4">
-          <p class="text-muted mb-2">${companyName}</p>
+          <p class="text-muted mb-1">${companyName}</p>
           <h1 class="fw-bold mb-2">${title}</h1>
           <p class="text-secondary mb-0">${category} • ${location}</p>
         </div>
@@ -75,11 +133,12 @@ function renderJob(job) {
           <div class="col-md-6">
             <div class="border rounded-4 p-3 h-100">
               <h2 class="h5 fw-bold mb-3">Job Overview</h2>
-              <p><strong>Company:</strong> ${companyName}</p>
-              <p><strong>Industry:</strong> ${industry}</p>
-              <p><strong>Location:</strong> ${location}</p>
-              <p><strong>Salary:</strong> ${salary}</p>
-              <p><strong>Japanese Level:</strong> ${japaneseLevel}</p>
+              <p class="mb-2"><strong>Company:</strong> ${companyName}</p>
+              <p class="mb-2"><strong>Industry:</strong> ${industry}</p>
+              <p class="mb-2"><strong>Location:</strong> ${location}</p>
+              <p class="mb-2"><strong>Salary:</strong> ${salary}</p>
+              <p class="mb-2"><strong>Japanese Level:</strong> ${japaneseLevel}</p>
+              <p class="mb-0"><strong>Deadline:</strong> ${deadline}</p>
             </div>
           </div>
           <div class="col-md-6">
@@ -100,15 +159,96 @@ function renderJob(job) {
           <p>${requirements}</p>
         </div>
 
-        <a href="../signin.html" class="btn btn-primary rounded-pill px-4">
-          Apply Now
-        </a>
+        <div class="d-flex align-items-center gap-3 flex-wrap" id="applySection">
+          ${applyHtml}
+        </div>
       </div>
-    </div>
-  `;
+    </div>`;
 }
 
-async function loadJobDetails() {
+// ─── Modal: submit application ───────────────────────────────────────────────
+
+function setupApplyModal(jobId) {
+  const submitBtn = document.getElementById("submitApplyBtn");
+  const spinner = document.getElementById("submitApplySpinner");
+  const btnText = document.getElementById("submitApplyBtnText");
+  const statusEl = document.getElementById("applyStatus");
+  const coverLetterEl = document.getElementById("coverLetterInput");
+  const charCount = document.getElementById("charCount");
+
+  if (!submitBtn) return;
+
+  // Character counter
+  if (coverLetterEl && charCount) {
+    coverLetterEl.addEventListener("input", () => {
+      charCount.textContent = `${coverLetterEl.value.length} / 2000`;
+    });
+  }
+
+  function showStatus(message, isSuccess) {
+    statusEl.textContent = message;
+    statusEl.className = `alert ${isSuccess ? "alert-success" : "alert-danger"} mb-3`;
+    statusEl.classList.remove("d-none");
+  }
+
+  submitBtn.addEventListener("click", async () => {
+    const coverLetter = coverLetterEl?.value.trim() || "";
+
+    submitBtn.disabled = true;
+    spinner.classList.remove("d-none");
+    btnText.textContent = "Submitting…";
+    statusEl.classList.add("d-none");
+
+    try {
+      const res = await fetch(`${API_BASE}/jobs/${jobId}/apply`, {
+        method: "POST",
+        headers: getAuthHeaders(),
+        body: JSON.stringify({ coverLetter }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || "Failed to submit application.");
+      }
+
+      showStatus("🎉 Application submitted successfully!", true);
+      btnText.textContent = "Submitted!";
+
+      // Update the apply section on the page to "Already Applied"
+      const applySection = document.getElementById("applySection");
+      if (applySection) {
+        applySection.innerHTML = `<button class="btn btn-success rounded-pill px-4" disabled aria-disabled="true">✓ Already Applied</button>`;
+      }
+
+      // Close modal after 1.5 s
+      setTimeout(() => {
+        const modalEl = document.getElementById("applyModal");
+        const modal = bootstrap.Modal.getInstance(modalEl);
+        if (modal) modal.hide();
+      }, 1500);
+    } catch (err) {
+      showStatus(err.message || "Something went wrong. Please try again.", false);
+      submitBtn.disabled = false;
+      spinner.classList.add("d-none");
+      btnText.textContent = "Submit Application";
+    }
+  });
+
+  // Reset form state on modal close
+  document.getElementById("applyModal")?.addEventListener("hidden.bs.modal", () => {
+    statusEl.classList.add("d-none");
+    if (coverLetterEl) coverLetterEl.value = "";
+    if (charCount) charCount.textContent = "0 / 2000";
+    submitBtn.disabled = false;
+    spinner.classList.add("d-none");
+    btnText.textContent = "Submit Application";
+  });
+}
+
+// ─── Init ────────────────────────────────────────────────────────────────────
+
+async function init() {
   const jobId = getQueryParam("id");
 
   if (!jobId) {
@@ -117,28 +257,32 @@ async function loadJobDetails() {
   }
 
   try {
-    console.log("Fetching job:", `${API_BASE_URL}/jobs/${jobId}`);
-
-    const response = await fetch(`${API_BASE_URL}/jobs/${jobId}`);
+    const response = await fetch(`${API_BASE}/jobs/${jobId}`);
     const result = await response.json();
-
-    console.log("API response:", result);
 
     if (!response.ok) {
       throw new Error(result.message || "Failed to load job details.");
     }
 
     const job = result.data?.job;
+    if (!job) throw new Error("Job data is missing from API response.");
 
-    if (!job) {
-      throw new Error("Job data is missing from API response.");
+    const { isLoggedIn, role } = getAuthState();
+    let alreadyApplied = false;
+    if (isLoggedIn && role === "jobseeker") {
+      alreadyApplied = await checkAlreadyApplied(jobId);
     }
 
-    renderJob(job);
+    const applyHtml = applyButtonHtml(isLoggedIn, role, alreadyApplied);
+    renderJob(job, applyHtml);
+
+    if (isLoggedIn && role === "jobseeker" && !alreadyApplied) {
+      setupApplyModal(jobId);
+    }
   } catch (error) {
     console.error("Error loading job details:", error);
     renderError(error.message || "Something went wrong while loading this job.");
   }
 }
 
-document.addEventListener("DOMContentLoaded", loadJobDetails);
+document.addEventListener("DOMContentLoaded", init);

@@ -67,45 +67,54 @@ export async function updateHeaderAuthState() {
  * Updates desktop navigation header
  */
 function updateDesktopNav(userName) {
-  const desktopActions = document.querySelector(".site-header__actions");
+  // Be resilient: some legacy pages do not include the `.site-header__actions` container.
+  // Prefer selecting the canonical actions container, but fall back to locating the
+  // Signup/Login links anywhere inside the header and replace them in-place.
+  const header = document.querySelector('.site-header') || document.querySelector('header');
+  if (!header) return;
 
-  if (!desktopActions) {
-    console.warn("Desktop header actions not found");
+  // Avoid re-running
+  if (header.querySelector('.user-auth-section')) return;
+
+  // Try common selectors first
+  let desktopActions = header.querySelector('.site-header__actions');
+  // fallback: look for a flex container that typically holds the signup/login
+  if (!desktopActions) desktopActions = header.querySelector('.d-flex.align-items-center.gap-2') || header.querySelector('.d-flex.align-items-center') || null;
+
+  // Locate signup and login elements anywhere under header (robust)
+  const signupLink = header.querySelector('.site-header__signup') || header.querySelector('a[href*="createAccount"]');
+  const loginBtn = header.querySelector('.site-header__login-btn') || header.querySelector('a[href*="signin"]');
+
+  // If neither found, nothing to do
+  if (!signupLink && !loginBtn) {
+    console.warn('HeaderAuth: Signup/Login links not found in header');
     return;
   }
 
-  // Check if already updated (user section exists)
-  if (desktopActions.querySelector(".user-auth-section")) {
+  // Determine insertion container: prefer the found actions container, else use the parent of signup/login
+  const insertContainer = desktopActions || (signupLink ? signupLink.parentElement : (loginBtn ? loginBtn.parentElement : header));
 
-    return;
-  }
+  // Create user section
+  const userSection = document.createElement('div');
+  userSection.className = 'd-flex align-items-center gap-2 user-auth-section';
+  userSection.innerHTML = `
+    <span class="text-muted">Hello, <strong>${userName}</strong></span>
+    <a
+      class="btn btn-outline-primary"
+      href="${getProfileDashboardPath()}"
+      aria-label="Go to profile dashboard"
+    >My Profile</a>
+  `;
 
-  // Find and replace only the Signup and Login links
-  const signupLink = desktopActions.querySelector(".site-header__signup");
-  const loginBtn = desktopActions.querySelector(".site-header__login-btn");
-
-  if (signupLink && loginBtn) {
-    // Create a wrapper for the user greeting and profile link
-    const userSection = document.createElement("div");
-    userSection.className = "d-flex align-items-center gap-2 user-auth-section";
-    userSection.innerHTML = `
-      <span class="text-muted">Hello, <strong>${userName}</strong></span>
-      <a
-        class="btn btn-outline-primary"
-        href="${getProfileDashboardPath()}"
-        aria-label="Go to profile dashboard"
-      >My Profile</a>
-    `;
-
-    // Replace the signup link with the user section
+  // If signupLink exists, replace it with the user section. Otherwise append it into the container.
+  if (signupLink) {
     signupLink.replaceWith(userSection);
-    // Remove the login button
-    loginBtn.remove();
-
-
-  } else {
-
+  } else if (insertContainer) {
+    insertContainer.appendChild(userSection);
   }
+
+  // Remove login button if present
+  if (loginBtn) loginBtn.remove();
 }
 
 /**

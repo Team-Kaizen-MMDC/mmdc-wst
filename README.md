@@ -32,6 +32,15 @@ Japan SSW is a frontend-first static site scaffold used as the Phase‑1 deliver
 
 This repository holds the wireframe-driven static pages and a stylesheet ([assets/css/main.css](assets/css/main.css)) that defines the design tokens (colors, spacing, typography) and header contract used across pages.
 
+## Features
+
+- **Job Listings & Search** — Browse and filter active job postings by industry, location, and Japanese level.
+- **Job Application** — Authenticated jobseekers can apply to any active job directly from the job details page (`pages/jobs/jobDetails.html`). An optional cover letter (up to 2000 characters) can be submitted with each application. A compound unique index prevents duplicate applications, and application status (submitted → reviewing → interview → offer → accepted/rejected) is tracked throughout the hiring process. Guests see a "Login to Apply" prompt; employers see no apply button.
+- **User Profiles** — Jobseekers maintain a full profile including education, experience, skills, and resume upload (S3-backed).
+- **Employer Dashboard** — Employers post jobs, view applicants per listing, and update application statuses with optional interview details and private notes.
+- **Google OAuth + Local Auth** — Sign in with a Google account or local email/password; JWT-based session management.
+- **i18n** — UI strings support English and Japanese locale switching.
+
 ## Project docs (short links)
 
 -- **End-to-end walkthrough (video):** [View recording on Google Drive](https://drive.google.com/file/d/14i2okO4TMqrbPdgWfu3mnwrU6haM2bBq/view?usp=sharing)

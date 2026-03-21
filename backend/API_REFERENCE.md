@@ -632,9 +632,12 @@ Submits an application to a job posting.
 
 ```json
 {
-  "coverLetter": "I am very interested in this position. I have 3 years of manufacturing experience and JLPT N3 certification..."
+  "coverLetter": "I am very interested in this position. I have 3 years of manufacturing experience and JLPT N3 certification...",
+  "resumePath": "https://japanssw-s3-bucket.s3.ap-southeast-1.amazonaws.com/resumes/abc123.pdf"
 }
 ```
+
+> Both fields are optional. `coverLetter` max 2000 characters. `resumePath` is an S3 URL set when the jobseeker has already uploaded a resume.
 
 **Success Response (201 Created):**
 
@@ -677,6 +680,25 @@ Retrieves all applications submitted by the authenticated jobseeker.
 **`GET /applications/:applicationId`**  
 **Access:** Protected (Applicant or Job Employer only)
 
+Returns a single application. Employer notes are hidden from the applicant.
+
+**Success Response (200 OK):**
+
+```json
+{
+  "success": true,
+  "data": {
+    "_id": "65app123abc456def",
+    "applicant": { "_id": "65user123abc456", "email": "user@example.com" },
+    "job": { "_id": "65job123abc456def", "title": "Manufacturing Worker" },
+    "status": "reviewing",
+    "coverLetter": "I am very interested...",
+    "resumePath": "https://japanssw-s3-bucket.s3.ap-southeast-1.amazonaws.com/resumes/abc123.pdf",
+    "createdAt": "2026-01-29T15:00:00.000Z"
+  }
+}
+```
+
 ---
 
 ### Withdraw Application
@@ -684,7 +706,20 @@ Retrieves all applications submitted by the authenticated jobseeker.
 **`PUT /applications/:applicationId/withdraw`**  
 **Access:** Protected (Applicant only)
 
-Withdraws an application. Cannot be done after certain statuses (e.g., "accepted").
+Withdraws an application. Only allowed while `status` is `submitted` or `reviewing` (not after `offer`, `accepted`, or `rejected`).
+
+**Success Response (200 OK):**
+
+```json
+{
+  "success": true,
+  "message": "Application withdrawn successfully",
+  "data": {
+    "_id": "65app123abc456def",
+    "status": "withdrawn"
+  }
+}
+```
 
 ---
 
@@ -710,13 +745,16 @@ Updates the status of an application.
 {
   "status": "interview",
   "notes": "Scheduling interview for next week",
-  "interviewInfo": {
+  "interview": {
     "date": "2026-02-05T10:00:00.000Z",
     "location": "Company Office, Meeting Room A",
-    "notes": "Please bring your resume"
+    "notes": "Please bring your resume",
+    "interviewers": ["Tanaka-san", "Suzuki-san"]
   }
 }
 ```
+
+> `notes` is required when `status` is `rejected` (stored as `rejectionReason`). `interview` object is applied when `status` is `"interview"`.
 
 **Valid Status Values:**
 
@@ -735,7 +773,28 @@ Updates the status of an application.
 **`PUT /applications/:applicationId/notes`**  
 **Access:** Protected (Employer only, must own the job)
 
-Adds private notes to an application (visible only to employer).
+Adds or updates private notes on an application (not visible to the applicant).
+
+**Request Body:**
+
+```json
+{
+  "notes": "Strong candidate — schedule interview pending team availability."
+}
+```
+
+**Success Response (200 OK):**
+
+```json
+{
+  "success": true,
+  "message": "Notes updated successfully",
+  "data": {
+    "_id": "65app123abc456def",
+    "employerNotes": "Strong candidate — schedule interview pending team availability."
+  }
+}
+```
 
 ---
 

@@ -2,7 +2,7 @@
   "info": {
     "name": "Japan SSW Backend API Testing",
     "_postman_id": "d0d14917-5f8f-4efd-a6a0-5e919dd5674d",
-    "description": "Manual API verification collection aligned with the backend Jest integration coverage for auth, profile, companies, and jobs.",
+    "description": "Manual API verification collection for auth, profile, companies, jobs, and applications (job application feature). Run Login as Jobseeker / Login as Employer first \u2014 tokens are auto-saved to collection variables.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
@@ -20,6 +20,14 @@
     },
     {
       "key": "jobId",
+      "value": ""
+    },
+    {
+      "key": "employerToken",
+      "value": ""
+    },
+    {
+      "key": "applicationId",
       "value": ""
     }
   ],
@@ -62,7 +70,54 @@
           }
         },
         {
-          "name": "Login",
+          "name": "Login as Jobseeker",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const json = pm.response.json();",
+                  "if (json.data && json.data.token) {",
+                  "  pm.collectionVariables.set('bearerToken', json.data.token);",
+                  "  console.log('Jobseeker token saved');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"postman-jobseeker@example.com\",\n  \"password\": \"Password123!\"\n}"
+            },
+            "url": "{{baseUrl}}/auth/login"
+          }
+        },
+        {
+          "name": "Login as Employer",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const json = pm.response.json();",
+                  "if (json.data && json.data.token) {",
+                  "  pm.collectionVariables.set('employerToken', json.data.token);",
+                  "  console.log('Employer token saved');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "request": {
             "method": "POST",
             "header": [
@@ -244,6 +299,29 @@
           }
         },
         {
+          "name": "Get Job by ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const json = pm.response.json();",
+                  "if (json.data && json.data.job && json.data.job._id) {",
+                  "  pm.collectionVariables.set('jobId', json.data.job._id);",
+                  "  console.log('jobId saved:', json.data.job._id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/jobs/{{jobId}}"
+          }
+        },
+        {
           "name": "Create Job",
           "request": {
             "method": "POST",
@@ -275,6 +353,298 @@
               }
             ],
             "url": "{{baseUrl}}/jobs/{{jobId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Applications",
+      "description": "Job application endpoints \u2014 jobseeker applies, checks own applications, withdraws; employer updates status and adds notes.",
+      "item": [
+        {
+          "name": "Apply to Job (Jobseeker)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const json = pm.response.json();",
+                  "if (json.data && json.data._id) {",
+                  "  pm.collectionVariables.set('applicationId', json.data._id);",
+                  "  console.log('applicationId saved:', json.data._id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"coverLetter\": \"I am very interested in this position and believe my skills are a great match.\"\n}"
+            },
+            "url": "{{baseUrl}}/jobs/{{jobId}}/apply",
+            "description": "Submit a job application. Requires jobseeker token in bearerToken. Prevents duplicate applications."
+          }
+        },
+        {
+          "name": "Apply to Job \u2014 Duplicate (expect 400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"coverLetter\": \"Trying to apply again.\"\n}"
+            },
+            "url": "{{baseUrl}}/jobs/{{jobId}}/apply",
+            "description": "Should return 400 \u2014 You have already applied to this job."
+          }
+        },
+        {
+          "name": "Get My Applications (Jobseeker)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/applications/me?page=1&limit=10",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "applications",
+                "me"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "Returns paginated list of the jobseeker's own applications with populated job details."
+          }
+        },
+        {
+          "name": "Get My Applications \u2014 Filter by Status",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/applications/me?status=submitted",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "applications",
+                "me"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "submitted"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Single Application",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/applications/{{applicationId}}",
+            "description": "Accessible by the applicant or the employer/admin who owns the job."
+          }
+        },
+        {
+          "name": "Get Job Applications (Employer)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employerToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/jobs/{{jobId}}/applications?page=1&limit=20",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "jobs",
+                "{{jobId}}",
+                "applications"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                }
+              ]
+            },
+            "description": "Employer/admin only. Returns all applications for a specific job with applicant profile details."
+          }
+        },
+        {
+          "name": "Update Application Status \u2014 reviewing (Employer)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employerToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"reviewing\"\n}"
+            },
+            "url": "{{baseUrl}}/applications/{{applicationId}}/status",
+            "description": "Move application to 'reviewing' status."
+          }
+        },
+        {
+          "name": "Update Application Status \u2014 interview (Employer)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employerToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"interview\",\n  \"interview\": {\n    \"date\": \"2026-05-15T10:00:00.000Z\",\n    \"location\": \"Shinjuku, Tokyo\",\n    \"notes\": \"Please bring your resume and certificates.\"\n  }\n}"
+            },
+            "url": "{{baseUrl}}/applications/{{applicationId}}/status",
+            "description": "Set interview date and location. This will show in the jobseeker Notifications panel."
+          }
+        },
+        {
+          "name": "Update Application Status \u2014 rejected (Employer)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employerToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"rejected\",\n  \"notes\": \"Position has been filled internally.\"\n}"
+            },
+            "url": "{{baseUrl}}/applications/{{applicationId}}/status"
+          }
+        },
+        {
+          "name": "Add Employer Notes",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employerToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"notes\": \"Strong candidate. Followed up by email on 2026-03-21.\"\n}"
+            },
+            "url": "{{baseUrl}}/applications/{{applicationId}}/notes"
+          }
+        },
+        {
+          "name": "Withdraw Application (Jobseeker)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/applications/{{applicationId}}/withdraw",
+            "description": "Only allowed when status is submitted, reviewing, or interview."
+          }
+        },
+        {
+          "name": "Apply Without Auth (expect 401)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"coverLetter\": \"No token provided.\"\n}"
+            },
+            "url": "{{baseUrl}}/jobs/{{jobId}}/apply",
+            "description": "Should return 401 Unauthorized."
           }
         }
       ]
