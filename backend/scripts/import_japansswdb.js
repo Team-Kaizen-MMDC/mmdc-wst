@@ -153,7 +153,7 @@ async function main() {
 
       // Prepare job payload
       const jobPayload = {
-        company: mongoose.Types.ObjectId(newCompanyId),
+        company: new mongoose.Types.ObjectId(newCompanyId),
         postedBy: postedById,
         title: doc.title || 'Imported Job',
         industry: doc.industry || 'Other',
