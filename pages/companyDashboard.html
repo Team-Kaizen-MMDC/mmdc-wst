@@ -1935,7 +1935,7 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
           const status = job.isExpired ? 'Expired' : (job.isDraft ? 'Draft' : 'Active');
 
           // Align with table headers: Job Title (with company), Location, Applicants, Status, Action
-          return `<tr data-job-id="${escapeHtml(id)}"><td><a href="jobs/jobDetails.html?id=${encodeURIComponent(id)}" class="text-decoration-none">${title}</a><div class="text-muted small">${company}</div></td><td>${escapeHtml(loc)}</td><td class="text-center">${escapeHtml(apps)}</td><td class="text-center">${escapeHtml(status)}</td><td class="text-center"><a class="btn btn-sm btn-outline-primary" href="../jobs/postJob.html?edit=${encodeURIComponent(id)}">Edit</a></td></tr>`;
+          return `<tr data-job-id="${escapeHtml(id)}"><td><a href="jobs/jobDetails.html?id=${encodeURIComponent(id)}" class="text-decoration-none">${title}</a><div class="text-muted small">${company}</div></td><td>${escapeHtml(loc)}</td><td class="text-center">${escapeHtml(apps)}</td><td class="text-center">${escapeHtml(status)}</td><td class="text-center"><a class="btn btn-sm btn-outline-primary" href="addEdit/job-post.html?edit=${encodeURIComponent(id)}">Edit</a></td></tr>`;
         }).join('');
 
         tbody.innerHTML = rows;
