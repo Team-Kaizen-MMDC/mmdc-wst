@@ -1834,6 +1834,24 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
 
     // Load company applicants summary (dashboard)
 
+    // Helper to format a job.location value (string or object) - global so other functions can use it
+    function formatJobLocation(loc) {
+      if (!loc) return '-';
+      if (typeof loc === 'string') return loc;
+      if (typeof loc === 'object') {
+        const parts = [];
+        if (loc.address) parts.push(loc.address);
+        if (loc.city) parts.push(loc.city);
+        if (loc.prefecture) parts.push(loc.prefecture);
+        if (loc.region) parts.push(loc.region);
+        if (loc.country) parts.push(loc.country);
+        if (parts.length) return parts.join(', ');
+        if (loc.cityName) return loc.cityName;
+        try { return JSON.stringify(loc); } catch { return '-'; }
+      }
+      return String(loc);
+    }
+
     // Load posted jobs into the Job List card (pulls from jobs collection)
     async function loadCompanyJobs() {
       const tbody = document.getElementById('job-list-body');
