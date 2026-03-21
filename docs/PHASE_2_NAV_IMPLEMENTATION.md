@@ -187,7 +187,7 @@ assets/js/
 2. **Open in browser:**
 
    ```
-   http://localhost:8000
+   http://localhost:3000
    ```
 
 3. **Test responsive behavior:**

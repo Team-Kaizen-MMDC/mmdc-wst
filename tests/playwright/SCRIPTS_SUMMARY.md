@@ -56,7 +56,7 @@ Added comprehensive npm scripts for all test scenarios.
 "test:firefox": "npx playwright test --project=firefox"
 "test:mobile": "npx playwright test --project=webkit-mobile"
 "test:report": "npx playwright show-report"
-"test:codegen": "npx playwright codegen http://localhost:8000"
+"test:codegen": "npx playwright codegen http://localhost:3000"
 "test:with-server": "..." // Auto-start/stop server
 ```
 
@@ -305,7 +305,7 @@ bash run-tests.sh
 ./run-tests.sh --no-server
 
 # Option 2: Kill process on port 8000
-lsof -ti:8000 | xargs kill
+lsof -ti:3000 | xargs kill
 ```
 
 ### Browsers Not Installed

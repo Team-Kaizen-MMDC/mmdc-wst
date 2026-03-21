@@ -85,7 +85,7 @@ npx playwright test --ui
 npx playwright test --debug smoke-links.spec.ts
 
 # Generate code (record actions)
-npx playwright codegen http://localhost:8000
+npx playwright codegen http://localhost:3000
 ```
 
 ## 📁 Test Organization
@@ -104,7 +104,7 @@ tests/playwright/
 
 ## ⚙️ Configuration
 
-- **Base URL:** http://localhost:8000
+- **Base URL:** http://localhost:3000
 - **Browsers:** Chromium, Firefox, Webkit (iPhone 12)
 - **Timeout:** 30s per test
 - **Retries:** 1

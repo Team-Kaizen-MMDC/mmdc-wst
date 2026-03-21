@@ -282,7 +282,7 @@ If port 8000 is already in use:
 ./run-tests.sh --no-server
 
 # Option 2: Kill the process using port 8000
-lsof -ti:8000 | xargs kill
+lsof -ti:3000 | xargs kill
 
 # Option 3: Start server on different port and update config
 python3 -m http.server 8001
@@ -424,7 +424,7 @@ npx playwright test --debug smoke-links.spec.ts
 ./run-tests.sh codegen
 
 # Generate test for specific page
-npx playwright codegen http://localhost:8000/pages/about.html
+npx playwright codegen http://localhost:3000/pages/about.html
 ```
 
 ## Test Maintenance

@@ -179,10 +179,10 @@ python -m http.server 8000
 # or
 npx http-server
 # or
-php -S localhost:8000
+php -S localhost:3000
 ```
 
-Open `http://localhost:8000` in your browser.
+Open `http://localhost:3000` in your browser.
 
 ## Local Test Accounts
 
@@ -226,7 +226,7 @@ ADMIN_EMAIL=me@test.local ADMIN_PASSWORD=MyPass@99 npm run seed:admin
 
 ## Running tests
 
-Playwright-based smoke tests live under [tests/playwright/](tests/playwright/). The Playwright config [tests/playwright/playwright.config.js](tests/playwright/playwright.config.js) sets `baseURL` to `http://localhost:8000`, so tests expect a local static server to be available.
+Playwright-based smoke tests live under [tests/playwright/](tests/playwright/). The Playwright config [tests/playwright/playwright.config.js](tests/playwright/playwright.config.js) sets `baseURL` to `http://localhost:3000`, so tests expect a local static server to be available.
 
 One-time setup:
 
@@ -240,7 +240,7 @@ Run tests (two options):
 1. Start a server manually (separate terminal) and run Playwright:
 
 ```bash
-# start server (serves at http://localhost:8000)
+# start server (serves at http://localhost:3000)
 python3 -m http.server 8000
 
 # in another terminal

@@ -36,7 +36,7 @@ Quick start (copy-paste)
 
 Notes
 
-- The Playwright config uses baseURL: http://localhost:8000. If you run your server on another port, either start it on 8000 or run tests with:
+- The Playwright config uses baseURL: http://localhost:3000. If you run your server on another port, either start it on 8000 or run tests with:
 
   npx playwright test --project=chromium --config=tests/playwright/playwright.config.js --grep="" --base-url=http://localhost:PORT
 

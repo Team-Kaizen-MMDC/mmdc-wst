@@ -6,13 +6,13 @@
 const { test, expect } = require("@playwright/test");
 
 const PAGES = [
-  { name: "Home", url: "http://localhost:8000/index.html" },
+  { name: "Home", url: "http://localhost:3000/index.html" },
   {
     name: "Job Filter",
-    url: "http://localhost:8000/pages/jobs/jobFilter.html",
+    url: "http://localhost:3000/pages/jobs/jobFilter.html",
   },
-  { name: "About", url: "http://localhost:8000/pages/about.html" },
-  { name: "Services", url: "http://localhost:8000/pages/services.html" },
+  { name: "About", url: "http://localhost:3000/pages/about.html" },
+  { name: "Services", url: "http://localhost:3000/pages/services.html" },
 ];
 
 test.describe("Keyboard Navigation - Skip Links", () => {
@@ -48,7 +48,7 @@ test.describe("Keyboard Navigation - Focus Indicators", () => {
   test("Job Filter: All interactive elements have visible focus", async ({
     page,
   }) => {
-    await page.goto("http://localhost:8000/pages/jobs/jobFilter.html");
+    await page.goto("http://localhost:3000/pages/jobs/jobFilter.html");
 
     // Test filter buttons
     const filterButtons = page.locator(".filter-group button");
@@ -69,7 +69,7 @@ test.describe("Keyboard Navigation - Focus Indicators", () => {
   });
 
   test("Navigation links have visible focus indicators", async ({ page }) => {
-    await page.goto("http://localhost:8000/index.html");
+    await page.goto("http://localhost:3000/index.html");
 
     const navLinks = page.locator("nav a, .navbar a");
     const count = await navLinks.count();
@@ -88,7 +88,7 @@ test.describe("Keyboard Navigation - Focus Indicators", () => {
 
 test.describe("Keyboard Navigation - Tab Order", () => {
   test("Job Filter: Tab order is logical", async ({ page }) => {
-    await page.goto("http://localhost:8000/pages/jobs/jobFilter.html");
+    await page.goto("http://localhost:3000/pages/jobs/jobFilter.html");
 
     // Start from beginning
     await page.keyboard.press("Tab");
@@ -118,7 +118,7 @@ test.describe("Keyboard Navigation - Tab Order", () => {
 
 test.describe("Keyboard Navigation - Interactive Controls", () => {
   test("Job Filter: Search input keyboard shortcuts work", async ({ page }) => {
-    await page.goto("http://localhost:8000/pages/jobs/jobFilter.html");
+    await page.goto("http://localhost:3000/pages/jobs/jobFilter.html");
 
     const searchInput = page
       .locator('#searchInput, input[type="search"]')
@@ -143,7 +143,7 @@ test.describe("Keyboard Navigation - Interactive Controls", () => {
   });
 
   test("Job Filter: Filter buttons toggle with keyboard", async ({ page }) => {
-    await page.goto("http://localhost:8000/pages/jobs/jobFilter.html");
+    await page.goto("http://localhost:3000/pages/jobs/jobFilter.html");
 
     const filterButton = page.locator(".filter-group button").first();
 
@@ -170,7 +170,7 @@ test.describe("Keyboard Navigation - Interactive Controls", () => {
   });
 
   test("Job Filter: Clear button keyboard accessible", async ({ page }) => {
-    await page.goto("http://localhost:8000/pages/jobs/jobFilter.html");
+    await page.goto("http://localhost:3000/pages/jobs/jobFilter.html");
 
     const clearButton = page
       .locator('#clearFilters, button:has-text("Clear")')
@@ -197,8 +197,8 @@ test.describe("Keyboard Navigation - Interactive Controls", () => {
 test.describe("Keyboard Navigation - Form Accessibility", () => {
   test("Contact form: All fields keyboard navigable", async ({ page }) => {
     const contactPages = [
-      "http://localhost:8000/pages/contact.html",
-      "http://localhost:8000/pages/addEdit/contact.html",
+      "http://localhost:3000/pages/contact.html",
+      "http://localhost:3000/pages/addEdit/contact.html",
     ];
 
     for (const url of contactPages) {
@@ -238,7 +238,7 @@ test.describe("Keyboard Navigation - Form Accessibility", () => {
 
 test.describe("Keyboard Navigation - ARIA Live Regions", () => {
   test("Job Filter: Results announced to screen readers", async ({ page }) => {
-    await page.goto("http://localhost:8000/pages/jobs/jobFilter.html");
+    await page.goto("http://localhost:3000/pages/jobs/jobFilter.html");
 
     // Check for ARIA live region
     const liveRegion = page.locator("[aria-live], #filterAnnouncement").first();

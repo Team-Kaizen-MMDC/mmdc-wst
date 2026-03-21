@@ -24,7 +24,7 @@ python3 -m http.server 8000 &
 
 ```bash
 # example (using pa11y):
-pa11y http://localhost:8000/index.html --reporter json > tests/accessibility/results/index-pa11y.json
+pa11y http://localhost:3000/index.html --reporter json > tests/accessibility/results/index-pa11y.json
 ```
 
 - [ ] Provide a short accessibility summary in PR description (what was added/changed and any remaining known issues).
