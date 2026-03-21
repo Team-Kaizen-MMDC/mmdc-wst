@@ -63,13 +63,17 @@
 
       <!-- Job Post Form -->
       <form id="jobPostForm" class="needs-validation" novalidate="">
-        <input type="hidden" name="company-id" id="company-id" value="PASTE_COMPANY_ID_HERE">
-        <input type="hidden" name="user-id" id="user-id" value="PASTE_USER_ID_HERE">
+        <input type="hidden" name="company-id" id="company-id" value="">
+        <input type="hidden" name="user-id" id="user-id" value="">
 
         <!-- Admin-only: Company selector (populated dynamically) -->
         <div id="company-select-wrapper" class="mb-3" style="display:none;">
           <label for="company-select" class="form-label fw-semibold">Select Company</label>
-          <select id="company-select" class="form-select">
+          <div class="input-group">
+            <input id="company-select-search" class="form-control" placeholder="Search companies..." aria-label="Search companies">
+            <button id="company-select-clear" type="button" class="btn btn-outline-secondary">Clear</button>
+          </div>
+          <select id="company-select" class="form-select mt-2">
             <option value="">Loading companies...</option>
           </select>
         </div>
@@ -93,6 +97,38 @@
                   class="form-control"
                 />
                 <div class="invalid-feedback">Company name is required.</div>
+              </div>
+
+              <!-- Company Contact Email -->
+              <div class="col-md-6 mb-3">
+                <label for="company-email" class="form-label fw-semibold">Company Contact Email</label>
+                <input
+                  id="company-email"
+                  name="company-email"
+                  type="email"
+                  placeholder="hr@company.example.com"
+                  class="form-control"
+                />
+                <div class="invalid-feedback">Please provide a valid contact email.</div>
+              </div>
+
+              <!-- Company Contact Phone -->
+              <div class="col-md-6 mb-3">
+                <label for="company-phone" class="form-label fw-semibold">Company Contact Phone</label>
+                <input
+                  id="company-phone"
+                  name="company-phone"
+                  type="text"
+                  placeholder="e.g., +81-3-1234-5678"
+                  class="form-control"
+                />
+                <div class="invalid-feedback">Please provide a valid contact phone.</div>
+              </div>
+
+              <!-- Company Description (optional) -->
+              <div class="col-12 mb-3">
+                <label for="company-description" class="form-label fw-semibold">Company Description (optional)</label>
+                <textarea id="company-description" name="company-description" class="form-control" rows="3" placeholder="Short description used when creating a new company"></textarea>
               </div>
 
               <!-- Job Title -->
@@ -320,11 +356,11 @@
                   <option selected="" disabled="" value="">
                     Select Japanese Level...
                   </option>
-                  <option>Beginner / N5</option>
-                  <option>Basic / N4</option>
-                  <option>Conversational / N3</option>
-                  <option>Business / N2</option>
-                  <option>Fluent / N1</option>
+                  <option value="N5">Beginner / N5</option>
+                  <option value="N4">Basic / N4</option>
+                  <option value="N3">Conversational / N3</option>
+                  <option value="N2">Business / N2</option>
+                  <option value="N1">Fluent / N1</option>
                 </select>
                 <div class="invalid-feedback">
                   Please select a Japanese level.
@@ -525,15 +561,45 @@
                   placeholder.textContent = 'Choose a company...';
                   select.appendChild(placeholder);
 
-                  companies.forEach((c) => {
-                    const opt = document.createElement('option');
-                    opt.value = c._id || c.id || '';
-                    opt.textContent = c.name || (c._id || c.id);
-                    select.appendChild(opt);
-                  });
+                  // Render companies into select and setup client-side search
+                  function renderCompanies(list) {
+                    select.innerHTML = '';
+                    const placeholder = document.createElement('option');
+                    placeholder.value = '';
+                    placeholder.textContent = 'Choose a company...';
+                    select.appendChild(placeholder);
 
-                  // Pre-select the user's company if present
-                  if (companyId) select.value = companyId;
+                    list.forEach((c) => {
+                      const opt = document.createElement('option');
+                      opt.value = c._id || c.id || '';
+                      opt.textContent = c.name || (c._id || c.id);
+                      select.appendChild(opt);
+                    });
+
+                    // Pre-select the user's company if present
+                    if (companyId) select.value = companyId;
+                  }
+
+                  renderCompanies(companies);
+
+                  // Client-side search box
+                  const searchInput = document.getElementById('company-select-search');
+                  const clearBtn = document.getElementById('company-select-clear');
+                  if (searchInput) {
+                    searchInput.addEventListener('input', function () {
+                      const q = this.value.trim().toLowerCase();
+                      if (!q) return renderCompanies(companies);
+                      const filtered = companies.filter(c => (c.name || '').toLowerCase().includes(q) || (c.slug || '').toLowerCase().includes(q));
+                      renderCompanies(filtered);
+                    });
+                  }
+                  if (clearBtn) {
+                    clearBtn.addEventListener('click', function () {
+                      const si = document.getElementById('company-select-search');
+                      if (si) si.value = '';
+                      renderCompanies(companies);
+                    });
+                  }
 
                   // When admin selects a company, set hidden company-id and company-name
                   select.addEventListener('change', function () {

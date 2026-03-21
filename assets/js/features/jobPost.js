@@ -30,14 +30,15 @@ export function initJobPost() {
 
     const description = data['job-description'] || '';
     const summary = description ? description.slice(0, 200) : (data['job-title'] || '');
+    const responsibilities = description || summary || 'See job description.';
 
     const payload = {
-      company: data['company-id'] || null,
+      company: (data['company-id'] && data['company-id'] !== 'PASTE_COMPANY_ID_HERE') ? data['company-id'] : null,
       title: data['job-title'] || '',
       industry: data['job-category'] || 'Other',
       category: data['job-category'] || '',
       summary: summary,
-      responsibilities: description,
+      responsibilities: responsibilities,
       japaneseLevel: data['japanese-language'] || 'None',
       compensation: {
         salaryMin: salary,
@@ -75,11 +76,26 @@ export function initJobPost() {
         const createHeaders = { 'Content-Type': 'application/json' };
         if (token) createHeaders.Authorization = `Bearer ${token}`;
 
+        // Build company payload with required fields (use form values or safe defaults)
+        const companyPayload = {
+          name: companyName,
+          industry: payload.industry || 'Other',
+          description: data['company-description'] || `Created for job: ${payload.title}`,
+          location: {
+            prefecture: data['prefecture'] || 'Unknown',
+            city: data['location-detail'] || 'Unknown'
+          },
+          contact: {
+            email: data['company-email'] || `import+${Date.now()}@example.local`,
+            phone: data['company-phone'] || '000-000-0000'
+          }
+        };
+
         const createResp = await fetch(`${API_BASE}/companies`, {
           method: 'POST',
           headers: createHeaders,
           credentials: 'include',
-          body: JSON.stringify({ name: companyName, industry: payload.industry })
+          body: JSON.stringify(companyPayload)
         });
         const createResult = await createResp.json().catch(() => null);
         if (createResp.ok && (createResult?.data?.company || createResult?.data)) {
