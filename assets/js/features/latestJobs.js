@@ -1,6 +1,12 @@
 //latestJob.js
 
-const API_BASE_URL = "http://localhost:3000/api/v1";
+const API_BASE_URL = (function(){
+  // Use local backend in development, otherwise use same-origin relative API path to satisfy CSP in production
+  if (location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.port === '8000') {
+    return 'http://localhost:3000/api/v1';
+  }
+  return '/api/v1';
+})();
 
 const latestJobsList = document.getElementById("latest-jobs-list");
 
