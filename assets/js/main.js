@@ -722,6 +722,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 // --- FilterData (normalized) Job listed ---
+/*
 const jobData = [
   {
     id: 1,
@@ -964,6 +965,7 @@ if (jobListings) {
    * @param {string} title
    * @returns {string} The URL slug.
    */
+  /*
   function createSlug(title) {
     if (!title) return "";
     return (
@@ -1184,6 +1186,8 @@ if (jobListings) {
     filterJobs();
   });
 }
+
+*/
 
 //  JOB ALERT
 document.addEventListener("DOMContentLoaded", () => {

@@ -62,9 +62,8 @@
       </div>
 
       <!-- Job Post Form -->
-      <form id="jobPostForm" class="needs-validation" novalidate="">
-        <input type="hidden" name="company-id" id="company-id" value="PASTE_COMPANY_ID_HERE">
-        <input type="hidden" name="user-id" id="user-id" value="PASTE_USER_ID_HERE">
+      <form id="jobPostForm" class="needs-validation">
+
         
         <!-- Section 1: Basic Information -->
         <div class="card mb-4 border-0 shadow-sm">
@@ -72,20 +71,18 @@
           <div class="card-body">
             <div class="row g-3">
               <!-- Company Name -->
-              <div class="col-md-6 mb-3">
-                <label for="company-name" class="form-label fw-semibold"
-                  >Company Name</label
-                >
-                <input
-                  id="company-name"
-                  name="company-name"
-                  type="text"
-                  placeholder="Ex: Nippon Manufacturing Co."
-                  required=""
-                  class="form-control"
-                />
-                <div class="invalid-feedback">Company name is required.</div>
-              </div>
+                <div class="col-md-6 mb-3">
+              <label for="company" class="form-label fw-semibold">Company Name</label>
+              <select
+                id="company"
+                name="company"
+                required
+                class="form-select"
+              >
+                <option selected disabled value="">Select Company...</option>
+              </select>
+              <div class="invalid-feedback">Please select a company.</div>
+            </div>
 
               <!-- Job Title -->
               <div class="col-md-6 mb-3">

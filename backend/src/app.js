@@ -19,6 +19,7 @@ const dbHelper = require("./config/database");
 const registerRoutes = require("./routes");
 const errorHandler = require("./middleware/errorHandler");
 const logger = require("./utils/logger");
+const cookieParser = require("cookie-parser");
 
 async function createApp() {
   const app = express();
@@ -115,6 +116,8 @@ async function createApp() {
   // Body parser middleware
   app.use(express.json({ limit: "10mb" }));
   app.use(express.urlencoded({ extended: true, limit: "10mb" }));
+
+  app.use(cookieParser());
 
   // Temporary request logger for OAuth/GSI debugging
   app.use((req, res, next) => {

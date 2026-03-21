@@ -1,14 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const adminJobController = require('../controllers/adminJobController');
+const { protect } = require('../middleware/auth'); // or your correct path
 
 // DEBUG LOG
 console.log("--- Loading AdminJobRoutes ---");
 
 router
     .route('/')
-    .get(adminJobController.getAdminJobs)
-    .post(adminJobController.createAdminJob);
+    .get(protect, adminJobController.getAdminJobs)
+    .post(protect, adminJobController.createAdminJob);
 
 // ADD THIS SECTION BELOW
 router

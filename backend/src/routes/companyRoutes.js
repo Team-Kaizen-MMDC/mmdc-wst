@@ -9,6 +9,7 @@ const {
   addCompanyAdmin,
   removeCompanyAdmin,
   getCompanyStats,
+  getMyCompany,
 } = require("../controllers/companyController");
 const { protect, authorize } = require("../middleware/auth");
 
@@ -78,6 +79,11 @@ router.get("/", getCompanies);
  *       404:
  *         description: Company not found
  */
+
+// Private helper route for logged-in employer/admin
+router.get("/my-company", protect, getMyCompany);
+
+// Public single company route
 router.get("/:idOrSlug", getCompany);
 
 // Protected routes
@@ -242,6 +248,7 @@ router.put("/:id/verify", authorize("admin"), verifyCompany);
  *       200:
  *         description: Company statistics
  */
+
 router.get("/admin/stats", authorize("admin"), getCompanyStats);
 
 module.exports = router;

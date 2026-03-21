@@ -421,3 +421,29 @@ exports.getCompanyStats = asyncHandler(async (req, res) => {
     }),
   );
 });
+
+/**
+ * @desc    Get the logged-in employer's company
+ * @route   GET /api/v1/companies/my-company
+ * @access  Private (Employer/Admin)
+ */
+exports.getMyCompany = asyncHandler(async (req, res) => {
+  const company = await Company.findOne({
+    isActive: true,
+    $or: [
+      { owner: req.user.id },
+      { admins: req.user.id },
+    ],
+  }).populate({
+    path: "owner",
+    select: "email role",
+  });
+
+  if (!company) {
+    throw new ApiError(404, "No company found for this account");
+  }
+
+  res.status(200).json(
+    new ApiResponse(200, "Company retrieved successfully", { company })
+  );
+});
