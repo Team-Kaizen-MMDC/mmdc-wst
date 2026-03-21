@@ -900,6 +900,41 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
               </div>
 
               <!-- APPLICATION + NOTIFICATIONS -->
+              <!-- Applicant Tracking (Dashboard-only dynamic) -->
+              <div class="col-12 col-md-6">
+                <div class="card shadow-sm h-100">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                      <h3 class="card-title fw-bold mb-0">Applicant Tracking</h3>
+                      <a href="#" class="small text-decoration-none" id="viewAllApplicantsLink">View All Applicants</a>
+                    </div>
+
+                    <ul class="list-unstyled small mb-3">
+                      <li class="mb-2">
+                        <span class="fw-semibold">Applied:</span>
+                        <span id="stat-applied-company">–</span>
+                      </li>
+                      <li class="mb-2">
+                        <span class="fw-semibold">Pending:</span>
+                        <span id="stat-pending-company">–</span>
+                      </li>
+                      <li class="mb-2">
+                        <span class="fw-semibold">Interview:</span>
+                        <span id="stat-interview-company">–</span>
+                      </li>
+                      <li class="mb-2">
+                        <span class="fw-semibold">Rejected:</span>
+                        <span id="stat-rejected-company">–</span>
+                      </li>
+                    </ul>
+
+                    <h6 class="fw-bold mb-2">Recent Applicants</h6>
+                    <div id="recentApplicantsList" class="list-group list-group-flush small">
+                      <div class="text-muted">Loading…</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div class="col-12 col-md-6">
                 <div class="card shadow-sm h-100">
                   <div class="card-body">
@@ -1931,6 +1966,92 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
     } else {
       loadProfile();
     }
+
+    // Load company applicants summary (dashboard)
+    async function loadCompanyApplicants() {
+      const token = getToken();
+      if (!token) return;
+      try {
+        // 1) Get employer's jobs
+        const jobsRes = await fetch(`${API_BASE}/jobs/my/jobs`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (!jobsRes.ok) throw new Error('Failed to fetch jobs');
+        const jobsJson = await jobsRes.json();
+        const jobs = jobsJson.data?.jobs || [];
+
+        // 2) For each job, fetch recent applications (parallel)
+        const appPromises = jobs.map(async (j) => {
+          try {
+            const r = await fetch(`${API_BASE}/jobs/${j._id}/applications?limit=50`, {
+              headers: { Authorization: `Bearer ${token}` },
+            });
+            if (!r.ok) return [];
+            const jdata = await r.json();
+            // include job reference on each app for display
+            return (jdata.data?.applications || []).map(a => Object.assign({ _job: { _id: j._id, title: j.title } }, a));
+          } catch (e) {
+            return [];
+          }
+        });
+
+        const appsArrays = await Promise.all(appPromises);
+        const allApps = appsArrays.flat();
+
+        // Compute counts
+        const total = allApps.length;
+        const pending = allApps.filter(a => ['submitted','reviewing'].includes(a.status)).length;
+        const interview = allApps.filter(a => a.status === 'interview').length;
+        const rejected = allApps.filter(a => a.status === 'rejected').length;
+
+        // Update UI
+        const elApplied = document.getElementById('stat-applied-company');
+        const elPending = document.getElementById('stat-pending-company');
+        const elInterview = document.getElementById('stat-interview-company');
+        const elRejected = document.getElementById('stat-rejected-company');
+        if (elApplied) elApplied.textContent = total;
+        if (elPending) elPending.textContent = pending;
+        if (elInterview) elInterview.textContent = interview;
+        if (elRejected) elRejected.textContent = rejected;
+
+        // Render recent applicants (most recent first)
+        const recentEl = document.getElementById('recentApplicantsList');
+        if (recentEl) {
+          if (allApps.length === 0) {
+            recentEl.innerHTML = '<div class="text-muted small">No applicants yet.</div>';
+          } else {
+            const sorted = allApps.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0,8);
+            recentEl.innerHTML = sorted.map(a => {
+              const applicant = (a.applicant && (a.applicant.profile ? (a.applicant.profile.firstName || '') + ' ' + (a.applicant.profile.lastName || '') : a.applicant.email)) || 'Applicant';
+              const jobTitle = a._job && a._job.title ? a._job.title : (a.job && a.job.title ? a.job.title : 'Job');
+              const date = a.createdAt ? new Date(a.createdAt).toLocaleDateString() : '–';
+              const status = a.status || '-';
+              return `<a href="#" class="list-group-item list-group-item-action py-2"><div class="fw-semibold">${escapeHtml(jobTitle)} — ${escapeHtml(applicant)}</div><div class="small text-muted">${escapeHtml(date)} · ${escapeHtml(status)}</div></a>`;
+            }).join('');
+          }
+        }
+
+      } catch (err) {
+        console.warn('loadCompanyApplicants error', err);
+      }
+    }
+
+    // HTML-escape helper
+    function escapeHtml(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+
+    // Kick off on DOM ready (Dashboard tab only)
+    document.addEventListener('DOMContentLoaded', function(){
+      // Only load when on Dashboard tab (active by default)
+      const activeTab = document.querySelector('#dashboard-tab');
+      if (activeTab && activeTab.classList.contains('active')) {
+        loadCompanyApplicants();
+      }
+      // Also reload when dashboard tab is shown (in case user navigates)
+      const dashboardTabBtn = document.getElementById('dashboard-tab');
+      if (dashboardTabBtn) {
+        dashboardTabBtn.addEventListener('shown.bs.tab', loadCompanyApplicants);
+      }
+    });
   </script>
   </body>
 </html>
