@@ -461,12 +461,9 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                 </div>
                 <div class="col-md-6 ps-md-4 mt-md-2">
                   <h3 class="fw-bold">Notifications</h3>
-                  <p class="small mb-1 text-dark">
-                    Interview: Oct 20, 2025 – XYZ Care (OSAKA)
-                  </p>
-                  <p class="small text-secondary">
-                    Interview: Nov 1, 2025 – AB Day Care (TOKYO)
-                  </p>
+                  <div id="interviewNotifications">
+                    <p class="small text-muted">Loading…</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1389,7 +1386,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
             >
               Close
             </button>
-            <button type="button" class="btn btn-primary">
+            <button type="button" id="downloadReportBtn" class="btn btn-primary">
               Download Report
             </button>
           </div>
@@ -3939,6 +3936,45 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           try { return new Date(d).toLocaleDateString(); } catch(e) { return d; }
         }
 
+        // Generate CSV and trigger download for applications
+        function generateApplicationsCSV(apps) {
+          apps = apps || [];
+          var header = ['Job Title','Company','Location','Date Applied','Status','Interview Date','Interview Location','Employer Notes'];
+          function esc(v) { return '"' + String(v || '').replace(/"/g, '""') + '"'; }
+          var lines = [header.map(esc).join(',')];
+          apps.forEach(function(a){
+            var jobTitle = a.job && a.job.title ? a.job.title : '';
+            var company = a.job && a.job.company && a.job.company.name ? a.job.company.name : '';
+            var prefecture = a.job && a.job.location && a.job.location.prefecture ? a.job.location.prefecture : '';
+            var city = a.job && a.job.location && a.job.location.city ? a.job.location.city : '';
+            var location = city ? city + ', ' + prefecture : prefecture;
+            var date = a.createdAt ? new Date(a.createdAt).toLocaleDateString() : '';
+            var status = a.status || '';
+            var interviewDate = a.interview && a.interview.date ? new Date(a.interview.date).toLocaleDateString() : '';
+            var interviewLoc = a.interview && a.interview.location ? a.interview.location : '';
+            var notes = a.employerNotes || '';
+            var row = [jobTitle, company, location, date, status, interviewDate, interviewLoc, notes];
+            lines.push(row.map(esc).join(','));
+          });
+          var csv = lines.join('\n');
+          var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+          var now = new Date();
+          var fname = 'applications-report-' + now.toISOString().slice(0,10) + '.csv';
+          if (navigator.msSaveBlob) { // IE10+
+            navigator.msSaveBlob(blob, fname);
+          } else {
+            var link = document.createElement('a');
+            var url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', fname);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+          }
+        }
+
         async function loadApplications() {
           var token = document.cookie.split('; ').find(function(r){ return r.startsWith('token='); });
           if (!token) return;
@@ -3951,6 +3987,8 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
             if (!res.ok) return;
             var data = await res.json();
             var apps = (data.data && data.data.applications) || [];
+            // Cache for download/export
+            window._applicationsForReport = apps;
 
             // ── Summary counts ──────────────────────────────────────────
             var total     = apps.length;
@@ -3993,6 +4031,42 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
               '</tr>';
             }).join('');
 
+            // ── Interview notifications panel ────────────────────────────
+            var notifEl = document.getElementById('interviewNotifications');
+            if (notifEl) {
+              var today = new Date();
+              // All applications with status 'interview', sorted by interview date ascending
+              var interviews = apps
+                .filter(function(a) { return a.status === 'interview'; })
+                .sort(function(a, b) {
+                  var da = a.interview && a.interview.date ? new Date(a.interview.date) : Infinity;
+                  var db = b.interview && b.interview.date ? new Date(b.interview.date) : Infinity;
+                  return da - db;
+                });
+
+              if (interviews.length === 0) {
+                notifEl.innerHTML = '<p class="small text-muted mb-0">No upcoming interviews.</p>';
+              } else {
+                notifEl.innerHTML = interviews.slice(0, 4).map(function(a, idx) {
+                  var company    = escapeH(a.job && a.job.company && a.job.company.name ? a.job.company.name : 'Company');
+                  var prefecture = escapeH(a.job && a.job.location && a.job.location.prefecture ? a.job.location.prefecture.toUpperCase() : '');
+                  var jobTitle   = escapeH(a.job && a.job.title ? a.job.title : 'Interview');
+                  var iDate      = a.interview && a.interview.date ? new Date(a.interview.date) : null;
+                  var isPast     = iDate && iDate < today;
+                  var dateLabel  = iDate
+                    ? iDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+                    : 'Date TBD';
+                  var textCls    = idx === 0 ? 'text-dark' : 'text-secondary';
+                  var pastBadge  = isPast ? ' <span class="badge bg-secondary-subtle text-secondary border border-secondary-subtle ms-1" style="font-size:0.65rem">Past</span>' : '';
+                  var loc        = prefecture ? ' (' + prefecture + ')' : '';
+                  return '<p class="small mb-1 ' + textCls + '">' +
+                    '📅 <strong>' + dateLabel + '</strong>' + pastBadge + '<br>' +
+                    '<span class="text-muted">' + jobTitle + ' – ' + company + loc + '</span>' +
+                  '</p>';
+                }).join('');
+              }
+            }
+
           } catch(e) {
             console.warn('loadApplications error', e);
           }
@@ -4004,6 +4078,24 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           var modal = document.getElementById('applicationDetailModal');
           if (modal) {
             modal.addEventListener('show.bs.modal', loadApplications);
+          }
+
+          // Download report button handler
+          var dl = document.getElementById('downloadReportBtn');
+          if (dl) {
+            dl.addEventListener('click', function() {
+              var apps = window._applicationsForReport || [];
+              if (!apps || apps.length === 0) {
+                // Reload then download
+                loadApplications().then(function() {
+                  generateApplicationsCSV(window._applicationsForReport || []);
+                }).catch(function(){
+                  generateApplicationsCSV(window._applicationsForReport || []);
+                });
+              } else {
+                generateApplicationsCSV(apps);
+              }
+            });
           }
         });
       })();
