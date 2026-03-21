@@ -362,72 +362,44 @@
 
             <!-- Applicant List (dynamic) -->
             <div class="col-lg-6 col-md-6">
-              <div class="card h-100 shadow-sm">
-                <div class="card-body">
-                  <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h3 class="card-title fw-bold mb-0">Applicant List</h3>
-                    <a href="#" class="text-danger small fw-semibold" id="viewAllApplicantsLink">View All</a>
+              <div class="card h-100 shadow-sm dashboard-list-card dashboard-list-card--applicants">
+                <div class="card-body p-4">
+                  <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-start gap-3 mb-4">
+                    <div>
+                      <h3 class="card-title fw-bold mb-1">Applicant List</h3>
+                      <p class="text-muted small mb-0">Review recent candidates and jump into applicant details faster.</p>
+                    </div>
+                    <a href="#" class="dashboard-list-link" id="viewAllApplicantsLink">View all applicants</a>
                   </div>
 
-                  <div id="applicantList" class="list-group list-group-flush">
-                    <div class="text-muted small">Loading applicants…</div>
+                  <div id="applicantList" class="dashboard-list">
+                    <div class="dashboard-list-empty">Loading applicants…</div>
                   </div>
-                  <div id="applicantListPagination" class="mt-3"></div>
+                  <div id="applicantListPagination" class="dashboard-list-pagination mt-3"></div>
                 </div>
               </div>
             </div>
 
             <!-- Job List Card-->
             <div class="col-lg-6 col-md-6">
-              <div class="card h-100 shadow-sm">
-                <div class="card-body">
+              <div class="card h-100 shadow-sm dashboard-list-card dashboard-list-card--jobs">
+                <div class="card-body p-4">
                   <div
-                    class="d-flex justify-content-between lign-items-center mb-3"
+                    class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-start gap-3 mb-4"
                   >
-                    <h3 class="card-title fw-bold mb-0">Job List</h3>
-                    <a href="#" class="text-danger small fw-semibold"
-                      >View All</a
+                    <div>
+                      <h3 class="card-title fw-bold mb-1">Job List</h3>
+                      <p class="text-muted small mb-0">Track your latest postings, statuses, and engagement at a glance.</p>
+                    </div>
+                    <a href="#" class="dashboard-list-link" id="viewAllJobsLink"
+                      >View all jobs</a
                     >
                   </div>
 
-                  <div id="dashboardJobList" class="list-group list-group-flush">
-                    <div class="list-group-item px-0 py-3">
-                      <div class="d-flex align-items-center">
-                        <div
-                          class="bg-light rounded me-3"
-                          style="width: 40px; height: 40px"
-                        ></div>
-                        <div class="flex-grow-1">
-                          <p class="mb-0 fw-semibold small">
-                            Cook and Customer Service
-                          </p>
-                          <small class="text-muted d-block"
-                            >Tokyo - Food Service</small
-                          >
-                          <small class="text-muted">250,000 yen</small>
-                        </div>
-                        <a href="#" class="text-danger small ms-2">view</a>
-                      </div>
-                    </div>
-
-                    <div class="list-group-item px-0 py-3">
-                      <div class="d-flex align-items-center">
-                        <div
-                          class="bg-light rounded me-3"
-                          style="width: 40px; height: 40px"
-                        ></div>
-                        <div class="flex-grow-1">
-                          <p class="mb-0 fw-semibold small">Machine Operate</p>
-                          <small class="text-muted d-block"
-                            >Chiba - Automotive</small
-                          >
-                          <small class="text-muted">JLPT N3</small>
-                        </div>
-                        <a href="#" class="text-danger small ms-2">view</a>
-                      </div>
-                    </div>
+                  <div id="dashboardJobList" class="dashboard-list">
+                    <div class="dashboard-list-empty">Loading jobs…</div>
                   </div>
-                  <div id="dashboardJobListPagination" class="mt-3"></div>
+                  <div id="dashboardJobListPagination" class="dashboard-list-pagination mt-3"></div>
                 </div>
               </div>
             </div>
@@ -1915,6 +1887,36 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
       return String(loc);
     }
 
+    function renderDashboardListEmptyState(message) {
+      return `<div class="dashboard-list-empty">${escapeHtml(message)}</div>`;
+    }
+
+    function getLabelInitials(label) {
+      const normalized = String(label || '')
+        .trim()
+        .split(/\s+/)
+        .filter(Boolean)
+        .slice(0, 2)
+        .map((part) => part.charAt(0).toUpperCase())
+        .join('');
+      return normalized || 'NA';
+    }
+
+    function getApplicantStatusTone(status) {
+      const key = String(status || '').toLowerCase();
+      if (key.includes('interview')) return 'interview';
+      if (key.includes('hire') || key.includes('accept') || key.includes('offer')) return 'hired';
+      if (key.includes('reject')) return 'rejected';
+      if (key.includes('review') || key.includes('submit') || key.includes('applic')) return 'reviewed';
+      return 'neutral';
+    }
+
+    function getJobStatusInfo(job) {
+      const label = job.isExpired ? 'Expired' : (job.isDraft ? 'Draft' : 'Active');
+      const tone = label === 'Expired' ? 'rejected' : (label === 'Draft' ? 'neutral' : 'hired');
+      return { label, tone };
+    }
+
     function renderListPagination(container, options) {
       if (!container) return;
 
@@ -1959,7 +1961,7 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
       if (!tbody) return;
       tbody.innerHTML = '<tr><td colspan="5" class="text-muted small">Loading jobs…</td></tr>';
       if (dashList) {
-        dashList.innerHTML = '<div class="text-muted small">Loading jobs…</div>';
+        dashList.innerHTML = renderDashboardListEmptyState('Loading jobs…');
       }
       if (dashPagination) {
         dashPagination.innerHTML = '';
@@ -1979,7 +1981,7 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
         if (!jobs || jobs.length === 0) {
           tbody.innerHTML = '<tr><td colspan="5" class="text-muted small">No jobs found.</td></tr>';
           if (dashList) {
-            dashList.innerHTML = '<div class="text-muted small">No jobs found.</div>';
+            dashList.innerHTML = renderDashboardListEmptyState('No jobs found.');
           }
           if (dashPagination) {
             dashPagination.innerHTML = '';
@@ -2036,8 +2038,13 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
               const id = job._id || job.id || '';
               const title = escapeHtml(job.title || 'Untitled');
               const loc = escapeHtml(formatJobLocation(job.location || job.jobLocation || null));
-              const meta = escapeHtml(job.japaneseLevel || job.industry || '');
-              return `<div class="list-group-item px-0 py-3"><div class="d-flex align-items-center"><div class="bg-light rounded me-3" style="width: 40px; height: 40px"></div><div class="flex-grow-1"><p class="mb-0 fw-semibold small">${title}</p><small class="text-muted d-block">${loc}</small><small class="text-muted">${meta}</small></div><a href="jobs/jobDetails.html?id=${encodeURIComponent(id)}" class="text-danger small ms-2">view</a></div></div>`;
+              const meta = escapeHtml(job.japaneseLevel || job.industry || 'No category provided');
+              const applications = job.applicationCount != null
+                ? `${escapeHtml(String(job.applicationCount))} application${job.applicationCount === 1 ? '' : 's'}`
+                : 'Applications unavailable';
+              const initials = escapeHtml(getLabelInitials(job.title || 'Job'));
+              const statusInfo = getJobStatusInfo(job);
+              return `<div class="dashboard-list-item dashboard-list-item--job"><div class="dashboard-list-item__main"><div class="dashboard-list-item__avatar dashboard-list-item__avatar--job" aria-hidden="true">${initials}</div><div class="dashboard-list-item__body"><div class="d-flex flex-column flex-md-row justify-content-between align-items-md-start gap-2 mb-2"><div><p class="dashboard-list-item__title mb-1">${title}</p><p class="dashboard-list-item__subtitle mb-0">${loc}</p></div><span class="dashboard-list-item__status dashboard-list-item__status--${escapeHtml(statusInfo.tone)}">${escapeHtml(statusInfo.label)}</span></div><div class="dashboard-list-item__meta"><span>${meta}</span><span>${applications}</span></div></div></div><a href="jobs/jobDetails.html?id=${encodeURIComponent(id)}" class="btn btn-sm btn-outline-danger dashboard-list-item__action">Details</a></div>`;
             }).join('');
 
             dashList.innerHTML = preview;
@@ -2056,7 +2063,7 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
         console.warn('loadCompanyJobs: error', err);
         tbody.innerHTML = '<tr><td colspan="5" class="text-muted small">Error loading jobs.</td></tr>';
         if (dashList) {
-          dashList.innerHTML = '<div class="text-muted small">Error loading jobs.</div>';
+          dashList.innerHTML = renderDashboardListEmptyState('Error loading jobs.');
         }
         if (dashPagination) {
           dashPagination.innerHTML = '';
@@ -2146,7 +2153,7 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
       const appListEl = document.getElementById('applicantList');
       const appPaginationEl = document.getElementById('applicantListPagination');
       const setApplicantCardMessage = (message) => {
-        if (appListEl) appListEl.innerHTML = `<div class="text-muted small">${escapeHtml(message)}</div>`;
+        if (appListEl) appListEl.innerHTML = renderDashboardListEmptyState(message);
         if (appPaginationEl) appPaginationEl.innerHTML = '';
       };
       if (recentEl) recentEl.innerHTML = '<div class="text-muted small">Loading applicants…</div>';
@@ -2273,7 +2280,7 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
         // Populate Applicant List card (larger list with actions)
         if (appListEl) {
           if (!recentApplications || recentApplications.length === 0) {
-            appListEl.innerHTML = '<div class="text-muted small">No applicants yet.</div>';
+            appListEl.innerHTML = renderDashboardListEmptyState('No applicants yet.');
             if (appPaginationEl) appPaginationEl.innerHTML = '';
           } else {
             const pageSize = 6;
@@ -2287,8 +2294,11 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
                 const applicant = getApplicantDisplayName(a.applicant || a);
                 const jobTitle = (a.job && a.job.title) ? a.job.title : (a._job && a._job.title) ? a._job.title : 'Job';
                 const status = a.status || '-';
+                const statusTone = getApplicantStatusTone(status);
                 const id = a._id || a.id || '';
-                return `<div class="list-group-item px-0 py-3"><div class="d-flex align-items-center mb-3"><div class="bg-light rounded me-3" style="width: 40px; height: 40px"></div><div class="flex-grow-1"><p class="mb-0 fw-semibold small">${escapeHtml(applicant)}</p><small class="text-muted d-block">${escapeHtml(jobTitle)}</small><small class="text-muted">${escapeHtml(status)}</small></div><button data-app-id="${escapeHtml(id)}" class="btn btn-sm btn-outline-danger view-app-btn">View</button></div></div>`;
+                const date = a.createdAt ? new Date(a.createdAt).toLocaleDateString() : 'Date unavailable';
+                const initials = escapeHtml(getLabelInitials(applicant));
+                return `<div class="dashboard-list-item dashboard-list-item--applicant"><div class="dashboard-list-item__main"><div class="dashboard-list-item__avatar" aria-hidden="true">${initials}</div><div class="dashboard-list-item__body"><div class="d-flex flex-column flex-md-row justify-content-between align-items-md-start gap-2 mb-2"><div><p class="dashboard-list-item__title mb-1">${escapeHtml(applicant)}</p><p class="dashboard-list-item__subtitle mb-0">${escapeHtml(jobTitle)}</p></div><span class="dashboard-list-item__status dashboard-list-item__status--${escapeHtml(statusTone)}">${escapeHtml(status)}</span></div><div class="dashboard-list-item__meta"><span>${escapeHtml(date)}</span><span>Latest activity</span></div></div></div><button data-app-id="${escapeHtml(id)}" class="btn btn-sm btn-outline-danger dashboard-list-item__action view-app-btn">View</button></div>`;
               }).join('');
 
               appListEl.querySelectorAll('.view-app-btn').forEach((btn) => {
@@ -2347,6 +2357,8 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
 
         // Wire View All links: open Applicant Tracking tab and refresh
         document.querySelectorAll('#viewAllApplicantsLink').forEach(el=>{
+          if (el.dataset.bound === 'true') return;
+          el.dataset.bound = 'true';
           el.addEventListener('click', (e)=>{
             e.preventDefault();
             const tabEl = document.getElementById('applicant-tab');
@@ -2355,6 +2367,19 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
             }
             // ensure full list is loaded
             loadCompanyApplicants();
+          });
+        });
+
+        document.querySelectorAll('#viewAllJobsLink').forEach(el=>{
+          if (el.dataset.bound === 'true') return;
+          el.dataset.bound = 'true';
+          el.addEventListener('click', (e)=>{
+            e.preventDefault();
+            const tabEl = document.getElementById('job-tab');
+            if (tabEl && typeof bootstrap !== 'undefined' && bootstrap.Tab) {
+              new bootstrap.Tab(tabEl).show();
+            }
+            loadCompanyJobs();
           });
         });
 

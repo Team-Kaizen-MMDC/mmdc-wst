@@ -65,7 +65,15 @@
       <form id="jobPostForm" class="needs-validation" novalidate="">
         <input type="hidden" name="company-id" id="company-id" value="PASTE_COMPANY_ID_HERE">
         <input type="hidden" name="user-id" id="user-id" value="PASTE_USER_ID_HERE">
-        
+
+        <!-- Admin-only: Company selector (populated dynamically) -->
+        <div id="company-select-wrapper" class="mb-3" style="display:none;">
+          <label for="company-select" class="form-label fw-semibold">Select Company</label>
+          <select id="company-select" class="form-select">
+            <option value="">Loading companies...</option>
+          </select>
+        </div>
+
         <!-- Section 1: Basic Information -->
         <div class="card mb-4 border-0 shadow-sm">
           <div class="card-header bg-light fw-bold h5">1. Job Basics</div>
@@ -458,7 +466,7 @@
     }
 
     const token = getToken();
-    const API_BASE = window.location.port === "8000" ? "http://localhost:3000/api/v1" : "/api/v1";
+    const API_BASE = window.location.port === "3000" ? "http://localhost:3000/api/v1" : "/api/v1";
 
     // Try to auto-fill company-id and company-name from /auth/me
     (async function fillProfile() {
@@ -489,6 +497,64 @@
           const nameEl = document.getElementById('company-name');
           if (nameEl && !nameEl.value) nameEl.value = user.company.name;
         }
+
+        // If platform admin, show company selector so admin can choose which company to post for
+        if (user.role === 'admin') {
+          try {
+            const compResp = await fetch(`${API_BASE}/companies?page=1&limit=200`, {
+              method: 'GET',
+              headers,
+              credentials: 'include'
+            });
+            if (compResp && compResp.ok) {
+              const compBody = await compResp.json().catch(()=>null);
+              const companies = compBody?.data?.companies || [];
+              const wrapper = document.getElementById('company-select-wrapper');
+              const select = document.getElementById('company-select');
+              if (wrapper && select) {
+                // Clear loading option
+                select.innerHTML = '';
+                if (companies.length === 0) {
+                  const opt = document.createElement('option');
+                  opt.value = '';
+                  opt.textContent = 'No companies found';
+                  select.appendChild(opt);
+                } else {
+                  const placeholder = document.createElement('option');
+                  placeholder.value = '';
+                  placeholder.textContent = 'Choose a company...';
+                  select.appendChild(placeholder);
+
+                  companies.forEach((c) => {
+                    const opt = document.createElement('option');
+                    opt.value = c._id || c.id || '';
+                    opt.textContent = c.name || (c._id || c.id);
+                    select.appendChild(opt);
+                  });
+
+                  // Pre-select the user's company if present
+                  if (companyId) select.value = companyId;
+
+                  // When admin selects a company, set hidden company-id and company-name
+                  select.addEventListener('change', function () {
+                    const cid = this.value;
+                    const name = this.options[this.selectedIndex]?.text || '';
+                    const el = document.getElementById('company-id');
+                    const nameEl = document.getElementById('company-name');
+                    if (el) el.value = cid;
+                    if (nameEl && name) nameEl.value = name;
+                  });
+                }
+
+                // Reveal wrapper
+                wrapper.style.display = 'block';
+              }
+            }
+          } catch (err) {
+            console.debug('Failed to load companies for admin selector', err);
+          }
+        }
+
       } catch (err) {
         // Non-fatal: autofill best-effort only
         console.debug('Profile autofill failed', err);

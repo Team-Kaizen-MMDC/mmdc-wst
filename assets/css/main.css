@@ -5106,6 +5106,173 @@ body.company-dashboard .profile-overview-action {
 }
 
 /* -------------------------------------
+   Company Dashboard List Cards
+-------------------------------------- */
+body.company-dashboard .dashboard-list-card {
+  border: 1px solid rgba(220, 53, 69, 0.12);
+  box-shadow: 0 12px 30px rgba(17, 24, 39, 0.08);
+}
+
+body.company-dashboard .dashboard-list-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  min-height: 2.5rem;
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  border: 1px solid #fecaca;
+  background: #ffffff;
+  color: #b91c1c;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+body.company-dashboard .dashboard-list-link:hover,
+body.company-dashboard .dashboard-list-link:focus {
+  color: #991b1b;
+  background: #fff5f5;
+  border-color: #fca5a5;
+}
+
+body.company-dashboard .dashboard-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+body.company-dashboard .dashboard-list-empty {
+  padding: 1rem 1.1rem;
+  border: 1px dashed #d1d5db;
+  border-radius: 1rem;
+  background: #f9fafb;
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+body.company-dashboard .dashboard-list-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid #eceff3;
+  border-radius: 1rem;
+  background: #ffffff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+body.company-dashboard .dashboard-list-item:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px rgba(17, 24, 39, 0.08);
+  border-color: #fca5a5;
+}
+
+body.company-dashboard .dashboard-list-item__main {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+  flex: 1;
+  min-width: 0;
+}
+
+body.company-dashboard .dashboard-list-item__avatar {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 0.85rem;
+  background: linear-gradient(135deg, #7f1d1d 0%, #dc2626 100%);
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+}
+
+body.company-dashboard .dashboard-list-item__avatar--job {
+  background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%);
+}
+
+body.company-dashboard .dashboard-list-item__body {
+  min-width: 0;
+  flex: 1;
+}
+
+body.company-dashboard .dashboard-list-item__title {
+  color: #111827;
+  font-size: 0.98rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+body.company-dashboard .dashboard-list-item__subtitle {
+  color: #6b7280;
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+body.company-dashboard .dashboard-list-item__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  color: #6b7280;
+  font-size: 0.8rem;
+}
+
+body.company-dashboard .dashboard-list-item__status {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-size: 0.76rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+body.company-dashboard .dashboard-list-item__status--reviewed {
+  background: #fff7ed;
+  border-color: #fed7aa;
+  color: #c2410c;
+}
+
+body.company-dashboard .dashboard-list-item__status--interview {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+  color: #1d4ed8;
+}
+
+body.company-dashboard .dashboard-list-item__status--hired {
+  background: #ecfdf5;
+  border-color: #a7f3d0;
+  color: #047857;
+}
+
+body.company-dashboard .dashboard-list-item__status--rejected {
+  background: #fef2f2;
+  border-color: #fecaca;
+  color: #b91c1c;
+}
+
+body.company-dashboard .dashboard-list-item__status--neutral {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+  color: #4b5563;
+}
+
+body.company-dashboard .dashboard-list-item__action {
+  min-width: 88px;
+  border-radius: 0.8rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  align-self: flex-start;
+}
+
+/* -------------------------------------
    Company Dashboard Applicant Tracking
 -------------------------------------- */
 body.company-dashboard .applicant-tracking-card {
@@ -5201,6 +5368,7 @@ body.company-dashboard .applicant-tracking-metric--rejected {
 
 @media (max-width: 575.98px) {
   body.company-dashboard .profile-overview-card .card-body,
+  body.company-dashboard .dashboard-list-card .card-body,
   body.company-dashboard .applicant-tracking-card .card-body {
     padding: 1.25rem !important;
   }
@@ -5218,5 +5386,14 @@ body.company-dashboard .applicant-tracking-metric--rejected {
 
   body.company-dashboard .applicant-tracking-metric {
     min-height: 104px;
+  }
+
+  body.company-dashboard .dashboard-list-item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  body.company-dashboard .dashboard-list-item__action {
+    width: 100%;
   }
 }
