@@ -239,6 +239,67 @@ exports.getJobApplications = asyncHandler(async (req, res, next) => {
 });
 
 /**
+ * @desc    Get aggregated applications summary for employer's company
+ * @route   GET /api/v1/jobs/my/applications/summary
+ * @access  Private (employer/admin)
+ */
+exports.getCompanyApplicationsSummary = asyncHandler(async (req, res, next) => {
+  // Admins may pass companyId as query param; employers use req.user.company
+  const { companyId } = req.query;
+  let company = null;
+
+  if (req.user.role === "admin" && companyId) {
+    company = companyId;
+  } else {
+    if (!req.user.company) {
+      return next(new ApiError(400, "No company associated with user"));
+    }
+    company = req.user.company;
+  }
+
+  // Find jobs for the company
+  const jobs = await Job.find({ company }).select("_id title").lean();
+  const jobIds = jobs.map((j) => j._id);
+
+  if (jobIds.length === 0) {
+    return res.json(
+      new ApiResponse(200, "No jobs found for company", {
+        jobs: [],
+        totalApplications: 0,
+        statusSummary: [],
+        recentApplications: [],
+      }),
+    );
+  }
+
+  const totalApplications = await Application.countDocuments({ job: { $in: jobIds } });
+
+  const statusSummary = await Application.aggregate([
+    { $match: { job: { $in: jobIds } } },
+    { $group: { _id: "$status", count: { $sum: 1 } } },
+  ]);
+
+  const recentApplications = await Application.find({ job: { $in: jobIds } })
+    .populate({
+      path: "applicant",
+      select: "email profile",
+      populate: { path: "profile", select: "firstName lastName nationality" },
+    })
+    .populate({ path: "job", select: "title" })
+    .sort("-createdAt")
+    .limit(10);
+
+  res.json(
+    new ApiResponse(200, "Company applications summary retrieved", {
+      jobs,
+      totalApplications,
+      statusSummary,
+      recentApplications,
+    }),
+  );
+});
+
+/**
  * @desc    Update application status
  * @route   PUT /api/v1/applications/:id/status
  * @access  Private (employer/admin)
