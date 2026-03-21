@@ -5001,3 +5001,697 @@ p.lead {
     transform: none !important;
   }
 }
+
+/* -------------------------------------
+   Company Dashboard Profile Overview
+-------------------------------------- */
+body.company-dashboard .profile-overview-card {
+  border: 1px solid rgba(220, 53, 69, 0.12);
+  box-shadow: 0 12px 30px rgba(17, 24, 39, 0.08);
+}
+
+body.company-dashboard .profile-overview-avatar {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 1.1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: linear-gradient(135deg, #7f1d1d 0%, #dc2626 100%);
+  color: #ffffff;
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  box-shadow: 0 10px 24px rgba(185, 28, 28, 0.28);
+  flex-shrink: 0;
+}
+
+body.company-dashboard .profile-overview-avatar-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+body.company-dashboard .profile-overview-avatar-fallback {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+body.company-dashboard .profile-overview-eyebrow {
+  color: #6b7280;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+body.company-dashboard .profile-overview-role {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  background: #fff1f2;
+  border: 1px solid #fecdd3;
+  color: #b91c1c;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+body.company-dashboard .profile-overview-edit-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  min-height: 2.5rem;
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  border: 1px solid #fecaca;
+  background: #ffffff;
+  color: #b91c1c;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+body.company-dashboard .profile-overview-edit-link:hover,
+body.company-dashboard .profile-overview-edit-link:focus {
+  color: #991b1b;
+  background: #fff5f5;
+  border-color: #fca5a5;
+}
+
+body.company-dashboard .profile-overview-panel {
+  padding: 1rem 1.15rem;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
+  border: 1px solid rgba(220, 53, 69, 0.12);
+}
+
+body.company-dashboard .profile-overview-panel-title {
+  color: #111827;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+body.company-dashboard .profile-overview-primary-action,
+body.company-dashboard .profile-overview-action {
+  min-height: 3rem;
+  border-radius: 0.9rem;
+  font-weight: 700;
+}
+
+/* -------------------------------------
+   Company Dashboard List Cards
+-------------------------------------- */
+body.company-dashboard .dashboard-list-card {
+  border: 1px solid rgba(220, 53, 69, 0.12);
+  box-shadow: 0 12px 30px rgba(17, 24, 39, 0.08);
+}
+
+body.company-dashboard .dashboard-list-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  min-height: 2.5rem;
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  border: 1px solid #fecaca;
+  background: #ffffff;
+  color: #b91c1c;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+body.company-dashboard .dashboard-list-link:hover,
+body.company-dashboard .dashboard-list-link:focus {
+  color: #991b1b;
+  background: #fff5f5;
+  border-color: #fca5a5;
+}
+
+body.company-dashboard .dashboard-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+body.company-dashboard .dashboard-list-empty {
+  padding: 1rem 1.1rem;
+  border: 1px dashed #d1d5db;
+  border-radius: 1rem;
+  background: #f9fafb;
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+body.company-dashboard .dashboard-list-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid #eceff3;
+  border-radius: 1rem;
+  background: #ffffff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+body.company-dashboard .dashboard-list-item:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px rgba(17, 24, 39, 0.08);
+  border-color: #fca5a5;
+}
+
+body.company-dashboard .dashboard-list-item__main {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+  flex: 1;
+  min-width: 0;
+}
+
+body.company-dashboard .dashboard-list-item__avatar {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 0.85rem;
+  background: linear-gradient(135deg, #7f1d1d 0%, #dc2626 100%);
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+}
+
+body.company-dashboard .dashboard-list-item__avatar--job {
+  background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%);
+}
+
+body.company-dashboard .dashboard-list-item__body {
+  min-width: 0;
+  flex: 1;
+}
+
+body.company-dashboard .dashboard-list-item__title {
+  color: #111827;
+  font-size: 0.98rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+body.company-dashboard .dashboard-list-item__subtitle {
+  color: #6b7280;
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+body.company-dashboard .dashboard-list-item__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  color: #6b7280;
+  font-size: 0.8rem;
+}
+
+body.company-dashboard .dashboard-list-item__status {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-size: 0.76rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+body.company-dashboard .dashboard-list-item__status--reviewed {
+  background: #fff7ed;
+  border-color: #fed7aa;
+  color: #c2410c;
+}
+
+body.company-dashboard .dashboard-list-item__status--interview {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+  color: #1d4ed8;
+}
+
+body.company-dashboard .dashboard-list-item__status--hired {
+  background: #ecfdf5;
+  border-color: #a7f3d0;
+  color: #047857;
+}
+
+body.company-dashboard .dashboard-list-item__status--rejected {
+  background: #fef2f2;
+  border-color: #fecaca;
+  color: #b91c1c;
+}
+
+body.company-dashboard .dashboard-list-item__status--neutral {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+  color: #4b5563;
+}
+
+body.company-dashboard .dashboard-list-item__action {
+  min-width: 88px;
+  border-radius: 0.8rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  align-self: flex-start;
+}
+
+/* -------------------------------------
+   Company Dashboard Applicant Tracking
+-------------------------------------- */
+body.company-dashboard .applicant-tracking-card {
+  border: 1px solid rgba(220, 53, 69, 0.12);
+  box-shadow: 0 12px 30px rgba(17, 24, 39, 0.08);
+}
+
+body.company-dashboard .applicant-tracking-badge {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  background: #fff1f2;
+  color: #b91c1c;
+  border: 1px solid #fecdd3;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+body.company-dashboard .applicant-tracking-summary {
+  padding: 1.25rem;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
+  border: 1px solid rgba(220, 53, 69, 0.12);
+}
+
+body.company-dashboard .applicant-tracking-label,
+body.company-dashboard .applicant-tracking-metric-label {
+  display: block;
+  color: #6b7280;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+body.company-dashboard .applicant-tracking-total {
+  color: #111827;
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 800;
+  line-height: 1;
+}
+
+body.company-dashboard .applicant-tracking-helper {
+  margin-top: 0.5rem;
+  color: #6b7280;
+  font-size: 0.85rem;
+}
+
+body.company-dashboard .applicant-tracking-metric {
+  height: 100%;
+  min-height: 120px;
+  padding: 1rem 1.1rem;
+  border-radius: 0.9rem;
+  border: 1px solid #eceff3;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.75rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+body.company-dashboard .applicant-tracking-metric-value {
+  color: #111827;
+  font-size: 1.85rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+body.company-dashboard .applicant-tracking-metric--reviewed {
+  background: linear-gradient(135deg, #fff9db 0%, #ffffff 100%);
+  border-color: #fde68a;
+}
+
+body.company-dashboard .applicant-tracking-metric--interview {
+  background: linear-gradient(135deg, #eff6ff 0%, #ffffff 100%);
+  border-color: #bfdbfe;
+}
+
+body.company-dashboard .applicant-tracking-metric--hired {
+  background: linear-gradient(135deg, #ecfdf5 0%, #ffffff 100%);
+  border-color: #a7f3d0;
+}
+
+body.company-dashboard .applicant-tracking-metric--rejected {
+  background: linear-gradient(135deg, #fef2f2 0%, #ffffff 100%);
+  border-color: #fecaca;
+}
+
+@media (max-width: 575.98px) {
+  body.company-dashboard .profile-overview-card .card-body,
+  body.company-dashboard .dashboard-list-card .card-body,
+  body.company-dashboard .applicant-tracking-card .card-body {
+    padding: 1.25rem !important;
+  }
+
+  body.company-dashboard .profile-overview-avatar {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 1rem;
+  }
+
+  body.company-dashboard .applicant-tracking-summary,
+  body.company-dashboard .applicant-tracking-metric {
+    padding: 1rem;
+  }
+
+  body.company-dashboard .applicant-tracking-metric {
+    min-height: 104px;
+  }
+
+  body.company-dashboard .dashboard-list-item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  body.company-dashboard .dashboard-list-item__action {
+    width: 100%;
+  }
+}
+
+body.profile-dashboard .profile-dashboard-panel {
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 1.25rem;
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08) !important;
+  overflow: hidden;
+}
+
+body.profile-dashboard .profile-dashboard-panel .card-header,
+body.profile-dashboard .profile-dashboard-panel .card-body {
+  background: #fff;
+}
+
+body.profile-dashboard .profile-dashboard-panel-header,
+body.profile-dashboard .profile-dashboard-section-header {
+  padding: 1.25rem 1.5rem 1rem;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+body.profile-dashboard .profile-dashboard-eyebrow {
+  color: #64748b;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+body.profile-dashboard .profile-dashboard-media-btn,
+body.profile-dashboard .profile-dashboard-avatar-trigger {
+  backdrop-filter: blur(8px);
+}
+
+body.profile-dashboard .profile-dashboard-avatar-trigger {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+body.profile-dashboard .profile-dashboard-avatar-trigger:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.14);
+}
+
+body.profile-dashboard .profile-dashboard-hero-body {
+  align-items: center;
+  display: flex;
+  gap: 1.25rem;
+  padding: 1.25rem 1.5rem 1.5rem;
+}
+
+body.profile-dashboard .profile-dashboard-hero-spacer {
+  flex: 0 0 180px;
+}
+
+body.profile-dashboard .profile-dashboard-hero-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  max-width: 34rem;
+}
+
+body.profile-dashboard .profile-dashboard-hero-text {
+  color: #475569;
+  line-height: 1.6;
+  margin: 0;
+}
+
+body.profile-dashboard .profile-dashboard-completion-pill {
+  align-self: flex-start;
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.12), rgba(59, 130, 246, 0.12));
+  border: 1px solid rgba(239, 68, 68, 0.14);
+  border-radius: 999px;
+  color: #0f172a;
+  display: inline-flex;
+  font-size: 0.92rem;
+  font-weight: 600;
+  gap: 0.3rem;
+  padding: 0.55rem 0.9rem;
+}
+
+body.profile-dashboard .profile-dashboard-inline-action,
+body.profile-dashboard .profile-dashboard-section-link,
+body.profile-dashboard .profile-dashboard-entry-link {
+  align-items: center;
+  background: rgba(239, 68, 68, 0.08);
+  border-radius: 999px;
+  color: #dc2626 !important;
+  display: inline-flex;
+  font-weight: 700;
+  gap: 0.35rem;
+  padding: 0.45rem 0.8rem;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+body.profile-dashboard .profile-dashboard-inline-action:hover,
+body.profile-dashboard .profile-dashboard-section-link:hover,
+body.profile-dashboard .profile-dashboard-entry-link:hover {
+  background: #dc2626;
+  color: #fff !important;
+  transform: translateY(-1px);
+}
+
+body.profile-dashboard .profile-dashboard-inline-chip {
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+body.profile-dashboard .profile-dashboard-divider {
+  border-color: rgba(15, 23, 42, 0.08);
+  margin: 1.1rem 0 1.25rem;
+}
+
+body.profile-dashboard .profile-dashboard-resume-btn {
+  border-radius: 999px;
+  padding-inline: 1rem;
+}
+
+body.profile-dashboard #read-display,
+body.profile-dashboard #edit-input {
+  border-color: rgba(148, 163, 184, 0.18) !important;
+  box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+body.profile-dashboard .profile-dashboard-stat {
+  background: linear-gradient(180deg, #fff, #f8fafc);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-height: 100%;
+  padding: 1rem;
+}
+
+body.profile-dashboard .profile-dashboard-stat__label {
+  color: #64748b;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+body.profile-dashboard .profile-dashboard-stat__value {
+  color: #0f172a;
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+body.profile-dashboard .profile-dashboard-stat--applied {
+  border-color: rgba(59, 130, 246, 0.2);
+}
+
+body.profile-dashboard .profile-dashboard-stat--pending {
+  border-color: rgba(245, 158, 11, 0.24);
+}
+
+body.profile-dashboard .profile-dashboard-stat--interview {
+  border-color: rgba(99, 102, 241, 0.22);
+}
+
+body.profile-dashboard .profile-dashboard-stat--rejected {
+  border-color: rgba(239, 68, 68, 0.2);
+}
+
+body.profile-dashboard .profile-dashboard-notification-panel {
+  background: linear-gradient(180deg, rgba(248, 250, 252, 0.95), #fff);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 1rem;
+  height: 100%;
+  padding: 1rem 1rem 0.85rem;
+}
+
+body.profile-dashboard #interviewNotifications {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+body.profile-dashboard #interviewNotifications > * {
+  background: #fff;
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  border-radius: 0.95rem;
+  margin: 0;
+  padding: 0.9rem 1rem;
+}
+
+body.profile-dashboard .profile-dashboard-entry-row {
+  align-items: flex-start;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+}
+
+body.profile-dashboard .profile-dashboard-entry-row:last-child {
+  border-bottom: 0;
+}
+
+body.profile-dashboard .profile-dashboard-entry-main {
+  align-items: flex-start;
+  display: flex;
+  gap: 0.9rem;
+  min-width: 0;
+}
+
+body.profile-dashboard .profile-dashboard-entry-icon {
+  align-items: center;
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.12), rgba(59, 130, 246, 0.14));
+  border-radius: 0.95rem;
+  color: #0f172a;
+  display: inline-flex;
+  font-size: 0.9rem;
+  font-weight: 800;
+  height: 2.75rem;
+  justify-content: center;
+  min-width: 2.75rem;
+}
+
+body.profile-dashboard .profile-dashboard-entry-body {
+  min-width: 0;
+}
+
+body.profile-dashboard .profile-dashboard-entry-title {
+  color: #0f172a;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.35;
+  margin: 0 0 0.2rem;
+}
+
+body.profile-dashboard .profile-dashboard-entry-subtitle,
+body.profile-dashboard .profile-dashboard-entry-meta {
+  color: #64748b;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  margin: 0;
+}
+
+body.profile-dashboard .profile-dashboard-entry-meta--active {
+  color: #15803d;
+  font-weight: 700;
+}
+
+body.profile-dashboard .profile-dashboard-section-empty {
+  color: #64748b;
+  font-size: 0.92rem;
+  font-style: italic;
+  padding: 1.2rem 1.25rem;
+}
+
+body.profile-dashboard .profile-dashboard-skill-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  padding: 1.25rem;
+}
+
+body.profile-dashboard .profile-dashboard-skill-chip {
+  background: rgba(37, 99, 235, 0.08);
+  border: 1px solid rgba(37, 99, 235, 0.12);
+  border-radius: 999px;
+  color: #1d4ed8;
+  display: inline-flex;
+  font-size: 0.92rem;
+  font-weight: 700;
+  padding: 0.55rem 0.9rem;
+}
+
+@media (max-width: 767.98px) {
+  body.profile-dashboard .profile-dashboard-hero-body {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  body.profile-dashboard .profile-dashboard-hero-spacer {
+    display: none;
+  }
+
+  body.profile-dashboard .profile-dashboard-panel-header,
+  body.profile-dashboard .profile-dashboard-section-header,
+  body.profile-dashboard .profile-dashboard-panel--hero .card-body,
+  body.profile-dashboard .profile-dashboard-panel--summary .card-body,
+  body.profile-dashboard .profile-dashboard-panel--info .card-body,
+  body.profile-dashboard .profile-dashboard-panel--tracking .card-body {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  body.profile-dashboard .profile-dashboard-entry-row {
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  body.profile-dashboard .profile-dashboard-entry-link {
+    align-self: flex-start;
+  }
+}

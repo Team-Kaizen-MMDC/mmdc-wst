@@ -616,7 +616,7 @@ touch assets/js/main.js
 npm run test:playwright:with-server
 
 # Check browser console for errors
-# Open http://localhost:8000 and check DevTools
+# Open http://localhost:3000 and check DevTools
 ```
 
 ---

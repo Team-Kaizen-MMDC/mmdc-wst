@@ -7,6 +7,25 @@ const User = require("../models/User");
  * Protect routes - verify JWT token
  */
 exports.protect = asyncHandler(async (req, res, next) => {
+  // If Passport has already populated req.user via session, trust that session
+  // (passport.deserializeUser loads the full user document). This allows
+  // session-based Google OAuth users to access protected routes without a JWT.
+  if (req.user) {
+    // Ensure account status checks are still enforced
+    if (!req.user.isActive) {
+      return next(new ApiError(401, "Account is deactivated"));
+    }
+    if (req.user.isLocked) {
+      return next(
+        new ApiError(
+          401,
+          "Account is locked due to multiple failed login attempts",
+        ),
+      );
+    }
+    return next();
+  }
+
   let token;
 
   // Check for token in Authorization header

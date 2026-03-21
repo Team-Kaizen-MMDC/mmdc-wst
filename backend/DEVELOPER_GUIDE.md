@@ -91,6 +91,22 @@ Step-by-step: add a new page API (example: `contact`)
 
 Seeding / Importing Content (Postman, Compass, curl)
 
+---
+
+Importing companies & jobs (importer script)
+
+- An importer is provided to safely seed companies and jobs from the japansswdb JSON files. Script: `backend/scripts/import_japansswdb.js`.
+- Usage (from repo root):
+
+```bash
+# ensure backend/.env contains a valid MONGODB_URI
+node backend/scripts/import_japansswdb.js --companies ~/Downloads/japansswdb.companies.json --jobs ~/Downloads/japansswdb.jobs.json
+```
+
+- The importer upserts companies (by name), remaps old company IDs to new ObjectIds for jobs, and creates Job documents via the Job model so validation runs the same as the app.
+- Results are written to `backend/scripts/import_report.json`.
+- Ensure `MONGODB_URI` in `backend/.env` points to the desired database (the script uses that value).
+
 - Purpose: manually add or update page documents in your dev or staging DB without running a seed script. The `POST /api/content` endpoint upserts by `slug` (create or replace).
 
 - Important: Include a `slug` field in the JSON (e.g., `"about"`) — this is used by page lookups.

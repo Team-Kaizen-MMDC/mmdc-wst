@@ -83,7 +83,7 @@ Example tests (what to cover)
 Config notes
 
 - Keep tests deterministic: use `waitForSelector` and avoid hard timeouts.
-  -- Use `baseURL` in Playwright config (`http://localhost:8000`) for convenience.
+  -- Use `baseURL` in Playwright config (`http://localhost:3000`) for convenience.
 - Use `trace` on failure to debug flakiness: `playwright show-trace`.
 
 Sample GitHub Actions CI

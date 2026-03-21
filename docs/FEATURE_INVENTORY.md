@@ -69,6 +69,8 @@
 
 3. **Company Jobs View**
 
+    - Note: Admins and the importer script now post jobs via the main `POST /api/v1/jobs` endpoint. If a job is posted without a company ObjectId, the frontend/importer can auto-create a company — the created company must include `contact.email`, `contact.phone`, and `description` to satisfy backend validation.
+
    - Filtered job listings for specific company
    - Direct application from company profile
    - Related companies suggestions

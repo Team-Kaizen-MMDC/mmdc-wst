@@ -461,6 +461,8 @@ Adds an education entry to the profile.
 
 ## Jobs
 
+> Note: Admins can create job listings via POST /api/v1/jobs (preferred). When posting as admin include a valid company ObjectId in `company` or the frontend/importer can auto-create a company with required contact fields (`contact.email`, `contact.phone`, `description`).
+
 ### Get All Jobs
 
 **`GET /jobs`**  

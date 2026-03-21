@@ -63,9 +63,21 @@
 
       <!-- Job Post Form -->
       <form id="jobPostForm" class="needs-validation" novalidate="">
-        <input type="hidden" name="company-id" id="company-id" value="PASTE_COMPANY_ID_HERE">
-        <input type="hidden" name="user-id" id="user-id" value="PASTE_USER_ID_HERE">
-        
+        <input type="hidden" name="company-id" id="company-id" value="">
+        <input type="hidden" name="user-id" id="user-id" value="">
+
+        <!-- Admin-only: Company selector (populated dynamically) -->
+        <div id="company-select-wrapper" class="mb-3" style="display:none;">
+          <label for="company-select" class="form-label fw-semibold">Select Company</label>
+          <div class="input-group">
+            <input id="company-select-search" class="form-control" placeholder="Search companies..." aria-label="Search companies">
+            <button id="company-select-clear" type="button" class="btn btn-outline-secondary">Clear</button>
+          </div>
+          <select id="company-select" class="form-select mt-2">
+            <option value="">Loading companies...</option>
+          </select>
+        </div>
+
         <!-- Section 1: Basic Information -->
         <div class="card mb-4 border-0 shadow-sm">
           <div class="card-header bg-light fw-bold h5">1. Job Basics</div>
@@ -85,6 +97,38 @@
                   class="form-control"
                 />
                 <div class="invalid-feedback">Company name is required.</div>
+              </div>
+
+              <!-- Company Contact Email -->
+              <div class="col-md-6 mb-3">
+                <label for="company-email" class="form-label fw-semibold">Company Contact Email</label>
+                <input
+                  id="company-email"
+                  name="company-email"
+                  type="email"
+                  placeholder="hr@company.example.com"
+                  class="form-control"
+                />
+                <div class="invalid-feedback">Please provide a valid contact email.</div>
+              </div>
+
+              <!-- Company Contact Phone -->
+              <div class="col-md-6 mb-3">
+                <label for="company-phone" class="form-label fw-semibold">Company Contact Phone</label>
+                <input
+                  id="company-phone"
+                  name="company-phone"
+                  type="text"
+                  placeholder="e.g., +81-3-1234-5678"
+                  class="form-control"
+                />
+                <div class="invalid-feedback">Please provide a valid contact phone.</div>
+              </div>
+
+              <!-- Company Description (optional) -->
+              <div class="col-12 mb-3">
+                <label for="company-description" class="form-label fw-semibold">Company Description (optional)</label>
+                <textarea id="company-description" name="company-description" class="form-control" rows="3" placeholder="Short description used when creating a new company"></textarea>
               </div>
 
               <!-- Job Title -->
@@ -117,11 +161,22 @@
                   <option selected="" disabled="" value="">
                     Select Category...
                   </option>
-                  <option>Manufacturing</option>
-                  <option>Food Service</option>
-                  <option>Caregiver</option>
-                  <option>Construction</option>
-                  <option>Aviation</option>
+                  <option value="Manufacturing">Manufacturing</option>
+                  <option value="Food Service">Food Service</option>
+                  <option value="Nursing Care">Nursing Care (Caregiver)</option>
+                  <option value="Construction">Construction</option>
+                  <option value="Agriculture">Agriculture</option>
+                  <option value="Hospitality">Hospitality</option>
+                  <option value="Food Processing">Food Processing</option>
+                  <option value="Industrial Machinery">Industrial Machinery</option>
+                  <option value="Electric &amp; Electronics">Electric &amp; Electronics</option>
+                  <option value="Building Cleaning">Building Cleaning</option>
+                  <option value="Shipbuilding">Shipbuilding</option>
+                  <option value="Auto Repair">Auto Repair</option>
+                  <option value="Aviation">Aviation</option>
+                  <option value="Accommodation">Accommodation</option>
+                  <option value="Logistics">Logistics</option>
+                  <option value="Other">Other</option>
                 </select>
                 <div class="invalid-feedback">
                   Please select a job category.
@@ -312,11 +367,11 @@
                   <option selected="" disabled="" value="">
                     Select Japanese Level...
                   </option>
-                  <option>Beginner / N5</option>
-                  <option>Basic / N4</option>
-                  <option>Conversational / N3</option>
-                  <option>Business / N2</option>
-                  <option>Fluent / N1</option>
+                  <option value="N5">Beginner / N5</option>
+                  <option value="N4">Basic / N4</option>
+                  <option value="N3">Conversational / N3</option>
+                  <option value="N2">Business / N2</option>
+                  <option value="N1">Fluent / N1</option>
                 </select>
                 <div class="invalid-feedback">
                   Please select a Japanese level.
@@ -434,17 +489,156 @@
     <script type="module" src="../../assets/js/main.js"></script>
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-    // Check if there is a hash in the URL (e.g., #job-pane)
+    // Show requested tab from hash
     const hash = window.location.hash;
     if (hash) {
-      // Find the tab button that corresponds to that pane
       const targetTab = document.querySelector(`[data-bs-target="${hash}"]`);
       if (targetTab) {
-        // Use Bootstrap's Tab constructor to show it
         const tab = new bootstrap.Tab(targetTab);
         tab.show();
       }
     }
+
+    // Helper: read token from URL or cookie and persist as cookie when present
+    function getToken() {
+      const params = new URLSearchParams(window.location.search);
+      const urlToken = params.get("token");
+      if (urlToken) {
+        document.cookie = `token=${urlToken}; path=/; max-age=${7 * 24 * 60 * 60}`;
+        try { history.replaceState(null, '', window.location.pathname); } catch (_) {}
+        return urlToken;
+      }
+      const match = document.cookie.split('; ').find(r => r.startsWith('token='));
+      return match ? decodeURIComponent(match.split('=')[1]) : null;
+    }
+
+    const token = getToken();
+    const API_BASE = window.location.port === "3000" ? "http://localhost:3000/api/v1" : "/api/v1";
+
+    // Try to auto-fill company-id and company-name from /auth/me
+    (async function fillProfile() {
+      try {
+        const headers = {};
+        if (token) headers.Authorization = `Bearer ${token}`;
+        const resp = await fetch(`${API_BASE}/auth/me`, {
+          method: 'GET',
+          headers,
+          credentials: 'include'
+        });
+        if (!resp.ok) return;
+        const body = await resp.json().catch(()=>null);
+        if (!body || !body.success || !body.data) return;
+        const user = body.data;
+
+        // company may be an ObjectId (string) or populated object
+        let companyId = null;
+        if (user.company && typeof user.company === 'string') companyId = user.company;
+        else if (user.company && user.company._id) companyId = user.company._id;
+
+        if (companyId) {
+          const el = document.getElementById('company-id');
+          if (el) el.value = companyId;
+        }
+
+        if (user.company && user.company.name) {
+          const nameEl = document.getElementById('company-name');
+          if (nameEl && !nameEl.value) nameEl.value = user.company.name;
+        }
+
+        // If platform admin, show company selector so admin can choose which company to post for
+        if (user.role === 'admin') {
+          try {
+            const compResp = await fetch(`${API_BASE}/companies?page=1&limit=200`, {
+              method: 'GET',
+              headers,
+              credentials: 'include'
+            });
+            if (compResp && compResp.ok) {
+              const compBody = await compResp.json().catch(()=>null);
+              const companies = compBody?.data?.companies || [];
+              const wrapper = document.getElementById('company-select-wrapper');
+              const select = document.getElementById('company-select');
+              if (wrapper && select) {
+                // Clear loading option
+                select.innerHTML = '';
+                if (companies.length === 0) {
+                  const opt = document.createElement('option');
+                  opt.value = '';
+                  opt.textContent = 'No companies found';
+                  select.appendChild(opt);
+                } else {
+                  const placeholder = document.createElement('option');
+                  placeholder.value = '';
+                  placeholder.textContent = 'Choose a company...';
+                  select.appendChild(placeholder);
+
+                  // Render companies into select and setup client-side search
+                  function renderCompanies(list) {
+                    select.innerHTML = '';
+                    const placeholder = document.createElement('option');
+                    placeholder.value = '';
+                    placeholder.textContent = 'Choose a company...';
+                    select.appendChild(placeholder);
+
+                    list.forEach((c) => {
+                      const opt = document.createElement('option');
+                      opt.value = c._id || c.id || '';
+                      opt.textContent = c.name || (c._id || c.id);
+                      select.appendChild(opt);
+                    });
+
+                    // Pre-select the user's company if present
+                    if (companyId) select.value = companyId;
+                  }
+
+                  renderCompanies(companies);
+
+                  // Client-side search box
+                  const searchInput = document.getElementById('company-select-search');
+                  const clearBtn = document.getElementById('company-select-clear');
+                  if (searchInput) {
+                    searchInput.addEventListener('input', function () {
+                      const q = this.value.trim().toLowerCase();
+                      if (!q) return renderCompanies(companies);
+                      const filtered = companies.filter(c => (c.name || '').toLowerCase().includes(q) || (c.slug || '').toLowerCase().includes(q));
+                      renderCompanies(filtered);
+                    });
+                  }
+                  if (clearBtn) {
+                    clearBtn.addEventListener('click', function () {
+                      const si = document.getElementById('company-select-search');
+                      if (si) si.value = '';
+                      renderCompanies(companies);
+                    });
+                  }
+
+                  // When admin selects a company, set hidden company-id and company-name
+                  select.addEventListener('change', function () {
+                    const cid = this.value;
+                    const name = this.options[this.selectedIndex]?.text || '';
+                    const el = document.getElementById('company-id');
+                    const nameEl = document.getElementById('company-name');
+                    if (el) el.value = cid;
+                    if (nameEl && name) nameEl.value = name;
+                  });
+                }
+
+                // Reveal wrapper
+                wrapper.style.display = 'block';
+              }
+            }
+          } catch (err) {
+            console.debug('Failed to load companies for admin selector', err);
+          }
+        }
+
+      } catch (err) {
+        // Non-fatal: autofill best-effort only
+        console.debug('Profile autofill failed', err);
+      }
+    })();
+
+    // Note: the job form submit is handled centrally by assets/js/features/jobPost.js
   });
 </script>
 

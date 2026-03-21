@@ -88,7 +88,7 @@
                 <div id="user-menu-dropdown" class="user-menu-dropdown">
                 <h4 class="user-menu-dropdown__greeting">Welcome Back!</h4>
                 <h3 class="user-menu-dropdown__userName" id="user-menu-name">Admin User</h3>
-                <a href="#" class="user-menu-dropdown__link">Profile</a>
+                <a href="addEdit/profile.html" class="user-menu-dropdown__link">Profile</a>
                 <a href="#" class="user-menu-dropdown__link">Message</a>
                 <hr class="user-menu-dropdown__divider" />
                 <a href="#" class="user-menu-dropdown__link">Help</a>
@@ -254,186 +254,152 @@
           <div class="row g-4">
             <!-- Profile -->
             <div class="col-lg-6 col-md-6">
-              <div class="card h-100 shadow-sm">
-                <div class="card-body">
-                  <div
-                    class="d-flex justify-content-between align-items-start mb-3"
-                  >
-                    <div>
-                      <h2 class="card-title fw-bold mb-1" id="dash-profile-name">Sanchez Miguel</h2>
-                      <p class="text-muted small mb-0">Admin</p>
+              <div class="card h-100 shadow-sm profile-overview-card">
+                <div class="card-body p-4">
+                  <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-start gap-3 mb-4">
+                    <div class="d-flex align-items-center gap-3">
+                      <div class="profile-overview-avatar">
+                        <img
+                          id="dash-profile-image"
+                          class="profile-overview-avatar-image d-none"
+                          alt="Profile photo"
+                        />
+                        <span id="dash-profile-initials" class="profile-overview-avatar-fallback" aria-hidden="true">SM</span>
+                      </div>
+                      <div>
+                        <p class="profile-overview-eyebrow mb-1">Company account</p>
+                        <h2 class="card-title fw-bold mb-2" id="dash-profile-name">Sanchez Miguel</h2>
+                        <span class="profile-overview-role" id="dash-profile-role">Admin</span>
+                      </div>
                     </div>
-                    <a href="#" class="text-danger small ms-2">Edit</a>
+                    <a href="addEdit/profile.html" class="profile-overview-edit-link">Edit profile</a>
                   </div>
-                  <hr />
-                  <div class="d-grid gap 2">
-                    <a
-                      href="../pages/addEdit/job-post.html"
-                      class="btn btn-outline-danger text-decoration-none"
-                      tabindex="-1"
-                      role="button"
-                      aria-disabled="true"
-                      >Post New Job</a
-                    >
-                    <button class="btn btn-outline-danger">
-                      View All Applicant
-                    </button>
-                    <button class="btn btn-outline-danger">
-                      View Posted Job
-                    </button>
+
+                  <div class="profile-overview-panel mb-4">
+                    <p class="profile-overview-panel-title mb-1">Quick actions</p>
+                    <p class="text-muted small mb-0">
+                      Manage your jobs, review applicants, and keep your dashboard up to date.
+                    </p>
+                  </div>
+
+                  <div class="row g-2">
+                    <div class="col-12">
+                      <a
+                        href="../pages/addEdit/job-post.html"
+                        class="btn btn-danger profile-overview-primary-action w-100 text-decoration-none"
+                        tabindex="-1"
+                        role="button"
+                        aria-disabled="true"
+                        >Post New Job</a
+                      >
+                    </div>
+                    <div class="col-sm-6">
+                      <button id="btnViewAllApplicants" class="btn btn-outline-danger profile-overview-action w-100">
+                        View All Applicants
+                      </button>
+                    </div>
+                    <div class="col-sm-6">
+                      <button id="btnViewPostedJob" class="btn btn-outline-danger profile-overview-action w-100">
+                        View Posted Jobs
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <!-- Applicant Tracking Card-->
-            <div class="col-lg-3 col-md-6">
-              <div class="card h-100 shadow-sm">
-                <div class="card-body">
-                  <h3 class="card-title fw-bold mb-3">Applicant Tracking</h3>
-                  <ul class="list-unstyled small mb-0">
-                    <li class="mb-2">
-                      <span class="fw-semibold"> Applicant:</span>200
-                    </li>
-                    <li class="mb-2">
-                      <span class="fw-semibold"> Reviewed:</span> 122
-                    </li>
-                    <li class="mb-2">
-                      <span class="fw-semibold"> Interview:</span> 22
-                    </li>
-                    <li class="mb-2">
-                      <span class="fw-semibold"> Hired:</span> 10
-                    </li>
-                    <li class="mb-2">
-                      <span class="fw-semibold"> Reject:</span> 55
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
 
-            <!-- Job Metric Card-->
-            <div class="col-lg-3 col-md-6">
-              <div class="card h-100 shadow-sm">
-                <div class="card-body">
-                  <h3 class="card-title fw-bold mb-3">Job Metric</h3>
-                  <ul class="list-unstyled small mb-0">
-                    <li class="mb-2">
-                      <span class="fw-semibold">Active:</span> 5
-                    </li>
-                    <li class="mb-2">
-                      <span class="fw-semibold">Pending:</span> 2
-                    </li>
-                    <li class="mb-2">
-                      <span class="fw-semibold">Expired:</span> 2
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
 
-            <!-- Applicant List -->
+            <!-- Applicant Tracking Card (dynamic) -->
             <div class="col-lg-6 col-md-6">
-              <div class="card h-100 shadow-sm">
-                <div class="card-body">
-                  <div
-                    class="d-flex justify-content-between align-items-center mb-3"
-                  >
-                    <h3 class="card-title fw-bold mb-0">Applicant List</h3>
-                    <a href="#" class="text-danger small fw-semibold"
-                      >View All</a
-                    >
+              <div class="card h-100 shadow-sm applicant-tracking-card">
+                <div class="card-body p-4">
+                  <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-start gap-3 mb-4">
+                    <div>
+                      <h3 class="card-title fw-bold mb-1">Applicant Tracking</h3>
+                      <p class="text-muted small mb-0">Quick overview of your hiring pipeline.</p>
+                    </div>
+                    <span class="applicant-tracking-badge">Pipeline overview</span>
                   </div>
 
-                  <div class="list-group list-group-flush">
-                    <div class="list-group-item px-0 py-3">
-                      <div class="d-flex align-items-center mb-3">
-                        <div
-                          class="bg-light rounded me-3"
-                          style="width: 40px; height: 40px"
-                        ></div>
-                        <div class="flex-grow-1">
-                          <p class="mb-0 fw-semibold small">Dela Cruz Juan</p>
-                          <small class="text-muted d-block"
-                            >Kitchen Restaurant - Food Service</small
-                          >
-                          <small class="text-muted">JLPT N3</small>
-                        </div>
-                        <a href="#" class="text-danger small ms-2">view</a>
+                  <div class="applicant-tracking-summary mb-3">
+                    <div>
+                      <p class="applicant-tracking-label mb-2">Total Applicants</p>
+                      <div class="applicant-tracking-total" id="stat-applied-company">–</div>
+                      <p class="applicant-tracking-helper mb-0">Applications received across all posted jobs.</p>
+                    </div>
+                  </div>
+
+                  <div class="row g-3">
+                    <div class="col-sm-6">
+                      <div class="applicant-tracking-metric applicant-tracking-metric--reviewed">
+                        <span class="applicant-tracking-metric-label">Reviewed</span>
+                        <span class="applicant-tracking-metric-value" id="stat-pending-company">–</span>
                       </div>
                     </div>
-
-                    <div class="list-group-item px-0 py-3">
-                      <div class="d-flex align-items-center">
-                        <div
-                          class="bg-light rounded me-3"
-                          style="width: 40px; height: 40px"
-                        ></div>
-                        <div class="flex-grow-1">
-                          <p class="mb-0 fw-semibold small">Dela Cruz Juan</p>
-                          <small class="text-muted d-block"
-                            >Assemble Line - Automotive</small
-                          >
-                          <small class="text-muted">JLPT N3</small>
-                        </div>
-                        <a href="#" class="text-danger small ms-2">view</a>
+                    <div class="col-sm-6">
+                      <div class="applicant-tracking-metric applicant-tracking-metric--interview">
+                        <span class="applicant-tracking-metric-label">Interview</span>
+                        <span class="applicant-tracking-metric-value" id="stat-interview-company">–</span>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="applicant-tracking-metric applicant-tracking-metric--hired">
+                        <span class="applicant-tracking-metric-label">Hired</span>
+                        <span class="applicant-tracking-metric-value" id="stat-hired-company">–</span>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="applicant-tracking-metric applicant-tracking-metric--rejected">
+                        <span class="applicant-tracking-metric-label">Rejected</span>
+                        <span class="applicant-tracking-metric-value" id="stat-rejected-company">–</span>
                       </div>
                     </div>
                   </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Applicant List (dynamic) -->
+            <div class="col-lg-6 col-md-6">
+              <div class="card h-100 shadow-sm dashboard-list-card dashboard-list-card--applicants">
+                <div class="card-body p-4">
+                  <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-start gap-3 mb-4">
+                    <div>
+                      <h3 class="card-title fw-bold mb-1">Applicant List</h3>
+                      <p class="text-muted small mb-0">Review recent candidates and jump into applicant details faster.</p>
+                    </div>
+                    <a href="#" class="dashboard-list-link" id="viewAllApplicantsLink">View all applicants</a>
+                  </div>
+
+                  <div id="applicantList" class="dashboard-list">
+                    <div class="dashboard-list-empty">Loading applicants…</div>
+                  </div>
+                  <div id="applicantListPagination" class="dashboard-list-pagination mt-3"></div>
                 </div>
               </div>
             </div>
 
             <!-- Job List Card-->
             <div class="col-lg-6 col-md-6">
-              <div class="card h-100 shadow-sm">
-                <div class="card-body">
+              <div class="card h-100 shadow-sm dashboard-list-card dashboard-list-card--jobs">
+                <div class="card-body p-4">
                   <div
-                    class="d-flex justify-content-between lign-items-center mb-3"
+                    class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-start gap-3 mb-4"
                   >
-                    <h3 class="card-title fw-bold mb-0">Job List</h3>
-                    <a href="#" class="text-danger small fw-semibold"
-                      >View All</a
+                    <div>
+                      <h3 class="card-title fw-bold mb-1">Job List</h3>
+                      <p class="text-muted small mb-0">Track your latest postings, statuses, and engagement at a glance.</p>
+                    </div>
+                    <a href="#" class="dashboard-list-link" id="viewAllJobsLink"
+                      >View all jobs</a
                     >
                   </div>
 
-                  <div class="list-group list-group-flush">
-                    <div class="list-group-item px-0 py-3">
-                      <div class="d-flex align-items-center">
-                        <div
-                          class="bg-light rounded me-3"
-                          style="width: 40px; height: 40px"
-                        ></div>
-                        <div class="flex-grow-1">
-                          <p class="mb-0 fw-semibold small">
-                            Cook and Customer Service
-                          </p>
-                          <small class="text-muted d-block"
-                            >Tokyo - Food Service</small
-                          >
-                          <small class="text-muted">250,000 yen</small>
-                        </div>
-                        <a href="#" class="text-danger small ms-2">view</a>
-                      </div>
-                    </div>
-
-                    <div class="list-group-item px-0 py-3">
-                      <div class="d-flex align-items-center">
-                        <div
-                          class="bg-light rounded me-3"
-                          style="width: 40px; height: 40px"
-                        ></div>
-                        <div class="flex-grow-1">
-                          <p class="mb-0 fw-semibold small">Machine Operate</p>
-                          <small class="text-muted d-block"
-                            >Chiba - Automotive</small
-                          >
-                          <small class="text-muted">JLPT N3</small>
-                        </div>
-                        <a href="#" class="text-danger small ms-2">view</a>
-                      </div>
-                    </div>
+                  <div id="dashboardJobList" class="dashboard-list">
+                    <div class="dashboard-list-empty">Loading jobs…</div>
                   </div>
+                  <div id="dashboardJobListPagination" class="dashboard-list-pagination mt-3"></div>
                 </div>
               </div>
             </div>
@@ -476,9 +442,10 @@
                     </tbody>
                 </table>
             </div>
+            <div id="jobTablePagination" class="mt-3"></div>
             
             <p class="mt-4 text-muted fst-italic text-sm">
-                * Click 'Edit' or the Job Title to view and manage details in the modal. All data persistence is mock-only.
+                * Click 'Edit' or a Job Title to open the details modal.
             </p>
         </div>
     </div>
@@ -557,6 +524,34 @@
         </div>
     </div>
 
+        <!-- Applicant Detail Modal -->
+        <div class="modal fade" id="applicantDetailModal" tabindex="-1" aria-labelledby="applicantDetailModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="applicantDetailModalLabel">Applicant Profile</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div id="applicantDetailContent">
+                  <p class="mb-1"><strong>Name:</strong> <span id="applicant-name">-</span></p>
+                  <p class="mb-1"><strong>Email:</strong> <span id="applicant-email">-</span></p>
+                  <p class="mb-1"><strong>Applied For:</strong> <span id="applicant-job">-</span></p>
+                  <p class="mb-1"><strong>Location:</strong> <span id="applicant-location">-</span></p>
+                  <p class="mb-1"><strong>Applied On:</strong> <span id="applicant-date">-</span></p>
+                  <p class="mb-1"><strong>Status:</strong> <span id="applicant-status">-</span></p>
+                  <div id="applicant-resume" class="mt-3"></div>
+                  <pre id="applicant-raw" class="small bg-light p-2 mt-3 d-none" style="max-height:240px;overflow:auto"></pre>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a id="applicant-open-resume" class="btn btn-danger d-none" target="_blank" href="#">Open Resume</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Applicant Tracking Tab Pane -->
         <div
           class="tab-pane fade p-0"
@@ -586,102 +581,8 @@
                     <th scope="col" style="width: 15%">Action</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <!--Row 1-->
-                  <tr>
-                    <td>
-                      <!--scalable to Profile Image-->
-                      <p class="FullName fw-semibold mb-0">Dela Cruz, Juan</p>
-                    </td>
-                    <td class="location">Server Restaurant</td>
-                    <td class="text-left">Quezon City, Philippines</td>
-                    <td class="text-left">Oct 10, 2025</td>
-                    <!--Review, Interview Scheduled, Final Stage,Hired, Rejected-->
-                    <td><span class="badge text-bg-light">Review</span></td>
-                    <td>
-                      <button class="btn btn-sm btn-outline-primary me-2">
-                        View Profile
-                      </button>
-                    </td>
-                  </tr>
-                  <!--Row 2-->
-                  <tr>
-                    <td>
-                      <!--scalable to Profile Image-->
-                      <p class="FullName fw-semibold mb-0">John Doe, Lenon</p>
-                    </td>
-                    <td class="location">House Construction</td>
-                    <td class="text-left">Yokohama, Kanagawa</td>
-                    <td class="text-left">Sept 24, 2025</td>
-                    <!--Review, Interview Scheduled, Final Stage,Hired, Rejected-->
-                    <td>
-                      <span class="badge text-bg-dark"
-                        >Interview Scheduled</span
-                      >
-                    </td>
-                    <td>
-                      <button class="btn btn-sm btn-outline-primary me-2">
-                        View Profile
-                      </button>
-                    </td>
-                  </tr>
-                  <!--Row 3-->
-                  <tr>
-                    <td>
-                      <!--scalable to Profile Image-->
-                      <p class="FullName fw-semibold mb-0">Levi, Cabalon</p>
-                    </td>
-                    <td class="location">Mechanic Ground Support</td>
-                    <td class="text-left">Haneda, Tokyo</td>
-                    <td class="text-left">Sept 24, 2025</td>
-                    <!--Review, Interview Scheduled, Final Stage,Hired, Rejected-->
-                    <td>
-                      <span class="badge text-bg-warning">Final Stage</span>
-                    </td>
-                    <td>
-                      <button class="btn btn-sm btn-outline-primary me-2">
-                        View Profile
-                      </button>
-                    </td>
-                  </tr>
-                  <!--Row 4-->
-                  <tr>
-                    <td>
-                      <!--scalable to Profile Image-->
-                      <p class="FullName fw-semibold mb-0">
-                        Mellisa, Sebastian
-                      </p>
-                    </td>
-                    <td class="location">Ward Nursing</td>
-                    <td class="text-left">Shibuya, Tokyo</td>
-                    <td class="text-left">Sept 02, 2025</td>
-                    <!--Review, Interview Scheduled, Final Stage,Hired, Rejected-->
-                    <td><span class="badge text-bg-success">Hired</span></td>
-                    <td>
-                      <button class="btn btn-sm btn-outline-primary me-2">
-                        View Profile
-                      </button>
-                    </td>
-                  </tr>
-                  <!--Row 4-->
-                  <tr>
-                    <td>
-                      <!--scalable to Profile Image-->
-                      <p class="FullName fw-semibold mb-0">Mendez, Castillo</p>
-                    </td>
-                    <td class="location">Machine Operator</td>
-                    <td class="text-left">Iwata, Shizuoka</td>
-                    <td class="text-left">Oct 15, 2025</td>
-                    <!--Review, Interview Scheduled, Final Stage,Hired, Rejected-->
-                    <td>
-                      <span class="badge text-bg-secondary">Rejected</span>
-                    </td>
-                    <td>
-                      <button class="btn btn-sm btn-outline-primary me-2">
-                        View Profile
-                      </button>
-                    </td>
-                  </tr>
+                        <tbody id="applicantTableBody">
+                  <!-- Populated dynamically by loadCompanyApplicants() -->
                 </tbody>
               </table>
             </div>
@@ -899,7 +800,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                 </div>
               </div>
 
-              <!-- APPLICATION + NOTIFICATIONS -->
+
               <div class="col-12 col-md-6">
                 <div class="card shadow-sm h-100">
                   <div class="card-body">
@@ -1853,18 +1754,48 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
     }
 
     // Update the three profile name elements with data from the API.
-    function applyProfileToUI(firstName, lastName) {
+    function applyProfileToUI(firstName, lastName, roleName, photoUrl) {
       const first = (firstName || "").trim();
       const last = (lastName || "").trim();
       const full = [first, last].filter(Boolean).join(" ") || "Admin";
+      const initials = [first, last]
+        .filter(Boolean)
+        .map((part) => part.charAt(0).toUpperCase())
+        .join("")
+        .slice(0, 2) || "AD";
+      const normalizedRole = String(roleName || "Admin")
+        .trim()
+        .replace(/\b\w/g, (char) => char.toUpperCase());
 
       const menuBtn = document.getElementById("user-menu-btn");
       const menuName = document.getElementById("user-menu-name");
       const dashName = document.getElementById("dash-profile-name");
+      const dashRole = document.getElementById("dash-profile-role");
+      const dashInitials = document.getElementById("dash-profile-initials");
+      const dashImage = document.getElementById("dash-profile-image");
 
       if (menuBtn) menuBtn.textContent = first || "Admin";
       if (menuName) menuName.textContent = full;
       if (dashName) dashName.textContent = full;
+      if (dashRole) dashRole.textContent = normalizedRole;
+      if (dashInitials) dashInitials.textContent = initials;
+      if (dashImage) {
+        const imageSrc = String(photoUrl || "").trim();
+        dashImage.alt = `${full} profile photo`;
+        dashImage.onerror = () => {
+          dashImage.classList.add("d-none");
+          if (dashInitials) dashInitials.classList.remove("d-none");
+        };
+        if (imageSrc) {
+          dashImage.src = imageSrc;
+          dashImage.classList.remove("d-none");
+          if (dashInitials) dashInitials.classList.add("d-none");
+        } else {
+          dashImage.removeAttribute("src");
+          dashImage.classList.add("d-none");
+          if (dashInitials) dashInitials.classList.remove("d-none");
+        }
+      }
     }
 
     // Fetch the Mongoose UserProfile for the signed-in user.
@@ -1882,18 +1813,29 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
           const {
             data: { profile },
           } = await res.json();
-          const gp = profile?.user?.googleProfile || {};
+          const authProvider = profile?.user?.authProvider || "local";
+          const shouldUseGoogleProfile = authProvider === "google";
+          const gp = shouldUseGoogleProfile ? profile?.user?.googleProfile || {} : {};
+          const role = profile?.user?.role || profile?.role || "Admin";
+          const photoUrl =
+            profile?.photoPath ||
+            (shouldUseGoogleProfile ? gp.picture : "") ||
+            profile?.user?.photoPath ||
+            "";
           const first =
             profile.firstName ||
-            gp.given_name ||
-            (gp.name && gp.name.split(" ")[0]) ||
+            (shouldUseGoogleProfile
+              ? gp.given_name || (gp.name && gp.name.split(" ")[0])
+              : "") ||
+            profile?.user?.email?.split("@")[0] ||
             "";
           const last =
             profile.lastName ||
-            gp.family_name ||
-            (gp.name && gp.name.split(" ").slice(1).join(" ")) ||
+            (shouldUseGoogleProfile
+              ? gp.family_name || (gp.name && gp.name.split(" ").slice(1).join(" "))
+              : "") ||
             "";
-          applyProfileToUI(first, last);
+          applyProfileToUI(first, last, role, photoUrl);
           return;
         }
 
@@ -1904,17 +1846,26 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
           });
           if (meRes.ok) {
             const { data: user } = await meRes.json();
-            const gp = user?.googleProfile || {};
+            const authProvider = user?.authProvider || "local";
+            const shouldUseGoogleProfile = authProvider === "google";
+            const gp = shouldUseGoogleProfile ? user?.googleProfile || {} : {};
+            const role = user?.role || "Admin";
+            const photoUrl =
+              (shouldUseGoogleProfile ? gp.picture : "") ||
+              user?.photoPath ||
+              "";
             const first =
-              gp.given_name ||
-              (gp.name && gp.name.split(" ")[0]) ||
+              (shouldUseGoogleProfile
+                ? gp.given_name || (gp.name && gp.name.split(" ")[0])
+                : "") ||
               user.email?.split("@")[0] ||
               "";
             const last =
-              gp.family_name ||
-              (gp.name && gp.name.split(" ").slice(1).join(" ")) ||
+              (shouldUseGoogleProfile
+                ? gp.family_name || (gp.name && gp.name.split(" ").slice(1).join(" "))
+                : "") ||
               "";
-            applyProfileToUI(first, last);
+            applyProfileToUI(first, last, role, photoUrl);
           }
         }
       } catch (err) {
@@ -1931,6 +1882,634 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
     } else {
       loadProfile();
     }
+
+    // Load company applicants summary (dashboard)
+
+    // Helper to format a job.location value (string or object) - global so other functions can use it
+    function formatJobLocation(loc) {
+      if (!loc) return '-';
+      if (typeof loc === 'string') return loc;
+      if (typeof loc === 'object') {
+        const parts = [];
+        if (loc.address) parts.push(loc.address);
+        if (loc.city) parts.push(loc.city);
+        if (loc.prefecture) parts.push(loc.prefecture);
+        if (loc.region) parts.push(loc.region);
+        if (loc.country) parts.push(loc.country);
+        if (parts.length) return parts.join(', ');
+        if (loc.cityName) return loc.cityName;
+        try { return JSON.stringify(loc); } catch { return '-'; }
+      }
+      return String(loc);
+    }
+
+    function renderDashboardListEmptyState(message) {
+      return `<div class="dashboard-list-empty">${escapeHtml(message)}</div>`;
+    }
+
+    function getLabelInitials(label) {
+      const normalized = String(label || '')
+        .trim()
+        .split(/\s+/)
+        .filter(Boolean)
+        .slice(0, 2)
+        .map((part) => part.charAt(0).toUpperCase())
+        .join('');
+      return normalized || 'NA';
+    }
+
+    function getApplicantStatusTone(status) {
+      const key = String(status || '').toLowerCase();
+      if (key.includes('interview')) return 'interview';
+      if (key.includes('hire') || key.includes('accept') || key.includes('offer')) return 'hired';
+      if (key.includes('reject')) return 'rejected';
+      if (key.includes('review') || key.includes('submit') || key.includes('applic')) return 'reviewed';
+      return 'neutral';
+    }
+
+    function getJobStatusInfo(job) {
+      const label = job.isExpired ? 'Expired' : (job.isDraft ? 'Draft' : 'Active');
+      const tone = label === 'Expired' ? 'rejected' : (label === 'Draft' ? 'neutral' : 'hired');
+      return { label, tone };
+    }
+
+    function renderListPagination(container, options) {
+      if (!container) return;
+
+      const { currentPage, totalItems, pageSize, label, onPageChange } = options;
+      const totalPages = Math.max(1, Math.ceil(totalItems / pageSize));
+
+      if (totalItems <= pageSize) {
+        container.innerHTML = '';
+        return;
+      }
+
+      const startItem = ((currentPage - 1) * pageSize) + 1;
+      const endItem = Math.min(currentPage * pageSize, totalItems);
+
+      container.innerHTML = `
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+          <small class="text-muted">Showing ${startItem}-${endItem} of ${totalItems} ${escapeHtml(label)}</small>
+          <div class="btn-group btn-group-sm" role="group" aria-label="${escapeHtml(label)} pagination">
+            <button type="button" class="btn btn-outline-secondary" data-pagination-action="prev" ${currentPage === 1 ? 'disabled' : ''}>Previous</button>
+            <button type="button" class="btn btn-outline-secondary" data-pagination-action="next" ${currentPage === totalPages ? 'disabled' : ''}>Next</button>
+          </div>
+        </div>
+      `;
+
+      container.querySelectorAll('[data-pagination-action]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const action = button.getAttribute('data-pagination-action');
+          const nextPage = action === 'prev' ? currentPage - 1 : currentPage + 1;
+
+          if (nextPage >= 1 && nextPage <= totalPages) {
+            onPageChange(nextPage);
+          }
+        });
+      });
+    }
+
+    // Load posted jobs into the Job List card (pulls from jobs collection)
+    async function loadCompanyJobs() {
+      const tbody = document.getElementById('job-list-body');
+      const dashList = document.getElementById('dashboardJobList');
+      const dashPagination = document.getElementById('dashboardJobListPagination');
+      if (!tbody) return;
+      tbody.innerHTML = '<tr><td colspan="5" class="text-muted small">Loading jobs…</td></tr>';
+      if (dashList) {
+        dashList.innerHTML = renderDashboardListEmptyState('Loading jobs…');
+      }
+      if (dashPagination) {
+        dashPagination.innerHTML = '';
+      }
+
+      const token = getToken();
+      try {
+        const headers = token ? { Authorization: `Bearer ${token}` } : {};
+        const res = await fetch(`${API_BASE}/jobs?limit=100`, { headers });
+        if (!res.ok) {
+          console.warn('loadCompanyJobs: failed to fetch jobs', res.status);
+          tbody.innerHTML = '<tr><td colspan="5" class="text-muted small">Failed to load jobs.</td></tr>';
+          return;
+        }
+        const j = await res.json();
+        const jobs = (j && j.data && j.data.jobs) ? j.data.jobs : (j && j.jobs) ? j.jobs : [];
+        if (!jobs || jobs.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="5" class="text-muted small">No jobs found.</td></tr>';
+          if (dashList) {
+            dashList.innerHTML = renderDashboardListEmptyState('No jobs found.');
+          }
+          if (dashPagination) {
+            dashPagination.innerHTML = '';
+          }
+          return;
+        }
+
+        // Paginate Job Management table
+        const jobTablePagination = document.getElementById('jobTablePagination');
+        const pageSizeTable = 10;
+        const renderJobTablePage = (page) => {
+          window._companyJobsTablePage = page;
+          const pageJobs = jobs.slice((page - 1) * pageSizeTable, page * pageSizeTable);
+          const rowsHtml = pageJobs.map(job => {
+            const id = job._id || job.id || '';
+            const title = escapeHtml(job.title || 'Untitled');
+            const company = escapeHtml((job.company && job.company.name) || job.companyName || 'Company');
+            const apps = job.applicationCount != null ? String(job.applicationCount) : '-';
+            const loc = formatJobLocation(job.location || job.jobLocation || null);
+            const status = job.isExpired ? 'Expired' : (job.isDraft ? 'Draft' : 'Active');
+            return `<tr data-job-id="${escapeHtml(id)}"><td><a href="jobs/jobDetails.html?id=${encodeURIComponent(id)}" class="text-decoration-none">${title}</a><div class="text-muted small">${company}</div></td><td>${escapeHtml(loc)}</td><td class="text-center">${escapeHtml(apps)}</td><td class="text-center">${escapeHtml(status)}</td><td class="text-center"><a class="btn btn-sm btn-outline-primary" href="addEdit/job-post.html?edit=${encodeURIComponent(id)}">Edit</a><button type="button" class="btn btn-sm btn-outline-danger ms-2 remove-job-btn" data-job-id="${escapeHtml(id)}">Remove</button></td></tr>`;
+          }).join('');
+          tbody.innerHTML = rowsHtml || '<tr><td colspan="5" class="text-muted small">No jobs found.</td></tr>';
+
+          // Attach remove handlers to newly rendered rows
+          tbody.querySelectorAll('.remove-job-btn').forEach(btn => {
+            btn.addEventListener('click', async (e) => {
+              const jobId = btn.getAttribute('data-job-id');
+              await deleteJob(jobId);
+            });
+          });
+
+          renderListPagination(jobTablePagination, {
+            currentPage: page,
+            totalItems: jobs.length,
+            pageSize: pageSizeTable,
+            label: 'jobs',
+            onPageChange: renderJobTablePage,
+          });
+        };
+
+        const totalPagesTable = Math.max(1, Math.ceil(jobs.length / pageSizeTable));
+        const initialTablePage = Math.min(Math.max(window._companyJobsTablePage || 1, 1), totalPagesTable);
+        renderJobTablePage(initialTablePage);
+
+        // Also populate the small dashboard Job List preview (if present)
+        if (dashList) {
+          const pageSize = 6;
+          const totalPages = Math.max(1, Math.ceil(jobs.length / pageSize));
+          const initialPage = Math.min(Math.max(window._companyDashboardJobPage || 1, 1), totalPages);
+          const renderDashboardJobPage = (page) => {
+            window._companyDashboardJobPage = page;
+            const preview = jobs.slice((page - 1) * pageSize, page * pageSize).map(job => {
+              const id = job._id || job.id || '';
+              const title = escapeHtml(job.title || 'Untitled');
+              const loc = escapeHtml(formatJobLocation(job.location || job.jobLocation || null));
+              const meta = escapeHtml(job.japaneseLevel || job.industry || 'No category provided');
+              const applications = job.applicationCount != null
+                ? `${escapeHtml(String(job.applicationCount))} application${job.applicationCount === 1 ? '' : 's'}`
+                : 'Applications unavailable';
+              const initials = escapeHtml(getLabelInitials(job.title || 'Job'));
+              const statusInfo = getJobStatusInfo(job);
+              return `<div class="dashboard-list-item dashboard-list-item--job"><div class="dashboard-list-item__main"><div class="dashboard-list-item__avatar dashboard-list-item__avatar--job" aria-hidden="true">${initials}</div><div class="dashboard-list-item__body"><div class="d-flex flex-column flex-md-row justify-content-between align-items-md-start gap-2 mb-2"><div><p class="dashboard-list-item__title mb-1">${title}</p><p class="dashboard-list-item__subtitle mb-0">${loc}</p></div><span class="dashboard-list-item__status dashboard-list-item__status--${escapeHtml(statusInfo.tone)}">${escapeHtml(statusInfo.label)}</span></div><div class="dashboard-list-item__meta"><span>${meta}</span><span>${applications}</span></div></div></div><a href="jobs/jobDetails.html?id=${encodeURIComponent(id)}" class="btn btn-sm btn-outline-danger dashboard-list-item__action">Details</a></div>`;
+            }).join('');
+
+            dashList.innerHTML = preview;
+            renderListPagination(dashPagination, {
+              currentPage: page,
+              totalItems: jobs.length,
+              pageSize,
+              label: 'jobs',
+              onPageChange: renderDashboardJobPage,
+            });
+          };
+
+          renderDashboardJobPage(initialPage);
+        }
+      } catch (err) {
+        console.warn('loadCompanyJobs: error', err);
+        tbody.innerHTML = '<tr><td colspan="5" class="text-muted small">Error loading jobs.</td></tr>';
+        if (dashList) {
+          dashList.innerHTML = renderDashboardListEmptyState('Error loading jobs.');
+        }
+        if (dashPagination) {
+          dashPagination.innerHTML = '';
+        }
+      }
+    }
+
+    // Ensure jobs load when the page is ready (and keep aligned with dashboard tab visibility)
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => { loadCompanyJobs(); });
+    } else {
+      loadCompanyJobs();
+    }
+
+    // Dashboard quick-action buttons
+    (function wireDashboardButtons(){
+      const btnViewAll = document.getElementById('btnViewAllApplicants');
+      if (btnViewAll) btnViewAll.addEventListener('click', (e)=>{
+        e.preventDefault();
+        const tabEl = document.getElementById('applicant-tab');
+        if (tabEl && typeof bootstrap !== 'undefined' && bootstrap.Tab) new bootstrap.Tab(tabEl).show();
+        loadCompanyApplicants();
+      });
+
+      const btnViewJobs = document.getElementById('btnViewPostedJob');
+      if (btnViewJobs) btnViewJobs.addEventListener('click', (e)=>{
+        e.preventDefault();
+        const tabEl = document.getElementById('job-tab');
+        if (tabEl && typeof bootstrap !== 'undefined' && bootstrap.Tab) new bootstrap.Tab(tabEl).show();
+        loadCompanyJobs();
+      });
+    })();
+    async function deleteJob(jobId) {
+      if (!jobId) return;
+      if (!confirm('Are you sure you want to remove this job? This will archive the job.')) return;
+      const token = getToken();
+      const headers = token ? { Authorization: `Bearer ${token}` } : {};
+      try {
+        const res = await fetch(`${API_BASE}/jobs/${encodeURIComponent(jobId)}`, {
+          method: 'DELETE',
+          headers,
+        });
+        const body = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          showTemporaryMessage(body.message || 'Failed to remove job', 'bg-red-600');
+          return;
+        }
+        // Remove row from the table
+        const row = document.querySelector(`tr[data-job-id="${jobId}"]`);
+        if (row) row.remove();
+        showTemporaryMessage(body.message || 'Job removed', 'bg-indigo-600');
+      } catch (err) {
+        console.error('deleteJob error', err);
+        showTemporaryMessage('Error removing job', 'bg-red-600');
+      }
+    }
+
+    function getApplicantDisplayName(entity) {
+          if (!entity) return 'Applicant';
+          const profile = entity.profile || {}; 
+          const first = (profile.firstName || profile.given_name || '').trim();
+          const last = (profile.lastName || profile.family_name || '').trim();
+          let full = [first, last].filter(Boolean).join(' ');
+          // fallback to full 'name' field if available
+          if (!full && (profile.name || entity.name)) full = (profile.name || entity.name || '').trim();
+          if (!full) full = entity.email || 'Applicant';
+          return full;
+        }
+
+        async function loadCompanyApplicants() {
+      // Only run when Dashboard tab is visible
+      const dashboardPane = document.getElementById('dashboard-pane');
+      if (dashboardPane && !dashboardPane.classList.contains('show') && !dashboardPane.classList.contains('active')) {
+        console.debug('loadCompanyApplicants: dashboard pane not visible; skipping');
+        return;
+      }
+
+      // Prevent duplicate concurrent loads
+      if (window._loadingCompanyApplicants) {
+        console.debug('loadCompanyApplicants: already loading; skipping duplicate call');
+        return;
+      }
+      window._loadingCompanyApplicants = true;
+
+      // Reset UI placeholders immediately
+      const recentEl = document.getElementById('recentApplicantsList');
+      const appListEl = document.getElementById('applicantList');
+      const appPaginationEl = document.getElementById('applicantListPagination');
+      const setApplicantCardMessage = (message) => {
+        if (appListEl) appListEl.innerHTML = renderDashboardListEmptyState(message);
+        if (appPaginationEl) appPaginationEl.innerHTML = '';
+      };
+      if (recentEl) recentEl.innerHTML = '<div class="text-muted small">Loading applicants…</div>';
+      setApplicantCardMessage('Loading applicants…');
+      ['stat-applied-company','stat-pending-company','stat-interview-company','stat-hired-company','stat-rejected-company'].forEach(id => { const el = document.getElementById(id); if (el) el.textContent = '—'; });
+
+      const token = getToken();
+      if (!token) {
+        console.warn('loadCompanyApplicants: no token available');
+        if (recentEl) recentEl.innerHTML = '<div class="text-muted small">Not signed in.</div>';
+        setApplicantCardMessage('Not signed in.');
+        window._loadingCompanyApplicants = false;
+        return;
+      }
+
+      try {
+        // Check user role first
+        const meRes = await fetch(`${API_BASE}/auth/me`, { headers: { Authorization: `Bearer ${token}` } });
+        if (!meRes.ok) {
+          console.warn('loadCompanyApplicants: auth/me failed', meRes.status);
+          const recentEl = document.getElementById('recentApplicantsList');
+          if (recentEl) recentEl.innerHTML = '<div class="text-muted small">Unable to verify user role.</div>';
+          setApplicantCardMessage('Unable to verify user role.');
+          return;
+        }
+        const meJson = await meRes.json();
+        const role = (meJson.data && meJson.data.user && meJson.data.user.role) || meJson.data?.role || meJson.data?.user?.role;
+        console.log('loadCompanyApplicants: user role:', role);
+        if (!['employer','admin'].includes(role)) {
+          const recentEl = document.getElementById('recentApplicantsList');
+          if (recentEl) recentEl.innerHTML = '<div class="text-muted small">Applicant tracking available to Employers and Admins only.</div>';
+          setApplicantCardMessage('Applicant tracking available to Employers and Admins only.');
+          return;
+        }
+
+        // 1) Get aggregated company applications summary
+        const summaryRes = await fetch(`${API_BASE}/jobs/my/applications/summary`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (!summaryRes.ok) {
+          console.warn('loadCompanyApplicants: failed to fetch company summary', summaryRes.status);
+          const recentEl = document.getElementById('recentApplicantsList');
+          if (recentEl) recentEl.innerHTML = '<div class="text-muted small">Failed to load applicants summary.</div>';
+          setApplicantCardMessage('Failed to load applicants summary.');
+          return;
+        }
+        const summaryJson = await summaryRes.json();
+        console.log('loadCompanyApplicants: summaryJson:', summaryJson);
+        const jobs = summaryJson.data?.jobs || [];
+        const totalApplications = summaryJson.data?.totalApplications || 0;
+        const statusSummary = summaryJson.data?.statusSummary || [];
+        const recentApplications = summaryJson.data?.recentApplications || [];
+        const sortedRecentApplications = [...recentApplications].sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
+        if (!jobs.length) {
+          const recentEl = document.getElementById('recentApplicantsList');
+          if (recentEl) recentEl.innerHTML = '<div class="text-muted small">No jobs posted yet.</div>';
+          setApplicantCardMessage('No applicants yet.');
+          // Zero counts (but show totalApplications if any)
+          document.getElementById('stat-applied-company').textContent = String(totalApplications || 0);
+          document.getElementById('stat-pending-company').textContent = '0';
+          document.getElementById('stat-interview-company').textContent = '0';
+          document.getElementById('stat-hired-company').textContent = '0';
+          document.getElementById('stat-rejected-company').textContent = '0';
+          return;
+        }
+
+        // Compute counts from statusSummary (normalize keys)
+        const statusMap = {};
+        (statusSummary || []).forEach(s => {
+          const key = String(s._id || '').toLowerCase();
+          if (key.includes('submit') || key.includes('applic')) {
+            statusMap['submitted'] = (statusMap['submitted'] || 0) + (s.count || 0);
+          } else if (key.includes('review')) {
+            statusMap['reviewing'] = (statusMap['reviewing'] || 0) + (s.count || 0);
+          } else if (key.includes('interview')) {
+            statusMap['interview'] = (statusMap['interview'] || 0) + (s.count || 0);
+          } else if (key.includes('reject')) {
+            statusMap['rejected'] = (statusMap['rejected'] || 0) + (s.count || 0);
+          } else if (key.includes('hire') || key.includes('accept') || key.includes('offer')) {
+            // treat hired/accepted/offer as accepted for dashboard
+            statusMap['accepted'] = (statusMap['accepted'] || 0) + (s.count || 0);
+          } else {
+            // Unknown statuses accumulate under 'other'
+            statusMap['other'] = (statusMap['other'] || 0) + (s.count || 0);
+          }
+        });
+
+        const pending = (statusMap['submitted'] || 0) + (statusMap['reviewing'] || 0);
+        const interview = statusMap['interview'] || 0;
+        const rejected = statusMap['rejected'] || 0;
+        const accepted = statusMap['accepted'] || 0;
+        const total = totalApplications || Object.values(statusMap).reduce((s,v)=>s+v,0);
+
+
+        // Update UI
+        const elApplied = document.getElementById('stat-applied-company');
+        const elPending = document.getElementById('stat-pending-company');
+        const elInterview = document.getElementById('stat-interview-company');
+        const elHired = document.getElementById('stat-hired-company');
+        const elRejected = document.getElementById('stat-rejected-company');
+        if (elApplied) elApplied.textContent = String(total);
+        if (elPending) elPending.textContent = String(pending);
+        if (elInterview) elInterview.textContent = String(interview);
+        if (elHired) elHired.textContent = String(accepted);
+        if (elRejected) elRejected.textContent = String(rejected);
+
+        // Render recent applicants (most recent first) from aggregated endpoint
+        const recentEl = document.getElementById('recentApplicantsList');
+        if (recentEl) {
+          if (!recentApplications || recentApplications.length === 0) {
+            recentEl.innerHTML = '<div class="text-muted small">No applicants yet.</div>';
+          } else {
+            const sorted = sortedRecentApplications.slice(0,8);
+            recentEl.innerHTML = sorted.map(a => {
+              const applicant = getApplicantDisplayName(a.applicant || a);
+              const jobTitle = (a.job && a.job.title) ? a.job.title : (a._job && a._job.title) ? a._job.title : 'Job';
+              const date = a.createdAt ? new Date(a.createdAt).toLocaleDateString() : '–';
+              const status = a.status || '-';
+              return `<a href="#" class="list-group-item list-group-item-action py-2"><div class="fw-semibold">${escapeHtml(jobTitle)} — ${escapeHtml(applicant)}</div><div class="small text-muted">${escapeHtml(date)} · ${escapeHtml(status)}</div></a>`;
+            }).join('');
+          }
+        }
+
+        // Populate Applicant List card (larger list with actions)
+        if (appListEl) {
+          if (!recentApplications || recentApplications.length === 0) {
+            appListEl.innerHTML = renderDashboardListEmptyState('No applicants yet.');
+            if (appPaginationEl) appPaginationEl.innerHTML = '';
+          } else {
+            const pageSize = 6;
+            const totalPages = Math.max(1, Math.ceil(sortedRecentApplications.length / pageSize));
+            const initialPage = Math.min(Math.max(window._companyApplicantListPage || 1, 1), totalPages);
+            const renderApplicantListPage = (page) => {
+              window._companyApplicantListPage = page;
+              const list = sortedRecentApplications.slice((page - 1) * pageSize, page * pageSize);
+
+              appListEl.innerHTML = list.map(a=>{
+                const applicant = getApplicantDisplayName(a.applicant || a);
+                const jobTitle = (a.job && a.job.title) ? a.job.title : (a._job && a._job.title) ? a._job.title : 'Job';
+                const status = a.status || '-';
+                const statusTone = getApplicantStatusTone(status);
+                const id = a._id || a.id || '';
+                const date = a.createdAt ? new Date(a.createdAt).toLocaleDateString() : 'Date unavailable';
+                const initials = escapeHtml(getLabelInitials(applicant));
+                return `<div class="dashboard-list-item dashboard-list-item--applicant"><div class="dashboard-list-item__main"><div class="dashboard-list-item__avatar" aria-hidden="true">${initials}</div><div class="dashboard-list-item__body"><div class="d-flex flex-column flex-md-row justify-content-between align-items-md-start gap-2 mb-2"><div><p class="dashboard-list-item__title mb-1">${escapeHtml(applicant)}</p><p class="dashboard-list-item__subtitle mb-0">${escapeHtml(jobTitle)}</p></div><span class="dashboard-list-item__status dashboard-list-item__status--${escapeHtml(statusTone)}">${escapeHtml(status)}</span></div><div class="dashboard-list-item__meta"><span>${escapeHtml(date)}</span><span>Latest activity</span></div></div></div><button data-app-id="${escapeHtml(id)}" class="btn btn-sm btn-outline-danger dashboard-list-item__action view-app-btn">View</button></div>`;
+              }).join('');
+
+              appListEl.querySelectorAll('.view-app-btn').forEach((btn) => {
+                btn.addEventListener('click', (e) => {
+                  e.preventDefault();
+                  const id = btn.getAttribute('data-app-id');
+                  const app = sortedRecentApplications.find(x => (x._id || x.id || '') === id);
+                  if (app) showApplicantDetail(app);
+                });
+              });
+
+              renderListPagination(appPaginationEl, {
+                currentPage: page,
+                totalItems: sortedRecentApplications.length,
+                pageSize,
+                label: 'applicants',
+                onPageChange: renderApplicantListPage,
+              });
+            };
+
+            renderApplicantListPage(initialPage);
+          }
+        }
+
+        // Populate Applicant Tracking Table (full list in Applicant Tracking tab)
+        const applicantTableBody = document.getElementById('applicantTableBody');
+        if (applicantTableBody) {
+          if (!recentApplications || recentApplications.length === 0) {
+            applicantTableBody.innerHTML = '<tr><td colspan="6" class="text-muted small">No applicants yet.</td></tr>';
+          } else {
+            const rows = sortedRecentApplications.map(a=>{
+              const id = a._id || a.id || '';
+              const applicant = getApplicantDisplayName(a.applicant || a);
+              const jobTitle = (a.job && a.job.title) ? a.job.title : (a._job && a._job.title) ? a._job.title : 'Job';
+              const locationRaw = (a.job && a.job.location) || (a._job && a._job.location) || null;
+              const location = formatJobLocation(locationRaw);
+              const date = a.createdAt ? new Date(a.createdAt).toLocaleDateString() : '–';
+              const status = a.status || '-';
+              return `<tr data-app-id="${escapeHtml(id)}"><td><p class="FullName fw-semibold mb-0">${escapeHtml(applicant)}</p></td><td class="location">${escapeHtml(jobTitle)}</td><td class="text-left">${escapeHtml(location)}</td><td class="text-left">${escapeHtml(date)}</td><td><span class="badge text-bg-light">${escapeHtml(status)}</span></td><td><button class="btn btn-sm btn-outline-primary me-2 view-table-app-btn" data-app-id="${escapeHtml(id)}">View Profile</button></td></tr>`;
+            }).join('');
+            applicantTableBody.innerHTML = rows;
+
+            // attach click handlers for table view buttons
+            setTimeout(()=>{
+              document.querySelectorAll('.view-table-app-btn').forEach(btn=>{
+                btn.addEventListener('click', (e)=>{
+                  e.preventDefault();
+                  const id = btn.getAttribute('data-app-id');
+                  const app = (recentApplications || []).find(x => (x._id||x.id||'') === id);
+                  if (app) showApplicantDetail(app);
+                });
+              });
+            },0);
+          }
+        }
+
+        // Wire View All links: open Applicant Tracking tab and refresh
+        document.querySelectorAll('#viewAllApplicantsLink').forEach(el=>{
+          if (el.dataset.bound === 'true') return;
+          el.dataset.bound = 'true';
+          el.addEventListener('click', (e)=>{
+            e.preventDefault();
+            const tabEl = document.getElementById('applicant-tab');
+            if (tabEl && typeof bootstrap !== 'undefined' && bootstrap.Tab) {
+              new bootstrap.Tab(tabEl).show();
+            }
+            // ensure full list is loaded
+            loadCompanyApplicants();
+          });
+        });
+
+        document.querySelectorAll('#viewAllJobsLink').forEach(el=>{
+          if (el.dataset.bound === 'true') return;
+          el.dataset.bound = 'true';
+          el.addEventListener('click', (e)=>{
+            e.preventDefault();
+            const tabEl = document.getElementById('job-tab');
+            if (tabEl && typeof bootstrap !== 'undefined' && bootstrap.Tab) {
+              new bootstrap.Tab(tabEl).show();
+            }
+            loadCompanyJobs();
+          });
+        });
+
+        // Helper to format a job.location value (string or object)
+        function formatJobLocation(loc) {
+          if (!loc) return '-';
+          if (typeof loc === 'string') return loc;
+          if (typeof loc === 'object') {
+            // Common fields: city, prefecture, region, country, address
+            const parts = [];
+            if (loc.address) parts.push(loc.address);
+            if (loc.city) parts.push(loc.city);
+            if (loc.prefecture) parts.push(loc.prefecture);
+            if (loc.region) parts.push(loc.region);
+            if (loc.country) parts.push(loc.country);
+            if (parts.length) return parts.join(', ');
+            // Fallback: try known nested fields
+            if (loc.cityName) return loc.cityName;
+            try { return JSON.stringify(loc); } catch { return '-'; }
+          }
+          return String(loc);
+        }
+
+        // Helper to show applicant modal — fetch full application if needed
+        async function showApplicantDetail(app) {
+          try {
+            // If the payload lacks applicant.profile, try fetching the full application
+            const id = app._id || app.id || app.applicationId || null;
+            const needsFetch = !(app.applicant && app.applicant.profile) && id;
+            if (needsFetch) {
+              try {
+                const token = getToken();
+                if (token) {
+                  const res = await fetch(`${API_BASE}/applications/${id}`, { headers: { Authorization: `Bearer ${token}` } });
+                  if (res.ok) {
+                    const j = await res.json();
+                    if (j && j.data) app = j.data; // replace with full application
+                  }
+                }
+              } catch (e) {
+                console.warn('showApplicantDetail: failed to fetch full application', e);
+              }
+            }
+
+            const name = getApplicantDisplayName(app.applicant || app);
+            const email = app.applicant?.email || (app.applicant && app.applicant.profile && app.applicant.profile.email) || '-';
+            const jobTitle = (app.job && app.job.title) || (app._job && app._job.title) || '-';
+            const locationRaw = (app.job && app.job.location) || (app._job && app._job.location) || null;
+            const location = formatJobLocation(locationRaw);
+            const date = app.createdAt ? new Date(app.createdAt).toLocaleString() : '-';
+            const status = app.status || '-';
+
+            document.getElementById('applicant-name').textContent = name;
+            document.getElementById('applicant-email').textContent = email;
+            document.getElementById('applicant-job').textContent = jobTitle;
+            document.getElementById('applicant-location').textContent = location;
+            document.getElementById('applicant-date').textContent = date;
+            document.getElementById('applicant-status').textContent = status;
+
+            // resume link if exists
+            const resumeEl = document.getElementById('applicant-resume');
+            const openResume = document.getElementById('applicant-open-resume');
+            const resumeUrl = app.resumeUrl || app.cvUrl || app.resume || (app.applicant && app.applicant.profile && app.applicant.profile.resumeUrl) || '';
+            if (resumeUrl) {
+              resumeEl.innerHTML = `<a href="${escapeHtml(resumeUrl)}" target="_blank" class="text-decoration-none">Open resume / CV</a>`;
+              openResume.href = resumeUrl;
+              openResume.classList.remove('d-none');
+            } else {
+              resumeEl.innerHTML = '';
+              openResume.classList.add('d-none');
+            }
+
+            // raw JSON debug removed from applicant modal
+            const rawEl = document.getElementById('applicant-raw');
+            if (rawEl) {
+              rawEl.textContent = '';
+              rawEl.classList.add('d-none');
+            }
+
+            const modalEl = document.getElementById('applicantDetailModal');
+            const modal = new bootstrap.Modal(modalEl);
+            modal.show();
+          } catch (err) {
+            console.warn('showApplicantDetail error', err);
+          }
+        }
+
+      } catch (err) {
+        console.warn('loadCompanyApplicants error', err);
+        const recentEl = document.getElementById('recentApplicantsList');
+        if (recentEl) recentEl.innerHTML = '<div class="text-muted small">Error loading applicants.</div>';
+        setApplicantCardMessage('Error loading applicants.');
+      } finally {
+        // allow subsequent loads
+        window._loadingCompanyApplicants = false;
+      }
+    }
+
+    // HTML-escape helper
+    function escapeHtml(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+
+    // Kick off on DOM ready (Dashboard tab only)
+    document.addEventListener('DOMContentLoaded', function(){
+      // Only load when on Dashboard tab (active by default)
+      const activeTab = document.querySelector('#dashboard-tab');
+      if (activeTab && activeTab.classList.contains('active')) {
+        loadCompanyApplicants();
+      }
+      // Also reload when dashboard tab is shown (in case user navigates)
+      const dashboardTabBtn = document.getElementById('dashboard-tab');
+      if (dashboardTabBtn) {
+        dashboardTabBtn.addEventListener('shown.bs.tab', loadCompanyApplicants);
+      }
+    });
   </script>
   </body>
 </html>

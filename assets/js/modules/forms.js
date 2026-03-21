@@ -15,7 +15,7 @@
 
 import { setCookie } from "./storage.js";
 import {
-  saveUserProfile,
+  replaceUserProfile,
   setNewUserFlag,
   hasCompletedProfile,
 } from "./userProfile.js";
@@ -223,7 +223,7 @@ export const initializeSignupValidation = () => {
 
       // --- INITIALIZE USER PROFILE ---
       // Save email to profile and mark as new user
-      saveUserProfile({ email: inputElements.email.value });
+      replaceUserProfile({ email: inputElements.email.value });
       setNewUserFlag(true);
 
 
@@ -340,7 +340,7 @@ export const initializeLoginValidation = () => {
             setCookie("email", inputElements.email.value, 7);
 
             // Save basic profile info and mark existing user
-            saveUserProfile({ email: inputElements.email.value });
+            replaceUserProfile({ email: inputElements.email.value });
             setNewUserFlag(false);
 
             // Role-based redirect: admin/employer → companyDashboard, everyone else → profileDashboard

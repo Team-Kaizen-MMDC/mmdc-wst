@@ -107,7 +107,18 @@ exports.getMyApplications = asyncHandler(async (req, res, next) => {
  * @access  Private (applicant or employer/admin)
  */
 exports.getApplication = asyncHandler(async (req, res, next) => {
-  const application = await Application.findById(req.params.id);
+  // Populate applicant.profile and job so frontend has full display data
+  const application = await Application.findById(req.params.id)
+    .populate({
+      path: 'applicant',
+      select: 'email profile',
+      populate: { path: 'profile', select: 'firstName lastName nationality japaneseLevel skills experience education' },
+    })
+    .populate({
+      path: 'job',
+      select: 'title location company',
+      populate: { path: 'company', select: 'name' },
+    });
 
   if (!application) {
     return next(new ApiError(404, "Application not found"));
@@ -115,7 +126,7 @@ exports.getApplication = asyncHandler(async (req, res, next) => {
 
   // Check authorization
   const isApplicant =
-    application.applicant._id.toString() === req.user._id.toString();
+    (application.applicant && application.applicant._id && application.applicant._id.toString && application.applicant._id.toString() === req.user._id.toString()) || false;
   const isEmployer = req.user.role === "employer" || req.user.role === "admin";
 
   if (!isApplicant && !isEmployer) {
@@ -234,6 +245,78 @@ exports.getJobApplications = asyncHandler(async (req, res, next) => {
         total,
         pages: Math.ceil(total / parseInt(limit)),
       },
+    }),
+  );
+});
+
+/**
+ * @desc    Get aggregated applications summary for employer's company
+ * @route   GET /api/v1/jobs/my/applications/summary
+ * @access  Private (employer/admin)
+ */
+exports.getCompanyApplicationsSummary = asyncHandler(async (req, res, next) => {
+  // Admins may pass companyId as query param; employers use req.user.company
+  const { companyId } = req.query;
+  let company = null;
+
+  if (req.user.role === "admin") {
+    // Admins can optionally pass companyId; if not provided, aggregate across all jobs
+    if (companyId) {
+      company = companyId;
+    } else {
+      company = null; // interpret as "all companies"
+    }
+  } else {
+    // Employers must be associated with a company
+    if (!req.user.company) {
+      return next(new ApiError(400, "No company associated with user"));
+    }
+    company = req.user.company;
+  }
+
+  // Find jobs for the company. If admin and no companyId provided, aggregate across all jobs.
+  let jobQuery = {};
+  if (company) {
+    jobQuery = { company };
+  }
+
+  const jobs = await Job.find(jobQuery).select("_id title").lean();
+  const jobIds = jobs.map((j) => j._id);
+
+  if (jobIds.length === 0) {
+    return res.json(
+      new ApiResponse(200, "No jobs found for company", {
+        jobs: [],
+        totalApplications: 0,
+        statusSummary: [],
+        recentApplications: [],
+      }),
+    );
+  }
+
+  const totalApplications = await Application.countDocuments({ job: { $in: jobIds } });
+
+  const statusSummary = await Application.aggregate([
+    { $match: { job: { $in: jobIds } } },
+    { $group: { _id: "$status", count: { $sum: 1 } } },
+  ]);
+
+  const recentApplications = await Application.find({ job: { $in: jobIds } })
+    .populate({
+      path: "applicant",
+      select: "email profile",
+      populate: { path: "profile", select: "firstName lastName nationality" },
+    })
+    .populate({ path: "job", select: "title" })
+    .sort("-createdAt")
+    .limit(10);
+
+  res.json(
+    new ApiResponse(200, "Company applications summary retrieved", {
+      jobs,
+      totalApplications,
+      statusSummary,
+      recentApplications,
     }),
   );
 });

@@ -663,7 +663,7 @@ offcanvasEl.addEventListener("hidden.bs.offcanvas", () => {
 
 ### Low Priority
 
-- None currently identified
+- Job posting validation: The frontend now posts admin-created jobs to `POST /api/v1/jobs` (admins allowed). Ensure the job-post form supplies required company contact fields when auto-creating a company (contact.email, contact.phone, description). Validation errors may occur when form select values don't match backend enums (e.g., `japaneseLevel`, `industry`).
 
 ### Future Enhancements
 

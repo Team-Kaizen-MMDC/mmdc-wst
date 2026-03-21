@@ -179,10 +179,10 @@ python -m http.server 8000
 # or
 npx http-server
 # or
-php -S localhost:8000
+php -S localhost:3000
 ```
 
-Open `http://localhost:8000` in your browser.
+Open `http://localhost:3000` in your browser.
 
 ## Local Test Accounts
 
@@ -218,6 +218,23 @@ ADMIN_EMAIL=me@test.local ADMIN_PASSWORD=MyPass@99 npm run seed:admin
 
 > **Note:** This account exists in MongoDB Atlas (`japansswdb`). Do not use these credentials in production.
 
+### Posting jobs as admin / import script
+
+Admins can create job listings via the main jobs endpoint (preferred):
+
+POST /api/v1/jobs (Authorization: Bearer <admin_token>) — the request body must include a valid company ObjectId in `company`. If an admin provides a company name or omits `company`, the frontend/importer supports auto-creating a company with required contact fields and then posting the job.
+
+To import the provided japansswdb seed files (companies + jobs):
+
+```bash
+# from repo root (ensure backend/.env contains MONGODB_URI)
+node backend/scripts/import_japansswdb.js --companies ~/Downloads/japansswdb.companies.json --jobs ~/Downloads/japansswdb.jobs.json
+```
+
+Import results are written to `backend/scripts/import_report.json`.
+
+(See docs/DATABASE_PLAN.md for updated API examples.)
+
 ## Development
 
 - HTML files live in the repo root and [pages/](pages/)
@@ -226,7 +243,7 @@ ADMIN_EMAIL=me@test.local ADMIN_PASSWORD=MyPass@99 npm run seed:admin
 
 ## Running tests
 
-Playwright-based smoke tests live under [tests/playwright/](tests/playwright/). The Playwright config [tests/playwright/playwright.config.js](tests/playwright/playwright.config.js) sets `baseURL` to `http://localhost:8000`, so tests expect a local static server to be available.
+Playwright-based smoke tests live under [tests/playwright/](tests/playwright/). The Playwright config [tests/playwright/playwright.config.js](tests/playwright/playwright.config.js) sets `baseURL` to `http://localhost:3000`, so tests expect a local static server to be available.
 
 One-time setup:
 
@@ -240,7 +257,7 @@ Run tests (two options):
 1. Start a server manually (separate terminal) and run Playwright:
 
 ```bash
-# start server (serves at http://localhost:8000)
+# start server (serves at http://localhost:3000)
 python3 -m http.server 8000
 
 # in another terminal

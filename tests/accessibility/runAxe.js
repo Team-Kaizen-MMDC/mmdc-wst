@@ -81,7 +81,7 @@ async function run() {
   try {
     for (const p of pages) {
       const page = await context.newPage();
-      const url = `http://localhost:8000/${p}`;
+      const url = `http://localhost:3000/${p}`;
       console.log("[axe] Visiting", url);
       const res = { url };
       try {

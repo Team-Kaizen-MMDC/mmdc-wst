@@ -182,7 +182,7 @@
       <div class="row g-4">
         <!-- PROFILE -->
         <div class="col-12 col-md-6">
-          <div class="card shadow-sm border-0 overflow-hidden">
+          <div class="card shadow-sm border-0 overflow-hidden profile-dashboard-panel profile-dashboard-panel--hero">
             <!-- Cover Section -->
             <div class="position-relative">
               <picture>
@@ -212,7 +212,7 @@
               <!-- Camera icon for cover upload -->
               <button
                 type="button"
-                class="btn btn-sm btn-light position-absolute top-0 end-0 m-2"
+                class="btn btn-sm btn-light position-absolute top-0 end-0 m-2 profile-dashboard-media-btn"
                 id="coverImageBtn"
                 title="Change cover photo"
               >
@@ -227,7 +227,7 @@
                 <a
                   href="#"
                   id="avatarImageBtn"
-                  class="d-inline-block rounded-circle border border-4 border-white shadow-sm overflow-hidden text-decoration-none"
+                  class="d-inline-block rounded-circle border border-4 border-white shadow-sm overflow-hidden text-decoration-none profile-dashboard-avatar-trigger"
                 >
                   <picture>
                     <!-- WebP format for optimized loading -->
@@ -271,27 +271,31 @@
             />
 
             <!-- Card Body -->
-            <div class="card-body d-flex align-items-center mt-1">
-              <!-- Spacer to match avatar space -->
-              <div style="width: 180px"></div>
-              <small class="text-muted mb-1"
-                >Profile <span class="text-primary">80% </span>complete — finish
-                to boost matches.</small
-              >
+            <div class="card-body profile-dashboard-hero-body mt-1">
+              <div class="profile-dashboard-hero-spacer" aria-hidden="true"></div>
+              <div class="profile-dashboard-hero-copy">
+                <p class="profile-dashboard-eyebrow mb-1">Profile readiness</p>
+                <p class="profile-dashboard-hero-text mb-2">
+                  Keep your profile current so employers can understand your background faster.
+                </p>
+                <span class="profile-dashboard-completion-pill"
+                  >Profile <strong>80%</strong> complete</span
+                >
+              </div>
             </div>
           </div>
         </div>
 
         <!-- Profile Summary-->
         <div class="col-12 col-md-6">
-          <div class="card shadow-sm h-100 rounded-4">
-            <div class="card-header bg-white">
-              <div class="d-flex justify-content-between">
+          <div class="card shadow-sm h-100 rounded-4 profile-dashboard-panel profile-dashboard-panel--summary">
+            <div class="card-header bg-white profile-dashboard-panel-header">
+              <div class="d-flex justify-content-between align-items-start gap-3">
                 <h2 class="card-title mb-0">Profile Summary</h2>
                 <!-- Edit Button (Initially visible) -->
                 <button
                   type="button"
-                  class="btn btn-link text-contrast-danger small ms-2 p-0 shadow-none"
+                  class="btn btn-link text-contrast-danger small ms-2 p-0 shadow-none profile-dashboard-inline-action"
                   id="edit-btn"
                 >
                   Edit
@@ -299,7 +303,7 @@
                 <!-- Save Button (Initially hidden) -->
                 <button
                   type="button"
-                  class="btn btn-link text-contrast-danger small ms-2 d-none p-0 shadow-none"
+                  class="btn btn-link text-contrast-danger small ms-2 d-none p-0 shadow-none profile-dashboard-inline-action"
                   id="save-btn"
                 >
                   Save
@@ -341,20 +345,20 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
 
         <!-- BASIC INFO -->
         <div class="col-12 col-md-6">
-          <div class="card shadow-sm h-100">
-            <div class="card-body">
-              <div class="d-flex justify-content-between">
+          <div class="card shadow-sm h-100 profile-dashboard-panel profile-dashboard-panel--info">
+            <div class="card-body p-4">
+              <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
                 <h3 class="card-title mb-0" id="info-name">profileDashboard</h3>
                 <a
                   href="#"
-                  class="text-contrast-danger small ms-2"
+                  class="text-contrast-danger small ms-2 profile-dashboard-inline-action"
                   data-bs-toggle="modal"
                   data-bs-target="#basicInfoModal"
                   >Edit</a
                 >
               </div>
               <p class="text-muted" id="info-location"></p>
-              <hr />
+              <hr class="profile-dashboard-divider" />
               <div class="row small">
                 <div class="col-6 mb-2">
                   <span class="fw-semibold">Visa:</span>
@@ -391,7 +395,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                   style="display: none"
                 />
 
-                <button type="button" id="resumeUploadLink" class="btn btn-sm btn-outline-primary d-block mt-3 fw-semibold">Upload Resume →</button>
+                <button type="button" id="resumeUploadLink" class="btn btn-sm btn-outline-primary d-block mt-3 fw-semibold profile-dashboard-resume-btn">Upload Resume →</button>
 
                 <div id="view-section" style="display: none; margin-top: 10px">
                   <a id="view-link" href="#" target="_blank">View Resume →</a>
@@ -409,17 +413,17 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
 
         <!-- APPLICATION + NOTIFICATIONS -->
         <div class="col-12 col-md-6">
-          <div class="card shadow-sm h-100">
-            <div class="card-body">
-              <div class="row">
-                <div class="col-md-6 border-md-end mb-3 mb-md-0">
-                  <h3
-                    class="fw-bold d-flex justify-content-between align-items-center mb-3"
-                  >
-                    Application Tracking
-                    <!--Button ICON -->
+          <div class="card shadow-sm h-100 profile-dashboard-panel profile-dashboard-panel--tracking">
+            <div class="card-body p-4">
+              <div class="row g-4">
+                <div class="col-md-6">
+                  <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
+                    <div>
+                      <p class="profile-dashboard-eyebrow mb-1">Applications</p>
+                      <h3 class="fw-bold mb-0">Application Tracking</h3>
+                    </div>
                     <button
-                      class="btn btn-outline-danger btn-sm px-3 shadow-sm d-flex align-items-center gap-1"
+                      class="btn btn-outline-danger btn-sm px-3 shadow-sm d-flex align-items-center gap-1 profile-dashboard-inline-chip"
                       data-bs-toggle="modal"
                       data-bs-target="#applicationDetailModal"
                       aria-label="View application history"
@@ -437,32 +441,44 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                           d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2m0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2m0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2"
                         ></path>
                       </svg>
-                      <span class="small fw-semibold"></span>
+                      <span class="small fw-semibold">History</span>
                     </button>
-                  </h3>
-                  <ul class="list-unstyled small mb-0">
-                    <li class="mb-2">
-                      <span class="fw-semibold"> Applied:</span>
-                      <span id="stat-applied">–</span>
-                    </li>
-                    <li class="mb-2">
-                      <span class="fw-semibold"> Pending:</span>
-                      <span id="stat-pending">–</span>
-                    </li>
-                    <li class="mb-2">
-                      <span class="fw-semibold"> Interview:</span>
-                      <span id="stat-interview">–</span>
-                    </li>
-                    <li class="mb-2">
-                      <span class="fw-semibold"> Rejected:</span>
-                      <span id="stat-rejected">–</span>
-                    </li>
-                  </ul>
+                  </div>
+
+                  <div class="row g-2">
+                    <div class="col-6">
+                      <div class="profile-dashboard-stat profile-dashboard-stat--applied">
+                        <span class="profile-dashboard-stat__label">Applied</span>
+                        <span class="profile-dashboard-stat__value" id="stat-applied">–</span>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="profile-dashboard-stat profile-dashboard-stat--pending">
+                        <span class="profile-dashboard-stat__label">Pending</span>
+                        <span class="profile-dashboard-stat__value" id="stat-pending">–</span>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="profile-dashboard-stat profile-dashboard-stat--interview">
+                        <span class="profile-dashboard-stat__label">Interview</span>
+                        <span class="profile-dashboard-stat__value" id="stat-interview">–</span>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="profile-dashboard-stat profile-dashboard-stat--rejected">
+                        <span class="profile-dashboard-stat__label">Rejected</span>
+                        <span class="profile-dashboard-stat__value" id="stat-rejected">–</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div class="col-md-6 ps-md-4 mt-md-2">
-                  <h3 class="fw-bold">Notifications</h3>
-                  <div id="interviewNotifications">
-                    <p class="small text-muted">Loading…</p>
+                <div class="col-md-6">
+                  <div class="profile-dashboard-notification-panel">
+                    <p class="profile-dashboard-eyebrow mb-1">Updates</p>
+                    <h3 class="fw-bold mb-3">Notifications</h3>
+                    <div id="interviewNotifications">
+                      <p class="small text-muted mb-0">Loading…</p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -472,14 +488,14 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
 
         <!-- EXPERIENCE -->
         <div class="col-12 col-md-6">
-          <div class="card shadow-sm">
-            <div class="card-header d-flex justify-content-between bg-white">
+          <div class="card shadow-sm profile-dashboard-panel profile-dashboard-panel--section">
+            <div class="card-header d-flex justify-content-between bg-white profile-dashboard-section-header">
               <h4 class="mb-0 fw-bold text-dark">Experience</h4>
               <!-- ADD button is always visible and opens the modal for a NEW entry (-1 index) -->
               <a
                 href="#"
                 id="addExperienceBtn"
-                class="small text-decoration-none fw-semibold"
+                class="small text-decoration-none fw-semibold profile-dashboard-section-link"
                 >Add
               </a>
             </div>
@@ -497,14 +513,14 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
 
         <!-- SKILLS -->
                <div class="col-12 col-md-6">
-          <div class="card shadow-sm">
-            <div class="card-header d-flex justify-content-between bg-white">
+          <div class="card shadow-sm profile-dashboard-panel profile-dashboard-panel--section">
+            <div class="card-header d-flex justify-content-between bg-white profile-dashboard-section-header">
               <h4 class="mb-0 fw-bold text-dark">Skills</h4>
               <!-- ADD button is always visible and opens the modal for a NEW entry (-1 index) -->
               <a
                 href="#"
                 id="openSkillsBtn"
-                class="small text-decoration-none fw-semibold"
+                class="small text-decoration-none fw-semibold profile-dashboard-section-link"
                 >Add
               </a>
             </div>
@@ -522,14 +538,14 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
 
         <!-- EDUCATION -->
         <div class="col-12 col-md-6">
-          <div class="card shadow-sm">
-            <div class="card-header d-flex justify-content-between bg-white">
+          <div class="card shadow-sm profile-dashboard-panel profile-dashboard-panel--section">
+            <div class="card-header d-flex justify-content-between bg-white profile-dashboard-section-header">
               <h4 class="mb-0 fw-bold text-dark">Education</h4>
               <!-- ADD button is always visible and opens the modal for a NEW entry (-1 index) -->
               <a
                 href="#"
                 id="addEducationBtn"
-                class="small text-decoration-none fw-semibold"
+                class="small text-decoration-none fw-semibold profile-dashboard-section-link"
                 >Add
               </a>
             </div>
@@ -546,15 +562,15 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
         </div>
 
         <!-- AVAILABILITY -->
-         <div class="col-12 col-md-6">
-          <div class="card shadow-sm">
-            <div class="card-header d-flex justify-content-between bg-white">
+          <div class="col-12 col-md-6">
+          <div class="card shadow-sm profile-dashboard-panel profile-dashboard-panel--section">
+            <div class="card-header d-flex justify-content-between bg-white profile-dashboard-section-header">
               <h4 class="mb-0 fw-bold text-dark">Availability / Preferences</h4>
               <!-- ADD button is always visible and opens the modal for a NEW entry (-1 index) -->
               <a
                 href="#"
                 id="addAvailabilityBtn"
-                class="small text-decoration-none fw-semibold"
+                class="small text-decoration-none fw-semibold profile-dashboard-section-link"
                 >Add
               </a>
             </div>
@@ -1611,6 +1627,20 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
         return res.json();
       }
 
+      function renderProfileDashboardEmptyState(message) {
+        return `<div class="profile-dashboard-section-empty">${message}</div>`;
+      }
+
+      function getProfileDashboardInitials(label = "") {
+        return String(label)
+          .trim()
+          .split(/\s+/)
+          .filter(Boolean)
+          .slice(0, 2)
+          .map((part) => part.charAt(0).toUpperCase())
+          .join("") || "NA";
+      }
+
       // ------------------------------------------------------------------
       // DYNAMIC BASIC INFO LOGIC
       // ------------------------------------------------------------------
@@ -2042,35 +2072,35 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
         );
 
         if (dataArray.length === 0) {
-          // Simple empty state message
-          displayContainer.innerHTML = `
-            <div class="text-muted small p-3">
-                No education entries yet. Click "Add" above to create your first entry.
-            </div>
-        `;
+          displayContainer.innerHTML = renderProfileDashboardEmptyState(
+            'No education entries yet. Click "Add" above to create your first entry.'
+          );
           return;
         }
 
-        // 1. Convert each data object into a complete HTML string (the 'map' loop)
         const educationHTML = dataArray
           .map((data, index) => {
-            // Logic for dates (same as before)
             const endDateText = data.isCurrent
               ? "Present"
               : `${data.endMonth} ${data.endYear}`;
             const datesText = `${data.startMonth} ${data.startYear} – ${endDateText}`;
-            const dateClass = data.isCurrent ? "text-success fw-semibold" : "";
+            const dateClass = data.isCurrent
+              ? "profile-dashboard-entry-meta--active"
+              : "";
+            const degreeField = [data.degree, data.field].filter(Boolean).join(" - ");
 
-            // Generate the HTML row
             return `
-            <div class="d-flex justify-content-between align-items-start py-3 px-3 border-bottom education-entry-row">
-                <div class="flex-grow-1">
-                    <div class="fw-semibold">${data.school}</div>
-                    <div class="text-muted small">${data.degree} – ${data.field}</div>
-                    <div class="small ${dateClass}">${datesText}</div>
+            <div class="profile-dashboard-entry-row education-entry-row">
+                <div class="profile-dashboard-entry-main">
+                    <div class="profile-dashboard-entry-icon">${getProfileDashboardInitials(data.school)}</div>
+                    <div class="profile-dashboard-entry-body">
+                        <div class="profile-dashboard-entry-title">${data.school}</div>
+                        <div class="profile-dashboard-entry-subtitle">${degreeField || "Education details"}</div>
+                        <div class="profile-dashboard-entry-meta ${dateClass}">${datesText}</div>
+                    </div>
                 </div>
                 <a href="#" 
-                  class="small text-decoration-none ms-3 flex-shrink-0 edit-education" 
+                  class="profile-dashboard-entry-link edit-education" 
                   data-index="${index}"
                   data-bs-toggle="modal" 
                   data-bs-target="#educationModal">
@@ -2079,9 +2109,8 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
             </div>
         `;
           })
-          .join(""); // 2. Join all the HTML strings together
+          .join("");
 
-        // 3. Insert the entire combined HTML string into the container at once
         displayContainer.innerHTML = educationHTML;
 
         // Attach listeners to Edit links (CSP-safe)
@@ -2096,13 +2125,6 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
             });
         });
 
-        // Optional: Remove border-bottom from last entry
-        const lastEntry = displayContainer.querySelector(
-          ".education-entry-row:last-child"
-        );
-        if (lastEntry) {
-          lastEntry.classList.remove("border-bottom");
-        }
       }
       /**
        * Deletes the currently edited education entry.
@@ -2460,7 +2482,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
         const container = document.getElementById("experience-list-container");
 
         if (!data.length) {
-          container.innerHTML = `<div class="text-muted small p-3">No experience entries yet.</div>`;
+          container.innerHTML = renderProfileDashboardEmptyState("No experience entries yet.");
           return;
         }
 
@@ -2469,14 +2491,18 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
             const endText = d.isCurrent
               ? "Present"
               : `${d.endMonth} ${d.endYear}`;
+            const metaClass = d.isCurrent ? "profile-dashboard-entry-meta--active" : "";
             return `
-      <div class="d-flex justify-content-between py-3 px-3 border-bottom experience-entry-row">
-        <div>
-          <div class="fw-semibold">${d.job}</div>
-          <div class="text-muted small">${d.company} — ${d.jobType}</div>
-          <div class="small">${d.startMonth} ${d.startYear} – ${endText}</div>
+      <div class="profile-dashboard-entry-row experience-entry-row">
+        <div class="profile-dashboard-entry-main">
+          <div class="profile-dashboard-entry-icon">${getProfileDashboardInitials(d.job || d.company)}</div>
+          <div class="profile-dashboard-entry-body">
+            <div class="profile-dashboard-entry-title">${d.job}</div>
+            <div class="profile-dashboard-entry-subtitle">${d.company} - ${d.jobType}</div>
+            <div class="profile-dashboard-entry-meta ${metaClass}">${d.startMonth} ${d.startYear} – ${endText}</div>
+          </div>
         </div>
-            <a href="#" class="small edit-experience" data-index="${i}" data-bs-toggle="modal" data-bs-target="#experienceModal">Edit</a>
+            <a href="#" class="profile-dashboard-entry-link edit-experience" data-index="${i}" data-bs-toggle="modal" data-bs-target="#experienceModal">Edit</a>
       </div>
     `;
           })
@@ -2493,10 +2519,6 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
             if (el) new bootstrap.Modal(el).show();
           });
         });
-
-        const rows = container.querySelectorAll(".experience-entry-row");
-        if (rows.length)
-          rows[rows.length - 1].classList.remove("border-bottom");
       }
 
       /* Delete Entry */
@@ -2566,6 +2588,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
         getUserProfile,
         getDisplayName,
         getFirstName,
+        saveUserProfile,
       } from "../assets/js/modules/userProfile.js";
 
       // Check authentication on page load
@@ -2579,6 +2602,44 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
         // Mobile logout button in offcanvas
         setupLogoutButton(".offcanvas-body .btn-danger");
       });
+
+      function syncDashboardEmailCookie(email) {
+        const normalizedEmail = String(email || "").trim();
+        if (!normalizedEmail) return;
+        document.cookie = `email=${encodeURIComponent(normalizedEmail)}; path=/`;
+      }
+
+      function getCachedDashboardProfile() {
+        try {
+          const profile = getUserProfile();
+          const hasIdentity = [
+            profile?.firstName,
+            profile?.lastName,
+            profile?.email,
+            profile?.picture,
+          ].some((value) => String(value || "").trim());
+
+          return hasIdentity ? profile : null;
+        } catch (error) {
+          console.warn("Could not read cached dashboard profile:", error);
+          return null;
+        }
+      }
+
+      function persistCachedDashboardProfile(profileData) {
+        try {
+          const normalizedProfile = {
+            ...profileData,
+            email: String(profileData?.email || "").trim(),
+          };
+
+          syncDashboardEmailCookie(normalizedProfile.email);
+          saveUserProfile(normalizedProfile);
+          localStorage.removeItem("userProfile");
+        } catch (error) {
+          console.warn("Could not persist cached dashboard profile:", error);
+        }
+      }
 
       // Populate dashboard with user data from backend API
       async function populateDashboard() {
@@ -2632,8 +2693,6 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
               // Remove token from URL to keep things clean
               try { history.replaceState(null, '', window.location.pathname + window.location.hash); } catch {}
 
-
-              console.log("nuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu")
               // Fetch basic user info and cache minimal profile for instant UI update
               try {
                 const meRes = await fetch('/api/v1/auth/me', {
@@ -2653,7 +2712,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                     nationality: '',
                     japaneseLevel: '',
                   };
-                  localStorage.setItem('userProfile', JSON.stringify(localProfile));
+                  persistCachedDashboardProfile(localProfile);
 
                   // Apply immediately to UI
                   const userMenuBtn = document.getElementById('user-menu-btn');
@@ -2682,9 +2741,8 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
             } else {
               // No token in URL — safe to apply cached profile for instant UI
               try {
-                const cached = localStorage.getItem('userProfile');
-                if (cached) {
-                  const lp = JSON.parse(cached);
+                const lp = getCachedDashboardProfile();
+                if (lp) {
                   const userMenuBtn = document.getElementById("user-menu-btn");
                   const userName = document.querySelector(".user-menu-dropdown__userName");
                   const avatarImg = document.getElementById("profileAvatarImg");
@@ -2765,7 +2823,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                       nationality: '',
                       japaneseLevel: '',
                     };
-                    localStorage.setItem('userProfile', JSON.stringify(localProfile));
+                    persistCachedDashboardProfile(localProfile);
                   } catch (e) {
                     console.warn('Could not persist local profile from /auth/me fallback', e);
                   }
@@ -2782,6 +2840,15 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           const data = await response.json();
           const profile = data.data.profile; // API returns { success: true, data: { profile: {...} } }
           console.log("Profile fetched from API:", profile);
+          const userAuthProvider = profile?.user?.authProvider || "local";
+          const shouldUseGoogleProfile = userAuthProvider === "google";
+
+          syncDashboardEmailCookie(
+            profile?.email ||
+            profile?.user?.email ||
+            profile?.user?.googleProfile?.email ||
+            ""
+          );
 
           // If the signed-in user changed since the last page load, clear
           // per-user cached localStorage keys to avoid showing another user's
@@ -2802,15 +2869,19 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           // those values for display so the UI reflects the signed-in identity
           // even when the server-side profile is older.
           try {
-            const cached = localStorage.getItem('userProfile');
-            if (cached) {
-              const lp = JSON.parse(cached);
+            const lp = getCachedDashboardProfile();
+            if (lp) {
               if (lp.firstName) profile.firstName = lp.firstName;
               if (lp.lastName) profile.lastName = lp.lastName;
               if (lp.email) profile.email = lp.email;
-              if (!profile.user) profile.user = {};
-              if (!profile.user.googleProfile) profile.user.googleProfile = {};
-              if (lp.picture) profile.user.googleProfile.picture = lp.picture;
+              if (lp.picture) {
+                if (!profile.user) profile.user = {};
+                profile.user.photoPath = profile.user.photoPath || lp.picture;
+                if (shouldUseGoogleProfile) {
+                  if (!profile.user.googleProfile) profile.user.googleProfile = {};
+                  profile.user.googleProfile.picture = lp.picture;
+                }
+              }
             }
           } catch (e) {
             console.warn('Could not apply cached local profile to server profile object', e);
@@ -2821,7 +2892,9 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           // with a single <img> pointing to the external Google URL so the
           // browser doesn't pick the local sources instead.
           try {
-            const avatarUrl = profile?.user?.googleProfile?.picture;
+            const avatarUrl = shouldUseGoogleProfile
+              ? profile?.user?.googleProfile?.picture
+              : profile?.photoPath || profile?.user?.photoPath || "";
             const avatarImg = document.getElementById("profileAvatarImg");
             if (avatarUrl && avatarImg) {
               const pic = avatarImg.closest("picture");
@@ -2843,7 +2916,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           // Merge Google profile fields into `profile` where applicable
           try {
             const userObj = profile.user || profile.user;
-            const gp = userObj?.googleProfile;
+            const gp = shouldUseGoogleProfile ? userObj?.googleProfile : null;
             if (gp) {
               // Prefer explicit profile fields, fall back to Google values
               profile.email = profile.email || gp.email || userObj.email;
@@ -2863,16 +2936,16 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           // reflect the updated Google name/email immediately.
           try {
             const localProfile = {
-              firstName: profile.firstName || (profile.user && profile.user.googleProfile && (profile.user.googleProfile.given_name || profile.user.googleProfile.name && profile.user.googleProfile.name.split(' ')[0])) || '',
-              lastName: profile.lastName || (profile.user && profile.user.googleProfile && profile.user.googleProfile.family_name) || '',
+              firstName: profile.firstName || (shouldUseGoogleProfile && profile.user && profile.user.googleProfile && (profile.user.googleProfile.given_name || profile.user.googleProfile.name && profile.user.googleProfile.name.split(' ')[0])) || '',
+              lastName: profile.lastName || (shouldUseGoogleProfile && profile.user && profile.user.googleProfile && profile.user.googleProfile.family_name) || '',
               email: profile.email || (profile.user && profile.user.email) || '',
-              picture: (profile.user && profile.user.googleProfile && profile.user.googleProfile.picture) || '',
+              picture: (shouldUseGoogleProfile && profile.user && profile.user.googleProfile && profile.user.googleProfile.picture) || profile.photoPath || (profile.user && profile.user.photoPath) || '',
               city: profile.city || '',
               prefecture: profile.prefecture || '',
               nationality: profile.nationality || '',
               japaneseLevel: profile.japaneseLevel || '',
             };
-            localStorage.setItem('userProfile', JSON.stringify(localProfile));
+            persistCachedDashboardProfile(localProfile);
           } catch (e) {
             console.warn('Could not persist merged profile to localStorage', e);
           }
@@ -2883,9 +2956,13 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           ".user-menu-dropdown__userName"
         );
 
-        // Prefer Google profile fields when available so sign-in updates show immediately
-        const gpAvailable = !!(profile.user && profile.user.googleProfile);
-        const gp = profile.user && profile.user.googleProfile ? profile.user.googleProfile : null;
+        const gpAvailable =
+          shouldUseGoogleProfile &&
+          !!(profile.user && profile.user.googleProfile);
+        const gp =
+          gpAvailable && profile.user && profile.user.googleProfile
+            ? profile.user.googleProfile
+            : null;
 
         const firstName = (gp && (gp.given_name || gp.name))
           ? (gp.given_name || gp.name.split(' ')[0])
@@ -3254,31 +3331,31 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
             container.innerHTML = ''; // Clear existing content
 
             if (availabilities.length === 0) {
-                container.innerHTML = `
-                    <div class="p-3 text-muted small fst-italic">
-                        No Availability profiles set up yet. Click "Add New Profile" above.
-                    </div>
-                `;
+                container.innerHTML = renderProfileDashboardEmptyState(
+                  'No availability entries yet. Click "Add" above to create your first entry.'
+                );
                 return;
             }
 
             // Render each availability item
             availabilities.forEach((item, index) => {
                 const entry = document.createElement('div');
-                entry.className = 'list-item p-3';
+                entry.className = 'profile-dashboard-entry-row availability-entry-row';
               // Title-case the workStatus for nicer display
               const displayWork = item.workStatus && String(item.workStatus).trim()
                 ? String(item.workStatus).trim().replace(/\b\w/g, (c) => c.toUpperCase())
                 : 'Not specified';
               entry.innerHTML = `
-                    <div class="d-flex justify-content-between align-items-start">
-                        <div>
-                    <h6 class="mb-1 fw-semibold text-dark">${displayWork}</h6>
-                            <p class="mb-1 small text-muted">Location: ${item.preferLocation}</p>
-                            <p class="mb-0 small text-secondary">Job Type: ${item.preferJobType}</p>
+                    <div class="profile-dashboard-entry-main">
+                        <div class="profile-dashboard-entry-icon">${getProfileDashboardInitials(displayWork)}</div>
+                        <div class="profile-dashboard-entry-body">
+                    <h6 class="profile-dashboard-entry-title">${displayWork}</h6>
+                            <p class="profile-dashboard-entry-meta">Location: ${item.preferLocation}</p>
+                            <p class="profile-dashboard-entry-subtitle mb-0">Job Type: ${item.preferJobType}</p>
                         </div>
+                    </div>
                     <a href="#" 
-                      class="small text-decoration-none text-blue-600 fw-semibold edit-availability"
+                      class="profile-dashboard-entry-link edit-availability"
                       data-index="${index}"
                       data-bs-toggle="modal"
                       data-bs-target="#availabilityModal"
@@ -3486,24 +3563,21 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
             const displayContainer = document.getElementById("skills-list-container");
 
             if (dataArray.length === 0) {
-                displayContainer.innerHTML = `
-                    <div class="p-4 text-muted small fst-italic">
-                        No skills entries yet. Click "Add" above to create your first entry.
-                    </div>
-                `;
+                displayContainer.innerHTML = renderProfileDashboardEmptyState(
+                  'No skills entries yet. Click "Add" above to create your first entry.'
+                );
                 return;
             }
 
-            // Generate HTML for skills, grouping them in a single paragraph or list
             const skillsHTML = dataArray.map(skill => {
               const name = typeof skill === 'string' ? skill : (skill.name || '');
               return `
-                <span class="badge bg-primary-subtle text-primary-emphasis rounded-pill px-3 py-2 m-1 fw-semibold">${name}</span>
+                <span class="profile-dashboard-skill-chip">${name}</span>
               `;
             }).join('');
 
             displayContainer.innerHTML = `
-                <div class="p-4 d-flex flex-wrap justify-content-start align-items-center">
+                <div class="profile-dashboard-skill-cloud">
                     ${skillsHTML}
                 </div>
             `;

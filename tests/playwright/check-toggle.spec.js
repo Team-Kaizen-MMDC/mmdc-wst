@@ -1,7 +1,7 @@
 const { test, expect } = require("@playwright/test");
 
 test("language switch exists in header and offcanvas", async ({ page }) => {
-  await page.goto("http://localhost:8000");
+  await page.goto("http://localhost:3000");
   await page.waitForLoadState("networkidle");
 
   // Header switch

@@ -195,7 +195,7 @@ npx playwright test jobs.spec.js
 
 See `playwright.config.js`:
 
-- **Base URL**: `http://localhost:8000`
+- **Base URL**: `http://localhost:3000`
 - **Browsers**: Chromium, Firefox, Webkit (iPhone 12)
 - **Timeout**: 30 seconds per test
 - **Retries**: 1 retry on failure

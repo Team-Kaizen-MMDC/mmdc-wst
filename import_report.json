@@ -1,0 +1,11 @@
+{
+  "companies": {
+    "created": 0,
+    "updated": 10,
+    "errors": []
+  },
+  "jobs": {
+    "created": 45,
+    "errors": []
+  }
+}

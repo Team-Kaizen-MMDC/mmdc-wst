@@ -20,7 +20,7 @@ module.exports = {
     baseURL:
       process.env.PLAYWRIGHT_BASE_URL ||
       process.env.BASE_URL ||
-      "http://localhost:8000",
+      "http://localhost:3000",
     trace: "on-first-retry",
     screenshot: "only-on-failure",
   },

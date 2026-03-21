@@ -14,6 +14,7 @@ const {
 const {
   applyToJob,
   getJobApplications,
+  getCompanyApplicationsSummary,
 } = require("../controllers/applicationController");
 const { protect, authorize } = require("../middleware/auth");
 const { validateApplication } = require("../validators/applicationValidator");
@@ -29,9 +30,17 @@ router.get("/:id", getJob);
 router.use(protect);
 
 router.get("/my/jobs", getMyJobs);
+// Aggregated applications summary for employer's company
+router.get(
+  "/my/applications/summary",
+  authorize("employer", "admin"),
+  getCompanyApplicationsSummary,
+);
+
 router.get("/admin/stats", authorize("admin"), getJobStats);
 
-router.post("/", authorize("employer", "admin"), createJob);
+// Only platform admins can create jobs via this endpoint. Other employer flows still use employer authorization.
+router.post("/", authorize("admin"), createJob);
 router.put("/:id", authorize("employer", "admin"), updateJob);
 router.delete("/:id", authorize("employer", "admin"), deleteJob);
 

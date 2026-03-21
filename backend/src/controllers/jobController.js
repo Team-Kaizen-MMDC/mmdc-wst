@@ -126,6 +126,35 @@ if (status) {
   // Get total count
   const total = await Job.countDocuments(query);
 
+  // Compute application counts per job (attach as applicationCount)
+  let jobsWithCounts = jobs;
+  try {
+    const Application = require("../models/Application");
+    const jobIds = jobs.map((j) => j._id);
+    if (jobIds.length) {
+      const counts = await Application.aggregate([
+        { $match: { job: { $in: jobIds } } },
+        { $group: { _id: "$job", count: { $sum: 1 } } },
+      ]);
+      const countsMap = counts.reduce((m, c) => {
+        m[c._id.toString()] = c.count;
+        return m;
+      }, {});
+
+      jobsWithCounts = jobs.map((j) => {
+        // convert to plain object so we can safely attach a field
+        const obj = j.toObject ? j.toObject() : JSON.parse(JSON.stringify(j));
+        obj.applicationCount = countsMap[j._id.toString()] || 0;
+        return obj;
+      });
+    } else {
+      jobsWithCounts = jobs.map((j) => (j.toObject ? j.toObject() : JSON.parse(JSON.stringify(j))));
+    }
+  } catch (err) {
+    // If anything goes wrong, fall back to original jobs array
+    jobsWithCounts = jobs.map((j) => (j.toObject ? j.toObject() : JSON.parse(JSON.stringify(j))));
+  }
+
   // Pagination info
   const pagination = {
     page: pageNum,
@@ -138,7 +167,7 @@ if (status) {
 
   res.status(200).json(
     new ApiResponse(200, "Jobs retrieved successfully", {
-      jobs,
+      jobs: jobsWithCounts,
       pagination,
     }),
   );
@@ -189,20 +218,24 @@ exports.createJob = asyncHandler(async (req, res) => {
     throw new ApiError(404, "Company not found");
   }
 
-  // Check if user owns or is admin of the company
-  const isOwner = company.owner.toString() === req.user.id;
-  const isAdmin = company.admins.some(
-    (admin) => admin.toString() === req.user.id,
-  );
+  // If user is not an admin, verify they own or are an admin of the company
+  const userIsPlatformAdmin = req.user && req.user.role === 'admin';
 
-  if (!isOwner && !isAdmin) {
-    throw new ApiError(
-      403,
-      "You do not have permission to post jobs for this company",
+  if (!userIsPlatformAdmin) {
+    const isOwner = company.owner.toString() === req.user.id;
+    const isCompanyAdmin = company.admins.some(
+      (admin) => admin.toString() === req.user.id,
     );
+
+    if (!isOwner && !isCompanyAdmin) {
+      throw new ApiError(
+        403,
+        "You do not have permission to post jobs for this company",
+      );
+    }
   }
 
-  // Add postedBy field
+  // Add postedBy field (whoever triggered the request)
   req.body.postedBy = req.user.id;
 
   const job = await Job.create(req.body);
