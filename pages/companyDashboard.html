@@ -2031,10 +2031,7 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
         const pending = (statusMap['submitted'] || 0) + (statusMap['reviewing'] || 0);
         const interview = statusMap['interview'] || 0;
         const rejected = statusMap['rejected'] || 0;
-        const total = allApps.length;
-        const pending = allApps.filter(a => ['submitted','reviewing'].includes(a.status)).length;
-        const interview = allApps.filter(a => a.status === 'interview').length;
-        const rejected = allApps.filter(a => a.status === 'rejected').length;
+
 
         // Update UI
         const elApplied = document.getElementById('stat-applied-company');
