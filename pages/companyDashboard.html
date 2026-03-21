@@ -1970,15 +1970,54 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
     // Load company applicants summary (dashboard)
     async function loadCompanyApplicants() {
       const token = getToken();
-      if (!token) return;
+      if (!token) {
+        console.warn('loadCompanyApplicants: no token available');
+        const recentEl = document.getElementById('recentApplicantsList');
+        if (recentEl) recentEl.innerHTML = '<div class="text-muted small">Not signed in.</div>';
+        return;
+      }
+
       try {
+        // Check user role first
+        const meRes = await fetch(`${API_BASE}/auth/me`, { headers: { Authorization: `Bearer ${token}` } });
+        if (!meRes.ok) {
+          console.warn('loadCompanyApplicants: auth/me failed', meRes.status);
+          const recentEl = document.getElementById('recentApplicantsList');
+          if (recentEl) recentEl.innerHTML = '<div class="text-muted small">Unable to verify user role.</div>';
+          return;
+        }
+        const meJson = await meRes.json();
+        const role = (meJson.data && meJson.data.user && meJson.data.user.role) || meJson.data?.role || meJson.data?.user?.role;
+        console.log('loadCompanyApplicants: user role:', role);
+        if (!['employer','admin'].includes(role)) {
+          const recentEl = document.getElementById('recentApplicantsList');
+          if (recentEl) recentEl.innerHTML = '<div class="text-muted small">Applicant tracking available to Employers and Admins only.</div>';
+          return;
+        }
+
         // 1) Get employer's jobs
         const jobsRes = await fetch(`${API_BASE}/jobs/my/jobs`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        if (!jobsRes.ok) throw new Error('Failed to fetch jobs');
+        if (!jobsRes.ok) {
+          console.warn('loadCompanyApplicants: failed to fetch jobs', jobsRes.status);
+          const recentEl = document.getElementById('recentApplicantsList');
+          if (recentEl) recentEl.innerHTML = '<div class="text-muted small">Failed to load jobs.</div>';
+          return;
+        }
         const jobsJson = await jobsRes.json();
         const jobs = jobsJson.data?.jobs || [];
+
+        if (!jobs.length) {
+          const recentEl = document.getElementById('recentApplicantsList');
+          if (recentEl) recentEl.innerHTML = '<div class="text-muted small">No jobs posted yet.</div>';
+          // Zero counts
+          document.getElementById('stat-applied-company').textContent = '0';
+          document.getElementById('stat-pending-company').textContent = '0';
+          document.getElementById('stat-interview-company').textContent = '0';
+          document.getElementById('stat-rejected-company').textContent = '0';
+          return;
+        }
 
         // 2) For each job, fetch recent applications (parallel)
         const appPromises = jobs.map(async (j) => {
@@ -1991,6 +2030,7 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
             // include job reference on each app for display
             return (jdata.data?.applications || []).map(a => Object.assign({ _job: { _id: j._id, title: j.title } }, a));
           } catch (e) {
+            console.warn('error fetching apps for job', j._id, e);
             return [];
           }
         });
@@ -2033,6 +2073,8 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
 
       } catch (err) {
         console.warn('loadCompanyApplicants error', err);
+        const recentEl = document.getElementById('recentApplicantsList');
+        if (recentEl) recentEl.innerHTML = '<div class="text-muted small">Error loading applicants.</div>';
       }
     }
 
