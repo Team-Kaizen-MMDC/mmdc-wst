@@ -88,7 +88,7 @@
                 <div id="user-menu-dropdown" class="user-menu-dropdown">
                 <h4 class="user-menu-dropdown__greeting">Welcome Back!</h4>
                 <h3 class="user-menu-dropdown__userName" id="user-menu-name">Admin User</h3>
-                <a href="#" class="user-menu-dropdown__link">Profile</a>
+                <a href="addEdit/profile.html" class="user-menu-dropdown__link">Profile</a>
                 <a href="#" class="user-menu-dropdown__link">Message</a>
                 <hr class="user-menu-dropdown__divider" />
                 <a href="#" class="user-menu-dropdown__link">Help</a>
@@ -258,8 +258,13 @@
                 <div class="card-body p-4">
                   <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-start gap-3 mb-4">
                     <div class="d-flex align-items-center gap-3">
-                      <div class="profile-overview-avatar" aria-hidden="true">
-                        <span id="dash-profile-initials">SM</span>
+                      <div class="profile-overview-avatar">
+                        <img
+                          id="dash-profile-image"
+                          class="profile-overview-avatar-image d-none"
+                          alt="Profile photo"
+                        />
+                        <span id="dash-profile-initials" class="profile-overview-avatar-fallback" aria-hidden="true">SM</span>
                       </div>
                       <div>
                         <p class="profile-overview-eyebrow mb-1">Company account</p>
@@ -267,7 +272,7 @@
                         <span class="profile-overview-role" id="dash-profile-role">Admin</span>
                       </div>
                     </div>
-                    <a href="#" class="profile-overview-edit-link">Edit profile</a>
+                    <a href="addEdit/profile.html" class="profile-overview-edit-link">Edit profile</a>
                   </div>
 
                   <div class="profile-overview-panel mb-4">
@@ -1777,7 +1782,7 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
     }
 
     // Update the three profile name elements with data from the API.
-    function applyProfileToUI(firstName, lastName, roleName) {
+    function applyProfileToUI(firstName, lastName, roleName, photoUrl) {
       const first = (firstName || "").trim();
       const last = (lastName || "").trim();
       const full = [first, last].filter(Boolean).join(" ") || "Admin";
@@ -1795,12 +1800,30 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
       const dashName = document.getElementById("dash-profile-name");
       const dashRole = document.getElementById("dash-profile-role");
       const dashInitials = document.getElementById("dash-profile-initials");
+      const dashImage = document.getElementById("dash-profile-image");
 
       if (menuBtn) menuBtn.textContent = first || "Admin";
       if (menuName) menuName.textContent = full;
       if (dashName) dashName.textContent = full;
       if (dashRole) dashRole.textContent = normalizedRole;
       if (dashInitials) dashInitials.textContent = initials;
+      if (dashImage) {
+        const imageSrc = String(photoUrl || "").trim();
+        dashImage.alt = `${full} profile photo`;
+        dashImage.onerror = () => {
+          dashImage.classList.add("d-none");
+          if (dashInitials) dashInitials.classList.remove("d-none");
+        };
+        if (imageSrc) {
+          dashImage.src = imageSrc;
+          dashImage.classList.remove("d-none");
+          if (dashInitials) dashInitials.classList.add("d-none");
+        } else {
+          dashImage.removeAttribute("src");
+          dashImage.classList.add("d-none");
+          if (dashInitials) dashInitials.classList.remove("d-none");
+        }
+      }
     }
 
     // Fetch the Mongoose UserProfile for the signed-in user.
@@ -1820,6 +1843,7 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
           } = await res.json();
           const gp = profile?.user?.googleProfile || {};
           const role = profile?.user?.role || profile?.role || "Admin";
+          const photoUrl = profile?.photoPath || gp.picture || profile?.user?.photoPath || "";
           const first =
             profile.firstName ||
             gp.given_name ||
@@ -1830,7 +1854,7 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
             gp.family_name ||
             (gp.name && gp.name.split(" ").slice(1).join(" ")) ||
             "";
-          applyProfileToUI(first, last, role);
+          applyProfileToUI(first, last, role, photoUrl);
           return;
         }
 
@@ -1843,6 +1867,7 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
             const { data: user } = await meRes.json();
             const gp = user?.googleProfile || {};
             const role = user?.role || "Admin";
+            const photoUrl = gp.picture || user?.photoPath || "";
             const first =
               gp.given_name ||
               (gp.name && gp.name.split(" ")[0]) ||
@@ -1852,7 +1877,7 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
               gp.family_name ||
               (gp.name && gp.name.split(" ").slice(1).join(" ")) ||
               "";
-            applyProfileToUI(first, last, role);
+            applyProfileToUI(first, last, role, photoUrl);
           }
         }
       } catch (err) {
