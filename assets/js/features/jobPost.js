@@ -2,73 +2,95 @@ export function initJobPost() {
   const jobForm = document.getElementById('jobPostForm');
   if (!jobForm) return;
 
+  const API_BASE = window.location.port === '8000' ? 'http://localhost:3000/api/v1' : '/api/v1';
+
+  function getToken() {
+    const params = new URLSearchParams(window.location.search);
+    const urlToken = params.get('token');
+    if (urlToken) return urlToken;
+    const match = document.cookie.split('; ').find(r => r.startsWith('token='));
+    return match ? decodeURIComponent(match.split('=')[1]) : null;
+  }
+
   jobForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const formData = new FormData(jobForm);
     const data = Object.fromEntries(formData.entries());
 
-    // Mapping the HTML 'name' attributes to your Payload
+    // Build payload aligned with backend Job model
+    const salary = Number(data['salary']) || 0;
+    const deadline = data['deadline'] || null;
+    let startDate = null;
+    if (deadline) {
+      const d = new Date(deadline);
+      d.setDate(d.getDate() + 7);
+      startDate = d.toISOString();
+    }
+
+    const description = data['job-description'] || '';
+    const summary = description ? description.slice(0, 200) : (data['job-title'] || '');
+
     const payload = {
-        title: data["job-title"],
-        companyName: data["company-name"], 
-        
-        // --- QUICK TEST HACK START ---
-        // Using valid 24-character hex IDs for testing
-        company: "65db12345678901234567890", 
-        postedBy: "65db12345678901234567890", 
-        // --- QUICK TEST HACK END ---
-
-        industry: data["job-category"], 
-        summary: data["job-description"], //modal-department-overview -  name="job-description">
-      
-
-        // SENDS DIRECTLY (Matching flattened schema)
-        preferWorkLocation: data["Prefer-location"],
-        supportSponsorship: data["support-detail"],
-        japaneseLanguage: data["japanese-language"],
-        nativeLanguage: data["other-language"],
-
-        location: {
-            prefecture: data["prefecture"], 
-            city: data["location-detail"] 
-        },
-
-        compensation: {
-            // Note: Your HTML has one 'salary' input, not min/max.
-            // Mapping 'salary' to both for now to avoid validation errors.
-            salaryMin: Number(data["salary"]), 
-            salaryMax: Number(data["salary"]), 
-            currency: "JPY"
-        },
-        applicationInfo: {
-            deadline: data["deadline"] ? new Date(data["deadline"]) : new Date(),
-            startDate: new Date() // Defaulting to now for testing
-        },
-        status: "active"
+      company: data['company-id'] || null,
+      title: data['job-title'] || '',
+      industry: data['job-category'] || 'Other',
+      category: data['job-category'] || '',
+      summary: summary,
+      responsibilities: description,
+      japaneseLevel: data['japanese-language'] || 'None',
+      compensation: {
+        salaryMin: salary,
+        salaryMax: salary,
+        currency: 'JPY',
+        period: 'monthly'
+      },
+      location: {
+        prefecture: data['prefecture'] || '',
+        city: data['location-detail'] || ''
+      },
+      applicationInfo: {
+        deadline: deadline ? new Date(deadline).toISOString() : null,
+        startDate: startDate,
+        applicationMethod: 'Platform'
+      },
+      status: 'active',
+      visibility: 'public'
     };
 
+    // Basic preflight checks
+    const token = getToken();
+    if (!payload.company) {
+      alert('Company ID missing. Set the hidden company-id field to your Company ObjectId.');
+      return;
+    }
+    if (!token && !document.cookie.includes('token=')) {
+      alert('Authentication required. Please sign in.');
+      return;
+    }
+
     try {
-      const response = await fetch('http://localhost:3000/api/v1/admin-jobs', {
+      const headers = { 'Content-Type': 'application/json' };
+      if (token) headers.Authorization = `Bearer ${token}`;
+
+      const response = await fetch(`${API_BASE}/jobs`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers,
         credentials: 'include',
         body: JSON.stringify(payload),
       });
 
-      const result = await response.json();
+      const result = await response.json().catch(() => null);
 
       if (response.ok) {
-        alert("Job posted successfully!");
-        window.location.href = "/pages/companyDashboard.html";
+        alert('Job posted successfully!');
+        window.location.href = '/pages/companyDashboard.html#job-pane';
       } else {
-        alert(result.message || "Failed to post job");
+        alert(result?.message || 'Failed to post job');
       }
-
     } catch (err) {
-      console.error("Error posting job:", err);
+      console.error('Error posting job:', err);
+      alert('Network error while posting the job.');
     }
   });
 }

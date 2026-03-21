@@ -437,14 +437,13 @@
     // Check if there is a hash in the URL (e.g., #job-pane)
     const hash = window.location.hash;
     if (hash) {
-      // Find the tab button that corresponds to that pane
       const targetTab = document.querySelector(`[data-bs-target="${hash}"]`);
       if (targetTab) {
-        // Use Bootstrap's Tab constructor to show it
         const tab = new bootstrap.Tab(targetTab);
         tab.show();
       }
     }
+    // Note: job form submit is handled by assets/js/features/jobPost.js (loaded via ../../assets/js/main.js)
   });
 </script>
 
