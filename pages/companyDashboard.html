@@ -911,16 +911,20 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
 
                     <ul class="list-unstyled small mb-3">
                       <li class="mb-2">
-                        <span class="fw-semibold">Applied:</span>
+                        <span class="fw-semibold">Applicants:</span>
                         <span id="stat-applied-company">–</span>
                       </li>
                       <li class="mb-2">
-                        <span class="fw-semibold">Pending:</span>
+                        <span class="fw-semibold">Reviewed:</span>
                         <span id="stat-pending-company">–</span>
                       </li>
                       <li class="mb-2">
                         <span class="fw-semibold">Interview:</span>
                         <span id="stat-interview-company">–</span>
+                      </li>
+                      <li class="mb-2">
+                        <span class="fw-semibold">Hired:</span>
+                        <span id="stat-hired-company">–</span>
                       </li>
                       <li class="mb-2">
                         <span class="fw-semibold">Rejected:</span>
@@ -2076,10 +2080,12 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
         const elApplied = document.getElementById('stat-applied-company');
         const elPending = document.getElementById('stat-pending-company');
         const elInterview = document.getElementById('stat-interview-company');
+        const elHired = document.getElementById('stat-hired-company');
         const elRejected = document.getElementById('stat-rejected-company');
         if (elApplied) elApplied.textContent = String(totalApplications);
         if (elPending) elPending.textContent = String(pending);
         if (elInterview) elInterview.textContent = String(interview);
+        if (elHired) elHired.textContent = String(accepted);
         if (elRejected) elRejected.textContent = String(rejected);
 
         // Render recent applicants (most recent first) from aggregated endpoint
