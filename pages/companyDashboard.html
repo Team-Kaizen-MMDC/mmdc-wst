@@ -2017,7 +2017,8 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
               const id = a._id || a.id || '';
               const applicant = getApplicantDisplayName(a.applicant || a);
               const jobTitle = (a.job && a.job.title) ? a.job.title : (a._job && a._job.title) ? a._job.title : 'Job';
-              const location = (a.job && a.job.location) || (a._job && a._job.location) || '';
+              const locationRaw = (a.job && a.job.location) || (a._job && a._job.location) || null;
+              const location = formatJobLocation(locationRaw);
               const date = a.createdAt ? new Date(a.createdAt).toLocaleDateString() : '–';
               const status = a.status || '-';
               return `<tr data-app-id="${escapeHtml(id)}"><td><p class="FullName fw-semibold mb-0">${escapeHtml(applicant)}</p></td><td class="location">${escapeHtml(jobTitle)}</td><td class="text-left">${escapeHtml(location)}</td><td class="text-left">${escapeHtml(date)}</td><td><span class="badge text-bg-light">${escapeHtml(status)}</span></td><td><button class="btn btn-sm btn-outline-primary me-2 view-table-app-btn" data-app-id="${escapeHtml(id)}">View Profile</button></td></tr>`;
@@ -2051,6 +2052,26 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
           });
         });
 
+        // Helper to format a job.location value (string or object)
+        function formatJobLocation(loc) {
+          if (!loc) return '-';
+          if (typeof loc === 'string') return loc;
+          if (typeof loc === 'object') {
+            // Common fields: city, prefecture, region, country, address
+            const parts = [];
+            if (loc.address) parts.push(loc.address);
+            if (loc.city) parts.push(loc.city);
+            if (loc.prefecture) parts.push(loc.prefecture);
+            if (loc.region) parts.push(loc.region);
+            if (loc.country) parts.push(loc.country);
+            if (parts.length) return parts.join(', ');
+            // Fallback: try known nested fields
+            if (loc.cityName) return loc.cityName;
+            try { return JSON.stringify(loc); } catch { return '-'; }
+          }
+          return String(loc);
+        }
+
         // Helper to show applicant modal — fetch full application if needed
         async function showApplicantDetail(app) {
           try {
@@ -2075,7 +2096,8 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
             const name = getApplicantDisplayName(app.applicant || app);
             const email = app.applicant?.email || (app.applicant && app.applicant.profile && app.applicant.profile.email) || '-';
             const jobTitle = (app.job && app.job.title) || (app._job && app._job.title) || '-';
-            const location = (app.job && app.job.location) || (app._job && app._job.location) || '-';
+            const locationRaw = (app.job && app.job.location) || (app._job && app._job.location) || null;
+            const location = formatJobLocation(locationRaw);
             const date = app.createdAt ? new Date(app.createdAt).toLocaleString() : '-';
             const status = app.status || '-';
 
