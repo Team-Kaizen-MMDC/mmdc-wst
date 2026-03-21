@@ -334,53 +334,17 @@
               </div>
             </div>
 
-            <!-- Applicant List -->
+            <!-- Applicant List (dynamic) -->
             <div class="col-lg-6 col-md-6">
               <div class="card h-100 shadow-sm">
                 <div class="card-body">
-                  <div
-                    class="d-flex justify-content-between align-items-center mb-3"
-                  >
+                  <div class="d-flex justify-content-between align-items-center mb-3">
                     <h3 class="card-title fw-bold mb-0">Applicant List</h3>
-                    <a href="#" class="text-danger small fw-semibold"
-                      >View All</a
-                    >
+                    <a href="#" class="text-danger small fw-semibold" id="viewAllApplicantsLink">View All</a>
                   </div>
 
-                  <div class="list-group list-group-flush">
-                    <div class="list-group-item px-0 py-3">
-                      <div class="d-flex align-items-center mb-3">
-                        <div
-                          class="bg-light rounded me-3"
-                          style="width: 40px; height: 40px"
-                        ></div>
-                        <div class="flex-grow-1">
-                          <p class="mb-0 fw-semibold small">Dela Cruz Juan</p>
-                          <small class="text-muted d-block"
-                            >Kitchen Restaurant - Food Service</small
-                          >
-                          <small class="text-muted">JLPT N3</small>
-                        </div>
-                        <a href="#" class="text-danger small ms-2">view</a>
-                      </div>
-                    </div>
-
-                    <div class="list-group-item px-0 py-3">
-                      <div class="d-flex align-items-center">
-                        <div
-                          class="bg-light rounded me-3"
-                          style="width: 40px; height: 40px"
-                        ></div>
-                        <div class="flex-grow-1">
-                          <p class="mb-0 fw-semibold small">Dela Cruz Juan</p>
-                          <small class="text-muted d-block"
-                            >Assemble Line - Automotive</small
-                          >
-                          <small class="text-muted">JLPT N3</small>
-                        </div>
-                        <a href="#" class="text-danger small ms-2">view</a>
-                      </div>
-                    </div>
+                  <div id="applicantList" class="list-group list-group-flush">
+                    <div class="text-muted small">Loading applicants…</div>
                   </div>
                 </div>
               </div>
@@ -2064,6 +2028,22 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
               const date = a.createdAt ? new Date(a.createdAt).toLocaleDateString() : '–';
               const status = a.status || '-';
               return `<a href="#" class="list-group-item list-group-item-action py-2"><div class="fw-semibold">${escapeHtml(jobTitle)} — ${escapeHtml(applicant)}</div><div class="small text-muted">${escapeHtml(date)} · ${escapeHtml(status)}</div></a>`;
+            }).join('');
+          }
+        }
+
+        // Populate Applicant List card (larger list with actions)
+        const appListEl = document.getElementById('applicantList');
+        if (appListEl) {
+          if (!recentApplications || recentApplications.length === 0) {
+            appListEl.innerHTML = '<div class="text-muted small">No applicants yet.</div>';
+          } else {
+            const list = recentApplications.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0,6);
+            appListEl.innerHTML = list.map(a=>{
+              const applicant = (a.applicant && (a.applicant.profile ? (a.applicant.profile.firstName || '') + ' ' + (a.applicant.profile.lastName || '') : a.applicant.email)) || 'Applicant';
+              const jobTitle = (a.job && a.job.title) ? a.job.title : (a._job && a._job.title) ? a._job.title : 'Job';
+              const status = a.status || '-';
+              return `<div class="list-group-item px-0 py-3"><div class="d-flex align-items-center mb-3"><div class="bg-light rounded me-3" style="width: 40px; height: 40px"></div><div class="flex-grow-1"><p class="mb-0 fw-semibold small">${escapeHtml(applicant)}</p><small class="text-muted d-block">${escapeHtml(jobTitle)}</small><small class="text-muted">${escapeHtml(status)}</small></div><a href="#" class="btn btn-sm btn-outline-danger">view</a></div></div>`;
             }).join('');
           }
         }
