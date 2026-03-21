@@ -1833,6 +1833,54 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
     }
 
     // Load company applicants summary (dashboard)
+
+    // Load posted jobs into the Job List card (pulls from jobs collection)
+    async function loadCompanyJobs() {
+      const tbody = document.getElementById('job-list-body');
+      if (!tbody) return;
+      tbody.innerHTML = '<tr><td colspan="6" class="text-muted small">Loading jobs…</td></tr>';
+
+      const token = getToken();
+      try {
+        const headers = token ? { Authorization: `Bearer ${token}` } : {};
+        const res = await fetch(`${API_BASE}/jobs?limit=100`, { headers });
+        if (!res.ok) {
+          console.warn('loadCompanyJobs: failed to fetch jobs', res.status);
+          tbody.innerHTML = '<tr><td colspan="6" class="text-muted small">Failed to load jobs.</td></tr>';
+          return;
+        }
+        const j = await res.json();
+        const jobs = (j && j.data && j.data.jobs) ? j.data.jobs : (j && j.jobs) ? j.jobs : [];
+        if (!jobs || jobs.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="6" class="text-muted small">No jobs found.</td></tr>';
+          return;
+        }
+
+        const rows = jobs.map(job => {
+          const id = job._id || job.id || '';
+          const title = escapeHtml(job.title || 'Untitled');
+          const company = escapeHtml((job.company && job.company.name) || job.companyName || 'Company');
+          const posted = job.createdAt ? new Date(job.createdAt).toLocaleDateString() : '-';
+          const apps = job.applicationCount != null ? String(job.applicationCount) : '-';
+          const loc = formatJobLocation(job.location || job.jobLocation || null);
+          const status = job.isExpired ? 'Expired' : (job.isDraft ? 'Draft' : 'Active');
+
+          return `<tr data-job-id="${escapeHtml(id)}"><td><a href="../jobs/jobDetails.html?id=${encodeURIComponent(id)}" class="text-decoration-none">${title}</a></td><td>${escapeHtml(company)}</td><td>${escapeHtml(loc)}</td><td>${escapeHtml(posted)}</td><td>${escapeHtml(apps)}</td><td><a class="btn btn-sm btn-outline-primary" href="../jobs/postJob.html?edit=${encodeURIComponent(id)}">Edit</a></td></tr>`;
+        }).join('');
+
+        tbody.innerHTML = rows;
+      } catch (err) {
+        console.warn('loadCompanyJobs: error', err);
+        tbody.innerHTML = '<tr><td colspan="6" class="text-muted small">Error loading jobs.</td></tr>';
+      }
+    }
+
+    // Ensure jobs load when the page is ready (and keep aligned with dashboard tab visibility)
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => { loadCompanyJobs(); });
+    } else {
+      loadCompanyJobs();
+    }
     function getApplicantDisplayName(entity) {
           if (!entity) return 'Applicant';
           const profile = entity.profile || {}; 
