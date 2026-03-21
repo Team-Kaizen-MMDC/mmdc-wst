@@ -1976,11 +1976,23 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
         return;
       }
 
+      // Prevent duplicate concurrent loads
+      if (window._loadingCompanyApplicants) {
+        console.debug('loadCompanyApplicants: already loading; skipping duplicate call');
+        return;
+      }
+      window._loadingCompanyApplicants = true;
+
+      // Reset UI placeholders immediately
+      const recentEl = document.getElementById('recentApplicantsList');
+      if (recentEl) recentEl.innerHTML = '<div class="text-muted small">Loading applicants…</div>';
+      ['stat-applied-company','stat-pending-company','stat-interview-company','stat-rejected-company'].forEach(id => { const el = document.getElementById(id); if (el) el.textContent = '—'; });
+
       const token = getToken();
       if (!token) {
         console.warn('loadCompanyApplicants: no token available');
-        const recentEl = document.getElementById('recentApplicantsList');
         if (recentEl) recentEl.innerHTML = '<div class="text-muted small">Not signed in.</div>';
+        window._loadingCompanyApplicants = false;
         return;
       }
 
@@ -2091,6 +2103,9 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
         console.warn('loadCompanyApplicants error', err);
         const recentEl = document.getElementById('recentApplicantsList');
         if (recentEl) recentEl.innerHTML = '<div class="text-muted small">Error loading applicants.</div>';
+      } finally {
+        // allow subsequent loads
+        window._loadingCompanyApplicants = false;
       }
     }
 
