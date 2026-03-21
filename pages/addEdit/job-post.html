@@ -434,7 +434,7 @@
     <script type="module" src="../../assets/js/main.js"></script>
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-    // Check if there is a hash in the URL (e.g., #job-pane)
+    // Show requested tab from hash
     const hash = window.location.hash;
     if (hash) {
       const targetTab = document.querySelector(`[data-bs-target="${hash}"]`);
@@ -443,7 +443,59 @@
         tab.show();
       }
     }
-    // Note: job form submit is handled by assets/js/features/jobPost.js (loaded via ../../assets/js/main.js)
+
+    // Helper: read token from URL or cookie and persist as cookie when present
+    function getToken() {
+      const params = new URLSearchParams(window.location.search);
+      const urlToken = params.get("token");
+      if (urlToken) {
+        document.cookie = `token=${urlToken}; path=/; max-age=${7 * 24 * 60 * 60}`;
+        try { history.replaceState(null, '', window.location.pathname); } catch (_) {}
+        return urlToken;
+      }
+      const match = document.cookie.split('; ').find(r => r.startsWith('token='));
+      return match ? decodeURIComponent(match.split('=')[1]) : null;
+    }
+
+    const token = getToken();
+    const API_BASE = window.location.port === "8000" ? "http://localhost:3000/api/v1" : "/api/v1";
+
+    // Try to auto-fill company-id and company-name from /auth/me
+    (async function fillProfile() {
+      try {
+        const headers = {};
+        if (token) headers.Authorization = `Bearer ${token}`;
+        const resp = await fetch(`${API_BASE}/auth/me`, {
+          method: 'GET',
+          headers,
+          credentials: 'include'
+        });
+        if (!resp.ok) return;
+        const body = await resp.json().catch(()=>null);
+        if (!body || !body.success || !body.data) return;
+        const user = body.data;
+
+        // company may be an ObjectId (string) or populated object
+        let companyId = null;
+        if (user.company && typeof user.company === 'string') companyId = user.company;
+        else if (user.company && user.company._id) companyId = user.company._id;
+
+        if (companyId) {
+          const el = document.getElementById('company-id');
+          if (el) el.value = companyId;
+        }
+
+        if (user.company && user.company.name) {
+          const nameEl = document.getElementById('company-name');
+          if (nameEl && !nameEl.value) nameEl.value = user.company.name;
+        }
+      } catch (err) {
+        // Non-fatal: autofill best-effort only
+        console.debug('Profile autofill failed', err);
+      }
+    })();
+
+    // Note: the job form submit is handled centrally by assets/js/features/jobPost.js
   });
 </script>
 

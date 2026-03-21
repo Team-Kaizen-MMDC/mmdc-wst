@@ -289,47 +289,51 @@
 
 
             <!-- Applicant Tracking Card (dynamic) -->
-            <div class="col-lg-3 col-md-6">
-              <div class="card h-100 shadow-sm">
-                <div class="card-body">
-                  <h3 class="card-title fw-bold mb-3">Applicant Tracking</h3>
-                  <ul class="list-unstyled small mb-0">
-                    <li class="mb-2">
-                      <span class="fw-semibold">Applicants:</span> <span id="stat-applied-company">–</span>
-                    </li>
-                    <li class="mb-2">
-                      <span class="fw-semibold">Reviewed:</span> <span id="stat-pending-company">–</span>
-                    </li>
-                    <li class="mb-2">
-                      <span class="fw-semibold">Interview:</span> <span id="stat-interview-company">–</span>
-                    </li>
-                    <li class="mb-2">
-                      <span class="fw-semibold">Hired:</span> <span id="stat-hired-company">–</span>
-                    </li>
-                    <li class="mb-2">
-                      <span class="fw-semibold">Rejected:</span> <span id="stat-rejected-company">–</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+            <div class="col-lg-6 col-md-6">
+              <div class="card h-100 shadow-sm applicant-tracking-card">
+                <div class="card-body p-4">
+                  <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-start gap-3 mb-4">
+                    <div>
+                      <h3 class="card-title fw-bold mb-1">Applicant Tracking</h3>
+                      <p class="text-muted small mb-0">Quick overview of your hiring pipeline.</p>
+                    </div>
+                    <span class="applicant-tracking-badge">Pipeline overview</span>
+                  </div>
 
-            <!-- Job Metric Card-->
-            <div class="col-lg-3 col-md-6">
-              <div class="card h-100 shadow-sm">
-                <div class="card-body">
-                  <h3 class="card-title fw-bold mb-3">Job Metric</h3>
-                  <ul class="list-unstyled small mb-0">
-                    <li class="mb-2">
-                      <span class="fw-semibold">Active:</span> 5
-                    </li>
-                    <li class="mb-2">
-                      <span class="fw-semibold">Pending:</span> 2
-                    </li>
-                    <li class="mb-2">
-                      <span class="fw-semibold">Expired:</span> 2
-                    </li>
-                  </ul>
+                  <div class="applicant-tracking-summary mb-3">
+                    <div>
+                      <p class="applicant-tracking-label mb-2">Total Applicants</p>
+                      <div class="applicant-tracking-total" id="stat-applied-company">–</div>
+                      <p class="applicant-tracking-helper mb-0">Applications received across all posted jobs.</p>
+                    </div>
+                  </div>
+
+                  <div class="row g-3">
+                    <div class="col-sm-6">
+                      <div class="applicant-tracking-metric applicant-tracking-metric--reviewed">
+                        <span class="applicant-tracking-metric-label">Reviewed</span>
+                        <span class="applicant-tracking-metric-value" id="stat-pending-company">–</span>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="applicant-tracking-metric applicant-tracking-metric--interview">
+                        <span class="applicant-tracking-metric-label">Interview</span>
+                        <span class="applicant-tracking-metric-value" id="stat-interview-company">–</span>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="applicant-tracking-metric applicant-tracking-metric--hired">
+                        <span class="applicant-tracking-metric-label">Hired</span>
+                        <span class="applicant-tracking-metric-value" id="stat-hired-company">–</span>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="applicant-tracking-metric applicant-tracking-metric--rejected">
+                        <span class="applicant-tracking-metric-label">Rejected</span>
+                        <span class="applicant-tracking-metric-value" id="stat-rejected-company">–</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -2091,7 +2095,7 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
       };
       if (recentEl) recentEl.innerHTML = '<div class="text-muted small">Loading applicants…</div>';
       setApplicantCardMessage('Loading applicants…');
-      ['stat-applied-company','stat-pending-company','stat-interview-company','stat-rejected-company'].forEach(id => { const el = document.getElementById(id); if (el) el.textContent = '—'; });
+      ['stat-applied-company','stat-pending-company','stat-interview-company','stat-hired-company','stat-rejected-company'].forEach(id => { const el = document.getElementById(id); if (el) el.textContent = '—'; });
 
       const token = getToken();
       if (!token) {
@@ -2148,6 +2152,7 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
           document.getElementById('stat-applied-company').textContent = String(totalApplications || 0);
           document.getElementById('stat-pending-company').textContent = '0';
           document.getElementById('stat-interview-company').textContent = '0';
+          document.getElementById('stat-hired-company').textContent = '0';
           document.getElementById('stat-rejected-company').textContent = '0';
           return;
         }
@@ -2186,7 +2191,7 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
         const elInterview = document.getElementById('stat-interview-company');
         const elHired = document.getElementById('stat-hired-company');
         const elRejected = document.getElementById('stat-rejected-company');
-        if (elApplied) elApplied.textContent = String(totalApplications);
+        if (elApplied) elApplied.textContent = String(total);
         if (elPending) elPending.textContent = String(pending);
         if (elInterview) elInterview.textContent = String(interview);
         if (elHired) elHired.textContent = String(accepted);

@@ -218,20 +218,24 @@ exports.createJob = asyncHandler(async (req, res) => {
     throw new ApiError(404, "Company not found");
   }
 
-  // Check if user owns or is admin of the company
-  const isOwner = company.owner.toString() === req.user.id;
-  const isAdmin = company.admins.some(
-    (admin) => admin.toString() === req.user.id,
-  );
+  // If user is not an admin, verify they own or are an admin of the company
+  const userIsPlatformAdmin = req.user && req.user.role === 'admin';
 
-  if (!isOwner && !isAdmin) {
-    throw new ApiError(
-      403,
-      "You do not have permission to post jobs for this company",
+  if (!userIsPlatformAdmin) {
+    const isOwner = company.owner.toString() === req.user.id;
+    const isCompanyAdmin = company.admins.some(
+      (admin) => admin.toString() === req.user.id,
     );
+
+    if (!isOwner && !isCompanyAdmin) {
+      throw new ApiError(
+        403,
+        "You do not have permission to post jobs for this company",
+      );
+    }
   }
 
-  // Add postedBy field
+  // Add postedBy field (whoever triggered the request)
   req.body.postedBy = req.user.id;
 
   const job = await Job.create(req.body);

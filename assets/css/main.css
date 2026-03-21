@@ -5001,3 +5001,112 @@ p.lead {
     transform: none !important;
   }
 }
+
+/* -------------------------------------
+   Company Dashboard Applicant Tracking
+-------------------------------------- */
+body.company-dashboard .applicant-tracking-card {
+  border: 1px solid rgba(220, 53, 69, 0.12);
+  box-shadow: 0 12px 30px rgba(17, 24, 39, 0.08);
+}
+
+body.company-dashboard .applicant-tracking-badge {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  background: #fff1f2;
+  color: #b91c1c;
+  border: 1px solid #fecdd3;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+body.company-dashboard .applicant-tracking-summary {
+  padding: 1.25rem;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
+  border: 1px solid rgba(220, 53, 69, 0.12);
+}
+
+body.company-dashboard .applicant-tracking-label,
+body.company-dashboard .applicant-tracking-metric-label {
+  display: block;
+  color: #6b7280;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+body.company-dashboard .applicant-tracking-total {
+  color: #111827;
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 800;
+  line-height: 1;
+}
+
+body.company-dashboard .applicant-tracking-helper {
+  margin-top: 0.5rem;
+  color: #6b7280;
+  font-size: 0.85rem;
+}
+
+body.company-dashboard .applicant-tracking-metric {
+  height: 100%;
+  min-height: 120px;
+  padding: 1rem 1.1rem;
+  border-radius: 0.9rem;
+  border: 1px solid #eceff3;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.75rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+body.company-dashboard .applicant-tracking-metric-value {
+  color: #111827;
+  font-size: 1.85rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+body.company-dashboard .applicant-tracking-metric--reviewed {
+  background: linear-gradient(135deg, #fff9db 0%, #ffffff 100%);
+  border-color: #fde68a;
+}
+
+body.company-dashboard .applicant-tracking-metric--interview {
+  background: linear-gradient(135deg, #eff6ff 0%, #ffffff 100%);
+  border-color: #bfdbfe;
+}
+
+body.company-dashboard .applicant-tracking-metric--hired {
+  background: linear-gradient(135deg, #ecfdf5 0%, #ffffff 100%);
+  border-color: #a7f3d0;
+}
+
+body.company-dashboard .applicant-tracking-metric--rejected {
+  background: linear-gradient(135deg, #fef2f2 0%, #ffffff 100%);
+  border-color: #fecaca;
+}
+
+@media (max-width: 575.98px) {
+  body.company-dashboard .applicant-tracking-card .card-body {
+    padding: 1.25rem !important;
+  }
+
+  body.company-dashboard .applicant-tracking-summary,
+  body.company-dashboard .applicant-tracking-metric {
+    padding: 1rem;
+  }
+
+  body.company-dashboard .applicant-tracking-metric {
+    min-height: 104px;
+  }
+}
