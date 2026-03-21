@@ -2051,9 +2051,27 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
           });
         });
 
-        // Helper to show applicant modal
-        function showApplicantDetail(app) {
+        // Helper to show applicant modal — fetch full application if needed
+        async function showApplicantDetail(app) {
           try {
+            // If the payload lacks applicant.profile, try fetching the full application
+            const id = app._id || app.id || app.applicationId || null;
+            const needsFetch = !(app.applicant && app.applicant.profile) && id;
+            if (needsFetch) {
+              try {
+                const token = getToken();
+                if (token) {
+                  const res = await fetch(`${API_BASE}/applications/${id}`, { headers: { Authorization: `Bearer ${token}` } });
+                  if (res.ok) {
+                    const j = await res.json();
+                    if (j && j.data) app = j.data; // replace with full application
+                  }
+                }
+              } catch (e) {
+                console.warn('showApplicantDetail: failed to fetch full application', e);
+              }
+            }
+
             const name = getApplicantDisplayName(app.applicant || app);
             const email = app.applicant?.email || (app.applicant && app.applicant.profile && app.applicant.profile.email) || '-';
             const jobTitle = (app.job && app.job.title) || (app._job && app._job.title) || '-';
