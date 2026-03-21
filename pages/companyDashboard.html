@@ -2069,10 +2069,12 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
               openResume.classList.add('d-none');
             }
 
-            // show raw payload for debugging
+            // raw JSON debug removed from applicant modal
             const rawEl = document.getElementById('applicant-raw');
-            rawEl.textContent = JSON.stringify(app, null, 2);
-            rawEl.classList.remove('d-none');
+            if (rawEl) {
+              rawEl.textContent = '';
+              rawEl.classList.add('d-none');
+            }
 
             const modalEl = document.getElementById('applicantDetailModal');
             const modal = new bootstrap.Modal(modalEl);
