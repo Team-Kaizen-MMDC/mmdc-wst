@@ -275,10 +275,10 @@
                       aria-disabled="true"
                       >Post New Job</a
                     >
-                    <button class="btn btn-outline-danger">
+                    <button id="btnViewAllApplicants" class="btn btn-outline-danger">
                       View All Applicant
                     </button>
-                    <button class="btn btn-outline-danger">
+                    <button id="btnViewPostedJob" class="btn btn-outline-danger">
                       View Posted Job
                     </button>
                   </div>
@@ -2010,6 +2010,25 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
     } else {
       loadCompanyJobs();
     }
+
+    // Dashboard quick-action buttons
+    (function wireDashboardButtons(){
+      const btnViewAll = document.getElementById('btnViewAllApplicants');
+      if (btnViewAll) btnViewAll.addEventListener('click', (e)=>{
+        e.preventDefault();
+        const tabEl = document.getElementById('applicant-tab');
+        if (tabEl && typeof bootstrap !== 'undefined' && bootstrap.Tab) new bootstrap.Tab(tabEl).show();
+        loadCompanyApplicants();
+      });
+
+      const btnViewJobs = document.getElementById('btnViewPostedJob');
+      if (btnViewJobs) btnViewJobs.addEventListener('click', (e)=>{
+        e.preventDefault();
+        const tabEl = document.getElementById('job-tab');
+        if (tabEl && typeof bootstrap !== 'undefined' && bootstrap.Tab) new bootstrap.Tab(tabEl).show();
+        loadCompanyJobs();
+      });
+    })();
     async function deleteJob(jobId) {
       if (!jobId) return;
       if (!confirm('Are you sure you want to remove this job? This will archive the job.')) return;
