@@ -257,8 +257,13 @@ exports.getCompanyApplicationsSummary = asyncHandler(async (req, res, next) => {
     company = req.user.company;
   }
 
-  // Find jobs for the company
-  const jobs = await Job.find({ company }).select("_id title").lean();
+  // Find jobs for the company. If admin and no companyId provided, aggregate across all jobs.
+  let jobQuery = {};
+  if (company) {
+    jobQuery = { company };
+  }
+
+  const jobs = await Job.find(jobQuery).select("_id title").lean();
   const jobIds = jobs.map((j) => j._id);
 
   if (jobIds.length === 0) {
