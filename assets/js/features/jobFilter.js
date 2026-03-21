@@ -1,6 +1,8 @@
 //jobFilter.js
 
-const API_BASE_URL = "http://localhost:3000/api/v1";
+const API_BASE_URL = (typeof _API !== 'undefined' && _API)
+  ? _API
+  : (['localhost','127.0.0.1'].includes(window.location.hostname) ? 'http://localhost:3000/api/v1' : '/api/v1');
 
 const jobListings = document.getElementById("jobListings");
 const noResults = document.getElementById("noResults");
