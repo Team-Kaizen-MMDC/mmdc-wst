@@ -254,33 +254,50 @@
           <div class="row g-4">
             <!-- Profile -->
             <div class="col-lg-6 col-md-6">
-              <div class="card h-100 shadow-sm">
-                <div class="card-body">
-                  <div
-                    class="d-flex justify-content-between align-items-start mb-3"
-                  >
-                    <div>
-                      <h2 class="card-title fw-bold mb-1" id="dash-profile-name">Sanchez Miguel</h2>
-                      <p class="text-muted small mb-0">Admin</p>
+              <div class="card h-100 shadow-sm profile-overview-card">
+                <div class="card-body p-4">
+                  <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-start gap-3 mb-4">
+                    <div class="d-flex align-items-center gap-3">
+                      <div class="profile-overview-avatar" aria-hidden="true">
+                        <span id="dash-profile-initials">SM</span>
+                      </div>
+                      <div>
+                        <p class="profile-overview-eyebrow mb-1">Company account</p>
+                        <h2 class="card-title fw-bold mb-2" id="dash-profile-name">Sanchez Miguel</h2>
+                        <span class="profile-overview-role" id="dash-profile-role">Admin</span>
+                      </div>
                     </div>
-                    <a href="#" class="text-danger small ms-2">Edit</a>
+                    <a href="#" class="profile-overview-edit-link">Edit profile</a>
                   </div>
-                  <hr />
-                  <div class="d-grid gap 2">
-                    <a
-                      href="../pages/addEdit/job-post.html"
-                      class="btn btn-outline-danger text-decoration-none"
-                      tabindex="-1"
-                      role="button"
-                      aria-disabled="true"
-                      >Post New Job</a
-                    >
-                    <button id="btnViewAllApplicants" class="btn btn-outline-danger">
-                      View All Applicant
-                    </button>
-                    <button id="btnViewPostedJob" class="btn btn-outline-danger">
-                      View Posted Job
-                    </button>
+
+                  <div class="profile-overview-panel mb-4">
+                    <p class="profile-overview-panel-title mb-1">Quick actions</p>
+                    <p class="text-muted small mb-0">
+                      Manage your jobs, review applicants, and keep your dashboard up to date.
+                    </p>
+                  </div>
+
+                  <div class="row g-2">
+                    <div class="col-12">
+                      <a
+                        href="../pages/addEdit/job-post.html"
+                        class="btn btn-danger profile-overview-primary-action w-100 text-decoration-none"
+                        tabindex="-1"
+                        role="button"
+                        aria-disabled="true"
+                        >Post New Job</a
+                      >
+                    </div>
+                    <div class="col-sm-6">
+                      <button id="btnViewAllApplicants" class="btn btn-outline-danger profile-overview-action w-100">
+                        View All Applicants
+                      </button>
+                    </div>
+                    <div class="col-sm-6">
+                      <button id="btnViewPostedJob" class="btn btn-outline-danger profile-overview-action w-100">
+                        View Posted Jobs
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1760,18 +1777,30 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
     }
 
     // Update the three profile name elements with data from the API.
-    function applyProfileToUI(firstName, lastName) {
+    function applyProfileToUI(firstName, lastName, roleName) {
       const first = (firstName || "").trim();
       const last = (lastName || "").trim();
       const full = [first, last].filter(Boolean).join(" ") || "Admin";
+      const initials = [first, last]
+        .filter(Boolean)
+        .map((part) => part.charAt(0).toUpperCase())
+        .join("")
+        .slice(0, 2) || "AD";
+      const normalizedRole = String(roleName || "Admin")
+        .trim()
+        .replace(/\b\w/g, (char) => char.toUpperCase());
 
       const menuBtn = document.getElementById("user-menu-btn");
       const menuName = document.getElementById("user-menu-name");
       const dashName = document.getElementById("dash-profile-name");
+      const dashRole = document.getElementById("dash-profile-role");
+      const dashInitials = document.getElementById("dash-profile-initials");
 
       if (menuBtn) menuBtn.textContent = first || "Admin";
       if (menuName) menuName.textContent = full;
       if (dashName) dashName.textContent = full;
+      if (dashRole) dashRole.textContent = normalizedRole;
+      if (dashInitials) dashInitials.textContent = initials;
     }
 
     // Fetch the Mongoose UserProfile for the signed-in user.
@@ -1790,6 +1819,7 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
             data: { profile },
           } = await res.json();
           const gp = profile?.user?.googleProfile || {};
+          const role = profile?.user?.role || profile?.role || "Admin";
           const first =
             profile.firstName ||
             gp.given_name ||
@@ -1800,7 +1830,7 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
             gp.family_name ||
             (gp.name && gp.name.split(" ").slice(1).join(" ")) ||
             "";
-          applyProfileToUI(first, last);
+          applyProfileToUI(first, last, role);
           return;
         }
 
@@ -1812,6 +1842,7 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
           if (meRes.ok) {
             const { data: user } = await meRes.json();
             const gp = user?.googleProfile || {};
+            const role = user?.role || "Admin";
             const first =
               gp.given_name ||
               (gp.name && gp.name.split(" ")[0]) ||
@@ -1821,7 +1852,7 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
               gp.family_name ||
               (gp.name && gp.name.split(" ").slice(1).join(" ")) ||
               "";
-            applyProfileToUI(first, last);
+            applyProfileToUI(first, last, role);
           }
         }
       } catch (err) {
