@@ -107,7 +107,18 @@ exports.getMyApplications = asyncHandler(async (req, res, next) => {
  * @access  Private (applicant or employer/admin)
  */
 exports.getApplication = asyncHandler(async (req, res, next) => {
-  const application = await Application.findById(req.params.id);
+  // Populate applicant.profile and job so frontend has full display data
+  const application = await Application.findById(req.params.id)
+    .populate({
+      path: 'applicant',
+      select: 'email profile',
+      populate: { path: 'profile', select: 'firstName lastName nationality japaneseLevel skills experience education' },
+    })
+    .populate({
+      path: 'job',
+      select: 'title location company',
+      populate: { path: 'company', select: 'name' },
+    });
 
   if (!application) {
     return next(new ApiError(404, "Application not found"));
@@ -115,7 +126,7 @@ exports.getApplication = asyncHandler(async (req, res, next) => {
 
   // Check authorization
   const isApplicant =
-    application.applicant._id.toString() === req.user._id.toString();
+    (application.applicant && application.applicant._id && application.applicant._id.toString && application.applicant._id.toString() === req.user._id.toString()) || false;
   const isEmployer = req.user.role === "employer" || req.user.role === "admin";
 
   if (!isApplicant && !isEmployer) {
