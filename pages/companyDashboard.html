@@ -2006,7 +2006,10 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
           return;
         }
         const jobsJson = await jobsRes.json();
+        console.log('loadCompanyApplicants: jobsJson:', jobsJson);
         const jobs = jobsJson.data?.jobs || [];
+        // initialize debug payload early so the panel can render even if no jobs
+        window._companyDebug = { jobs: jobs, responses: [] };
 
         if (!jobs.length) {
           const recentEl = document.getElementById('recentApplicantsList');
