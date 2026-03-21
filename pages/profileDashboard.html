@@ -391,11 +391,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                   style="display: none"
                 />
 
-                <a
-                  href="#"
-                  id="resumeUploadLink"
-                  class="d-block mt-3 text-secondary fw-semibold"
-                  >Upload Resume →</a>
+                <button type="button" id="resumeUploadLink" class="btn btn-sm btn-outline-primary d-block mt-3 fw-semibold">Upload Resume →</button>
 
                 <div id="view-section" style="display: none; margin-top: 10px">
                   <a id="view-link" href="#" target="_blank">View Resume →</a>
@@ -3860,6 +3856,102 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                 });
             }
         });
+    </script>
+    <script>
+      (function(){
+        function debounce(fn, wait){let t; return function(){var args=arguments; clearTimeout(t); t=setTimeout(function(){fn.apply(null,args);}, wait);};}
+
+        function computeProfileCompletion(){
+          try{
+            const checks = [];
+            const nameEl = document.getElementById('info-name');
+            checks.push(!!(nameEl && nameEl.textContent && nameEl.textContent.trim() && nameEl.textContent.trim().toLowerCase() !== 'profiledashboard'));
+
+            const avatar = document.getElementById('profileAvatarImg');
+            checks.push(!!(avatar && avatar.src && !/placehold\.co|data:image/i.test(avatar.src)));
+
+            const bioEl = document.getElementById('edit-input') || document.getElementById('profileBio');
+            let bioOk = false;
+            if(bioEl){
+              const val = (bioEl.value || bioEl.textContent || '').trim();
+              if(val.length > 20 && !/default profile description/i.test(val)) bioOk = true;
+            }
+            checks.push(bioOk);
+
+            const resume = document.getElementById('file-path');
+            checks.push(!!(resume && (resume.value || '').trim()));
+
+            const expContainer = document.getElementById('experience-list-container');
+            let expOk = false;
+            if(expContainer){
+              const children = Array.from(expContainer.children).filter(function(c){
+                const t = (c.textContent||'').trim();
+                return t && !/Loading experience entries.../i.test(t);
+              });
+              if(children.length > 0) expOk = true;
+            }
+            checks.push(expOk);
+
+            const skills = document.querySelectorAll('.skill-input');
+            checks.push(!!(skills && skills.length > 0));
+
+            const basicIds = ['info-location','info-visa','info-industry','info-nationality','info-age'];
+            let basicCount = 0;
+            basicIds.forEach(function(id){const el = document.getElementById(id); if(el && (el.textContent||'').trim()) basicCount++;});
+            const basicOk = basicCount >= Math.ceil(basicIds.length/2);
+            checks.push(basicOk);
+
+            const total = checks.length || 1;
+            const score = checks.filter(Boolean).length;
+            const percent = Math.round((score/total) * 100);
+
+            const textEl = document.getElementById('profileCompletionText');
+            const bar = document.getElementById('profileCompletionBar');
+            if(textEl) textEl.innerHTML = 'Profile <span class="text-primary">' + percent + '% </span>complete — finish to boost matches.';
+            if(bar){ bar.style.width = percent + '%'; bar.setAttribute('aria-valuenow', String(percent)); }
+          }catch(e){ console.error('computeProfileCompletion error', e); }
+        }
+
+        document.addEventListener('DOMContentLoaded', function(){
+          // Replace the static small text with a dynamic component if present
+          try{
+            var smalls = Array.from(document.querySelectorAll('small.text-muted.mb-1'));
+            var target = smalls.find(function(s){ return /Profile\s+\d+%|Profile\s*\</i.test(s.textContent) || /Profile/.test(s.textContent); });
+            if(target){
+              var wrapper = document.createElement('div'); wrapper.style.flex = '1';
+              wrapper.innerHTML = '<div class="d-flex align-items-center justify-content-between mb-1" style="width:100%;">' +
+                '<small id="profileCompletionText" class="text-muted mb-1">Profile <span class="text-primary">0% </span>complete — finish to boost matches.</small>' +
+                '<a href="#" id="profileCompletionEdit" class="small text-decoration-none">Edit</a>' +
+              '</div>' +
+              '<div class="progress" style="height:8px; width:100%;">' +
+                '<div id="profileCompletionBar" class="progress-bar bg-primary" role="progressbar" style="width:0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>' +
+              '</div>';
+              target.replaceWith(wrapper);
+            }
+          }catch(e){ console.warn('failed to replace static profile text', e); }
+
+          // Initial compute
+          computeProfileCompletion();
+
+          // Recompute on common events
+          var resumeInput = document.getElementById('file-path');
+          if(resumeInput) resumeInput.addEventListener('change', debounce(computeProfileCompletion, 200));
+          var realFile = document.getElementById('resumeUpload');
+          if(realFile) realFile.addEventListener('change', debounce(computeProfileCompletion, 200));
+
+          // Observe DOM changes and recompute (debounced)
+          try{
+            var observer = new MutationObserver(debounce(function(){ computeProfileCompletion(); }, 250));
+            observer.observe(document.body, { childList: true, subtree: true, attributes: true });
+          }catch(e){ /* ignore */ }
+
+          // Make the Edit link open the basic info modal when clicked
+          var editLink = document.getElementById('profileCompletionEdit');
+          if(editLink){
+            editLink.addEventListener('click', function(e){ e.preventDefault(); var toggle = document.querySelector('[data-bs-target="#basicInfoModal"]'); if(toggle) toggle.click(); });
+          }
+        });
+      })();
     </script>
   </body>
 </html>

@@ -91,7 +91,17 @@ export class I18n {
     }
     this.current = lang || I18n.DEFAULT_LANG;
     document.documentElement.lang = this.current;
-    return this.updatePageContent();
+    const p = this.updatePageContent();
+    try {
+      // Notify other scripts on the page that the language changed so
+      // dynamic components (that don't use data-i18n) can re-render.
+      document.dispatchEvent(
+        new CustomEvent("i18n:languageChanged", { detail: { lang: this.current } }),
+      );
+    } catch (e) {
+      /* ignore in older browsers */
+    }
+    return p;
   }
 
   translate(key) {
