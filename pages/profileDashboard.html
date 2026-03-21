@@ -442,16 +442,20 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                   </h3>
                   <ul class="list-unstyled small mb-0">
                     <li class="mb-2">
-                      <span class="fw-semibold"> Applied:</span>5
+                      <span class="fw-semibold"> Applied:</span>
+                      <span id="stat-applied">–</span>
                     </li>
                     <li class="mb-2">
-                      <span class="fw-semibold"> Pending:</span> 2
+                      <span class="fw-semibold"> Pending:</span>
+                      <span id="stat-pending">–</span>
                     </li>
                     <li class="mb-2">
-                      <span class="fw-semibold"> Interview:</span> 22
+                      <span class="fw-semibold"> Interview:</span>
+                      <span id="stat-interview">–</span>
                     </li>
                     <li class="mb-2">
-                      <span class="fw-semibold"> Rejected:</span> 2
+                      <span class="fw-semibold"> Rejected:</span>
+                      <span id="stat-rejected">–</span>
                     </li>
                   </ul>
                 </div>
@@ -1369,62 +1373,9 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                     <th scope="col">Status</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody id="applicationTableBody">
                   <tr>
-                    <td>
-                      <div class="fw-semibold">Caregiver</div>
-                      <div class="small text-muted">XYZ Care Solutions</div>
-                    </td>
-                    <td>Osaka</td>
-                    <td>2025/09/01</td>
-                    <td>
-                      <span
-                        class="badge bg-info-subtle text-primary border border-info-subtle"
-                        >Interview Scheduled</span
-                      >
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="fw-semibold">Hotel Desk Staff</div>
-                      <div class="small text-muted">Kyoto Grand Inn</div>
-                    </td>
-                    <td>Kyoto</td>
-                    <td>2025/08/15</td>
-                    <td>
-                      <span
-                        class="badge bg-warning-subtle text-warning border border-warning-subtle"
-                        >Under Review</span
-                      >
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="fw-semibold">Ground Handling</div>
-                      <div class="small text-muted">Japan Airline</div>
-                    </td>
-                    <td>Tokyo</td>
-                    <td>2025/08/01</td>
-                    <td>
-                      <span
-                        class="badge bg-danger-subtle text-danger border border-danger-subtle"
-                        >Rejected</span
-                      >
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="fw-semibold">Food Processor</div>
-                      <div class="small text-muted">AgriFoods Japan</div>
-                    </td>
-                    <td>Hokkaido</td>
-                    <td>2025/07/20</td>
-                    <td>
-                      <span
-                        class="badge bg-success-subtle text-success border border-success-subtle"
-                        >Applied</span
-                      >
-                    </td>
+                    <td colspan="4" class="text-center text-muted py-3">Loading applications…</td>
                   </tr>
                 </tbody>
               </table>
@@ -3949,6 +3900,110 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           var editLink = document.getElementById('profileCompletionEdit');
           if(editLink){
             editLink.addEventListener('click', function(e){ e.preventDefault(); var toggle = document.querySelector('[data-bs-target="#basicInfoModal"]'); if(toggle) toggle.click(); });
+          }
+        });
+      })();
+    </script>
+
+    <!-- Application Tracking: dynamic stats + modal table -->
+    <script>
+      (function () {
+        // Status groupings for summary counts
+        var STATUS_APPLIED    = ['submitted', 'reviewing', 'offer', 'accepted'];
+        var STATUS_PENDING    = ['submitted', 'reviewing'];
+        var STATUS_INTERVIEW  = ['interview'];
+        var STATUS_REJECTED   = ['rejected'];
+
+        function statusBadge(status) {
+          var map = {
+            submitted:  { cls: 'bg-success-subtle text-success border border-success-subtle', label: 'Applied' },
+            reviewing:  { cls: 'bg-warning-subtle text-warning border border-warning-subtle', label: 'Under Review' },
+            interview:  { cls: 'bg-info-subtle text-primary border border-info-subtle',       label: 'Interview' },
+            offer:      { cls: 'bg-primary-subtle text-primary border border-primary-subtle', label: 'Offer' },
+            accepted:   { cls: 'bg-success text-white',                                       label: 'Accepted' },
+            rejected:   { cls: 'bg-danger-subtle text-danger border border-danger-subtle',    label: 'Rejected' },
+            withdrawn:  { cls: 'bg-secondary-subtle text-secondary border border-secondary-subtle', label: 'Withdrawn' },
+          };
+          var b = map[status] || { cls: 'bg-secondary-subtle text-secondary', label: status };
+          return '<span class="badge ' + b.cls + '">' + b.label + '</span>';
+        }
+
+        function escapeH(s) {
+          return String(s || '')
+            .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+            .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+        }
+
+        function formatDate(d) {
+          if (!d) return '–';
+          try { return new Date(d).toLocaleDateString(); } catch(e) { return d; }
+        }
+
+        async function loadApplications() {
+          var token = document.cookie.split('; ').find(function(r){ return r.startsWith('token='); });
+          if (!token) return;
+          token = decodeURIComponent(token.split('=')[1]);
+
+          try {
+            var res = await fetch('/api/v1/applications/me?limit=200', {
+              headers: { 'Authorization': 'Bearer ' + token }
+            });
+            if (!res.ok) return;
+            var data = await res.json();
+            var apps = (data.data && data.data.applications) || [];
+
+            // ── Summary counts ──────────────────────────────────────────
+            var total     = apps.length;
+            var pending   = apps.filter(function(a){ return STATUS_PENDING.includes(a.status); }).length;
+            var interview = apps.filter(function(a){ return STATUS_INTERVIEW.includes(a.status); }).length;
+            var rejected  = apps.filter(function(a){ return STATUS_REJECTED.includes(a.status); }).length;
+
+            var elApplied   = document.getElementById('stat-applied');
+            var elPending   = document.getElementById('stat-pending');
+            var elInterview = document.getElementById('stat-interview');
+            var elRejected  = document.getElementById('stat-rejected');
+            if (elApplied)   elApplied.textContent   = total;
+            if (elPending)   elPending.textContent   = pending;
+            if (elInterview) elInterview.textContent = interview;
+            if (elRejected)  elRejected.textContent  = rejected;
+
+            // ── Modal table ─────────────────────────────────────────────
+            var tbody = document.getElementById('applicationTableBody');
+            if (!tbody) return;
+
+            if (apps.length === 0) {
+              tbody.innerHTML = '<tr><td colspan="4" class="text-center text-muted py-3">No applications yet.</td></tr>';
+              return;
+            }
+
+            tbody.innerHTML = apps.map(function(a) {
+              var jobTitle   = escapeH(a.job && a.job.title   ? a.job.title   : 'Job');
+              var company    = escapeH(a.job && a.job.company && a.job.company.name ? a.job.company.name : '–');
+              var prefecture = escapeH(a.job && a.job.location && a.job.location.prefecture ? a.job.location.prefecture : '–');
+              var city       = escapeH(a.job && a.job.location && a.job.location.city ? a.job.location.city : '');
+              var location   = city ? city + ', ' + prefecture : prefecture;
+              var date       = formatDate(a.createdAt);
+              var badge      = statusBadge(a.status);
+              return '<tr>' +
+                '<td><div class="fw-semibold">' + jobTitle + '</div>' +
+                    '<div class="small text-muted">' + company + '</div></td>' +
+                '<td>' + location + '</td>' +
+                '<td>' + date + '</td>' +
+                '<td>' + badge + '</td>' +
+              '</tr>';
+            }).join('');
+
+          } catch(e) {
+            console.warn('loadApplications error', e);
+          }
+        }
+
+        // Load on DOM ready + reload each time the modal opens
+        document.addEventListener('DOMContentLoaded', function() {
+          loadApplications();
+          var modal = document.getElementById('applicationDetailModal');
+          if (modal) {
+            modal.addEventListener('show.bs.modal', loadApplications);
           }
         });
       })();

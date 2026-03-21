@@ -77,6 +77,11 @@ exports.getMyApplications = asyncHandler(async (req, res, next) => {
   const skip = (parseInt(page) - 1) * parseInt(limit);
 
   const applications = await Application.find(query)
+    .populate({
+      path: "job",
+      select: "title location company",
+      populate: { path: "company", select: "name" },
+    })
     .sort("-createdAt")
     .skip(skip)
     .limit(parseInt(limit));
