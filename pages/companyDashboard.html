@@ -1833,7 +1833,19 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
     }
 
     // Load company applicants summary (dashboard)
-    async function loadCompanyApplicants() {
+    function getApplicantDisplayName(entity) {
+          if (!entity) return 'Applicant';
+          const profile = entity.profile || {}; 
+          const first = (profile.firstName || profile.given_name || '').trim();
+          const last = (profile.lastName || profile.family_name || '').trim();
+          let full = [first, last].filter(Boolean).join(' ');
+          // fallback to full 'name' field if available
+          if (!full && (profile.name || entity.name)) full = (profile.name || entity.name || '').trim();
+          if (!full) full = entity.email || 'Applicant';
+          return full;
+        }
+
+        async function loadCompanyApplicants() {
       // Only run when Dashboard tab is visible
       const dashboardPane = document.getElementById('dashboard-pane');
       if (dashboardPane && !dashboardPane.classList.contains('show') && !dashboardPane.classList.contains('active')) {
@@ -1957,7 +1969,7 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
           } else {
             const sorted = recentApplications.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0,8);
             recentEl.innerHTML = sorted.map(a => {
-              const applicant = (a.applicant && (a.applicant.profile ? (a.applicant.profile.firstName || '') + ' ' + (a.applicant.profile.lastName || '') : a.applicant.email)) || 'Applicant';
+              const applicant = getApplicantDisplayName(a.applicant || a);
               const jobTitle = (a.job && a.job.title) ? a.job.title : (a._job && a._job.title) ? a._job.title : 'Job';
               const date = a.createdAt ? new Date(a.createdAt).toLocaleDateString() : '–';
               const status = a.status || '-';
@@ -1974,7 +1986,7 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
           } else {
             const list = recentApplications.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0,6);
             appListEl.innerHTML = list.map(a=>{
-              const applicant = (a.applicant && (a.applicant.profile ? (a.applicant.profile.firstName || '') + ' ' + (a.applicant.profile.lastName || '') : a.applicant.email)) || 'Applicant';
+              const applicant = getApplicantDisplayName(a.applicant || a);
               const jobTitle = (a.job && a.job.title) ? a.job.title : (a._job && a._job.title) ? a._job.title : 'Job';
               const status = a.status || '-';
               const id = a._id || a.id || '';
@@ -2003,7 +2015,7 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
           } else {
             const rows = recentApplications.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt)).map(a=>{
               const id = a._id || a.id || '';
-              const applicant = (a.applicant && (a.applicant.profile ? (a.applicant.profile.firstName || '') + ' ' + (a.applicant.profile.lastName || '') : a.applicant.email)) || 'Applicant';
+              const applicant = getApplicantDisplayName(a.applicant || a);
               const jobTitle = (a.job && a.job.title) ? a.job.title : (a._job && a._job.title) ? a._job.title : 'Job';
               const location = (a.job && a.job.location) || (a._job && a._job.location) || '';
               const date = a.createdAt ? new Date(a.createdAt).toLocaleDateString() : '–';
@@ -2042,7 +2054,7 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
         // Helper to show applicant modal
         function showApplicantDetail(app) {
           try {
-            const name = (app.applicant && app.applicant.profile && ((app.applicant.profile.firstName||'') + ' ' + (app.applicant.profile.lastName||''))) || app.applicant?.email || 'Applicant';
+            const name = getApplicantDisplayName(app.applicant || app);
             const email = app.applicant?.email || (app.applicant && app.applicant.profile && app.applicant.profile.email) || '-';
             const jobTitle = (app.job && app.job.title) || (app._job && app._job.title) || '-';
             const location = (app.job && app.job.location) || (app._job && app._job.location) || '-';
