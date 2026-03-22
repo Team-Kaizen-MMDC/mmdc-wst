@@ -369,7 +369,7 @@
                       <h3 class="card-title fw-bold mb-1">Applicant List</h3>
                       <p class="text-muted small mb-0">Review recent candidates and jump into applicant details faster.</p>
                     </div>
-                    <a href="#" class="dashboard-list-link" id="viewAllApplicantsLink">View all applicants</a>
+                    <a href="#" class="dashboard-list-link" id="viewAllApplicantsLink">View all</a>
                   </div>
 
                   <div id="applicantList" class="dashboard-list">
@@ -392,7 +392,7 @@
                       <p class="text-muted small mb-0">Track your latest postings, statuses, and engagement at a glance.</p>
                     </div>
                     <a href="#" class="dashboard-list-link" id="viewAllJobsLink"
-                      >View all jobs</a
+                      >View all</a
                     >
                   </div>
 
@@ -2314,7 +2314,7 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
                 const id = a._id || a.id || '';
                 const date = a.createdAt ? new Date(a.createdAt).toLocaleDateString() : 'Date unavailable';
                 const initials = escapeHtml(getLabelInitials(applicant));
-                return `<div class="dashboard-list-item dashboard-list-item--applicant"><div class="dashboard-list-item__main"><div class="dashboard-list-item__avatar" aria-hidden="true">${initials}</div><div class="dashboard-list-item__body"><div class="d-flex flex-column flex-md-row justify-content-between align-items-md-start gap-2 mb-2"><div><p class="dashboard-list-item__title mb-1">${escapeHtml(applicant)}</p><p class="dashboard-list-item__subtitle mb-0">${escapeHtml(jobTitle)}</p></div><span class="dashboard-list-item__status dashboard-list-item__status--${escapeHtml(statusTone)}">${escapeHtml(status)}</span></div><div class="dashboard-list-item__meta"><span>${escapeHtml(date)}</span><span>Latest activity</span></div></div></div><button data-app-id="${escapeHtml(id)}" class="btn btn-sm btn-outline-danger dashboard-list-item__action view-app-btn">View</button></div>`;
+                return `<div class="dashboard-list-item dashboard-list-item--applicant"><div class="dashboard-list-item__main"><div class="dashboard-list-item__avatar" aria-hidden="true">${initials}</div><div class="dashboard-list-item__body"><div class="d-flex flex-column flex-md-row justify-content-between align-items-md-start gap-2 mb-2"><div style="min-width:0"><p class="dashboard-list-item__title mb-1">${escapeHtml(applicant)}</p><p class="dashboard-list-item__subtitle mb-0">${escapeHtml(jobTitle)}</p></div><span class="dashboard-list-item__status dashboard-list-item__status--${escapeHtml(statusTone)}">${escapeHtml(status)}</span></div><div class="dashboard-list-item__meta"><span>${escapeHtml(date)}</span><span>Latest activity</span></div></div></div><button data-app-id="${escapeHtml(id)}" class="btn btn-sm btn-outline-danger dashboard-list-item__action view-app-btn">View</button></div>`;
               }).join('');
 
               appListEl.querySelectorAll('.view-app-btn').forEach((btn) => {
