@@ -2353,11 +2353,13 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
               const location = formatJobLocation(locationRaw);
               const date = a.createdAt ? new Date(a.createdAt).toLocaleDateString() : '–';
               const status = a.status || '-';
-              return `<tr data-app-id="${escapeHtml(id)}"><td><p class="FullName fw-semibold mb-0">${escapeHtml(applicant)}</p></td><td class="location">${escapeHtml(jobTitle)}</td><td class="text-left">${escapeHtml(location)}</td><td class="text-left">${escapeHtml(date)}</td><td><span class="badge text-bg-light">${escapeHtml(status)}</span></td><td><button class="btn btn-sm btn-outline-primary me-2 view-table-app-btn" data-app-id="${escapeHtml(id)}">View Profile</button></td></tr>`;
+              const statusOptions = ['submitted','reviewing','interview','offer','accepted','rejected'];
+              const statusSelectHtml = `<select class="form-select form-select-sm status-select" data-app-id="${escapeHtml(id)}" style="min-width:120px">${statusOptions.map(s=>`<option value="${s}"${s===status?' selected':''}>${s.charAt(0).toUpperCase()+s.slice(1)}</option>`).join('')}</select>`;
+              return `<tr data-app-id="${escapeHtml(id)}"><td><p class="FullName fw-semibold mb-0">${escapeHtml(applicant)}</p></td><td class="location">${escapeHtml(jobTitle)}</td><td class="text-left">${escapeHtml(location)}</td><td class="text-left">${escapeHtml(date)}</td><td>${statusSelectHtml}</td><td><button class="btn btn-sm btn-outline-primary me-2 view-table-app-btn" data-app-id="${escapeHtml(id)}">View Profile</button></td></tr>`;
             }).join('');
             applicantTableBody.innerHTML = rows;
 
-            // attach click handlers for table view buttons
+            // attach click handlers for table view buttons and status selects
             setTimeout(()=>{
               document.querySelectorAll('.view-table-app-btn').forEach(btn=>{
                 btn.addEventListener('click', (e)=>{
@@ -2365,6 +2367,31 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
                   const id = btn.getAttribute('data-app-id');
                   const app = (recentApplications || []).find(x => (x._id||x.id||'') === id);
                   if (app) showApplicantDetail(app);
+                });
+              });
+
+              document.querySelectorAll('.status-select').forEach(sel=>{
+                sel.addEventListener('change', async (e)=>{
+                  const id = sel.getAttribute('data-app-id');
+                  const newStatus = sel.value;
+                  const token = getToken();
+                  sel.disabled = true;
+                  try {
+                    const res = await fetch(`${API_BASE}/applications/${id}/status`, {
+                      method: 'PUT',
+                      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+                      body: JSON.stringify({ status: newStatus }),
+                    });
+                    if (!res.ok) throw new Error('Failed to update status');
+                    // Update in-memory data so dashboard stats are accurate
+                    const app = (recentApplications || []).find(x => (x._id||x.id||'') === id);
+                    if (app) app.status = newStatus;
+                    // Reload to refresh dashboard tracking card stats
+                    await loadCompanyApplicants();
+                  } catch (err) {
+                    console.error('Status update failed', err);
+                    sel.disabled = false;
+                  }
                 });
               });
             },0);
