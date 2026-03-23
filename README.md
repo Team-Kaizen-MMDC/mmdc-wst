@@ -18,6 +18,7 @@ features and optional Bootstrap utilities.
 - Getting Started
 - Development
 - Testing
+- Changelog
 - File Structure
 - Best Practices
 - Code & Design Guide
@@ -52,6 +53,8 @@ This repository holds the wireframe-driven static pages and a stylesheet ([asset
 -- **Backend API test guide:** [docs/BACKEND_API_TESTING.md](docs/BACKEND_API_TESTING.md) — backend Jest coverage, integration test harness, commands, and Postman usage.
 
 For implementation details, testing guidance, and design docs, see the [docs/](docs/) folder.
+
+-- **Changelog:** [CHANGELOG.md](CHANGELOG.md) — release notes and history.
 
 ## Application Flow
 
