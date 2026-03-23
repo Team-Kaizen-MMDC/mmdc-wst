@@ -293,6 +293,9 @@ async function createApp() {
     });
   });
 
+  // Add this to your backend server file
+app.use(express.static(path.join(__dirname, 'frontend')));
+
   // Debug endpoint: allow pages to POST the client_id and origin they will
   // use to request GSI resources so we can log and inspect mismatches.
   app.post("/debug/log-gsi", (req, res) => {
