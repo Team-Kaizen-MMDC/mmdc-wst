@@ -70,11 +70,10 @@ exports.getCompanies = asyncHandler(async (req, res) => {
     .sort(sort);
 
   // If text search is used, include search score
-  if (search) {
-    companiesQuery = companiesQuery
-      .select({ score: { $meta: "textScore" } })
-      .sort({ score: { $meta: "textScore" } });
-  }
+  // If text search is used, sort by relevance
+if (search) {
+  companiesQuery = companiesQuery.sort({ score: { $meta: "textScore" } });
+}
 
   const companies = await companiesQuery;
 
@@ -106,21 +105,25 @@ exports.getCompanies = asyncHandler(async (req, res) => {
  */
 exports.getCompany = asyncHandler(async (req, res) => {
   const { idOrSlug } = req.params;
+  const mongoose = require("mongoose");
 
-  // Try to find by ID first, then by slug
-  let company = await Company.findOne({
-    $or: [{ _id: idOrSlug }, { slug: idOrSlug }],
-    isActive: true,
-  })
-    .populate({
-      path: "owner",
-      select: "email",
-    })
+  // Build a smart query
+  let query = { isActive: true };
+  
+  // Check if it's a valid MongoDB ID
+  if (mongoose.Types.ObjectId.isValid(idOrSlug)) {
+    query._id = idOrSlug;
+  } else {
+    // If not a valid ID, search only by slug
+    query.slug = idOrSlug;
+  }
+
+  let company = await Company.findOne(query)
+    .populate({ path: "owner", select: "email" })
     .populate({
       path: "jobs",
       match: { isDeleted: false, status: "active" },
-      select:
-        "title industry location.prefecture compensation.salaryMin compensation.salaryMax applicationInfo.deadline",
+      select: "title industry location.prefecture compensation.salaryMin compensation.salaryMax applicationInfo.deadline",
       options: { limit: 10, sort: "-createdAt" },
     });
 
@@ -128,9 +131,7 @@ exports.getCompany = asyncHandler(async (req, res) => {
     throw new ApiError(404, "Company not found");
   }
 
-  res
-    .status(200)
-    .json(new ApiResponse(200, "Company retrieved successfully", { company }));
+  res.status(200).json(new ApiResponse(200, "Company retrieved successfully", { company }));
 });
 
 /**

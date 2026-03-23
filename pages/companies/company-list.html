@@ -2,21 +2,32 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>company list</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Browse companies hiring in Japan – Japan SSW" />
+    <title>Company List – Japan SSW</title>
 
-    <!-- Bootstrap CSS 5.3.3 (Phase 2) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
-    <!-- Site CSS (loaded after Bootstrap to override as needed) -->
+
     <link rel="stylesheet" href="../../assets/css/main.css" />
+    <link rel="icon" type="image/x-icon" href="../../assets/icons/favicon.ico" />
   </head>
+
   <body class="sticky-footer-layout">
-    <header class="site-header">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <header class="site-header" role="banner">
       <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light">
           <a
@@ -26,7 +37,7 @@
             >Japan SSW</a
           >
 
-          <!-- Offcanvas toggler for mobile -->
+          
           <button
             class="btn btn-outline-secondary d-lg-none"
             type="button"
@@ -38,7 +49,7 @@
             <span class="navbar-toggler-icon"></span>
           </button>
 
-          <!-- Desktop nav (visible on lg+) -->
+
           <div class="collapse navbar-collapse d-none d-lg-flex" id="navbarNav">
             <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
               <li class="nav-item">
@@ -51,9 +62,10 @@
               </li>
               <li class="nav-item">
                 <a
-                  class="nav-link site-header__nav-link"
+                  class="nav-link site-header__nav-link active"
                   href="../../index.html#companies"
                   data-i18n="nav.services"
+                  aria-current="page"
                   >Companies</a
                 >
               </li>
@@ -93,7 +105,7 @@
         </nav>
       </div>
 
-      <!-- Offcanvas (mobile) -->
+
       <div
         class="offcanvas offcanvas-start"
         tabindex="-1"
@@ -101,11 +113,7 @@
         aria-labelledby="siteOffcanvasLabel"
       >
         <div class="offcanvas-header">
-          <h5
-            class="offcanvas-title"
-            id="siteOffcanvasLabel"
-            data-i18n="nav.menu"
-          >
+          <h5 class="offcanvas-title" id="siteOffcanvasLabel" data-i18n="nav.menu">
             Menu
           </h5>
           <button
@@ -115,6 +123,7 @@
             aria-label="Close"
           ></button>
         </div>
+
         <div class="offcanvas-body d-flex flex-column">
           <ul class="navbar-nav">
             <li class="nav-item">
@@ -176,339 +185,230 @@
         </div>
       </div>
     </header>
-    <main class="py-5">
-      <div class="container">
-        <h1
-          class="fw-bold text-dark mb-4 border-bottom border-3 border-primary pb-2 text-center"
-        >
-          Featured Companies
-        </h1>
 
-        <div class="row g-4 justify-content-center">
-          <!-- Company Card 1 -->
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="feature-card bg-white p-4 rounded-4 shadow-sm h-100">
-              <div
-                class="d-flex flex-column flex-md-row align-items-center align-items-md-start gap-4"
-              >
-                <div class="flex-shrink-0">
-                  <img
-                    src="../../assets/images/company-logos/ANA_InterContinental.png"
-                    alt="Company logo"
-                    class="img-fluid"
-                    style="width: 100px; height: 100px; object-fit: contain"
-                    onerror="this.onerror=null; this.src='https://placehold.co/100x100/cccccc/000000?text=Logo';"
-                  />
-                </div>
-                <div class="flex-grow-1 text-center text-md-start">
-                  <h2 class="h6 fw-bold mb-2">ANA InterContinental</h2>
-                  <p class="text-muted small mb-3">
-                    ANA InterContinental is a leading hospitality group
-                    operating luxury hotels across Japan.
-                  </p>
-                  <div
-                    class="d-flex flex-column flex-sm-row justify-content-center justify-content-md-start gap-2"
-                  >
-                    <a
-                      href="./ana-intercontinental.html"
-                      class="btn btn-outline-primary btn-sm"
-                      >View Company</a
-                    >
-                    <a
-                      href="../../index.html#companies"
-                      class="btn btn-outline-dark btn-sm"
-                      >5+ Jobs</a
-                    >
-                  </div>
-                </div>
-              </div>
-            </div>
+    <main id="main-content" class="py-4 py-lg-5">
+      <section class="container mb-4">
+        <div class="row align-items-center g-3">
+          <div class="col-12 col-lg-8">
+            <p class="text-uppercase small fw-semibold text-primary mb-2">
+              Company Directory
+            </p>
+            <h1 class="display-6 fw-bold mb-3">Find Companies Hiring in Japan</h1>
+            <p class="text-muted mb-0">
+              Browse active employers, filter by industry and prefecture, and
+              explore company profiles before viewing available jobs.
+            </p>
           </div>
-
-          <!-- Company Card 2 -->
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="feature-card bg-white p-4 rounded-4 shadow-sm h-100">
-              <div
-                class="d-flex flex-column flex-md-row align-items-center align-items-md-start gap-4"
-              >
-                <div class="flex-shrink-0">
-                  <img
-                    src="../../assets/images/company-logos/Prince_Hotels.png"
-                    alt="Company logo"
-                    class="img-fluid"
-                    style="width: 100px; height: 100px; object-fit: contain"
-                    onerror="this.onerror=null; this.src='https://placehold.co/100x100/cccccc/000000?text=Logo';"
-                  />
-                </div>
-                <div class="flex-grow-1 text-center text-md-start">
-                  <h2 class="h6 fw-bold mb-2">Prince Hotels</h2>
-                  <p class="text-muted small mb-3">
-                    Prince Hotels & Resorts operates hotels, resorts, and
-                    leisure facilities throughout Japan
-                  </p>
-                  <div
-                    class="d-flex flex-column flex-sm-row justify-content-center justify-content-md-start gap-2"
-                  >
-                    <a
-                      href="./prince-hotels.html"
-                      class="btn btn-outline-primary btn-sm"
-                      >View Company</a
-                    >
-                    <a href="#" class="btn btn-outline-dark btn-sm">3 Jobs</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Company Card 3 -->
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="feature-card bg-white p-4 rounded-4 shadow-sm h-100">
-              <div
-                class="d-flex flex-column flex-md-row align-items-center align-items-md-start gap-4"
-              >
-                <div class="flex-shrink-0">
-                  <img
-                    src="../../assets/images/company-logos/sompocare.png"
-                    alt="Company logo"
-                    class="img-fluid"
-                    style="width: 100px; height: 100px; object-fit: contain"
-                    onerror="this.onerror=null; this.src='https://placehold.co/100x100/cccccc/000000?text=Logo';"
-                  />
-                </div>
-                <div class="flex-grow-1 text-center text-md-start">
-                  <h2 class="h6 fw-bold mb-2">SOMPO Care</h2>
-                  <p class="text-muted small mb-3">
-                    SOMPO Care is one of Japan’s largest care service providers
-                    for the elderly.
-                  </p>
-                  <div
-                    class="d-flex flex-column flex-sm-row justify-content-center justify-content-md-start gap-2"
-                  >
-                    <a
-                      href="./sompo-care.html"
-                      class="btn btn-outline-primary btn-sm"
-                      >View Company</a
-                    >
-                    <a href="#" class="btn btn-outline-dark btn-sm">2 Jobs</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Company Card 4 -->
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="feature-card bg-white p-4 rounded-4 shadow-sm h-100">
-              <div
-                class="d-flex flex-column flex-md-row align-items-center align-items-md-start gap-4"
-              >
-                <div class="flex-shrink-0">
-                  <img
-                    src="../../assets/images/company-logos/Nissan.png"
-                    alt="Company logo"
-                    class="img-fluid"
-                    style="width: 100px; height: 100px; object-fit: contain"
-                    onerror="this.onerror=null; this.src='https://placehold.co/100x100/cccccc/000000?text=Logo';"
-                  />
-                </div>
-                <div class="flex-grow-1 text-center text-md-start">
-                  <h2 class="h6 fw-bold mb-2">Nissan Motor Company</h2>
-                  <p class="text-muted small mb-3">
-                    Nissan Motor Company is a world-renowned automobile
-                    manufacturer based in Yokohama.
-                  </p>
-                  <div
-                    class="d-flex flex-column flex-sm-row justify-content-center justify-content-md-start gap-2"
-                  >
-                    <a
-                      href="./nissan.html"
-                      class="btn btn-outline-primary btn-sm"
-                      >View Company</a
-                    >
-                    <a href="#" class="btn btn-outline-dark btn-sm">2 Jobs</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Company Card 5 -->
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="feature-card bg-white p-4 rounded-4 shadow-sm h-100">
-              <div
-                class="d-flex flex-column flex-md-row align-items-center align-items-md-start gap-4"
-              >
-                <div class="flex-shrink-0">
-                  <img
-                    src="../../assets/images/company-logos/Daikin_1.png"
-                    alt="Company logo"
-                    class="img-fluid"
-                    style="width: 100px; height: 100px; object-fit: contain"
-                    onerror="this.onerror=null; this.src='https://placehold.co/100x100/cccccc/000000?text=Logo';"
-                  />
-                </div>
-                <div class="flex-grow-1 text-center text-md-start">
-                  <h2 class="h6 fw-bold mb-2">Daikin Industries</h2>
-                  <p class="text-muted small mb-3">
-                    Daikin Industries is a global leader in air conditioning and
-                    refrigeration systems.
-                  </p>
-                  <div
-                    class="d-flex flex-column flex-sm-row justify-content-center justify-content-md-start gap-2"
-                  >
-                    <a
-                      href="./daikin.html"
-                      class="btn btn-outline-primary btn-sm"
-                      >View Company</a
-                    >
-                    <a href="#" class="btn btn-outline-dark btn-sm">2 Jobs</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Company Card 6 -->
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="feature-card bg-white p-4 rounded-4 shadow-sm h-100">
-              <div
-                class="d-flex flex-column flex-md-row align-items-center align-items-md-start gap-4"
-              >
-                <div class="flex-shrink-0">
-                  <img
-                    src="../../assets/images/company-logos/Kandenko.png"
-                    alt="Company logo"
-                    class="img-fluid"
-                    style="width: 100px; height: 100px; object-fit: contain"
-                    onerror="this.onerror=null; this.src='https://placehold.co/100x100/cccccc/000000?text=Logo';"
-                  />
-                </div>
-                <div class="flex-grow-1 text-center text-md-start">
-                  <h2 class="h6 fw-bold mb-2">Kandenko</h2>
-                  <p class="text-muted small mb-3">
-                    Kandenko is a major engineering and construction company
-                    specializing in electrical, communication, and energy
-                    systems.
-                  </p>
-                  <div
-                    class="d-flex flex-column flex-sm-row justify-content-center justify-content-md-start gap-2"
-                  >
-                    <a
-                      href="./kandenko.html"
-                      class="btn btn-outline-primary btn-sm"
-                      >View Company</a
-                    >
-                    <a href="#" class="btn btn-outline-dark btn-sm">2 Jobs</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Company Card 7 -->
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="feature-card bg-white p-4 rounded-4 shadow-sm h-100">
-              <div
-                class="d-flex flex-column flex-md-row align-items-center align-items-md-start gap-4"
-              >
-                <div class="flex-shrink-0">
-                  <img
-                    src="../../assets/images/company-logos/Yoshinoya.png"
-                    alt="Company logo"
-                    class="img-fluid"
-                    style="width: 100px; height: 100px; object-fit: contain"
-                    onerror="this.onerror=null; this.src='https://placehold.co/100x100/cccccc/000000?text=Logo';"
-                  />
-                </div>
-                <div class="flex-grow-1 text-center text-md-start">
-                  <h2 class="h6 fw-bold mb-2">Yoshinoya</h2>
-                  <p class="text-muted small mb-3">
-                    Yoshinoya is one of Japan’s most famous restaurant chains,
-                    known for its gyūdon (beef bowls)
-                  </p>
-                  <div
-                    class="d-flex flex-column flex-sm-row justify-content-center justify-content-md-start gap-2"
-                  >
-                    <a
-                      href="./yoshinoya.html"
-                      class="btn btn-outline-primary btn-sm"
-                      >View Company</a
-                    >
-                    <a href="#" class="btn btn-outline-dark btn-sm">2 Jobs</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Company Card 8 -->
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="feature-card bg-white p-4 rounded-4 shadow-sm h-100">
-              <div
-                class="d-flex flex-column flex-md-row align-items-center align-items-md-start gap-4"
-              >
-                <div class="flex-shrink-0">
-                  <img
-                    src="../../assets/images/company-logos/ANA.png"
-                    alt="Company logo"
-                    class="img-fluid"
-                    style="width: 100px; height: 100px; object-fit: contain"
-                    onerror="this.onerror=null; this.src='https://placehold.co/100x100/cccccc/000000?text=Logo';"
-                  />
-                </div>
-                <div class="flex-grow-1 text-center text-md-start">
-                  <h2 class="h6 fw-bold mb-2">All Nippon Airways (ANA)</h2>
-                  <p class="text-muted small mb-3">
-                    All Nippon Airways (ANA) is Japan’s largest airline and one
-                    of the most trusted aviation brands in Asia.
-                  </p>
-                  <div
-                    class="d-flex flex-column flex-sm-row justify-content-center justify-content-md-start gap-2"
-                  >
-                    <a href="./ana.html" class="btn btn-outline-primary btn-sm"
-                      >View Company</a
-                    >
-                    <a href="#" class="btn btn-outline-dark btn-sm">2 Jobs</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Company Card 9 -->
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="feature-card bg-white p-4 rounded-4 shadow-sm h-100">
-              <div
-                class="d-flex flex-column flex-md-row align-items-center align-items-md-start gap-4"
-              >
-                <div class="flex-shrink-0">
-                  <img
-                    src="../../assets/images/company-logos/Mitsubishi_Heavy_Industries.png"
-                    alt="Company logo"
-                    class="img-fluid"
-                    style="width: 100px; height: 100px; object-fit: contain"
-                    onerror="this.onerror=null; this.src='https://placehold.co/100x100/cccccc/000000?text=Logo';"
-                  />
-                </div>
-                <div class="flex-grow-1 text-center text-md-start">
-                  <h2 class="h6 fw-bold mb-2">Mitsubishi Heavy Industries</h2>
-                  <p class="text-muted small mb-3">
-                    Mitsubishi Heavy Industries is a global engineering and
-                    manufacturing leader.
-                  </p>
-                  <div
-                    class="d-flex flex-column flex-sm-row justify-content-center justify-content-md-start gap-2"
-                  >
-                    <a
-                      href="./mitsubishi-heavy-industries.html"
-                      class="btn btn-outline-primary btn-sm"
-                      >View Company</a
-                    >
-                    <a href="#" class="btn btn-outline-dark btn-sm">2 Jobs</a>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div class="col-12 col-lg-4 text-lg-end">
+            <a href="../../index.html#companies" class="btn btn-outline-primary">
+              ← Back to Home Companies
+            </a>
           </div>
         </div>
-        <!-- End Row -->
+      </section>
+
+      <section class="container">
+        <div class="row g-4">
+          <!-- Filters Sidebar -->
+          <aside class="col-12 col-lg-4 col-xl-3">
+            <div class="card shadow-sm rounded-4 border-0 sticky-lg-top" style="top: 1.5rem">
+              <div class="card-body p-4">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                  <h2 class="h5 fw-bold mb-0">Filter Companies</h2>
+                  <button
+                    type="button"
+                    id="clearCompanyFilters"
+                    class="btn btn-sm btn-outline-secondary"
+                  >
+                    Clear
+                  </button>
+                </div>
+
+                <form id="companyFilterForm" novalidate>
+                  <div class="mb-4">
+                    <label for="companySearchInput" class="form-label fw-semibold">
+                      Search Company
+                    </label>
+                    <input
+                      type="search"
+                      id="companySearchInput"
+                      class="form-control"
+                      placeholder="Search by company name"
+                      autocomplete="off"
+                    />
+                    <div class="form-text">
+                      Search employers by name or keyword.
+                    </div>
+                  </div>
+
+                  <div class="mb-4">
+                    <label for="industryFilter" class="form-label fw-semibold">
+                      Industry
+                    </label>
+                    <select id="industryFilter" class="form-select">
+                      <option value="">All industries</option>
+                    </select>
+                  </div>
+
+                  <div class="mb-4">
+                    <label for="prefectureFilter" class="form-label fw-semibold">
+                      Prefecture
+                    </label>
+                    <select id="prefectureFilter" class="form-select">
+                      <option value="">All prefectures</option>
+                    </select>
+                  </div>
+
+                  <div class="mb-4">
+                    <span class="form-label fw-semibold d-block mb-2">Verified</span>
+                    <div class="d-flex flex-wrap gap-2" role="group" aria-label="Verified filter">
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-primary rounded-pill active"
+                        data-filter-group="verified"
+                        data-value=""
+                        aria-pressed="true"
+                      >
+                        All
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-secondary rounded-pill"
+                        data-filter-group="verified"
+                        data-value="true"
+                        aria-pressed="false"
+                      >
+                        Verified Only
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="mb-0">
+                    <span class="form-label fw-semibold d-block mb-2">Company Size</span>
+                    <div class="d-flex flex-wrap gap-2" role="group" aria-label="Company size filter">
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-primary rounded-pill active"
+                        data-filter-group="size"
+                        data-value=""
+                        aria-pressed="true"
+                      >
+                        All
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-secondary rounded-pill"
+                        data-filter-group="size"
+                        data-value="small"
+                        aria-pressed="false"
+                      >
+                        Small
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-secondary rounded-pill"
+                        data-filter-group="size"
+                        data-value="medium"
+                        aria-pressed="false"
+                      >
+                        Medium
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-secondary rounded-pill"
+                        data-filter-group="size"
+                        data-value="large"
+                        aria-pressed="false"
+                      >
+                        Large
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </aside>
+
+          <!-- Results Area -->
+          <section class="col-12 col-lg-8 col-xl-9" aria-labelledby="company-results-heading">
+  
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2 id="company-results-heading" class="h4 fw-bold mb-1">Company Results</h2>
+      <p class="text-muted mb-0">
+        <span id="companyResultCount" aria-live="polite">0</span> companies found
+      </p>
+    </div>
+
+    <div class="col-auto">
+      <label for="companySort" class="visually-hidden">Sort companies</label>
+      <select id="companySort" class="form-select form-select-sm border-0 shadow-sm">
+        <option value="-createdAt">Newest first</option>
+        <option value="name">Name A–Z</option>
+        <option value="-jobCount">Most jobs</option>
+      </select>
+    </div>
+  </div>
+
+  <div id="companyFilterAnnouncement" class="visually-hidden" aria-live="polite"></div>
+
+  <div id="companyLoadingState" class="text-center py-5">
+    <div class="spinner-border text-primary spinner-border-sm me-2" role="status"></div>
+    <span class="text-muted">Loading companies...</span>
+  </div>
+
+  <div id="noCompanyResults" class="text-center py-5 d-none">
+    <h3 class="text-muted fw-semibold mb-2">No companies found</h3>
+    <p class="text-secondary mb-4">Try adjusting your filters or search criteria</p>
+    <button type="button" class="btn btn-outline-primary btn-sm" id="emptyStateClearFilters">
+      Clear All Filters
+    </button>
+  </div>
+
+  <div id="companyListings" class="row g-4"></div>
+
+</section>
+
+          </section>
+        </div>
+      </section>
+
+      <!-- Card Template for JS -->
+     <template id="companyCardTemplate">
+  <div class="col-12">
+    <article class="card shadow-sm rounded-4 border-0 h-100 overflow-hidden">
+      <div class="card-body p-4">
+        <div class="d-flex flex-column flex-md-row gap-4">
+          <div class="flex-shrink-0 text-center">
+            <img class="company-card__logo img-fluid rounded-3 border" style="width: 96px; height: 96px; object-fit: contain" />
+          </div>
+
+          <div class="flex-grow-1">
+            <div class="d-flex flex-column flex-lg-row justify-content-between gap-3 mb-3">
+              <div>
+                <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+                  <h3 class="company-card__name h5 fw-bold mb-0"></h3>
+                  <span class="company-card__verified badge text-bg-success d-none">Verified</span>
+                </div>
+                <p class="company-card__meta text-muted mb-2"></p>
+                <div class="d-flex flex-wrap gap-2">
+                  <span class="company-card__industry badge rounded-pill text-bg-light"></span>
+                  <span class="company-card__location badge rounded-pill text-bg-light"></span>
+                  <span class="company-card__jobs badge rounded-pill text-bg-light"></span>
+                </div>
+              </div>
+              <div class="text-lg-end">
+                <a href="#" class="company-card__link btn btn-primary">View Company</a>
+              </div>
+            </div>
+            <p class="company-card__description text-muted mb-0"></p>
+          </div>
+        </div>
       </div>
-      <!-- End Container -->
+    </article>
+  </div>
+</template>
+
     </main>
 
     <footer class="site-footer site-footer--dark py-3 py-md-4">
@@ -518,11 +418,9 @@
           <p class="muted site-footer__cta-muted">
             Reach qualified candidates under the SSW programme.
           </p>
-          <div class="footer-cta-actions site-footer__cta-actions d-flex gap-2">
-            <a class="btn btn-secondary" href="#">Employer Login</a>
-            <a class="btn btn-primary" href="#">Post a Job</a>
-          </div>
+          
         </div>
+
         <div class="footer-links site-footer__links">
           <div class="link-col site-footer__link-col">
             <h3>Company</h3>
@@ -532,24 +430,27 @@
               <li><a href="../contact.html">Contact</a></li>
             </ul>
           </div>
+
           <div class="link-col site-footer__link-col">
-            <h3>Jobs</h3>
+            <h4>Jobs</h4>
             <ul>
               <li><a href="../jobs/jobFilter.html">Search Jobs</a></li>
               <li><a href="../../index.html#companies">Companies</a></li>
-              <li><a href="../../index.html#post-job">Post a Job</a></li>
+
             </ul>
           </div>
+
           <div class="link-col site-footer__link-col">
             <h3>Resources</h3>
             <ul>
               <li><a href="../visaGuidance.html">Visa Guidance</a></li>
-              <li><a href="#">Employer Hub</a></li>
+
               <li><a href="../privacy.html">Privacy</a></li>
             </ul>
           </div>
         </div>
       </div>
+
       <div class="container footer-legal site-footer__legal">
         <div class="legal-inner site-footer__legal-inner">
           <small>&copy; 2025 Japan SSW. All rights reserved.</small>
@@ -560,7 +461,16 @@
         </div>
       </div>
     </footer>
-    <!-- Site JavaScript (ES Module) -->
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+
     <script type="module" src="../../assets/js/main.js"></script>
+    <script type="module" src="../../assets/js/features/companyList.js"></script>
   </body>
 </html>
+
+

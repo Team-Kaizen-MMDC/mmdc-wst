@@ -55,6 +55,21 @@ const router = express.Router();
  */
 router.get("/", getCompanies);
 
+
+/**
+ * @swagger
+ * /api/v1/companies/admin/stats:
+ *   get:
+ *     summary: Get company statistics (Admin only)
+ *     tags: [Companies]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Company statistics
+ */
+router.get("/admin/stats", protect, authorize("admin"), getCompanyStats);
+
 /**
  * @swagger
  * /api/v1/companies/{idOrSlug}:
@@ -230,18 +245,6 @@ router.delete(
  */
 router.put("/:id/verify", authorize("admin"), verifyCompany);
 
-/**
- * @swagger
- * /api/v1/companies/admin/stats:
- *   get:
- *     summary: Get company statistics (Admin only)
- *     tags: [Companies]
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: Company statistics
- */
-router.get("/admin/stats", authorize("admin"), getCompanyStats);
+
 
 module.exports = router;
