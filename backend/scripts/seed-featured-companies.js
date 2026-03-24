@@ -233,7 +233,7 @@ const COMPANIES = [
     size: "5000+",
     founded: 1937,
     website: "https://www.toyota-global.com",
-    logo: "/assets/images/company-logos/Nissan.png", // placeholder until Toyota logo added
+    // logo: null — no asset yet; JS will use ui-avatars.com fallback
     tagline: "Moving the world forward",
     description:
       "Toyota Motor Corporation is one of the world's largest automobile manufacturers, headquartered in Toyota City, Aichi Prefecture. SSW workers are recruited for vehicle assembly, quality inspection, painting, and production logistics. Toyota provides structured skills training, safety certification, and long-term career pathways in Japan's premier automotive industry.",
@@ -255,7 +255,7 @@ const COMPANIES = [
     size: "5000+",
     founded: 1951,
     website: "https://www.jal.com",
-    logo: "/assets/images/company-logos/ANA.png", // placeholder
+    // logo: null — no asset yet; JS will use ui-avatars.com fallback
     tagline: "Your wings across the world",
     description:
       "Japan Airlines (JAL) is Japan's flag carrier and one of Asia's leading international airlines. JAL actively recruits SSW workers for ground handling, aircraft maintenance support, cargo operations, and airport services. The airline offers competitive pay, comprehensive on-the-job training, and a structured career development program for skilled foreign workers.",
@@ -276,7 +276,7 @@ const COMPANIES = [
     size: "5000+",
     founded: 1919,
     website: "https://www.yamato-hd.co.jp",
-    logo: "/assets/images/company-logos/Nissan.png", // placeholder
+    // logo: null — no asset yet; JS will use ui-avatars.com fallback
     tagline: "Delivering Japan reliably every day",
     description:
       "Yamato Transport, known as Kuroneko Yamato, is Japan's largest parcel delivery company. SSW workers are hired for package sorting, delivery support, and warehouse operations across Yamato's nationwide network. The company offers stable employment, transportation allowances, and skills training in Japan's growing logistics sector.",
@@ -297,7 +297,7 @@ const COMPANIES = [
     size: "5000+",
     founded: 1921,
     website: "https://www.komatsu.com",
-    logo: "/assets/images/company-logos/Daikin_1.png", // placeholder
+    // logo: null — no asset yet; JS will use ui-avatars.com fallback
     tagline: "Powering construction and mining globally",
     description:
       "Komatsu is a world-leading manufacturer of construction and mining equipment, headquartered in Tokyo. SSW candidates can join Komatsu's manufacturing plants in Ishikawa and Ibaraki for equipment assembly, welding, and quality control roles. Komatsu provides technical training, safety certification, and career growth in Japan's industrial machinery sector.",
@@ -318,7 +318,7 @@ const COMPANIES = [
     size: "5000+",
     founded: 1892,
     website: "https://www.obayashi.co.jp",
-    logo: "/assets/images/company-logos/Kandenko.png", // placeholder
+    // logo: null — no asset yet; JS will use ui-avatars.com fallback
     tagline: "Building the future of Japan",
     description:
       "Obayashi Corporation is one of Japan's five major general contractors, delivering large-scale infrastructure, commercial, and civil engineering projects. SSW workers are recruited for reinforced concrete work, scaffolding, ironwork, and site support roles. Obayashi offers technical skill training, safety certification, and career development in Japan's construction industry.",
@@ -340,7 +340,7 @@ const COMPANIES = [
     size: "5000+",
     founded: 1880,
     website: "https://www.maruha-nichiro.co.jp",
-    logo: "/assets/images/company-logos/sompocare.png", // placeholder
+    // logo: null — no asset yet; JS will use ui-avatars.com fallback
     tagline: "From the ocean to your table",
     description:
       "Maruha Nichiro is Japan's largest seafood and food processing company, operating processing plants, aquaculture facilities, and distribution centres nationwide. SSW workers are hired for seafood processing, canning, freezing, and quality inspection roles. Maruha Nichiro offers structured training, social insurance, and career development in Japan's food processing industry.",
@@ -361,7 +361,7 @@ const COMPANIES = [
     size: "5000+",
     founded: 1974,
     website: "https://www.7andi.com",
-    logo: "/assets/images/company-logos/Yoshinoya.png", // placeholder
+    // logo: null — no asset yet; JS will use ui-avatars.com fallback
     tagline: "Bringing great dining to neighbourhoods across Japan",
     description:
       "Seven & i Food Systems operates Denny's Japan restaurants and other family dining chains across the country. SSW workers are recruited for kitchen, service, and store operations roles. The company provides paid training, uniform support, Japanese language assistance, and a clear pathway to supervisory roles in Japan's family restaurant sector.",
@@ -382,7 +382,7 @@ const COMPANIES = [
     size: "1001-5000",
     founded: 2005,
     website: "https://www.nihon-care.co.jp",
-    logo: "/assets/images/company-logos/sompocare.png", // placeholder
+    // logo: null — no asset yet; JS will use ui-avatars.com fallback
     tagline: "Safe, compassionate care for every stage of life",
     description:
       "Nihon Anzen Seimei Care operates a network of elderly care facilities and home-care services across Japan's Kansai and Chubu regions. SSW caregivers are welcomed under the Caregiving category with full support including Japanese language training, housing assistance, and a structured career ladder from support worker to care team leader.",
@@ -403,7 +403,7 @@ const COMPANIES = [
     size: "5000+",
     founded: 1901,
     website: "https://www.issworld.com/japan",
-    logo: "/assets/images/company-logos/Kandenko.png", // placeholder
+    // logo: null — no asset yet; JS will use ui-avatars.com fallback
     tagline: "Creating clean, safe, welcoming workplaces across Japan",
     description:
       "ISS Facility Services Japan provides integrated facility management including building cleaning, maintenance, catering, and security services to major corporations, hospitals, and government facilities across Japan. SSW workers are hired for cleaning, waste management, and building support roles with paid training and stable employment across multiple prefectures.",
@@ -424,7 +424,7 @@ const COMPANIES = [
     size: "5000+",
     founded: 2003,
     website: "https://www.jfe-steel.co.jp",
-    logo: "/assets/images/company-logos/Mitsubishi_Heavy_Industries.png", // placeholder
+    // logo: null — no asset yet; JS will use ui-avatars.com fallback
     tagline: "Forging Japan's steel foundation",
     description:
       "JFE Steel Corporation is one of Japan's largest integrated steel producers, operating major works in Chiba, Fukuyama, and Kawasaki. SSW workers are recruited for steel production, rolling mill operations, and shipbuilding steel fabrication. JFE Steel offers competitive wages, safety training, and career development in Japan's heavy industry sector.",
