@@ -54,6 +54,8 @@ This repository holds the wireframe-driven static pages and a stylesheet ([asset
 
 -- **Bug tracking & issue log:** [docs/BUG_TRACKING.md](docs/BUG_TRACKING.md) — issues found during testing, fixes applied, results, and remarks.
 
+-- **Integration plan:** [docs/INTEGRATION_PLAN.md](docs/INTEGRATION_PLAN.md) — existing features review, error handling, security, input validation, edge-case testing, and Railway deployment checklist.
+
 For implementation details, testing guidance, and design docs, see the [docs/](docs/) folder.
 
 -- **Changelog:** [CHANGELOG.md](CHANGELOG.md) — release notes and history.
