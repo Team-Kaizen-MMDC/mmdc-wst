@@ -224,7 +224,223 @@ const COMPANIES = [
       { title: "Shift Supervisor", category: "Management", summary: "Lead a team of restaurant crew during assigned shifts, ensuring quality, speed, and customer satisfaction standards are consistently met.", responsibilities: ["Manage crew assignments and shift schedules", "Monitor food quality and service speed throughout the shift", "Handle escalated customer complaints", "Complete end-of-shift cash reconciliation and reports", "Coach and motivate team members to meet performance targets"] },
     ],
   },
+
+  // ─── 10 additional companies ────────────────────────────────────────────────
+  {
+    name: "Toyota Motor Corporation",
+    slug: "toyota-motor-corporation",
+    industry: "Manufacturing",
+    size: "5000+",
+    founded: 1937,
+    website: "https://www.toyota-global.com",
+    logo: "/assets/images/company-logos/Nissan.png", // placeholder until Toyota logo added
+    tagline: "Moving the world forward",
+    description:
+      "Toyota Motor Corporation is one of the world's largest automobile manufacturers, headquartered in Toyota City, Aichi Prefecture. SSW workers are recruited for vehicle assembly, quality inspection, painting, and production logistics. Toyota provides structured skills training, safety certification, and long-term career pathways in Japan's premier automotive industry.",
+    location: { prefecture: "Aichi", city: "Toyota", address: "1 Toyota-cho, Toyota, Aichi" },
+    contact: { email: "ssw-recruit@toyota.co.jp", phone: "0565-28-2121" },
+    socialMedia: { linkedin: "https://www.linkedin.com/company/toyota-motor-corporation" },
+    jobs: [
+      { title: "Vehicle Assembly Worker", category: "Assembly", summary: "Work on Toyota's world-class vehicle assembly lines in Aichi, fitting body panels, interior components, and mechanical subassemblies with precision and speed.", responsibilities: ["Install body, chassis, and interior components per assembly instructions", "Use automated assembly tools and torque wrenches correctly", "Conduct in-process quality checks at designated inspection points", "Alert supervisors to any defects or line abnormalities immediately", "Maintain 5S standards at your workstation throughout the shift"] },
+      { title: "Paint Shop Technician", category: "Painting", summary: "Operate automated and manual painting equipment in Toyota's vehicle paint shops, ensuring consistent finish quality across all models.", responsibilities: ["Operate automated spray systems and manual touch-up equipment", "Inspect painted surfaces for runs, sags, and colour inconsistencies", "Mix and prepare paint compounds to Toyota specifications", "Maintain and clean paint booths and spray equipment daily", "Follow all chemical handling and ventilation safety procedures"] },
+      { title: "Production Logistics Worker", category: "Logistics", summary: "Manage in-plant materials flow — supplying the correct parts to the correct assembly workstation at the correct time using Toyota's lean production system.", responsibilities: ["Operate tugger trains and forklifts to deliver parts kits", "Replenish assembly line supermarkets on schedule", "Scan and track parts inventory using the WMS system", "Flag discrepancies in parts counts immediately", "Support Kaizen improvements in line-feeding operations"] },
+      { title: "Quality Inspector", category: "Quality", summary: "Conduct final vehicle quality inspections before dispatch, verifying all systems and appearance meet Toyota's Global Quality Standards.", responsibilities: ["Perform functional checks on braking, lighting, and electronic systems", "Inspect exterior paintwork and trim fit and finish", "Document inspection results on electronic quality forms", "Quarantine non-conforming vehicles and raise corrective action requests", "Participate in quality circle activities to reduce defect rates"] },
+      { title: "Press Shop Operator", category: "Manufacturing", summary: "Operate large mechanical and hydraulic presses forming steel body panels for Toyota vehicles in the Aichi stamping plants.", responsibilities: ["Load and operate progressive press dies safely", "Inspect stamped panels against master templates", "Remove flash and trim panels to dimension", "Carry out first-level press maintenance and lubrication", "Follow all noise and vibration safety procedures in the press shop"] },
+    ],
+  },
+  {
+    name: "Japan Airlines (JAL)",
+    slug: "japan-airlines-jal",
+    industry: "Aviation",
+    size: "5000+",
+    founded: 1951,
+    website: "https://www.jal.com",
+    logo: "/assets/images/company-logos/ANA.png", // placeholder
+    tagline: "Your wings across the world",
+    description:
+      "Japan Airlines (JAL) is Japan's flag carrier and one of Asia's leading international airlines. JAL actively recruits SSW workers for ground handling, aircraft maintenance support, cargo operations, and airport services. The airline offers competitive pay, comprehensive on-the-job training, and a structured career development program for skilled foreign workers.",
+    location: { prefecture: "Tokyo", city: "Shinagawa", address: "2-4-11 Higashi-Shinagawa, Shinagawa-ku, Tokyo" },
+    contact: { email: "ssw@jal.co.jp", phone: "03-5460-3121" },
+    socialMedia: { linkedin: "https://www.linkedin.com/company/japan-airlines" },
+    jobs: [
+      { title: "Ramp Ground Handler", category: "Ground Operations", summary: "Perform all ramp-side ground handling duties for JAL flights including pushback, marshalling, baggage loading, and fuelling liaison at Tokyo Haneda and Narita.", responsibilities: ["Marshal and guide aircraft on the ramp safely", "Load and unload baggage and cargo according to load plans", "Operate ground support equipment including baggage tractors", "Coordinate fuelling checks with JAL operations", "Maintain all ramp safety standards and FOD prevention procedures"] },
+      { title: "Aircraft Cabin Cleaner", category: "Cabin Services", summary: "Perform rapid, thorough cabin cleaning and resetting of JAL aircraft between flights to the airline's premium service standards.", responsibilities: ["Clean seats, seat pockets, and tray tables between turnarounds", "Replenish cabin supplies including blankets and pillows", "Remove all waste and sanitise lavatories", "Check for and report any damage or lost property", "Complete cabin preparation within tight turnaround schedules"] },
+      { title: "Air Cargo Handler", category: "Cargo", summary: "Process, sort, and load air cargo shipments for JAL's domestic and international cargo operations at Narita and Haneda cargo facilities.", responsibilities: ["Sort and screen incoming and outgoing cargo shipments", "Build and break down cargo pallets and ULDs to load plans", "Scan shipments and update cargo tracking systems", "Ensure dangerous goods are handled per IATA regulations", "Operate cargo-handling equipment including elevating platforms"] },
+      { title: "Baggage Service Agent", category: "Customer Service", summary: "Assist JAL passengers with baggage-related inquiries, including check-in, tracing delayed baggage, and processing claims at major JAL terminals.", responsibilities: ["Tag and process checked baggage at departure counters", "Trace delayed or mishandled baggage and communicate updates to passengers", "Process baggage damage and loss claims accurately", "Coordinate with ramp and airline operations on baggage queries", "Maintain a calm, empathetic approach with frustrated passengers"] },
+    ],
+  },
+  {
+    name: "Yamato Transport (Kuroneko)",
+    slug: "yamato-transport-kuroneko",
+    industry: "Logistics",
+    size: "5000+",
+    founded: 1919,
+    website: "https://www.yamato-hd.co.jp",
+    logo: "/assets/images/company-logos/Nissan.png", // placeholder
+    tagline: "Delivering Japan reliably every day",
+    description:
+      "Yamato Transport, known as Kuroneko Yamato, is Japan's largest parcel delivery company. SSW workers are hired for package sorting, delivery support, and warehouse operations across Yamato's nationwide network. The company offers stable employment, transportation allowances, and skills training in Japan's growing logistics sector.",
+    location: { prefecture: "Tokyo", city: "Chuo", address: "2-16-10 Ginza, Chuo-ku, Tokyo" },
+    contact: { email: "ssw@yamatogroup.co.jp", phone: "0120-01-9625" },
+    socialMedia: { linkedin: "https://www.linkedin.com/company/yamato-holdings" },
+    jobs: [
+      { title: "Package Sorting Worker", category: "Sorting", summary: "Sort high volumes of parcels at Yamato's regional distribution centres, ensuring accurate routing for same-day and next-day delivery across Japan.", responsibilities: ["Scan and sort parcels by destination zone using conveyor systems", "Stack and unstuck parcels safely on cages and dollies", "Identify and isolate damaged or undeliverable parcels", "Maintain accurate parcel count logs per shift", "Follow all manual handling and ergonomic guidelines"] },
+      { title: "Delivery Support Staff", category: "Delivery", summary: "Assist Yamato delivery drivers by loading delivery vehicles, preparing manifests, and managing parcel handover at distribution branches.", responsibilities: ["Load parcels onto delivery vehicles according to route sequence", "Prepare daily delivery manifests and scan paperwork", "Accept incoming re-delivery parcels and process returns", "Manage parcel staging areas at branch depots", "Support driver debriefs and end-of-day parcel reconciliation"] },
+      { title: "Warehouse Operative", category: "Warehouse", summary: "Operate Yamato's automated and manual warehousing equipment to receive, store, and dispatch parcels and freight shipments.", responsibilities: ["Receive and book in incoming freight deliveries", "Operate forklifts and pallet jacks safely (after certification)", "Pick and pack items for onward shipment as required", "Maintain organised and clean warehouse locations", "Support inventory cycle counts and stock accuracy checks"] },
+      { title: "Parcel Processing Agent", category: "Operations", summary: "Manage parcel data entry, label generation, and system updates for Yamato's shipment processing operations at major depots.", responsibilities: ["Enter shipment data accurately into Yamato's logistics system", "Generate and apply shipping labels and manifests", "Resolve scanning exceptions and address queries", "Liaise with customer service on undeliverable parcel queries", "Support system reconciliation at start and end of shift"] },
+    ],
+  },
+  {
+    name: "Komatsu Ltd.",
+    slug: "komatsu-ltd",
+    industry: "Industrial Machinery",
+    size: "5000+",
+    founded: 1921,
+    website: "https://www.komatsu.com",
+    logo: "/assets/images/company-logos/Daikin_1.png", // placeholder
+    tagline: "Powering construction and mining globally",
+    description:
+      "Komatsu is a world-leading manufacturer of construction and mining equipment, headquartered in Tokyo. SSW candidates can join Komatsu's manufacturing plants in Ishikawa and Ibaraki for equipment assembly, welding, and quality control roles. Komatsu provides technical training, safety certification, and career growth in Japan's industrial machinery sector.",
+    location: { prefecture: "Tokyo", city: "Minato", address: "2-3-6 Akasaka, Minato-ku, Tokyo" },
+    contact: { email: "ssw-recruit@komatsu.co.jp", phone: "03-5561-2616" },
+    socialMedia: { linkedin: "https://www.linkedin.com/company/komatsu" },
+    jobs: [
+      { title: "Construction Equipment Assembler", category: "Assembly", summary: "Assemble hydraulic excavators, bulldozers, and other construction machinery at Komatsu's Kanazawa plant in Ishikawa Prefecture.", responsibilities: ["Assemble hydraulic and mechanical sub-components to engineering specifications", "Fit track assemblies, cab structures, and boom attachments", "Use hand tools, power tools, and torque tools accurately", "Perform post-assembly functional checks", "Document assembly completion on electronic work orders"] },
+      { title: "Structural Welder", category: "Welding", summary: "Weld heavy steel frames and structural components for Komatsu's range of excavators, dump trucks, and wheel loaders.", responsibilities: ["Perform MIG, TIG, and arc welding on structural steel frames", "Read and interpret weld symbol drawings", "Inspect welds visually and with NDT equipment", "Prepare weld joints including grinding and fit-up", "Follow all PPE and hot-work permit requirements"] },
+      { title: "Machining Operator", category: "Machining", summary: "Operate CNC turning, milling, and boring machines producing precision components for Komatsu's drivetrain and hydraulic systems.", responsibilities: ["Set up and operate CNC machine tools per work instructions", "Check machined dimensions against engineering drawings", "Perform in-process quality measurements", "Change cutting tools and adjust offsets as required", "Carry out first-level machine maintenance and lubrication"] },
+      { title: "After-sales Parts Warehouse Worker", category: "Warehouse", summary: "Pick, pack, and despatch spare parts orders from Komatsu's regional parts distribution centre serving dealers and customers across Asia-Pacific.", responsibilities: ["Pick parts orders accurately using handheld scanners", "Pack parts for domestic and international shipment", "Receive and put away incoming parts stock", "Conduct cycle count inventory checks", "Operate forklift and reach trucks (after certification)"] },
+    ],
+  },
+  {
+    name: "Obayashi Corporation",
+    slug: "obayashi-corporation",
+    industry: "Construction",
+    size: "5000+",
+    founded: 1892,
+    website: "https://www.obayashi.co.jp",
+    logo: "/assets/images/company-logos/Kandenko.png", // placeholder
+    tagline: "Building the future of Japan",
+    description:
+      "Obayashi Corporation is one of Japan's five major general contractors, delivering large-scale infrastructure, commercial, and civil engineering projects. SSW workers are recruited for reinforced concrete work, scaffolding, ironwork, and site support roles. Obayashi offers technical skill training, safety certification, and career development in Japan's construction industry.",
+    location: { prefecture: "Tokyo", city: "Shinjuku", address: "2-15-2 Konan, Minato-ku, Tokyo" },
+    contact: { email: "ssw@obayashi.co.jp", phone: "03-5769-1111" },
+    socialMedia: { linkedin: "https://www.linkedin.com/company/obayashi" },
+    jobs: [
+      { title: "Reinforced Concrete Worker", category: "Concrete", summary: "Place rebar, set formwork, and pour concrete on Obayashi's large commercial and infrastructure construction sites across Japan.", responsibilities: ["Assemble and tie rebar to structural drawings", "Set, align, and strip concrete formwork", "Support concrete placement and vibration operations", "Carry out post-pour curing and surface finishing", "Maintain a tidy and hazard-free site at all times"] },
+      { title: "Scaffolding Erector", category: "Scaffolding", summary: "Erect and dismantle scaffolding systems at Obayashi construction sites, working safely at height to enable other trades to operate efficiently.", responsibilities: ["Erect, alter, and dismantle tubular and system scaffolding", "Inspect scaffold structures for safety compliance daily", "Fit edge protection, toe boards, and guardrails", "Tag-out unsafe scaffold bays and report to supervisor", "Operate material hoists and attend toolbox talks"] },
+      { title: "Ironwork / Steel Fixer", category: "Structural Steel", summary: "Fabricate and erect structural steelwork including columns, beams, and connections on major building projects.", responsibilities: ["Connect structural steel members using bolts and site welds", "Read structural drawings and steel connection details", "Operate man-baskets and work at height safely", "Grind and treat steel surfaces for painting", "Assist with crane lifts of steel components"] },
+      { title: "Site Support Worker", category: "Site Operations", summary: "Provide general site support including materials handling, concrete mixing, cleaning, and assisting specialist trades on Obayashi project sites.", responsibilities: ["Deliver materials to trade crews on multi-storey sites", "Operate concrete barrows and assist with pours", "Keep site access, stairwells, and common areas clean", "Assist with loading and unloading deliveries", "Attend daily safety briefings and follow site rules"] },
+      { title: "Civil Works Labourer", category: "Civil Engineering", summary: "Work on Obayashi's civil engineering projects including roads, bridges, and tunnels, carrying out excavation support, drainage, and compaction tasks.", responsibilities: ["Assist with excavation, trench shoring, and backfill operations", "Lay drainage pipes and service ducts", "Operate compaction equipment for road sub-base layers", "Support survey teams with setting out tasks", "Follow all confined space and ground work safety procedures"] },
+    ],
+  },
+  {
+    name: "Maruha Nichiro Corporation",
+    slug: "maruha-nichiro-corporation",
+    industry: "Food Processing",
+    size: "5000+",
+    founded: 1880,
+    website: "https://www.maruha-nichiro.co.jp",
+    logo: "/assets/images/company-logos/sompocare.png", // placeholder
+    tagline: "From the ocean to your table",
+    description:
+      "Maruha Nichiro is Japan's largest seafood and food processing company, operating processing plants, aquaculture facilities, and distribution centres nationwide. SSW workers are hired for seafood processing, canning, freezing, and quality inspection roles. Maruha Nichiro offers structured training, social insurance, and career development in Japan's food processing industry.",
+    location: { prefecture: "Tokyo", city: "Koto", address: "1-1-2 Toyosu, Koto-ku, Tokyo" },
+    contact: { email: "ssw@maruha-nichiro.co.jp", phone: "03-6833-0300" },
+    socialMedia: { linkedin: "https://www.linkedin.com/company/maruha-nichiro" },
+    jobs: [
+      { title: "Seafood Processing Worker", category: "Processing", summary: "Process fresh and frozen seafood products including filleting, de-heading, skinning, and portioning at Maruha Nichiro's Hokkaido and Miyagi processing plants.", responsibilities: ["Fillet, de-head, and skin fish to plant specifications", "Portion fillets to weight and trim to presentation standards", "Operate manual and semi-automatic processing equipment", "Maintain cutting tools and equipment in hygienic condition", "Follow all HACCP and food safety procedures throughout the shift"] },
+      { title: "Canning Line Operator", category: "Manufacturing", summary: "Operate Maruha Nichiro's seafood canning lines, managing filling, seaming, retorting, and labelling processes for domestic and export markets.", responsibilities: ["Set up and operate filling and seaming machines", "Monitor fill weights and can seam quality continuously", "Operate retort sterilisation equipment to schedule", "Apply labels and pack finished cans for despatch", "Record all production and quality data accurately"] },
+      { title: "Frozen Food Production Worker", category: "Manufacturing", summary: "Produce frozen seafood and ready-meal products on Maruha Nichiro's IQF and blast-freeze lines, maintaining strict cold-chain integrity throughout.", responsibilities: ["Operate IQF and blast-freeze equipment", "Manage frozen product glazing and portion packaging", "Monitor and record product temperatures in the cold store", "Carry out hygienic strip-down and clean-down of equipment", "Follow all cold-chain and allergen management procedures"] },
+      { title: "Quality Control Technician", category: "Quality", summary: "Conduct in-process and finished product quality checks at Maruha Nichiro's processing facilities, ensuring all products meet food safety and customer specifications.", responsibilities: ["Perform sensory, visual, and weight checks on product samples", "Test for pathogens and allergens using rapid-test kits", "Record all quality data in HACCP monitoring forms", "Place product on hold if out-of-spec results are found", "Support external audits and third-party certification activities"] },
+    ],
+  },
+  {
+    name: "Seven & i Food Systems (Denny's Japan)",
+    slug: "seven-i-food-systems",
+    industry: "Food Service",
+    size: "5000+",
+    founded: 1974,
+    website: "https://www.7andi.com",
+    logo: "/assets/images/company-logos/Yoshinoya.png", // placeholder
+    tagline: "Bringing great dining to neighbourhoods across Japan",
+    description:
+      "Seven & i Food Systems operates Denny's Japan restaurants and other family dining chains across the country. SSW workers are recruited for kitchen, service, and store operations roles. The company provides paid training, uniform support, Japanese language assistance, and a clear pathway to supervisory roles in Japan's family restaurant sector.",
+    location: { prefecture: "Tokyo", city: "Chiyoda", address: "8-8-8 Nibancho, Chiyoda-ku, Tokyo" },
+    contact: { email: "ssw@7andi-fs.co.jp", phone: "03-6238-3400" },
+    socialMedia: { linkedin: "https://www.linkedin.com/company/seven-i-food-systems" },
+    jobs: [
+      { title: "Kitchen Line Cook", category: "Kitchen", summary: "Prepare hot and cold dishes from Denny's Japan's menu in a structured brigade kitchen, following standardised recipes and plating guides.", responsibilities: ["Prepare starters, mains, and desserts to recipe specifications", "Manage grill, fryer, and sauté stations during service", "Monitor food quality and temperature at all times", "Keep the kitchen and equipment clean between and after service", "Assist with mise en place preparation before each shift"] },
+      { title: "Floor Service Staff", category: "Service", summary: "Provide attentive table service to Denny's Japan guests, taking orders, delivering food, and ensuring a positive dining experience from arrival to departure.", responsibilities: ["Welcome guests and escort them to tables", "Take accurate food and beverage orders", "Deliver dishes promptly and describe specials", "Process payments via POS and handle cash correctly", "Clear and reset tables for subsequent seatings"] },
+      { title: "Store Operations Worker", category: "Operations", summary: "Support the daily operations of a Denny's Japan restaurant including opening/closing procedures, stock management, and facility cleanliness.", responsibilities: ["Carry out opening and closing checklists", "Receive and put away food and beverage deliveries", "Maintain restaurant equipment and report faults", "Clean dining room, restrooms, and staff areas", "Assist with stocktakes and waste recording"] },
+      { title: "Catering & Events Staff", category: "Catering", summary: "Support Denny's Japan catering operations for corporate and community events, setting up and servicing buffet and set-menu catering packages.", responsibilities: ["Set up catering stations and buffet equipment at event venues", "Prepare and plate catering menu items to presentation standards", "Serve guests during events and manage refill and clearing", "Break down and clean catering equipment post-event", "Liaise with the event coordinator on timing and menu changes"] },
+    ],
+  },
+  {
+    name: "Nihon Anzen Seimei Care",
+    slug: "nihon-anzen-seimei-care",
+    industry: "Nursing Care",
+    size: "1001-5000",
+    founded: 2005,
+    website: "https://www.nihon-care.co.jp",
+    logo: "/assets/images/company-logos/sompocare.png", // placeholder
+    tagline: "Safe, compassionate care for every stage of life",
+    description:
+      "Nihon Anzen Seimei Care operates a network of elderly care facilities and home-care services across Japan's Kansai and Chubu regions. SSW caregivers are welcomed under the Caregiving category with full support including Japanese language training, housing assistance, and a structured career ladder from support worker to care team leader.",
+    location: { prefecture: "Osaka", city: "Osaka", address: "2-3-1 Namba, Chuo-ku, Osaka" },
+    contact: { email: "ssw@nihon-care.co.jp", phone: "06-6534-8000" },
+    socialMedia: { linkedin: "https://www.linkedin.com/company/nihon-anzen-seimei" },
+    jobs: [
+      { title: "Residential Caregiver (SSW)", category: "Nursing Care", summary: "Provide direct personal care and daily living support to elderly residents in our Osaka and Kyoto care facilities, following individualised care plans.", responsibilities: ["Assist residents with bathing, dressing, and grooming", "Support mealtimes and monitor nutritional intake", "Provide mobility assistance and bed transfers", "Record care observations accurately in electronic care notes", "Participate in multidisciplinary care planning meetings"] },
+      { title: "Night Shift Care Worker", category: "Nursing Care", summary: "Provide overnight monitoring, comfort care, and emergency response for residents in our 24-hour residential care facilities.", responsibilities: ["Conduct regular night-time welfare checks on residents", "Assist with nocturnal personal care needs", "Respond calmly to resident call bells and emergencies", "Document overnight incidents and handover to day shift", "Maintain a quiet, safe environment for residents' overnight rest"] },
+      { title: "Day Care Centre Staff", category: "Day Care", summary: "Support elderly day-service clients at our Osaka day centre with activities, meals, bathing, and social engagement programmes.", responsibilities: ["Greet and sign in day-service clients on arrival", "Facilitate group activities and cognitive programmes", "Assist with personal care including bathing", "Serve and support clients during meals", "Help clients board transport vehicles at end of the day"] },
+      { title: "Home Care Aide (Visiting)", category: "Home Care", summary: "Visit elderly clients at home to provide personal care, domestic support, and companionship as part of Nihon Care's home-visiting programme across Osaka.", responsibilities: ["Provide personal care in clients' homes", "Assist with light housekeeping and grocery management", "Accompany clients on medical appointments and outings", "Monitor and report any health changes to the coordinator", "Complete visit records accurately on the mobile care app"] },
+    ],
+  },
+  {
+    name: "ISS Facility Services Japan",
+    slug: "iss-facility-services-japan",
+    industry: "Building Cleaning",
+    size: "5000+",
+    founded: 1901,
+    website: "https://www.issworld.com/japan",
+    logo: "/assets/images/company-logos/Kandenko.png", // placeholder
+    tagline: "Creating clean, safe, welcoming workplaces across Japan",
+    description:
+      "ISS Facility Services Japan provides integrated facility management including building cleaning, maintenance, catering, and security services to major corporations, hospitals, and government facilities across Japan. SSW workers are hired for cleaning, waste management, and building support roles with paid training and stable employment across multiple prefectures.",
+    location: { prefecture: "Tokyo", city: "Chuo", address: "3-5-7 Nihonbashi, Chuo-ku, Tokyo" },
+    contact: { email: "ssw@jp.issworld.com", phone: "03-5200-8500" },
+    socialMedia: { linkedin: "https://www.linkedin.com/company/iss-facility-services" },
+    jobs: [
+      { title: "Commercial Cleaning Operative", category: "Cleaning", summary: "Clean and maintain offices, lobbies, restrooms, and common areas in ISS-managed commercial buildings across Tokyo, Osaka, and Nagoya to a consistently high standard.", responsibilities: ["Vacuum, mop, and dust all areas to cleaning schedules", "Clean and sanitise restrooms and kitchenettes thoroughly", "Empty bins and sort recyclable waste correctly", "Replenish consumables including soap and paper products", "Report building faults or damage to the site manager"] },
+      { title: "Hospital Cleaning Specialist", category: "Healthcare Cleaning", summary: "Carry out specialist cleaning and disinfection of patient wards, theatres, and clinical areas in ISS-managed hospital contracts, following strict infection-control protocols.", responsibilities: ["Clean and disinfect patient rooms using correct dwell times", "Perform terminal cleans of operating theatres post-procedure", "Handle clinical waste according to hospital waste protocols", "Wear correct PPE for clinical areas at all times", "Record cleaning completion on electronic audit systems"] },
+      { title: "Floor Care Technician", category: "Floor Care", summary: "Operate professional floor-cleaning machinery including scrubber-dryers, buffing machines, and carpet-extraction equipment in large commercial facilities.", responsibilities: ["Operate ride-on and walk-behind scrubber-dryers safely", "Strip, seal, and buff hard floors to a high finish", "Extract and deep-clean carpets using hot-water extraction", "Inspect floor surfaces and schedule preventive treatments", "Maintain cleaning machinery in serviceable condition"] },
+      { title: "Waste Management Operative", category: "Waste Management", summary: "Manage waste streams at ISS client sites including general waste, recyclables, food waste, and hazardous materials in compliance with Japanese waste regulations.", responsibilities: ["Collect and segregate waste by stream across client sites", "Compact and containerise waste for collection", "Maintain accurate waste logs and transfer notes", "Ensure waste storage areas are clean and compliant", "Support client waste-reduction and recycling initiatives"] },
+    ],
+  },
+  {
+    name: "JFE Steel Corporation",
+    slug: "jfe-steel-corporation",
+    industry: "Shipbuilding",
+    size: "5000+",
+    founded: 2003,
+    website: "https://www.jfe-steel.co.jp",
+    logo: "/assets/images/company-logos/Mitsubishi_Heavy_Industries.png", // placeholder
+    tagline: "Forging Japan's steel foundation",
+    description:
+      "JFE Steel Corporation is one of Japan's largest integrated steel producers, operating major works in Chiba, Fukuyama, and Kawasaki. SSW workers are recruited for steel production, rolling mill operations, and shipbuilding steel fabrication. JFE Steel offers competitive wages, safety training, and career development in Japan's heavy industry sector.",
+    location: { prefecture: "Kanagawa", city: "Kawasaki", address: "1-1 Minamiwatarida-cho, Kawasaki-ku, Kawasaki" },
+    contact: { email: "ssw-recruit@jfe-steel.co.jp", phone: "044-577-1111" },
+    socialMedia: { linkedin: "https://www.linkedin.com/company/jfe-steel" },
+    jobs: [
+      { title: "Steel Production Operator", category: "Production", summary: "Operate electric arc furnace and continuous casting equipment at JFE Steel's Kawasaki works, producing high-quality steel billets and slabs for rolling.", responsibilities: ["Monitor and operate EAF and ladle furnace controls", "Manage scrap charging and alloy additions to specification", "Operate continuous casting machines to produce slabs", "Record melt data and adjust parameters to meet quality targets", "Follow all hot metal handling and PPE requirements"] },
+      { title: "Hot Rolling Mill Operator", category: "Rolling", summary: "Operate hot strip mill equipment to roll steel slabs into coil and plate products meeting JFE's dimensional and mechanical property specifications.", responsibilities: ["Set up mill roll gaps and tension levels to product schedules", "Monitor strip dimensions and surface quality during rolling", "Respond to cobbles and strip breaks quickly and safely", "Record rolling data in the mill automation system", "Support roll change activities and schedule maintenance windows"] },
+      { title: "Steel Fabrication Welder", category: "Fabrication", summary: "Fabricate heavy steel structures and marine components at JFE's shipbuilding steel fabrication division serving Japan's major shipyards.", responsibilities: ["Weld large steel sections using SAW, MIG, and FCAW processes", "Prepare joint fit-up and pre-heat as per WPS", "Conduct self-inspection of welds using visual and gauge checks", "Work safely with overhead cranes and lifting equipment", "Participate in shift-handover and safety pre-work checks"] },
+      { title: "Maintenance Fitter", category: "Maintenance", summary: "Perform planned and breakdown maintenance on rolling mill, conveyor, and materials-handling equipment across JFE Steel's Kawasaki works.", responsibilities: ["Diagnose and repair mechanical faults on heavy industrial equipment", "Replace bearings, seals, couplings, and drive components", "Carry out planned preventive maintenance to schedule", "Use SAP PM to log work orders and parts consumption", "Follow all lockout/tag-out procedures before starting work"] },
+      { title: "Quality Testing Technician", category: "Quality", summary: "Conduct mechanical and chemical testing of steel samples from production heats to verify they meet JIS and customer specification requirements.", responsibilities: ["Prepare steel test pieces using cutting and milling equipment", "Operate tensile testing, impact testing, and hardness testing machines", "Perform chemical composition analysis using spectrometry equipment", "Record and report test results against product specifications", "Raise non-conformance reports for out-of-spec results"] },
+    ],
+  },
 ];
+
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
