@@ -20,8 +20,27 @@ function applyTestEnv() {
   process.env.RESUME_S3_BUCKET = "test-resume-bucket";
 }
 
+/**
+ * Guard: refuse to drop a database that is not on localhost / 127.0.0.1.
+ * Prevents runaway dropDatabase() calls from wiping the real Atlas cluster
+ * when the mongoose singleton reconnects after memory-server teardown.
+ */
+function assertSafeConnection(mongooseInstance, label = "dropDatabase") {
+  const host = mongooseInstance?.connection?.host || "";
+  if (!host.match(/localhost|127\.0\.0\.1/i)) {
+    throw new Error(
+      `SAFETY GUARD: ${label} refused — connection host "${host}" is not a local memory server. ` +
+        "Check test isolation; mongoose may have reconnected to Atlas."
+    );
+  }
+}
+
 async function createIntegrationContext() {
   const mongoServer = await MongoMemoryServer.create();
+
+  // Save and override MONGODB_URI so the app never touches the real Atlas DB.
+  // Restored in destroyIntegrationContext to prevent leaking into other suites.
+  const _originalMongoUri = process.env.MONGODB_URI;
   process.env.MONGODB_URI = mongoServer.getUri();
   applyTestEnv();
 
@@ -32,6 +51,7 @@ async function createIntegrationContext() {
 
   return {
     mongoServer,
+    _originalMongoUri,
     app,
     models: {
       User: require("../../src/models/User"),
@@ -44,17 +64,24 @@ async function createIntegrationContext() {
 }
 
 async function resetDatabase(context) {
+  assertSafeConnection(context.app.locals.mongoose, "resetDatabase");
   await context.app.locals.mongoose.connection.dropDatabase();
 }
 
 async function destroyIntegrationContext(context) {
   if (context?.app?.locals?.mongoose) {
+    assertSafeConnection(context.app.locals.mongoose, "destroyIntegrationContext");
     await context.app.locals.mongoose.connection.dropDatabase();
     await context.app.locals.mongoose.connection.close();
   }
 
   if (context?.mongoServer) {
     await context.mongoServer.stop();
+  }
+
+  // Restore the real Atlas URI after the memory server is fully stopped.
+  if (context?._originalMongoUri !== undefined) {
+    process.env.MONGODB_URI = context._originalMongoUri;
   }
 }
 

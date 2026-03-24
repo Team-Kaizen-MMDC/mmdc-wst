@@ -26,7 +26,13 @@ afterAll(async () => {
 });
 
 afterEach(async () => {
-  // Clear all collections between tests so tests are independent
+  // Safety guard: only clear collections when connected to a local memory server.
+  // If the connection host is not localhost/127.0.0.1, skip — this prevents
+  // accidental deleteMany() calls against the real Atlas cluster when mongoose
+  // auto-reconnects after a memory-server teardown.
+  const host = mongoose.connection?.host || "";
+  if (!host.match(/localhost|127\.0\.0\.1/i)) return;
+
   const collections = mongoose.connection.collections;
   for (const key in collections) {
     await collections[key].deleteMany({});
