@@ -28,7 +28,8 @@
 5. [Database Relationships](#5-database-relationships)
 6. [Indexes and Performance](#6-indexes-and-performance)
 7. [Data Validation Rules](#7-data-validation-rules)
-8. [Appendix](#appendix)
+8. [Future Collections (Not Yet Implemented)](#8-future-collections-not-yet-implemented)
+9. [Appendix](#appendix)
 
 ---
 
@@ -869,6 +870,118 @@ graph TD
 
 ---
 
+## 8. Future Collections (Not Yet Implemented)
+
+The following collections exist in the Atlas database but are **not yet wired to any model, controller, or route**. They are reserved for planned features and should not be dropped. Each is labelled with its intended purpose.
+
+> 🚧 = planned feature &nbsp;|&nbsp; 🔁 = will replace a temporary workaround &nbsp;|&nbsp; ⚠️ = overlaps with embedded sub-doc (needs decision before implementing)
+
+### Notifications & Messaging
+
+#### `notification` 🚧
+Push/in-app notifications for job seekers (new match, application status change) and employers (new applicant). Will use a standard `{ user, type, message, read, createdAt }` shape.
+
+#### `authSessions` 🔁
+Persistent JWT refresh-token sessions. Currently tokens are stateless; this collection will store `{ user, token, expiresAt, ipAddress, userAgent }` when sliding-session / refresh-token rotation is added.
+
+#### `emailVerification` 🔁
+Dedicated email-verification tokens. Currently handled via `emailVerificationToken` fields directly on `users`. Will be extracted here for cleaner querying and TTL index expiry.
+
+#### `passwordReset` 🔁
+Dedicated password-reset tokens. Same rationale as `emailVerification` — currently on `users`, will be migrated here with a TTL index.
+
+---
+
+### Job & Application Enhancements
+
+#### `jobBookmarks` 🚧
+Saved/bookmarked jobs per job seeker. Shape: `{ user, job, createdAt }`. Powers a "Saved Jobs" tab on the job-seeker dashboard.
+
+#### `jobApplications` 🔁
+Intended to supersede `applications` with a richer event-sourced schema (status history log). Migration plan needed before activating.
+
+#### `jobApplictionEvents` 🚧
+Audit log of state transitions on a job application (`submitted → reviewing → accepted`). Shape: `{ application, fromStatus, toStatus, actor, note, createdAt }`. *(Note: typo in collection name — will be renamed `jobApplicationEvents` when implemented.)*
+
+#### `jobCategories` 🚧
+Master list of SSW industry categories and sub-categories for structured filtering. Currently industries are a plain enum on the `jobs` schema.
+
+#### `moderationFlags` 🚧
+Content moderation reports on jobs or companies (`{ targetType, targetId, reporter, reason, status }`). For admin review queue.
+
+---
+
+### Company Enhancements
+
+#### `companyHighlights` ⚠️
+Company achievement badges / highlights. Currently embedded as `companies.highlights[]`. Separate collection needed only if highlights grow large or require independent querying.
+
+#### `companyContacts` ⚠️
+Named contact persons at a company (HR manager, recruiter). Currently embedded as `companies.contact{}`. Extract when multi-contact support is required.
+
+#### `companyLocations` ⚠️
+Multiple office/branch locations per company. Currently single `location` object on `companies`. Extract when multi-location support is needed.
+
+---
+
+### Agency / RSO Feature
+
+#### `agencies` 🚧
+Registered Support Organizations (RSOs) / recruitment agencies that sponsor SSW workers. Core of the planned agency portal.
+
+#### `agencyHighlights` 🚧
+Achievement highlights for agencies (placements, certifications). Mirrors `companyHighlights` pattern.
+
+#### `agencyServices` 🚧
+Services offered by an agency (visa support, housing, language training). Shape: `{ agency, serviceType, description, price }`.
+
+---
+
+### Admin & Audit
+
+#### `adminActions` 🚧
+Audit log of admin-performed actions (`{ admin, action, targetType, targetId, before, after, createdAt }`). For compliance and change tracking.
+
+#### `adminRoles` 🚧
+Fine-grained permission sets for admin users (e.g., `content-moderator`, `user-manager`). Currently all admins have full access via `role: "admin"`.
+
+#### `adminAccounts` 🔁
+Legacy collection — superseded by `users` with `role: "admin"`. Will be dropped once confirmed empty and no legacy references remain.
+
+---
+
+### Content & CMS
+
+#### `homepageBanner` 🚧
+Editable hero banners for `index.html` managed by admins. Shape: `{ title, subtitle, imageUrl, ctaText, ctaUrl, isActive, order }`.
+
+#### `homepageSections` 🚧
+Dynamic homepage content blocks (feature highlights, testimonials, stats). Allows non-developer content editing.
+
+#### `aboutContent` 🔁
+Legacy duplicate of `about`. Will be dropped once `about` is confirmed as the single source of truth for all About page content.
+
+---
+
+### Profile Sub-collections (currently embedded)
+
+#### `education` ⚠️
+Currently embedded in `userprofiles.education[]`. Extract only if education records need to be independently searched or linked across profiles.
+
+#### `experiences` ⚠️
+Currently embedded in `userprofiles.experience[]`. Extract only if work experience needs richer querying or linking.
+
+#### `skills` ⚠️
+Currently embedded in `userprofiles.skills[]`. Extract to a separate collection if a global skills taxonomy (with aliases, JLPT mapping) is needed.
+
+#### `availabilityPreferences` ⚠️
+Currently embedded in `userprofiles.availability{}`. Extract if job-matching algorithm needs to query availability independently.
+
+#### `userAccounts` 🔁
+Legacy collection — superseded by `users`. Will be dropped once confirmed empty and no legacy references remain.
+
+---
+
 ## Appendix
 
 ### Environment Variables
@@ -1014,9 +1127,10 @@ npm run restore -- --from ../backups/<ts> --collections users,companies
 
 ---
 
-**Document Version:** 2.1
+**Document Version:** 2.2
 **Last Updated:** March 24, 2026
 **Changelog:**
+- v2.2 (2026-03-24): Added Section 8 — Future Collections (26 collections documented with planned purpose, status, and implementation notes)
 - v2.1 (2026-03-24): Updated Company schema (`featured`, `location.*`, `contact.*`, `size` enum, logo path), indexes, seed scripts (seed:featured, backup, restore), backup strategy (Atlas snapshots via japansswdb_backups)
 - v2.0 (2026-03-20): Initial comprehensive schema documentation
 
