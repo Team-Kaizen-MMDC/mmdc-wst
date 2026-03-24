@@ -242,36 +242,6 @@ languages[]      : { language*, level (native|fluent|conversational|basic) }
 
 ---
 
-#### `adminjobs`
-
-Admin-managed job postings with a simplified flat structure — no company/user foreign keys.
-
-| Field | Type | Notes |
-|---|---|---|
-| `_id` | ObjectId | Primary key |
-| `title` | String | Required |
-| `companyName` | String | Required (plain text, no FK) |
-| `industry` | String | Required |
-| `location.prefecture` | String | Required |
-| `location.city` | String | — |
-| `compensation.salaryMin` | Number | — |
-| `compensation.salaryMax` | Number | — |
-| `compensation.currency` | String | default `"JPY"` |
-| `summary` | String | Job description |
-| `employmentType` | String | `"Full-time"` \| `"Part-time"` \| `"Contract"` (default `"Full-time"`) |
-| `preferWorkLocation` | String | Preferred work location note |
-| `supportSponsorship` | String | Visa sponsorship info |
-| `japaneseLanguage` | String | Japanese language requirement |
-| `nativeLanguage` | String | Native language requirement |
-| `status` | String | `"active"` \| `"closed"` \| `"archived"` (default `"active"`) |
-| `isAdminPost` | Boolean | Always `true` |
-| `createdAt` | Date | auto |
-| `updatedAt` | Date | auto |
-
-> Managed exclusively via `POST/PATCH/DELETE /api/v1/admin-jobs`. Displayed in `pages/companyDashboard.html`.
-
----
-
 ### Application Domain
 
 #### `applications`
@@ -303,20 +273,6 @@ Admin-managed job postings with a simplified flat structure — no company/user 
 ---
 
 ### Content Domain
-
-#### `contents`
-
-| Field | Type | Notes |
-|---|---|---|
-| `_id` | ObjectId | Primary key |
-| `title` | String | — |
-| `slug` | String | URL-safe identifier |
-| `paragraphs` | Array | `[{ type: "mission"\|"vision"\|…, text: String }]` |
-| `type` | String | `"page"` \| `"article"` |
-| `language` | String | `"en"` \| `"ja"` |
-| `published` | Boolean | default `false` |
-| `createdAt` | Date | auto |
-| `updatedAt` | Date | auto |
 
 #### `about`
 
@@ -518,13 +474,13 @@ curl -X PUT http://localhost:3000/api/v1/applications/<id>/status \
 | **Sign In Form** | Local email/password or Google OAuth login | `users` |
 | **Create Account** | Register as jobseeker or employer | `users` |
 | **Profile Dashboard** | View/edit jobseeker profile, resume, experience | `users`, `userprofiles` |
-| **Company Dashboard** | Admin/employer manages jobs and company info | `companies`, `adminjobs`, `jobs` |
+| **Company Dashboard** | Admin/employer manages jobs and company info | `companies`, `jobs` |
 | **Job Search & Listing** | Filter by industry, location, visa, salary | `jobs` |
 | **Job Detail Page** | Full job info + Apply button | `jobs`, `applications` |
 | **Application Form** | Submit cover letter + resume | `applications` |
 | **My Applications** | Jobseeker tracks application statuses | `applications` |
 | **Applications Management** | Employer reviews and updates statuses | `applications` |
-| **Admin Panel** | Manage users, companies, content, verify | `users`, `companies`, `contents` |
+| **Admin Panel** | Manage users, companies, verify employers | `users`, `companies` |
 
 ### Authentication Flow
 
@@ -678,6 +634,7 @@ erDiagram
         Array admins
         Array jobs
         Boolean isVerified
+        Boolean featured
         ObjectId verifiedBy FK
     }
 
@@ -702,14 +659,6 @@ erDiagram
         String status
         Array statusHistory
     }
-
-    AdminJob {
-        ObjectId _id PK
-        String title
-        String companyName
-        Object compensation
-        String status
-    }
 ```
 
 ### Relationship Summary
@@ -723,7 +672,6 @@ erDiagram
 | User → Job (postedBy) | One-to-Many | Employers post many jobs |
 | Company → Job | One-to-Many | Company has many job postings |
 | Job → Application | One-to-Many | Job receives many applications |
-| AdminJob | Standalone | No foreign key references |
 
 ---
 
@@ -782,12 +730,6 @@ erDiagram
 { createdAt: -1 }
 ```
 
-### `contents`
-
-```javascript
-{ title: "text", "paragraphs.text": "text" }   // full-text search
-```
-
 ### Performance Notes
 
 1. Use `.populate()` with field projection — only select needed fields
@@ -825,9 +767,6 @@ erDiagram
 | | `visibility` | Enum: `public`, `private`, `rso-only` |
 | | `applicationInfo.deadline` | Must not be in the past (new jobs) |
 | | `applicationInfo.startDate` | Must be after `deadline` |
-| **adminjobs** | `title`, `companyName`, `industry` | Required |
-| | `employmentType` | Enum: `Full-time`, `Part-time`, `Contract` |
-| | `status` | Enum: `active`, `closed`, `archived` |
 | **applications** | `status` | Enum: `submitted`, `reviewing`, `interview`, `offer`, `accepted`, `rejected`, `withdrawn` |
 | | `coverLetter` | max 2000 chars |
 | | `{ applicant, job }` | Unique compound — no duplicate applications |
@@ -939,6 +878,9 @@ Services offered by an agency (visa support, housing, language training). Shape:
 
 ### Admin & Audit
 
+#### `adminjobs` 🔁
+Legacy simplified job-posting collection with a flat schema (`companyName` as plain string, no FK to `companies`). Was used by an early admin dashboard (`/api/v1/admin-jobs`, `dashboardLoader.js`). Superseded by the main `jobs` collection which uses proper company/user references. When an admin job-management UI is rebuilt, it should post to `jobs` with `role: "admin"` authorization instead.
+
 #### `adminActions` 🚧
 Audit log of admin-performed actions (`{ admin, action, targetType, targetId, before, after, createdAt }`). For compliance and change tracking.
 
@@ -951,6 +893,9 @@ Legacy collection — superseded by `users` with `role: "admin"`. Will be droppe
 ---
 
 ### Content & CMS
+
+#### `contents` 🔁
+Legacy CMS collection intended for general page content (paragraphs, mission, vision). Was wired to a native-driver `contentController` (`POST /api/content`) that was never registered in the main router and always had 0 documents. All current content is served from the `about` collection. If a full CMS is needed, rebuild against `contents` (or `homepageSections`) with proper auth guards.
 
 #### `homepageBanner` 🚧
 Editable hero banners for `index.html` managed by admins. Shape: `{ title, subtitle, imageUrl, ctaText, ctaUrl, isActive, order }`.
@@ -1127,9 +1072,10 @@ npm run restore -- --from ../backups/<ts> --collections users,companies
 
 ---
 
-**Document Version:** 2.2
+**Document Version:** 2.3
 **Last Updated:** March 24, 2026
 **Changelog:**
+- v2.3 (2026-03-24): Removed `adminjobs` and `contents` from active collections (dropped from Atlas, dead code removed); updated ERD mermaid diagram, UI/data flow table, indexes, validation table; moved both to Section 8 (Future) with migration notes; added `featured` field to Company ERD
 - v2.2 (2026-03-24): Added Section 8 — Future Collections (26 collections documented with planned purpose, status, and implementation notes)
 - v2.1 (2026-03-24): Updated Company schema (`featured`, `location.*`, `contact.*`, `size` enum, logo path), indexes, seed scripts (seed:featured, backup, restore), backup strategy (Atlas snapshots via japansswdb_backups)
 - v2.0 (2026-03-20): Initial comprehensive schema documentation
