@@ -66,6 +66,26 @@
 
 **Instance methods:** `comparePassword()`, `getSignedJwtToken()`, `incLoginAttempts()`, `resetLoginAttempts()`
 
+**Document Structure:**
+
+```json
+{
+  "_id": "69c29ebcc446199ce308b6cc",
+  "email": "admin@japanssw.com",
+  "password": "$2b$12$92X6Z...hashed...",
+  "authProvider": "local",
+  "googleId": null,
+  "googleProfile": null,
+  "role": "admin",
+  "isActive": true,
+  "isEmailVerified": true,
+  "loginAttempts": 0,
+  "lockUntil": null,
+  "createdAt": "2026-03-24T14:25:01.003Z",
+  "updatedAt": "2026-03-24T14:25:01.003Z"
+}
+```
+
 ---
 
 #### `userprofiles`
@@ -122,9 +142,56 @@ languages[]      : { language*, level (native|fluent|conversational|basic) }
 
 *(* = required)*
 
----
+**Document Structure:**
 
-### Company Domain
+```json
+{
+  "_id": "69c29ed2dc4b0d0ef130ffac",
+  "user": "69c29ed2dc4b0d0ef130ffa5",
+  "firstName": "Maria",
+  "lastName": "Santos",
+  "dateOfBirth": "1995-08-10T00:00:00.000Z",
+  "gender": "female",
+  "nationality": "Filipino",
+  "phone": "+63-917-000-0000",
+  "address": "Quezon City",
+  "prefecture": "Tokyo",
+  "city": "Shibuya",
+  "postalCode": "150-0001",
+  "japaneseLevel": "N3",
+  "availability": {
+    "startDate": "2026-06-01T00:00:00.000Z",
+    "visaStatus": "ssw-1",
+    "visaValidUntil": "2028-06-01T00:00:00.000Z",
+    "desiredIndustry": "Food Service",
+    "relocate": true,
+    "remote": false
+  },
+  "bio": "Experienced food service professional seeking SSW opportunities in Japan.",
+  "resumePath": "resumes/maria-santos-2026.pdf",
+  "cvPath": null,
+  "photoPath": null,
+  "profileCompleted": true,
+  "education": [
+    { "school": "De La Salle University", "degree": "Bachelor", "field": "Hospitality Management", "startDate": "2013-06-01T00:00:00.000Z", "endDate": "2017-04-01T00:00:00.000Z", "current": false }
+  ],
+  "experience": [
+    { "company": "Jollibee Foods Corp", "title": "Crew Leader", "description": "Managed front-of-house operations", "startDate": "2017-06-01T00:00:00.000Z", "endDate": "2026-01-01T00:00:00.000Z", "current": false }
+  ],
+  "skills": [
+    { "name": "Food Safety", "level": "advanced", "category": "Technical" }
+  ],
+  "certifications": [],
+  "languages": [
+    { "language": "Filipino", "level": "native" },
+    { "language": "Japanese", "level": "conversational" }
+  ],
+  "createdAt": "2026-03-24T14:25:22.668Z",
+  "updatedAt": "2026-03-24T14:25:22.668Z"
+}
+```
+
+---
 
 #### `companies`
 
@@ -175,6 +242,45 @@ languages[]      : { language*, level (native|fluent|conversational|basic) }
 **Query helpers:** `.active()` — `{ isActive: true }` · `.verified()` — `{ isVerified: true }`
 
 > **Featured companies:** The `featured` flag identifies the 9 companies with dedicated pages under `pages/companies/` (ANA, ANA InterContinental, Daikin, Kandenko, Mitsubishi Heavy Industries, Nissan, Prince Hotels, SOMPO Care, Yoshinoya). The homepage fetches `GET /api/v1/companies?featured=true` to ensure these always appear in the Top Companies section regardless of other companies in the DB. To feature a new company set `featured: true` via Atlas or the admin API.
+
+**Document Structure:**
+
+```json
+{
+  "_id": "69c29ec3c446199ce308b709",
+  "name": "ANA (All Nippon Airways)",
+  "slug": "ana-all-nippon-airways",
+  "industry": "Aviation",
+  "size": "5000+",
+  "founded": 1952,
+  "website": "https://www.ana.co.jp",
+  "description": "Japan's largest airline group offering aviation and ground handling roles under the SSW program.",
+  "logo": "/assets/images/company-logos/ANA.png",
+  "location": {
+    "prefecture": "Tokyo",
+    "city": "Minato",
+    "address": "2-5-2 Hanedakuko",
+    "postalCode": "144-0041"
+  },
+  "contact": {
+    "email": "ssw-recruit@ana.co.jp",
+    "phone": "+81-3-6735-1000",
+    "fax": null
+  },
+  "owner": "69c29ec0c446199ce308b6f5",
+  "admins": [],
+  "jobs": ["69c29ec4c446199ce308b780", "69c29ec4c446199ce308b782"],
+  "isVerified": true,
+  "isActive": true,
+  "featured": true,
+  "images": [],
+  "videos": [],
+  "certifications": [],
+  "licenses": [],
+  "createdAt": "2026-03-24T14:25:07.398Z",
+  "updatedAt": "2026-03-24T15:21:42.000Z"
+}
+```
 
 ---
 
@@ -240,6 +346,58 @@ languages[]      : { language*, level (native|fluent|conversational|basic) }
 - Validates `applicationInfo.startDate` is after `applicationInfo.deadline`
 - Auto-sets `status = "closed"` when deadline has passed and status is `"active"`
 
+**Document Structure:**
+
+```json
+{
+  "_id": "69c29ec4c446199ce308b728",
+  "company": "69c29ec3c446199ce308b709",
+  "postedBy": "69c29ec0c446199ce308b6f5",
+  "title": "Food Service Staff (Hall)",
+  "industry": "Food Service",
+  "category": "Service",
+  "summary": "Serve customers and maintain dining area at ANA airport restaurant.",
+  "responsibilities": "Take orders; Serve food and beverages; Maintain cleanliness; Support kitchen staff during peak hours",
+  "requirements": "Japanese N4 or higher; Food handler certificate preferred; Customer service experience",
+  "requiredEducation": "High School",
+  "japaneseLevel": "N4",
+  "requiredExperience": {
+    "years": 1,
+    "description": "Food service or hospitality experience"
+  },
+  "requiredSkills": ["Customer Service", "Japanese Language", "Teamwork"],
+  "requiredCertifications": [],
+  "compensation": {
+    "salaryMin": 195000,
+    "salaryMax": 240000,
+    "currency": "JPY",
+    "period": "monthly",
+    "overtimePay": true
+  },
+  "location": {
+    "prefecture": "Tokyo",
+    "city": "Ota",
+    "remote": false,
+    "remoteType": "None"
+  },
+  "applicationInfo": {
+    "deadline": "2026-06-01T00:00:00.000Z",
+    "startDate": "2026-07-01T00:00:00.000Z",
+    "contactEmail": "ssw-recruit@ana.co.jp",
+    "applicationMethod": "Platform"
+  },
+  "status": "active",
+  "visibility": "public",
+  "views": 42,
+  "applications": [],
+  "featured": false,
+  "urgent": false,
+  "isDeleted": false,
+  "createdAt": "2026-03-24T14:25:08.421Z",
+  "updatedAt": "2026-03-24T14:25:08.421Z"
+}
+```
+
 ---
 
 ### Application Domain
@@ -270,6 +428,43 @@ languages[]      : { language*, level (native|fluent|conversational|basic) }
 
 **Instance methods:** `canWithdraw()`, `canUpdateStatus()`
 
+**Document Structure:**
+
+```json
+{
+  "_id": "69c29ec6c446199ce308b78a",
+  "applicant": "69c29ebdc446199ce308b6d2",
+  "job": "69c29ec4c446199ce308b728",
+  "status": "reviewing",
+  "coverLetter": "I have 3 years of food service experience and am JLPT N3 certified. I am eager to grow my career in Japan with ANA.",
+  "resumePath": "resumes/applicant-cv-2026.pdf",
+  "employerNotes": "Strong candidate — proceed to interview",
+  "interview": {
+    "date": "2026-05-10T09:00:00.000Z",
+    "location": "Online (Zoom)",
+    "notes": "Confirm availability before booking",
+    "interviewers": ["HR Manager"]
+  },
+  "statusHistory": [
+    {
+      "status": "submitted",
+      "changedBy": "69c29ebdc446199ce308b6d2",
+      "date": "2026-03-24T14:25:10.904Z",
+      "notes": "Application submitted"
+    },
+    {
+      "status": "reviewing",
+      "changedBy": "69c29ec0c446199ce308b6f5",
+      "date": "2026-03-25T08:00:00.000Z",
+      "notes": "Under review by HR"
+    }
+  ],
+  "rejectionReason": null,
+  "createdAt": "2026-03-24T14:25:10.904Z",
+  "updatedAt": "2026-03-25T08:00:00.000Z"
+}
+```
+
 ---
 
 ### Content Domain
@@ -283,6 +478,34 @@ languages[]      : { language*, level (native|fluent|conversational|basic) }
 | `content` | String | — |
 | `language` | String | `"en"` \| `"ja"` |
 | `order` | Number | Display order |
+
+**Document Structure:**
+
+```json
+{
+  "_id": "69c29eb3ebbf9175f7811564",
+  "slug": "about",
+  "title": "About Japan SSW",
+  "mission": "To empower Filipino workers by providing transparent, ethical, and world-class recruitment services that open doors to rewarding careers in Japan.",
+  "vision": "To be the most trusted bridge between Filipino talent and Japanese employers, fostering mutual growth and cultural exchange through the SSW program.",
+  "paragraphs": [
+    {
+      "_id": "69c29eb315172875b9659683",
+      "text": "MMDC (Manpower Management Development Corporation) is a licensed recruitment agency dedicated to connecting Filipino skilled workers with quality employment opportunities in Japan."
+    },
+    {
+      "_id": "69c29eb315172875b9659684",
+      "text": "We specialize in Japan's Specified Skilled Worker (SSW) program, helping candidates navigate the visa process, skills assessments, and job placement from start to finish."
+    },
+    {
+      "_id": "69c29eb315172875b9659685",
+      "text": "Our team of experienced professionals provides end-to-end support — from pre-departure orientation and language training to on-ground assistance once you arrive in Japan."
+    }
+  ],
+  "createdAt": "2026-03-24T14:24:51.041Z",
+  "updatedAt": "2026-03-24T14:24:51.041Z"
+}
+```
 
 ---
 
@@ -1072,10 +1295,11 @@ npm run restore -- --from ../backups/<ts> --collections users,companies
 
 ---
 
-**Document Version:** 2.3
+**Document Version:** 2.4
 **Last Updated:** March 24, 2026
 **Changelog:**
-- v2.3 (2026-03-24): Removed `adminjobs` and `contents` from active collections (dropped from Atlas, dead code removed); updated ERD mermaid diagram, UI/data flow table, indexes, validation table; moved both to Section 8 (Future) with migration notes; added `featured` field to Company ERD
+- v2.4 (2026-03-24): Added Document Structure JSON examples for all 6 active collections (users, userprofiles, companies, jobs, applications, about)
+- v2.3 (2026-03-24): Removed `adminjobs` and `contents` from active collections; updated ERD, UI flow, indexes, validation; moved to Section 8
 - v2.2 (2026-03-24): Added Section 8 — Future Collections (26 collections documented with planned purpose, status, and implementation notes)
 - v2.1 (2026-03-24): Updated Company schema (`featured`, `location.*`, `contact.*`, `size` enum, logo path), indexes, seed scripts (seed:featured, backup, restore), backup strategy (Atlas snapshots via japansswdb_backups)
 - v2.0 (2026-03-20): Initial comprehensive schema documentation
