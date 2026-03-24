@@ -1,4 +1,7 @@
-const API_URL = "http://localhost:3000/api/v1/companies?limit=6";
+const API_BASE = ['localhost', '127.0.0.1'].includes(window.location.hostname)
+  ? 'http://localhost:3000/api/v1'
+  : '/api/v1';
+const API_URL = `${API_BASE}/companies?limit=6`;
 
 async function fetchTopCompanies() {
   const grid = document.getElementById("companyGrid");

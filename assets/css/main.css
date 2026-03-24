@@ -5118,6 +5118,7 @@ body.company-dashboard .dashboard-list-link {
   align-items: center;
   justify-content: center;
   align-self: flex-start;
+  white-space: nowrap;
   min-height: 2.5rem;
   padding: 0.6rem 1rem;
   border-radius: 999px;
@@ -5206,6 +5207,8 @@ body.company-dashboard .dashboard-list-item__title {
   font-size: 0.98rem;
   font-weight: 700;
   line-height: 1.35;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 body.company-dashboard .dashboard-list-item__subtitle {
