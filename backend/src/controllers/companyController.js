@@ -19,6 +19,7 @@ exports.getCompanies = asyncHandler(async (req, res) => {
     prefecture,
     size,
     verified,
+    featured,
     // Search
     search,
     // Sorting
@@ -28,25 +29,11 @@ exports.getCompanies = asyncHandler(async (req, res) => {
   // Build query
   const query = { isActive: true };
 
-  // Industry filter
-  if (industry) {
-    query.industry = industry;
-  }
-
-  // Location filter
-  if (prefecture) {
-    query["location.prefecture"] = prefecture;
-  }
-
-  // Size filter
-  if (size) {
-    query.size = size;
-  }
-
-  // Verified filter
-  if (verified !== undefined) {
-    query.isVerified = verified === "true";
-  }
+  if (industry)    query.industry = industry;
+  if (prefecture)  query["location.prefecture"] = prefecture;
+  if (size)        query.size = size;
+  if (verified !== undefined) query.isVerified = verified === "true";
+  if (featured === "true")    query.featured = true;
 
   // Text search
   if (search) {

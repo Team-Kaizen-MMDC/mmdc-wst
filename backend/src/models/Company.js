@@ -198,6 +198,12 @@ const companySchema = new mongoose.Schema(
       default: true,
       index: true,
     },
+    // Featured on homepage — always shown in Top Companies section
+    featured: {
+      type: Boolean,
+      default: false,
+      index: true,
+    },
 
     // Social Media
     socialMedia: {

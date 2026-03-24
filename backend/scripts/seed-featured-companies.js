@@ -33,6 +33,7 @@ const COMPANIES = [
   {
     name: "All Nippon Airways (ANA)",
     slug: "all-nippon-airways-ana",
+    featured: true,
     industry: "Aviation",
     size: "5000+",
     founded: 1952,
@@ -54,6 +55,7 @@ const COMPANIES = [
   },
   {
     name: "ANA InterContinental",
+    featured: true,
     slug: "ana-intercontinental",
     industry: "Accommodation",
     size: "5000+",
@@ -75,6 +77,7 @@ const COMPANIES = [
     ],
   },
   {
+    featured: true,
     name: "Daikin Industries",
     slug: "daikin-industries",
     industry: "Industrial Machinery",
@@ -95,6 +98,7 @@ const COMPANIES = [
       { title: "Quality Control Inspector", category: "Quality", summary: "Inspect finished air conditioning products on the production line, verifying they meet Daikin's rigorous quality and safety standards before shipment.", responsibilities: ["Inspect products against quality checklists", "Use measurement tools and test equipment accurately", "Record and report non-conformances", "Collaborate with production to improve quality", "Ensure all products meet ISO and safety standards"] },
     ],
   },
+    featured: true,
   {
     name: "Kandenko",
     slug: "kandenko",
@@ -115,6 +119,7 @@ const COMPANIES = [
       { title: "Building Systems Installer", category: "Installation", summary: "Install electrical, fire-alarm, security, and communication systems in new construction and renovation projects across the Kanto region.", responsibilities: ["Install low-voltage communication and security systems", "Run cables and terminate connections neatly", "Test installed systems after completion", "Coordinate with building contractors", "Maintain installation documentation"] },
       { title: "Project Assistant", category: "Project Management", summary: "Provide administrative and logistical support to Kandenko's project management teams, helping to keep multi-site construction projects on schedule.", responsibilities: ["Prepare project reports and meeting minutes", "Track material deliveries and inventory", "Update project schedules and dashboards", "Assist with permit applications and documentation", "Communicate updates between site teams and head office"] },
     ],
+    featured: true,
   },
   {
     name: "Mitsubishi Heavy Industries",
@@ -136,6 +141,7 @@ const COMPANIES = [
       { title: "Equipment Assembly Technician", category: "Assembly", summary: "Assemble large industrial machinery and equipment components following detailed engineering drawings and assembly instructions at MHI's Nagasaki and Kobe plants.", responsibilities: ["Read and follow assembly drawings and work orders", "Assemble mechanical subassemblies to specification", "Use hand tools, torque wrenches, and gauges correctly", "Perform functional tests post-assembly", "Collaborate with engineering teams on assembly issues"] },
       { title: "Welding Technician", category: "Welding", summary: "Perform certified welding operations on steel structures and pressure vessels for MHI's energy and industrial plant divisions.", responsibilities: ["Perform MIG, TIG, and stick welding to certified standards", "Inspect welds for defects visually and with test equipment", "Grind and dress welds to finish requirements", "Follow all hot-work safety procedures", "Maintain welding equipment and consumables"] },
       { title: "Quality Inspector", category: "Quality", summary: "Inspect manufactured components and assemblies against technical drawings, ensuring they meet MHI's stringent quality and regulatory standards.", responsibilities: ["Inspect parts using gauges, callipers, and CMM equipment", "Compare parts against engineering drawings", "Record inspection data in quality management systems", "Identify and quarantine non-conforming parts", "Support root-cause analysis for quality issues"] },
+    featured: true,
     ],
   },
   {
@@ -156,6 +162,7 @@ const COMPANIES = [
       { title: "Assembly Line Worker", category: "Assembly", summary: "Work on Nissan's vehicle assembly line at the Oppama or Tochigi plant, fitting components and sub-assemblies to produce Nissan vehicles.", responsibilities: ["Fit interior and exterior vehicle components", "Operate automated assembly tools and fixtures", "Perform in-line quality checks", "Maintain pace with line speed targets", "Report quality issues or line stoppages immediately"] },
       { title: "Vehicle Inspection Technician", category: "Quality Control", summary: "Conduct final vehicle quality inspections before delivery, checking all systems and appearance to Nissan's global quality standards.", responsibilities: ["Inspect finished vehicles for visual and functional defects", "Test vehicle systems including lighting, brakes, and electronics", "Document findings using inspection checklists", "Tag and report non-conforming vehicles for repair", "Work collaboratively with assembly and repair teams"] },
       { title: "Manufacturing Support Staff", category: "Manufacturing", summary: "Provide materials handling, line-feeding, and logistics support to Nissan's assembly plant operations.", responsibilities: ["Deliver parts kits to assembly line workstations", "Operate tugger trains and forklifts (after certification)", "Manage parts inventory at line-side supermarkets", "Support production with material replenishment", "Maintain safety and 5S standards in materials areas"] },
+    featured: true,
       { title: "Equipment Maintenance Worker", category: "Maintenance", summary: "Perform preventive and corrective maintenance on manufacturing equipment including robots, conveyors, and body shop tooling at Nissan's plants.", responsibilities: ["Execute scheduled preventive maintenance tasks", "Diagnose and repair mechanical and electrical faults", "Replace worn components and lubricate machinery", "Document maintenance activities in SAP PM", "Support 24/7 production by participating in rotating shifts"] },
     ],
   },
@@ -177,6 +184,7 @@ const COMPANIES = [
       { title: "Guest Relations Staff", category: "Guest Services", summary: "Welcome and assist guests at Prince Hotels properties, handling front desk, concierge, and guest experience responsibilities.", responsibilities: ["Check guests in and out efficiently and warmly", "Handle room reservations and modifications", "Respond to guest queries and arrange services", "Communicate hotel facilities and local attractions", "Resolve guest complaints professionally"] },
       { title: "Restaurant Service Staff", category: "F&B", summary: "Deliver courteous, efficient food and beverage service in Prince Hotels' restaurants, cafés, and banquet facilities.", responsibilities: ["Greet guests and take food and beverage orders", "Serve dishes and drinks promptly and accurately", "Maintain thorough knowledge of menus", "Clear and reset tables for subsequent guests", "Support the smooth running of breakfast and dinner services"] },
       { title: "Facility Maintenance Worker", category: "Engineering", summary: "Maintain Prince Hotels' buildings, guest rooms, and leisure facilities in excellent condition to support guest satisfaction.", responsibilities: ["Respond to maintenance requests from guest rooms and public areas", "Perform routine checks on HVAC, plumbing, and electrical systems", "Carry out minor repairs to fixtures and fittings", "Keep maintenance records up to date", "Escalate complex issues to the engineering manager"] },
+    featured: true,
       { title: "Kitchen Support Staff", category: "Kitchen", summary: "Assist Prince Hotels' professional kitchen teams with food preparation, plating, and kitchen hygiene across multiple restaurant outlets.", responsibilities: ["Wash, peel, and prep vegetables and ingredients", "Support line cooks during busy service periods", "Plate food items according to chef specifications", "Maintain kitchen cleanliness and organisation", "Follow all food hygiene and safety procedures"] },
       { title: "Housekeeping Associate", category: "Housekeeping", summary: "Clean and prepare guest rooms and public spaces to Prince Hotels' luxury presentation standards.", responsibilities: ["Service guest rooms including bedmaking and bathroom cleaning", "Replenish toiletries, amenities, and mini-bar items", "Report maintenance issues found in rooms", "Clean and maintain public areas and corridors", "Handle lost property in line with hotel policy"] },
     ],
@@ -197,6 +205,7 @@ const COMPANIES = [
     socialMedia: { linkedin: "https://www.linkedin.com/company/sompo-care" },
     jobs: [
       { title: "Certified Caregiver (SSW)", category: "Nursing Care", summary: "Provide direct care and daily living support to elderly residents in SOMPO Care's residential facilities across Japan, following individualised care plans.", responsibilities: ["Assist residents with bathing, dressing, and personal hygiene", "Support mealtimes and monitor nutritional intake", "Assist with mobility and transfer exercises", "Implement individualised care plans", "Document daily care observations in electronic records"] },
+    featured: true,
       { title: "Home Care Support Staff", category: "Home Care", summary: "Visit elderly clients in their own homes to provide personal care, light domestic support, and social engagement under SOMPO Care's home care division.", responsibilities: ["Provide personal care in clients' own homes", "Assist with light housekeeping and meal preparation", "Accompany clients on outings as required", "Monitor health changes and report to care coordinator", "Build trusting relationships with clients and families"] },
       { title: "Nursing Facility Worker", category: "Nursing Care", summary: "Work as part of the residential care team at a SOMPO Care nursing home, supporting registered nurses with daily care tasks and activities.", responsibilities: ["Support nursing staff with clinical care tasks", "Assist with therapeutic exercises and activities", "Accompany residents to medical appointments", "Help deliver recreational and cognitive activities", "Maintain accurate and timely care documentation"] },
       { title: "Day Service Care Attendant", category: "Day Care", summary: "Support elderly day-service clients at SOMPO Care's day centres, facilitating activities, meals, bathing, and transport assistance.", responsibilities: ["Welcome clients on arrival at the day centre", "Assist with bathing and personal care routines", "Facilitate group activities and cognitive programmes", "Serve and assist with meals", "Help clients board and alight transport vehicles"] },
@@ -525,6 +534,7 @@ async function main() {
       verifiedAt: now,
       verifiedBy: adminId,
       isActive: true,
+      featured: def.featured === true,
       createdAt: now,
       updatedAt: now,
     };
