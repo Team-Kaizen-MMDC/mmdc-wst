@@ -142,6 +142,78 @@ Additional backend notes (resume upload & AWS S3)
 - **Verify AWS config locally:** A verification script is available at `backend/verify-aws-config.js` and a convenience npm script `verify:aws` was added to `backend/package.json`. Run `cd backend && npm run verify:aws` to validate environment variables, assume-role, and basic S3 Put/Get/Delete operations.
 - **Frontend integration:** The frontend now fetches a presigned URL for viewing an uploaded resume on dashboard load (if present). See [backend/S3_RESUME_UPLOAD_GUIDE.md](backend/S3_RESUME_UPLOAD_GUIDE.md) and the frontend integration guide for usage.
 
+### S3 Resume Upload — Full Reference
+
+#### API endpoints
+
+| Method | Route | Auth | Purpose |
+|--------|-------|------|---------|
+| `POST` | `/api/v1/profile/resume` | JWT | Upload or overwrite resume |
+| `GET` | `/api/v1/profile/resume` | JWT | Get 5-minute presigned download URL |
+| `PUT` | `/api/v1/profile/resume` | JWT | Alias for upload |
+| `DELETE` | `/api/v1/profile/resume` | JWT | Delete from S3 + clear profile |
+
+#### Upload flow
+
+1. Frontend validates file type (PDF / DOC / DOCX) and sends `multipart/form-data` to `POST /api/v1/profile/resume`.
+2. Multer (memory storage) processes the buffer — never written to disk.
+3. Backend validates extension and MIME type server-side.
+4. `PutObjectCommand` stores the file at `resumes/{userId}/resume{ext}` with `ACL: private`.
+5. `resumePath` key is saved to the user's `UserProfile` document in MongoDB.
+6. A 5-minute presigned URL is returned immediately so the frontend can display a download link.
+
+#### Security measures
+
+| Measure | Detail |
+|---------|--------|
+| File type | Extension + MIME check — `.pdf`, `.doc`, `.docx` only |
+| Size limit | 10 MB (multer) |
+| Object ACL | `private` — no public access |
+| Presigned URL TTL | 5 minutes |
+| Bucket public access | Fully blocked (`block_public_acls`, `restrict_public_buckets`) |
+| Encryption | AES-256 server-side (S3-managed) |
+| Versioning | Enabled on bucket |
+| Key isolation | Key includes `userId` — users cannot access each other's files |
+| IAM permissions | Minimal: `s3:PutObject`, `s3:GetObject`, `s3:DeleteObject` on bucket only |
+| Auth | JWT `protect` middleware required on all resume routes |
+
+#### AWS credentials
+
+The backend uses the **Node provider chain** (IAM roles, not hardcoded keys):
+
+1. `AWS_ROLE_ARN` env var → STS `AssumeRole` (recommended for local dev)
+2. EC2 / ECS instance or task execution role (production)
+3. `AWS_PROFILE` named profile (`~/.aws/credentials`)
+4. `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY` (last resort, not recommended in production)
+
+**Required env vars:**
+
+```env
+AWS_REGION=ap-northeast-1
+RESUME_S3_BUCKET=japanssw-s3-84cafb59
+AWS_ROLE_ARN=arn:aws:iam::182371258083:role/mmdc-wst-s3-access-role-84cafb59
+```
+
+#### Infrastructure
+
+Managed via Terraform (`terraform/`):
+- `s3.tf` — bucket, public-access block, AES-256 encryption, versioning
+- `iam.tf` — IAM role + minimal S3 policy
+- `terraform-s3.yml` — GitHub Actions workflow (OIDC role assumption)
+
+#### Key files
+
+| File | Purpose |
+|------|---------|
+| `backend/src/utils/awsS3.js` | S3 client + credential provider chain |
+| `backend/src/controllers/profileController.js` | Upload / presigned URL / delete logic |
+| `backend/src/routes/profileRoutes.js` | Route definitions |
+| `backend/verify-aws-config.js` | End-to-end AWS setup verifier |
+| `backend/AWS_IAM_SETUP.md` | IAM role setup guide (4 deployment scenarios) |
+| `backend/S3_RESUME_UPLOAD_GUIDE.md` | Frontend integration guide |
+| `terraform/s3.tf` | S3 bucket Terraform config |
+| `terraform/iam.tf` | IAM role + policy Terraform config |
+
 ## Technologies
 
 - HTML5

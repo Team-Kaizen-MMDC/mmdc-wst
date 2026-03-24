@@ -11,6 +11,7 @@
   - [Internationalization (i18n)](#internationalization-i18n)
   - [Accessibility](#accessibility)
 - [Backend Integration Tests](#backend-integration-tests)
+- [S3 Resume Upload Tests](#s3-resume-upload-tests)
 - [Test Results Summary](#test-results-summary)
 - [Known Issues](#known-issues)
 - [Browser Compatibility](#browser-compatibility)
@@ -92,6 +93,12 @@ This document outlines the testing performed on the Japan SSW website, focusing 
    - Jobs routes (public listing, filters, employer-only endpoints)
    - Applications routes (apply, withdraw, my applications)
    - Health check endpoints
+
+6. **S3 Resume Upload**
+   - File upload (PDF / DOC / DOCX)
+   - Presigned URL generation (5-minute TTL)
+   - File deletion
+   - Security: MIME validation, size limit, ACL, key isolation
 
 ---
 
@@ -770,6 +777,147 @@ Test files live in [`backend/tests/integration/`](backend/tests/integration/). E
 | **Total** | **35** | **35** | **0** |
 
 > **Note:** `cd backend && npm run test:integration` runs these 35 tests against an ephemeral in-memory database. No environment variables or Atlas connection are needed.
+
+---
+
+## S3 Resume Upload Tests
+
+The S3 layer is verified through two complementary approaches: a live verification script that runs real AWS operations, and the existing `profile.routes.test.js` integration tests for the profile API surface.
+
+### Verification Script
+
+```bash
+cd backend && npm run verify:aws
+```
+
+`backend/verify-aws-config.js` validates the full AWS setup end-to-end:
+
+| Check | What it verifies |
+|-------|-----------------|
+| Environment variables | `AWS_REGION`, `RESUME_S3_BUCKET` present |
+| AWS credentials | STS `GetCallerIdentity` succeeds |
+| IAM role assumption | STS `AssumeRole` with `AWS_ROLE_ARN` succeeds |
+| S3 PutObject | Writes a test object to the bucket |
+| S3 GetObject | Reads the test object back |
+| S3 DeleteObject | Removes the test object |
+
+### Manual API Testing
+
+```bash
+# Upload a resume (replace TOKEN and /path/to/resume.pdf)
+curl -X POST http://localhost:3000/api/v1/profile/resume \
+  -H "Authorization: Bearer TOKEN" \
+  -F "resume=@/path/to/resume.pdf"
+
+# Get presigned download URL (valid 5 minutes)
+curl -X GET http://localhost:3000/api/v1/profile/resume \
+  -H "Authorization: Bearer TOKEN"
+
+# Delete resume
+curl -X DELETE http://localhost:3000/api/v1/profile/resume \
+  -H "Authorization: Bearer TOKEN"
+```
+
+### S3-001: Upload — Valid File
+
+**Objective:** Verify a valid PDF upload is stored in S3 and returns a presigned URL.
+
+**Steps:**
+1. Authenticate and obtain a JWT token.
+2. `POST /api/v1/profile/resume` with a `.pdf` file ≤ 10 MB.
+3. Verify response contains `resumeUrl` (presigned URL).
+4. Confirm `UserProfile.resumePath` is saved as `resumes/{userId}/resume.pdf`.
+
+**Expected Result:** 200, `resumeUrl` present, object visible in S3 console.
+
+---
+
+### S3-002: Upload — Invalid File Type
+
+**Objective:** Verify non-allowed file types are rejected before reaching S3.
+
+**Steps:**
+1. `POST /api/v1/profile/resume` with a `.txt` or `.exe` file.
+
+**Expected Result:** 400, `{"success": false}`, no object written to S3.
+
+---
+
+### S3-003: Upload — File Too Large
+
+**Objective:** Verify files over 10 MB are rejected by multer.
+
+**Steps:**
+1. `POST /api/v1/profile/resume` with a file > 10 MB.
+
+**Expected Result:** 413 Payload Too Large, no object written to S3.
+
+---
+
+### S3-004: Upload — Unauthenticated
+
+**Objective:** Verify unauthenticated requests are rejected.
+
+**Steps:**
+1. `POST /api/v1/profile/resume` without `Authorization` header.
+
+**Expected Result:** 401 Unauthorized.
+
+---
+
+### S3-005: Presigned URL — Expiry
+
+**Objective:** Verify presigned URLs expire after 5 minutes.
+
+**Steps:**
+1. Upload a resume and capture `resumeUrl`.
+2. Wait > 5 minutes.
+3. Attempt to access the presigned URL.
+
+**Expected Result:** AWS returns `403 AccessDenied` / `Request has expired`.
+
+---
+
+### S3-006: Delete — Removes from S3 and DB
+
+**Objective:** Verify deletion clears S3 object and `resumePath` in MongoDB.
+
+**Steps:**
+1. Upload a resume to confirm it exists.
+2. `DELETE /api/v1/profile/resume` with valid JWT.
+3. Check S3 — object should no longer exist.
+4. Check `UserProfile` — `resumePath` should be `undefined`.
+
+**Expected Result:** 200, S3 object gone, DB field cleared.
+
+---
+
+### S3-007: Key Isolation
+
+**Objective:** Verify users cannot access each other's resumes.
+
+**Steps:**
+1. Upload a resume as User A.
+2. Authenticate as User B.
+3. Construct User A's S3 key (`resumes/{userAId}/resume.pdf`) and attempt `GET /api/v1/profile/resume`.
+
+**Expected Result:** User B's presigned URL resolves to User B's own `resumePath` (not User A's). Direct S3 access without a presigned URL returns `403`.
+
+---
+
+### S3 Test Summary
+
+| Test | Method | Expected Status | Notes |
+|------|--------|-----------------|-------|
+| S3-001 | POST upload valid PDF | 200 | presigned URL in response |
+| S3-002 | POST invalid file type | 400 | rejected before S3 |
+| S3-003 | POST file > 10 MB | 413 | multer limit |
+| S3-004 | POST no auth token | 401 | JWT protect middleware |
+| S3-005 | GET presigned URL after 5 min | 403 (AWS) | URL expiry |
+| S3-006 | DELETE removes object + DB | 200 | S3 + MongoDB cleared |
+| S3-007 | Cross-user key access | 403 (AWS) | key isolation |
+
+> Run `npm run verify:aws` from `backend/` to validate the live AWS configuration before deploying.
 
 ---
 
