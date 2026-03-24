@@ -52,6 +52,8 @@ This repository holds the wireframe-driven static pages and a stylesheet ([asset
 
 -- **Backend API test guide:** [docs/BACKEND_API_TESTING.md](docs/BACKEND_API_TESTING.md) — backend Jest coverage, integration test harness, commands, and Postman usage.
 
+-- **Bug tracking & issue log:** [docs/BUG_TRACKING.md](docs/BUG_TRACKING.md) — issues found during testing, fixes applied, results, and remarks.
+
 For implementation details, testing guidance, and design docs, see the [docs/](docs/) folder.
 
 -- **Changelog:** [CHANGELOG.md](CHANGELOG.md) — release notes and history.
