@@ -541,17 +541,20 @@ in `backend/scripts/` to take and restore manual backups.
 ```bash
 cd backend
 
-# Full backup (all 34 collections)
+# Local JSON files only
 npm run backup
 
-# Backup specific collections only
-node scripts/backup-db.js --collections users,companies,jobs
+# Local JSON + push snapshot to Atlas  ← recommended
+npm run backup:atlas
 
-# Custom output path
-node scripts/backup-db.js --out /path/to/my-backups
+# Atlas only (no local files)
+npm run backup:atlas-only
+
+# Selective backup
+node scripts/backup-db.js --collections users,companies,jobs [--push-to-atlas]
 ```
 
-Output is a timestamped directory:
+**Local output** — timestamped directory:
 ```
 backups/
 └── 2026-03-24T14-46-12/
@@ -562,19 +565,39 @@ backups/
     └── …
 ```
 
+**Atlas snapshot** — stored in `japansswdb_backups` database on the same cluster:
+```
+japansswdb_backups (database)
+├── _sessions   ← one manifest doc per backup run
+├── users       ← docs stored as { session, chunk, docs: [...] }
+├── companies
+├── jobs
+└── …
+```
+Visible in MongoDB Compass / Atlas UI under the `japansswdb_backups` database.
+
 ### Restore
 
 ```bash
 cd backend
 
-# Additive restore (safe — won't overwrite existing docs)
-npm run restore -- --from ../backups/2026-03-24T14-46-12
+# List all Atlas snapshots
+npm run restore:atlas -- --list
 
-# Full replace (drops each collection first, then inserts)
+# Restore latest Atlas snapshot (additive)
+npm run restore:atlas -- --latest
+
+# Restore latest and drop collections first (full replace)
+npm run restore:atlas -- --latest --drop
+
+# Restore a specific Atlas snapshot
+npm run restore:atlas -- --session 2026-03-24T15-21-42
+
+# Restore from local JSON files
 npm run restore -- --from ../backups/2026-03-24T14-46-12 --drop
 
 # Restore specific collections only
-npm run restore -- --from ../backups/2026-03-24T14-46-12 --collections users,companies
+npm run restore:atlas -- --latest --collections users,companies,jobs
 ```
 
 ### Backup policy (recommended)
