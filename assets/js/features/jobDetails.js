@@ -3,8 +3,9 @@
 
 import { getCookie, getRoleFromToken } from "../modules/storage.js";
 
-const API_BASE =
-  window.location.port === "8000" ? "http://localhost:3000/api/v1" : "/api/v1";
+const API_BASE = ['localhost', '127.0.0.1'].includes(window.location.hostname)
+  ? 'http://localhost:3000/api/v1'
+  : '/api/v1';
 
 const jobDetail = document.getElementById("jobDetail");
 
@@ -40,20 +41,29 @@ function formatLocation(job) {
   return [city, prefecture].filter(Boolean).join(", ") || "Not specified";
 }
 
+function getAuthToken() {
+  // Prefer localStorage (set by signin.html and googleAuth.js)
+  const ls = localStorage.getItem("token");
+  if (ls) return ls;
+  // Fall back to cookie (set by OAuth session)
+  const cookie = getCookie("token");
+  return cookie ? decodeURIComponent(cookie) : null;
+}
+
 function getAuthHeaders() {
-  const token = getCookie("token");
+  const token = getAuthToken();
   const headers = { "Content-Type": "application/json" };
-  if (token) headers["Authorization"] = `Bearer ${decodeURIComponent(token)}`;
+  if (token) headers["Authorization"] = `Bearer ${token}`;
   return headers;
 }
 
 // ─── Auth state ─────────────────────────────────────────────────────────────
 
 function getAuthState() {
-  const isLoggedIn = getCookie("isLoggedIn") === "true";
-  const token = getCookie("token");
-  const role = getRoleFromToken();
-  return { isLoggedIn: isLoggedIn || !!token, role };
+  const token = getAuthToken();
+  const cookieLoggedIn = getCookie("isLoggedIn") === "true";
+  const role = token ? getRoleFromToken() : null;
+  return { isLoggedIn: cookieLoggedIn || !!token, role };
 }
 
 // ─── Already-applied check ───────────────────────────────────────────────────

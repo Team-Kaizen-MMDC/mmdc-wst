@@ -28,7 +28,8 @@
 5. [Database Relationships](#5-database-relationships)
 6. [Indexes and Performance](#6-indexes-and-performance)
 7. [Data Validation Rules](#7-data-validation-rules)
-8. [Appendix](#appendix)
+8. [Future Collections (Not Yet Implemented)](#8-future-collections-not-yet-implemented)
+9. [Appendix](#appendix)
 
 ---
 
@@ -64,6 +65,26 @@
 **Virtual:** `isLocked` → `true` when `lockUntil > Date.now()`
 
 **Instance methods:** `comparePassword()`, `getSignedJwtToken()`, `incLoginAttempts()`, `resetLoginAttempts()`
+
+**Document Structure:**
+
+```json
+{
+  "_id": "69c29ebcc446199ce308b6cc",
+  "email": "admin@japanssw.com",
+  "password": "$2b$12$92X6Z...hashed...",
+  "authProvider": "local",
+  "googleId": null,
+  "googleProfile": null,
+  "role": "admin",
+  "isActive": true,
+  "isEmailVerified": true,
+  "loginAttempts": 0,
+  "lockUntil": null,
+  "createdAt": "2026-03-24T14:25:01.003Z",
+  "updatedAt": "2026-03-24T14:25:01.003Z"
+}
+```
 
 ---
 
@@ -121,9 +142,56 @@ languages[]      : { language*, level (native|fluent|conversational|basic) }
 
 *(* = required)*
 
----
+**Document Structure:**
 
-### Company Domain
+```json
+{
+  "_id": "69c29ed2dc4b0d0ef130ffac",
+  "user": "69c29ed2dc4b0d0ef130ffa5",
+  "firstName": "Maria",
+  "lastName": "Santos",
+  "dateOfBirth": "1995-08-10T00:00:00.000Z",
+  "gender": "female",
+  "nationality": "Filipino",
+  "phone": "+63-917-000-0000",
+  "address": "Quezon City",
+  "prefecture": "Tokyo",
+  "city": "Shibuya",
+  "postalCode": "150-0001",
+  "japaneseLevel": "N3",
+  "availability": {
+    "startDate": "2026-06-01T00:00:00.000Z",
+    "visaStatus": "ssw-1",
+    "visaValidUntil": "2028-06-01T00:00:00.000Z",
+    "desiredIndustry": "Food Service",
+    "relocate": true,
+    "remote": false
+  },
+  "bio": "Experienced food service professional seeking SSW opportunities in Japan.",
+  "resumePath": "resumes/maria-santos-2026.pdf",
+  "cvPath": null,
+  "photoPath": null,
+  "profileCompleted": true,
+  "education": [
+    { "school": "De La Salle University", "degree": "Bachelor", "field": "Hospitality Management", "startDate": "2013-06-01T00:00:00.000Z", "endDate": "2017-04-01T00:00:00.000Z", "current": false }
+  ],
+  "experience": [
+    { "company": "Jollibee Foods Corp", "title": "Crew Leader", "description": "Managed front-of-house operations", "startDate": "2017-06-01T00:00:00.000Z", "endDate": "2026-01-01T00:00:00.000Z", "current": false }
+  ],
+  "skills": [
+    { "name": "Food Safety", "level": "advanced", "category": "Technical" }
+  ],
+  "certifications": [],
+  "languages": [
+    { "language": "Filipino", "level": "native" },
+    { "language": "Japanese", "level": "conversational" }
+  ],
+  "createdAt": "2026-03-24T14:25:22.668Z",
+  "updatedAt": "2026-03-24T14:25:22.668Z"
+}
+```
+
+---
 
 #### `companies`
 
@@ -131,39 +199,88 @@ languages[]      : { language*, level (native|fluent|conversational|basic) }
 |---|---|---|
 | `_id` | ObjectId | Primary key |
 | `name` | String | Required, unique, max 200 chars |
-| `slug` | String | Unique, URL-safe, auto-generated from name |
-| `logo` | String | URL |
+| `slug` | String | Unique, URL-safe, auto-generated from name pre-save |
+| `logo` | String | Absolute URL (`https://…`) or relative path (`/assets/images/company-logos/…`) |
 | `industry` | String | Required; enum of 16 industries (see §7) |
-| `size` | String | `"1-10"` \| `"11-50"` \| `"51-200"` \| `"201-500"` \| `"501-1000"` \| `"1000+"` |
-| `founded` | Number | Year |
+| `size` | String | `"1-10"` \| `"11-50"` \| `"51-200"` \| `"201-500"` \| `"501-1000"` \| `"1001-5000"` \| `"5000+"` |
+| `founded` | Number | Year (1800 – current year) |
 | `website` | String | URL |
-| `description` | String | max 2000 chars |
+| `description` | String | Required, max 2000 chars |
 | `tagline` | String | max 200 chars |
-| `address.street` | String | — |
-| `address.city` | String | — |
-| `address.prefecture` | String | — |
-| `address.postalCode` | String | — |
-| `address.country` | String | default `"Japan"` |
-| `contactEmail` | String | — |
-| `contactPhone` | String | — |
+| `location.prefecture` | String | Required |
+| `location.city` | String | Required |
+| `location.address` | String | max 300 chars |
+| `location.postalCode` | String | Format `123-4567` |
+| `contact.email` | String | Required |
+| `contact.phone` | String | Required |
+| `contact.fax` | String | Optional |
 | `socialMedia.linkedin` | String | — |
 | `socialMedia.facebook` | String | — |
 | `socialMedia.twitter` | String | — |
-| `benefits` | [String] | e.g. `["Health Insurance", "Visa Sponsorship"]` |
+| `socialMedia.instagram` | String | — |
+| `certifications` | [Object] | `{ name, issuer, date, expiryDate, certificateUrl }` |
+| `licenses` | [String] | — |
 | `owner` | ObjectId → `users` | Required; employer who created the company |
 | `admins` | [ObjectId → `users`] | Additional admin users |
-| `jobs` | [ObjectId → `jobs`] | Denormalized list of company job IDs |
-| `isVerified` | Boolean | default `false` |
+| `jobs` | [ObjectId → `jobs`] | Denormalized list of company job IDs (kept in sync) |
+| `isVerified` | Boolean | default `false`; set via `company.verify(userId)` |
+| `verifiedAt` | Date | Set when `isVerified` becomes `true` |
 | `verifiedBy` | ObjectId → `users` | Admin who verified the company |
-| `isActive` | Boolean | default `true` |
+| `isActive` | Boolean | default `true`; indexed |
+| `featured` | Boolean | default `false`; **`true` = always shown in Top Companies on homepage** |
+| `images` | [String] | Gallery image URLs |
+| `videos` | [String] | Video URLs |
 | `createdAt` | Date | auto |
 | `updatedAt` | Date | auto |
 
-**Virtuals:** `jobCount` (jobs array length), `employeeRange` (human-readable size string)
+**Virtuals:** `jobCount` (jobs array length), `employeeRange` (human-readable size range)
 
-**Instance method:** `verify(userId)` — sets `isVerified: true`, records `verifiedBy`
+**Instance methods:**
+- `verify(userId)` — sets `isVerified: true`, records `verifiedBy` & `verifiedAt`
+- `deactivate()` — sets `isActive: false`
 
-**Query helper:** `.verified()` — filters to `isVerified: true`
+**Query helpers:** `.active()` — `{ isActive: true }` · `.verified()` — `{ isVerified: true }`
+
+> **Featured companies:** The `featured` flag identifies the 9 companies with dedicated pages under `pages/companies/` (ANA, ANA InterContinental, Daikin, Kandenko, Mitsubishi Heavy Industries, Nissan, Prince Hotels, SOMPO Care, Yoshinoya). The homepage fetches `GET /api/v1/companies?featured=true` to ensure these always appear in the Top Companies section regardless of other companies in the DB. To feature a new company set `featured: true` via Atlas or the admin API.
+
+**Document Structure:**
+
+```json
+{
+  "_id": "69c29ec3c446199ce308b709",
+  "name": "ANA (All Nippon Airways)",
+  "slug": "ana-all-nippon-airways",
+  "industry": "Aviation",
+  "size": "5000+",
+  "founded": 1952,
+  "website": "https://www.ana.co.jp",
+  "description": "Japan's largest airline group offering aviation and ground handling roles under the SSW program.",
+  "logo": "/assets/images/company-logos/ANA.png",
+  "location": {
+    "prefecture": "Tokyo",
+    "city": "Minato",
+    "address": "2-5-2 Hanedakuko",
+    "postalCode": "144-0041"
+  },
+  "contact": {
+    "email": "ssw-recruit@ana.co.jp",
+    "phone": "+81-3-6735-1000",
+    "fax": null
+  },
+  "owner": "69c29ec0c446199ce308b6f5",
+  "admins": [],
+  "jobs": ["69c29ec4c446199ce308b780", "69c29ec4c446199ce308b782"],
+  "isVerified": true,
+  "isActive": true,
+  "featured": true,
+  "images": [],
+  "videos": [],
+  "certifications": [],
+  "licenses": [],
+  "createdAt": "2026-03-24T14:25:07.398Z",
+  "updatedAt": "2026-03-24T15:21:42.000Z"
+}
+```
 
 ---
 
@@ -229,35 +346,57 @@ languages[]      : { language*, level (native|fluent|conversational|basic) }
 - Validates `applicationInfo.startDate` is after `applicationInfo.deadline`
 - Auto-sets `status = "closed"` when deadline has passed and status is `"active"`
 
----
+**Document Structure:**
 
-#### `adminjobs`
-
-Admin-managed job postings with a simplified flat structure — no company/user foreign keys.
-
-| Field | Type | Notes |
-|---|---|---|
-| `_id` | ObjectId | Primary key |
-| `title` | String | Required |
-| `companyName` | String | Required (plain text, no FK) |
-| `industry` | String | Required |
-| `location.prefecture` | String | Required |
-| `location.city` | String | — |
-| `compensation.salaryMin` | Number | — |
-| `compensation.salaryMax` | Number | — |
-| `compensation.currency` | String | default `"JPY"` |
-| `summary` | String | Job description |
-| `employmentType` | String | `"Full-time"` \| `"Part-time"` \| `"Contract"` (default `"Full-time"`) |
-| `preferWorkLocation` | String | Preferred work location note |
-| `supportSponsorship` | String | Visa sponsorship info |
-| `japaneseLanguage` | String | Japanese language requirement |
-| `nativeLanguage` | String | Native language requirement |
-| `status` | String | `"active"` \| `"closed"` \| `"archived"` (default `"active"`) |
-| `isAdminPost` | Boolean | Always `true` |
-| `createdAt` | Date | auto |
-| `updatedAt` | Date | auto |
-
-> Managed exclusively via `POST/PATCH/DELETE /api/v1/admin-jobs`. Displayed in `pages/companyDashboard.html`.
+```json
+{
+  "_id": "69c29ec4c446199ce308b728",
+  "company": "69c29ec3c446199ce308b709",
+  "postedBy": "69c29ec0c446199ce308b6f5",
+  "title": "Food Service Staff (Hall)",
+  "industry": "Food Service",
+  "category": "Service",
+  "summary": "Serve customers and maintain dining area at ANA airport restaurant.",
+  "responsibilities": "Take orders; Serve food and beverages; Maintain cleanliness; Support kitchen staff during peak hours",
+  "requirements": "Japanese N4 or higher; Food handler certificate preferred; Customer service experience",
+  "requiredEducation": "High School",
+  "japaneseLevel": "N4",
+  "requiredExperience": {
+    "years": 1,
+    "description": "Food service or hospitality experience"
+  },
+  "requiredSkills": ["Customer Service", "Japanese Language", "Teamwork"],
+  "requiredCertifications": [],
+  "compensation": {
+    "salaryMin": 195000,
+    "salaryMax": 240000,
+    "currency": "JPY",
+    "period": "monthly",
+    "overtimePay": true
+  },
+  "location": {
+    "prefecture": "Tokyo",
+    "city": "Ota",
+    "remote": false,
+    "remoteType": "None"
+  },
+  "applicationInfo": {
+    "deadline": "2026-06-01T00:00:00.000Z",
+    "startDate": "2026-07-01T00:00:00.000Z",
+    "contactEmail": "ssw-recruit@ana.co.jp",
+    "applicationMethod": "Platform"
+  },
+  "status": "active",
+  "visibility": "public",
+  "views": 42,
+  "applications": [],
+  "featured": false,
+  "urgent": false,
+  "isDeleted": false,
+  "createdAt": "2026-03-24T14:25:08.421Z",
+  "updatedAt": "2026-03-24T14:25:08.421Z"
+}
+```
 
 ---
 
@@ -289,23 +428,46 @@ Admin-managed job postings with a simplified flat structure — no company/user 
 
 **Instance methods:** `canWithdraw()`, `canUpdateStatus()`
 
+**Document Structure:**
+
+```json
+{
+  "_id": "69c29ec6c446199ce308b78a",
+  "applicant": "69c29ebdc446199ce308b6d2",
+  "job": "69c29ec4c446199ce308b728",
+  "status": "reviewing",
+  "coverLetter": "I have 3 years of food service experience and am JLPT N3 certified. I am eager to grow my career in Japan with ANA.",
+  "resumePath": "resumes/applicant-cv-2026.pdf",
+  "employerNotes": "Strong candidate — proceed to interview",
+  "interview": {
+    "date": "2026-05-10T09:00:00.000Z",
+    "location": "Online (Zoom)",
+    "notes": "Confirm availability before booking",
+    "interviewers": ["HR Manager"]
+  },
+  "statusHistory": [
+    {
+      "status": "submitted",
+      "changedBy": "69c29ebdc446199ce308b6d2",
+      "date": "2026-03-24T14:25:10.904Z",
+      "notes": "Application submitted"
+    },
+    {
+      "status": "reviewing",
+      "changedBy": "69c29ec0c446199ce308b6f5",
+      "date": "2026-03-25T08:00:00.000Z",
+      "notes": "Under review by HR"
+    }
+  ],
+  "rejectionReason": null,
+  "createdAt": "2026-03-24T14:25:10.904Z",
+  "updatedAt": "2026-03-25T08:00:00.000Z"
+}
+```
+
 ---
 
 ### Content Domain
-
-#### `contents`
-
-| Field | Type | Notes |
-|---|---|---|
-| `_id` | ObjectId | Primary key |
-| `title` | String | — |
-| `slug` | String | URL-safe identifier |
-| `paragraphs` | Array | `[{ type: "mission"\|"vision"\|…, text: String }]` |
-| `type` | String | `"page"` \| `"article"` |
-| `language` | String | `"en"` \| `"ja"` |
-| `published` | Boolean | default `false` |
-| `createdAt` | Date | auto |
-| `updatedAt` | Date | auto |
 
 #### `about`
 
@@ -316,6 +478,34 @@ Admin-managed job postings with a simplified flat structure — no company/user 
 | `content` | String | — |
 | `language` | String | `"en"` \| `"ja"` |
 | `order` | Number | Display order |
+
+**Document Structure:**
+
+```json
+{
+  "_id": "69c29eb3ebbf9175f7811564",
+  "slug": "about",
+  "title": "About Japan SSW",
+  "mission": "To empower Filipino workers by providing transparent, ethical, and world-class recruitment services that open doors to rewarding careers in Japan.",
+  "vision": "To be the most trusted bridge between Filipino talent and Japanese employers, fostering mutual growth and cultural exchange through the SSW program.",
+  "paragraphs": [
+    {
+      "_id": "69c29eb315172875b9659683",
+      "text": "MMDC (Manpower Management Development Corporation) is a licensed recruitment agency dedicated to connecting Filipino skilled workers with quality employment opportunities in Japan."
+    },
+    {
+      "_id": "69c29eb315172875b9659684",
+      "text": "We specialize in Japan's Specified Skilled Worker (SSW) program, helping candidates navigate the visa process, skills assessments, and job placement from start to finish."
+    },
+    {
+      "_id": "69c29eb315172875b9659685",
+      "text": "Our team of experienced professionals provides end-to-end support — from pre-departure orientation and language training to on-ground assistance once you arrive in Japan."
+    }
+  ],
+  "createdAt": "2026-03-24T14:24:51.041Z",
+  "updatedAt": "2026-03-24T14:24:51.041Z"
+}
+```
 
 ---
 
@@ -507,13 +697,13 @@ curl -X PUT http://localhost:3000/api/v1/applications/<id>/status \
 | **Sign In Form** | Local email/password or Google OAuth login | `users` |
 | **Create Account** | Register as jobseeker or employer | `users` |
 | **Profile Dashboard** | View/edit jobseeker profile, resume, experience | `users`, `userprofiles` |
-| **Company Dashboard** | Admin/employer manages jobs and company info | `companies`, `adminjobs`, `jobs` |
+| **Company Dashboard** | Admin/employer manages jobs and company info | `companies`, `jobs` |
 | **Job Search & Listing** | Filter by industry, location, visa, salary | `jobs` |
 | **Job Detail Page** | Full job info + Apply button | `jobs`, `applications` |
 | **Application Form** | Submit cover letter + resume | `applications` |
 | **My Applications** | Jobseeker tracks application statuses | `applications` |
 | **Applications Management** | Employer reviews and updates statuses | `applications` |
-| **Admin Panel** | Manage users, companies, content, verify | `users`, `companies`, `contents` |
+| **Admin Panel** | Manage users, companies, verify employers | `users`, `companies` |
 
 ### Authentication Flow
 
@@ -667,6 +857,7 @@ erDiagram
         Array admins
         Array jobs
         Boolean isVerified
+        Boolean featured
         ObjectId verifiedBy FK
     }
 
@@ -691,14 +882,6 @@ erDiagram
         String status
         Array statusHistory
     }
-
-    AdminJob {
-        ObjectId _id PK
-        String title
-        String companyName
-        Object compensation
-        String status
-    }
 ```
 
 ### Relationship Summary
@@ -712,7 +895,6 @@ erDiagram
 | User → Job (postedBy) | One-to-Many | Employers post many jobs |
 | Company → Job | One-to-Many | Company has many job postings |
 | Job → Application | One-to-Many | Job receives many applications |
-| AdminJob | Standalone | No foreign key references |
 
 ---
 
@@ -740,11 +922,12 @@ erDiagram
 ### `companies`
 
 ```javascript
-{ name: 1 }                                        // unique
-{ slug: 1 }                                        // unique
-{ industry: 1, isActive: 1, isVerified: 1 }        // compound
-{ "location.prefecture": 1, isActive: 1 }           // compound
-{ name: "text", description: "text" }               // full-text search
+{ name: 1 }                                         // unique
+{ slug: 1 }                                         // unique
+{ industry: 1, isActive: 1, isVerified: 1 }         // compound
+{ "location.prefecture": 1, isActive: 1 }            // compound
+{ featured: 1, isActive: 1 }                         // homepage featured query
+{ name: "text", description: "text" }                // full-text search
 ```
 
 ### `jobs`
@@ -768,12 +951,6 @@ erDiagram
 { applicant: 1, job: 1 }   // unique compound — prevents duplicate applications
 { status: 1 }
 { createdAt: -1 }
-```
-
-### `contents`
-
-```javascript
-{ title: "text", "paragraphs.text": "text" }   // full-text search
 ```
 
 ### Performance Notes
@@ -813,9 +990,6 @@ erDiagram
 | | `visibility` | Enum: `public`, `private`, `rso-only` |
 | | `applicationInfo.deadline` | Must not be in the past (new jobs) |
 | | `applicationInfo.startDate` | Must be after `deadline` |
-| **adminjobs** | `title`, `companyName`, `industry` | Required |
-| | `employmentType` | Enum: `Full-time`, `Part-time`, `Contract` |
-| | `status` | Enum: `active`, `closed`, `archived` |
 | **applications** | `status` | Enum: `submitted`, `reviewing`, `interview`, `offer`, `accepted`, `rejected`, `withdrawn` |
 | | `coverLetter` | max 2000 chars |
 | | `{ applicant, job }` | Unique compound — no duplicate applications |
@@ -858,6 +1032,124 @@ graph TD
 
 ---
 
+## 8. Future Collections (Not Yet Implemented)
+
+The following collections exist in the Atlas database but are **not yet wired to any model, controller, or route**. They are reserved for planned features and should not be dropped. Each is labelled with its intended purpose.
+
+> 🚧 = planned feature &nbsp;|&nbsp; 🔁 = will replace a temporary workaround &nbsp;|&nbsp; ⚠️ = overlaps with embedded sub-doc (needs decision before implementing)
+
+### Notifications & Messaging
+
+#### `notification` 🚧
+Push/in-app notifications for job seekers (new match, application status change) and employers (new applicant). Will use a standard `{ user, type, message, read, createdAt }` shape.
+
+#### `authSessions` 🔁
+Persistent JWT refresh-token sessions. Currently tokens are stateless; this collection will store `{ user, token, expiresAt, ipAddress, userAgent }` when sliding-session / refresh-token rotation is added.
+
+#### `emailVerification` 🔁
+Dedicated email-verification tokens. Currently handled via `emailVerificationToken` fields directly on `users`. Will be extracted here for cleaner querying and TTL index expiry.
+
+#### `passwordReset` 🔁
+Dedicated password-reset tokens. Same rationale as `emailVerification` — currently on `users`, will be migrated here with a TTL index.
+
+---
+
+### Job & Application Enhancements
+
+#### `jobBookmarks` 🚧
+Saved/bookmarked jobs per job seeker. Shape: `{ user, job, createdAt }`. Powers a "Saved Jobs" tab on the job-seeker dashboard.
+
+#### `jobApplications` 🔁
+Intended to supersede `applications` with a richer event-sourced schema (status history log). Migration plan needed before activating.
+
+#### `jobApplictionEvents` 🚧
+Audit log of state transitions on a job application (`submitted → reviewing → accepted`). Shape: `{ application, fromStatus, toStatus, actor, note, createdAt }`. *(Note: typo in collection name — will be renamed `jobApplicationEvents` when implemented.)*
+
+#### `jobCategories` 🚧
+Master list of SSW industry categories and sub-categories for structured filtering. Currently industries are a plain enum on the `jobs` schema.
+
+#### `moderationFlags` 🚧
+Content moderation reports on jobs or companies (`{ targetType, targetId, reporter, reason, status }`). For admin review queue.
+
+---
+
+### Company Enhancements
+
+#### `companyHighlights` ⚠️
+Company achievement badges / highlights. Currently embedded as `companies.highlights[]`. Separate collection needed only if highlights grow large or require independent querying.
+
+#### `companyContacts` ⚠️
+Named contact persons at a company (HR manager, recruiter). Currently embedded as `companies.contact{}`. Extract when multi-contact support is required.
+
+#### `companyLocations` ⚠️
+Multiple office/branch locations per company. Currently single `location` object on `companies`. Extract when multi-location support is needed.
+
+---
+
+### Agency / RSO Feature
+
+#### `agencies` 🚧
+Registered Support Organizations (RSOs) / recruitment agencies that sponsor SSW workers. Core of the planned agency portal.
+
+#### `agencyHighlights` 🚧
+Achievement highlights for agencies (placements, certifications). Mirrors `companyHighlights` pattern.
+
+#### `agencyServices` 🚧
+Services offered by an agency (visa support, housing, language training). Shape: `{ agency, serviceType, description, price }`.
+
+---
+
+### Admin & Audit
+
+#### `adminjobs` 🔁
+Legacy simplified job-posting collection with a flat schema (`companyName` as plain string, no FK to `companies`). Was used by an early admin dashboard (`/api/v1/admin-jobs`, `dashboardLoader.js`). Superseded by the main `jobs` collection which uses proper company/user references. When an admin job-management UI is rebuilt, it should post to `jobs` with `role: "admin"` authorization instead.
+
+#### `adminActions` 🚧
+Audit log of admin-performed actions (`{ admin, action, targetType, targetId, before, after, createdAt }`). For compliance and change tracking.
+
+#### `adminRoles` 🚧
+Fine-grained permission sets for admin users (e.g., `content-moderator`, `user-manager`). Currently all admins have full access via `role: "admin"`.
+
+#### `adminAccounts` 🔁
+Legacy collection — superseded by `users` with `role: "admin"`. Will be dropped once confirmed empty and no legacy references remain.
+
+---
+
+### Content & CMS
+
+#### `contents` 🔁
+Legacy CMS collection intended for general page content (paragraphs, mission, vision). Was wired to a native-driver `contentController` (`POST /api/content`) that was never registered in the main router and always had 0 documents. All current content is served from the `about` collection. If a full CMS is needed, rebuild against `contents` (or `homepageSections`) with proper auth guards.
+
+#### `homepageBanner` 🚧
+Editable hero banners for `index.html` managed by admins. Shape: `{ title, subtitle, imageUrl, ctaText, ctaUrl, isActive, order }`.
+
+#### `homepageSections` 🚧
+Dynamic homepage content blocks (feature highlights, testimonials, stats). Allows non-developer content editing.
+
+#### `aboutContent` 🔁
+Legacy duplicate of `about`. Will be dropped once `about` is confirmed as the single source of truth for all About page content.
+
+---
+
+### Profile Sub-collections (currently embedded)
+
+#### `education` ⚠️
+Currently embedded in `userprofiles.education[]`. Extract only if education records need to be independently searched or linked across profiles.
+
+#### `experiences` ⚠️
+Currently embedded in `userprofiles.experience[]`. Extract only if work experience needs richer querying or linking.
+
+#### `skills` ⚠️
+Currently embedded in `userprofiles.skills[]`. Extract to a separate collection if a global skills taxonomy (with aliases, JLPT mapping) is needed.
+
+#### `availabilityPreferences` ⚠️
+Currently embedded in `userprofiles.availability{}`. Extract if job-matching algorithm needs to query availability independently.
+
+#### `userAccounts` 🔁
+Legacy collection — superseded by `users`. Will be dropped once confirmed empty and no legacy references remain.
+
+---
+
 ## Appendix
 
 ### Environment Variables
@@ -897,9 +1189,16 @@ Location: `backend/` and `backend/scripts/`
 | Script | npm Command | Description |
 |---|---|---|
 | `seedDatabase.js` | `npm run seed` | Basic seed data |
-| `seedDatabase-comprehensive.js` | `npm run seed:full` | Full seed (clears first) |
+| `seedDatabase-comprehensive.js` | `npm run seed:full` | Full seed — 21 users, 10 companies, 44 jobs, 20 applications (clears first) |
 | `seedDatabase.clean.js` | `npm run seed:clean` | Clean, safe seed |
 | `scripts/create-admin.js` | `npm run seed:admin` | Create / reset superadmin User + UserProfile |
+| `scripts/seed-about.js` | `npm run seed:about` | Seed About page content |
+| `scripts/seed-featured-companies.js` | `npm run seed:featured` | Seed 9 featured companies + 10 additional companies (19 total) + 133 SSW jobs with `featured:true` on the first 9 |
+| `scripts/backup-db.js` | `npm run backup` | Manual backup — exports all collections to `backups/<timestamp>/` JSON |
+| `scripts/backup-db.js` | `npm run backup:atlas` | Local JSON backup + push snapshot to `japansswdb_backups` Atlas database |
+| `scripts/backup-db.js` | `npm run backup:atlas-only` | Atlas-only snapshot (no local files) |
+| `scripts/restore-db.js` | `npm run restore` | Restore from local JSON backup directory |
+| `scripts/restore-from-atlas.js` | `npm run restore:atlas` | Restore from Atlas snapshot (`--list`, `--latest`, `--session`, `--drop`) |
 | `scripts/list-collections.js` | — | Audit collections |
 | `scripts/check-db.js` | — | Check DB connectivity |
 
@@ -929,14 +1228,80 @@ ADMIN_EMAIL=me@test.local ADMIN_PASSWORD=MyPass@99 npm run seed:admin
 
 > ⚠️ This account lives in `japansswdb` on MongoDB Atlas. Do not use in production.
 
-### Backup Strategy
+#### `seed-featured-companies.js` — Featured Companies Seed
 
-1. **Automated Continuous Backups** — MongoDB Atlas automatic backups
-2. **Pre-Deployment Snapshot** — Manual backup before schema migrations
-3. **Retention Policy** — Daily for 7 days, weekly for 4 weeks
+Seeds the 9 companies with dedicated pages under `pages/companies/` plus 10 additional SSW companies. Idempotent — skips companies that already exist by slug.
+
+```bash
+cd backend
+
+npm run seed:featured            # seed all 19 companies (skip existing)
+npm run seed:featured -- --drop  # drop and re-seed all 19 companies
+npm run seed:featured -- --dry-run  # preview without writing
+```
+
+**Featured companies seeded (`featured: true`):** ANA, ANA InterContinental, Daikin Industries, Kandenko, Mitsubishi Heavy Industries, Nissan Motor Company, Prince Hotels & Resorts, SOMPO Care, Yoshinoya.
+
+**Additional companies seeded (`featured: false`):** Toyota Motor Corporation, Japan Airlines (JAL), Yamato Transport, Komatsu Ltd., Obayashi Corporation, Maruha Nichiro, Seven & i Food Systems, Nihon Anzen Seimei Care, ISS Facility Services Japan, JFE Steel Corporation.
+
+### Backup & Restore Strategy
+
+> **Atlas M0 free tier has no automated backups.** All backups are manual using the scripts below.
+
+#### Local JSON backup
+
+Exports every collection to a timestamped directory of `.json` files at `backups/<ISO-timestamp>/`. The `backups/` directory is gitignored.
+
+```bash
+cd backend
+
+npm run backup                                       # local JSON only
+npm run backup -- --collections users,companies,jobs # selective
+```
+
+#### Atlas cloud snapshot
+
+Pushes a snapshot into the `japansswdb_backups` database on the same Atlas cluster. Visible in MongoDB Compass / Atlas UI. Collections are stored as chunked documents `{ session, chunk, docs: [...] }` under `_sessions` (manifest) + one collection per source collection.
+
+```bash
+npm run backup:atlas        # local JSON + Atlas snapshot (recommended)
+npm run backup:atlas-only   # Atlas only
+```
+
+#### Restore
+
+```bash
+# From Atlas snapshot
+npm run restore:atlas -- --list                             # list snapshots
+npm run restore:atlas -- --latest                           # restore newest
+npm run restore:atlas -- --session 2026-03-24T15-21-42     # specific session
+npm run restore:atlas -- --latest --drop                    # full replace
+
+# From local JSON
+npm run restore -- --from ../backups/2026-03-24T15-21-42 --drop
+npm run restore -- --from ../backups/<ts> --collections users,companies
+```
+
+#### Recommended backup triggers
+
+| Event | Command |
+|---|---|
+| Before any seed / import operation | `npm run backup:atlas` |
+| Before a co-developer data migration | `npm run backup:atlas` |
+| After full reseed completes cleanly | `npm run backup:atlas` |
+| Weekly (manual cadence) | `npm run backup:atlas` |
+
+> Never commit backup JSON files — they may contain PII.
 
 ---
 
-**Document Version:** 2.0
-**Last Updated:** March 20, 2026
+**Document Version:** 2.4
+**Last Updated:** March 24, 2026
+**Changelog:**
+- v2.4 (2026-03-24): Added Document Structure JSON examples for all 6 active collections (users, userprofiles, companies, jobs, applications, about)
+- v2.3 (2026-03-24): Removed `adminjobs` and `contents` from active collections; updated ERD, UI flow, indexes, validation; moved to Section 8
+- v2.2 (2026-03-24): Added Section 8 — Future Collections (26 collections documented with planned purpose, status, and implementation notes)
+- v2.1 (2026-03-24): Updated Company schema (`featured`, `location.*`, `contact.*`, `size` enum, logo path), indexes, seed scripts (seed:featured, backup, restore), backup strategy (Atlas snapshots via japansswdb_backups)
+- v2.0 (2026-03-20): Initial comprehensive schema documentation
+
 **Next Review:** On any schema change

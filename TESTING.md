@@ -10,6 +10,8 @@
   - [Mobile Responsiveness](#mobile-responsiveness)
   - [Internationalization (i18n)](#internationalization-i18n)
   - [Accessibility](#accessibility)
+- [Backend Integration Tests](#backend-integration-tests)
+- [S3 Resume Upload Tests](#s3-resume-upload-tests)
 - [Test Results Summary](#test-results-summary)
 - [Known Issues](#known-issues)
 - [Browser Compatibility](#browser-compatibility)
@@ -24,10 +26,11 @@ This document outlines the testing performed on the Japan SSW website, focusing 
 - Internationalization (English/Japanese language toggle)
 - Responsive design and accessibility
 - Cross-browser compatibility
+- Backend API integration (auth, companies, jobs, applications)
 
-**Testing Period:** October 2025  
+**Testing Period:** October 2025 – March 2026
 **Testers:** Development Team  
-**Test Types:** Manual Testing, Functional Testing, Accessibility Testing
+**Test Types:** Manual Testing, Functional Testing, Accessibility Testing, Backend Integration Testing
 
 ---
 
@@ -83,6 +86,19 @@ This document outlines the testing performed on the Japan SSW website, focusing 
    - ARIA attributes
    - Color contrast (WCAG AA)
    - Screen reader compatibility
+
+5. **Backend API Integration**
+   - Auth routes (register, login, JWT verification)
+   - Companies routes (public listing, auth guards)
+   - Jobs routes (public listing, filters, employer-only endpoints)
+   - Applications routes (apply, withdraw, my applications)
+   - Health check endpoints
+
+6. **S3 Resume Upload**
+   - File upload (PDF / DOC / DOCX)
+   - Presigned URL generation (5-minute TTL)
+   - File deletion
+   - Security: MIME validation, size limit, ACL, key isolation
 
 ---
 
@@ -628,6 +644,283 @@ offcanvasEl.addEventListener("hidden.bs.offcanvas", () => {
 
 ---
 
+## Backend Integration Tests
+
+Automated integration tests for the Express/MongoDB backend API. Tests run using **Jest + Supertest** with an in-memory MongoDB instance (`mongodb-memory-server`) — no real Atlas connection required.
+
+### Setup & Running
+
+```bash
+# One-time: install backend dependencies
+cd backend && npm install
+
+# Run all backend tests
+npm test
+
+# Run integration tests only
+npm run test:integration
+```
+
+Test files live in [`backend/tests/integration/`](backend/tests/integration/). Environment variables (`MONGODB_URI`, `JWT_SECRET`, etc.) are injected automatically by `setup.js` for the in-memory server.
+
+---
+
+### BIT-001: Health Endpoints
+
+**File:** `health.test.js`
+
+| Test | Expected | Result |
+|------|----------|--------|
+| `GET /health` returns 200 with `status: "success"` | 200 | ✅ PASS |
+| `GET /api/health` (legacy) returns `ok: true` | 200 | ✅ PASS |
+| Unknown API route returns 404 | 404 | ✅ PASS |
+
+---
+
+### BIT-002: Authentication — Register
+
+**File:** `auth.test.js`
+
+| Test | Expected | Result |
+|------|----------|--------|
+| Register new user returns token | 201 | ✅ PASS |
+| Register with missing email | 400 | ✅ PASS |
+| Register with short password (<8 chars) | 400 | ✅ PASS |
+| Register duplicate email | 409/400 | ✅ PASS |
+
+---
+
+### BIT-003: Authentication — Login
+
+**File:** `auth.test.js`
+
+| Test | Expected | Result |
+|------|----------|--------|
+| Login with valid credentials returns token | 200 | ✅ PASS |
+| Login with wrong password | 401 | ✅ PASS |
+| Login with non-existent email | 401 | ✅ PASS |
+| Login with empty body | 400 | ✅ PASS |
+
+---
+
+### BIT-004: Authentication — Get Current User
+
+**File:** `auth.test.js`
+
+| Test | Expected | Result |
+|------|----------|--------|
+| `GET /api/v1/auth/me` with valid JWT returns user | 200 | ✅ PASS |
+| `GET /api/v1/auth/me` with no token | 401 | ✅ PASS |
+| `GET /api/v1/auth/me` with invalid token | 401 | ✅ PASS |
+
+---
+
+### BIT-005: Companies
+
+**File:** `companies.test.js`
+
+| Test | Expected | Result |
+|------|----------|--------|
+| `GET /api/v1/companies` returns 200 and array | 200 | ✅ PASS |
+| Pagination param `?limit=5` accepted | 200 | ✅ PASS |
+| `POST /api/v1/companies` unauthenticated | 401 | ✅ PASS |
+| `POST /api/v1/companies` as admin | 201/403 | ✅ PASS |
+| `GET /api/v1/companies/:id` non-existent ObjectId | 404 | ✅ PASS |
+| `GET /api/v1/companies/:id` invalid ID format | 400/404 | ✅ PASS |
+
+---
+
+### BIT-006: Jobs
+
+**File:** `jobs.test.js`
+
+| Test | Expected | Result |
+|------|----------|--------|
+| `GET /api/v1/jobs` returns 200 and array | 200 | ✅ PASS |
+| Pagination params `?page=1&limit=10` accepted | 200 | ✅ PASS |
+| Filter param `?industry=Manufacturing` accepted | 200 | ✅ PASS |
+| `GET /api/v1/jobs/:id` non-existent ObjectId | 404 | ✅ PASS |
+| `GET /api/v1/jobs/:id` invalid ID format | 400/404 | ✅ PASS |
+| `GET /api/v1/jobs/my/jobs` no token | 401 | ✅ PASS |
+| `GET /api/v1/jobs/my/jobs` as jobseeker | 200/403 | ✅ PASS |
+| `POST /api/v1/jobs` unauthenticated | 401 | ✅ PASS |
+
+---
+
+### BIT-007: Applications
+
+**File:** `applications.test.js`
+
+| Test | Expected | Result |
+|------|----------|--------|
+| `GET /api/v1/applications/me` no token | 401 | ✅ PASS |
+| `GET /api/v1/applications/me` authenticated (empty) | 200 | ✅ PASS |
+| `POST /api/v1/jobs/:jobId/apply` unauthenticated | 401 | ✅ PASS |
+| Apply to non-existent job | 404/400 | ✅ PASS |
+| Apply with cover letter > 2000 chars | 400/404 | ✅ PASS |
+| `DELETE /api/v1/applications/:id` unauthenticated | 401 | ✅ PASS |
+| Delete non-existent application (authenticated) | 404/403 | ✅ PASS |
+
+---
+
+### Integration Test Summary
+
+| Suite | Tests | Passed | Failed |
+|-------|-------|--------|--------|
+| Health | 3 | 3 | 0 |
+| Auth — Register | 4 | 4 | 0 |
+| Auth — Login | 4 | 4 | 0 |
+| Auth — Get Me | 3 | 3 | 0 |
+| Companies | 6 | 6 | 0 |
+| Jobs | 8 | 8 | 0 |
+| Applications | 7 | 7 | 0 |
+| **Total** | **35** | **35** | **0** |
+
+> **Note:** `cd backend && npm run test:integration` runs these 35 tests against an ephemeral in-memory database. No environment variables or Atlas connection are needed.
+
+---
+
+## S3 Resume Upload Tests
+
+The S3 layer is verified through two complementary approaches: a live verification script that runs real AWS operations, and the existing `profile.routes.test.js` integration tests for the profile API surface.
+
+### Verification Script
+
+```bash
+cd backend && npm run verify:aws
+```
+
+`backend/verify-aws-config.js` validates the full AWS setup end-to-end:
+
+| Check | What it verifies |
+|-------|-----------------|
+| Environment variables | `AWS_REGION`, `RESUME_S3_BUCKET` present |
+| AWS credentials | STS `GetCallerIdentity` succeeds |
+| IAM role assumption | STS `AssumeRole` with `AWS_ROLE_ARN` succeeds |
+| S3 PutObject | Writes a test object to the bucket |
+| S3 GetObject | Reads the test object back |
+| S3 DeleteObject | Removes the test object |
+
+### Manual API Testing
+
+```bash
+# Upload a resume (replace TOKEN and /path/to/resume.pdf)
+curl -X POST http://localhost:3000/api/v1/profile/resume \
+  -H "Authorization: Bearer TOKEN" \
+  -F "resume=@/path/to/resume.pdf"
+
+# Get presigned download URL (valid 5 minutes)
+curl -X GET http://localhost:3000/api/v1/profile/resume \
+  -H "Authorization: Bearer TOKEN"
+
+# Delete resume
+curl -X DELETE http://localhost:3000/api/v1/profile/resume \
+  -H "Authorization: Bearer TOKEN"
+```
+
+### S3-001: Upload — Valid File
+
+**Objective:** Verify a valid PDF upload is stored in S3 and returns a presigned URL.
+
+**Steps:**
+1. Authenticate and obtain a JWT token.
+2. `POST /api/v1/profile/resume` with a `.pdf` file ≤ 10 MB.
+3. Verify response contains `resumeUrl` (presigned URL).
+4. Confirm `UserProfile.resumePath` is saved as `resumes/{userId}/resume.pdf`.
+
+**Expected Result:** 200, `resumeUrl` present, object visible in S3 console.
+
+---
+
+### S3-002: Upload — Invalid File Type
+
+**Objective:** Verify non-allowed file types are rejected before reaching S3.
+
+**Steps:**
+1. `POST /api/v1/profile/resume` with a `.txt` or `.exe` file.
+
+**Expected Result:** 400, `{"success": false}`, no object written to S3.
+
+---
+
+### S3-003: Upload — File Too Large
+
+**Objective:** Verify files over 10 MB are rejected by multer.
+
+**Steps:**
+1. `POST /api/v1/profile/resume` with a file > 10 MB.
+
+**Expected Result:** 413 Payload Too Large, no object written to S3.
+
+---
+
+### S3-004: Upload — Unauthenticated
+
+**Objective:** Verify unauthenticated requests are rejected.
+
+**Steps:**
+1. `POST /api/v1/profile/resume` without `Authorization` header.
+
+**Expected Result:** 401 Unauthorized.
+
+---
+
+### S3-005: Presigned URL — Expiry
+
+**Objective:** Verify presigned URLs expire after 5 minutes.
+
+**Steps:**
+1. Upload a resume and capture `resumeUrl`.
+2. Wait > 5 minutes.
+3. Attempt to access the presigned URL.
+
+**Expected Result:** AWS returns `403 AccessDenied` / `Request has expired`.
+
+---
+
+### S3-006: Delete — Removes from S3 and DB
+
+**Objective:** Verify deletion clears S3 object and `resumePath` in MongoDB.
+
+**Steps:**
+1. Upload a resume to confirm it exists.
+2. `DELETE /api/v1/profile/resume` with valid JWT.
+3. Check S3 — object should no longer exist.
+4. Check `UserProfile` — `resumePath` should be `undefined`.
+
+**Expected Result:** 200, S3 object gone, DB field cleared.
+
+---
+
+### S3-007: Key Isolation
+
+**Objective:** Verify users cannot access each other's resumes.
+
+**Steps:**
+1. Upload a resume as User A.
+2. Authenticate as User B.
+3. Construct User A's S3 key (`resumes/{userAId}/resume.pdf`) and attempt `GET /api/v1/profile/resume`.
+
+**Expected Result:** User B's presigned URL resolves to User B's own `resumePath` (not User A's). Direct S3 access without a presigned URL returns `403`.
+
+---
+
+### S3 Test Summary
+
+| Test | Method | Expected Status | Notes |
+|------|--------|-----------------|-------|
+| S3-001 | POST upload valid PDF | 200 | presigned URL in response |
+| S3-002 | POST invalid file type | 400 | rejected before S3 |
+| S3-003 | POST file > 10 MB | 413 | multer limit |
+| S3-004 | POST no auth token | 401 | JWT protect middleware |
+| S3-005 | GET presigned URL after 5 min | 403 (AWS) | URL expiry |
+| S3-006 | DELETE removes object + DB | 200 | S3 + MongoDB cleared |
+| S3-007 | Cross-user key access | 403 (AWS) | key isolation |
+
+> Run `npm run verify:aws` from `backend/` to validate the live AWS configuration before deploying.
+
+---
+
 ## Test Results Summary
 
 | Category              | Total Tests | Passed | Failed | Pass Rate |
@@ -704,13 +997,14 @@ offcanvasEl.addEventListener("hidden.bs.offcanvas", () => {
 
 ## Conclusion
 
-All 22 test cases have passed successfully. The Japan SSW website demonstrates:
+All 22 frontend test cases have passed successfully, and all 35 backend integration tests pass. The Japan SSW website demonstrates:
 
 - ✅ Robust mobile navigation with offcanvas menu
 - ✅ Full internationalization support (EN/JP)
 - ✅ WCAG AA accessibility compliance
 - ✅ Cross-browser compatibility
 - ✅ Responsive design across all breakpoints
+- ✅ Backend API auth, CRUD, and edge-case handling verified by automated integration tests
 
 The i18n implementation successfully handles locale loading on GitHub Pages, provides proper fallbacks, and persists user language preferences. All critical accessibility requirements are met with proper ARIA attributes, keyboard navigation, and screen reader support.
 
@@ -718,6 +1012,6 @@ The i18n implementation successfully handles locale loading on GitHub Pages, pro
 
 ---
 
-**Document Version:** 1.0  
-**Last Updated:** October 14, 2025  
+**Document Version:** 1.1  
+**Last Updated:** March 24, 2026  
 **Next Review:** Post-deployment validation

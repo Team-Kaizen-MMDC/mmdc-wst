@@ -4,15 +4,19 @@ const API_BASE_URL = (typeof _API !== 'undefined' && _API)
   ? _API
   : (['localhost','127.0.0.1'].includes(window.location.hostname) ? 'http://localhost:3000/api/v1' : '/api/v1');
 
-const jobListings = document.getElementById("jobListings");
-const noResults = document.getElementById("noResults");
-const resultCount = document.getElementById("resultCount");
-const resultCount2 = document.getElementById("resultCount-2");
-const searchInput = document.getElementById("searchInput");
-const clearFiltersBtn = document.getElementById("clearFilters");
+const jobListings       = document.getElementById("jobListings");
+const noResults         = document.getElementById("noResults");
+const resultCount       = document.getElementById("resultCount");
+const resultCount2      = document.getElementById("resultCount-2");
+const searchInput       = document.getElementById("searchInput");
+const clearFiltersBtn   = document.getElementById("clearFilters");
 const filterAnnouncement = document.getElementById("filterAnnouncement");
+const paginationContainer = document.getElementById("jobPagination");
+
+const PAGE_SIZE = 10; // jobs per page
 
 let allJobs = [];
+let currentPage = 1;
 
 let filters = {
   search: "",
@@ -22,6 +26,8 @@ let filters = {
   industry: "all",
   minSalary: 0,
 };
+
+// ─── Utilities ────────────────────────────────────────────────────────────────
 
 function escapeHTML(value = "") {
   return String(value)
@@ -46,37 +52,28 @@ function formatSalary(job) {
   const min = job.compensation?.salaryMin || 0;
   const max = job.compensation?.salaryMax || 0;
   const currency = job.compensation?.currency || "JPY";
-
-  if (min && max) {
-    return `${currency} ${Number(min).toLocaleString()} - ${Number(max).toLocaleString()}`;
-  }
-
-  if (min) {
-    return `${currency} ${Number(min).toLocaleString()}`;
-  }
-
+  if (min && max) return `${currency} ${Number(min).toLocaleString()} – ${Number(max).toLocaleString()}`;
+  if (min)        return `${currency} ${Number(min).toLocaleString()}`;
   return "Not specified";
 }
 
 function getSupportValue(job) {
-  if (job.support === true) return "yes";
-  if (job.support === false) return "no";
-  if (job.visaSupport === true) return "yes";
-  if (job.visaSupport === false) return "no";
+  if (job.support === true   || job.visaSupport === true)  return "yes";
+  if (job.support === false  || job.visaSupport === false) return "no";
   return "all";
 }
 
+// ─── Render ───────────────────────────────────────────────────────────────────
+
 function renderNoResults(show) {
-  if (!noResults) return;
-  noResults.classList.toggle("d-none", !show);
+  noResults?.classList.toggle("d-none", !show);
 }
 
 function updateCounts(count) {
-  if (resultCount) resultCount.textContent = String(count);
+  if (resultCount)  resultCount.textContent  = String(count);
   if (resultCount2) resultCount2.textContent = String(count);
   if (filterAnnouncement) {
-    filterAnnouncement.textContent =
-      count === 0 ? "No jobs found." : `${count} jobs found.`;
+    filterAnnouncement.textContent = count === 0 ? "No jobs found." : `${count} jobs found.`;
   }
 }
 
@@ -85,24 +82,19 @@ function renderJobs(jobs) {
 
   if (!jobs.length) {
     jobListings.innerHTML = "";
-    renderNoResults(true);
-    updateCounts(0);
     return;
   }
 
-  renderNoResults(false);
-  updateCounts(jobs.length);
-
   jobListings.innerHTML = jobs
     .map((job) => {
-      const title = escapeHTML(job.title || "Untitled Job");
-      const company = escapeHTML(job.company?.name || "Unknown Company");
-      const location = escapeHTML(formatLocation(job));
-      const salary = escapeHTML(formatSalary(job));
+      const title         = escapeHTML(job.title || "Untitled Job");
+      const company       = escapeHTML(job.company?.name || "Unknown Company");
+      const location      = escapeHTML(formatLocation(job));
+      const salary        = escapeHTML(formatSalary(job));
       const japaneseLevel = escapeHTML(job.japaneseLevel || "Not specified");
-      const industry = escapeHTML(job.industry || job.category || "General");
-      const summary = escapeHTML(job.summary || "No summary available.");
-      const jobId = encodeURIComponent(job._id);
+      const industry      = escapeHTML(job.industry || job.category || "General");
+      const summary       = escapeHTML(job.summary || "No summary available.");
+      const jobId         = encodeURIComponent(job._id);
 
       return `
         <div class="col-md-6 col-lg-6" role="listitem">
@@ -118,9 +110,7 @@ function renderJobs(jobs) {
               <p class="text-muted small mt-2 mb-0">${summary}</p>
             </div>
             <div class="card-footer bg-transparent border-0">
-              <a href="jobDetails.html?id=${jobId}" class="btn btn-primary w-100">
-                View Details
-              </a>
+              <a href="jobDetails.html?id=${jobId}" class="btn btn-primary w-100">View Details</a>
             </div>
           </div>
         </div>
@@ -129,77 +119,151 @@ function renderJobs(jobs) {
     .join("");
 }
 
+// ─── Pagination ───────────────────────────────────────────────────────────────
+
+function renderPagination(totalItems) {
+  if (!paginationContainer) return;
+  paginationContainer.innerHTML = "";
+
+  const totalPages = Math.ceil(totalItems / PAGE_SIZE);
+  if (totalPages <= 1) return;
+
+  const nav = document.createElement("nav");
+  nav.setAttribute("aria-label", "Job results pagination");
+
+  const ul = document.createElement("ul");
+  ul.className = "pagination pagination-sm justify-content-center flex-wrap gap-1 mb-0";
+
+  ul.appendChild(makePaginationItem("«", currentPage - 1, currentPage === 1, false, "Previous page"));
+
+  for (const p of buildPageRange(currentPage, totalPages)) {
+    if (p === "…") {
+      const li = document.createElement("li");
+      li.className = "page-item disabled";
+      li.innerHTML = `<span class="page-link">…</span>`;
+      ul.appendChild(li);
+    } else {
+      ul.appendChild(makePaginationItem(p, p, false, p === currentPage, `Page ${p}`));
+    }
+  }
+
+  ul.appendChild(makePaginationItem("»", currentPage + 1, currentPage === totalPages, false, "Next page"));
+
+  const info = document.createElement("p");
+  const start = (currentPage - 1) * PAGE_SIZE + 1;
+  const end   = Math.min(currentPage * PAGE_SIZE, totalItems);
+  info.className = "text-muted small text-center mt-2 mb-0";
+  info.textContent = `Showing ${start}–${end} of ${totalItems} jobs`;
+
+  nav.appendChild(ul);
+  paginationContainer.appendChild(nav);
+  paginationContainer.appendChild(info);
+}
+
+function makePaginationItem(label, page, disabled, active, ariaLabel) {
+  const li = document.createElement("li");
+  li.className = `page-item${disabled ? " disabled" : ""}${active ? " active" : ""}`;
+  if (active) li.setAttribute("aria-current", "page");
+
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "page-link";
+  btn.textContent = label;
+  btn.setAttribute("aria-label", ariaLabel);
+
+  if (!disabled && !active) {
+    btn.addEventListener("click", () => {
+      currentPage = page;
+      applyFilters();
+      document.getElementById("resultCount-2")
+        ?.closest("section, div")
+        ?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }
+
+  li.appendChild(btn);
+  return li;
+}
+
+function buildPageRange(current, total) {
+  if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+  const pages = [];
+  if (current <= 4) {
+    for (let i = 1; i <= 5; i++) pages.push(i);
+    pages.push("…");
+    pages.push(total);
+  } else if (current >= total - 3) {
+    pages.push(1);
+    pages.push("…");
+    for (let i = total - 4; i <= total; i++) pages.push(i);
+  } else {
+    pages.push(1);
+    pages.push("…");
+    for (let i = current - 1; i <= current + 1; i++) pages.push(i);
+    pages.push("…");
+    pages.push(total);
+  }
+  return pages;
+}
+
+// ─── Filter logic ─────────────────────────────────────────────────────────────
+
 function applyFilters() {
   const filtered = allJobs.filter((job) => {
     const searchBlob = [
-      job.title,
-      job.company?.name,
-      job.location?.city,
-      job.location?.prefecture,
-      job.japaneseLevel,
-      job.industry,
-      job.category,
-      job.summary,
-    ]
-      .join(" ")
-      .toLowerCase();
+      job.title, job.company?.name, job.location?.city,
+      job.location?.prefecture, job.japaneseLevel,
+      job.industry, job.category, job.summary,
+    ].join(" ").toLowerCase();
 
-    if (filters.search && !searchBlob.includes(filters.search)) {
-      return false;
-    }
+    if (filters.search && !searchBlob.includes(filters.search)) return false;
 
-    if (
-      filters.japaneseLevel !== "any" &&
-      normalize(job.japaneseLevel) !== normalize(filters.japaneseLevel)
-    ) {
-      return false;
-    }
+    if (filters.japaneseLevel !== "any" &&
+        normalize(job.japaneseLevel) !== normalize(filters.japaneseLevel)) return false;
 
     if (filters.location !== "all") {
-      const city = normalize(job.location?.city);
+      const city       = normalize(job.location?.city);
       const prefecture = normalize(job.location?.prefecture);
-      const target = normalize(filters.location);
-
-      if (!city.includes(target) && !prefecture.includes(target)) {
-        return false;
-      }
+      const target     = normalize(filters.location);
+      if (!city.includes(target) && !prefecture.includes(target)) return false;
     }
 
     if (filters.industry !== "all") {
       const industry = normalize(job.industry);
       const category = normalize(job.category);
-      const target = normalize(filters.industry);
-
-      if (!industry.includes(target) && !category.includes(target)) {
-        return false;
-      }
+      const target   = normalize(filters.industry);
+      if (!industry.includes(target) && !category.includes(target)) return false;
     }
 
     if (filters.minSalary > 0) {
-      const min = Number(job.compensation?.salaryMin || 0);
-      if (min < filters.minSalary) {
-        return false;
-      }
+      if (Number(job.compensation?.salaryMin || 0) < filters.minSalary) return false;
     }
 
-    if (filters.support !== "all") {
-      const supportValue = getSupportValue(job);
-      if (supportValue !== filters.support) {
-        return false;
-      }
-    }
+    if (filters.support !== "all" && getSupportValue(job) !== filters.support) return false;
 
     return true;
   });
 
-  renderJobs(filtered);
+  // Reset to page 1 when filters produce fewer pages than current page
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  if (currentPage > totalPages) currentPage = 1;
+
+  const start    = (currentPage - 1) * PAGE_SIZE;
+  const pageSlice = filtered.slice(start, start + PAGE_SIZE);
+
+  const hasResults = filtered.length > 0;
+  renderNoResults(!hasResults);
+  updateCounts(filtered.length);
+  renderJobs(pageSlice);
+  renderPagination(filtered.length);
 }
 
-function setupSearch() {
-  if (!searchInput) return;
+// ─── Event setup ─────────────────────────────────────────────────────────────
 
-  searchInput.addEventListener("input", (event) => {
+function setupSearch() {
+  searchInput?.addEventListener("input", (event) => {
     filters.search = event.target.value.trim().toLowerCase();
+    currentPage = 1;
     applyFilters();
   });
 }
@@ -211,7 +275,7 @@ function setupFilterButtons() {
       if (!button) return;
 
       const groupName = group.dataset.filterGroup;
-      const value = button.dataset.value;
+      const value     = button.dataset.value;
 
       group.querySelectorAll("button").forEach((btn) => {
         btn.classList.remove("active", "btn-outline-primary");
@@ -229,34 +293,22 @@ function setupFilterButtons() {
         filters[groupName] = value;
       }
 
+      currentPage = 1;
       applyFilters();
     });
   });
 }
 
 function setupClearFilters() {
-  if (!clearFiltersBtn) return;
-
-  clearFiltersBtn.addEventListener("click", () => {
-    filters = {
-      search: "",
-      support: "all",
-      japaneseLevel: "any",
-      location: "all",
-      industry: "all",
-      minSalary: 0,
-    };
-
+  clearFiltersBtn?.addEventListener("click", () => {
+    filters = { search: "", support: "all", japaneseLevel: "any", location: "all", industry: "all", minSalary: 0 };
     if (searchInput) searchInput.value = "";
 
     document.querySelectorAll("[data-filter-group]").forEach((group) => {
-      const buttons = group.querySelectorAll("button");
-
-      buttons.forEach((btn, index) => {
+      group.querySelectorAll("button").forEach((btn, index) => {
         btn.classList.remove("active", "btn-outline-primary");
         btn.classList.add("btn-outline-secondary");
         btn.setAttribute("aria-pressed", "false");
-
         if (index === 0) {
           btn.classList.add("active", "btn-outline-primary");
           btn.classList.remove("btn-outline-secondary");
@@ -265,20 +317,19 @@ function setupClearFilters() {
       });
     });
 
+    currentPage = 1;
     applyFilters();
   });
 }
 
+// ─── Load ─────────────────────────────────────────────────────────────────────
+
 async function loadJobs() {
   try {
-    const response = await fetch(`${API_BASE_URL}/jobs?limit=100`);
-    const result = await response.json();
+    const response = await fetch(`${API_BASE_URL}/jobs?limit=500`);
+    const result   = await response.json();
 
-    console.log("Job filter API response:", result);
-
-    if (!response.ok) {
-      throw new Error(result.message || "Failed to load jobs.");
-    }
+    if (!response.ok) throw new Error(result.message || "Failed to load jobs.");
 
     allJobs = result.data?.jobs || [];
     applyFilters();
@@ -287,9 +338,7 @@ async function loadJobs() {
     if (jobListings) {
       jobListings.innerHTML = `
         <div class="col-12">
-          <div class="alert alert-danger">
-            ${escapeHTML(error.message || "Something went wrong while loading jobs.")}
-          </div>
+          <div class="alert alert-danger">${escapeHTML(error.message || "Something went wrong while loading jobs.")}</div>
         </div>
       `;
     }

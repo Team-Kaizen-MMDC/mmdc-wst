@@ -318,7 +318,7 @@ async function seedJobs(companyList) {
         salaryMax: 340000,
       },
     ],
-    Healthcare: [
+    "Nursing Care": [
       {
         title: "Certified Nursing Assistant",
         category: "Nursing",
