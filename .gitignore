@@ -195,8 +195,6 @@ SKILL.md
 
 .github/COPILOT_GUIDES.md
 .github/copilot-instructions.md
-.github/skills
-.github/skills/*
 
 # MongoDB manual backups (large JSON dumps — do not commit)
 backups/

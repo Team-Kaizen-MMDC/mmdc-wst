@@ -23,6 +23,7 @@ features and optional Bootstrap utilities.
 - Code & Design Guide
 - Design files (Figma)
 - Contributing
+- Database Backup & Restore
 - Deployment
 - License & Team
 
@@ -529,6 +530,67 @@ git push origin feature/your-change
 ```
 
 1. Open a Pull Request on GitHub targeting `main` and request review from code owners.
+
+## Database Backup & Restore
+
+MongoDB Atlas free tier (`M0`) has **no automated backups**. Use the scripts
+in `backend/scripts/` to take and restore manual backups.
+
+### Backup
+
+```bash
+cd backend
+
+# Full backup (all 34 collections)
+npm run backup
+
+# Backup specific collections only
+node scripts/backup-db.js --collections users,companies,jobs
+
+# Custom output path
+node scripts/backup-db.js --out /path/to/my-backups
+```
+
+Output is a timestamped directory:
+```
+backups/
+└── 2026-03-24T14-46-12/
+    ├── manifest.json        ← metadata: date, DB name, doc counts
+    ├── users.json
+    ├── companies.json
+    ├── jobs.json
+    └── …
+```
+
+### Restore
+
+```bash
+cd backend
+
+# Additive restore (safe — won't overwrite existing docs)
+npm run restore -- --from ../backups/2026-03-24T14-46-12
+
+# Full replace (drops each collection first, then inserts)
+npm run restore -- --from ../backups/2026-03-24T14-46-12 --drop
+
+# Restore specific collections only
+npm run restore -- --from ../backups/2026-03-24T14-46-12 --collections users,companies
+```
+
+### Backup policy (recommended)
+
+| Trigger | Action |
+|---|---|
+| Before any seed / import operation | `npm run backup` |
+| Before a co-developer data migration | `npm run backup` |
+| Weekly cadence (manual) | `npm run backup`, archive outside repo |
+| After full reseed completes | `npm run backup` to capture clean state |
+
+> **`backups/` is gitignored.** Store archives in a shared drive or private S3 bucket.
+> Never commit backup JSON — collections may contain PII.
+
+### Related skill
+See [`.github/skills/database-architect/SKILL.MD`](.github/skills/database-architect/SKILL.MD) for the full backup/restore conventions used by the Database Architect agent role.
 
 ## Deployment
 
