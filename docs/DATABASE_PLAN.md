@@ -131,39 +131,49 @@ languages[]      : { language*, level (native|fluent|conversational|basic) }
 |---|---|---|
 | `_id` | ObjectId | Primary key |
 | `name` | String | Required, unique, max 200 chars |
-| `slug` | String | Unique, URL-safe, auto-generated from name |
-| `logo` | String | URL |
+| `slug` | String | Unique, URL-safe, auto-generated from name pre-save |
+| `logo` | String | Absolute URL (`https://…`) or relative path (`/assets/images/company-logos/…`) |
 | `industry` | String | Required; enum of 16 industries (see §7) |
-| `size` | String | `"1-10"` \| `"11-50"` \| `"51-200"` \| `"201-500"` \| `"501-1000"` \| `"1000+"` |
-| `founded` | Number | Year |
+| `size` | String | `"1-10"` \| `"11-50"` \| `"51-200"` \| `"201-500"` \| `"501-1000"` \| `"1001-5000"` \| `"5000+"` |
+| `founded` | Number | Year (1800 – current year) |
 | `website` | String | URL |
-| `description` | String | max 2000 chars |
+| `description` | String | Required, max 2000 chars |
 | `tagline` | String | max 200 chars |
-| `address.street` | String | — |
-| `address.city` | String | — |
-| `address.prefecture` | String | — |
-| `address.postalCode` | String | — |
-| `address.country` | String | default `"Japan"` |
-| `contactEmail` | String | — |
-| `contactPhone` | String | — |
+| `location.prefecture` | String | Required |
+| `location.city` | String | Required |
+| `location.address` | String | max 300 chars |
+| `location.postalCode` | String | Format `123-4567` |
+| `contact.email` | String | Required |
+| `contact.phone` | String | Required |
+| `contact.fax` | String | Optional |
 | `socialMedia.linkedin` | String | — |
 | `socialMedia.facebook` | String | — |
 | `socialMedia.twitter` | String | — |
-| `benefits` | [String] | e.g. `["Health Insurance", "Visa Sponsorship"]` |
+| `socialMedia.instagram` | String | — |
+| `certifications` | [Object] | `{ name, issuer, date, expiryDate, certificateUrl }` |
+| `licenses` | [String] | — |
 | `owner` | ObjectId → `users` | Required; employer who created the company |
 | `admins` | [ObjectId → `users`] | Additional admin users |
-| `jobs` | [ObjectId → `jobs`] | Denormalized list of company job IDs |
-| `isVerified` | Boolean | default `false` |
+| `jobs` | [ObjectId → `jobs`] | Denormalized list of company job IDs (kept in sync) |
+| `isVerified` | Boolean | default `false`; set via `company.verify(userId)` |
+| `verifiedAt` | Date | Set when `isVerified` becomes `true` |
 | `verifiedBy` | ObjectId → `users` | Admin who verified the company |
-| `isActive` | Boolean | default `true` |
+| `isActive` | Boolean | default `true`; indexed |
+| `featured` | Boolean | default `false`; **`true` = always shown in Top Companies on homepage** |
+| `images` | [String] | Gallery image URLs |
+| `videos` | [String] | Video URLs |
 | `createdAt` | Date | auto |
 | `updatedAt` | Date | auto |
 
-**Virtuals:** `jobCount` (jobs array length), `employeeRange` (human-readable size string)
+**Virtuals:** `jobCount` (jobs array length), `employeeRange` (human-readable size range)
 
-**Instance method:** `verify(userId)` — sets `isVerified: true`, records `verifiedBy`
+**Instance methods:**
+- `verify(userId)` — sets `isVerified: true`, records `verifiedBy` & `verifiedAt`
+- `deactivate()` — sets `isActive: false`
 
-**Query helper:** `.verified()` — filters to `isVerified: true`
+**Query helpers:** `.active()` — `{ isActive: true }` · `.verified()` — `{ isVerified: true }`
+
+> **Featured companies:** The `featured` flag identifies the 9 companies with dedicated pages under `pages/companies/` (ANA, ANA InterContinental, Daikin, Kandenko, Mitsubishi Heavy Industries, Nissan, Prince Hotels, SOMPO Care, Yoshinoya). The homepage fetches `GET /api/v1/companies?featured=true` to ensure these always appear in the Top Companies section regardless of other companies in the DB. To feature a new company set `featured: true` via Atlas or the admin API.
 
 ---
 
@@ -740,11 +750,12 @@ erDiagram
 ### `companies`
 
 ```javascript
-{ name: 1 }                                        // unique
-{ slug: 1 }                                        // unique
-{ industry: 1, isActive: 1, isVerified: 1 }        // compound
-{ "location.prefecture": 1, isActive: 1 }           // compound
-{ name: "text", description: "text" }               // full-text search
+{ name: 1 }                                         // unique
+{ slug: 1 }                                         // unique
+{ industry: 1, isActive: 1, isVerified: 1 }         // compound
+{ "location.prefecture": 1, isActive: 1 }            // compound
+{ featured: 1, isActive: 1 }                         // homepage featured query
+{ name: "text", description: "text" }                // full-text search
 ```
 
 ### `jobs`
@@ -897,9 +908,16 @@ Location: `backend/` and `backend/scripts/`
 | Script | npm Command | Description |
 |---|---|---|
 | `seedDatabase.js` | `npm run seed` | Basic seed data |
-| `seedDatabase-comprehensive.js` | `npm run seed:full` | Full seed (clears first) |
+| `seedDatabase-comprehensive.js` | `npm run seed:full` | Full seed — 21 users, 10 companies, 44 jobs, 20 applications (clears first) |
 | `seedDatabase.clean.js` | `npm run seed:clean` | Clean, safe seed |
 | `scripts/create-admin.js` | `npm run seed:admin` | Create / reset superadmin User + UserProfile |
+| `scripts/seed-about.js` | `npm run seed:about` | Seed About page content |
+| `scripts/seed-featured-companies.js` | `npm run seed:featured` | Seed 9 featured companies + 10 additional companies (19 total) + 133 SSW jobs with `featured:true` on the first 9 |
+| `scripts/backup-db.js` | `npm run backup` | Manual backup — exports all collections to `backups/<timestamp>/` JSON |
+| `scripts/backup-db.js` | `npm run backup:atlas` | Local JSON backup + push snapshot to `japansswdb_backups` Atlas database |
+| `scripts/backup-db.js` | `npm run backup:atlas-only` | Atlas-only snapshot (no local files) |
+| `scripts/restore-db.js` | `npm run restore` | Restore from local JSON backup directory |
+| `scripts/restore-from-atlas.js` | `npm run restore:atlas` | Restore from Atlas snapshot (`--list`, `--latest`, `--session`, `--drop`) |
 | `scripts/list-collections.js` | — | Audit collections |
 | `scripts/check-db.js` | — | Check DB connectivity |
 
@@ -929,14 +947,77 @@ ADMIN_EMAIL=me@test.local ADMIN_PASSWORD=MyPass@99 npm run seed:admin
 
 > ⚠️ This account lives in `japansswdb` on MongoDB Atlas. Do not use in production.
 
-### Backup Strategy
+#### `seed-featured-companies.js` — Featured Companies Seed
 
-1. **Automated Continuous Backups** — MongoDB Atlas automatic backups
-2. **Pre-Deployment Snapshot** — Manual backup before schema migrations
-3. **Retention Policy** — Daily for 7 days, weekly for 4 weeks
+Seeds the 9 companies with dedicated pages under `pages/companies/` plus 10 additional SSW companies. Idempotent — skips companies that already exist by slug.
+
+```bash
+cd backend
+
+npm run seed:featured            # seed all 19 companies (skip existing)
+npm run seed:featured -- --drop  # drop and re-seed all 19 companies
+npm run seed:featured -- --dry-run  # preview without writing
+```
+
+**Featured companies seeded (`featured: true`):** ANA, ANA InterContinental, Daikin Industries, Kandenko, Mitsubishi Heavy Industries, Nissan Motor Company, Prince Hotels & Resorts, SOMPO Care, Yoshinoya.
+
+**Additional companies seeded (`featured: false`):** Toyota Motor Corporation, Japan Airlines (JAL), Yamato Transport, Komatsu Ltd., Obayashi Corporation, Maruha Nichiro, Seven & i Food Systems, Nihon Anzen Seimei Care, ISS Facility Services Japan, JFE Steel Corporation.
+
+### Backup & Restore Strategy
+
+> **Atlas M0 free tier has no automated backups.** All backups are manual using the scripts below.
+
+#### Local JSON backup
+
+Exports every collection to a timestamped directory of `.json` files at `backups/<ISO-timestamp>/`. The `backups/` directory is gitignored.
+
+```bash
+cd backend
+
+npm run backup                                       # local JSON only
+npm run backup -- --collections users,companies,jobs # selective
+```
+
+#### Atlas cloud snapshot
+
+Pushes a snapshot into the `japansswdb_backups` database on the same Atlas cluster. Visible in MongoDB Compass / Atlas UI. Collections are stored as chunked documents `{ session, chunk, docs: [...] }` under `_sessions` (manifest) + one collection per source collection.
+
+```bash
+npm run backup:atlas        # local JSON + Atlas snapshot (recommended)
+npm run backup:atlas-only   # Atlas only
+```
+
+#### Restore
+
+```bash
+# From Atlas snapshot
+npm run restore:atlas -- --list                             # list snapshots
+npm run restore:atlas -- --latest                           # restore newest
+npm run restore:atlas -- --session 2026-03-24T15-21-42     # specific session
+npm run restore:atlas -- --latest --drop                    # full replace
+
+# From local JSON
+npm run restore -- --from ../backups/2026-03-24T15-21-42 --drop
+npm run restore -- --from ../backups/<ts> --collections users,companies
+```
+
+#### Recommended backup triggers
+
+| Event | Command |
+|---|---|
+| Before any seed / import operation | `npm run backup:atlas` |
+| Before a co-developer data migration | `npm run backup:atlas` |
+| After full reseed completes cleanly | `npm run backup:atlas` |
+| Weekly (manual cadence) | `npm run backup:atlas` |
+
+> Never commit backup JSON files — they may contain PII.
 
 ---
 
-**Document Version:** 2.0
-**Last Updated:** March 20, 2026
+**Document Version:** 2.1
+**Last Updated:** March 24, 2026
+**Changelog:**
+- v2.1 (2026-03-24): Updated Company schema (`featured`, `location.*`, `contact.*`, `size` enum, logo path), indexes, seed scripts (seed:featured, backup, restore), backup strategy (Atlas snapshots via japansswdb_backups)
+- v2.0 (2026-03-20): Initial comprehensive schema documentation
+
 **Next Review:** On any schema change
