@@ -39,6 +39,7 @@ npm run seed:full         # Comprehensive seed (clears first)
 npm run seed:full:verbose # Comprehensive seed with verbose output
 npm run seed:clear        # Clear all seed data
 npm run seed:clean        # Clean seed (safe script)
+npm run seed:featured     # Seed 9 featured companies + 41 SSW jobs (pages/companies/)
 npm run fix-seed          # Fix inconsistent seed data
 ```
 

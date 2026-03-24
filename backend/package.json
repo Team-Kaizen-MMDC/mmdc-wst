@@ -109,6 +109,7 @@
     "seed:clean": "node seedDatabase.clean.js",
     "seed:admin": "node scripts/create-admin.js",
     "seed:about": "node scripts/seed-about.js",
+    "seed:featured": "node scripts/seed-featured-companies.js",
     "backup": "node scripts/backup-db.js",
     "restore": "node scripts/restore-db.js",
     "extract:pages": "node scripts/extract-from-pages.js",
