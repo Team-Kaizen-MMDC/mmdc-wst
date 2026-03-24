@@ -20,7 +20,8 @@ const companySchema = new mongoose.Schema(
     logo: {
       type: String,
       trim: true,
-      match: [/^https?:\/\/.+/, "Please provide a valid logo URL"],
+      // Allow absolute URLs (https://...) or relative paths (/assets/...)
+      match: [/^(https?:\/\/.+|\/\S+)/, "Please provide a valid logo URL or relative path"],
     },
 
     // Company Details

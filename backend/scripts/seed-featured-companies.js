@@ -23,7 +23,7 @@ const mongoose = require("mongoose");
 const path = require("path");
 
 const ADMIN_EMAIL = "admin@mmdc.local";
-const LOGO_BASE = "https://mmdc-wst-production.up.railway.app/assets/images/company-logos";
+const LOGO_BASE = "/assets/images/company-logos";
 const DRY_RUN = process.argv.includes("--dry-run");
 const DROP = process.argv.includes("--drop");
 
