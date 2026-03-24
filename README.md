@@ -274,8 +274,19 @@ Backend API tests use Jest, Supertest, and `mongodb-memory-server` from the `bac
 
 ```bash
 cd backend
-npm test
+npm test                   # run all backend tests
+npm run test:integration   # run integration tests only
 ```
+
+The integration test suite lives under [`backend/tests/integration/`](backend/tests/integration/) and covers:
+
+- `auth.test.js` — register, login, `GET /me`, JWT edge cases
+- `companies.test.js` — public list, auth guards, 404/400
+- `jobs.test.js` — public list, filters, employer-only routes, 404/400
+- `applications.test.js` — `GET /me`, apply edge cases, withdraw
+- `health.test.js` — `/health`, `/api/health`, 404 handler
+
+No real MongoDB connection is required — tests use an in-memory MongoDB instance (`mongodb-memory-server`) spun up by `backend/tests/integration/setup.js`.
 
 Notes:
 
@@ -289,15 +300,16 @@ Notes:
 Detailed test documentation and results are available in [TESTING.md](TESTING.md) at the repository root. That document contains:
 
 - A list of test cases (functional, mobile/offcanvas, i18n, accessibility)
+- Backend integration test cases (auth, companies, jobs, applications, health)
 - Test environment and browsers used
 - Evidence and notes for each test (network checks, ARIA, WCAG contrast)
 - A summary of fixes applied during testing (with commit references)
 
 Quick links:
-Quick links:
 
 - View the full testing report: [TESTING.md](TESTING.md)
 - Playwright smoke tests: [tests/playwright/](tests/playwright/) (see the "Running tests" section above for commands)
+- Backend integration tests: [backend/tests/integration/](backend/tests/integration/) — run with `cd backend && npm run test:integration`
 
 Project management & QA
 

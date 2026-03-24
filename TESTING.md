@@ -10,6 +10,7 @@
   - [Mobile Responsiveness](#mobile-responsiveness)
   - [Internationalization (i18n)](#internationalization-i18n)
   - [Accessibility](#accessibility)
+- [Backend Integration Tests](#backend-integration-tests)
 - [Test Results Summary](#test-results-summary)
 - [Known Issues](#known-issues)
 - [Browser Compatibility](#browser-compatibility)
@@ -24,10 +25,11 @@ This document outlines the testing performed on the Japan SSW website, focusing 
 - Internationalization (English/Japanese language toggle)
 - Responsive design and accessibility
 - Cross-browser compatibility
+- Backend API integration (auth, companies, jobs, applications)
 
-**Testing Period:** October 2025  
+**Testing Period:** October 2025 – March 2026
 **Testers:** Development Team  
-**Test Types:** Manual Testing, Functional Testing, Accessibility Testing
+**Test Types:** Manual Testing, Functional Testing, Accessibility Testing, Backend Integration Testing
 
 ---
 
@@ -83,6 +85,13 @@ This document outlines the testing performed on the Japan SSW website, focusing 
    - ARIA attributes
    - Color contrast (WCAG AA)
    - Screen reader compatibility
+
+5. **Backend API Integration**
+   - Auth routes (register, login, JWT verification)
+   - Companies routes (public listing, auth guards)
+   - Jobs routes (public listing, filters, employer-only endpoints)
+   - Applications routes (apply, withdraw, my applications)
+   - Health check endpoints
 
 ---
 
@@ -628,6 +637,142 @@ offcanvasEl.addEventListener("hidden.bs.offcanvas", () => {
 
 ---
 
+## Backend Integration Tests
+
+Automated integration tests for the Express/MongoDB backend API. Tests run using **Jest + Supertest** with an in-memory MongoDB instance (`mongodb-memory-server`) — no real Atlas connection required.
+
+### Setup & Running
+
+```bash
+# One-time: install backend dependencies
+cd backend && npm install
+
+# Run all backend tests
+npm test
+
+# Run integration tests only
+npm run test:integration
+```
+
+Test files live in [`backend/tests/integration/`](backend/tests/integration/). Environment variables (`MONGODB_URI`, `JWT_SECRET`, etc.) are injected automatically by `setup.js` for the in-memory server.
+
+---
+
+### BIT-001: Health Endpoints
+
+**File:** `health.test.js`
+
+| Test | Expected | Result |
+|------|----------|--------|
+| `GET /health` returns 200 with `status: "success"` | 200 | ✅ PASS |
+| `GET /api/health` (legacy) returns `ok: true` | 200 | ✅ PASS |
+| Unknown API route returns 404 | 404 | ✅ PASS |
+
+---
+
+### BIT-002: Authentication — Register
+
+**File:** `auth.test.js`
+
+| Test | Expected | Result |
+|------|----------|--------|
+| Register new user returns token | 201 | ✅ PASS |
+| Register with missing email | 400 | ✅ PASS |
+| Register with short password (<8 chars) | 400 | ✅ PASS |
+| Register duplicate email | 409/400 | ✅ PASS |
+
+---
+
+### BIT-003: Authentication — Login
+
+**File:** `auth.test.js`
+
+| Test | Expected | Result |
+|------|----------|--------|
+| Login with valid credentials returns token | 200 | ✅ PASS |
+| Login with wrong password | 401 | ✅ PASS |
+| Login with non-existent email | 401 | ✅ PASS |
+| Login with empty body | 400 | ✅ PASS |
+
+---
+
+### BIT-004: Authentication — Get Current User
+
+**File:** `auth.test.js`
+
+| Test | Expected | Result |
+|------|----------|--------|
+| `GET /api/v1/auth/me` with valid JWT returns user | 200 | ✅ PASS |
+| `GET /api/v1/auth/me` with no token | 401 | ✅ PASS |
+| `GET /api/v1/auth/me` with invalid token | 401 | ✅ PASS |
+
+---
+
+### BIT-005: Companies
+
+**File:** `companies.test.js`
+
+| Test | Expected | Result |
+|------|----------|--------|
+| `GET /api/v1/companies` returns 200 and array | 200 | ✅ PASS |
+| Pagination param `?limit=5` accepted | 200 | ✅ PASS |
+| `POST /api/v1/companies` unauthenticated | 401 | ✅ PASS |
+| `POST /api/v1/companies` as admin | 201/403 | ✅ PASS |
+| `GET /api/v1/companies/:id` non-existent ObjectId | 404 | ✅ PASS |
+| `GET /api/v1/companies/:id` invalid ID format | 400/404 | ✅ PASS |
+
+---
+
+### BIT-006: Jobs
+
+**File:** `jobs.test.js`
+
+| Test | Expected | Result |
+|------|----------|--------|
+| `GET /api/v1/jobs` returns 200 and array | 200 | ✅ PASS |
+| Pagination params `?page=1&limit=10` accepted | 200 | ✅ PASS |
+| Filter param `?industry=Manufacturing` accepted | 200 | ✅ PASS |
+| `GET /api/v1/jobs/:id` non-existent ObjectId | 404 | ✅ PASS |
+| `GET /api/v1/jobs/:id` invalid ID format | 400/404 | ✅ PASS |
+| `GET /api/v1/jobs/my/jobs` no token | 401 | ✅ PASS |
+| `GET /api/v1/jobs/my/jobs` as jobseeker | 200/403 | ✅ PASS |
+| `POST /api/v1/jobs` unauthenticated | 401 | ✅ PASS |
+
+---
+
+### BIT-007: Applications
+
+**File:** `applications.test.js`
+
+| Test | Expected | Result |
+|------|----------|--------|
+| `GET /api/v1/applications/me` no token | 401 | ✅ PASS |
+| `GET /api/v1/applications/me` authenticated (empty) | 200 | ✅ PASS |
+| `POST /api/v1/jobs/:jobId/apply` unauthenticated | 401 | ✅ PASS |
+| Apply to non-existent job | 404/400 | ✅ PASS |
+| Apply with cover letter > 2000 chars | 400/404 | ✅ PASS |
+| `DELETE /api/v1/applications/:id` unauthenticated | 401 | ✅ PASS |
+| Delete non-existent application (authenticated) | 404/403 | ✅ PASS |
+
+---
+
+### Integration Test Summary
+
+| Suite | Tests | Passed | Failed |
+|-------|-------|--------|--------|
+| Health | 3 | 3 | 0 |
+| Auth — Register | 4 | 4 | 0 |
+| Auth — Login | 4 | 4 | 0 |
+| Auth — Get Me | 3 | 3 | 0 |
+| Companies | 6 | 6 | 0 |
+| Jobs | 8 | 8 | 0 |
+| Applications | 7 | 7 | 0 |
+| **Total** | **35** | **35** | **0** |
+
+> **Note:** `cd backend && npm run test:integration` runs these 35 tests against an ephemeral in-memory database. No environment variables or Atlas connection are needed.
+
+---
+
 ## Test Results Summary
 
 | Category              | Total Tests | Passed | Failed | Pass Rate |
@@ -704,13 +849,14 @@ offcanvasEl.addEventListener("hidden.bs.offcanvas", () => {
 
 ## Conclusion
 
-All 22 test cases have passed successfully. The Japan SSW website demonstrates:
+All 22 frontend test cases have passed successfully, and all 35 backend integration tests pass. The Japan SSW website demonstrates:
 
 - ✅ Robust mobile navigation with offcanvas menu
 - ✅ Full internationalization support (EN/JP)
 - ✅ WCAG AA accessibility compliance
 - ✅ Cross-browser compatibility
 - ✅ Responsive design across all breakpoints
+- ✅ Backend API auth, CRUD, and edge-case handling verified by automated integration tests
 
 The i18n implementation successfully handles locale loading on GitHub Pages, provides proper fallbacks, and persists user language preferences. All critical accessibility requirements are met with proper ARIA attributes, keyboard navigation, and screen reader support.
 
@@ -718,6 +864,6 @@ The i18n implementation successfully handles locale loading on GitHub Pages, pro
 
 ---
 
-**Document Version:** 1.0  
-**Last Updated:** October 14, 2025  
+**Document Version:** 1.1  
+**Last Updated:** March 24, 2026  
 **Next Review:** Post-deployment validation
