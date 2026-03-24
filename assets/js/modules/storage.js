@@ -43,8 +43,13 @@ export function deleteCookie(name) {
  * @returns {string|null} role string or null if no token / decode fails
  */
 export function getRoleFromToken() {
-  const match = document.cookie.split("; ").find((r) => r.startsWith("token="));
-  const token = match ? decodeURIComponent(match.split("=")[1]) : null;
+  // Check localStorage first (set by signin.html / googleAuth.js)
+  let token = localStorage.getItem("token");
+  if (!token) {
+    // Fall back to cookie
+    const match = document.cookie.split("; ").find((r) => r.startsWith("token="));
+    token = match ? decodeURIComponent(match.split("=")[1]) : null;
+  }
   if (!token) return null;
   try {
     const payload = JSON.parse(atob(token.split(".")[1]));
