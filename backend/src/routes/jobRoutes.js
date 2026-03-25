@@ -15,6 +15,7 @@ const {
   applyToJob,
   getJobApplications,
   getCompanyApplicationsSummary,
+  getCompanyApplicationsPaginated,
 } = require("../controllers/applicationController");
 const { protect, authorize } = require("../middleware/auth");
 const { validateApplication } = require("../validators/applicationValidator");
@@ -35,6 +36,12 @@ router.get(
   "/my/applications/summary",
   authorize("employer", "admin"),
   getCompanyApplicationsSummary,
+);
+// Paginated full application list for employer's company (Applicant Tracking tab)
+router.get(
+  "/my/applications",
+  authorize("employer", "admin"),
+  getCompanyApplicationsPaginated,
 );
 
 /**
