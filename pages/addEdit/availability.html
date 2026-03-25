@@ -288,6 +288,29 @@
         return new Date(y, m - 1, d).toISOString();
       };
 
+      // Map human-readable form labels to MongoDB enum values.
+      const normalizeJlpt = (val) => {
+        const map = { 'N5 level': 'N5', 'N4 level': 'N4', 'N3 level': 'N3', 'N2 level': 'N2', 'N1 level': 'N1' };
+        return map[val] || (['none','N5','N4','N3','N2','N1'].includes(val) ? val : 'none');
+      };
+      const normalizeVisa = (val) => {
+        if (!val) return undefined;
+        const map = {
+          'Specified Skilled Worker (I & II) Visa': 'ssw-1',
+          'Specified Skilled Worker (SSW-1) Visa':  'ssw-1',
+          'Specified Skilled Worker (SSW-2) Visa':  'ssw-2',
+          'Student Visa': 'student',
+          'Skilled Labor Visa': 'working',
+          'Permanent Resident Visa': 'pr',
+          'Spouse / Long-Term Resident Visa': 'spouse',
+          'Long-Term Resident Visa': 'spouse',
+          'Not Applicable': 'not-applicable',
+        };
+        if (map[val]) return map[val];
+        const valid = ['not-applicable','student','working','ssw-1','ssw-2','spouse','pr','other'];
+        return valid.includes(val) ? val : 'other';
+      };
+
       // Sync the fully-assembled localStorage profile to MongoDB via the API.
       // Each section is sent independently so a partial failure doesn't block the rest.
       const syncProfileToBackend = async (profile) => {
@@ -325,19 +348,19 @@
         const dobDate = dob ? buildDate(dob.year, dob.month, dob.day) : null;
 
         const basicProfile = {
-          ...(mergedProfile.firstName && { firstName: mergedProfile.firstName }),
-          ...(mergedProfile.lastName  && { lastName:  mergedProfile.lastName  }),
+          ...(mergedProfile.firstName && { firstName: mergedProfile.firstName.trim() }),
+          ...(mergedProfile.lastName  && { lastName:  mergedProfile.lastName.trim()  }),
           ...(dobDate                 && { dateOfBirth: dobDate }),
           ...(mergedProfile.gender    && { gender: mergedProfile.gender.toLowerCase() }),
           ...(mergedProfile.nationality && { nationality: mergedProfile.nationality }),
           ...(mergedProfile.address   && { address:   mergedProfile.address   }),
           ...(mergedProfile.city      && { city:      mergedProfile.city      }),
           ...(mergedProfile.prefecture && { prefecture: mergedProfile.prefecture }),
-          ...(mergedProfile.japaneseLevel && { japaneseLevel: mergedProfile.japaneseLevel }),
+          ...(mergedProfile.japaneseLevel && { japaneseLevel: normalizeJlpt(mergedProfile.japaneseLevel) }),
           ...(mergedProfile.profileSummary && { bio: mergedProfile.profileSummary }),
           // Store visa status and desired industry inside availability sub-doc
           availability: {
-            ...(mergedProfile.visaStatus && { visaStatus: mergedProfile.visaStatus }),
+            ...(mergedProfile.visaStatus && { visaStatus: normalizeVisa(mergedProfile.visaStatus) }),
             ...(mergedProfile.industry   && { desiredIndustry: mergedProfile.industry }),
           },
         };

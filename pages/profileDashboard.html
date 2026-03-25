@@ -2634,8 +2634,14 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           };
 
           syncDashboardEmailCookie(normalizedProfile.email);
-          saveUserProfile(normalizedProfile);
-          localStorage.removeItem("userProfile");
+          // Only overwrite localStorage if the new data actually has content,
+          // to avoid wiping out data collected during the addEdit registration flow.
+          const hasContent = normalizedProfile.firstName || normalizedProfile.lastName || normalizedProfile.picture;
+          if (hasContent) {
+            saveUserProfile(normalizedProfile);
+          }
+          // Do NOT remove the global fallback key — it is needed by
+          // syncProfileToBackend in availability.html and the dashboard auto-create.
         } catch (error) {
           console.warn("Could not persist cached dashboard profile:", error);
         }
@@ -2809,21 +2815,24 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                     };
                   }
                   }
-                  // Persist minimal profile info to localStorage so other UI modules
-                  // (which read the userProfile key) will show updated name/email.
+                  // Only persist to localStorage when there is useful Google profile
+                  // data (name/picture). For local accounts the fields are empty and
+                  // persisting them would wipe out the data collected in the addEdit flow.
                   try {
                     const gp = user?.googleProfile;
-                    const localProfile = {
-                      firstName: gp?.given_name || gp?.name?.split(' ')[0] || '',
-                      lastName: gp?.family_name || (gp?.name && gp.name.split(' ').slice(1).join(' ')) || '',
-                      email: gp?.email || user?.email || '',
-                      picture: gp?.picture || user?.picture || '',
-                      city: '',
-                      prefecture: '',
-                      nationality: '',
-                      japaneseLevel: '',
-                    };
-                    persistCachedDashboardProfile(localProfile);
+                    if (gp && (gp.given_name || gp.name || gp.picture)) {
+                      const localProfile = {
+                        firstName: gp.given_name || gp.name?.split(' ')[0] || '',
+                        lastName: gp.family_name || (gp.name && gp.name.split(' ').slice(1).join(' ')) || '',
+                        email: gp.email || user?.email || '',
+                        picture: gp.picture || '',
+                        city: '',
+                        prefecture: '',
+                        nationality: '',
+                        japaneseLevel: '',
+                      };
+                      persistCachedDashboardProfile(localProfile);
+                    }
                   } catch (e) {
                     console.warn('Could not persist local profile from /auth/me fallback', e);
                   }
@@ -2866,19 +2875,31 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                   const dob = mergedP.dateOfBirth;
                   const dobDate = dob ? buildDateFromParts(dob.year, dob.month, dob.day) : null;
 
+                  const normJlpt = (v) => {
+                    const m = {'N5 level':'N5','N4 level':'N4','N3 level':'N3','N2 level':'N2','N1 level':'N1'};
+                    return m[v] || (['none','N5','N4','N3','N2','N1'].includes(v) ? v : undefined);
+                  };
+                  const normVisa = (v) => {
+                    if (!v) return undefined;
+                    const m = {'Specified Skilled Worker (I & II) Visa':'ssw-1','Specified Skilled Worker (SSW-1) Visa':'ssw-1','Specified Skilled Worker (SSW-2) Visa':'ssw-2','Student Visa':'student','Skilled Labor Visa':'working','Permanent Resident Visa':'pr','Spouse / Long-Term Resident Visa':'spouse','Long-Term Resident Visa':'spouse','Not Applicable':'not-applicable'};
+                    if (m[v]) return m[v];
+                    const valid = ['not-applicable','student','working','ssw-1','ssw-2','spouse','pr','other'];
+                    return valid.includes(v) ? v : 'other';
+                  };
+
                   const profileBody = {
-                    firstName: mergedP.firstName || (emailDecoded ? emailDecoded.split('@')[0] : 'User'),
-                    lastName:  mergedP.lastName  || '',
+                    firstName: (mergedP.firstName || (emailDecoded ? emailDecoded.split('@')[0] : 'User')).trim(),
+                    lastName:  (mergedP.lastName  || '').trim(),
                     ...(dobDate && { dateOfBirth: dobDate }),
                     ...(mergedP.gender      && { gender:        mergedP.gender.toLowerCase() }),
                     ...(mergedP.nationality && { nationality:   mergedP.nationality }),
                     ...(mergedP.address     && { address:       mergedP.address }),
                     ...(mergedP.city        && { city:          mergedP.city }),
                     ...(mergedP.prefecture  && { prefecture:    mergedP.prefecture }),
-                    ...(mergedP.japaneseLevel && { japaneseLevel: mergedP.japaneseLevel }),
+                    ...(mergedP.japaneseLevel && normJlpt(mergedP.japaneseLevel) && { japaneseLevel: normJlpt(mergedP.japaneseLevel) }),
                     ...(mergedP.profileSummary && { bio:         mergedP.profileSummary }),
                     availability: {
-                      ...(mergedP.visaStatus && { visaStatus:      mergedP.visaStatus }),
+                      ...(mergedP.visaStatus && normVisa(mergedP.visaStatus) && { visaStatus: normVisa(mergedP.visaStatus) }),
                       ...(mergedP.industry   && { desiredIndustry: mergedP.industry   }),
                     },
                   };
