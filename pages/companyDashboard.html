@@ -430,10 +430,18 @@
                 >
                     <thead class="table-light">
                         <tr>
-                            <th scope="col" style="width: 30%">Job Title</th>
-                            <th scope="col" style="width: 30%">Location</th>
-                            <th scope="col" class="text-center" style="width: 10%">Applicants</th>
-                            <th scope="col" class="text-center" style="width: 10%">Status</th>
+                            <th scope="col" style="width: 30%; cursor:pointer; user-select:none;" class="sortable-th" data-sort-col="title">
+                              Job Title <span class="sort-icon text-muted ms-1">⇅</span>
+                            </th>
+                            <th scope="col" style="width: 30%; cursor:pointer; user-select:none;" class="sortable-th" data-sort-col="location">
+                              Location <span class="sort-icon text-muted ms-1">⇅</span>
+                            </th>
+                            <th scope="col" class="text-center sortable-th" style="width: 10%; cursor:pointer; user-select:none;" data-sort-col="applicants">
+                              Applicants <span class="sort-icon text-muted ms-1">⇅</span>
+                            </th>
+                            <th scope="col" class="text-center sortable-th" style="width: 10%; cursor:pointer; user-select:none;" data-sort-col="status">
+                              Status <span class="sort-icon text-muted ms-1">⇅</span>
+                            </th>
                             <th scope="col" class="text-center" style="width: 20%">Action</th>
                         </tr>
                     </thead>
@@ -564,10 +572,25 @@
           tabindex="0"
         >
           <div class="card p-4 shadow-sm">
-            <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
               <h4 class="fw-bold mb-0">Applicant List</h4>
-              <!--Modal function metric pop-->
-             
+              <div class="d-flex gap-2 flex-wrap">
+                <select id="applicantStatusFilter" class="form-select form-select-sm" style="min-width:140px;">
+                  <option value="">All Statuses</option>
+                  <option value="submitted">Submitted</option>
+                  <option value="reviewing">Reviewing</option>
+                  <option value="interview">Interview</option>
+                  <option value="offer">Offer</option>
+                  <option value="accepted">Accepted</option>
+                  <option value="rejected">Rejected</option>
+                </select>
+                <select id="applicantSortSelect" class="form-select form-select-sm" style="min-width:190px;">
+                  <option value="createdAt|desc">Date Applied (Newest)</option>
+                  <option value="createdAt|asc">Date Applied (Oldest)</option>
+                  <option value="status|asc">Status A → Z</option>
+                  <option value="status|desc">Status Z → A</option>
+                </select>
+              </div>
             </div>
             <!--Responsive Table Container-->
             <div class="table-responsive">
@@ -1974,6 +1997,9 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
     }
 
     // Load posted jobs into the Job List card (pulls from jobs collection)
+    // jobSortState: { col: 'title'|'location'|'applicants'|'status', dir: 'asc'|'desc' }
+    window._jobSortState = window._jobSortState || { col: null, dir: 'asc' };
+
     async function loadCompanyJobs() {
       const tbody = document.getElementById('job-list-body');
       const dashList = document.getElementById('dashboardJobList');
@@ -1997,24 +2023,59 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
           return;
         }
         const j = await res.json();
-        const jobs = (j && j.data && j.data.jobs) ? j.data.jobs : (j && j.jobs) ? j.jobs : [];
+        let jobs = (j && j.data && j.data.jobs) ? j.data.jobs : (j && j.jobs) ? j.jobs : [];
         if (!jobs || jobs.length === 0) {
           tbody.innerHTML = '<tr><td colspan="5" class="text-muted small">No jobs found.</td></tr>';
-          if (dashList) {
-            dashList.innerHTML = renderDashboardListEmptyState('No jobs found.');
-          }
-          if (dashPagination) {
-            dashPagination.innerHTML = '';
-          }
+          if (dashList) dashList.innerHTML = renderDashboardListEmptyState('No jobs found.');
+          if (dashPagination) dashPagination.innerHTML = '';
           return;
         }
+
+        // Helper to get sortable values per column
+        const getSortValue = (job, col) => {
+          if (col === 'title') return (job.title || '').toLowerCase();
+          if (col === 'location') return formatJobLocation(job.location || job.jobLocation || null).toLowerCase();
+          if (col === 'applicants') return job.applicationCount != null ? Number(job.applicationCount) : -1;
+          if (col === 'status') return (job.isExpired ? 'expired' : job.isDraft ? 'draft' : 'active');
+          return '';
+        };
+
+        // Sort jobs if a sort column is active
+        const applySort = (arr) => {
+          const { col, dir } = window._jobSortState;
+          if (!col) return arr;
+          return [...arr].sort((a, b) => {
+            const va = getSortValue(a, col);
+            const vb = getSortValue(b, col);
+            if (va < vb) return dir === 'asc' ? -1 : 1;
+            if (va > vb) return dir === 'asc' ? 1 : -1;
+            return 0;
+          });
+        };
+
+        // Update header icons to reflect current sort state
+        const updateSortIcons = () => {
+          document.querySelectorAll('#job-pane .sortable-th').forEach(th => {
+            const col = th.getAttribute('data-sort-col');
+            const icon = th.querySelector('.sort-icon');
+            if (!icon) return;
+            if (col === window._jobSortState.col) {
+              icon.textContent = window._jobSortState.dir === 'asc' ? ' ↑' : ' ↓';
+              th.classList.add('text-primary');
+            } else {
+              icon.textContent = ' ⇅';
+              th.classList.remove('text-primary');
+            }
+          });
+        };
 
         // Paginate Job Management table
         const jobTablePagination = document.getElementById('jobTablePagination');
         const pageSizeTable = 10;
         const renderJobTablePage = (page) => {
           window._companyJobsTablePage = page;
-          const pageJobs = jobs.slice((page - 1) * pageSizeTable, page * pageSizeTable);
+          const sorted = applySort(jobs);
+          const pageJobs = sorted.slice((page - 1) * pageSizeTable, page * pageSizeTable);
           const rowsHtml = pageJobs.map(job => {
             const id = job._id || job.id || '';
             const title = escapeHtml(job.title || 'Untitled');
@@ -2025,8 +2086,8 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
             return `<tr data-job-id="${escapeHtml(id)}"><td><a href="jobs/jobDetails.html?id=${encodeURIComponent(id)}" class="text-decoration-none">${title}</a><div class="text-muted small">${company}</div></td><td>${escapeHtml(loc)}</td><td class="text-center">${escapeHtml(apps)}</td><td class="text-center">${escapeHtml(status)}</td><td class="text-center"><a class="btn btn-sm btn-outline-primary" href="addEdit/job-post.html?edit=${encodeURIComponent(id)}">Edit</a><button type="button" class="btn btn-sm btn-outline-danger ms-2 remove-job-btn" data-job-id="${escapeHtml(id)}">Remove</button></td></tr>`;
           }).join('');
           tbody.innerHTML = rowsHtml || '<tr><td colspan="5" class="text-muted small">No jobs found.</td></tr>';
+          updateSortIcons();
 
-          // Attach remove handlers to newly rendered rows
           tbody.querySelectorAll('.remove-job-btn').forEach(btn => {
             btn.addEventListener('click', async (e) => {
               const jobId = btn.getAttribute('data-job-id');
@@ -2042,6 +2103,22 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
             onPageChange: renderJobTablePage,
           });
         };
+
+        // Wire up sortable column header clicks (once per load)
+        document.querySelectorAll('#job-pane .sortable-th').forEach(th => {
+          th.onclick = null; // remove stale handlers
+          th.addEventListener('click', () => {
+            const col = th.getAttribute('data-sort-col');
+            if (window._jobSortState.col === col) {
+              window._jobSortState.dir = window._jobSortState.dir === 'asc' ? 'desc' : 'asc';
+            } else {
+              window._jobSortState.col = col;
+              window._jobSortState.dir = 'asc';
+            }
+            window._companyJobsTablePage = 1;
+            renderJobTablePage(1);
+          });
+        });
 
         const totalPagesTable = Math.max(1, Math.ceil(jobs.length / pageSizeTable));
         const initialTablePage = Math.min(Math.max(window._companyJobsTablePage || 1, 1), totalPagesTable);
@@ -2082,12 +2159,8 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
       } catch (err) {
         console.warn('loadCompanyJobs: error', err);
         tbody.innerHTML = '<tr><td colspan="5" class="text-muted small">Error loading jobs.</td></tr>';
-        if (dashList) {
-          dashList.innerHTML = renderDashboardListEmptyState('Error loading jobs.');
-        }
-        if (dashPagination) {
-          dashPagination.innerHTML = '';
-        }
+        if (dashList) dashList.innerHTML = renderDashboardListEmptyState('Error loading jobs.');
+        if (dashPagination) dashPagination.innerHTML = '';
       }
     }
 
@@ -2401,21 +2474,28 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
           const pageSize = 20;
           if (!tbody) return;
 
+          // Read sort/filter from controls
+          const sortSelect = document.getElementById('applicantSortSelect');
+          const statusFilter = document.getElementById('applicantStatusFilter');
+          const [sortField, sortOrder] = (sortSelect ? sortSelect.value : 'createdAt|desc').split('|');
+          const filterStatus = statusFilter ? statusFilter.value : '';
+
           tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted py-3"><span class="spinner-border spinner-border-sm me-2"></span>Loading…</td></tr>';
           if (paginationEl) paginationEl.innerHTML = '';
 
           try {
             const token = getToken();
-            const res = await fetch(`${API_BASE}/jobs/my/applications?page=${page}&limit=${pageSize}`, {
-              headers: { Authorization: `Bearer ${token}` }
-            });
+            let url = `${API_BASE}/jobs/my/applications?page=${page}&limit=${pageSize}&sort=${sortField}&order=${sortOrder}`;
+            if (filterStatus) url += `&status=${encodeURIComponent(filterStatus)}`;
+            const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
             if (!res.ok) throw new Error('Failed to fetch applications');
             const json = await res.json();
             const applications = (json.data && json.data.applications) || [];
             const pagination = (json.data && json.data.pagination) || { total: 0, pages: 1, page: 1 };
 
             if (applications.length === 0) {
-              tbody.innerHTML = '<tr><td colspan="6" class="text-muted small text-center py-3">No applicants yet.</td></tr>';
+              tbody.innerHTML = '<tr><td colspan="6" class="text-muted small text-center py-3">No applicants found.</td></tr>';
+              if (paginationEl) paginationEl.innerHTML = '';
               return;
             }
 
@@ -2432,7 +2512,6 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
               return `<tr data-app-id="${escapeHtml(id)}"><td><p class="FullName fw-semibold mb-0">${escapeHtml(applicant)}</p></td><td class="location">${escapeHtml(jobTitle)}</td><td class="text-left">${escapeHtml(location)}</td><td class="text-left">${escapeHtml(date)}</td><td>${statusSelectHtml}</td><td><button class="btn btn-sm btn-outline-primary me-2 view-table-app-btn" data-app-id="${escapeHtml(id)}">View Profile</button></td></tr>`;
             }).join('');
 
-            // Attach event handlers
             tbody.querySelectorAll('.view-table-app-btn').forEach(btn => {
               btn.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -2456,7 +2535,6 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
                   });
                   if (!r.ok) throw new Error('Failed to update status');
                   sel.disabled = false;
-                  // Refresh dashboard summary stats
                   loadCompanyApplicants();
                 } catch (err) {
                   console.error('Status update failed', err);
@@ -2465,38 +2543,48 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
               });
             });
 
-            // Render pagination controls
-            if (paginationEl && pagination.pages > 1) {
+            // Pagination controls
+            if (paginationEl) {
               const currentPage = pagination.page;
               const totalPages = pagination.pages;
               const start = (currentPage - 1) * pageSize + 1;
               const end = Math.min(currentPage * pageSize, pagination.total);
-              paginationEl.innerHTML = `
-                <small class="text-muted">Showing ${start}–${end} of ${pagination.total} applicants</small>
-                <nav aria-label="Applicant list pagination">
-                  <ul class="pagination pagination-sm mb-0">
-                    <li class="page-item${currentPage === 1 ? ' disabled' : ''}">
-                      <button class="page-link" data-page="${currentPage - 1}" ${currentPage === 1 ? 'disabled' : ''}>Previous</button>
-                    </li>
-                    ${Array.from({ length: totalPages }, (_, i) => i + 1).map(p =>
-                      `<li class="page-item${p === currentPage ? ' active' : ''}">
-                        <button class="page-link" data-page="${p}">${p}</button>
-                      </li>`
-                    ).join('')}
-                    <li class="page-item${currentPage === totalPages ? ' disabled' : ''}">
-                      <button class="page-link" data-page="${currentPage + 1}" ${currentPage === totalPages ? 'disabled' : ''}>Next</button>
-                    </li>
-                  </ul>
-                </nav>`;
-              paginationEl.querySelectorAll('[data-page]').forEach(btn => {
-                btn.addEventListener('click', () => {
-                  const p = parseInt(btn.getAttribute('data-page'));
-                  if (p >= 1 && p <= totalPages) loadApplicantTrackingTable(p);
+              const countHtml = `<small class="text-muted">Showing ${start}–${end} of ${pagination.total} applicant${pagination.total !== 1 ? 's' : ''}</small>`;
+              if (totalPages <= 1) {
+                paginationEl.innerHTML = countHtml;
+              } else {
+                // Show at most 7 page buttons, with ellipsis
+                const pages = [];
+                for (let p = 1; p <= totalPages; p++) {
+                  if (p === 1 || p === totalPages || (p >= currentPage - 2 && p <= currentPage + 2)) {
+                    pages.push(p);
+                  } else if (pages[pages.length - 1] !== '…') {
+                    pages.push('…');
+                  }
+                }
+                paginationEl.innerHTML = `
+                  ${countHtml}
+                  <nav aria-label="Applicant list pagination">
+                    <ul class="pagination pagination-sm mb-0">
+                      <li class="page-item${currentPage === 1 ? ' disabled' : ''}">
+                        <button class="page-link" data-page="${currentPage - 1}" ${currentPage === 1 ? 'disabled' : ''}>‹ Prev</button>
+                      </li>
+                      ${pages.map(p => p === '…'
+                        ? `<li class="page-item disabled"><span class="page-link">…</span></li>`
+                        : `<li class="page-item${p === currentPage ? ' active' : ''}"><button class="page-link" data-page="${p}">${p}</button></li>`
+                      ).join('')}
+                      <li class="page-item${currentPage === totalPages ? ' disabled' : ''}">
+                        <button class="page-link" data-page="${currentPage + 1}" ${currentPage === totalPages ? 'disabled' : ''}>Next ›</button>
+                      </li>
+                    </ul>
+                  </nav>`;
+                paginationEl.querySelectorAll('[data-page]').forEach(btn => {
+                  btn.addEventListener('click', () => {
+                    const p = parseInt(btn.getAttribute('data-page'));
+                    if (p >= 1 && p <= totalPages) loadApplicantTrackingTable(p);
+                  });
                 });
-              });
-            } else if (paginationEl) {
-              const start = Math.min(1, pagination.total);
-              paginationEl.innerHTML = `<small class="text-muted">Showing ${start}–${pagination.total} of ${pagination.total} applicants</small>`;
+              }
             }
           } catch (err) {
             console.error('loadApplicantTrackingTable error', err);
@@ -2630,6 +2718,11 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
       if (applicantTabBtn) {
         applicantTabBtn.addEventListener('shown.bs.tab', () => loadApplicantTrackingTable(1));
       }
+      // Reload from page 1 when sort or status filter changes
+      const applicantSortSelect = document.getElementById('applicantSortSelect');
+      const applicantStatusFilter = document.getElementById('applicantStatusFilter');
+      if (applicantSortSelect) applicantSortSelect.addEventListener('change', () => loadApplicantTrackingTable(1));
+      if (applicantStatusFilter) applicantStatusFilter.addEventListener('change', () => loadApplicantTrackingTable(1));
     });
   </script>
   </body>

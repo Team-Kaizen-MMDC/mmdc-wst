@@ -83,7 +83,10 @@ function populateCompanyDetails(company) {
   // Logo & Website
   const logoEl = document.getElementById("det-logo");
   if (logoEl) {
-    logoEl.src = company.logoUrl || `https://ui-avatars.com/api/?name=${encodeURIComponent(companyName)}&background=f8f9fa&color=212529&size=128`;
+    const fallback = `https://ui-avatars.com/api/?name=${encodeURIComponent(companyName)}&background=f8f9fa&color=212529&size=128`;
+    logoEl.src = company.logo || company.logoUrl || fallback;
+    logoEl.alt = `${companyName} logo`;
+    logoEl.onerror = function () { this.src = fallback; this.onerror = null; };
   }
 
   const websiteEl = document.getElementById("det-website");

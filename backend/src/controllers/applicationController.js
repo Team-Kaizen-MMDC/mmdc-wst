@@ -327,7 +327,7 @@ exports.getCompanyApplicationsSummary = asyncHandler(async (req, res, next) => {
  * @access  Private (employer/admin)
  */
 exports.getCompanyApplicationsPaginated = asyncHandler(async (req, res, next) => {
-  const { companyId, status, page = 1, limit = 20 } = req.query;
+  const { companyId, status, page = 1, limit = 20, sort = "createdAt", order = "desc" } = req.query;
   let company = null;
 
   if (req.user.role === "admin") {
@@ -360,6 +360,11 @@ exports.getCompanyApplicationsPaginated = asyncHandler(async (req, res, next) =>
   const total = await Application.countDocuments(query);
   const skip = (parseInt(page) - 1) * parseInt(limit);
 
+  // Only allow sorting on safe top-level fields
+  const allowedSortFields = { createdAt: "createdAt", status: "status" };
+  const sortField = allowedSortFields[sort] || "createdAt";
+  const sortDir = order === "asc" ? 1 : -1;
+
   const applications = await Application.find(query)
     .populate({
       path: "applicant",
@@ -367,7 +372,7 @@ exports.getCompanyApplicationsPaginated = asyncHandler(async (req, res, next) =>
       populate: { path: "profile", select: "firstName lastName nationality resumePath" },
     })
     .populate({ path: "job", select: "title location" })
-    .sort("-createdAt")
+    .sort({ [sortField]: sortDir })
     .skip(skip)
     .limit(parseInt(limit));
 
