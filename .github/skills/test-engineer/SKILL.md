@@ -1,3 +1,9 @@
+---
+name: "test-engineer"
+title: "Test Engineer"
+description: "Skill profile for Test Engineer — Playwright, Jest, test conventions and CI integration."
+---
+
 # 🧪 Test Engineer — Skill Profile
 > Japan SSW Platform (`mmdc-wst`)
 

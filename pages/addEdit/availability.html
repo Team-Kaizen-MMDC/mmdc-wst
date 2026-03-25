@@ -251,6 +251,7 @@
     <script type="module">
       import { checkAuthAndRedirect } from "../../assets/js/modules/auth.js";
       import { initializeAvailabilityValidation } from "../../assets/js/modules/validation.js";
+      import { getCookie } from "../../assets/js/modules/storage.js";
       import {
         saveUserProfile,
         getUserProfile,
@@ -260,7 +261,6 @@
       // Load existing availability data
       const loadAvailabilityData = () => {
         const profile = getUserProfile();
-        console.log("Loading availability data:", profile);
 
         if (profile.availability) {
           if (profile.availability.status) {
@@ -278,8 +278,192 @@
         }
       };
 
-      // Save availability data on form submit
-      const saveAvailabilityData = (event) => {
+      // Build an ISO date string from separate year/month(/day) values.
+      // Returns null if year or month are missing.
+      const buildDate = (year, month, day = 1) => {
+        const y = parseInt(year);
+        const m = parseInt(month);
+        const d = parseInt(day) || 1;
+        if (!y || !m) return null;
+        return new Date(y, m - 1, d).toISOString();
+      };
+
+      // Map human-readable form labels to MongoDB enum values.
+      const normalizeJlpt = (val) => {
+        const map = { 'N5 level': 'N5', 'N4 level': 'N4', 'N3 level': 'N3', 'N2 level': 'N2', 'N1 level': 'N1' };
+        return map[val] || (['none','N5','N4','N3','N2','N1'].includes(val) ? val : 'none');
+      };
+      const normalizeVisa = (val) => {
+        if (!val) return undefined;
+        const map = {
+          'Specified Skilled Worker (I & II) Visa': 'ssw-1',
+          'Specified Skilled Worker (SSW-1) Visa':  'ssw-1',
+          'Specified Skilled Worker (SSW-2) Visa':  'ssw-2',
+          'Student Visa': 'student',
+          'Skilled Labor Visa': 'working',
+          'Permanent Resident Visa': 'pr',
+          'Spouse / Long-Term Resident Visa': 'spouse',
+          'Long-Term Resident Visa': 'spouse',
+          'Not Applicable': 'not-applicable',
+        };
+        if (map[val]) return map[val];
+        const valid = ['not-applicable','student','working','ssw-1','ssw-2','spouse','pr','other'];
+        return valid.includes(val) ? val : 'other';
+      };
+
+      // Sync the fully-assembled localStorage profile to MongoDB via the API.
+      // Each section is sent independently so a partial failure doesn't block the rest.
+      const syncProfileToBackend = async (profile) => {
+        const token = getCookie("token") || localStorage.getItem("token") || "";
+        if (!token) return;
+
+        const headers = {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        };
+
+        // Merge the email-keyed profile with the global fallback key so data
+        // is found regardless of whether the email cookie was available during
+        // the addEdit flow.
+        let mergedProfile = { ...profile };
+        try {
+          const fallbackRaw = localStorage.getItem("userProfile");
+          if (fallbackRaw) {
+            const fallback = JSON.parse(fallbackRaw);
+            // Prefer non-empty values: use fallback as base, override with email-keyed
+            mergedProfile = {
+              ...fallback,
+              ...Object.fromEntries(
+                Object.entries(profile).filter(([, v]) =>
+                  v !== "" && v !== null && v !== undefined &&
+                  !(Array.isArray(v) && v.length === 0)
+                )
+              ),
+            };
+          }
+        } catch (e) { /* ignore */ }
+
+        // ── 1. Basic profile ──────────────────────────────────────────
+        const dob = mergedProfile.dateOfBirth;
+        const dobDate = dob ? buildDate(dob.year, dob.month, dob.day) : null;
+
+        const basicProfile = {
+          ...(mergedProfile.firstName && { firstName: mergedProfile.firstName.trim() }),
+          ...(mergedProfile.lastName  && { lastName:  mergedProfile.lastName.trim()  }),
+          ...(dobDate                 && { dateOfBirth: dobDate }),
+          ...(mergedProfile.gender    && { gender: mergedProfile.gender.toLowerCase() }),
+          ...(mergedProfile.nationality && { nationality: mergedProfile.nationality }),
+          ...(mergedProfile.address   && { address:   mergedProfile.address   }),
+          ...(mergedProfile.city      && { city:      mergedProfile.city      }),
+          ...(mergedProfile.prefecture && { prefecture: mergedProfile.prefecture }),
+          ...(mergedProfile.japaneseLevel && { japaneseLevel: normalizeJlpt(mergedProfile.japaneseLevel) }),
+          ...(mergedProfile.profileSummary && { bio: mergedProfile.profileSummary }),
+          // Store visa status and desired industry inside availability sub-doc
+          availability: {
+            ...(mergedProfile.visaStatus && { visaStatus: normalizeVisa(mergedProfile.visaStatus) }),
+            ...(mergedProfile.industry   && { desiredIndustry: mergedProfile.industry }),
+          },
+        };
+
+        try {
+          let res = await fetch("/api/v1/profile", {
+            method: "POST",
+            headers,
+            body: JSON.stringify(basicProfile),
+          });
+          // 400 from createProfile means "profile already exists" — switch to PUT
+          if (res.status === 400) {
+            res = await fetch("/api/v1/profile", {
+              method: "PUT",
+              headers,
+              body: JSON.stringify(basicProfile),
+            });
+          }
+          if (!res.ok) console.warn("Basic profile sync failed:", res.status);
+        } catch (e) {
+          console.warn("Could not sync basic profile to API:", e);
+        }
+
+        // ── 2. Education ──────────────────────────────────────────────
+        const educationList = mergedProfile.education;
+        if (educationList && educationList.length > 0) {
+          for (const edu of educationList) {
+            if (!edu.schoolName || !edu.educationalAttainment) continue;
+            const startDate = buildDate(edu.startYear, edu.startMonth) || new Date().toISOString();
+            const endDate   = edu.currentlyStudying ? null : buildDate(edu.endYear, edu.endMonth || 12);
+            const payload = {
+              school:      edu.schoolName,
+              degree:      edu.educationalAttainment,
+              field:       edu.fieldOfStudy || "",
+              startDate,
+              ...(endDate && { endDate }),
+              current:     !!edu.currentlyStudying,
+              description: edu.description || "",
+            };
+            try {
+              await fetch("/api/v1/profile/education", { method: "POST", headers, body: JSON.stringify(payload) });
+            } catch (e) {
+              console.warn("Could not sync education to API:", e);
+            }
+          }
+        }
+
+        // ── 3. Experience ─────────────────────────────────────────────
+        const experienceList = mergedProfile.experience;
+        if (experienceList && experienceList.length > 0) {
+          for (const exp of experienceList) {
+            if (!exp.companyName || !exp.jobPosition) continue;
+            const startDate = buildDate(exp.startYear, exp.startMonth) || new Date().toISOString();
+            const endDate   = exp.currentlyWorking ? null : buildDate(exp.endYear, exp.endMonth || 12);
+            const payload = {
+              company:     exp.companyName,
+              title:       exp.jobPosition,
+              startDate,
+              ...(endDate && { endDate }),
+              current:     !!exp.currentlyWorking,
+              description: exp.description || "",
+            };
+            try {
+              await fetch("/api/v1/profile/experience", { method: "POST", headers, body: JSON.stringify(payload) });
+            } catch (e) {
+              console.warn("Could not sync experience to API:", e);
+            }
+          }
+        }
+
+        // ── 4. Skills ─────────────────────────────────────────────────
+        const skillsList = mergedProfile.skills;
+        if (skillsList && skillsList.length > 0) {
+          const skillsPayload = {
+            skills: skillsList.map((s) =>
+              typeof s === "string" ? { name: s, level: "intermediate" } : s
+            ),
+          };
+          try {
+            await fetch("/api/v1/profile/skills", { method: "PUT", headers, body: JSON.stringify(skillsPayload) });
+          } catch (e) {
+            console.warn("Could not sync skills to API:", e);
+          }
+        }
+
+        // ── 5. Certifications ─────────────────────────────────────────
+        const certList = mergedProfile.certifications;
+        if (certList && certList.length > 0) {
+          const certPayload = {
+            certifications: certList.map((c) =>
+              typeof c === "string" ? { name: c, issuer: "N/A" } : c
+            ),
+          };
+          try {
+            await fetch("/api/v1/profile/certifications", { method: "PUT", headers, body: JSON.stringify(certPayload) });
+          } catch (e) {
+            console.warn("Could not sync certifications to API:", e);
+          }
+        }
+      };
+
+      // Save availability data on form submit then sync everything to MongoDB
+      const saveAvailabilityData = async (event) => {
         event.preventDefault();
 
         const availabilityData = {
@@ -291,13 +475,12 @@
         };
 
         saveUserProfile(availabilityData);
-
-        // Mark profile as complete (final step)
         markProfileComplete();
 
-        console.log("Availability data saved. Profile complete!");
+        // Sync all profile steps to MongoDB Atlas
+        const fullProfile = getUserProfile();
+        await syncProfileToBackend(fullProfile);
 
-        // Redirect to profile dashboard
         window.location.href = "../profileDashboard.html";
       };
 

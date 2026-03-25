@@ -37,28 +37,6 @@ router.get(
   getCompanyApplicationsSummary,
 );
 
-router.get("/admin/stats", authorize("admin"), getJobStats);
-
-// Only platform admins can create jobs via this endpoint. Other employer flows still use employer authorization.
-router.post("/", authorize("admin"), createJob);
-router.put("/:id", authorize("employer", "admin"), updateJob);
-router.delete("/:id", authorize("employer", "admin"), deleteJob);
-
-router.post(
-  "/:jobId/apply",
-  authorize("jobseeker"),
-  validateApplication,
-  applyToJob,
-);
-
-router.get(
-  "/:jobId/applications",
-  authorize("employer", "admin"),
-  getJobApplications,
-);
-
-module.exports = router;
-
 /**
  * @swagger
  * /api/v1/jobs:

@@ -1,3 +1,9 @@
+---
+name: "database-architect"
+title: "Database Architect"
+description: "Skill profile for Database Architect — Mongoose schemas, indexes, backup and restore."
+---
+
 # 🗄️ Database Developer / Architect — Skill Profile
 > Japan SSW Platform (`mmdc-wst`)
 

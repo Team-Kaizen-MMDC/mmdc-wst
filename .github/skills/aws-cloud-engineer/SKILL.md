@@ -1,3 +1,9 @@
+---
+name: "aws-cloud-engineer"
+title: "AWS / Cloud Infrastructure Engineer"
+description: "Skill profile for AWS / Cloud Infrastructure Engineer — S3, IAM, Terraform, OIDC."
+---
+
 # ☁️ AWS / Cloud Infrastructure Engineer — Skill Profile
 > Japan SSW Platform (`mmdc-wst`)
 

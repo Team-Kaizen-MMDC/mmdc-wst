@@ -209,27 +209,65 @@ export const initializeSignupValidation = () => {
     event.preventDefault();
     event.stopPropagation();
 
-
-
     // Run FULL form validation on submit
     if (checkFormValidity(inputElements)) {
+      const submitBtn = form.querySelector('button[type="submit"]');
+      if (submitBtn) submitBtn.disabled = true;
 
+      fetch("/api/v1/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: inputElements.email.value,
+          password: inputElements.password.value,
+          role: "jobseeker",
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data && data.success) {
+            if (data.data && data.data.token) {
+              setCookie("token", data.data.token, 7);
+              // Also persist token in localStorage so addEdit pages can
+              // read it even if the cookie isn't immediately accessible.
+              localStorage.setItem("token", data.data.token);
+            }
+            setCookie("isLoggedIn", "true", 7);
+            setCookie("email", inputElements.email.value, 7);
 
-      // --- COOKIE SAVING ---
-      setCookie("email", inputElements.email.value);
-      setCookie("password", inputElements.password.value);
-      // --- LOGGED-IN COOKIE ---
-      setCookie("isLoggedIn", "true", 1); // Sets the cookie for 1 day
+            const seedProfile = { email: inputElements.email.value };
+            replaceUserProfile(seedProfile);
+            // Mirror to the global fallback key so addEdit pages always
+            // find the profile even if the email cookie is unavailable.
+            try {
+              const existing = JSON.parse(localStorage.getItem("userProfile") || "{}");
+              const base = { ...existing, ...seedProfile, lastUpdated: new Date().toISOString() };
+              localStorage.setItem("userProfile", JSON.stringify(base));
+            } catch (_) {}
+            setNewUserFlag(true);
 
-      // --- INITIALIZE USER PROFILE ---
-      // Save email to profile and mark as new user
-      replaceUserProfile({ email: inputElements.email.value });
-      setNewUserFlag(true);
-
-
-      window.location.href = "addEdit/profile.html";
-    } else {
-
+            window.location.href = "addEdit/profile.html";
+          } else {
+            const msg = (data && data.message) || "Registration failed. Please try again.";
+            const fb = document.getElementById("emailFeedback");
+            if (fb) {
+              fb.textContent = msg;
+              fb.style.display = "block";
+            }
+            setValidationState(inputElements.email, false);
+          }
+        })
+        .catch((err) => {
+          console.error("Registration request failed", err);
+          const fb = document.getElementById("emailFeedback");
+          if (fb) {
+            fb.textContent = "Server error. Please try again later.";
+            fb.style.display = "block";
+          }
+        })
+        .finally(() => {
+          if (submitBtn) submitBtn.disabled = false;
+        });
     }
   };
 

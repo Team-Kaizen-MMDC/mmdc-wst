@@ -1,3 +1,9 @@
+---
+name: "security-engineer"
+title: "Security Engineer"
+description: "Skill profile for Security Engineer — audit, secrets, auth, and hardening practices."
+---
+
 # 🔐 Security Engineer — Skill Profile
 > Japan SSW Platform (`mmdc-wst`)
 

@@ -140,19 +140,16 @@ const userProfileSchema = new mongoose.Schema(
     // Basic Information
     firstName: {
       type: String,
-      required: [true, "First name is required"],
       trim: true,
       maxlength: [50, "First name cannot exceed 50 characters"],
     },
     lastName: {
       type: String,
-      required: [true, "Last name is required"],
       trim: true,
       maxlength: [50, "Last name cannot exceed 50 characters"],
     },
     dateOfBirth: {
       type: Date,
-      required: [true, "Date of birth is required"],
     },
     gender: {
       type: String,
@@ -160,7 +157,6 @@ const userProfileSchema = new mongoose.Schema(
     },
     nationality: {
       type: String,
-      required: [true, "Nationality is required"],
       trim: true,
     },
     // Contact Information

@@ -1,3 +1,9 @@
+---
+name: "devops-engineer"
+title: "DevOps Engineer"
+description: "Skill profile for DevOps Engineer — CI/CD, Terraform, deployments and workflows."
+---
+
 # 🚀 DevOps Engineer — Skill Profile
 > Japan SSW Platform (`mmdc-wst`)
 

@@ -28,8 +28,25 @@ export function checkAuthAndRedirect() {
 
 /**
  * Logs the user out by deleting cookies, clearing profile, and redirecting.
+ * Calls the backend logout endpoint first to destroy the server-side Passport
+ * session — critical for Google OAuth users whose req.user would otherwise
+ * persist in the session and cause the wrong profile to be returned after
+ * switching accounts.
  */
-export function logoutAndRedirect(redirectPath = "signin.html") {
+export async function logoutAndRedirect(redirectPath = "signin.html") {
+  // Hit the backend logout endpoint to destroy the server-side session.
+  // We read the token before clearing cookies so the request is authorized.
+  try {
+    const token = getCookie("token");
+    await fetch("/api/v1/auth/logout", {
+      method: "POST",
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+      credentials: "include",
+    });
+  } catch (err) {
+    console.warn("Backend logout request failed (continuing anyway):", err);
+  }
+
   // Clear auth cookies
   document.cookie = `isLoggedIn=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/`;
   document.cookie = `email=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/`;
