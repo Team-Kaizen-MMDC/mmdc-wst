@@ -73,6 +73,14 @@ async function checkAlreadyApplied(jobId) {
     const res = await fetch(`${API_BASE}/applications/me?limit=100`, {
       headers: getAuthHeaders(),
     });
+    if (res.status === 401) {
+      // Account locked or session expired — show a warning banner
+      const warning = document.getElementById("applySection");
+      if (warning) {
+        warning.innerHTML = `<div class="alert alert-warning mb-0">⚠️ Your account is locked or session expired. <a href="../signin.html">Log in again</a> to apply.</div>`;
+      }
+      return true; // treat as applied so the normal apply button is suppressed
+    }
     if (!res.ok) return false;
     const data = await res.json();
     const apps = data.data?.applications || [];
@@ -219,6 +227,9 @@ function setupApplyModal(jobId) {
       const data = await res.json();
 
       if (!res.ok) {
+        if (res.status === 401) {
+          throw new Error("Your session has expired or your account is locked. Please log out and log back in, then try again.");
+        }
         throw new Error(data.message || "Failed to submit application.");
       }
 
