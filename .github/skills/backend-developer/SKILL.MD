@@ -1,3 +1,9 @@
+---
+name: "backend-developer"
+title: "Backend Developer"
+description: "Skill profile for Backend Developer — responsibilities, stack, and conventions."
+---
+
 # ⚙️ Backend Developer — Skill Profile
 > Japan SSW Platform (`mmdc-wst`)
 

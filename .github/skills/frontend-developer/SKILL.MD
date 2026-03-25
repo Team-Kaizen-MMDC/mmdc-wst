@@ -1,3 +1,9 @@
+---
+name: "frontend-developer"
+title: "Frontend Developer"
+description: "Skill profile for Frontend Developer — UI, accessibility, Tailwind, i18n."
+---
+
 # 🎨 Frontend Developer — Skill Profile
 > Japan SSW Platform (`mmdc-wst`)
 

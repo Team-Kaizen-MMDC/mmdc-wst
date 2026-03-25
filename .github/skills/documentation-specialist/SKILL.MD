@@ -1,3 +1,9 @@
+---
+name: "documentation-specialist"
+title: "Documentation Specialist"
+description: "Skill profile for Documentation Specialist — README, Swagger docs, diagrams and badges."
+---
+
 # 📄 Documentation Specialist — Skill Profile
 > Japan SSW Platform (`mmdc-wst`)
 

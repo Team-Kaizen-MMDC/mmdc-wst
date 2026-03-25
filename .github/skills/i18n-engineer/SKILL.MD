@@ -1,3 +1,9 @@
+---
+name: "i18n-engineer"
+title: "i18n / Localization Engineer"
+description: "Skill profile for i18n / Localization Engineer — manage locales, translation workflow, tests."
+---
+
 # 🌐 i18n / Localization Engineer — Skill Profile
 > Japan SSW Platform (`mmdc-wst`)
 
