@@ -2836,38 +2836,67 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
               // to redo the setup flow. Guard against reload loops with sessionStorage.
               if (!sessionStorage.getItem('profileAutoCreated')) {
                 try {
+                  // Read from email-keyed profile; also check the global fallback key
+                  // in case the email cookie was unavailable during the addEdit flow.
                   const lsP = getUserProfile();
+                  let mergedP = { ...lsP };
+                  try {
+                    const fbRaw = localStorage.getItem('userProfile');
+                    if (fbRaw) {
+                      const fb = JSON.parse(fbRaw);
+                      mergedP = {
+                        ...fb,
+                        ...Object.fromEntries(
+                          Object.entries(lsP).filter(([, v]) =>
+                            v !== '' && v !== null && v !== undefined &&
+                            !(Array.isArray(v) && v.length === 0)
+                          )
+                        ),
+                      };
+                    }
+                  } catch (_) {}
+
                   const emailFromCookie = document.cookie.split('; ').find(r => r.startsWith('email='))?.split('=')[1] || '';
+                  const emailDecoded = decodeURIComponent(emailFromCookie);
                   const buildDateFromParts = (year, month, day = 1) => {
                     const y = parseInt(year), m = parseInt(month), d = parseInt(day) || 1;
                     if (!y || !m) return null;
                     return new Date(y, m - 1, d).toISOString();
                   };
-                  const dob = lsP.dateOfBirth;
+                  const dob = mergedP.dateOfBirth;
                   const dobDate = dob ? buildDateFromParts(dob.year, dob.month, dob.day) : null;
 
                   const profileBody = {
-                    firstName: lsP.firstName || (emailFromCookie ? emailFromCookie.split('@')[0] : 'User'),
-                    lastName:  lsP.lastName  || '',
+                    firstName: mergedP.firstName || (emailDecoded ? emailDecoded.split('@')[0] : 'User'),
+                    lastName:  mergedP.lastName  || '',
                     ...(dobDate && { dateOfBirth: dobDate }),
-                    ...(lsP.gender      && { gender:        lsP.gender.toLowerCase() }),
-                    ...(lsP.nationality && { nationality:   lsP.nationality }),
-                    ...(lsP.address     && { address:       lsP.address }),
-                    ...(lsP.city        && { city:          lsP.city }),
-                    ...(lsP.prefecture  && { prefecture:    lsP.prefecture }),
-                    ...(lsP.japaneseLevel && { japaneseLevel: lsP.japaneseLevel }),
-                    ...(lsP.profileSummary && { bio:         lsP.profileSummary }),
+                    ...(mergedP.gender      && { gender:        mergedP.gender.toLowerCase() }),
+                    ...(mergedP.nationality && { nationality:   mergedP.nationality }),
+                    ...(mergedP.address     && { address:       mergedP.address }),
+                    ...(mergedP.city        && { city:          mergedP.city }),
+                    ...(mergedP.prefecture  && { prefecture:    mergedP.prefecture }),
+                    ...(mergedP.japaneseLevel && { japaneseLevel: mergedP.japaneseLevel }),
+                    ...(mergedP.profileSummary && { bio:         mergedP.profileSummary }),
                     availability: {
-                      ...(lsP.visaStatus && { visaStatus:      lsP.visaStatus }),
-                      ...(lsP.industry   && { desiredIndustry: lsP.industry   }),
+                      ...(mergedP.visaStatus && { visaStatus:      mergedP.visaStatus }),
+                      ...(mergedP.industry   && { desiredIndustry: mergedP.industry   }),
                     },
                   };
 
-                  const createRes = await fetch('/api/v1/profile', {
+                  let createRes = await fetch('/api/v1/profile', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
                     body: JSON.stringify(profileBody),
                   });
+
+                  // 400 = "profile already exists" → update it instead
+                  if (createRes.status === 400) {
+                    createRes = await fetch('/api/v1/profile', {
+                      method: 'PUT',
+                      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+                      body: JSON.stringify(profileBody),
+                    });
+                  }
 
                   if (createRes.ok) {
                     sessionStorage.setItem('profileAutoCreated', '1');

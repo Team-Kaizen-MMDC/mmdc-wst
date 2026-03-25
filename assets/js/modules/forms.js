@@ -228,11 +228,22 @@ export const initializeSignupValidation = () => {
           if (data && data.success) {
             if (data.data && data.data.token) {
               setCookie("token", data.data.token, 7);
+              // Also persist token in localStorage so addEdit pages can
+              // read it even if the cookie isn't immediately accessible.
+              localStorage.setItem("token", data.data.token);
             }
             setCookie("isLoggedIn", "true", 7);
             setCookie("email", inputElements.email.value, 7);
 
-            replaceUserProfile({ email: inputElements.email.value });
+            const seedProfile = { email: inputElements.email.value };
+            replaceUserProfile(seedProfile);
+            // Mirror to the global fallback key so addEdit pages always
+            // find the profile even if the email cookie is unavailable.
+            try {
+              const existing = JSON.parse(localStorage.getItem("userProfile") || "{}");
+              const base = { ...existing, ...seedProfile, lastUpdated: new Date().toISOString() };
+              localStorage.setItem("userProfile", JSON.stringify(base));
+            } catch (_) {}
             setNewUserFlag(true);
 
             window.location.href = "addEdit/profile.html";

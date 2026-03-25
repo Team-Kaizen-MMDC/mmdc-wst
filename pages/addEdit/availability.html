@@ -291,7 +291,7 @@
       // Sync the fully-assembled localStorage profile to MongoDB via the API.
       // Each section is sent independently so a partial failure doesn't block the rest.
       const syncProfileToBackend = async (profile) => {
-        const token = getCookie("token");
+        const token = getCookie("token") || localStorage.getItem("token") || "";
         if (!token) return;
 
         const headers = {
@@ -299,49 +299,72 @@
           Authorization: `Bearer ${token}`,
         };
 
+        // Merge the email-keyed profile with the global fallback key so data
+        // is found regardless of whether the email cookie was available during
+        // the addEdit flow.
+        let mergedProfile = { ...profile };
+        try {
+          const fallbackRaw = localStorage.getItem("userProfile");
+          if (fallbackRaw) {
+            const fallback = JSON.parse(fallbackRaw);
+            // Prefer non-empty values: use fallback as base, override with email-keyed
+            mergedProfile = {
+              ...fallback,
+              ...Object.fromEntries(
+                Object.entries(profile).filter(([, v]) =>
+                  v !== "" && v !== null && v !== undefined &&
+                  !(Array.isArray(v) && v.length === 0)
+                )
+              ),
+            };
+          }
+        } catch (e) { /* ignore */ }
+
         // ── 1. Basic profile ──────────────────────────────────────────
-        const dob = profile.dateOfBirth;
+        const dob = mergedProfile.dateOfBirth;
         const dobDate = dob ? buildDate(dob.year, dob.month, dob.day) : null;
 
         const basicProfile = {
-          ...(profile.firstName && { firstName: profile.firstName }),
-          ...(profile.lastName  && { lastName:  profile.lastName  }),
-          ...(dobDate           && { dateOfBirth: dobDate }),
-          ...(profile.gender    && { gender: profile.gender.toLowerCase() }),
-          ...(profile.nationality && { nationality: profile.nationality }),
-          ...(profile.address   && { address:   profile.address   }),
-          ...(profile.city      && { city:      profile.city      }),
-          ...(profile.prefecture && { prefecture: profile.prefecture }),
-          ...(profile.japaneseLevel && { japaneseLevel: profile.japaneseLevel }),
-          ...(profile.profileSummary && { bio: profile.profileSummary }),
+          ...(mergedProfile.firstName && { firstName: mergedProfile.firstName }),
+          ...(mergedProfile.lastName  && { lastName:  mergedProfile.lastName  }),
+          ...(dobDate                 && { dateOfBirth: dobDate }),
+          ...(mergedProfile.gender    && { gender: mergedProfile.gender.toLowerCase() }),
+          ...(mergedProfile.nationality && { nationality: mergedProfile.nationality }),
+          ...(mergedProfile.address   && { address:   mergedProfile.address   }),
+          ...(mergedProfile.city      && { city:      mergedProfile.city      }),
+          ...(mergedProfile.prefecture && { prefecture: mergedProfile.prefecture }),
+          ...(mergedProfile.japaneseLevel && { japaneseLevel: mergedProfile.japaneseLevel }),
+          ...(mergedProfile.profileSummary && { bio: mergedProfile.profileSummary }),
           // Store visa status and desired industry inside availability sub-doc
           availability: {
-            ...(profile.visaStatus && { visaStatus: profile.visaStatus }),
-            ...(profile.industry   && { desiredIndustry: profile.industry }),
+            ...(mergedProfile.visaStatus && { visaStatus: mergedProfile.visaStatus }),
+            ...(mergedProfile.industry   && { desiredIndustry: mergedProfile.industry }),
           },
         };
 
         try {
-          const res = await fetch("/api/v1/profile", {
+          let res = await fetch("/api/v1/profile", {
             method: "POST",
             headers,
             body: JSON.stringify(basicProfile),
           });
+          // 400 from createProfile means "profile already exists" — switch to PUT
           if (res.status === 400) {
-            // Profile already exists — update instead
-            await fetch("/api/v1/profile", {
+            res = await fetch("/api/v1/profile", {
               method: "PUT",
               headers,
               body: JSON.stringify(basicProfile),
             });
           }
+          if (!res.ok) console.warn("Basic profile sync failed:", res.status);
         } catch (e) {
           console.warn("Could not sync basic profile to API:", e);
         }
 
         // ── 2. Education ──────────────────────────────────────────────
-        if (profile.education && profile.education.length > 0) {
-          for (const edu of profile.education) {
+        const educationList = mergedProfile.education;
+        if (educationList && educationList.length > 0) {
+          for (const edu of educationList) {
             if (!edu.schoolName || !edu.educationalAttainment) continue;
             const startDate = buildDate(edu.startYear, edu.startMonth) || new Date().toISOString();
             const endDate   = edu.currentlyStudying ? null : buildDate(edu.endYear, edu.endMonth || 12);
@@ -363,8 +386,9 @@
         }
 
         // ── 3. Experience ─────────────────────────────────────────────
-        if (profile.experience && profile.experience.length > 0) {
-          for (const exp of profile.experience) {
+        const experienceList = mergedProfile.experience;
+        if (experienceList && experienceList.length > 0) {
+          for (const exp of experienceList) {
             if (!exp.companyName || !exp.jobPosition) continue;
             const startDate = buildDate(exp.startYear, exp.startMonth) || new Date().toISOString();
             const endDate   = exp.currentlyWorking ? null : buildDate(exp.endYear, exp.endMonth || 12);
@@ -385,9 +409,10 @@
         }
 
         // ── 4. Skills ─────────────────────────────────────────────────
-        if (profile.skills && profile.skills.length > 0) {
+        const skillsList = mergedProfile.skills;
+        if (skillsList && skillsList.length > 0) {
           const skillsPayload = {
-            skills: profile.skills.map((s) =>
+            skills: skillsList.map((s) =>
               typeof s === "string" ? { name: s, level: "intermediate" } : s
             ),
           };
@@ -399,9 +424,10 @@
         }
 
         // ── 5. Certifications ─────────────────────────────────────────
-        if (profile.certifications && profile.certifications.length > 0) {
+        const certList = mergedProfile.certifications;
+        if (certList && certList.length > 0) {
           const certPayload = {
-            certifications: profile.certifications.map((c) =>
+            certifications: certList.map((c) =>
               typeof c === "string" ? { name: c, issuer: "N/A" } : c
             ),
           };
