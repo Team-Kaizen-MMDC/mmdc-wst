@@ -112,7 +112,7 @@ exports.getApplication = asyncHandler(async (req, res, next) => {
     .populate({
       path: 'applicant',
       select: 'email profile',
-      populate: { path: 'profile', select: 'firstName lastName nationality japaneseLevel skills experience education' },
+      populate: { path: 'profile', select: 'firstName lastName nationality japaneseLevel skills experience education resumePath' },
     })
     .populate({
       path: 'job',
@@ -220,7 +220,7 @@ exports.getJobApplications = asyncHandler(async (req, res, next) => {
       populate: {
         path: "profile",
         select:
-          "firstName lastName nationality japaneseLevel skills experience education",
+          "firstName lastName nationality japaneseLevel skills experience education resumePath",
       },
     })
     .sort("-createdAt")
@@ -317,6 +317,69 @@ exports.getCompanyApplicationsSummary = asyncHandler(async (req, res, next) => {
       totalApplications,
       statusSummary,
       recentApplications,
+    }),
+  );
+});
+
+/**
+ * @desc    Get paginated applications for employer's company (Applicant Tracking tab)
+ * @route   GET /api/v1/jobs/my/applications
+ * @access  Private (employer/admin)
+ */
+exports.getCompanyApplicationsPaginated = asyncHandler(async (req, res, next) => {
+  const { companyId, status, page = 1, limit = 20 } = req.query;
+  let company = null;
+
+  if (req.user.role === "admin") {
+    company = companyId || null;
+  } else {
+    if (!req.user.company) {
+      return next(new ApiError(400, "No company associated with user"));
+    }
+    company = req.user.company;
+  }
+
+  let jobQuery = {};
+  if (company) jobQuery = { company };
+
+  const jobs = await Job.find(jobQuery).select("_id").lean();
+  const jobIds = jobs.map((j) => j._id);
+
+  if (jobIds.length === 0) {
+    return res.json(
+      new ApiResponse(200, "No applications found", {
+        applications: [],
+        pagination: { page: 1, limit: parseInt(limit), total: 0, pages: 0 },
+      }),
+    );
+  }
+
+  const query = { job: { $in: jobIds } };
+  if (status) query.status = status;
+
+  const total = await Application.countDocuments(query);
+  const skip = (parseInt(page) - 1) * parseInt(limit);
+
+  const applications = await Application.find(query)
+    .populate({
+      path: "applicant",
+      select: "email profile",
+      populate: { path: "profile", select: "firstName lastName nationality resumePath" },
+    })
+    .populate({ path: "job", select: "title location" })
+    .sort("-createdAt")
+    .skip(skip)
+    .limit(parseInt(limit));
+
+  res.json(
+    new ApiResponse(200, "Company applications retrieved", {
+      applications,
+      pagination: {
+        page: parseInt(page),
+        limit: parseInt(limit),
+        total,
+        pages: Math.ceil(total / parseInt(limit)),
+      },
     }),
   );
 });

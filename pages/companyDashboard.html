@@ -540,7 +540,10 @@
                   <p class="mb-1"><strong>Location:</strong> <span id="applicant-location">-</span></p>
                   <p class="mb-1"><strong>Applied On:</strong> <span id="applicant-date">-</span></p>
                   <p class="mb-1"><strong>Status:</strong> <span id="applicant-status">-</span></p>
-                  <div id="applicant-resume" class="mt-3"></div>
+                  <div class="mt-3">
+                    <strong>Resume / CV:</strong>
+                    <div id="applicant-resume" class="mt-1"></div>
+                  </div>
                   <pre id="applicant-raw" class="small bg-light p-2 mt-3 d-none" style="max-height:240px;overflow:auto"></pre>
                 </div>
               </div>
@@ -582,10 +585,11 @@
                   </tr>
                 </thead>
                         <tbody id="applicantTableBody">
-                  <!-- Populated dynamically by loadCompanyApplicants() -->
+                  <!-- Populated dynamically by loadApplicantTrackingTable() -->
                 </tbody>
               </table>
             </div>
+            <div id="applicantTrackingPagination" class="d-flex justify-content-between align-items-center mt-3 flex-wrap gap-2"></div>
           </div>
         </div>
 
@@ -2339,64 +2343,8 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
           }
         }
 
-        // Populate Applicant Tracking Table (full list in Applicant Tracking tab)
-        const applicantTableBody = document.getElementById('applicantTableBody');
-        if (applicantTableBody) {
-          if (!recentApplications || recentApplications.length === 0) {
-            applicantTableBody.innerHTML = '<tr><td colspan="6" class="text-muted small">No applicants yet.</td></tr>';
-          } else {
-            const rows = sortedRecentApplications.map(a=>{
-              const id = a._id || a.id || '';
-              const applicant = getApplicantDisplayName(a.applicant || a);
-              const jobTitle = (a.job && a.job.title) ? a.job.title : (a._job && a._job.title) ? a._job.title : 'Job';
-              const locationRaw = (a.job && a.job.location) || (a._job && a._job.location) || null;
-              const location = formatJobLocation(locationRaw);
-              const date = a.createdAt ? new Date(a.createdAt).toLocaleDateString() : '–';
-              const status = a.status || '-';
-              const statusOptions = ['submitted','reviewing','interview','offer','accepted','rejected'];
-              const statusSelectHtml = `<select class="form-select form-select-sm status-select" data-app-id="${escapeHtml(id)}" style="min-width:120px">${statusOptions.map(s=>`<option value="${s}"${s===status?' selected':''}>${s.charAt(0).toUpperCase()+s.slice(1)}</option>`).join('')}</select>`;
-              return `<tr data-app-id="${escapeHtml(id)}"><td><p class="FullName fw-semibold mb-0">${escapeHtml(applicant)}</p></td><td class="location">${escapeHtml(jobTitle)}</td><td class="text-left">${escapeHtml(location)}</td><td class="text-left">${escapeHtml(date)}</td><td>${statusSelectHtml}</td><td><button class="btn btn-sm btn-outline-primary me-2 view-table-app-btn" data-app-id="${escapeHtml(id)}">View Profile</button></td></tr>`;
-            }).join('');
-            applicantTableBody.innerHTML = rows;
-
-            // attach click handlers for table view buttons and status selects
-            setTimeout(()=>{
-              document.querySelectorAll('.view-table-app-btn').forEach(btn=>{
-                btn.addEventListener('click', (e)=>{
-                  e.preventDefault();
-                  const id = btn.getAttribute('data-app-id');
-                  const app = (recentApplications || []).find(x => (x._id||x.id||'') === id);
-                  if (app) showApplicantDetail(app);
-                });
-              });
-
-              document.querySelectorAll('.status-select').forEach(sel=>{
-                sel.addEventListener('change', async (e)=>{
-                  const id = sel.getAttribute('data-app-id');
-                  const newStatus = sel.value;
-                  const token = getToken();
-                  sel.disabled = true;
-                  try {
-                    const res = await fetch(`${API_BASE}/applications/${id}/status`, {
-                      method: 'PUT',
-                      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-                      body: JSON.stringify({ status: newStatus }),
-                    });
-                    if (!res.ok) throw new Error('Failed to update status');
-                    // Update in-memory data so dashboard stats are accurate
-                    const app = (recentApplications || []).find(x => (x._id||x.id||'') === id);
-                    if (app) app.status = newStatus;
-                    // Reload to refresh dashboard tracking card stats
-                    await loadCompanyApplicants();
-                  } catch (err) {
-                    console.error('Status update failed', err);
-                    sel.disabled = false;
-                  }
-                });
-              });
-            },0);
-          }
-        }
+        // Populate Applicant Tracking Table — loaded separately with server-side pagination
+        loadApplicantTrackingTable(1);
 
         // Wire View All links: open Applicant Tracking tab and refresh
         document.querySelectorAll('#viewAllApplicantsLink').forEach(el=>{
@@ -2446,6 +2394,116 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
           return String(loc);
         }
 
+        // Load and render the Applicant Tracking tab table with server-side pagination
+        async function loadApplicantTrackingTable(page) {
+          const tbody = document.getElementById('applicantTableBody');
+          const paginationEl = document.getElementById('applicantTrackingPagination');
+          const pageSize = 20;
+          if (!tbody) return;
+
+          tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted py-3"><span class="spinner-border spinner-border-sm me-2"></span>Loading…</td></tr>';
+          if (paginationEl) paginationEl.innerHTML = '';
+
+          try {
+            const token = getToken();
+            const res = await fetch(`${API_BASE}/jobs/my/applications?page=${page}&limit=${pageSize}`, {
+              headers: { Authorization: `Bearer ${token}` }
+            });
+            if (!res.ok) throw new Error('Failed to fetch applications');
+            const json = await res.json();
+            const applications = (json.data && json.data.applications) || [];
+            const pagination = (json.data && json.data.pagination) || { total: 0, pages: 1, page: 1 };
+
+            if (applications.length === 0) {
+              tbody.innerHTML = '<tr><td colspan="6" class="text-muted small text-center py-3">No applicants yet.</td></tr>';
+              return;
+            }
+
+            const statusOptions = ['submitted','reviewing','interview','offer','accepted','rejected'];
+            tbody.innerHTML = applications.map(a => {
+              const id = a._id || a.id || '';
+              const applicant = getApplicantDisplayName(a.applicant || a);
+              const jobTitle = (a.job && a.job.title) || '-';
+              const locationRaw = (a.job && a.job.location) || null;
+              const location = formatJobLocation(locationRaw);
+              const date = a.createdAt ? new Date(a.createdAt).toLocaleDateString() : '–';
+              const status = a.status || '-';
+              const statusSelectHtml = `<select class="form-select form-select-sm status-select" data-app-id="${escapeHtml(id)}" style="min-width:120px">${statusOptions.map(s=>`<option value="${s}"${s===status?' selected':''}>${s.charAt(0).toUpperCase()+s.slice(1)}</option>`).join('')}</select>`;
+              return `<tr data-app-id="${escapeHtml(id)}"><td><p class="FullName fw-semibold mb-0">${escapeHtml(applicant)}</p></td><td class="location">${escapeHtml(jobTitle)}</td><td class="text-left">${escapeHtml(location)}</td><td class="text-left">${escapeHtml(date)}</td><td>${statusSelectHtml}</td><td><button class="btn btn-sm btn-outline-primary me-2 view-table-app-btn" data-app-id="${escapeHtml(id)}">View Profile</button></td></tr>`;
+            }).join('');
+
+            // Attach event handlers
+            tbody.querySelectorAll('.view-table-app-btn').forEach(btn => {
+              btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const id = btn.getAttribute('data-app-id');
+                const app = applications.find(x => (x._id || x.id || '') === id);
+                if (app) showApplicantDetail(app);
+              });
+            });
+
+            tbody.querySelectorAll('.status-select').forEach(sel => {
+              sel.addEventListener('change', async () => {
+                const id = sel.getAttribute('data-app-id');
+                const newStatus = sel.value;
+                const token = getToken();
+                sel.disabled = true;
+                try {
+                  const r = await fetch(`${API_BASE}/applications/${id}/status`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+                    body: JSON.stringify({ status: newStatus }),
+                  });
+                  if (!r.ok) throw new Error('Failed to update status');
+                  sel.disabled = false;
+                  // Refresh dashboard summary stats
+                  loadCompanyApplicants();
+                } catch (err) {
+                  console.error('Status update failed', err);
+                  sel.disabled = false;
+                }
+              });
+            });
+
+            // Render pagination controls
+            if (paginationEl && pagination.pages > 1) {
+              const currentPage = pagination.page;
+              const totalPages = pagination.pages;
+              const start = (currentPage - 1) * pageSize + 1;
+              const end = Math.min(currentPage * pageSize, pagination.total);
+              paginationEl.innerHTML = `
+                <small class="text-muted">Showing ${start}–${end} of ${pagination.total} applicants</small>
+                <nav aria-label="Applicant list pagination">
+                  <ul class="pagination pagination-sm mb-0">
+                    <li class="page-item${currentPage === 1 ? ' disabled' : ''}">
+                      <button class="page-link" data-page="${currentPage - 1}" ${currentPage === 1 ? 'disabled' : ''}>Previous</button>
+                    </li>
+                    ${Array.from({ length: totalPages }, (_, i) => i + 1).map(p =>
+                      `<li class="page-item${p === currentPage ? ' active' : ''}">
+                        <button class="page-link" data-page="${p}">${p}</button>
+                      </li>`
+                    ).join('')}
+                    <li class="page-item${currentPage === totalPages ? ' disabled' : ''}">
+                      <button class="page-link" data-page="${currentPage + 1}" ${currentPage === totalPages ? 'disabled' : ''}>Next</button>
+                    </li>
+                  </ul>
+                </nav>`;
+              paginationEl.querySelectorAll('[data-page]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                  const p = parseInt(btn.getAttribute('data-page'));
+                  if (p >= 1 && p <= totalPages) loadApplicantTrackingTable(p);
+                });
+              });
+            } else if (paginationEl) {
+              const start = Math.min(1, pagination.total);
+              paginationEl.innerHTML = `<small class="text-muted">Showing ${start}–${pagination.total} of ${pagination.total} applicants</small>`;
+            }
+          } catch (err) {
+            console.error('loadApplicantTrackingTable error', err);
+            tbody.innerHTML = '<tr><td colspan="6" class="text-danger small text-center py-3">Failed to load applicants.</td></tr>';
+          }
+        }
+
         // Helper to show applicant modal — fetch full application if needed
         async function showApplicantDetail(app) {
           try {
@@ -2482,17 +2540,48 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
             document.getElementById('applicant-date').textContent = date;
             document.getElementById('applicant-status').textContent = status;
 
-            // resume link if exists
+            // resume link if exists — check profile resumePath and fetch presigned URL
             const resumeEl = document.getElementById('applicant-resume');
             const openResume = document.getElementById('applicant-open-resume');
-            const resumeUrl = app.resumeUrl || app.cvUrl || app.resume || (app.applicant && app.applicant.profile && app.applicant.profile.resumeUrl) || '';
-            if (resumeUrl) {
-              resumeEl.innerHTML = `<a href="${escapeHtml(resumeUrl)}" target="_blank" class="text-decoration-none">Open resume / CV</a>`;
-              openResume.href = resumeUrl;
+            resumeEl.innerHTML = '<span class="text-muted small">Checking for resume…</span>';
+            openResume.classList.add('d-none');
+            openResume.href = '#';
+
+            // Check for a direct resumeUrl on the application first, then try fetching by applicant userId
+            const directUrl = app.resumeUrl || app.cvUrl || app.resume || '';
+            const applicantUserId = (app.applicant && (app.applicant._id || app.applicant.id)) || null;
+
+            if (directUrl) {
+              resumeEl.innerHTML = `<a href="${escapeHtml(directUrl)}" target="_blank" class="text-decoration-none"><i class="fas fa-file-pdf me-1"></i>View Resume / CV</a>`;
+              openResume.href = directUrl;
               openResume.classList.remove('d-none');
+            } else if (applicantUserId) {
+              // Always attempt to fetch presigned URL by user ID — backend returns 404 if no resume exists
+              try {
+                const token = getToken();
+                const rRes = await fetch(`${API_BASE}/profile/${applicantUserId}/resume`, {
+                  headers: { Authorization: `Bearer ${token}` }
+                });
+                if (rRes.ok) {
+                  const rJson = await rRes.json();
+                  const presignedUrl = rJson && rJson.data && rJson.data.resumeUrl;
+                  if (presignedUrl) {
+                    resumeEl.innerHTML = `<a href="${escapeHtml(presignedUrl)}" target="_blank" class="text-decoration-none"><i class="fas fa-file-pdf me-1"></i>View Resume / CV</a>`;
+                    openResume.href = presignedUrl;
+                    openResume.classList.remove('d-none');
+                  } else {
+                    resumeEl.innerHTML = '<span class="text-muted small">No resume uploaded</span>';
+                  }
+                } else {
+                  // 404 = no resume on file
+                  resumeEl.innerHTML = '<span class="text-muted small">No resume uploaded</span>';
+                }
+              } catch (resumeErr) {
+                console.warn('showApplicantDetail: failed to fetch resume URL', resumeErr);
+                resumeEl.innerHTML = '<span class="text-muted small">Could not load resume</span>';
+              }
             } else {
-              resumeEl.innerHTML = '';
-              openResume.classList.add('d-none');
+              resumeEl.innerHTML = '<span class="text-muted small">No resume uploaded</span>';
             }
 
             // raw JSON debug removed from applicant modal
@@ -2535,6 +2624,11 @@ Looking ahead, Company Template Inc. continues to push boundaries in sustainable
       const dashboardTabBtn = document.getElementById('dashboard-tab');
       if (dashboardTabBtn) {
         dashboardTabBtn.addEventListener('shown.bs.tab', loadCompanyApplicants);
+      }
+      // Load applicant tracking table when the Applicant Tracking tab is shown
+      const applicantTabBtn = document.getElementById('applicant-tab');
+      if (applicantTabBtn) {
+        applicantTabBtn.addEventListener('shown.bs.tab', () => loadApplicantTrackingTable(1));
       }
     });
   </script>

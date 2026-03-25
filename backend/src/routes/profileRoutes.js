@@ -18,8 +18,9 @@ const {
   uploadResume,
   getResume,
   deleteResume,
+  getResumeByUserId,
 } = require("../controllers/profileController");
-const { protect } = require("../middleware/auth");
+const { protect, authorize } = require("../middleware/auth");
 
 // All routes require authentication
 router.use(protect);
@@ -340,5 +341,8 @@ router.post("/resume", ..._ensureHandlers(uploadResume));
 router.get("/resume", ..._ensureHandlers(getResume));
 router.put("/resume", ..._ensureHandlers(uploadResume));
 router.delete("/resume", ..._ensureHandlers(deleteResume));
+
+// Admin/employer route to view any applicant's resume
+router.get("/:userId/resume", authorize("admin", "employer"), getResumeByUserId);
 
 module.exports = router;

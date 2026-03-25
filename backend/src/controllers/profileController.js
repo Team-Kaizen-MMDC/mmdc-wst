@@ -453,6 +453,36 @@ exports.getResume = asyncHandler(async (req, res, next) => {
   }
 });
 
+// @desc    Get presigned URL for any user's resume (admin/employer only)
+// @route   GET /api/v1/profile/:userId/resume
+// @access  Private (admin, employer)
+exports.getResumeByUserId = asyncHandler(async (req, res, next) => {
+  const profile = await UserProfile.findOne({ user: req.params.userId });
+  if (!profile || !profile.resumePath)
+    return next(new ApiError(404, "No resume uploaded for this user"));
+
+  try {
+    const getCmd = new GetObjectCommand({
+      Bucket: S3_BUCKET,
+      Key: profile.resumePath,
+    });
+    const url = await getSignedUrl(s3, getCmd, { expiresIn: 60 * 5 });
+    res.status(200).json(
+      new ApiResponse(200, "Resume URL generated", {
+        resumeUrl: url,
+        resumeKey: profile.resumePath,
+      }),
+    );
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error(
+      "getResumeByUserId: failed to generate URL",
+      err && err.message ? err.message : err,
+    );
+    return next(new ApiError(500, "Failed to retrieve resume"));
+  }
+});
+
 // @desc    Delete resume from S3 and clear profile reference
 // @route   DELETE /api/v1/profile/resume
 // @access  Private
