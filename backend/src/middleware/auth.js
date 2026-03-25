@@ -79,6 +79,13 @@ exports.protect = asyncHandler(async (req, res, next) => {
  */
 exports.authorize = (...roles) => {
   return (req, res, next) => {
+    // Debug: log allowed roles vs actual role during tests
+    try {
+      console.log('[AUTH-Z] allowedRoles=', roles, 'userRole=', req.user && req.user.role);
+    } catch (e) {
+      console.log('[AUTH-Z] could not read role', e && e.message);
+    }
+
     if (!roles.includes(req.user.role)) {
       return next(
         new ApiError(
