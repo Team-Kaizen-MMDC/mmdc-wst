@@ -2745,31 +2745,43 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                 console.warn('auth/me fetch during OAuth redirect failed:', meErr);
               }
             } else {
-              // No token in URL — safe to apply cached profile for instant UI
+              // No token in URL — safe to apply cached profile for instant UI,
+              // but only if the cache belongs to the currently signed-in user.
+              // Decode the JWT to get the token's email and guard against showing
+              // a previously-logged-in user's data.
               try {
                 const lp = getCachedDashboardProfile();
                 if (lp) {
-                  const userMenuBtn = document.getElementById("user-menu-btn");
-                  const userName = document.querySelector(".user-menu-dropdown__userName");
-                  const avatarImg = document.getElementById("profileAvatarImg");
-                  const infoName = document.getElementById("info-name");
+                  let tokenEmail = '';
+                  try { tokenEmail = (JSON.parse(atob(token.split('.')[1])).email || '').toLowerCase(); } catch (_) {}
+                  const cacheEmail = (lp.email || '').toLowerCase();
+                  const sameUser = !tokenEmail || !cacheEmail || tokenEmail === cacheEmail;
 
-                  const first = lp.firstName || '';
-                  const last = lp.lastName || '';
-                  const display = (first || last) ? `${first} ${last}`.trim() : (lp.email || 'User');
+                  if (sameUser) {
+                    const userMenuBtn = document.getElementById("user-menu-btn");
+                    const userName = document.querySelector(".user-menu-dropdown__userName");
+                    const avatarImg = document.getElementById("profileAvatarImg");
+                    const infoName = document.getElementById("info-name");
 
-                  if (userMenuBtn) userMenuBtn.textContent = first || userMenuBtn.textContent;
-                  if (userName) userName.textContent = display;
-                  if (infoName) infoName.textContent = display;
+                    const first = lp.firstName || '';
+                    const last = lp.lastName || '';
+                    const display = (first || last) ? `${first} ${last}`.trim() : (lp.email || 'User');
 
-                  if (lp.picture && avatarImg) {
-                    const pic = avatarImg.closest('picture');
-                    const imgHtml = `<img id="profileAvatarImg" src="${lp.picture}" alt="User Avatar" class="rounded-circle" style="width: 100px; height: 100px; object-fit: cover; object-position: center;" loading="lazy"/>`;
-                    if (pic) {
-                      pic.innerHTML = imgHtml;
-                      const newImg = pic.querySelector('#profileAvatarImg');
-                      if (newImg) newImg.onerror = function () { this.src = 'https://placehold.co/100x100/fecaca/991b1b?text=JD'; };
-                    } else avatarImg.src = lp.picture;
+                    if (userMenuBtn) userMenuBtn.textContent = first || userMenuBtn.textContent;
+                    if (userName) userName.textContent = display;
+                    if (infoName) infoName.textContent = display;
+
+                    if (lp.picture && avatarImg) {
+                      const pic = avatarImg.closest('picture');
+                      const imgHtml = `<img id="profileAvatarImg" src="${lp.picture}" alt="User Avatar" class="rounded-circle" style="width: 100px; height: 100px; object-fit: cover; object-position: center;" loading="lazy"/>`;
+                      if (pic) {
+                        pic.innerHTML = imgHtml;
+                        const newImg = pic.querySelector('#profileAvatarImg');
+                        if (newImg) newImg.onerror = function () { this.src = 'https://placehold.co/100x100/fecaca/991b1b?text=JD'; };
+                      } else avatarImg.src = lp.picture;
+                    }
+                  } else {
+                    console.log('Skipping stale cached profile for previous user:', cacheEmail, '!= token user:', tokenEmail);
                   }
                 }
               } catch (e) {
@@ -2950,10 +2962,17 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           // per-user cached localStorage keys to avoid showing another user's
           // stale data (experience, skills, education, etc.). Then persist
           // the current user's id so future checks can detect changes.
+          // Also clear when prevUid is absent but there's a cached profile for
+          // a different email (covers the "first visit after switching accounts" case).
           try {
             const prevUid = localStorage.getItem('currentUserId');
             const newUid = profile && profile.user && (profile.user._id || profile.user.id || profile.user);
-            if (newUid && prevUid && prevUid !== String(newUid)) {
+            const newEmail = (profile?.email || profile?.user?.email || '').toLowerCase();
+            const cachedProfileRaw = newEmail ? localStorage.getItem(`userProfile:${newEmail}`) : null;
+            // Detect a different user via UID change OR via a cached profile email mismatch
+            const uidChanged = newUid && prevUid && prevUid !== String(newUid);
+            const emailMismatch = newEmail && !cachedProfileRaw && localStorage.getItem('userProfile');
+            if (uidChanged || emailMismatch) {
               ['experienceData','educationData','skillsData','userProfile','applicationsData'].forEach(k => localStorage.removeItem(k));
             }
             if (newUid) localStorage.setItem('currentUserId', String(newUid));
@@ -2964,19 +2983,30 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           // If the browser has a cached local profile from Google sign-in, prefer
           // those values for display so the UI reflects the signed-in identity
           // even when the server-side profile is older.
+          // Guard: only merge when the cached profile belongs to the same user
+          // that the backend just returned, to prevent a previously-logged-in
+          // user's data from bleeding into a freshly-switched account.
           try {
             const lp = getCachedDashboardProfile();
             if (lp) {
-              if (lp.firstName) profile.firstName = lp.firstName;
-              if (lp.lastName) profile.lastName = lp.lastName;
-              if (lp.email) profile.email = lp.email;
-              if (lp.picture) {
-                if (!profile.user) profile.user = {};
-                profile.user.photoPath = profile.user.photoPath || lp.picture;
-                if (shouldUseGoogleProfile) {
-                  if (!profile.user.googleProfile) profile.user.googleProfile = {};
-                  profile.user.googleProfile.picture = lp.picture;
+              const backendEmail = (profile?.email || profile?.user?.email || '').toLowerCase();
+              const cacheEmail  = (lp.email || '').toLowerCase();
+              const sameUser = !backendEmail || !cacheEmail || backendEmail === cacheEmail;
+
+              if (sameUser) {
+                if (lp.firstName) profile.firstName = lp.firstName;
+                if (lp.lastName) profile.lastName = lp.lastName;
+                if (lp.email) profile.email = lp.email;
+                if (lp.picture) {
+                  if (!profile.user) profile.user = {};
+                  profile.user.photoPath = profile.user.photoPath || lp.picture;
+                  if (shouldUseGoogleProfile) {
+                    if (!profile.user.googleProfile) profile.user.googleProfile = {};
+                    profile.user.googleProfile.picture = lp.picture;
+                  }
                 }
+              } else {
+                console.log('Skipping stale cached profile merge for previous user:', cacheEmail, '!= backend user:', backendEmail);
               }
             }
           } catch (e) {
