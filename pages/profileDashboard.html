@@ -2831,7 +2831,53 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
               } catch (err) {
                 console.warn("Fallback /auth/me failed:", err);
               }
-              // Show a message or redirect to profile creation
+              // Auto-create a minimal profile from localStorage so the dashboard
+              // and operations like resume upload work without requiring the user
+              // to redo the setup flow. Guard against reload loops with sessionStorage.
+              if (!sessionStorage.getItem('profileAutoCreated')) {
+                try {
+                  const lsP = getUserProfile();
+                  const emailFromCookie = document.cookie.split('; ').find(r => r.startsWith('email='))?.split('=')[1] || '';
+                  const buildDateFromParts = (year, month, day = 1) => {
+                    const y = parseInt(year), m = parseInt(month), d = parseInt(day) || 1;
+                    if (!y || !m) return null;
+                    return new Date(y, m - 1, d).toISOString();
+                  };
+                  const dob = lsP.dateOfBirth;
+                  const dobDate = dob ? buildDateFromParts(dob.year, dob.month, dob.day) : null;
+
+                  const profileBody = {
+                    firstName: lsP.firstName || (emailFromCookie ? emailFromCookie.split('@')[0] : 'User'),
+                    lastName:  lsP.lastName  || '',
+                    ...(dobDate && { dateOfBirth: dobDate }),
+                    ...(lsP.gender      && { gender:        lsP.gender.toLowerCase() }),
+                    ...(lsP.nationality && { nationality:   lsP.nationality }),
+                    ...(lsP.address     && { address:       lsP.address }),
+                    ...(lsP.city        && { city:          lsP.city }),
+                    ...(lsP.prefecture  && { prefecture:    lsP.prefecture }),
+                    ...(lsP.japaneseLevel && { japaneseLevel: lsP.japaneseLevel }),
+                    ...(lsP.profileSummary && { bio:         lsP.profileSummary }),
+                    availability: {
+                      ...(lsP.visaStatus && { visaStatus:      lsP.visaStatus }),
+                      ...(lsP.industry   && { desiredIndustry: lsP.industry   }),
+                    },
+                  };
+
+                  const createRes = await fetch('/api/v1/profile', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+                    body: JSON.stringify(profileBody),
+                  });
+
+                  if (createRes.ok) {
+                    sessionStorage.setItem('profileAutoCreated', '1');
+                    window.location.reload();
+                    return;
+                  }
+                } catch (autoCreateErr) {
+                  console.warn('Could not auto-create profile:', autoCreateErr);
+                }
+              }
               return;
             }
             throw new Error(`API error: ${response.status}`);
