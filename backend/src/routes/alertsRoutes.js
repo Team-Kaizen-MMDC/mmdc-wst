@@ -16,6 +16,11 @@ module.exports = function createAlertsRouter(app, context) {
       // Prefer native driver (context.db) if available, otherwise use mongoose connection
       if ((context && context.db) || app.locals.db) {
         const db = context && context.db ? context.db : app.locals.db;
+        // Check for existing subscription
+        const existing = await db.collection("job_alerts").findOne({ email });
+        if (existing) {
+          return res.status(200).json({ success: true, message: "already_subscribed" });
+        }
         const result = await db.collection("job_alerts").insertOne(doc);
         return res.status(201).json({ success: true, id: result.insertedId });
       }
@@ -23,6 +28,10 @@ module.exports = function createAlertsRouter(app, context) {
       if ((context && context.mongoose) || app.locals.mongoose) {
         // Use mongoose connection's collection helper to avoid creating models
         const coll = app.locals.mongoose.connection.collection("job_alerts");
+        const existing = await coll.findOne({ email });
+        if (existing) {
+          return res.status(200).json({ success: true, message: "already_subscribed" });
+        }
         const result = await coll.insertOne(doc);
         return res.status(201).json({ success: true, id: result.insertedId });
       }

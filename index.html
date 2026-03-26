@@ -715,10 +715,23 @@
               });
 
               if (resp.ok) {
-                // Show success toast
-                jobAlertToast.show();
-                // Clear input and update state
-                emailInput.value = "";
+                const data = await resp.json().catch(() => null);
+                const msg = data && data.message ? data.message : null;
+
+                if (msg === "already_subscribed") {
+                  // Inform user they are already subscribed
+                  const bodyEl = jobAlertToastEl.querySelector('.toast-body');
+                  if (bodyEl) bodyEl.textContent = "You're already subscribed to job alerts.";
+                  jobAlertToast.show();
+                } else {
+                  // Show success toast
+                  const bodyEl = jobAlertToastEl.querySelector('.toast-body');
+                  if (bodyEl) bodyEl.textContent = "Success! Latest job alerts sent to your email.";
+                  jobAlertToast.show();
+                  // Clear input and update state
+                  emailInput.value = "";
+                }
+
                 updateButtonState();
               } else {
                 const data = await resp.json().catch(() => null);
