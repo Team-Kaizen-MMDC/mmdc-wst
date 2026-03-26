@@ -549,7 +549,7 @@
               type="email"
               id="newsletter-email"
               class="form-control form-control-custom"
-              placeholder="john@gmail.com"
+              value="john@gmail.com"
               aria-label="Email address for job alerts"
               required
             />
@@ -697,17 +697,42 @@
         // Run once on load in case the browser pre-fills the input
         updateButtonState();
 
-        // 5. Show the Toast on button click (Demo action)
-        signupButton.addEventListener("click", (event) => {
-          event.preventDefault(); // Prevent default form submission behavior (though this isn't a form, it's good practice)
+        // 5. Show the Toast on button click and send to backend
+        signupButton.addEventListener("click", async (event) => {
+          event.preventDefault(); // Prevent default form submission behavior
 
           if (!signupButton.disabled) {
-            //DEMO ACTION: Show the success Toast
-            jobAlertToast.show();
+            signupButton.disabled = true;
+            const prevText = signupButton.textContent;
+            signupButton.textContent = "Saving...";
 
-            //DEMO ACTION: Clear the input field and disable the button after "signing up"
-            emailInput.value = "";
-            updateButtonState();
+            const email = emailInput.value.trim();
+            try {
+              const resp = await fetch("/api/v1/alerts/subscribe", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email }),
+              });
+
+              if (resp.ok) {
+                // Show success toast
+                jobAlertToast.show();
+                // Clear input and update state
+                emailInput.value = "";
+                updateButtonState();
+              } else {
+                const data = await resp.json().catch(() => null);
+                const msg = data && data.message ? data.message : `Error ${resp.status}`;
+                // Fallback: simple alert for failures
+                alert("Subscription failed: " + msg);
+              }
+            } catch (err) {
+              console.error("Subscription network error", err);
+              alert("Network error while subscribing. Please try again.");
+            } finally {
+              signupButton.textContent = prevText;
+              updateButtonState();
+            }
           }
         });
       });
