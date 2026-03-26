@@ -41,6 +41,7 @@ This repository holds the wireframe-driven static pages and a stylesheet ([asset
 - **Employer Dashboard** — Employers post jobs, view applicants per listing, and update application statuses with optional interview details and private notes.
 - **Google OAuth + Local Auth** — Sign in with a Google account or local email/password; JWT-based session management.
 - **i18n** — UI strings support English and Japanese locale switching.
+- **Job Alerts** — Visitors can subscribe to job alert emails via the homepage "Get Job Matches" band. Emails are stored in MongoDB collection `job_alerts`. API: `POST /api/v1/alerts/subscribe`.
 
 ## Project docs (short links)
 
@@ -136,6 +137,20 @@ sequenceDiagram
 - Postman collections: [backend/postman/Japan_SSW_API_day1_day4.postman_collection.json](backend/postman/Japan_SSW_API_day1_day4.postman_collection.json), [backend/postman/Japan_SSW_API_Complete.postman_collection.json](backend/postman/Japan_SSW_API_Complete.postman_collection.json), and [backend/postman/Japan_SSW_Backend_API_Testing.postman_collection.json](backend/postman/Japan_SSW_Backend_API_Testing.postman_collection.json).
 - Backend API testing guide: [docs/BACKEND_API_TESTING.md](docs/BACKEND_API_TESTING.md).
 - Backend default port: `3000`. Swagger UI (when server running): `http://localhost:3000/api-docs`
+
+### Alerts subscription API
+
+- `POST /api/v1/alerts/subscribe` — Accepts JSON payload `{ "email": "user@example.com" }`, validates basic email format, and inserts a document into the `job_alerts` collection in MongoDB. Returns `201` on success and `400` for invalid input.
+
+Example curl:
+
+```bash
+curl -X POST http://localhost:3000/api/v1/alerts/subscribe \
+  -H 'Content-Type: application/json' \
+  -d '{"email":"john@gmail.com"}'
+```
+
+Note: Ensure `MONGODB_URI` (and optionally `USE_MONGOOSE=true`) are configured before running the server.
 
 Additional backend notes (resume upload & AWS S3)
 
