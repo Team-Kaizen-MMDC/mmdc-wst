@@ -1,35 +1,25 @@
 // assets/js/features/adminCompanyList.js
 
-const API_BASE_URL = "http://localhost:3000/api/v1/companies";
+const API_BASE_URL = "/api/v1/companies";
 
-let companyModal = null;
+let allCompanies = [];
+let currentPage = 1;
+const pageSize = 10;
+let searchTerm = "";
 
 document.addEventListener("DOMContentLoaded", () => {
-  const modalEl = document.getElementById("editCompanyModal");
-  const formEl = document.getElementById("editCompanyForm");
- const tableBody = document.getElementById("adminCompanyTableBody");
-  if (modalEl) {
-    companyModal = new bootstrap.Modal(modalEl);
-  }
 
-  if (formEl) {
-    formEl.addEventListener("submit", handleUpdateCompany);
-  }
-
-
-  if (tableBody) {
-    tableBody.addEventListener("click", (e) => {
-      const editBtn = e.target.closest(".edit-company-btn");
-      if (!editBtn) return;
-
-      const companyId = editBtn.dataset.companyId;
-      if (companyId) {
-        openEditModal(companyId);
-      }
-    });
-  }
 
   fetchAdminCompanies();
+
+  const searchInput = document.getElementById("companySearchInput");
+  if (searchInput) {
+    searchInput.addEventListener("input", (e) => {
+      searchTerm = e.target.value.toLowerCase().trim();
+      currentPage = 1;
+      renderCompanyPage(1);
+    });
+  }
 });
 
 window.fetchAdminCompanies = async function () {
@@ -37,6 +27,7 @@ window.fetchAdminCompanies = async function () {
 
   const tableBody = document.getElementById("adminCompanyTableBody");
   const countEl = document.getElementById("adminCompanyCount");
+  const paginationEl = document.getElementById("companyManagementPagination");
 
   if (!tableBody) {
     console.warn("adminCompanyTableBody not found");
@@ -52,51 +43,21 @@ window.fetchAdminCompanies = async function () {
       </tr>
     `;
 
-    const response = await fetch(API_BASE_URL);
+    if (paginationEl) {
+      paginationEl.innerHTML = "";
+    }
+
+    const response = await fetch(`${API_BASE_URL}?limit=100`);
     const result = await response.json();
 
-    const companies = result.data?.companies || [];
+    allCompanies = result.data?.companies || [];
+    const totalCompanies = result.data?.pagination?.total ?? allCompanies.length;
 
     if (countEl) {
-      countEl.textContent = companies.length;
+      countEl.textContent = totalCompanies;
     }
 
-    if (!companies.length) {
-      tableBody.innerHTML = `
-        <tr>
-          <td colspan="5" class="text-center text-muted py-4">
-            No companies found.
-          </td>
-        </tr>
-      `;
-      return;
-    }
-
-    tableBody.innerHTML = companies.map(company => {
-      const slugOrId = company.slug || company._id;
-      const location = [
-        company.location?.prefecture,
-        company.location?.city
-      ].filter(Boolean).join(", ");
-
-      return `
-        <tr>
-          <td class="ps-4 fw-semibold">${company.name || "-"}</td>
-          <td>${location || "-"}</td>
-          <td>${company.industry || "-"}</td>
-          <td>${company.jobsCount ?? 0}</td>
-          <td class="text-end pe-4">
-            <button
-                class="btn btn-sm btn-outline-primary edit-company-btn"
-                data-company-id="${slugOrId}"
-                type="button"
-            >
-                Edit
-            </button>
-            </td>
-        </tr>
-      `;
-    }).join("");
+    renderCompanyPage(1);
   } catch (error) {
     console.error("Failed to fetch companies:", error);
 
@@ -110,76 +71,141 @@ window.fetchAdminCompanies = async function () {
   }
 };
 
-window.openEditModal = async function (slug) {
-  try {
-    const response = await fetch(`${API_BASE_URL}/${slug}`);
-    const result = await response.json();
-    const company = result.data?.company || result.data;
+function renderCompanyPage(page) {
+  const tableBody = document.getElementById("adminCompanyTableBody");
+  const paginationEl = document.getElementById("companyManagementPagination");
 
-    if (!company) {
-      alert("Company data not found");
-      return;
+  if (!tableBody) return;
+
+  const filteredCompanies = allCompanies.filter((company) => {
+    const name = (company.name || "").toLowerCase();
+    const industry = (company.industry || "").toLowerCase();
+    const location = [
+      company.location?.prefecture,
+      company.location?.city,
+    ]
+      .filter(Boolean)
+      .join(", ")
+      .toLowerCase();
+
+    return (
+      name.includes(searchTerm) ||
+      industry.includes(searchTerm) ||
+      location.includes(searchTerm)
+    );
+  });
+
+  if (!filteredCompanies.length) {
+    tableBody.innerHTML = `
+      <tr>
+        <td colspan="5" class="text-center text-muted py-4">
+          No matching companies found.
+        </td>
+      </tr>
+    `;
+    if (paginationEl) {
+      paginationEl.innerHTML = "";
     }
-
-    document.getElementById("edit-company-id").value = company._id || "";
-    document.getElementById("edit-company-name").value = company.name || "";
-    document.getElementById("edit-company-industry").value = company.industry || "";
-    document.getElementById("edit-company-prefecture").value = company.location?.prefecture || "";
-    document.getElementById("edit-company-city").value = company.location?.city || "";
-    document.getElementById("edit-company-description").value = company.description || "";
-
-    if (companyModal) {
-      companyModal.show();
-    }
-  } catch (error) {
-    console.error("Could not fetch company details:", error);
-    alert("Could not fetch company details");
+    return;
   }
-};
 
-async function handleUpdateCompany(e) {
-  e.preventDefault();
+  const totalItems = filteredCompanies.length;
+  const totalPages = Math.ceil(totalItems / pageSize);
 
-  const id = document.getElementById("edit-company-id").value;
-  const token = localStorage.getItem("token") || getCookie("token");
+  currentPage = Math.max(1, Math.min(page, totalPages));
 
-  const updatedData = {
-    name: document.getElementById("edit-company-name").value.trim(),
-    industry: document.getElementById("edit-company-industry").value.trim(),
-    location: {
-      prefecture: document.getElementById("edit-company-prefecture").value.trim(),
-      city: document.getElementById("edit-company-city").value.trim(),
-    },
-    description: document.getElementById("edit-company-description").value.trim(),
-  };
+  const startIndex = (currentPage - 1) * pageSize;
+  const pageItems = filteredCompanies.slice(startIndex, startIndex + pageSize);
 
-  try {
-    const response = await fetch(`${API_BASE_URL}/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        ...(token ? { Authorization: `Bearer ${token}` } : {})
-      },
-      body: JSON.stringify(updatedData),
-    });
+  tableBody.innerHTML = pageItems
+    .map((company) => {
+      const slug = company.slug || company._id;
+      const location = [company.location?.prefecture, company.location?.city]
+        .filter(Boolean)
+        .join(", ");
 
-    const result = await response.json();
-    console.log("update result:", result);
+      return `
+        <tr>
+          <td class="ps-4 fw-semibold">${escapeHtml(company.name || "-")}</td>
+          <td>${escapeHtml(location || "-")}</td>
+          <td>${escapeHtml(company.industry || "-")}</td>
+          <td>${escapeHtml(String(company.jobsCount ?? 0))}</td>
+          <td class="text-end pe-4">
+            <a
+              href="/pages/companies/company-details.html?slug=${encodeURIComponent(slug)}"
+              class="btn btn-sm btn-outline-primary"
+            >
+              Edit
+            </a>
+          </td>
+        </tr>
+      `;
+    })
+    .join("");
 
-    if (!response.ok) {
-      throw new Error(result.message || "Failed to update company");
-    }
-
-    alert("Company updated successfully!");
-    if (companyModal) companyModal.hide();
-    fetchAdminCompanies();
-  } catch (error) {
-    console.error("Update failed:", error);
-    alert(error.message || "Failed to update company");
-  }
+  renderCompanyPagination(paginationEl, totalItems, totalPages);
 }
 
-function getCookie(name) {
-  const match = document.cookie.match(new RegExp("(^| )" + name + "=([^;]+)"));
-  return match ? decodeURIComponent(match[2]) : null;
+function renderCompanyPagination(container, totalItems, totalPages) {
+  if (!container) return;
+
+  const start = (currentPage - 1) * pageSize + 1;
+  const end = Math.min(currentPage * pageSize, totalItems);
+
+  let html = `
+    <small class="text-muted">
+      Showing ${start}–${end} of ${totalItems} companies
+    </small>
+    <nav aria-label="Company management pagination">
+      <ul class="pagination pagination-sm mb-0">
+  `;
+
+  html += `
+    <li class="page-item ${currentPage === 1 ? "disabled" : ""}">
+      <button class="page-link" data-page="${currentPage - 1}" ${currentPage === 1 ? "disabled" : ""}>
+        ‹
+      </button>
+    </li>
+  `;
+
+  for (let i = 1; i <= totalPages; i++) {
+    html += `
+      <li class="page-item ${i === currentPage ? "active" : ""}">
+        <button class="page-link" data-page="${i}">${i}</button>
+      </li>
+    `;
+  }
+
+  html += `
+    <li class="page-item ${currentPage === totalPages ? "disabled" : ""}">
+      <button class="page-link" data-page="${currentPage + 1}" ${currentPage === totalPages ? "disabled" : ""}>
+        ›
+      </button>
+    </li>
+  `;
+
+  html += `
+      </ul>
+    </nav>
+  `;
+
+  container.innerHTML = html;
+
+  container.querySelectorAll("[data-page]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const page = Number(btn.dataset.page);
+      if (page >= 1 && page <= totalPages) {
+        renderCompanyPage(page);
+      }
+    });
+  });
+}
+
+function escapeHtml(value) {
+  return String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
