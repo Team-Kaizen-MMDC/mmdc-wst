@@ -549,7 +549,7 @@
               type="email"
               id="newsletter-email"
               class="form-control form-control-custom"
-              placeholder="john@gmail.com"
+              value="john@gmail.com"
               aria-label="Email address for job alerts"
               required
             />
@@ -565,24 +565,7 @@
         </div>
       </section>
 
-      <!-- Post a Job CTA -->
-      <section id="post-job" class="section-padding">
-        <div class="container">
-          <div class="feature-card feature-cta animate-scale-up animate-on-scroll animate-hover-lift">
-            <div>
-              <h3 data-i18n="cta.post_job.title">Want to post jobs?</h3>
-              <p class="muted" data-i18n="cta.post_job.lead">
-                Reach qualified engineers and designers in Japan.
-              </p>
-            </div>
-            <div>
-              <a class="btn btn-primary animate-hover-scale" href="#" data-i18n="btn.post_job"
-                >Post a Job</a
-              >
-            </div>
-          </div>
-        </div>
-      </section>
+
     </main>
 
     <!-- Toast Container: Positioned in the bottom right corner -->
@@ -714,17 +697,55 @@
         // Run once on load in case the browser pre-fills the input
         updateButtonState();
 
-        // 5. Show the Toast on button click (Demo action)
-        signupButton.addEventListener("click", (event) => {
-          event.preventDefault(); // Prevent default form submission behavior (though this isn't a form, it's good practice)
+        // 5. Show the Toast on button click and send to backend
+        signupButton.addEventListener("click", async (event) => {
+          event.preventDefault(); // Prevent default form submission behavior
 
           if (!signupButton.disabled) {
-            //DEMO ACTION: Show the success Toast
-            jobAlertToast.show();
+            signupButton.disabled = true;
+            const prevText = signupButton.textContent;
+            signupButton.textContent = "Saving...";
 
-            //DEMO ACTION: Clear the input field and disable the button after "signing up"
-            emailInput.value = "";
-            updateButtonState();
+            const email = emailInput.value.trim();
+            try {
+              const resp = await fetch("/api/v1/alerts/subscribe", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email }),
+              });
+
+              if (resp.ok) {
+                const data = await resp.json().catch(() => null);
+                const msg = data && data.message ? data.message : null;
+
+                if (msg === "already_subscribed") {
+                  // Inform user they are already subscribed
+                  const bodyEl = jobAlertToastEl.querySelector('.toast-body');
+                  if (bodyEl) bodyEl.textContent = "You're already subscribed to job alerts.";
+                  jobAlertToast.show();
+                } else {
+                  // Show success toast
+                  const bodyEl = jobAlertToastEl.querySelector('.toast-body');
+                  if (bodyEl) bodyEl.textContent = "Success! Latest job alerts sent to your email.";
+                  jobAlertToast.show();
+                  // Clear input and update state
+                  emailInput.value = "";
+                }
+
+                updateButtonState();
+              } else {
+                const data = await resp.json().catch(() => null);
+                const msg = data && data.message ? data.message : `Error ${resp.status}`;
+                // Fallback: simple alert for failures
+                alert("Subscription failed: " + msg);
+              }
+            } catch (err) {
+              console.error("Subscription network error", err);
+              alert("Network error while subscribing. Please try again.");
+            } finally {
+              signupButton.textContent = prevText;
+              updateButtonState();
+            }
           }
         });
       });

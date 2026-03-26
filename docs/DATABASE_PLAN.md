@@ -35,6 +35,24 @@
 
 ## 1. Collections and Documents
 
+### Alerts
+
+#### `job_alerts`
+
+| Field | Type | Notes |
+|---|---|---|
+| `_id` | ObjectId | Primary key |
+| `email` | String | Required, lowercase, indexed |
+| `createdAt` | Date | Creation timestamp |
+
+Notes: Stores newsletter/subscription emails collected from the frontend job alerts band. Inserted by POST /api/v1/alerts/subscribe. Backend supports native MongoDB driver or Mongoose. Consider a unique index on `email` to prevent duplicates (e.g., `{ email: 1 }` with `unique: true`).
+
+Example document:
+
+```json
+{ "_id": "ObjectId(...)", "email": "john@gmail.com", "createdAt": "2026-03-26T11:00:00.000Z" }
+```
+
 ### User Domain
 
 #### `users`

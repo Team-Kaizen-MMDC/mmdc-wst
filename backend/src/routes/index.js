@@ -5,6 +5,7 @@ const jobRoutes = require("./jobRoutes");
 const companyRoutes = require("./companyRoutes");
 const applicationRoutes = require("./applicationRoutes");
 const userRoutes = require("./userRoutes");
+const alertsRoutes = require("./alertsRoutes");
 
 module.exports = function registerRoutes(app, context) {
   app.use("/api/v1/auth", authRoutes);
@@ -14,6 +15,9 @@ module.exports = function registerRoutes(app, context) {
   app.use("/api/v1/applications", applicationRoutes);
   app.use("/api/v1/users", userRoutes);
   app.use(aboutRoutes(app, context));
+
+  // Alerts / newsletter subscription routes
+  app.use(alertsRoutes(app, context));
 
   // Legacy health check (keeping for backward compatibility)
   app.get("/api/health", (req, res) => res.json({ ok: true }));
