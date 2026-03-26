@@ -97,8 +97,16 @@ export function saveUserProfile(profileData) {
       ...profileData,
       lastUpdated: new Date().toISOString(),
     };
-    localStorage.setItem(getUserStorageKey(), JSON.stringify(updatedProfile));
-    console.log("User profile saved successfully:", updatedProfile);
+    const key = getUserStorageKey();
+    localStorage.setItem(key, JSON.stringify(updatedProfile));
+    // Always mirror to the global fallback key so the sync in availability.html
+    // can find the data even when the email cookie is unavailable.
+    if (key !== GLOBAL_FALLBACK_KEY) {
+      try {
+        const existing = JSON.parse(localStorage.getItem(GLOBAL_FALLBACK_KEY) || "{}");
+        localStorage.setItem(GLOBAL_FALLBACK_KEY, JSON.stringify({ ...existing, ...updatedProfile }));
+      } catch (_) {}
+    }
     return true;
   } catch (error) {
     console.error("Error saving user profile:", error);

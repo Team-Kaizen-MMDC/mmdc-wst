@@ -2634,8 +2634,14 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           };
 
           syncDashboardEmailCookie(normalizedProfile.email);
-          saveUserProfile(normalizedProfile);
-          localStorage.removeItem("userProfile");
+          // Only overwrite localStorage if the new data actually has content,
+          // to avoid wiping out data collected during the addEdit registration flow.
+          const hasContent = normalizedProfile.firstName || normalizedProfile.lastName || normalizedProfile.picture;
+          if (hasContent) {
+            saveUserProfile(normalizedProfile);
+          }
+          // Do NOT remove the global fallback key — it is needed by
+          // syncProfileToBackend in availability.html and the dashboard auto-create.
         } catch (error) {
           console.warn("Could not persist cached dashboard profile:", error);
         }
@@ -2739,31 +2745,43 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                 console.warn('auth/me fetch during OAuth redirect failed:', meErr);
               }
             } else {
-              // No token in URL — safe to apply cached profile for instant UI
+              // No token in URL — safe to apply cached profile for instant UI,
+              // but only if the cache belongs to the currently signed-in user.
+              // Decode the JWT to get the token's email and guard against showing
+              // a previously-logged-in user's data.
               try {
                 const lp = getCachedDashboardProfile();
                 if (lp) {
-                  const userMenuBtn = document.getElementById("user-menu-btn");
-                  const userName = document.querySelector(".user-menu-dropdown__userName");
-                  const avatarImg = document.getElementById("profileAvatarImg");
-                  const infoName = document.getElementById("info-name");
+                  let tokenEmail = '';
+                  try { tokenEmail = (JSON.parse(atob(token.split('.')[1])).email || '').toLowerCase(); } catch (_) {}
+                  const cacheEmail = (lp.email || '').toLowerCase();
+                  const sameUser = !tokenEmail || !cacheEmail || tokenEmail === cacheEmail;
 
-                  const first = lp.firstName || '';
-                  const last = lp.lastName || '';
-                  const display = (first || last) ? `${first} ${last}`.trim() : (lp.email || 'User');
+                  if (sameUser) {
+                    const userMenuBtn = document.getElementById("user-menu-btn");
+                    const userName = document.querySelector(".user-menu-dropdown__userName");
+                    const avatarImg = document.getElementById("profileAvatarImg");
+                    const infoName = document.getElementById("info-name");
 
-                  if (userMenuBtn) userMenuBtn.textContent = first || userMenuBtn.textContent;
-                  if (userName) userName.textContent = display;
-                  if (infoName) infoName.textContent = display;
+                    const first = lp.firstName || '';
+                    const last = lp.lastName || '';
+                    const display = (first || last) ? `${first} ${last}`.trim() : (lp.email || 'User');
 
-                  if (lp.picture && avatarImg) {
-                    const pic = avatarImg.closest('picture');
-                    const imgHtml = `<img id="profileAvatarImg" src="${lp.picture}" alt="User Avatar" class="rounded-circle" style="width: 100px; height: 100px; object-fit: cover; object-position: center;" loading="lazy"/>`;
-                    if (pic) {
-                      pic.innerHTML = imgHtml;
-                      const newImg = pic.querySelector('#profileAvatarImg');
-                      if (newImg) newImg.onerror = function () { this.src = 'https://placehold.co/100x100/fecaca/991b1b?text=JD'; };
-                    } else avatarImg.src = lp.picture;
+                    if (userMenuBtn) userMenuBtn.textContent = first || userMenuBtn.textContent;
+                    if (userName) userName.textContent = display;
+                    if (infoName) infoName.textContent = display;
+
+                    if (lp.picture && avatarImg) {
+                      const pic = avatarImg.closest('picture');
+                      const imgHtml = `<img id="profileAvatarImg" src="${lp.picture}" alt="User Avatar" class="rounded-circle" style="width: 100px; height: 100px; object-fit: cover; object-position: center;" loading="lazy"/>`;
+                      if (pic) {
+                        pic.innerHTML = imgHtml;
+                        const newImg = pic.querySelector('#profileAvatarImg');
+                        if (newImg) newImg.onerror = function () { this.src = 'https://placehold.co/100x100/fecaca/991b1b?text=JD'; };
+                      } else avatarImg.src = lp.picture;
+                    }
+                  } else {
+                    console.log('Skipping stale cached profile for previous user:', cacheEmail, '!= token user:', tokenEmail);
                   }
                 }
               } catch (e) {
@@ -2809,21 +2827,24 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                     };
                   }
                   }
-                  // Persist minimal profile info to localStorage so other UI modules
-                  // (which read the userProfile key) will show updated name/email.
+                  // Only persist to localStorage when there is useful Google profile
+                  // data (name/picture). For local accounts the fields are empty and
+                  // persisting them would wipe out the data collected in the addEdit flow.
                   try {
                     const gp = user?.googleProfile;
-                    const localProfile = {
-                      firstName: gp?.given_name || gp?.name?.split(' ')[0] || '',
-                      lastName: gp?.family_name || (gp?.name && gp.name.split(' ').slice(1).join(' ')) || '',
-                      email: gp?.email || user?.email || '',
-                      picture: gp?.picture || user?.picture || '',
-                      city: '',
-                      prefecture: '',
-                      nationality: '',
-                      japaneseLevel: '',
-                    };
-                    persistCachedDashboardProfile(localProfile);
+                    if (gp && (gp.given_name || gp.name || gp.picture)) {
+                      const localProfile = {
+                        firstName: gp.given_name || gp.name?.split(' ')[0] || '',
+                        lastName: gp.family_name || (gp.name && gp.name.split(' ').slice(1).join(' ')) || '',
+                        email: gp.email || user?.email || '',
+                        picture: gp.picture || '',
+                        city: '',
+                        prefecture: '',
+                        nationality: '',
+                        japaneseLevel: '',
+                      };
+                      persistCachedDashboardProfile(localProfile);
+                    }
                   } catch (e) {
                     console.warn('Could not persist local profile from /auth/me fallback', e);
                   }
@@ -2831,7 +2852,94 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
               } catch (err) {
                 console.warn("Fallback /auth/me failed:", err);
               }
-              // Show a message or redirect to profile creation
+              // Auto-create a minimal profile from localStorage so the dashboard
+              // and operations like resume upload work without requiring the user
+              // to redo the setup flow. Guard against reload loops with sessionStorage.
+              if (!sessionStorage.getItem('profileAutoCreated')) {
+                try {
+                  // Read from email-keyed profile; also check the global fallback key
+                  // in case the email cookie was unavailable during the addEdit flow.
+                  const lsP = getUserProfile();
+                  let mergedP = { ...lsP };
+                  try {
+                    const fbRaw = localStorage.getItem('userProfile');
+                    if (fbRaw) {
+                      const fb = JSON.parse(fbRaw);
+                      mergedP = {
+                        ...fb,
+                        ...Object.fromEntries(
+                          Object.entries(lsP).filter(([, v]) =>
+                            v !== '' && v !== null && v !== undefined &&
+                            !(Array.isArray(v) && v.length === 0)
+                          )
+                        ),
+                      };
+                    }
+                  } catch (_) {}
+
+                  const emailFromCookie = document.cookie.split('; ').find(r => r.startsWith('email='))?.split('=')[1] || '';
+                  const emailDecoded = decodeURIComponent(emailFromCookie);
+                  const buildDateFromParts = (year, month, day = 1) => {
+                    const y = parseInt(year), m = parseInt(month), d = parseInt(day) || 1;
+                    if (!y || !m) return null;
+                    return new Date(y, m - 1, d).toISOString();
+                  };
+                  const dob = mergedP.dateOfBirth;
+                  const dobDate = dob ? buildDateFromParts(dob.year, dob.month, dob.day) : null;
+
+                  const normJlpt = (v) => {
+                    const m = {'N5 level':'N5','N4 level':'N4','N3 level':'N3','N2 level':'N2','N1 level':'N1'};
+                    return m[v] || (['none','N5','N4','N3','N2','N1'].includes(v) ? v : undefined);
+                  };
+                  const normVisa = (v) => {
+                    if (!v) return undefined;
+                    const m = {'Specified Skilled Worker (I & II) Visa':'ssw-1','Specified Skilled Worker (SSW-1) Visa':'ssw-1','Specified Skilled Worker (SSW-2) Visa':'ssw-2','Student Visa':'student','Skilled Labor Visa':'working','Permanent Resident Visa':'pr','Spouse / Long-Term Resident Visa':'spouse','Long-Term Resident Visa':'spouse','Not Applicable':'not-applicable'};
+                    if (m[v]) return m[v];
+                    const valid = ['not-applicable','student','working','ssw-1','ssw-2','spouse','pr','other'];
+                    return valid.includes(v) ? v : 'other';
+                  };
+
+                  const profileBody = {
+                    firstName: (mergedP.firstName || (emailDecoded ? emailDecoded.split('@')[0] : 'User')).trim(),
+                    lastName:  (mergedP.lastName  || '').trim(),
+                    ...(dobDate && { dateOfBirth: dobDate }),
+                    ...(mergedP.gender      && { gender:        mergedP.gender.toLowerCase() }),
+                    ...(mergedP.nationality && { nationality:   mergedP.nationality }),
+                    ...(mergedP.address     && { address:       mergedP.address }),
+                    ...(mergedP.city        && { city:          mergedP.city }),
+                    ...(mergedP.prefecture  && { prefecture:    mergedP.prefecture }),
+                    ...(mergedP.japaneseLevel && normJlpt(mergedP.japaneseLevel) && { japaneseLevel: normJlpt(mergedP.japaneseLevel) }),
+                    ...(mergedP.profileSummary && { bio:         mergedP.profileSummary }),
+                    availability: {
+                      ...(mergedP.visaStatus && normVisa(mergedP.visaStatus) && { visaStatus: normVisa(mergedP.visaStatus) }),
+                      ...(mergedP.industry   && { desiredIndustry: mergedP.industry   }),
+                    },
+                  };
+
+                  let createRes = await fetch('/api/v1/profile', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+                    body: JSON.stringify(profileBody),
+                  });
+
+                  // 400 = "profile already exists" → update it instead
+                  if (createRes.status === 400) {
+                    createRes = await fetch('/api/v1/profile', {
+                      method: 'PUT',
+                      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+                      body: JSON.stringify(profileBody),
+                    });
+                  }
+
+                  if (createRes.ok) {
+                    sessionStorage.setItem('profileAutoCreated', '1');
+                    window.location.reload();
+                    return;
+                  }
+                } catch (autoCreateErr) {
+                  console.warn('Could not auto-create profile:', autoCreateErr);
+                }
+              }
               return;
             }
             throw new Error(`API error: ${response.status}`);
@@ -2854,10 +2962,17 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           // per-user cached localStorage keys to avoid showing another user's
           // stale data (experience, skills, education, etc.). Then persist
           // the current user's id so future checks can detect changes.
+          // Also clear when prevUid is absent but there's a cached profile for
+          // a different email (covers the "first visit after switching accounts" case).
           try {
             const prevUid = localStorage.getItem('currentUserId');
             const newUid = profile && profile.user && (profile.user._id || profile.user.id || profile.user);
-            if (newUid && prevUid && prevUid !== String(newUid)) {
+            const newEmail = (profile?.email || profile?.user?.email || '').toLowerCase();
+            const cachedProfileRaw = newEmail ? localStorage.getItem(`userProfile:${newEmail}`) : null;
+            // Detect a different user via UID change OR via a cached profile email mismatch
+            const uidChanged = newUid && prevUid && prevUid !== String(newUid);
+            const emailMismatch = newEmail && !cachedProfileRaw && localStorage.getItem('userProfile');
+            if (uidChanged || emailMismatch) {
               ['experienceData','educationData','skillsData','userProfile','applicationsData'].forEach(k => localStorage.removeItem(k));
             }
             if (newUid) localStorage.setItem('currentUserId', String(newUid));
@@ -2868,19 +2983,30 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           // If the browser has a cached local profile from Google sign-in, prefer
           // those values for display so the UI reflects the signed-in identity
           // even when the server-side profile is older.
+          // Guard: only merge when the cached profile belongs to the same user
+          // that the backend just returned, to prevent a previously-logged-in
+          // user's data from bleeding into a freshly-switched account.
           try {
             const lp = getCachedDashboardProfile();
             if (lp) {
-              if (lp.firstName) profile.firstName = lp.firstName;
-              if (lp.lastName) profile.lastName = lp.lastName;
-              if (lp.email) profile.email = lp.email;
-              if (lp.picture) {
-                if (!profile.user) profile.user = {};
-                profile.user.photoPath = profile.user.photoPath || lp.picture;
-                if (shouldUseGoogleProfile) {
-                  if (!profile.user.googleProfile) profile.user.googleProfile = {};
-                  profile.user.googleProfile.picture = lp.picture;
+              const backendEmail = (profile?.email || profile?.user?.email || '').toLowerCase();
+              const cacheEmail  = (lp.email || '').toLowerCase();
+              const sameUser = !backendEmail || !cacheEmail || backendEmail === cacheEmail;
+
+              if (sameUser) {
+                if (lp.firstName) profile.firstName = lp.firstName;
+                if (lp.lastName) profile.lastName = lp.lastName;
+                if (lp.email) profile.email = lp.email;
+                if (lp.picture) {
+                  if (!profile.user) profile.user = {};
+                  profile.user.photoPath = profile.user.photoPath || lp.picture;
+                  if (shouldUseGoogleProfile) {
+                    if (!profile.user.googleProfile) profile.user.googleProfile = {};
+                    profile.user.googleProfile.picture = lp.picture;
+                  }
                 }
+              } else {
+                console.log('Skipping stale cached profile merge for previous user:', cacheEmail, '!= backend user:', backendEmail);
               }
             }
           } catch (e) {

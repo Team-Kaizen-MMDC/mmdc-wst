@@ -15,6 +15,7 @@ const {
   applyToJob,
   getJobApplications,
   getCompanyApplicationsSummary,
+  getCompanyApplicationsPaginated,
 } = require("../controllers/applicationController");
 const { protect, authorize } = require("../middleware/auth");
 const { validateApplication } = require("../validators/applicationValidator");
@@ -36,28 +37,12 @@ router.get(
   authorize("employer", "admin"),
   getCompanyApplicationsSummary,
 );
-
-router.get("/admin/stats", authorize("admin"), getJobStats);
-
-// Only platform admins can create jobs via this endpoint. Other employer flows still use employer authorization.
-router.post("/", authorize("admin"), createJob);
-router.put("/:id", authorize("employer", "admin"), updateJob);
-router.delete("/:id", authorize("employer", "admin"), deleteJob);
-
-router.post(
-  "/:jobId/apply",
-  authorize("jobseeker"),
-  validateApplication,
-  applyToJob,
-);
-
+// Paginated full application list for employer's company (Applicant Tracking tab)
 router.get(
-  "/:jobId/applications",
+  "/my/applications",
   authorize("employer", "admin"),
-  getJobApplications,
+  getCompanyApplicationsPaginated,
 );
-
-module.exports = router;
 
 /**
  * @swagger

@@ -47,6 +47,7 @@
 - [ ] Mobile-responsive design across all breakpoints
 - [ ] Accessible keyboard navigation
 - [ ] Application completion rate >80%
+- [x] Job filter pagination implemented (10 per page, smart ellipsis page numbers)
 
 ### 2. Company Discovery: Companies → Company Profile → Jobs → Apply
 
@@ -87,6 +88,8 @@
 - [ ] Integration between company profiles and job listings
 - [ ] Contact forms functional with email notifications
 - [ ] SEO-optimized for company discovery
+- [x] Company list pagination implemented (9 per page, smart ellipsis page numbers)
+- [x] Featured companies always shown on homepage (via featured=true DB flag)
 
 ### 3. RSO Directory: Agency → RSO List → RSO Detail → Contact
 

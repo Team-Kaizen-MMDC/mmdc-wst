@@ -3,8 +3,9 @@
 
 import { getCookie, getRoleFromToken } from "../modules/storage.js";
 
-const API_BASE =
-  window.location.port === "8000" ? "http://localhost:3000/api/v1" : "/api/v1";
+const API_BASE = ['localhost', '127.0.0.1'].includes(window.location.hostname)
+  ? 'http://localhost:3000/api/v1'
+  : '/api/v1';
 
 const jobDetail = document.getElementById("jobDetail");
 
@@ -40,20 +41,29 @@ function formatLocation(job) {
   return [city, prefecture].filter(Boolean).join(", ") || "Not specified";
 }
 
+function getAuthToken() {
+  // Prefer localStorage (set by signin.html and googleAuth.js)
+  const ls = localStorage.getItem("token");
+  if (ls) return ls;
+  // Fall back to cookie (set by OAuth session)
+  const cookie = getCookie("token");
+  return cookie ? decodeURIComponent(cookie) : null;
+}
+
 function getAuthHeaders() {
-  const token = getCookie("token");
+  const token = getAuthToken();
   const headers = { "Content-Type": "application/json" };
-  if (token) headers["Authorization"] = `Bearer ${decodeURIComponent(token)}`;
+  if (token) headers["Authorization"] = `Bearer ${token}`;
   return headers;
 }
 
 // ─── Auth state ─────────────────────────────────────────────────────────────
 
 function getAuthState() {
-  const isLoggedIn = getCookie("isLoggedIn") === "true";
-  const token = getCookie("token");
-  const role = getRoleFromToken();
-  return { isLoggedIn: isLoggedIn || !!token, role };
+  const token = getAuthToken();
+  const cookieLoggedIn = getCookie("isLoggedIn") === "true";
+  const role = token ? getRoleFromToken() : null;
+  return { isLoggedIn: cookieLoggedIn || !!token, role };
 }
 
 // ─── Already-applied check ───────────────────────────────────────────────────
@@ -63,6 +73,14 @@ async function checkAlreadyApplied(jobId) {
     const res = await fetch(`${API_BASE}/applications/me?limit=100`, {
       headers: getAuthHeaders(),
     });
+    if (res.status === 401) {
+      // Account locked or session expired — show a warning banner
+      const warning = document.getElementById("applySection");
+      if (warning) {
+        warning.innerHTML = `<div class="alert alert-warning mb-0">⚠️ Your account is locked or session expired. <a href="../signin.html">Log in again</a> to apply.</div>`;
+      }
+      return true; // treat as applied so the normal apply button is suppressed
+    }
     if (!res.ok) return false;
     const data = await res.json();
     const apps = data.data?.applications || [];
@@ -209,6 +227,9 @@ function setupApplyModal(jobId) {
       const data = await res.json();
 
       if (!res.ok) {
+        if (res.status === 401) {
+          throw new Error("Your session has expired or your account is locked. Please log out and log back in, then try again.");
+        }
         throw new Error(data.message || "Failed to submit application.");
       }
 

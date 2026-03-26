@@ -23,6 +23,7 @@ features and optional Bootstrap utilities.
 - Code & Design Guide
 - Design files (Figma)
 - Contributing
+- Database Backup & Restore
 - Deployment
 - License & Team
 
@@ -141,6 +142,78 @@ Additional backend notes (resume upload & AWS S3)
 - **Resume uploads use IAM Roles:** Resume file uploads are stored in S3 and the backend has been updated to use IAM role-based credentials (no long-lived access keys). See [backend/AWS_IAM_SETUP.md](backend/AWS_IAM_SETUP.md) for setup and troubleshooting.
 - **Verify AWS config locally:** A verification script is available at `backend/verify-aws-config.js` and a convenience npm script `verify:aws` was added to `backend/package.json`. Run `cd backend && npm run verify:aws` to validate environment variables, assume-role, and basic S3 Put/Get/Delete operations.
 - **Frontend integration:** The frontend now fetches a presigned URL for viewing an uploaded resume on dashboard load (if present). See [backend/S3_RESUME_UPLOAD_GUIDE.md](backend/S3_RESUME_UPLOAD_GUIDE.md) and the frontend integration guide for usage.
+
+### S3 Resume Upload — Full Reference
+
+#### API endpoints
+
+| Method | Route | Auth | Purpose |
+|--------|-------|------|---------|
+| `POST` | `/api/v1/profile/resume` | JWT | Upload or overwrite resume |
+| `GET` | `/api/v1/profile/resume` | JWT | Get 5-minute presigned download URL |
+| `PUT` | `/api/v1/profile/resume` | JWT | Alias for upload |
+| `DELETE` | `/api/v1/profile/resume` | JWT | Delete from S3 + clear profile |
+
+#### Upload flow
+
+1. Frontend validates file type (PDF / DOC / DOCX) and sends `multipart/form-data` to `POST /api/v1/profile/resume`.
+2. Multer (memory storage) processes the buffer — never written to disk.
+3. Backend validates extension and MIME type server-side.
+4. `PutObjectCommand` stores the file at `resumes/{userId}/resume{ext}` with `ACL: private`.
+5. `resumePath` key is saved to the user's `UserProfile` document in MongoDB.
+6. A 5-minute presigned URL is returned immediately so the frontend can display a download link.
+
+#### Security measures
+
+| Measure | Detail |
+|---------|--------|
+| File type | Extension + MIME check — `.pdf`, `.doc`, `.docx` only |
+| Size limit | 10 MB (multer) |
+| Object ACL | `private` — no public access |
+| Presigned URL TTL | 5 minutes |
+| Bucket public access | Fully blocked (`block_public_acls`, `restrict_public_buckets`) |
+| Encryption | AES-256 server-side (S3-managed) |
+| Versioning | Enabled on bucket |
+| Key isolation | Key includes `userId` — users cannot access each other's files |
+| IAM permissions | Minimal: `s3:PutObject`, `s3:GetObject`, `s3:DeleteObject` on bucket only |
+| Auth | JWT `protect` middleware required on all resume routes |
+
+#### AWS credentials
+
+The backend uses the **Node provider chain** (IAM roles, not hardcoded keys):
+
+1. `AWS_ROLE_ARN` env var → STS `AssumeRole` (recommended for local dev)
+2. EC2 / ECS instance or task execution role (production)
+3. `AWS_PROFILE` named profile (`~/.aws/credentials`)
+4. `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY` (last resort, not recommended in production)
+
+**Required env vars:**
+
+```env
+AWS_REGION=ap-northeast-1
+RESUME_S3_BUCKET=japanssw-s3-84cafb59
+AWS_ROLE_ARN=arn:aws:iam::182371258083:role/mmdc-wst-s3-access-role-84cafb59
+```
+
+#### Infrastructure
+
+Managed via Terraform (`terraform/`):
+- `s3.tf` — bucket, public-access block, AES-256 encryption, versioning
+- `iam.tf` — IAM role + minimal S3 policy
+- `terraform-s3.yml` — GitHub Actions workflow (OIDC role assumption)
+
+#### Key files
+
+| File | Purpose |
+|------|---------|
+| `backend/src/utils/awsS3.js` | S3 client + credential provider chain |
+| `backend/src/controllers/profileController.js` | Upload / presigned URL / delete logic |
+| `backend/src/routes/profileRoutes.js` | Route definitions |
+| `backend/verify-aws-config.js` | End-to-end AWS setup verifier |
+| `backend/AWS_IAM_SETUP.md` | IAM role setup guide (4 deployment scenarios) |
+| `backend/S3_RESUME_UPLOAD_GUIDE.md` | Frontend integration guide |
+| `terraform/s3.tf` | S3 bucket Terraform config |
+| `terraform/iam.tf` | IAM role + policy Terraform config |
 
 ## Technologies
 
@@ -274,8 +347,19 @@ Backend API tests use Jest, Supertest, and `mongodb-memory-server` from the `bac
 
 ```bash
 cd backend
-npm test
+npm test                   # run all backend tests
+npm run test:integration   # run integration tests only
 ```
+
+The integration test suite lives under [`backend/tests/integration/`](backend/tests/integration/) and covers:
+
+- `auth.test.js` — register, login, `GET /me`, JWT edge cases
+- `companies.test.js` — public list, auth guards, 404/400
+- `jobs.test.js` — public list, filters, employer-only routes, 404/400
+- `applications.test.js` — `GET /me`, apply edge cases, withdraw
+- `health.test.js` — `/health`, `/api/health`, 404 handler
+
+No real MongoDB connection is required — tests use an in-memory MongoDB instance (`mongodb-memory-server`) spun up by `backend/tests/integration/setup.js`.
 
 Notes:
 
@@ -289,15 +373,16 @@ Notes:
 Detailed test documentation and results are available in [TESTING.md](TESTING.md) at the repository root. That document contains:
 
 - A list of test cases (functional, mobile/offcanvas, i18n, accessibility)
+- Backend integration test cases (auth, companies, jobs, applications, health)
 - Test environment and browsers used
 - Evidence and notes for each test (network checks, ARIA, WCAG contrast)
 - A summary of fixes applied during testing (with commit references)
 
 Quick links:
-Quick links:
 
 - View the full testing report: [TESTING.md](TESTING.md)
 - Playwright smoke tests: [tests/playwright/](tests/playwright/) (see the "Running tests" section above for commands)
+- Backend integration tests: [backend/tests/integration/](backend/tests/integration/) — run with `cd backend && npm run test:integration`
 
 Project management & QA
 
@@ -445,6 +530,90 @@ git push origin feature/your-change
 ```
 
 1. Open a Pull Request on GitHub targeting `main` and request review from code owners.
+
+## Database Backup & Restore
+
+MongoDB Atlas free tier (`M0`) has **no automated backups**. Use the scripts
+in `backend/scripts/` to take and restore manual backups.
+
+### Backup
+
+```bash
+cd backend
+
+# Local JSON files only
+npm run backup
+
+# Local JSON + push snapshot to Atlas  ← recommended
+npm run backup:atlas
+
+# Atlas only (no local files)
+npm run backup:atlas-only
+
+# Selective backup
+node scripts/backup-db.js --collections users,companies,jobs [--push-to-atlas]
+```
+
+**Local output** — timestamped directory:
+```
+backups/
+└── 2026-03-24T14-46-12/
+    ├── manifest.json        ← metadata: date, DB name, doc counts
+    ├── users.json
+    ├── companies.json
+    ├── jobs.json
+    └── …
+```
+
+**Atlas snapshot** — stored in `japansswdb_backups` database on the same cluster:
+```
+japansswdb_backups (database)
+├── _sessions   ← one manifest doc per backup run
+├── users       ← docs stored as { session, chunk, docs: [...] }
+├── companies
+├── jobs
+└── …
+```
+Visible in MongoDB Compass / Atlas UI under the `japansswdb_backups` database.
+
+### Restore
+
+```bash
+cd backend
+
+# List all Atlas snapshots
+npm run restore:atlas -- --list
+
+# Restore latest Atlas snapshot (additive)
+npm run restore:atlas -- --latest
+
+# Restore latest and drop collections first (full replace)
+npm run restore:atlas -- --latest --drop
+
+# Restore a specific Atlas snapshot
+npm run restore:atlas -- --session 2026-03-24T15-21-42
+
+# Restore from local JSON files
+npm run restore -- --from ../backups/2026-03-24T14-46-12 --drop
+
+# Restore specific collections only
+npm run restore:atlas -- --latest --collections users,companies,jobs
+```
+
+### Backup policy (recommended)
+
+| Trigger | Action |
+|---|---|
+| Before any seed / import operation | `npm run backup` |
+| Before a co-developer data migration | `npm run backup` |
+| Weekly cadence (manual) | `npm run backup`, archive outside repo |
+| After full reseed completes | `npm run backup` to capture clean state |
+
+> **`backups/` is gitignored.** Store archives in a shared drive or private S3 bucket.
+> Never commit backup JSON — collections may contain PII.
+
+### Related skill
+See [`.github/skills/database-architect/SKILL.MD`](.github/skills/database-architect/SKILL.MD) for the full backup/restore conventions used by the Database Architect agent role.
 
 ## Deployment
 

@@ -20,7 +20,8 @@ const companySchema = new mongoose.Schema(
     logo: {
       type: String,
       trim: true,
-      match: [/^https?:\/\/.+/, "Please provide a valid logo URL"],
+      // Allow absolute URLs (https://...) or relative paths (/assets/...)
+      match: [/^(https?:\/\/.+|\/\S+)/, "Please provide a valid logo URL or relative path"],
     },
 
     // Company Details
@@ -195,6 +196,12 @@ const companySchema = new mongoose.Schema(
     isActive: {
       type: Boolean,
       default: true,
+      index: true,
+    },
+    // Featured on homepage — always shown in Top Companies section
+    featured: {
+      type: Boolean,
+      default: false,
       index: true,
     },
 

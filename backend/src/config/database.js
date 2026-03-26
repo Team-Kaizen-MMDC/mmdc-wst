@@ -1,21 +1,33 @@
 const { MongoClient } = require("mongodb");
 const mongoose = require("mongoose");
-const config = require("../../config");
+
+// Read URI at connection time (not module load time) so that test suites
+// can override process.env.MONGODB_URI before calling createApp() without
+// being foiled by a cached value from config.js's dotenv.config() call.
+function getMongoUri() {
+  return process.env.MONGODB_URI;
+}
+
+function getDbName() {
+  return process.env.MONGODB_DB || "mmdc-wst";
+}
 
 async function connectNative() {
-  if (!config.MONGODB_URI) {
+  const uri = getMongoUri();
+  if (!uri) {
     throw new Error(
       "Missing MONGODB_URI environment variable for native connector",
     );
   }
-  const client = new MongoClient(config.MONGODB_URI);
+  const client = new MongoClient(uri);
   await client.connect();
-  const db = client.db(config.DB_NAME);
+  const db = client.db(getDbName());
   return { client, db };
 }
 
 async function connectMongoose(options = {}) {
-  if (!config.MONGODB_URI) {
+  const uri = getMongoUri();
+  if (!uri) {
     throw new Error(
       "Missing MONGODB_URI environment variable for mongoose connector",
     );
@@ -27,7 +39,7 @@ async function connectMongoose(options = {}) {
     socketTimeoutMS: 45000,
   };
   await mongoose.connect(
-    config.MONGODB_URI,
+    uri,
     Object.assign(defaultOptions, options),
   );
   return mongoose;

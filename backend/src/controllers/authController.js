@@ -175,10 +175,20 @@ exports.getMe = asyncHandler(async (req, res, next) => {
  * @access  Private
  */
 exports.logout = asyncHandler(async (req, res, next) => {
-  // Since we're using JWT (stateless), logout is handled client-side
-  // by removing the token. This endpoint is mainly for logging purposes.
+  logger.info(`User logged out: ${req.user?.email || 'unknown'}`);
 
-  logger.info(`User logged out: ${req.user.email}`);
+  // req.logout() is Passport's mechanism for removing the user from the
+  // session. It internally calls session.regenerate() to create a fresh
+  // anonymous session, so we must NOT call session.destroy() separately —
+  // doing so races with regenerate() and crashes the process.
+  if (typeof req.logout === 'function') {
+    await new Promise((resolve) => {
+      req.logout((err) => {
+        if (err) logger.warn('Passport logout error:', err);
+        resolve();
+      });
+    });
+  }
 
   res.status(200).json(new ApiResponse(200, "Logout successful", null));
 });
