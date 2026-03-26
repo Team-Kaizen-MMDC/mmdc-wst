@@ -25,7 +25,7 @@ async function main() {
   }
   const dbName = process.env.MONGODB_DB || 'mmdc-wst';
 
-  const client = new MongoClient(uri, { useUnifiedTopology: true });
+  const client = new MongoClient(uri);
   try {
     await client.connect();
     const db = client.db(dbName);
