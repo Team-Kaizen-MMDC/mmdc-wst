@@ -2,8 +2,6 @@
 
 const API_BASE_URL = "http://localhost:3000/api/v1/companies";
 
-let companyModal = null;
-
 document.addEventListener("DOMContentLoaded", () => {
   const modalEl = document.getElementById("editCompanyModal");
   const formEl = document.getElementById("editCompanyForm");
