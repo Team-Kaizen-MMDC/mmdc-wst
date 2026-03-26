@@ -591,6 +591,14 @@ japansswdb_backups (database)
 ```
 Visible in MongoDB Compass / Atlas UI under the `japansswdb_backups` database.
 
+### Audit logging
+
+The backup tooling now records who, when, and how each backup was triggered.
+- The local manifest (backups/<timestamp>/manifest.json) and the Atlas `_sessions` document include metadata: `triggeredBy`, `triggeredVia` (e.g. `npm:backup:atlas`), `command`, `cwd`, `pid`, `session` and `createdAt`.
+- A compact JSONL audit file `backups/backup.log` is appended on every run and contains one short record per backup (session, createdAt, triggeredBy, triggeredVia, command, cwd, pid, collections, totalDocs).
+
+This makes it easy to audit backups taken via `npm run backup*` or direct invocation. For stricter attribution, consider running with an explicit `--actor` flag or setting an environment variable that the script can record.
+
 ### Restore
 
 ```bash
