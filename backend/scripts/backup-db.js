@@ -35,6 +35,7 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const fs = require("fs");
 const path = require("path");
+const os = require("os");
 
 // ─── CLI args ────────────────────────────────────────────────────────────────
 
@@ -109,15 +110,47 @@ async function main() {
     }
   }
 
+  // Record who/what triggered this run
+  const npmEvent = process.env.npm_lifecycle_event || null;
+  const command = process.argv.join(" ");
+  const triggeredBy = process.env.USER || process.env.LOGNAME || (os.userInfo && os.userInfo().username) || "unknown";
+
   const manifest = {
     session:     ts,
     createdAt:   new Date().toISOString(),
     database:    dbName,
     uri:         process.env.MONGODB_URI.replace(/:\/\/[^@]+@/, "://<credentials>@"),
+    triggeredBy: triggeredBy,
+    triggeredVia: npmEvent ? `npm:${npmEvent}` : "direct",
+    command: command,
+    cwd: process.cwd(),
+    pid: process.pid,
     collections: {},
   };
+
   for (const name of collections) {
     manifest.collections[name] = { count: collectionData[name].length, file: `${name}.json` };
+  }
+
+  // Append a short JSONL log entry to backups/backup.log for quick audit
+  try {
+    ensureDir(outRoot);
+    const auditLogPath = path.join(outRoot, "backup.log");
+    const logEntry = {
+      session: ts,
+      createdAt: manifest.createdAt,
+      triggeredBy: manifest.triggeredBy,
+      triggeredVia: manifest.triggeredVia,
+      command: manifest.command,
+      cwd: manifest.cwd,
+      pid: manifest.pid,
+      collections: Object.keys(manifest.collections).length,
+      totalDocs
+    };
+    fs.appendFileSync(auditLogPath, JSON.stringify(logEntry) + "\n", "utf8");
+  } catch (err) {
+    // non-fatal: continue even if logging fails
+    console.warn("⚠️  Could not write audit log:", err.message);
   }
 
   // ── 1. Write local JSON files ──────────────────────────────────────────────
