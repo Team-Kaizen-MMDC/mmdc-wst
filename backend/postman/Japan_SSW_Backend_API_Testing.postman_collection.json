@@ -1,40 +1,10 @@
 {
   "info": {
+    "_postman_id": "0b7872a9-a56d-4c0d-a439-56187d767a7b",
     "name": "Japan SSW Backend API Testing",
-    "_postman_id": "d0d14917-5f8f-4efd-a6a0-5e919dd5674d",
-    "description": "Manual API verification collection for auth, profile, companies, jobs, and applications (job application feature). Run Login as Jobseeker / Login as Employer first \u2014 tokens are auto-saved to collection variables.",
+    "description": "Complete API test collection for the Japan SSW Platform backend. Updated to reflect all current routes including Profile sub-resources, Users, About, Alerts, and OAuth flows.\n\n**Variables:**\n- `baseUrl` \u2014 set to `http://localhost:3000/api/v1` for local dev\n- `baseRootUrl` \u2014 set to `http://localhost:3000` for OAuth, About, and utility routes\n- `bearerToken` \u2014 paste jobseeker JWT after login\n- `employerToken` \u2014 paste employer JWT after login\n- `adminToken` \u2014 paste admin JWT after login\n- `companyId`, `jobId`, `applicationId`, `userId`, `educationId`, `experienceId` \u2014 paste from responses",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
-  "variable": [
-    {
-      "key": "baseUrl",
-      "value": "http://localhost:3000/api/v1"
-    },
-    {
-      "key": "bearerToken",
-      "value": ""
-    },
-    {
-      "key": "companyId",
-      "value": ""
-    },
-    {
-      "key": "jobId",
-      "value": ""
-    },
-    {
-      "key": "employerToken",
-      "value": ""
-    },
-    {
-      "key": "adminToken",
-      "value": ""
-    },
-    {
-      "key": "applicationId",
-      "value": ""
-    }
-  ],
   "item": [
     {
       "name": "Auth",
@@ -49,11 +19,17 @@
                 "value": "application/json"
               }
             ],
+            "url": "{{baseUrl}}/auth/register",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"postman-jobseeker@example.com\",\n  \"password\": \"Password123!\",\n  \"role\": \"jobseeker\"\n}"
+              "raw": "{\n  \"email\": \"postman-jobseeker@example.com\",\n  \"password\": \"Password123!\",\n  \"role\": \"jobseeker\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
-            "url": "{{baseUrl}}/auth/register"
+            "description": "Register a new jobseeker account."
           }
         },
         {
@@ -66,30 +42,21 @@
                 "value": "application/json"
               }
             ],
+            "url": "{{baseUrl}}/auth/register",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"postman-employer@example.com\",\n  \"password\": \"Password123!\",\n  \"role\": \"employer\"\n}"
+              "raw": "{\n  \"email\": \"postman-employer@example.com\",\n  \"password\": \"Password123!\",\n  \"role\": \"employer\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
-            "url": "{{baseUrl}}/auth/register"
+            "description": "Register a new employer account."
           }
         },
         {
           "name": "Login as Jobseeker",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "const json = pm.response.json();",
-                  "if (json.data && json.data.token) {",
-                  "  pm.collectionVariables.set('bearerToken', json.data.token);",
-                  "  console.log('Jobseeker token saved');",
-                  "}"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
           "request": {
             "method": "POST",
             "header": [
@@ -98,30 +65,21 @@
                 "value": "application/json"
               }
             ],
+            "url": "{{baseUrl}}/auth/login",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"postman-jobseeker@example.com\",\n  \"password\": \"Password123!\"\n}"
+              "raw": "{\n  \"email\": \"postman-jobseeker@example.com\",\n  \"password\": \"Password123!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
-            "url": "{{baseUrl}}/auth/login"
+            "description": "Returns a JWT. Copy to bearerToken variable."
           }
         },
         {
           "name": "Login as Employer",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "const json = pm.response.json();",
-                  "if (json.data && json.data.token) {",
-                  "  pm.collectionVariables.set('employerToken', json.data.token);",
-                  "  console.log('Employer token saved');",
-                  "}"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
           "request": {
             "method": "POST",
             "header": [
@@ -130,30 +88,21 @@
                 "value": "application/json"
               }
             ],
+            "url": "{{baseUrl}}/auth/login",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"postman-employer@example.com\",\n  \"password\": \"Password123!\"\n}"
+              "raw": "{\n  \"email\": \"postman-employer@example.com\",\n  \"password\": \"Password123!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
-            "url": "{{baseUrl}}/auth/login"
+            "description": "Returns a JWT. Copy to employerToken variable."
           }
         },
         {
           "name": "Login as Admin",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "const json = pm.response.json();",
-                  "if (json.data && json.data.token) {",
-                  "  pm.collectionVariables.set('adminToken', json.data.token);",
-                  "  console.log('Admin token saved');",
-                  "}"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
           "request": {
             "method": "POST",
             "header": [
@@ -162,15 +111,21 @@
                 "value": "application/json"
               }
             ],
+            "url": "{{baseUrl}}/auth/login",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"admin@mmdc.local\",\n  \"password\": \"SuperAdmin@1234\"\n}"
+              "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"AdminPass123!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
-            "url": "{{baseUrl}}/auth/login"
+            "description": "Returns a JWT. Copy to adminToken variable."
           }
         },
         {
-          "name": "Get Current User",
+          "name": "Get Current User (me)",
           "request": {
             "method": "GET",
             "header": [
@@ -179,7 +134,8 @@
                 "value": "Bearer {{bearerToken}}"
               }
             ],
-            "url": "{{baseUrl}}/auth/me"
+            "url": "{{baseUrl}}/auth/me",
+            "description": "Returns authenticated user. Requires bearerToken."
           }
         },
         {
@@ -192,14 +148,94 @@
                 "value": "Bearer {{bearerToken}}"
               }
             ],
-            "url": "{{baseUrl}}/auth/logout"
+            "url": "{{baseUrl}}/auth/logout",
+            "description": "Invalidates current session."
+          }
+        },
+        {
+          "name": "Forgot Password",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/forgot-password",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"postman-jobseeker@example.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Sends password reset email."
+          }
+        },
+        {
+          "name": "Google Auth (ID Token)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/google",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"googleToken\": \"REPLACE_WITH_GOOGLE_ID_TOKEN\",\n  \"role\": \"jobseeker\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Authenticate using Google Sign-In ID token. Role is used for new accounts."
+          }
+        },
+        {
+          "name": "Google Auth \u2014 Start OAuth Flow (dev)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseRootUrl}}/auth/google?role=jobseeker&redirect=/pages/profileDashboard.html",
+            "description": "Initiates Google OAuth 2.0 redirect flow. Dev/browser only."
+          }
+        },
+        {
+          "name": "Auth Status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseRootUrl}}/auth/status",
+            "description": "Check current OAuth session authentication status."
           }
         }
-      ]
+      ],
+      "description": "Local auth (register/login/logout) and Google OAuth endpoints."
     },
     {
       "name": "Profile",
       "item": [
+        {
+          "name": "Get Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/profile",
+            "description": "Get the authenticated user's profile."
+          }
+        },
         {
           "name": "Create Profile",
           "request": {
@@ -214,24 +250,17 @@
                 "value": "Bearer {{bearerToken}}"
               }
             ],
+            "url": "{{baseUrl}}/profile",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"firstName\": \"Juan\",\n  \"lastName\": \"Dela Cruz\",\n  \"dateOfBirth\": \"1994-02-10\",\n  \"nationality\": \"Philippines\",\n  \"japaneseLevel\": \"N4\"\n}"
-            },
-            "url": "{{baseUrl}}/profile"
-          }
-        },
-        {
-          "name": "Get Profile",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{bearerToken}}"
+              "raw": "{\n  \"firstName\": \"Taro\",\n  \"lastName\": \"Yamamoto\",\n  \"dateOfBirth\": \"1995-05-15\",\n  \"nationality\": \"Filipino\",\n  \"japaneseLevel\": \"N3\",\n  \"bio\": \"Experienced software engineer seeking SSW visa opportunities in Japan.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
               }
-            ],
-            "url": "{{baseUrl}}/profile"
+            },
+            "description": "Create a new profile for the authenticated jobseeker."
           }
         },
         {
@@ -248,11 +277,17 @@
                 "value": "Bearer {{bearerToken}}"
               }
             ],
+            "url": "{{baseUrl}}/profile",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"city\": \"Yokohama\",\n  \"bio\": \"Updated from Postman\"\n}"
+              "raw": "{\n  \"firstName\": \"Taro\",\n  \"lastName\": \"Yamamoto\",\n  \"japaneseLevel\": \"N2\",\n  \"bio\": \"Updated bio with N2 Japanese level.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
-            "url": "{{baseUrl}}/profile"
+            "description": "Update the authenticated user's profile."
           }
         },
         {
@@ -265,10 +300,336 @@
                 "value": "Bearer {{bearerToken}}"
               }
             ],
-            "url": "{{baseUrl}}/profile"
+            "url": "{{baseUrl}}/profile",
+            "description": "Delete the authenticated user's profile."
+          }
+        },
+        {
+          "name": "Add Education",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/profile/education",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"school\": \"University of the Philippines\",\n  \"degree\": \"Bachelor of Science\",\n  \"field\": \"Computer Science\",\n  \"startDate\": \"2013-06-01\",\n  \"endDate\": \"2017-04-30\",\n  \"current\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Update Education",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/profile/education/{{educationId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"school\": \"University of the Philippines\",\n  \"degree\": \"Bachelor of Science\",\n  \"field\": \"Information Technology\",\n  \"startDate\": \"2013-06-01\",\n  \"endDate\": \"2017-04-30\",\n  \"current\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Delete Education",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/profile/education/{{educationId}}"
+          }
+        },
+        {
+          "name": "Add Experience",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/profile/experience",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"company\": \"Acme Corp\",\n  \"title\": \"Software Engineer\",\n  \"description\": \"Developed web applications using Node.js and React.\",\n  \"startDate\": \"2017-05-01\",\n  \"endDate\": \"2021-03-31\",\n  \"current\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Update Experience",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/profile/experience/{{experienceId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"company\": \"Acme Corp\",\n  \"title\": \"Senior Software Engineer\",\n  \"description\": \"Led a team of 5 developers.\",\n  \"startDate\": \"2017-05-01\",\n  \"current\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Delete Experience",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/profile/experience/{{experienceId}}"
+          }
+        },
+        {
+          "name": "Update Skills",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/profile/skills",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"skills\": [\n    {\n      \"name\": \"JavaScript\",\n      \"level\": \"Advanced\",\n      \"category\": \"Programming\"\n    },\n    {\n      \"name\": \"Node.js\",\n      \"level\": \"Advanced\",\n      \"category\": \"Backend\"\n    },\n    {\n      \"name\": \"React\",\n      \"level\": \"Intermediate\",\n      \"category\": \"Frontend\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Update Languages",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/profile/languages",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"languages\": [\n    {\n      \"language\": \"English\",\n      \"proficiency\": \"Native\"\n    },\n    {\n      \"language\": \"Japanese\",\n      \"proficiency\": \"N3\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Update Certifications",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/profile/certifications",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"certifications\": [\n    {\n      \"name\": \"Japanese Language Proficiency Test N3\",\n      \"issuer\": \"JLPT\",\n      \"issueDate\": \"2023-07-01\",\n      \"expiryDate\": null\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Update Availability",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/profile/availability",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"availableFrom\": \"2025-04-01\",\n  \"visaStatus\": \"eligible\",\n  \"preferredLocations\": [\n    \"Tokyo\",\n    \"Osaka\"\n  ],\n  \"openToRelocation\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Upload Resume",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/profile/resume",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "resume",
+                  "type": "file",
+                  "src": "resume.pdf"
+                }
+              ]
+            },
+            "description": "Upload a PDF resume. Use multipart/form-data with field name 'resume'."
+          }
+        },
+        {
+          "name": "Get Resume (presigned URL)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/profile/resume",
+            "description": "Returns a presigned S3 URL to download the resume."
+          }
+        },
+        {
+          "name": "Replace Resume",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/profile/resume",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "resume",
+                  "type": "file",
+                  "src": "resume_updated.pdf"
+                }
+              ]
+            },
+            "description": "Replace existing resume with a new PDF."
+          }
+        },
+        {
+          "name": "Delete Resume",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/profile/resume",
+            "description": "Deletes the stored resume from S3."
+          }
+        },
+        {
+          "name": "Get Applicant Resume (Employer/Admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employerToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/profile/{{userId}}/resume",
+            "description": "Employer or admin can view any applicant's resume presigned URL."
           }
         }
-      ]
+      ],
+      "description": "All profile management endpoints. All require bearerToken."
     },
     {
       "name": "Companies",
@@ -277,7 +638,26 @@
           "name": "List Companies",
           "request": {
             "method": "GET",
-            "url": "{{baseUrl}}/companies"
+            "header": [],
+            "url": "{{baseUrl}}/companies?page=1&limit=10",
+            "description": "Public. Supports query params: page, limit, industry."
+          }
+        },
+        {
+          "name": "List Companies \u2014 Filter by Industry",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/companies?industry=Manufacturing&page=1&limit=10"
+          }
+        },
+        {
+          "name": "Get Company by ID or Slug",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/companies/{{companyId}}",
+            "description": "Public. Accepts MongoDB ObjectId or company slug."
           }
         },
         {
@@ -291,14 +671,20 @@
               },
               {
                 "key": "Authorization",
-                "value": "Bearer {{bearerToken}}"
+                "value": "Bearer {{employerToken}}"
               }
             ],
+            "url": "{{baseUrl}}/companies",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Postman Works\",\n  \"industry\": \"Manufacturing\",\n  \"description\": \"Created from Postman manual test flow\",\n  \"location\": {\n    \"prefecture\": \"Osaka\",\n    \"city\": \"Osaka\"\n  },\n  \"contact\": {\n    \"email\": \"hr@postman-works.example.com\",\n    \"phone\": \"+81-6-1111-2222\"\n  }\n}"
+              "raw": "{\n  \"name\": \"Tech Innovation Corp\",\n  \"industry\": \"Information Technology\",\n  \"size\": \"51-200\",\n  \"description\": \"A leading tech company specializing in AI solutions.\",\n  \"location\": {\n    \"prefecture\": \"Tokyo\",\n    \"city\": \"Shinjuku\"\n  },\n  \"website\": \"https://techinnovation.example.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
-            "url": "{{baseUrl}}/companies"
+            "description": "Employer or admin only."
           }
         },
         {
@@ -312,17 +698,119 @@
               },
               {
                 "key": "Authorization",
-                "value": "Bearer {{bearerToken}}"
+                "value": "Bearer {{employerToken}}"
               }
             ],
+            "url": "{{baseUrl}}/companies/{{companyId}}",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"description\": \"Updated from Postman\"\n}"
+              "raw": "{\n  \"description\": \"Updated company description.\",\n  \"size\": \"201-500\",\n  \"website\": \"https://updated.techinnovation.example.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Delete Company",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employerToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/companies/{{companyId}}",
+            "description": "Employer or admin only."
+          }
+        },
+        {
+          "name": "Add Company Admin",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employerToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/companies/{{companyId}}/admins",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"{{userId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
-            "url": "{{baseUrl}}/companies/{{companyId}}"
+            "description": "Add a user as company admin."
+          }
+        },
+        {
+          "name": "Remove Company Admin",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employerToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/companies/{{companyId}}/admins/{{userId}}",
+            "description": "Remove a user from company admins."
+          }
+        },
+        {
+          "name": "Verify Company (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/companies/{{companyId}}/verify",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"isVerified\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Admin only. Mark company as verified."
+          }
+        },
+        {
+          "name": "Company Stats (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/companies/admin/stats",
+            "description": "Admin only. Returns aggregated company statistics."
           }
         }
-      ]
+      ],
+      "description": "Company CRUD. GET endpoints are public; mutations require employer/admin."
     },
     {
       "name": "Jobs",
@@ -331,30 +819,77 @@
           "name": "List Jobs",
           "request": {
             "method": "GET",
-            "url": "{{baseUrl}}/jobs"
+            "header": [],
+            "url": "{{baseUrl}}/jobs?page=1&limit=10",
+            "description": "Public. Supports: industry, prefecture, japaneseLevel, minSalary, search, page, limit."
+          }
+        },
+        {
+          "name": "List Jobs \u2014 With Filters",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/jobs?industry=Manufacturing&prefecture=Tokyo&japaneseLevel=N3&page=1&limit=10"
           }
         },
         {
           "name": "Get Job by ID",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "const json = pm.response.json();",
-                  "if (json.data && json.data.job && json.data.job._id) {",
-                  "  pm.collectionVariables.set('jobId', json.data.job._id);",
-                  "  console.log('jobId saved:', json.data.job._id);",
-                  "}"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
           "request": {
             "method": "GET",
             "header": [],
-            "url": "{{baseUrl}}/jobs/{{jobId}}"
+            "url": "{{baseUrl}}/jobs/{{jobId}}",
+            "description": "Public."
+          }
+        },
+        {
+          "name": "Get Jobs by Company",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/jobs/company/{{companyId}}",
+            "description": "Public. Returns all active jobs for a specific company."
+          }
+        },
+        {
+          "name": "Get My Posted Jobs (Employer)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employerToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/jobs/my/jobs",
+            "description": "Returns jobs posted by the authenticated employer."
+          }
+        },
+        {
+          "name": "Get My Applications Summary (Employer)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employerToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/jobs/my/applications/summary",
+            "description": "Returns aggregated application counts grouped by status for the employer's company."
+          }
+        },
+        {
+          "name": "Get My Applications Paginated (Employer)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employerToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/jobs/my/applications?page=1&limit=20",
+            "description": "Returns full paginated application list for employer's company (Applicant Tracking)."
           }
         },
         {
@@ -368,51 +903,26 @@
               },
               {
                 "key": "Authorization",
-                "value": "Bearer {{bearerToken}}"
+                "value": "Bearer {{employerToken}}"
               }
             ],
+            "url": "{{baseUrl}}/jobs",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"company\": \"{{companyId}}\",\n  \"title\": \"Quality Inspector\",\n  \"industry\": \"Manufacturing\",\n  \"summary\": \"Inspect outgoing products.\",\n  \"responsibilities\": \"Inspect, document, and report quality findings.\",\n  \"requirements\": \"Attention to detail.\",\n  \"compensation\": {\n    \"salaryMin\": 190000,\n    \"salaryMax\": 230000,\n    \"currency\": \"JPY\",\n    \"period\": \"monthly\"\n  },\n  \"location\": {\n    \"prefecture\": \"Tokyo\",\n    \"city\": \"Chiyoda\",\n    \"remote\": false\n  },\n  \"applicationInfo\": {\n    \"deadline\": \"2026-12-31T00:00:00.000Z\",\n    \"startDate\": \"2027-01-31T00:00:00.000Z\",\n    \"contactEmail\": \"jobs@postman-works.example.com\",\n    \"applicationMethod\": \"Platform\"\n  }\n}"
+              "raw": "{\n  \"company\": \"{{companyId}}\",\n  \"title\": \"Software Engineer (SSW)\",\n  \"industry\": \"Information Technology\",\n  \"summary\": \"Join our growing engineering team in Tokyo.\",\n  \"japaneseLevel\": \"N3\",\n  \"compensation\": {\n    \"salaryMin\": 3500000,\n    \"salaryMax\": 5500000,\n    \"currency\": \"JPY\"\n  },\n  \"location\": {\n    \"prefecture\": \"Tokyo\",\n    \"city\": \"Shibuya\"\n  },\n  \"visaSponsorship\": true,\n  \"status\": \"active\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
-            "url": "{{baseUrl}}/jobs"
+            "description": "Employer or admin only."
           }
         },
         {
-          "name": "Create Job (Admin example - auto-create company)",
-          "event": [
-            {
-              "listen": "prerequest",
-              "script": {
-                "exec": [
-                  "if (!pm.collectionVariables.get('companyId') || pm.collectionVariables.get('companyId') === '') {",
-                  "  const createCompanyReq = {",
-                  "    url: pm.collectionVariables.get('baseUrl') + '/companies',",
-                  "    method: 'POST',",
-                  "    header: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + pm.collectionVariables.get('adminToken') },",
-                  "    body: { mode: 'raw', raw: JSON.stringify({ name: 'Postman Auto Company', description: 'Auto-created by Postman admin example', contact: { email: 'admin@postman-company.example', phone: '+81-90-0000-0000' }, location: { prefecture: 'Tokyo', city: 'Chiyoda' } }) }",
-                  "  };",
-                  "  pm.sendRequest(createCompanyReq, function (err, res) {",
-                  "    if (err) { console.error('Company create failed', err); return; }",
-                  "    try {",
-                  "      const json = res.json();",
-                  "      if (json && json.data && json.data._id) {",
-                  "        pm.collectionVariables.set('companyId', json.data._id);",
-                  "        console.log('Created companyId', json.data._id);",
-                  "      } else if (json && json.data && json.data.company && json.data.company._id) {",
-                  "        pm.collectionVariables.set('companyId', json.data.company._id);",
-                  "        console.log('Created companyId', json.data.company._id);",
-                  "      }",
-                  "    } catch (e) { console.error('Failed to parse create company response', e); }",
-                  "  });",
-                  "}"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
+          "name": "Update Job",
           "request": {
-            "method": "POST",
+            "method": "PUT",
             "header": [
               {
                 "key": "Content-Type",
@@ -420,14 +930,20 @@
               },
               {
                 "key": "Authorization",
-                "value": "Bearer {{adminToken}}"
+                "value": "Bearer {{employerToken}}"
               }
             ],
+            "url": "{{baseUrl}}/jobs/{{jobId}}",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"company\": \"{{companyId}}\",\n  \"title\": \"Admin: Production Supervisor\",\n  \"industry\": \"Manufacturing\",\n  \"summary\": \"Supervise production line and ensure quality.\",\n  \"responsibilities\": \"Oversee team, maintain KPIs.\",\n  \"requirements\": \"Experience in manufacturing supervision.\",\n  \"compensation\": {\n    \"salaryMin\": 250000,\n    \"salaryMax\": 320000,\n    \"currency\": \"JPY\",\n    \"period\": \"monthly\"\n  },\n  \"location\": {\n    \"prefecture\": \"Tokyo\",\n    \"city\": \"Chiyoda\",\n    \"remote\": false\n  },\n  \"japaneseLevel\": \"N4\",\n  \"applicationInfo\": {\n    \"deadline\": \"2026-12-31T00:00:00.000Z\",\n    \"startDate\": \"2027-01-31T00:00:00.000Z\",\n    \"contactEmail\": \"hr@postman-company.example\",\n    \"applicationMethod\": \"Platform\"\n  }\n}"
+              "raw": "{\n  \"title\": \"Senior Software Engineer (SSW)\",\n  \"japaneseLevel\": \"N2\",\n  \"compensation\": {\n    \"salaryMin\": 5000000,\n    \"salaryMax\": 7000000,\n    \"currency\": \"JPY\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
-            "url": "{{baseUrl}}/jobs"
+            "description": "Employer or admin only."
           }
         },
         {
@@ -437,35 +953,29 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{bearerToken}}"
+                "value": "Bearer {{employerToken}}"
               }
             ],
-            "url": "{{baseUrl}}/jobs/{{jobId}}"
+            "url": "{{baseUrl}}/jobs/{{jobId}}",
+            "description": "Soft delete. Employer or admin only."
           }
-        }
-      ]
-    },
-    {
-      "name": "Applications",
-      "description": "Job application endpoints \u2014 jobseeker applies, checks own applications, withdraws; employer updates status and adds notes.",
-      "item": [
+        },
+        {
+          "name": "Job Stats (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/jobs/admin/stats",
+            "description": "Admin only. Returns job statistics."
+          }
+        },
         {
           "name": "Apply to Job (Jobseeker)",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "const json = pm.response.json();",
-                  "if (json.data && json.data._id) {",
-                  "  pm.collectionVariables.set('applicationId', json.data._id);",
-                  "  console.log('applicationId saved:', json.data._id);",
-                  "}"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
           "request": {
             "method": "POST",
             "header": [
@@ -478,12 +988,17 @@
                 "value": "Bearer {{bearerToken}}"
               }
             ],
+            "url": "{{baseUrl}}/jobs/{{jobId}}/apply",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"coverLetter\": \"I am very interested in this position and believe my skills are a great match.\"\n}"
+              "raw": "{\n  \"coverLetter\": \"I am very interested in this position and believe my skills in Node.js and Japanese language (N3) make me a strong candidate.\",\n  \"resumePath\": \"\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
-            "url": "{{baseUrl}}/jobs/{{jobId}}/apply",
-            "description": "Submit a job application. Requires jobseeker token in bearerToken. Prevents duplicate applications."
+            "description": "Jobseeker only. Returns 400 if already applied."
           }
         },
         {
@@ -500,14 +1015,39 @@
                 "value": "Bearer {{bearerToken}}"
               }
             ],
+            "url": "{{baseUrl}}/jobs/{{jobId}}/apply",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"coverLetter\": \"Trying to apply again.\"\n}"
+              "raw": "{\n  \"coverLetter\": \"Duplicate application attempt.\",\n  \"resumePath\": \"\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
-            "url": "{{baseUrl}}/jobs/{{jobId}}/apply",
-            "description": "Should return 400 \u2014 You have already applied to this job."
+            "description": "Expected to return 400 \u2014 already applied."
           }
         },
+        {
+          "name": "Get Job Applications (Employer)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employerToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/jobs/{{jobId}}/applications?page=1&limit=20",
+            "description": "Employer or admin only. Lists all applications for a specific job."
+          }
+        }
+      ],
+      "description": "Job listing and management. GET endpoints are public; mutations require employer/admin."
+    },
+    {
+      "name": "Applications",
+      "item": [
         {
           "name": "Get My Applications (Jobseeker)",
           "request": {
@@ -518,27 +1058,8 @@
                 "value": "Bearer {{bearerToken}}"
               }
             ],
-            "url": {
-              "raw": "{{baseUrl}}/applications/me?page=1&limit=10",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "applications",
-                "me"
-              ],
-              "query": [
-                {
-                  "key": "page",
-                  "value": "1"
-                },
-                {
-                  "key": "limit",
-                  "value": "10"
-                }
-              ]
-            },
-            "description": "Returns paginated list of the jobseeker's own applications with populated job details."
+            "url": "{{baseUrl}}/applications/me?page=1&limit=10",
+            "description": "Jobseeker only. Returns the authenticated user's applications."
           }
         },
         {
@@ -551,22 +1072,8 @@
                 "value": "Bearer {{bearerToken}}"
               }
             ],
-            "url": {
-              "raw": "{{baseUrl}}/applications/me?status=submitted",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "applications",
-                "me"
-              ],
-              "query": [
-                {
-                  "key": "status",
-                  "value": "submitted"
-                }
-              ]
-            }
+            "url": "{{baseUrl}}/applications/me?status=submitted",
+            "description": "Status options: submitted, reviewing, interview, offer, accepted, rejected, withdrawn."
           }
         },
         {
@@ -580,41 +1087,7 @@
               }
             ],
             "url": "{{baseUrl}}/applications/{{applicationId}}",
-            "description": "Accessible by the applicant or the employer/admin who owns the job."
-          }
-        },
-        {
-          "name": "Get Job Applications (Employer)",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{employerToken}}"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/jobs/{{jobId}}/applications?page=1&limit=20",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "jobs",
-                "{{jobId}}",
-                "applications"
-              ],
-              "query": [
-                {
-                  "key": "page",
-                  "value": "1"
-                },
-                {
-                  "key": "limit",
-                  "value": "20"
-                }
-              ]
-            },
-            "description": "Employer/admin only. Returns all applications for a specific job with applicant profile details."
+            "description": "Accessible by the applicant, the job's employer, or admin."
           }
         },
         {
@@ -631,12 +1104,16 @@
                 "value": "Bearer {{employerToken}}"
               }
             ],
+            "url": "{{baseUrl}}/applications/{{applicationId}}/status",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"status\": \"reviewing\"\n}"
-            },
-            "url": "{{baseUrl}}/applications/{{applicationId}}/status",
-            "description": "Move application to 'reviewing' status."
+              "raw": "{\n  \"status\": \"reviewing\",\n  \"notes\": \"Candidate looks promising, reviewing resume.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
           }
         },
         {
@@ -653,12 +1130,42 @@
                 "value": "Bearer {{employerToken}}"
               }
             ],
+            "url": "{{baseUrl}}/applications/{{applicationId}}/status",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"status\": \"interview\",\n  \"interview\": {\n    \"date\": \"2026-05-15T10:00:00.000Z\",\n    \"location\": \"Shinjuku, Tokyo\",\n    \"notes\": \"Please bring your resume and certificates.\"\n  }\n}"
-            },
+              "raw": "{\n  \"status\": \"interview\",\n  \"notes\": \"Scheduling interview.\",\n  \"interview\": {\n    \"date\": \"2025-04-15T10:00:00Z\",\n    \"location\": \"Tokyo Office, 3F\",\n    \"notes\": \"Bring ID and portfolio.\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Update Application Status \u2014 offer (Employer)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employerToken}}"
+              }
+            ],
             "url": "{{baseUrl}}/applications/{{applicationId}}/status",
-            "description": "Set interview date and location. This will show in the jobseeker Notifications panel."
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"offer\",\n  \"notes\": \"Extending a job offer.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
           }
         },
         {
@@ -675,11 +1182,16 @@
                 "value": "Bearer {{employerToken}}"
               }
             ],
+            "url": "{{baseUrl}}/applications/{{applicationId}}/status",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"status\": \"rejected\",\n  \"notes\": \"Position has been filled internally.\"\n}"
-            },
-            "url": "{{baseUrl}}/applications/{{applicationId}}/status"
+              "raw": "{\n  \"status\": \"rejected\",\n  \"notes\": \"Skills do not match current requirements.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
           }
         },
         {
@@ -696,11 +1208,17 @@
                 "value": "Bearer {{employerToken}}"
               }
             ],
+            "url": "{{baseUrl}}/applications/{{applicationId}}/notes",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"notes\": \"Strong candidate. Followed up by email on 2026-03-21.\"\n}"
+              "raw": "{\n  \"notes\": \"Strong candidate. Follow up in Q2 if the role opens again.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
-            "url": "{{baseUrl}}/applications/{{applicationId}}/notes"
+            "description": "Employer or admin only. Max 1000 characters."
           }
         },
         {
@@ -714,7 +1232,7 @@
               }
             ],
             "url": "{{baseUrl}}/applications/{{applicationId}}/withdraw",
-            "description": "Only allowed when status is submitted, reviewing, or interview."
+            "description": "Jobseeker only. Cannot withdraw if already accepted/rejected."
           }
         },
         {
@@ -727,15 +1245,335 @@
                 "value": "application/json"
               }
             ],
+            "url": "{{baseUrl}}/jobs/{{jobId}}/apply",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"coverLetter\": \"No token provided.\"\n}"
+              "raw": "{\n  \"coverLetter\": \"No token provided.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
-            "url": "{{baseUrl}}/jobs/{{jobId}}/apply",
-            "description": "Should return 401 Unauthorized."
+            "description": "Expected to return 401 \u2014 no authorization header."
           }
         }
-      ]
+      ],
+      "description": "Application workflow for jobseekers and employers."
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Update Password",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/users/update-password",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"currentPassword\": \"Password123!\",\n  \"newPassword\": \"NewPassword456!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Authenticated user can update their own password. Returns new JWT."
+          }
+        },
+        {
+          "name": "List All Users (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/users?page=1&limit=20",
+            "description": "Admin only. Supports: role, isActive, search (by email), page, limit."
+          }
+        },
+        {
+          "name": "List Users \u2014 Filter by Role",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/users?role=employer&page=1&limit=20",
+            "description": "Admin only. Role options: jobseeker, employer, admin, rso."
+          }
+        },
+        {
+          "name": "Get User by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearerToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/users/{{userId}}",
+            "description": "Accessible by self or admin."
+          }
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/users/{{userId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"updated@example.com\",\n  \"isActive\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Self can update email. Admin can also update role, isActive, company."
+          }
+        },
+        {
+          "name": "Delete User (Admin)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/users/{{userId}}",
+            "description": "Admin only. Performs a soft delete (sets isActive=false)."
+          }
+        }
+      ],
+      "description": "User management. Most require admin role."
+    },
+    {
+      "name": "About",
+      "item": [
+        {
+          "name": "Get About Info",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseRootUrl}}/api/about",
+            "description": "Public. Returns about/platform info from the database."
+          }
+        },
+        {
+          "name": "List About Entries",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseRootUrl}}/api/abouts",
+            "description": "Public. Returns all about entries."
+          }
+        }
+      ],
+      "description": "Public about/platform information endpoints."
+    },
+    {
+      "name": "Alerts & Newsletter",
+      "item": [
+        {
+          "name": "Subscribe to Job Alerts",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/alerts/subscribe",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"subscriber@example.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Public. Subscribe an email to job alert notifications."
+          }
+        },
+        {
+          "name": "Subscribe \u2014 Duplicate (expect 200 already_subscribed)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/alerts/subscribe",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"subscriber@example.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Expected: 200 with message=already_subscribed."
+          }
+        },
+        {
+          "name": "Subscribe \u2014 Invalid Email (expect 400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/alerts/subscribe",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"not-an-email\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Expected: 400 with message=invalid_email."
+          }
+        }
+      ],
+      "description": "Job alert subscription endpoints."
+    },
+    {
+      "name": "Utility",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseRootUrl}}/health",
+            "description": "Returns API status, timestamp, and environment."
+          }
+        },
+        {
+          "name": "Health Check (Legacy)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseRootUrl}}/api/health",
+            "description": "Legacy endpoint. Returns { ok: true }."
+          }
+        },
+        {
+          "name": "Frontend Config",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseRootUrl}}/config",
+            "description": "Returns safe frontend config such as googleClientId."
+          }
+        },
+        {
+          "name": "Debug Session",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseRootUrl}}/debug/session",
+            "description": "Returns current session and OAuth authentication state."
+          }
+        }
+      ],
+      "description": "Health check, config, and debug endpoints."
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000/api/v1",
+      "type": "string"
+    },
+    {
+      "key": "baseRootUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "bearerToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "employerToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "adminToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "companyId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "jobId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "applicationId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "userId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "educationId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "experienceId",
+      "value": "",
+      "type": "string"
     }
   ]
 }
