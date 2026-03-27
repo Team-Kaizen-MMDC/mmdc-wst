@@ -2055,22 +2055,27 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
             }
           }
 
-          // Refresh from backend to reflect canonical state
-          await populateDashboard();
+        // Close modal BEFORE refreshing so backdrop is removed cleanly
+        const modalElement = document.getElementById(EDUCATION_MODAL_ID);
+        const modal = Modal.getInstance(modalElement);
+        if (modal) modal.hide();
+        form.classList.remove("was-validated");
+
+        // Refresh from backend to reflect canonical state
+        if (typeof window.populateDashboard === 'function') await window.populateDashboard();
         } catch (err) {
           console.error('Failed to save education via API, falling back to localStorage:', err);
           if (index === -1) dataArray.push(newData);
           else dataArray[index] = newData;
           localStorage.setItem(EDUCATION_STORAGE_KEY, JSON.stringify(dataArray));
           renderEducationSection();
+
+          // Still close modal on error
+          const modalElement = document.getElementById(EDUCATION_MODAL_ID);
+          const modal = Modal.getInstance(modalElement);
+          if (modal) modal.hide();
+          form.classList.remove("was-validated");
         }
-
-        // Close modal
-        const modalElement = document.getElementById(EDUCATION_MODAL_ID);
-        const modal = Modal.getInstance(modalElement);
-        if (modal) modal.hide();
-
-        form.classList.remove("was-validated");
       }
 
       /**
@@ -2158,10 +2163,16 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
 
           // Attempt server delete if id present, else remove locally
           const entry = dataArray[index];
+
+          // Hide modal BEFORE any async work so the backdrop clears cleanly
+          const modalElement = document.getElementById(EDUCATION_MODAL_ID);
+          const modal = Modal.getInstance(modalElement);
+          if (modal) modal.hide();
+
           try {
             if (entry && entry.id) {
               await apiRequest(`/profile/education/${entry.id}`, 'DELETE');
-              await populateDashboard();
+              if (typeof window.populateDashboard === 'function') await window.populateDashboard();
             } else {
               dataArray.splice(index, 1);
               localStorage.setItem(EDUCATION_STORAGE_KEY, JSON.stringify(dataArray));
@@ -2173,11 +2184,6 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
             localStorage.setItem(EDUCATION_STORAGE_KEY, JSON.stringify(dataArray));
             renderEducationSection();
           }
-
-          // Close modal
-          const modalElement = document.getElementById(EDUCATION_MODAL_ID);
-          const modal = Modal.getInstance(modalElement);
-          if (modal) modal.hide();
 
           console.log(`Education entry at index ${index} deleted.`);
         }
@@ -2451,8 +2457,13 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
             });
           }
 
+          // Close modal BEFORE refreshing so backdrop is removed cleanly
+          const modalEl = document.getElementById(EXPERIENCE_MODAL_ID);
+          const expModal = bootstrap.Modal.getInstance(modalEl);
+          if (expModal) expModal.hide();
+
           // Refresh from backend to ensure IDs and canonical data are stored
-          await populateDashboard();
+          if (typeof window.populateDashboard === 'function') await window.populateDashboard();
         } catch (err) {
           // Fallback to localStorage if API fails
           console.error('Failed to save experience via API, falling back to localStorage:', err);
@@ -2460,12 +2471,12 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           else data[index] = entry;
           localStorage.setItem(EXPERIENCE_STORAGE_KEY, JSON.stringify(data));
           renderExperienceSection();
-        }
 
-        const modal = bootstrap.Modal.getInstance(
-          document.getElementById(EXPERIENCE_MODAL_ID)
-        );
-        if (modal) modal.hide();
+          // Still close modal on error
+          const modalEl = document.getElementById(EXPERIENCE_MODAL_ID);
+          const expModal = bootstrap.Modal.getInstance(modalEl);
+          if (expModal) expModal.hide();
+        }
       }
 
       /* Render Section */
@@ -2544,10 +2555,16 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           confirm("Delete this entry?")
         ) {
           const entry = data[index];
+
+          // Hide modal BEFORE any async work so the backdrop clears cleanly
+          const modalEl = document.getElementById(EXPERIENCE_MODAL_ID);
+          const modal = bootstrap.Modal.getInstance(modalEl);
+          if (modal) modal.hide();
+
           try {
             if (entry && entry.id) {
               await apiRequest(`/profile/experience/${entry.id}`, 'DELETE');
-              await populateDashboard();
+              if (typeof window.populateDashboard === 'function') await window.populateDashboard();
             } else {
               // Fallback: local-only remove
               data.splice(index, 1);
@@ -2560,11 +2577,6 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
             localStorage.setItem(EXPERIENCE_STORAGE_KEY, JSON.stringify(data));
             renderExperienceSection();
           }
-
-          const modal = bootstrap.Modal.getInstance(
-            document.getElementById(EXPERIENCE_MODAL_ID)
-          );
-          if (modal) modal.hide();
         }
       }
 
@@ -3288,7 +3300,6 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           if (typeof renderExperienceSection === "function") {
             renderExperienceSection();
           }
-        }
         }
 
         // Update Skills section
