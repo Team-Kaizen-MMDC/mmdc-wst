@@ -932,7 +932,20 @@
             "header": [],
             "url": "{{baseUrl}}/jobs/{{jobId}}",
             "description": "Public."
-          }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (!pm.collectionVariables.get('jobId')) {",
+                  "  throw new Error(\"Collection variable 'jobId' is not set. Run 'Create Job' or set jobId before this request.\");",
+                  "}"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Get Jobs by Company",
@@ -1055,7 +1068,20 @@
               }
             },
             "description": "Employer or admin only."
-          }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (!pm.collectionVariables.get('jobId')) {",
+                  "  throw new Error(\"Collection variable 'jobId' is not set. Run 'Create Job' or set jobId before this request.\");",
+                  "}"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Delete Job",
@@ -1069,7 +1095,20 @@
             ],
             "url": "{{baseUrl}}/jobs/{{jobId}}",
             "description": "Soft delete. Employer or admin only."
-          }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (!pm.collectionVariables.get('jobId')) {",
+                  "  throw new Error(\"Collection variable 'jobId' is not set. Run 'Create Job' or set jobId before this request.\");",
+                  "}"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Job Stats (Admin)",
@@ -1113,6 +1152,17 @@
           },
           "event": [
             {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (!pm.collectionVariables.get('jobId')) {",
+                  "  throw new Error(\"Collection variable 'jobId' is not set. Run 'Create Job' or set jobId before this request.\");",
+                  "}"
+                ]
+              }
+            },
+            {
               "listen": "test",
               "script": {
                 "type": "text/javascript",
@@ -1155,7 +1205,20 @@
               }
             },
             "description": "Expected to return 400 \u2014 already applied."
-          }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (!pm.collectionVariables.get('jobId')) {",
+                  "  throw new Error(\"Collection variable 'jobId' is not set. Run 'Create Job' or set jobId before this request.\");",
+                  "}"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Get Job Applications (Admin)",
@@ -1169,7 +1232,20 @@
             ],
             "url": "{{baseUrl}}/jobs/{{jobId}}/applications?page=1&limit=20",
             "description": "Employer or admin only. Lists all applications for a specific job."
-          }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (!pm.collectionVariables.get('jobId')) {",
+                  "  throw new Error(\"Collection variable 'jobId' is not set. Run 'Create Job' or set jobId before this request.\");",
+                  "}"
+                ]
+              }
+            }
+          ]
         }
       ],
       "description": "Job listing and management. GET endpoints are public; mutations require employer/admin."
@@ -1385,7 +1461,20 @@
               }
             },
             "description": "Expected to return 401 \u2014 no authorization header."
-          }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (!pm.collectionVariables.get('jobId')) {",
+                  "  throw new Error(\"Collection variable 'jobId' is not set. Run 'Create Job' or set jobId before this request.\");",
+                  "}"
+                ]
+              }
+            }
+          ]
         }
       ],
       "description": "Application workflow for jobseekers and employers."
