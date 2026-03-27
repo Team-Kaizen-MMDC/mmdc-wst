@@ -15,3 +15,9 @@ variable "allowed_principals" {
   type        = list(string)
   default     = []
 }
+
+variable "create_railway_user" {
+  description = "Set to true to create an IAM user for Railway (non-AWS hosts that cannot use EC2 instance roles)."
+  type        = bool
+  default     = false
+}

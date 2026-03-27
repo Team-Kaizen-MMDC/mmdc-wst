@@ -393,7 +393,7 @@ exports.uploadResume = [
         Key: key,
         Body: req.file.buffer,
         ContentType: req.file.mimetype,
-        ACL: "private",
+        // ACL omitted: new S3 buckets (post Apr 2023) have ACLs disabled by default
       };
 
       await s3.send(new PutObjectCommand(putParams));
@@ -414,10 +414,15 @@ exports.uploadResume = [
       );
     } catch (err) {
       // eslint-disable-next-line no-console
-      console.error(
-        "uploadResume: upload failed",
-        err && err.message ? err.message : err,
-      );
+      console.error("uploadResume: S3 upload failed", {
+        code: err && err.Code,
+        name: err && err.name,
+        message: err && err.message,
+        bucket: S3_BUCKET,
+        region: process.env.AWS_REGION,
+        hasAccessKey: !!process.env.AWS_ACCESS_KEY_ID,
+        hasRoleArn: !!process.env.AWS_ROLE_ARN,
+      });
       return next(new ApiError(500, "Failed to upload resume"));
     }
   }),
@@ -507,10 +512,15 @@ exports.deleteResume = asyncHandler(async (req, res, next) => {
       .json(new ApiResponse(200, "Resume deleted successfully", {}));
   } catch (err) {
     // eslint-disable-next-line no-console
-    console.error(
-      "deleteResume: failed to delete",
-      err && err.message ? err.message : err,
-    );
+    console.error("deleteResume: S3 delete failed", {
+      code: err && err.Code,
+      name: err && err.name,
+      message: err && err.message,
+      bucket: S3_BUCKET,
+      region: process.env.AWS_REGION,
+      hasAccessKey: !!process.env.AWS_ACCESS_KEY_ID,
+      hasRoleArn: !!process.env.AWS_ROLE_ARN,
+    });
     return next(new ApiError(500, "Failed to delete resume"));
   }
 });

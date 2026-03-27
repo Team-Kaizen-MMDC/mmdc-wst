@@ -655,6 +655,24 @@ Railway runs `npm install` at the repo root (which also installs `backend/` depe
 | `GOOGLE_CLIENT_SECRET` | *(from Google Cloud Console)* |
 | `MONGODB_URI` | *(Atlas connection string)* |
 | `JWT_SECRET` | *(32+ random chars)* |
+| `AWS_REGION` | `ap-southeast-1` |
+| `RESUME_S3_BUCKET` | *(S3 bucket name for resume uploads)* |
+| `AWS_ROLE_ARN` | `arn:aws:iam::182371258083:role/mmdc-wst-s3-access-role-84cafb59` |
+| `AWS_ACCESS_KEY_ID` | *(Railway IAM user access key — see below)* |
+| `AWS_SECRET_ACCESS_KEY` | *(Railway IAM user secret key — see below)* |
+
+> **Note on AWS credentials on Railway:** Railway is not an AWS host, so there is no EC2 instance role or metadata service. The app uses `AWS_ROLE_ARN` (role assumption), but to call `sts:AssumeRole` from Railway it needs base credentials first.
+>
+> **One-time setup (run once via Terraform):**
+> ```bash
+> cd terraform
+> terraform apply -var="create_railway_user=true"
+> terraform output -raw railway_user_access_key_id
+> terraform output -raw railway_user_secret_access_key
+> ```
+> This creates a minimal IAM user (`mmdc-wst-railway-deploy-*`) whose only permission is `sts:AssumeRole` on the S3 role. Copy the output keys into Railway environment variables (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`). The app will use those keys to assume the role and get temporary S3 credentials.
+>
+> **`.env` is a local-only file** — values there are never deployed to Railway. All variables above must be explicitly set in the Railway dashboard (*Service → Variables*).
 
 **Google Cloud Console setup:**
 Add both of the following as Authorized Redirect URIs in your OAuth 2.0 client
