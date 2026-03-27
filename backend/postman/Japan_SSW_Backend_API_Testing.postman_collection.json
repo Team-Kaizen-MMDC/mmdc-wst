@@ -152,7 +152,7 @@
             "url": "{{baseUrl}}/auth/login",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"AdminPass123!\"\n}",
+              "raw": "{\n  \"email\": \"admin@mmdc.local\",\n  \"password\": \"SuperAdmin@1234\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
