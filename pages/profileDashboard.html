@@ -1624,7 +1624,19 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           throw new Error(text || `${res.status} ${res.statusText}`);
         }
 
-        return res.json();
+        // Some endpoints (DELETE) may return 204 No Content or a non-JSON body.
+        // Safely handle those cases to avoid unhandled JSON parse errors.
+        if (res.status === 204) return null;
+        const contentType = res.headers.get('content-type') || '';
+        if (!contentType.includes('application/json')) {
+          // No JSON body to parse
+          return null;
+        }
+
+        // Read text first so we can detect empty bodies (which would cause JSON.parse to throw)
+        const text = await res.text();
+        if (!text) return null;
+        return JSON.parse(text);
       }
 
       function renderProfileDashboardEmptyState(message) {
@@ -3237,6 +3249,12 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           if (typeof renderEducationSection === "function") {
             renderEducationSection();
           }
+        } else {
+          // Ensure localStorage is cleared when backend has no education entries
+          localStorage.setItem("educationData", JSON.stringify([]));
+          if (typeof renderEducationSection === "function") {
+            renderEducationSection();
+          }
         }
 
         // Update Experience section - trigger the existing render function
@@ -3264,6 +3282,13 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           if (typeof renderExperienceSection === "function") {
             renderExperienceSection();
           }
+        } else {
+          // Ensure localStorage is cleared when backend has no experience entries
+          localStorage.setItem("experienceData", JSON.stringify([]));
+          if (typeof renderExperienceSection === "function") {
+            renderExperienceSection();
+          }
+        }
         }
 
         // Update Skills section
