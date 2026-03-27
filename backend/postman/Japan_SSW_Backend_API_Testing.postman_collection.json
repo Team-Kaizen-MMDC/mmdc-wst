@@ -696,7 +696,7 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{employerToken}}"
+                "value": "Bearer {{adminToken}}"
               }
             ],
             "url": "{{baseUrl}}/profile/{{userId}}/resume",
@@ -746,7 +746,7 @@
               },
               {
                 "key": "Authorization",
-                "value": "Bearer {{employerToken}}"
+                "value": "Bearer {{adminToken}}"
               }
             ],
             "url": "{{baseUrl}}/companies",
@@ -791,7 +791,7 @@
               },
               {
                 "key": "Authorization",
-                "value": "Bearer {{employerToken}}"
+                "value": "Bearer {{adminToken}}"
               }
             ],
             "url": "{{baseUrl}}/companies/{{companyId}}",
@@ -813,7 +813,7 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{employerToken}}"
+                "value": "Bearer {{adminToken}}"
               }
             ],
             "url": "{{baseUrl}}/companies/{{companyId}}",
@@ -831,7 +831,7 @@
               },
               {
                 "key": "Authorization",
-                "value": "Bearer {{employerToken}}"
+                "value": "Bearer {{adminToken}}"
               }
             ],
             "url": "{{baseUrl}}/companies/{{companyId}}/admins",
@@ -854,7 +854,7 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{employerToken}}"
+                "value": "Bearer {{adminToken}}"
               }
             ],
             "url": "{{baseUrl}}/companies/{{companyId}}/admins/{{userId}}",
@@ -944,13 +944,13 @@
           }
         },
         {
-          "name": "Get My Posted Jobs (Employer)",
+          "name": "Get My Posted Jobs (Admin)",
           "request": {
             "method": "GET",
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{employerToken}}"
+                "value": "Bearer {{adminToken}}"
               }
             ],
             "url": "{{baseUrl}}/jobs/my/jobs",
@@ -958,13 +958,13 @@
           }
         },
         {
-          "name": "Get My Applications Summary (Employer)",
+          "name": "Get My Applications Summary (Admin)",
           "request": {
             "method": "GET",
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{employerToken}}"
+                "value": "Bearer {{adminToken}}"
               }
             ],
             "url": "{{baseUrl}}/jobs/my/applications/summary",
@@ -972,13 +972,13 @@
           }
         },
         {
-          "name": "Get My Applications Paginated (Employer)",
+          "name": "Get My Applications Paginated (Admin)",
           "request": {
             "method": "GET",
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{employerToken}}"
+                "value": "Bearer {{adminToken}}"
               }
             ],
             "url": "{{baseUrl}}/jobs/my/applications?page=1&limit=20",
@@ -996,7 +996,7 @@
               },
               {
                 "key": "Authorization",
-                "value": "Bearer {{employerToken}}"
+                "value": "Bearer {{adminToken}}"
               }
             ],
             "url": "{{baseUrl}}/jobs",
@@ -1041,7 +1041,7 @@
               },
               {
                 "key": "Authorization",
-                "value": "Bearer {{employerToken}}"
+                "value": "Bearer {{adminToken}}"
               }
             ],
             "url": "{{baseUrl}}/jobs/{{jobId}}",
@@ -1064,7 +1064,7 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{employerToken}}"
+                "value": "Bearer {{adminToken}}"
               }
             ],
             "url": "{{baseUrl}}/jobs/{{jobId}}",
@@ -1158,13 +1158,13 @@
           }
         },
         {
-          "name": "Get Job Applications (Employer)",
+          "name": "Get Job Applications (Admin)",
           "request": {
             "method": "GET",
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{employerToken}}"
+                "value": "Bearer {{adminToken}}"
               }
             ],
             "url": "{{baseUrl}}/jobs/{{jobId}}/applications?page=1&limit=20",
@@ -1220,7 +1220,7 @@
           }
         },
         {
-          "name": "Update Application Status \u2014 reviewing (Employer)",
+          "name": "Update Application Status \u2014 reviewing (Admin)",
           "request": {
             "method": "PUT",
             "header": [
@@ -1230,7 +1230,7 @@
               },
               {
                 "key": "Authorization",
-                "value": "Bearer {{employerToken}}"
+                "value": "Bearer {{adminToken}}"
               }
             ],
             "url": "{{baseUrl}}/applications/{{applicationId}}/status",
@@ -1246,7 +1246,7 @@
           }
         },
         {
-          "name": "Update Application Status \u2014 interview (Employer)",
+          "name": "Update Application Status \u2014 interview (Admin)",
           "request": {
             "method": "PUT",
             "header": [
@@ -1256,7 +1256,7 @@
               },
               {
                 "key": "Authorization",
-                "value": "Bearer {{employerToken}}"
+                "value": "Bearer {{adminToken}}"
               }
             ],
             "url": "{{baseUrl}}/applications/{{applicationId}}/status",
@@ -1272,7 +1272,7 @@
           }
         },
         {
-          "name": "Update Application Status \u2014 offer (Employer)",
+          "name": "Update Application Status \u2014 offer (Admin)",
           "request": {
             "method": "PUT",
             "header": [
@@ -1282,7 +1282,7 @@
               },
               {
                 "key": "Authorization",
-                "value": "Bearer {{employerToken}}"
+                "value": "Bearer {{adminToken}}"
               }
             ],
             "url": "{{baseUrl}}/applications/{{applicationId}}/status",
@@ -1298,7 +1298,7 @@
           }
         },
         {
-          "name": "Update Application Status \u2014 rejected (Employer)",
+          "name": "Update Application Status \u2014 rejected (Admin)",
           "request": {
             "method": "PUT",
             "header": [
@@ -1308,7 +1308,7 @@
               },
               {
                 "key": "Authorization",
-                "value": "Bearer {{employerToken}}"
+                "value": "Bearer {{adminToken}}"
               }
             ],
             "url": "{{baseUrl}}/applications/{{applicationId}}/status",
@@ -1334,7 +1334,7 @@
               },
               {
                 "key": "Authorization",
-                "value": "Bearer {{employerToken}}"
+                "value": "Bearer {{adminToken}}"
               }
             ],
             "url": "{{baseUrl}}/applications/{{applicationId}}/notes",
@@ -1661,11 +1661,6 @@
     },
     {
       "key": "bearerToken",
-      "value": "",
-      "type": "string"
-    },
-    {
-      "key": "employerToken",
       "value": "",
       "type": "string"
     },
