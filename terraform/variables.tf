@@ -10,8 +10,8 @@ variable "bucket_name" {
   default     = ""
 }
 
-variable "allowed_principals" {
-  description = "Optional list of AWS principal ARNs allowed to access the bucket. If empty, the created IAM role will be used."
-  type        = list(string)
-  default     = []
+variable "create_railway_user" {
+  description = "Set to true to create an IAM user for Railway (non-AWS hosts that cannot use EC2 instance roles)."
+  type        = bool
+  default     = false
 }
