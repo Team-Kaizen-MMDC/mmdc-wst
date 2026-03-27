@@ -88,7 +88,8 @@
                   "    var token = json.data && json.data.token;",
                   "    if (token) {",
                   "        pm.collectionVariables.set('bearerToken', token);",
-                  "        console.log('Set bearerToken:', token.substring(0,30) + '...');",
+                  "        pm.collectionVariables.set('bearerToken', token);",
+                  "        console.log('Set bearerToken + bearerToken');",
                   "    }",
                   "}"
                 ]
@@ -129,7 +130,8 @@
                   "    var token = json.data && json.data.token;",
                   "    if (token) {",
                   "        pm.collectionVariables.set('employerToken', token);",
-                  "        console.log('Set employerToken:', token.substring(0,30) + '...');",
+                  "        pm.collectionVariables.set('bearerToken', token);",
+                  "        console.log('Set employerToken + bearerToken');",
                   "    }",
                   "}"
                 ]
@@ -170,7 +172,8 @@
                   "    var token = json.data && json.data.token;",
                   "    if (token) {",
                   "        pm.collectionVariables.set('adminToken', token);",
-                  "        console.log('Set adminToken:', token.substring(0,30) + '...');",
+                  "        pm.collectionVariables.set('bearerToken', token);",
+                  "        console.log('Set adminToken + bearerToken');",
                   "    }",
                   "}"
                 ]
