@@ -76,7 +76,25 @@
               }
             },
             "description": "Returns a JWT. Copy to bearerToken variable."
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var json = pm.response.json();",
+                  "    var token = json.data && json.data.token;",
+                  "    if (token) {",
+                  "        pm.collectionVariables.set('bearerToken', token);",
+                  "        console.log('Set bearerToken:', token.substring(0,30) + '...');",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Login as Employer",
@@ -99,7 +117,25 @@
               }
             },
             "description": "Returns a JWT. Copy to employerToken variable."
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var json = pm.response.json();",
+                  "    var token = json.data && json.data.token;",
+                  "    if (token) {",
+                  "        pm.collectionVariables.set('employerToken', token);",
+                  "        console.log('Set employerToken:', token.substring(0,30) + '...');",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Login as Admin",
@@ -122,7 +158,25 @@
               }
             },
             "description": "Returns a JWT. Copy to adminToken variable."
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var json = pm.response.json();",
+                  "    var token = json.data && json.data.token;",
+                  "    if (token) {",
+                  "        pm.collectionVariables.set('adminToken', token);",
+                  "        console.log('Set adminToken:', token.substring(0,30) + '...');",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Get Current User (me)",
@@ -136,7 +190,25 @@
             ],
             "url": "{{baseUrl}}/auth/me",
             "description": "Returns authenticated user. Requires bearerToken."
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var json = pm.response.json();",
+                  "    var userId = json.data && json.data.user && json.data.user.id;",
+                  "    if (userId) {",
+                  "        pm.collectionVariables.set('userId', userId);",
+                  "        console.log('Set userId:', userId);",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Logout",
@@ -685,7 +757,25 @@
               }
             },
             "description": "Employer or admin only."
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    var json = pm.response.json();",
+                  "    var id = json.data && (json.data._id || json.data.id || (json.data.company && (json.data.company._id || json.data.company.id)));",
+                  "    if (id) {",
+                  "        pm.collectionVariables.set('companyId', id);",
+                  "        console.log('Set companyId:', id);",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Update Company",
@@ -917,7 +1007,25 @@
               }
             },
             "description": "Employer or admin only."
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    var json = pm.response.json();",
+                  "    var id = json.data && (json.data._id || json.data.id || (json.data.job && (json.data.job._id || json.data.job.id)));",
+                  "    if (id) {",
+                  "        pm.collectionVariables.set('jobId', id);",
+                  "        console.log('Set jobId:', id);",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Update Job",
@@ -999,7 +1107,25 @@
               }
             },
             "description": "Jobseeker only. Returns 400 if already applied."
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    var json = pm.response.json();",
+                  "    var id = json.data && (json.data._id || json.data.id || (json.data.application && (json.data.application._id || json.data.application.id)));",
+                  "    if (id) {",
+                  "        pm.collectionVariables.set('applicationId', id);",
+                  "        console.log('Set applicationId:', id);",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "Apply to Job \u2014 Duplicate (expect 400)",
