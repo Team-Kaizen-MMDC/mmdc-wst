@@ -1639,22 +1639,31 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
         return JSON.parse(text);
       }
 
-      // Helper: hide a Bootstrap modal and wait for it to fully close
-      // (including backdrop removal) before resolving.
-      function hideModalAsync(modalId) {
-        return new Promise((resolve) => {
-          const el = document.getElementById(modalId);
-          if (!el) { resolve(); return; }
-          const instance = bootstrap.Modal.getInstance(el);
-          if (!instance) { resolve(); return; }
-          // If already hidden, resolve immediately
-          if (!el.classList.contains('show')) { instance.hide(); resolve(); return; }
-          el.addEventListener('hidden.bs.modal', resolve, { once: true });
-          instance.hide();
-        });
+      // Force-close a Bootstrap modal and clean up all backdrop/body artifacts immediately.
+      // More reliable than waiting for the 'hidden.bs.modal' event, which can hang if
+      // Bootstrap loses track of the instance (e.g. when created with `new bootstrap.Modal(el)`).
+      function forceCloseModal(modalId) {
+        const el = document.getElementById(modalId);
+        if (el) {
+          try {
+            const instance = bootstrap.Modal.getInstance(el);
+            if (instance) instance.dispose();
+          } catch (_) {}
+          el.classList.remove('show');
+          el.style.display = 'none';
+          el.setAttribute('aria-hidden', 'true');
+          el.removeAttribute('aria-modal');
+          el.removeAttribute('role');
+        }
+        // Remove ALL lingering backdrops and restore body scroll
+        document.querySelectorAll('.modal-backdrop').forEach(b => b.remove());
+        document.body.classList.remove('modal-open');
+        document.body.style.removeProperty('overflow');
+        document.body.style.removeProperty('padding-right');
       }
 
 
+      function renderProfileDashboardEmptyState(message) {
         return `<div class="profile-dashboard-section-empty">${message}</div>`;
       }
 
@@ -2071,7 +2080,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           }
 
         // Close modal BEFORE refreshing so backdrop is removed cleanly
-        await hideModalAsync(EDUCATION_MODAL_ID);
+        forceCloseModal(EDUCATION_MODAL_ID);
         form.classList.remove("was-validated");
 
         // Refresh from backend to reflect canonical state
@@ -2084,7 +2093,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           renderEducationSection();
 
           // Still close modal on error
-          await hideModalAsync(EDUCATION_MODAL_ID);
+          forceCloseModal(EDUCATION_MODAL_ID);
           form.classList.remove("was-validated");
         }
       }
@@ -2176,7 +2185,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           const entry = dataArray[index];
 
           // Hide modal BEFORE any async work so the backdrop clears cleanly
-          await hideModalAsync(EDUCATION_MODAL_ID);
+          forceCloseModal(EDUCATION_MODAL_ID);
 
           try {
             if (entry && entry.id) {
@@ -2467,7 +2476,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           }
 
           // Close modal BEFORE refreshing so backdrop is removed cleanly
-          await hideModalAsync(EXPERIENCE_MODAL_ID);
+          forceCloseModal(EXPERIENCE_MODAL_ID);
 
           // Refresh from backend to ensure IDs and canonical data are stored
           if (typeof window.populateDashboard === 'function') await window.populateDashboard();
@@ -2480,7 +2489,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           renderExperienceSection();
 
           // Still close modal on error
-          await hideModalAsync(EXPERIENCE_MODAL_ID);
+          forceCloseModal(EXPERIENCE_MODAL_ID);
         }
       }
 
@@ -2562,7 +2571,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           const entry = data[index];
 
           // Hide modal and wait for it to fully close (backdrop removed) before refreshing DOM
-          await hideModalAsync(EXPERIENCE_MODAL_ID);
+          forceCloseModal(EXPERIENCE_MODAL_ID);
 
           try {
             if (entry && entry.id) {
