@@ -15,8 +15,12 @@
  *    - Automatically uses the IAM role attached to the compute resource
  *    - No explicit credentials needed
  *
- * REQUIRED IAM ROLE PERMISSIONS:
- * The IAM role must have a policy allowing:
+ * 3. Railway (or any non-AWS host):
+ *    - Role assumption via AWS_ROLE_ARN does NOT work (no AWS metadata service)
+ *    - Must set AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY in Railway env vars
+ *    - Create a dedicated IAM user with least-privilege S3 permissions
+ *
+ * REQUIRED IAM ROLE/USER PERMISSIONS:
  * - s3:PutObject
  * - s3:GetObject
  * - s3:DeleteObject
@@ -65,6 +69,18 @@ function createS3Client() {
 
 // Create and export a singleton S3 client instance
 const s3Client = createS3Client();
+
+// Warn at startup if no explicit credentials are configured.
+// On Railway (non-AWS host) the credential chain will fail at request time
+// unless AWS_ACCESS_KEY_ID + AWS_SECRET_ACCESS_KEY are set.
+if (!process.env.AWS_ACCESS_KEY_ID && !process.env.AWS_ROLE_ARN) {
+  // eslint-disable-next-line no-console
+  console.warn(
+    "[awsS3] WARNING: Neither AWS_ACCESS_KEY_ID nor AWS_ROLE_ARN is set. " +
+    "S3 operations will fail on non-AWS hosts (e.g. Railway). " +
+    "Set AWS_ACCESS_KEY_ID + AWS_SECRET_ACCESS_KEY in Railway environment variables."
+  );
+}
 
 /**
  * Get S3 Client Instance

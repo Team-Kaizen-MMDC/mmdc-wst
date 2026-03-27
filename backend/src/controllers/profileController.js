@@ -414,10 +414,15 @@ exports.uploadResume = [
       );
     } catch (err) {
       // eslint-disable-next-line no-console
-      console.error(
-        "uploadResume: upload failed",
-        err && err.message ? err.message : err,
-      );
+      console.error("uploadResume: S3 upload failed", {
+        code: err && err.Code,
+        name: err && err.name,
+        message: err && err.message,
+        bucket: S3_BUCKET,
+        region: process.env.AWS_REGION,
+        hasAccessKey: !!process.env.AWS_ACCESS_KEY_ID,
+        hasRoleArn: !!process.env.AWS_ROLE_ARN,
+      });
       return next(new ApiError(500, "Failed to upload resume"));
     }
   }),

@@ -655,6 +655,12 @@ Railway runs `npm install` at the repo root (which also installs `backend/` depe
 | `GOOGLE_CLIENT_SECRET` | *(from Google Cloud Console)* |
 | `MONGODB_URI` | *(Atlas connection string)* |
 | `JWT_SECRET` | *(32+ random chars)* |
+| `AWS_REGION` | `ap-southeast-1` |
+| `RESUME_S3_BUCKET` | *(S3 bucket name for resume uploads)* |
+| `AWS_ACCESS_KEY_ID` | *(IAM user access key — required on Railway)* |
+| `AWS_SECRET_ACCESS_KEY` | *(IAM user secret key — required on Railway)* |
+
+> **Note on AWS credentials on Railway:** Railway is not an AWS host, so IAM role assumption (`AWS_ROLE_ARN`) does not work. You must create a dedicated IAM user with least-privilege S3 permissions (`s3:PutObject`, `s3:GetObject`, `s3:DeleteObject` on the resume bucket) and set `AWS_ACCESS_KEY_ID` + `AWS_SECRET_ACCESS_KEY` as Railway environment variables. Without these, resume upload will return a 500 error.
 
 **Google Cloud Console setup:**
 Add both of the following as Authorized Redirect URIs in your OAuth 2.0 client
