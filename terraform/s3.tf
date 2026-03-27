@@ -36,7 +36,14 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "this" {
 }
 
 locals {
-  bucket_principals = length(var.allowed_principals) > 0 ? var.allowed_principals : [aws_iam_role.app_role.arn]
+  # Always include the app role. Merge in any extra principals (e.g. local dev IAM users).
+  bucket_principals = distinct(
+    concat(
+      [aws_iam_role.app_role.arn],
+      var.allowed_principals,
+      var.create_railway_user ? [aws_iam_user.railway[0].arn] : [],
+    )
+  )
 
   bucket_policy = jsonencode({
     Version = "2012-10-17"

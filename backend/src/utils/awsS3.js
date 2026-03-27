@@ -32,11 +32,11 @@ const RESUME_S3_BUCKET  = process.env.RESUME_S3_BUCKET  || "japanssw-s3-84cafb59
 function createS3Client() {
   let credentials;
 
-  if (AWS_ROLE_ARN) {
-    // Explicitly assume the role using whatever base credentials are available
-    // (env vars on Railway, instance profile on EC2, CLI creds locally).
-    // fromNodeProviderChain({ roleArn }) only does profile-file role chaining —
-    // fromTemporaryCredentials is required for programmatic STS AssumeRole.
+  if (AWS_ROLE_ARN && process.env.AWS_ACCESS_KEY_ID) {
+    // Railway / any host with explicit IAM user keys:
+    // Use those keys as master credentials to call sts:AssumeRole, then use the
+    // resulting temporary credentials for S3. fromNodeProviderChain({ roleArn })
+    // does NOT do programmatic role assumption — fromTemporaryCredentials is required.
     credentials = fromTemporaryCredentials({
       masterCredentials: fromNodeProviderChain(),
       params: {
@@ -46,12 +46,14 @@ function createS3Client() {
       },
     });
     // eslint-disable-next-line no-console
-    console.log(`[awsS3] Using role assumption: ${AWS_ROLE_ARN}`);
+    console.log(`[awsS3] Using role assumption via explicit keys: ${AWS_ROLE_ARN}`);
   } else {
-    // No role — use chain directly (works on EC2/ECS with attached role, or with env key creds)
+    // Local dev or AWS-hosted (EC2/ECS/Lambda):
+    // Use the default provider chain — AWS CLI credentials locally,
+    // or the attached instance/task role on AWS infrastructure.
     credentials = fromNodeProviderChain();
     // eslint-disable-next-line no-console
-    console.log("[awsS3] Using default credential provider chain (no role assumption)");
+    console.log("[awsS3] Using default credential provider chain (no explicit role assumption)");
   }
 
   return new S3Client({ region: AWS_REGION, credentials });
@@ -64,8 +66,9 @@ if (!process.env.AWS_ACCESS_KEY_ID && !process.env.AWS_ROLE_ARN) {
   // eslint-disable-next-line no-console
   console.warn(
     "[awsS3] WARNING: Neither AWS_ACCESS_KEY_ID nor AWS_ROLE_ARN is set. " +
-    "S3 operations will fail on non-AWS hosts (e.g. Railway). " +
-    "Set AWS_ACCESS_KEY_ID + AWS_SECRET_ACCESS_KEY + AWS_ROLE_ARN in Railway env vars."
+    "S3 operations will rely on AWS CLI credentials locally, or the attached " +
+    "instance role on EC2/ECS. On Railway, set AWS_ACCESS_KEY_ID + " +
+    "AWS_SECRET_ACCESS_KEY + AWS_ROLE_ARN in Railway env vars."
   );
 }
 
