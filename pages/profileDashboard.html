@@ -87,13 +87,13 @@
 
                 <!-- User Menu Dropdown (non-Bootstrap custom dropdown) -->
                 <div id="user-menu-dropdown" class="user-menu-dropdown">
-                  <h4 class="user-menu-dropdown__greeting">Welcome Back!</h4>
+                  <h4 class="user-menu-dropdown__greeting" data-i18n="dashboard.welcome_back">Welcome Back!</h4>
                   <h3 class="user-menu-dropdown__userName">Juan Dela Cruz</h3>
-                  <a href="#" class="user-menu-dropdown__link">Profile</a>
+                  <a href="#" class="user-menu-dropdown__link" data-i18n="dashboard.menu.profile">Profile</a>
                   <hr class="user-menu-dropdown__divider" />
-                  <a href="#" class="user-menu-dropdown__link">Help</a>
-                  <a href="#" class="user-menu-dropdown__link">Settings</a>
-                  <button type="button" class="user-menu-dropdown__link">
+                  <a href="#" class="user-menu-dropdown__link" data-i18n="dashboard.menu.help">Help</a>
+                  <a href="#" class="user-menu-dropdown__link" data-i18n="dashboard.menu.settings">Settings</a>
+                  <button type="button" class="user-menu-dropdown__link" data-i18n="dashboard.menu.sign_out">
                     Sign out
                   </button>
                 </div>
@@ -166,9 +166,11 @@
               class="btn btn-outline-secondary"
               href="#"
               data-bs-dismiss="offcanvas"
+              data-i18n="dashboard.menu.profile"
               >Profile</a
             >
             <a class="btn btn-danger" href="#" data-bs-dismiss="offcanvas"
+              data-i18n="dashboard.menu.sign_out"
               >Sign out</a
             >
           </div>
@@ -274,8 +276,8 @@
             <div class="card-body profile-dashboard-hero-body mt-1">
               <div class="profile-dashboard-hero-spacer" aria-hidden="true"></div>
               <div class="profile-dashboard-hero-copy">
-                <p class="profile-dashboard-eyebrow mb-1">Profile readiness</p>
-                <p class="profile-dashboard-hero-text mb-2">
+                <p class="profile-dashboard-eyebrow mb-1" data-i18n="dashboard.profile_readiness">Profile readiness</p>
+                <p class="profile-dashboard-hero-text mb-2" data-i18n="dashboard.profile_keep_current">
                   Keep your profile current so employers can understand your background faster.
                 </p>
                 <span class="profile-dashboard-completion-pill"
@@ -291,12 +293,13 @@
           <div class="card shadow-sm h-100 rounded-4 profile-dashboard-panel profile-dashboard-panel--summary">
             <div class="card-header bg-white profile-dashboard-panel-header">
               <div class="d-flex justify-content-between align-items-start gap-3">
-                <h2 class="card-title mb-0">Profile Summary</h2>
+                <h2 class="card-title mb-0" data-i18n="dashboard.profile_summary">Profile Summary</h2>
                 <!-- Edit Button (Initially visible) -->
                 <button
                   type="button"
                   class="btn btn-link text-contrast-danger small ms-2 p-0 shadow-none profile-dashboard-inline-action"
                   id="edit-btn"
+                  data-i18n="dashboard.edit"
                 >
                   Edit
                 </button>
@@ -305,6 +308,7 @@
                   type="button"
                   class="btn btn-link text-contrast-danger small ms-2 d-none p-0 shadow-none profile-dashboard-inline-action"
                   id="save-btn"
+                  data-i18n="dashboard.save"
                 >
                   Save
                 </button>
@@ -361,27 +365,27 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
               <hr class="profile-dashboard-divider" />
               <div class="row small">
                 <div class="col-6 mb-2">
-                  <span class="fw-semibold">Visa:</span>
+                  <span class="fw-semibold" data-i18n="dashboard.label.visa">Visa:</span>
                   <span id="info-visa"></span>
                 </div>
                 <div class="col-6 mb-2">
-                  <span class="fw-semibold">Valid until:</span>
+                  <span class="fw-semibold" data-i18n="dashboard.label.valid_until">Valid until:</span>
                   <span id="info-validity"></span>
                 </div>
                 <div class="col-6 mb-2">
-                  <span class="fw-semibold">Industry:</span>
+                  <span class="fw-semibold" data-i18n="dashboard.label.industry">Industry:</span>
                   <span id="info-industry"></span>
                 </div>
                 <div class="col-6 mb-2">
-                  <span class="fw-semibold">Japanese:</span>
+                  <span class="fw-semibold" data-i18n="dashboard.label.japanese">Japanese:</span>
                   <span id="info-japanese"></span>
                 </div>
                 <div class="col-6 mb-2">
-                  <span class="fw-semibold">Nationality:</span>
+                  <span class="fw-semibold" data-i18n="dashboard.label.nationality">Nationality:</span>
                   <span id="info-nationality"></span>
                 </div>
                 <div class="col-6 mb-2">
-                  <span class="fw-semibold">Age:</span>
+                  <span class="fw-semibold" data-i18n="dashboard.label.age">Age:</span>
                   <span id="info-age"></span>
                 </div>
               </div>
@@ -395,11 +399,11 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                   style="display: none"
                 />
 
-                <button type="button" id="resumeUploadLink" class="btn btn-sm btn-outline-primary d-block mt-3 fw-semibold profile-dashboard-resume-btn">Upload Resume →</button>
+                <button type="button" id="resumeUploadLink" class="btn btn-sm btn-outline-primary d-block mt-3 fw-semibold profile-dashboard-resume-btn" data-i18n="dashboard.upload_resume">Upload Resume →</button>
 
                 <div id="view-section" style="display: none; margin-top: 10px">
-                  <a id="view-link" href="#" target="_blank">View Resume →</a>
-                  <span id="view-loading" style="display:none; margin-left:8px; color: #666; font-size:0.9rem">Loading…</span>
+                  <a id="view-link" href="#" target="_blank" data-i18n="dashboard.view_resume">View Resume →</a>
+                  <span id="view-loading" style="display:none; margin-left:8px; color: #666; font-size:0.9rem" data-i18n="dashboard.loading">Loading…</span>
                   <button id="remove-button" style="margin-left: 10px">
                     X
                   </button>
@@ -419,8 +423,8 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                 <div class="col-md-6">
                   <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
                     <div>
-                      <p class="profile-dashboard-eyebrow mb-1">Applications</p>
-                      <h3 class="fw-bold mb-0">Application Tracking</h3>
+                      <p class="profile-dashboard-eyebrow mb-1" data-i18n="dashboard.applications">Applications</p>
+                      <h3 class="fw-bold mb-0" data-i18n="dashboard.application_tracking">Application Tracking</h3>
                     </div>
                     <button
                       class="btn btn-outline-danger btn-sm px-3 shadow-sm d-flex align-items-center gap-1 profile-dashboard-inline-chip"
@@ -441,32 +445,32 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                           d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2m0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2m0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2"
                         ></path>
                       </svg>
-                      <span class="small fw-semibold">History</span>
+                      <span class="small fw-semibold" data-i18n="dashboard.history">History</span>
                     </button>
                   </div>
 
                   <div class="row g-2">
                     <div class="col-6">
                       <div class="profile-dashboard-stat profile-dashboard-stat--applied">
-                        <span class="profile-dashboard-stat__label">Applied</span>
+                        <span class="profile-dashboard-stat__label" data-i18n="dashboard.stat.applied">Applied</span>
                         <span class="profile-dashboard-stat__value" id="stat-applied">–</span>
                       </div>
                     </div>
                     <div class="col-6">
                       <div class="profile-dashboard-stat profile-dashboard-stat--pending">
-                        <span class="profile-dashboard-stat__label">Pending</span>
+                        <span class="profile-dashboard-stat__label" data-i18n="dashboard.stat.pending">Pending</span>
                         <span class="profile-dashboard-stat__value" id="stat-pending">–</span>
                       </div>
                     </div>
                     <div class="col-6">
                       <div class="profile-dashboard-stat profile-dashboard-stat--interview">
-                        <span class="profile-dashboard-stat__label">Interview</span>
+                        <span class="profile-dashboard-stat__label" data-i18n="dashboard.stat.interview">Interview</span>
                         <span class="profile-dashboard-stat__value" id="stat-interview">–</span>
                       </div>
                     </div>
                     <div class="col-6">
                       <div class="profile-dashboard-stat profile-dashboard-stat--rejected">
-                        <span class="profile-dashboard-stat__label">Rejected</span>
+                        <span class="profile-dashboard-stat__label" data-i18n="dashboard.stat.rejected">Rejected</span>
                         <span class="profile-dashboard-stat__value" id="stat-rejected">–</span>
                       </div>
                     </div>
@@ -474,10 +478,10 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                 </div>
                 <div class="col-md-6">
                   <div class="profile-dashboard-notification-panel">
-                    <p class="profile-dashboard-eyebrow mb-1">Updates</p>
-                    <h3 class="fw-bold mb-3">Notifications</h3>
+                    <p class="profile-dashboard-eyebrow mb-1" data-i18n="dashboard.updates">Updates</p>
+                    <h3 class="fw-bold mb-3" data-i18n="dashboard.notifications">Notifications</h3>
                     <div id="interviewNotifications">
-                      <p class="small text-muted mb-0">Loading…</p>
+                      <p class="small text-muted mb-0" data-i18n="dashboard.loading">Loading…</p>
                     </div>
                   </div>
                 </div>
@@ -490,12 +494,13 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
         <div class="col-12 col-md-6">
           <div class="card shadow-sm profile-dashboard-panel profile-dashboard-panel--section">
             <div class="card-header d-flex justify-content-between bg-white profile-dashboard-section-header">
-              <h4 class="mb-0 fw-bold text-dark">Experience</h4>
+              <h4 class="mb-0 fw-bold text-dark" data-i18n="dashboard.experience">Experience</h4>
               <!-- ADD button is always visible and opens the modal for a NEW entry (-1 index) -->
               <a
                 href="#"
                 id="addExperienceBtn"
                 class="small text-decoration-none fw-semibold profile-dashboard-section-link"
+                data-i18n="dashboard.add"
                 >Add
               </a>
             </div>
@@ -504,7 +509,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
             <!-- Note: The p-0 is added to remove card body padding, allowing the list items' internal padding (p-3) to control spacing -->
             <div class="card-body p-0" id="experience-list-container">
               <!-- Entries will be dynamically injected here by renderExperienceSection() -->
-              <div class="p-3 text-muted small">
+              <div class="p-3 text-muted small" data-i18n="dashboard.loading_experience">
                 Loading experience entries...
               </div>
             </div>
@@ -515,12 +520,13 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                <div class="col-12 col-md-6">
           <div class="card shadow-sm profile-dashboard-panel profile-dashboard-panel--section">
             <div class="card-header d-flex justify-content-between bg-white profile-dashboard-section-header">
-              <h4 class="mb-0 fw-bold text-dark">Skills</h4>
+              <h4 class="mb-0 fw-bold text-dark" data-i18n="dashboard.skills">Skills</h4>
               <!-- ADD button is always visible and opens the modal for a NEW entry (-1 index) -->
               <a
                 href="#"
                 id="openSkillsBtn"
                 class="small text-decoration-none fw-semibold profile-dashboard-section-link"
+                data-i18n="dashboard.add"
                 >Add
               </a>
             </div>
@@ -529,7 +535,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
             <!-- Note: The p-0 is added to remove card body padding, allowing the list items' internal padding (p-3) to control spacing -->
             <div class="card-body p-0" id="skills-list-container">
               <!-- Entries will be dynamically injected here by renderSkillsSection() -->
-              <div class="p-3 text-muted small fst-italic">
+              <div class="p-3 text-muted small fst-italic" data-i18n="dashboard.no_skills">
                 No Skills entries yet. Click "Add" above to create your first entry.
               </div>
             </div>
@@ -540,12 +546,13 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
         <div class="col-12 col-md-6">
           <div class="card shadow-sm profile-dashboard-panel profile-dashboard-panel--section">
             <div class="card-header d-flex justify-content-between bg-white profile-dashboard-section-header">
-              <h4 class="mb-0 fw-bold text-dark">Education</h4>
+              <h4 class="mb-0 fw-bold text-dark" data-i18n="dashboard.education">Education</h4>
               <!-- ADD button is always visible and opens the modal for a NEW entry (-1 index) -->
               <a
                 href="#"
                 id="addEducationBtn"
                 class="small text-decoration-none fw-semibold profile-dashboard-section-link"
+                data-i18n="dashboard.add"
                 >Add
               </a>
             </div>
@@ -554,7 +561,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
             <!-- Note: The p-0 is added to remove card body padding, allowing the list items' internal padding (p-3) to control spacing -->
             <div class="card-body p-0" id="education-list-container">
               <!-- Entries will be dynamically injected here by renderEducationSection() -->
-              <div class="p-3 text-muted small">
+              <div class="p-3 text-muted small" data-i18n="dashboard.loading_education">
                 Loading education entries...
               </div>
             </div>
@@ -565,12 +572,13 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           <div class="col-12 col-md-6">
           <div class="card shadow-sm profile-dashboard-panel profile-dashboard-panel--section">
             <div class="card-header d-flex justify-content-between bg-white profile-dashboard-section-header">
-              <h4 class="mb-0 fw-bold text-dark">Availability / Preferences</h4>
+              <h4 class="mb-0 fw-bold text-dark" data-i18n="dashboard.availability">Availability / Preferences</h4>
               <!-- ADD button is always visible and opens the modal for a NEW entry (-1 index) -->
               <a
                 href="#"
                 id="addAvailabilityBtn"
                 class="small text-decoration-none fw-semibold profile-dashboard-section-link"
+                data-i18n="dashboard.add"
                 >Add
               </a>
             </div>
@@ -579,7 +587,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
             <!-- Note: The p-0 is added to remove card body padding, allowing the list items' internal padding (p-3) to control spacing -->
             <div class="card-body p-0" id="availability-list-container">
               <!-- Entries will be dynamically injected here by renderAvailabilitySection() -->
-              <div class="p-3 text-muted small">
+              <div class="p-3 text-muted small" data-i18n="dashboard.no_availability">
                 No Availability entries yet. Click "Add" above to create your first entry.
               </div>
             </div>
@@ -598,7 +606,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
       <div class="modal-dialog modal-lg">
         <div class="modal-content rounded-4">
           <div class="modal-header bg-light text-white rounded-top-4">
-            <h5 class="modal-title" id="basicInfoModalLabel">
+            <h5 class="modal-title" id="basicInfoModalLabel" data-i18n="dashboard.modal.basic_info">
               Basic Information
             </h5>
             <button
@@ -613,7 +621,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
             <form id="basicInfoForm" novalidate>
               <div class="row">
                 <div class="col-6 mb-3">
-                  <label for="modal-firstName" class="form-label small fw-semibold"
+                  <label for="modal-firstName" class="form-label small fw-semibold" data-i18n="dashboard.label.first_name"
                     >First Name*</label
                   >
                   <input
@@ -624,7 +632,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                   />
                 </div>
                 <div class="col-6 mb-3">
-                  <label for="modal-lastName" class="form-label small fw-semibold"
+                  <label for="modal-lastName" class="form-label small fw-semibold" data-i18n="dashboard.label.last_name"
                     >Last Name*</label
                   >
                   <input
@@ -637,7 +645,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
               </div>
               <div class="row">
                 <div class="col-6 mb-3">
-                  <label class="form-label small fw-semibold">City</label>
+                  <label class="form-label small fw-semibold" data-i18n="dashboard.label.city">City</label>
                   <input
                     type="text"
                     id="modal-city"
@@ -645,7 +653,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                   />
                 </div>
                 <div class="col-6 mb-3">
-                  <label class="form-label small fw-semibold">Prefecture</label>
+                  <label class="form-label small fw-semibold" data-i18n="dashboard.label.prefecture">Prefecture</label>
                   <input
                     type="text"
                     id="modal-prefecture"
@@ -654,7 +662,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                 </div>
               </div>
               <div class="mb-3">
-                <label class="form-label small fw-semibold">Address</label>
+                <label class="form-label small fw-semibold" data-i18n="dashboard.label.address">Address</label>
                 <input
                   type="text"
                   id="modal-address"
@@ -663,7 +671,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
               </div>
               <div class="row">
                 <div class="col-6 mb-3">
-                  <label class="form-label small fw-semibold">Postal Code</label>
+                  <label class="form-label small fw-semibold" data-i18n="dashboard.label.postal_code">Postal Code</label>
                   <input
                     type="text"
                     id="modal-postalCode"
@@ -671,7 +679,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                   />
                 </div>
                 <div class="col-6 mb-3">
-                  <label class="form-label small fw-semibold">Phone</label>
+                  <label class="form-label small fw-semibold" data-i18n="dashboard.label.phone">Phone</label>
                   <input
                     type="tel"
                     id="modal-phone"
@@ -681,7 +689,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
               </div>
               <div class="row">
                 <div class="col-6 mb-3">
-                  <label class="form-label small fw-semibold" for="modal-visa"
+                  <label class="form-label small fw-semibold" for="modal-visa" data-i18n="dashboard.label.visa_type"
                     >Visa Type</label
                   >
                   <select id="modal-visa" class="form-select">
@@ -696,7 +704,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                   </select>
                 </div>
                 <div class="col-6 mb-3">
-                  <label class="form-label small fw-semibold"
+                  <label class="form-label small fw-semibold" data-i18n="dashboard.label.valid_until_form"
                     >Valid Until</label
                   >
                   <input
@@ -706,7 +714,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                   />
                 </div>
                 <div class="col-6 mb-3">
-                  <label class="form-label small fw-semibold" for="modal-industry"
+                  <label class="form-label small fw-semibold" for="modal-industry" data-i18n="dashboard.label.desired_industry"
                     >Desired Industry</label
                   >
                   <select id="modal-industry" class="form-select">
@@ -728,6 +736,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                   <label
                     class="form-label small fw-semibold"
                     for="modal-japanese"
+                    data-i18n="dashboard.label.japanese_level"
                     >Japanese Level</label
                   >
                   <select id="modal-japanese" class="form-select">
@@ -743,6 +752,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                   <label
                     class="form-label small fw-semibold"
                     for="modal-nationality"
+                    data-i18n="dashboard.label.nationality_form"
                     >Nationality*</label
                   >
                   <input
@@ -753,7 +763,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                   />
                 </div>
                 <div class="col-6 mb-3">
-                  <label class="form-label small fw-semibold">Date of Birth</label>
+                  <label class="form-label small fw-semibold" data-i18n="dashboard.label.date_of_birth">Date of Birth</label>
                   <input
                     type="date"
                     id="modal-dateOfBirth"
@@ -761,7 +771,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                   />
                 </div>
                 <div class="col-6 mb-3">
-                  <label class="form-label small fw-semibold">Gender</label>
+                  <label class="form-label small fw-semibold" data-i18n="dashboard.label.gender">Gender</label>
                   <select id="modal-gender" class="form-select">
                     <option value="">Prefer not to say</option>
                     <option value="male">Male</option>
@@ -775,10 +785,11 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                   type="button"
                   class="btn btn-outline-secondary border me-2"
                   data-bs-dismiss="modal"
+                  data-i18n="dashboard.btn.cancel"
                 >
                   Cancel
                 </button>
-                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="submit" class="btn btn-primary" data-i18n="dashboard.btn.save">Save</button>
               </div>
             </form>
           </div>
@@ -798,7 +809,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
         <div class="modal-content rounded-4">
           <!-- Header -->
           <div class="modal-header bg-light text-white rounded-top-4">
-            <h5 class="modal-title" id="experienceModalLabel">Experience</h5>
+            <h5 class="modal-title" id="experienceModalLabel" data-i18n="dashboard.modal.experience">Experience</h5>
             <button
               type="button"
               class="btn-close btn-close-white"
@@ -818,7 +829,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
               <div class="p-3 mb-4 border rounded-4 bg-light shadow-sm">
                 <!-- Job Title -->
                 <div class="mb-3">
-                  <label for="job" class="form-label small fw-semibold"
+                  <label for="job" class="form-label small fw-semibold" data-i18n="dashboard.label.job_title"
                     >Job Title*</label
                   >
                   <input
@@ -833,7 +844,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
 
                 <!--Company Name -->
                 <div class="mb-3">
-                  <label for="company" class="form-label small fw-semibold"
+                  <label for="company" class="form-label small fw-semibold" data-i18n="dashboard.label.company_name"
                     >Company Name*</label
                   >
                   <input
@@ -848,7 +859,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
 
                 <!-- Job type -->
                 <div class="mb-3">
-                  <label for="jobType" class="form-label small fw-semibold"
+                  <label for="jobType" class="form-label small fw-semibold" data-i18n="dashboard.label.job_type"
                     >Job Type*</label
                   >
                   <select
@@ -869,7 +880,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                 </div>
 
                 <div class="mb-4">
-                  <label for="expStartMonth" class="form-label"
+                  <label for="expStartMonth" class="form-label" data-i18n="dashboard.label.start_date"
                     >Start Date*</label
                   >
                   <div class="row g-2">
@@ -897,7 +908,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                 </div>
 
                 <div class="mb-4" id="expEndDateWrapper">
-                  <label for="expEndMonth" class="form-label">End Date*</label>
+                  <label for="expEndMonth" class="form-label" data-i18n="dashboard.label.end_date">End Date*</label>
                   <div class="row g-2" id="expEndDateSelects">
                     <div class="col">
                       <select
@@ -943,7 +954,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                   id="currentlyWorkingCheckbox"
                   name="currentlyWorkingCheckbox"
                 />
-                <label class="form-check-label" for="currentlyWorkingCheckbox">
+                <label class="form-check-label" for="currentlyWorkingCheckbox" data-i18n="dashboard.label.currently_working">
                   I am currently working here
                 </label>
               </div>
@@ -955,6 +966,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                   class="btn btn-outline-danger me-2 rounded-md"
                   id="deleteExperienceBtn"
                   style="display: none"
+                  data-i18n="dashboard.btn.delete_entry"
                 >
                   Delete Entry
                 </button>
@@ -964,12 +976,14 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                     type="button"
                     class="btn btn-outline-secondary me-2 rounded-md"
                     data-bs-dismiss="modal"
+                    data-i18n="dashboard.btn.close"
                   >
                     Close
                   </button>
                   <button
                     type="submit"
                     class="btn btn-primary px-4 rounded-md shadow-sm"
+                    data-i18n="dashboard.btn.save"
                   >
                     Save
                   </button>
@@ -992,7 +1006,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
         <div class="modal-content rounded-4">
             <!-- Header -->
           <div class="modal-header bg-light text-white rounded-top-4">
-            <h5 class="modal-title" id="skillsModalLabel">
+            <h5 class="modal-title" id="skillsModalLabel" data-i18n="dashboard.modal.skills">
               Skills or Certificate
             </h5>
             <button
@@ -1007,7 +1021,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
             <form id="skillsForm" novalidate>
               <!-- Skills Entry -->
               <div class="p-3 mb-4 border rounded-4 bg-light shadow-sm">
-                <p class="text-muted small mb-3">Add all technical, soft, or language skills you possess below.</p>
+                <p class="text-muted small mb-3" data-i18n="dashboard.skills_hint">Add all technical, soft, or language skills you possess below.</p>
 
                 <!-- Dynamic Skills Input Container -->
                 <div id="dynamicSkillsContainer" class="list-group list-group-flush border rounded-3 mb-4 shadow-sm">
@@ -1024,8 +1038,8 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
               </div>
 
               <div class="d-flex justify-content-end mt-3">
-                <button type="button" class="btn btn-outline-secondary border me-2" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary">Save skills</button>
+                <button type="button" class="btn btn-outline-secondary border me-2" data-bs-dismiss="modal" data-i18n="dashboard.btn.cancel">Cancel</button>
+                <button type="submit" class="btn btn-primary" data-i18n="dashboard.btn.save_skills">Save skills</button>
               </div>
             </form>
           </div>
@@ -1044,7 +1058,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
         <div class="modal-content rounded-4">
           <!-- Header -->
           <div class="modal-header bg-light text-white rounded-top-4">
-            <h5 class="modal-title" id="educationModalLabel">Education</h5>
+            <h5 class="modal-title" id="educationModalLabel" data-i18n="dashboard.modal.education">Education</h5>
             <button
               type="button"
               class="btn-close btn-close-white"
@@ -1064,7 +1078,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
               <div class="p-3 mb-4 border rounded-4 bg-light shadow-sm">
                 <!-- School Title -->
                 <div class="mb-3">
-                  <label for="school" class="form-label small fw-semibold"
+                  <label for="school" class="form-label small fw-semibold" data-i18n="dashboard.label.school"
                     >School*</label
                   >
                   <input
@@ -1079,7 +1093,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
 
                 <!-- Degree -->
                 <div class="mb-3">
-                  <label for="degree" class="form-label small fw-semibold"
+                  <label for="degree" class="form-label small fw-semibold" data-i18n="dashboard.label.degree"
                     >Degree*</label
                   >
                   <select
@@ -1099,7 +1113,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
 
                 <!-- Field of Study -->
                 <div class="mb-3">
-                  <label for="field" class="form-label small fw-semibold"
+                  <label for="field" class="form-label small fw-semibold" data-i18n="dashboard.label.field_of_study"
                     >Field of Study*</label
                   >
                   <input
@@ -1113,7 +1127,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                 </div>
 
                 <div class="mb-4">
-                  <label for="eduStartMonth" class="form-label"
+                  <label for="eduStartMonth" class="form-label" data-i18n="dashboard.label.start_date"
                     >Start Date*</label
                   >
                   <div class="row g-2">
@@ -1141,7 +1155,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                 </div>
 
                 <div class="mb-4" id="eduEndDateWrapper">
-                  <label for="eduEndMonth" class="form-label">End Date*</label>
+                  <label for="eduEndMonth" class="form-label" data-i18n="dashboard.label.end_date">End Date*</label>
                   <div class="row g-2" id="endDateSelects">
                     <div class="col">
                       <select
@@ -1187,7 +1201,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                   id="currentlyStudyingCheckbox"
                   name="currentlyStudyingCheckbox"
                 />
-                <label class="form-check-label" for="currentlyStudyingCheckbox">
+                <label class="form-check-label" for="currentlyStudyingCheckbox" data-i18n="dashboard.label.currently_studying">
                   I am currently study here
                 </label>
               </div>
@@ -1197,6 +1211,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                   class="btn btn-outline-danger me-2 rounded-md"
                   id="deleteEducationBtn"
                   style="display: none"
+                  data-i18n="dashboard.btn.delete_entry"
                 >
                   Delete Entry
                 </button>
@@ -1206,12 +1221,14 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                     type="button"
                     class="btn btn-outline-secondary me-2 rounded-md"
                     data-bs-dismiss="modal"
+                    data-i18n="dashboard.btn.close"
                   >
                     Close
                   </button>
                   <button
                     type="submit"
                     class="btn btn-primary px-4 rounded-md shadow-sm"
+                    data-i18n="dashboard.btn.save"
                   >
                     Save
                   </button>
@@ -1235,7 +1252,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
         <div class="modal-content rounded-4">
                 <!-- Header -->
           <div class="modal-header bg-light text-white rounded-top-4">
-            <h5 class="modal-title" id="availabilityModalLabel">
+            <h5 class="modal-title" id="availabilityModalLabel" data-i18n="dashboard.modal.availability">
               Availability &amp; Preferences
             </h5>
             <button
@@ -1256,7 +1273,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
               <div class="p-3 mb-4 border rounded-4 bg-light shadow-sm">
                 <!-- status Title -->
                 <div class="mb-3">
-                  <label for="workStatus" class="form-label small fw-semibold"
+                  <label for="workStatus" class="form-label small fw-semibold" data-i18n="dashboard.label.preferred_work"
                     >Preferred Work</label
                   >
                   <input
@@ -1271,7 +1288,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
            
                 <!--Preferred Location -->    
               <div class="mb-3">
-                 <label for="preferLocation" class="form-label small fw-semibold"
+                 <label for="preferLocation" class="form-label small fw-semibold" data-i18n="dashboard.label.preferred_location"
                   >Prefered Work Location</label
                 >
                  <select
@@ -1295,7 +1312,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
 
              <!-- Prefer Job type -->
                 <div class="mb-3">
-                  <label for="preferJobType" class="form-label small fw-semibold"
+                  <label for="preferJobType" class="form-label small fw-semibold" data-i18n="dashboard.label.preferred_job_type"
                     >Preferred Job Type*</label
                   >
                   <select
@@ -1321,6 +1338,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                   class="btn btn-outline-danger me-2 rounded-md"
                   id="deleteAvailabilityBtn"
                   style="display: none"
+                  data-i18n="dashboard.btn.delete_entry"
                 >
                   Delete Entry
                 </button>
@@ -1330,12 +1348,14 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                     type="button"
                     class="btn btn-outline-secondary me-2 rounded-md"
                     data-bs-dismiss="modal"
+                    data-i18n="dashboard.btn.close"
                   >
                     Close
                   </button>
                   <button
                     type="submit"
                     class="btn btn-primary px-4 rounded-md shadow-sm"
+                    data-i18n="dashboard.btn.save"
                   >
                     Save
                   </button>
@@ -1413,8 +1433,8 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
     <footer class="site-footer site-footer--dark" role="contentinfo">
       <div class="container footer-grid site-footer__grid">
         <div class="footer-cta site-footer__cta">
-          <h3>Want to post jobs on JapanSSW?</h3>
-          <p class="muted site-footer__cta-muted">
+          <h3 data-i18n="footer.cta.title">Want to post jobs on JapanSSW?</h3>
+          <p class="muted site-footer__cta-muted" data-i18n="footer.cta.lead">
             Reach qualified candidates under the SSW programme.
           </p>
           <div class="footer-cta-actions site-footer__cta-actions">
@@ -1423,27 +1443,27 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
 
         <div class="footer-links site-footer__links">
           <div class="link-col site-footer__link-col">
-            <h4>Company</h4>
+            <h4 data-i18n="footer.col.company">Company</h4>
             <ul>
-              <li><a href="../index.html">Home</a></li>
-              <li><a href="about.html">About</a></li>
-              <li><a href="contact.html">Contact</a></li>
+              <li><a href="../index.html" data-i18n="footer.link.home">Home</a></li>
+              <li><a href="about.html" data-i18n="footer.link.about">About</a></li>
+              <li><a href="contact.html" data-i18n="footer.link.contact">Contact</a></li>
             </ul>
           </div>
           <div class="link-col site-footer__link-col">
-            <h4>Jobs</h4>
+            <h4 data-i18n="footer.col.jobs">Jobs</h4>
             <ul>
-              <li><a href="/pages/jobs/jobFilter.html">Search Jobs</a></li>
-              <li><a href="companies/company-list.html">Companies</a></li>
-              <li><a href="#post-job">Post a Job</a></li>
+              <li><a href="/pages/jobs/jobFilter.html" data-i18n="footer.link.search_jobs">Search Jobs</a></li>
+              <li><a href="companies/company-list.html" data-i18n="footer.link.companies">Companies</a></li>
+              <li><a href="#post-job" data-i18n="footer.link.post_job">Post a Job</a></li>
             </ul>
           </div>
           <div class="link-col site-footer__link-col">
-            <h4>Resources</h4>
+            <h4 data-i18n="footer.col.resources">Resources</h4>
             <ul>
-              <li><a href="visaGuidance.html">Visa Guidance</a></li>
-              <li><a href="#">Employer Hub</a></li>
-              <li><a href="privacy.html">Privacy</a></li>
+              <li><a href="visaGuidance.html" data-i18n="footer.link.visa_guidance">Visa Guidance</a></li>
+              <li><a href="#" data-i18n="footer.link.employer_hub">Employer Hub</a></li>
+              <li><a href="privacy.html" data-i18n="footer.link.privacy">Privacy</a></li>
             </ul>
           </div>
         </div>
@@ -1454,8 +1474,8 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
             >© 2025 Japan SSW. All rights reserved.</small
           >
           <nav aria-label="Footer legal">
-            <a href="terms.html">Terms</a>
-            <a href="privacy.html">Privacy</a>
+            <a href="terms.html" data-i18n="footer.link.terms">Terms</a>
+            <a href="privacy.html" data-i18n="footer.link.privacy">Privacy</a>
           </nav>
         </div>
       </div>

@@ -86,14 +86,14 @@
 
                 <!-- User Menu Dropdown (non-Bootstrap custom dropdown) -->
                 <div id="user-menu-dropdown" class="user-menu-dropdown">
-                <h4 class="user-menu-dropdown__greeting">Welcome Back!</h4>
+                <h4 class="user-menu-dropdown__greeting" data-i18n="dashboard.welcome_back">Welcome Back!</h4>
                 <h3 class="user-menu-dropdown__userName" id="user-menu-name">Admin User</h3>
-                <a href="addEdit/profile.html" class="user-menu-dropdown__link">Profile</a>
-                <a href="#" class="user-menu-dropdown__link">Message</a>
+                <a href="addEdit/profile.html" class="user-menu-dropdown__link" data-i18n="dashboard.menu.profile">Profile</a>
+                <a href="#" class="user-menu-dropdown__link" data-i18n="dashboard.menu.message">Message</a>
                 <hr class="user-menu-dropdown__divider" />
-                <a href="#" class="user-menu-dropdown__link">Help</a>
-                <a href="#" class="user-menu-dropdown__link">Settings</a>
-                <button type="button" id="sign-out-btn" class="user-menu-dropdown__link">Sign out</button>
+                <a href="#" class="user-menu-dropdown__link" data-i18n="dashboard.menu.help">Help</a>
+                <a href="#" class="user-menu-dropdown__link" data-i18n="dashboard.menu.settings">Settings</a>
+                <button type="button" id="sign-out-btn" class="user-menu-dropdown__link" data-i18n="dashboard.menu.sign_out">Sign out</button>
               </div>
             </div>
           </div>
@@ -163,9 +163,11 @@
               class="btn btn-outline-secondary"
               href="#"
               data-bs-dismiss="offcanvas"
+              data-i18n="dashboard.menu.profile"
               >Profile</a
             >
             <a class="btn btn-danger" href="#" data-bs-dismiss="offcanvas"
+              data-i18n="dashboard.menu.sign_out"
               >Sign out</a
             >
           </div>
@@ -184,7 +186,7 @@
         <li class="nav-item" role="presentation">
           <button
             class="nav-link text-danger active fw-bold"
-            id="dashboard-tab"
+            id="dashboard-tab" data-i18n="companyDashboard.tab.dashboard"
             data-bs-toggle="tab"
             data-bs-target="#dashboard-pane"
             type="button"
@@ -267,16 +269,16 @@
                         <span id="dash-profile-initials" class="profile-overview-avatar-fallback" aria-hidden="true">SM</span>
                       </div>
                       <div>
-                        <p class="profile-overview-eyebrow mb-1">Company account</p>
+                        <p class="profile-overview-eyebrow mb-1" data-i18n="companyDashboard.company_account">Company account</p>
                         <h2 class="card-title fw-bold mb-2" id="dash-profile-name">Sanchez Miguel</h2>
                         <span class="profile-overview-role" id="dash-profile-role">Admin</span>
                       </div>
                     </div>
-                    <a href="addEdit/profile.html" class="profile-overview-edit-link">Edit profile</a>
+                    <a href="addEdit/profile.html" class="profile-overview-edit-link" data-i18n="companyDashboard.edit_profile">Edit profile</a>
                   </div>
 
                   <div class="profile-overview-panel mb-4">
-                    <p class="profile-overview-panel-title mb-1">Quick actions</p>
+                    <p class="profile-overview-panel-title mb-1" data-i18n="companyDashboard.quick_actions">Quick actions</p>
                     <p class="text-muted small mb-0">
                       Manage your jobs, review applicants, and keep your dashboard up to date.
                     </p>
@@ -294,12 +296,12 @@
                       >
                     </div>
                     <div class="col-sm-6">
-                      <button id="btnViewAllApplicants" class="btn btn-outline-danger profile-overview-action w-100">
+                      <button id="btnViewAllApplicants" data-i18n="companyDashboard.view_all_applicants" class="btn btn-outline-danger profile-overview-action w-100">
                         View All Applicants
                       </button>
                     </div>
                     <div class="col-sm-6">
-                      <button id="btnViewPostedJob" class="btn btn-outline-danger profile-overview-action w-100">
+                      <button id="btnViewPostedJob" data-i18n="companyDashboard.view_posted_jobs" class="btn btn-outline-danger profile-overview-action w-100">
                         View Posted Jobs
                       </button>
                     </div>
@@ -316,42 +318,42 @@
                 <div class="card-body p-4">
                   <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-start gap-3 mb-4">
                     <div>
-                      <h3 class="card-title fw-bold mb-1">Applicant Tracking</h3>
-                      <p class="text-muted small mb-0">Quick overview of your hiring pipeline.</p>
+                      <h3 class="card-title fw-bold mb-1" data-i18n="companyDashboard.applicant_tracking">Applicant Tracking</h3>
+                      <p class="text-muted small mb-0" data-i18n="companyDashboard.pipeline_overview_desc">Quick overview of your hiring pipeline.</p>
                     </div>
-                    <span class="applicant-tracking-badge">Pipeline overview</span>
+                    <span class="applicant-tracking-badge" data-i18n="companyDashboard.pipeline_overview">Pipeline overview</span>
                   </div>
 
                   <div class="applicant-tracking-summary mb-3">
                     <div>
-                      <p class="applicant-tracking-label mb-2">Total Applicants</p>
+                      <p class="applicant-tracking-label mb-2" data-i18n="companyDashboard.total_applicants">Total Applicants</p>
                       <div class="applicant-tracking-total" id="stat-applied-company">–</div>
-                      <p class="applicant-tracking-helper mb-0">Applications received across all posted jobs.</p>
+                      <p class="applicant-tracking-helper mb-0" data-i18n="companyDashboard.total_applicants_desc">Applications received across all posted jobs.</p>
                     </div>
                   </div>
 
                   <div class="row g-3">
                     <div class="col-sm-6">
                       <div class="applicant-tracking-metric applicant-tracking-metric--reviewed">
-                        <span class="applicant-tracking-metric-label">Reviewed</span>
+                        <span class="applicant-tracking-metric-label" data-i18n="companyDashboard.reviewed">Reviewed</span>
                         <span class="applicant-tracking-metric-value" id="stat-pending-company">–</span>
                       </div>
                     </div>
                     <div class="col-sm-6">
                       <div class="applicant-tracking-metric applicant-tracking-metric--interview">
-                        <span class="applicant-tracking-metric-label">Interview</span>
+                        <span class="applicant-tracking-metric-label" data-i18n="companyDashboard.interview">Interview</span>
                         <span class="applicant-tracking-metric-value" id="stat-interview-company">–</span>
                       </div>
                     </div>
                     <div class="col-sm-6">
                       <div class="applicant-tracking-metric applicant-tracking-metric--hired">
-                        <span class="applicant-tracking-metric-label">Hired</span>
+                        <span class="applicant-tracking-metric-label" data-i18n="companyDashboard.hired">Hired</span>
                         <span class="applicant-tracking-metric-value" id="stat-hired-company">–</span>
                       </div>
                     </div>
                     <div class="col-sm-6">
                       <div class="applicant-tracking-metric applicant-tracking-metric--rejected">
-                        <span class="applicant-tracking-metric-label">Rejected</span>
+                        <span class="applicant-tracking-metric-label" data-i18n="companyDashboard.rejected">Rejected</span>
                         <span class="applicant-tracking-metric-value" id="stat-rejected-company">–</span>
                       </div>
                     </div>
@@ -366,14 +368,14 @@
                 <div class="card-body p-4">
                   <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-start gap-3 mb-4">
                     <div>
-                      <h3 class="card-title fw-bold mb-1">Applicant List</h3>
-                      <p class="text-muted small mb-0">Review recent candidates and jump into applicant details faster.</p>
+                      <h3 class="card-title fw-bold mb-1" data-i18n="companyDashboard.applicant_list">Applicant List</h3>
+                      <p class="text-muted small mb-0" data-i18n="companyDashboard.applicant_list_desc">Review recent candidates and jump into applicant details faster.</p>
                     </div>
-                    <a href="#" class="dashboard-list-link" id="viewAllApplicantsLink">View all</a>
+                    <a href="#" class="dashboard-list-link" id="viewAllApplicantsLink" data-i18n="companyDashboard.view_all">View all</a>
                   </div>
 
                   <div id="applicantList" class="dashboard-list">
-                    <div class="dashboard-list-empty">Loading applicants…</div>
+                    <div class="dashboard-list-empty" data-i18n="companyDashboard.loading_applicants">Loading applicants…</div>
                   </div>
                   <div id="applicantListPagination" class="dashboard-list-pagination mt-3"></div>
                 </div>
@@ -388,8 +390,8 @@
                     class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-start gap-3 mb-4"
                   >
                     <div>
-                      <h3 class="card-title fw-bold mb-1">Job List</h3>
-                      <p class="text-muted small mb-0">Track your latest postings, statuses, and engagement at a glance.</p>
+                      <h3 class="card-title fw-bold mb-1" data-i18n="companyDashboard.job_list">Job List</h3>
+                      <p class="text-muted small mb-0" data-i18n="companyDashboard.job_list_desc">Track your latest postings, statuses, and engagement at a glance.</p>
                     </div>
                     <a href="#" class="dashboard-list-link" id="viewAllJobsLink"
                       >View all</a
@@ -397,7 +399,7 @@
                   </div>
 
                   <div id="dashboardJobList" class="dashboard-list">
-                    <div class="dashboard-list-empty">Loading jobs…</div>
+                    <div class="dashboard-list-empty" data-i18n="companyDashboard.loading_jobs">Loading jobs…</div>
                   </div>
                   <div id="dashboardJobListPagination" class="dashboard-list-pagination mt-3"></div>
                 </div>
@@ -416,7 +418,7 @@
         >
           <div class="card p-4 shadow-sm">
             <div class="d-flex justify-content-between align-items-center mb-4">
-              <h4 class="fw-bold mb-0">Job List</h4>
+              <h4 class="fw-bold mb-0" data-i18n="companyDashboard.job_list">Job List</h4>
              <a href="../pages/addEdit/job-post.html" class="btn btn-danger fw-bold">
   Post New Job
 </a>
@@ -442,7 +444,7 @@
                             <th scope="col" class="text-center sortable-th" style="width: 10%; cursor:pointer; user-select:none;" data-sort-col="status">
                               Status <span class="sort-icon text-muted ms-1">⇅</span>
                             </th>
-                            <th scope="col" class="text-center" style="width: 20%">Action</th>
+                            <th scope="col" class="text-center" style="width: 20%" data-i18n="companyDashboard.th.action">Action</th>
                         </tr>
                     </thead>
                     <tbody id="job-list-body">
@@ -521,7 +523,7 @@
                         <i class="fas fa-trash-alt me-2"></i> Remove Job
                     </button>
                     <div>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-i18n="dashboard.btn.close">Close</button>
                         
                          <button type="button" class="btn btn-primary" id="modal-edit-toggle-btn">
                         <i class="fas fa-edit me-2"></i> Edit
@@ -537,7 +539,7 @@
           <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="applicantDetailModalLabel">Applicant Profile</h5>
+                <h5 class="modal-title" id="applicantDetailModalLabel" data-i18n="companyDashboard.applicant_profile">Applicant Profile</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
@@ -556,8 +558,8 @@
                 </div>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <a id="applicant-open-resume" class="btn btn-danger d-none" target="_blank" href="#">Open Resume</a>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-i18n="dashboard.btn.close">Close</button>
+                <a id="applicant-open-resume" class="btn btn-danger d-none" data-i18n="companyDashboard.open_resume" target="_blank" href="#">Open Resume</a>
               </div>
             </div>
           </div>
@@ -573,7 +575,7 @@
         >
           <div class="card p-4 shadow-sm">
             <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
-              <h4 class="fw-bold mb-0">Applicant List</h4>
+              <h4 class="fw-bold mb-0" data-i18n="companyDashboard.applicant_list">Applicant List</h4>
               <div class="d-flex gap-2 flex-wrap">
                 <select id="applicantStatusFilter" class="form-select form-select-sm" style="min-width:140px;">
                   <option value="">All Statuses</option>
@@ -627,7 +629,7 @@
   <div class="card p-4 shadow-sm">
     <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
       <div>
-        <h2 class="h4 fw-bold mb-0">Company Management</h2>
+        <h2 class="h4 fw-bold mb-0" data-i18n="companyDashboard.tab.company_management">Company Management</h2>
         <p class="text-muted mb-0">
           <span id="adminCompanyCount">0</span> companies registered
         </p>
@@ -676,8 +678,8 @@
     <footer class="site-footer site-footer--dark" role="contentinfo">
       <div class="container footer-grid site-footer__grid">
         <div class="footer-cta site-footer__cta">
-          <h3>Want to post jobs on JapanSSW?</h3>
-          <p class="muted site-footer__cta-muted">
+          <h3 data-i18n="footer.cta.title">Want to post jobs on JapanSSW?</h3>
+          <p class="muted site-footer__cta-muted" data-i18n="footer.cta.lead">
             Reach qualified candidates under the SSW programme.
           </p>
           <div class="footer-cta-actions site-footer__cta-actions">
@@ -688,26 +690,26 @@
 
         <div class="footer-links site-footer__links">
           <div class="link-col site-footer__link-col">
-            <h4>Company</h4>
+            <h4 data-i18n="footer.col.company">Company</h4>
             <ul>
-              <li><a href="../index.html">Home</a></li>
-              <li><a href="about.html">About</a></li>
-              <li><a href="contact.html">Contact</a></li>
+              <li><a href="../index.html" data-i18n="footer.link.home">Home</a></li>
+              <li><a href="about.html" data-i18n="footer.link.about">About</a></li>
+              <li><a href="contact.html" data-i18n="footer.link.contact">Contact</a></li>
             </ul>
           </div>
           <div class="link-col site-footer__link-col">
-            <h4>Jobs</h4>
+            <h4 data-i18n="footer.col.jobs">Jobs</h4>
             <ul>
-              <li><a href="../index.html#jobs">Search Jobs</a></li>
-              <li><a href="../index.html#companies">Companies</a></li>
-              <li><a href="../index.html#post-job">Post a Job</a></li>
+              <li><a href="../index.html#jobs" data-i18n="footer.link.search_jobs">Search Jobs</a></li>
+              <li><a href="../index.html#companies" data-i18n="footer.link.companies">Companies</a></li>
+              <li><a href="../index.html#post-job" data-i18n="footer.link.post_job">Post a Job</a></li>
             </ul>
           </div>
           <div class="link-col site-footer__link-col">
-            <h4>Resources</h4>
+            <h4 data-i18n="footer.col.resources">Resources</h4>
             <ul>
-              <li><a href="visaGuidance.html">Visa Guidance</a></li>
-              <li><a href="privacy.html">Privacy</a></li>
+              <li><a href="visaGuidance.html" data-i18n="footer.link.visa_guidance">Visa Guidance</a></li>
+              <li><a href="privacy.html" data-i18n="footer.link.privacy">Privacy</a></li>
             </ul>
           </div>
         </div>
@@ -718,8 +720,8 @@
             >© 2025 Japan SSW. All rights reserved.</small
           >
           <nav aria-label="Footer legal">
-            <a href="terms.html">Terms</a>
-            <a href="privacy.html">Privacy</a>
+            <a href="terms.html" data-i18n="footer.link.terms">Terms</a>
+            <a href="privacy.html" data-i18n="footer.link.privacy">Privacy</a>
           </nav>
         </div>
       </div>
