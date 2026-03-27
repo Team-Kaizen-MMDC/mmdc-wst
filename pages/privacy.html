@@ -25,7 +25,7 @@
     <header class="site-header">
       <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light">
-          <a class="navbar-brand site-header__brand" href="../index.html"
+          <a class="navbar-brand site-header__brand" href="../index.html" data-i18n="site.brand"
             >Japan SSW</a
           >
 
@@ -118,12 +118,14 @@
               class="btn btn-outline-secondary"
               href="createAccount.html"
               data-bs-dismiss="offcanvas"
+              data-i18n="nav.signup"
               >Signup</a
             >
             <a
               class="btn btn-danger"
               href="signin.html"
               data-bs-dismiss="offcanvas"
+              data-i18n="nav.login"
               >Login</a
             >
           </div>
@@ -133,22 +135,22 @@
 
     <main id="main-content" role="main" class="section-padding">
       <div class="container legal-content">
-        <h1 class="section-title animate-fade-in-down animate-on-scroll">
+        <h1 class="section-title animate-fade-in-down animate-on-scroll" data-i18n="privacy.heading">
           Privacy Policy
         </h1>
 
         <article
           class="feature-card feature-wide animate-fade-in-up animate-on-scroll"
         >
-          <p class="muted">
+          <p class="muted" data-i18n="privacy.intro">
             This Privacy Policy explains how Japan SSW ("we", "us", or "our")
             collects, uses, and shares information when you use our website and
             services. We are committed to protecting your privacy and handling
             your personal information responsibly.
           </p>
 
-          <h2>1. Information We Collect</h2>
-          <p>
+          <h2 data-i18n="privacy.section1">1. Information We Collect</h2>
+          <p data-i18n="privacy.p1">
             We collect information you provide directly (for example, when you
             create an account, apply for a job, or contact us) and
             automatically-collected information (such as browser and device
@@ -156,8 +158,8 @@
             service.
           </p>
 
-          <h2>2. How We Use Information</h2>
-          <p>
+          <h2 data-i18n="privacy.section2">2. How We Use Information</h2>
+          <p data-i18n="privacy.p2">
             We use your information to operate, maintain, and provide the
             services, to communicate with you about your account and job
             applications, and to comply with legal obligations. We may also use
@@ -165,8 +167,8 @@
             improvements.
           </p>
 
-          <h2>3. Sharing and Disclosure</h2>
-          <p>
+          <h2 data-i18n="privacy.section3">3. Sharing and Disclosure</h2>
+          <p data-i18n="privacy.p3">
             We do not sell personal information. We may share data with third
             party service providers who process data on our behalf (e.g.,
             hosting, analytics, messaging), and with employers when you choose
@@ -174,24 +176,24 @@
             law or to protect rights and safety.
           </p>
 
-          <h2>4. Cookies and Tracking</h2>
-          <p>
+          <h2 data-i18n="privacy.section4">4. Cookies and Tracking</h2>
+          <p data-i18n="privacy.p4">
             We use cookies and similar technologies to provide core site
             functionality and to analyze site usage. You can control cookie
             preferences through your browser settings, but disabling cookies may
             affect site functionality.
           </p>
 
-          <h2>5. Security</h2>
-          <p>
+          <h2 data-i18n="privacy.section5">5. Security</h2>
+          <p data-i18n="privacy.p5">
             We take reasonable administrative and technical measures to protect
             personal information. However no method of transmission over the
             internet or storage is 100% secure. Use caution when sharing
             sensitive personal information.
           </p>
 
-          <h2>6. Contact</h2>
-          <p>
+          <h2 data-i18n="privacy.section6">6. Contact</h2>
+          <p data-i18n="privacy.p6">
             If you have questions about this Privacy Policy or our data
             practices, please contact us at privacy@japanssw.example
             (placeholder).
@@ -203,8 +205,8 @@
     <footer class="site-footer site-footer--dark py-3 py-md-4">
       <div class="container footer-grid site-footer__grid">
         <div class="footer-cta site-footer__cta">
-          <h3>Want to post jobs on JapanSSW?</h3>
-          <p class="muted site-footer__cta-muted">
+          <h3 data-i18n="footer.cta.title">Want to post jobs on JapanSSW?</h3>
+          <p class="muted site-footer__cta-muted" data-i18n="footer.cta.lead">
             Reach qualified candidates under the SSW programme.
           </p>
           <div class="footer-cta-actions site-footer__cta-actions d-flex gap-2">
@@ -214,37 +216,37 @@
 
         <div class="footer-links site-footer__links">
           <div class="link-col site-footer__link-col">
-            <h4>Company</h4>
+            <h4 data-i18n="footer.col.company">Company</h4>
             <ul>
-              <li><a href="../">Home</a></li>
-              <li><a href="about.html">About</a></li>
-              <li><a href="contact.html">Contact</a></li>
+              <li><a href="../" data-i18n="footer.link.home">Home</a></li>
+              <li><a href="about.html" data-i18n="footer.link.about">About</a></li>
+              <li><a href="contact.html" data-i18n="footer.link.contact">Contact</a></li>
             </ul>
           </div>
           <div class="link-col site-footer__link-col">
-            <h4>Jobs</h4>
+            <h4 data-i18n="footer.col.jobs">Jobs</h4>
             <ul>
-              <li><a href="../index.html#jobs">Search Jobs</a></li>
-              <li><a href="../index.html#companies">Companies</a></li>
-              <li><a href="../index.html#post-job">Post a Job</a></li>
+              <li><a href="../index.html#jobs" data-i18n="footer.link.search_jobs">Search Jobs</a></li>
+              <li><a href="../index.html#companies" data-i18n="footer.link.companies">Companies</a></li>
+              <li><a href="../index.html#post-job" data-i18n="footer.link.post_job">Post a Job</a></li>
             </ul>
           </div>
           <div class="link-col site-footer__link-col">
-            <h4>Resources</h4>
+            <h4 data-i18n="footer.col.resources">Resources</h4>
             <ul>
-              <li><a href="visaGuidance.html">Visa Guidance</a></li>
-              <li><a href="#">Employer Hub</a></li>
-              <li><a href="privacy.html">Privacy</a></li>
+              <li><a href="visaGuidance.html" data-i18n="footer.link.visa_guidance">Visa Guidance</a></li>
+              <li><a href="#" data-i18n="footer.link.employer_hub">Employer Hub</a></li>
+              <li><a href="privacy.html" data-i18n="footer.link.privacy">Privacy</a></li>
             </ul>
           </div>
         </div>
       </div>
       <div class="container footer-legal site-footer__legal">
         <div class="legal-inner site-footer__legal-inner">
-          <small>&copy; 2025 Japan SSW. All rights reserved.</small>
+          <small data-i18n="footer.copyright">&copy; 2025 Japan SSW. All rights reserved.</small>
           <nav aria-label="Footer legal">
-            <a href="terms.html">Terms</a>
-            <a href="privacy.html">Privacy</a>
+            <a href="terms.html" data-i18n="footer.link.terms">Terms</a>
+            <a href="privacy.html" data-i18n="footer.link.privacy">Privacy</a>
           </nav>
         </div>
       </div>
