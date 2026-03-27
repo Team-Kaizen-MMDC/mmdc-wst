@@ -1639,7 +1639,22 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
         return JSON.parse(text);
       }
 
-      function renderProfileDashboardEmptyState(message) {
+      // Helper: hide a Bootstrap modal and wait for it to fully close
+      // (including backdrop removal) before resolving.
+      function hideModalAsync(modalId) {
+        return new Promise((resolve) => {
+          const el = document.getElementById(modalId);
+          if (!el) { resolve(); return; }
+          const instance = bootstrap.Modal.getInstance(el);
+          if (!instance) { resolve(); return; }
+          // If already hidden, resolve immediately
+          if (!el.classList.contains('show')) { instance.hide(); resolve(); return; }
+          el.addEventListener('hidden.bs.modal', resolve, { once: true });
+          instance.hide();
+        });
+      }
+
+
         return `<div class="profile-dashboard-section-empty">${message}</div>`;
       }
 
@@ -2056,9 +2071,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           }
 
         // Close modal BEFORE refreshing so backdrop is removed cleanly
-        const modalElement = document.getElementById(EDUCATION_MODAL_ID);
-        const modal = Modal.getInstance(modalElement);
-        if (modal) modal.hide();
+        await hideModalAsync(EDUCATION_MODAL_ID);
         form.classList.remove("was-validated");
 
         // Refresh from backend to reflect canonical state
@@ -2071,9 +2084,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           renderEducationSection();
 
           // Still close modal on error
-          const modalElement = document.getElementById(EDUCATION_MODAL_ID);
-          const modal = Modal.getInstance(modalElement);
-          if (modal) modal.hide();
+          await hideModalAsync(EDUCATION_MODAL_ID);
           form.classList.remove("was-validated");
         }
       }
@@ -2165,9 +2176,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           const entry = dataArray[index];
 
           // Hide modal BEFORE any async work so the backdrop clears cleanly
-          const modalElement = document.getElementById(EDUCATION_MODAL_ID);
-          const modal = Modal.getInstance(modalElement);
-          if (modal) modal.hide();
+          await hideModalAsync(EDUCATION_MODAL_ID);
 
           try {
             if (entry && entry.id) {
@@ -2458,9 +2467,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           }
 
           // Close modal BEFORE refreshing so backdrop is removed cleanly
-          const modalEl = document.getElementById(EXPERIENCE_MODAL_ID);
-          const expModal = bootstrap.Modal.getInstance(modalEl);
-          if (expModal) expModal.hide();
+          await hideModalAsync(EXPERIENCE_MODAL_ID);
 
           // Refresh from backend to ensure IDs and canonical data are stored
           if (typeof window.populateDashboard === 'function') await window.populateDashboard();
@@ -2473,9 +2480,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           renderExperienceSection();
 
           // Still close modal on error
-          const modalEl = document.getElementById(EXPERIENCE_MODAL_ID);
-          const expModal = bootstrap.Modal.getInstance(modalEl);
-          if (expModal) expModal.hide();
+          await hideModalAsync(EXPERIENCE_MODAL_ID);
         }
       }
 
@@ -2556,10 +2561,8 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
         ) {
           const entry = data[index];
 
-          // Hide modal BEFORE any async work so the backdrop clears cleanly
-          const modalEl = document.getElementById(EXPERIENCE_MODAL_ID);
-          const modal = bootstrap.Modal.getInstance(modalEl);
-          if (modal) modal.hide();
+          // Hide modal and wait for it to fully close (backdrop removed) before refreshing DOM
+          await hideModalAsync(EXPERIENCE_MODAL_ID);
 
           try {
             if (entry && entry.id) {
