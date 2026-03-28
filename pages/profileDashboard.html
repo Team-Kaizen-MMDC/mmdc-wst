@@ -278,9 +278,7 @@
                 <p class="profile-dashboard-hero-text mb-2">
                   Keep your profile current so employers can understand your background faster.
                 </p>
-                <span class="profile-dashboard-completion-pill"
-                  >Profile <strong>80%</strong> complete</span
-                >
+               <span id="profileCompletionBadge" class="profile-status-badge">Profile 0% complete</span>
               </div>
             </div>
           </div>
@@ -2683,6 +2681,69 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
         }
       }
 
+              // profile-status-badge js 
+              function calculateProfileCompletion(profile) {
+          let score = 0;
+
+          const weights = {
+            basicInfo: 25,
+            summary: 10,
+            experience: 15,
+            education: 15,
+            skills: 10,
+            resume: 10,
+            preferences: 10,
+            photo: 5,
+          };
+
+          // IMPORTANT: use YOUR actual fields
+          const hasBasicInfo =
+            profile.firstName &&
+            profile.lastName &&
+            profile.nationality;
+
+          const hasSummary =
+            profile.bio && profile.bio.trim() !== "";
+
+          const hasExperience =
+            Array.isArray(profile.experience) && profile.experience.length > 0;
+
+          const hasEducation =
+            Array.isArray(profile.education) && profile.education.length > 0;
+
+          const hasSkills =
+            Array.isArray(profile.skills) && profile.skills.length > 0;
+
+          const hasResume =
+            !!profile.resumeUrl;
+
+          const hasPreferences =
+            profile.availability &&
+            (profile.availability.visaStatus || profile.availability.desiredIndustry);
+
+          const hasPhoto =
+            !!profile.user?.googleProfile?.picture;
+
+          if (hasBasicInfo) score += weights.basicInfo;
+          if (hasSummary) score += weights.summary;
+          if (hasExperience) score += weights.experience;
+          if (hasEducation) score += weights.education;
+          if (hasSkills) score += weights.skills;
+          if (hasResume) score += weights.resume;
+          if (hasPreferences) score += weights.preferences;
+          if (hasPhoto) score += weights.photo;
+
+          return score;
+        }
+
+        // UI updater for badge
+        function updateProfileCompletionUI(percent) {
+          const badge = document.getElementById("profileCompletionBadge");
+          if (!badge) return;
+
+          badge.textContent = `Profile ${percent}% complete`;
+        }
+
       // Populate dashboard with user data from backend API
       async function populateDashboard() {
         console.log("Fetching profile from backend API...");
@@ -2984,6 +3045,8 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           const data = await response.json();
           const profile = data.data.profile; // API returns { success: true, data: { profile: {...} } }
           console.log("Profile fetched from API:", profile);
+          const completion = calculateProfileCompletion(profile);  //  NEW: Calculate profile completion
+          updateProfileCompletionUI(completion);
           const userAuthProvider = profile?.user?.authProvider || "local";
           const shouldUseGoogleProfile = userAuthProvider === "google";
 
@@ -4424,6 +4487,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
           }
         });
       })();
+
     </script>
   </body>
 </html>
