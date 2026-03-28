@@ -263,6 +263,11 @@ function enableEditMode() {
   const descEl = document.getElementById("det-description");
   const industryEl = document.getElementById("det-industry");
   const locationEl = document.getElementById("det-location");
+  const foundedEl = document.getElementById("det-founded");
+  const sizeEl = document.getElementById("det-size");
+  const foundedStatEl = document.getElementById("det-founded-stat");
+  const contactEmailEl = document.getElementById("det-contact-email");
+const contactPhoneEl = document.getElementById("det-contact-phone");
 
   const prefecture = currentCompany.location?.prefecture || "";
   const city = currentCompany.location?.city || "";
@@ -283,6 +288,17 @@ function enableEditMode() {
     "Aviation",
     "Accommodation",
     "Logistics",
+    "Other",
+  ];
+
+  const sizeOptions = [
+    "1-10",
+    "11-50",
+    "51-200",
+    "201-500",
+    "501-1000",
+    "1001-5000",
+    "5000+",
   ];
 
   if (nameEl) {
@@ -301,17 +317,11 @@ function enableEditMode() {
       <div class="row g-2">
         <div class="col-md-6">
           <select id="edit-industry" class="form-select">
-            ${industryOptions
-              .map(
-                (option) => `
-                  <option value="${escapeHtml(option)}" ${
-                    currentCompany.industry === option ? "selected" : ""
-                  }>
-                    ${escapeHtml(option)}
-                  </option>
-                `
-              )
-              .join("")}
+            ${industryOptions.map(option => `
+              <option value="${escapeHtml(option)}" ${currentCompany.industry === option ? "selected" : ""}>
+                ${escapeHtml(option)}
+              </option>
+            `).join("")}
           </select>
         </div>
 
@@ -340,23 +350,13 @@ function enableEditMode() {
 
   if (shortDescEl) {
     shortDescEl.innerHTML = `
-      <textarea
-        id="edit-short-description"
-        class="form-control"
-        rows="4"
-        placeholder="Short description"
-      >${escapeHtml(currentCompany.description || "")}</textarea>
+      <textarea id="edit-short-description" class="form-control" rows="4">${escapeHtml(currentCompany.description || "")}</textarea>
     `;
   }
 
   if (descEl) {
     descEl.innerHTML = `
-      <textarea
-        id="edit-description"
-        class="form-control"
-        rows="8"
-        placeholder="Company description"
-      >${escapeHtml(currentCompany.description || "")}</textarea>
+      <textarea id="edit-description" class="form-control" rows="8">${escapeHtml(currentCompany.description || "")}</textarea>
     `;
   }
 
@@ -371,6 +371,60 @@ function enableEditMode() {
       <span class="text-muted">${escapeHtml([prefecture, city].filter(Boolean).join(", ") || "Not specified")}</span>
     `;
   }
+
+  if (foundedEl) {
+    foundedEl.innerHTML = `
+      <input
+        id="edit-founded"
+        type="number"
+        class="form-control"
+        min="1800"
+        max="${new Date().getFullYear()}"
+        value="${escapeHtml(currentCompany.founded || "")}"
+        placeholder="Founded year"
+      >
+    `;
+  }
+
+  if (sizeEl) {
+    sizeEl.innerHTML = `
+      <select id="edit-size" class="form-select">
+        <option value="">Select company size</option>
+        ${sizeOptions.map(option => `
+          <option value="${escapeHtml(option)}" ${currentCompany.size === option ? "selected" : ""}>
+            ${escapeHtml(option)}
+          </option>
+        `).join("")}
+      </select>
+    `;
+  }
+
+  if (foundedStatEl) {
+    foundedStatEl.innerHTML = `<span class="text-muted">${escapeHtml(currentCompany.founded || "—")}</span>`;
+  }
+  if (contactEmailEl) {
+  contactEmailEl.innerHTML = `
+    <input
+      id="edit-contact-email"
+      type="email"
+      class="form-control"
+      value="${escapeHtml(currentCompany.contact?.email || "")}"
+      placeholder="company@email.com"
+    >
+  `;
+}
+
+if (contactPhoneEl) {
+  contactPhoneEl.innerHTML = `
+    <input
+      id="edit-contact-phone"
+      type="text"
+      class="form-control"
+      value="${escapeHtml(currentCompany.contact?.phone || "")}"
+      placeholder="Phone number"
+    >
+  `;
+}
 
   toggleEditButtons(true);
 }
@@ -412,54 +466,48 @@ async function saveCompanyChanges() {
 
   const name = document.getElementById("edit-name")?.value.trim() || "";
   const industry = document.getElementById("edit-industry")?.value || "";
-    "";
   const prefecture = document.getElementById("edit-prefecture")?.value.trim() || "";
   const city = document.getElementById("edit-city")?.value.trim() || "";
-  const shortDescription =
-    document.getElementById("edit-short-description")?.value.trim() || "";
-  const description =
-    document.getElementById("edit-description")?.value.trim() || shortDescription;
+  const shortDescription = document.getElementById("edit-short-description")?.value.trim() || "";
+  const description = document.getElementById("edit-description")?.value.trim() || shortDescription;
+  const foundedValue = document.getElementById("edit-founded")?.value.trim() || "";
+  const size = document.getElementById("edit-size")?.value || "";
+  const contactEmail = document.getElementById("edit-contact-email")?.value.trim() || "";
+const contactPhone = document.getElementById("edit-contact-phone")?.value.trim() || "";
 
   const payload = {
     name,
     industry,
     description,
+    founded: foundedValue ? Number(foundedValue) : undefined,
+    size,
+    contact: {
+    email: contactEmail,
+    phone: contactPhone,
+  },
     location: {
       prefecture,
       city,
     },
   };
 
-  console.log("update payload:", payload);
-
   try {
-    const response = await fetch(
-      `http://localhost:3000/api/v1/companies/${currentCompany._id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(payload),
-      }
-    );
+    const response = await fetch(`${API_BASE_URL}/${currentCompany._id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(payload),
+    });
 
     const result = await response.json();
-    console.log("update response status:", response.status);
-    console.log("update response result:", result);
 
     if (!response.ok) {
       throw new Error(result.message || "Failed to update company.");
     }
 
-    const updatedCompany = result?.data?.company || result?.data || null;
-
-    if (!updatedCompany) {
-      throw new Error("Updated company data was not returned.");
-    }
-
-    currentCompany = updatedCompany;
+    currentCompany = result?.data?.company || result?.data || result;
     isEditMode = false;
 
     populateCompanyDetails(currentCompany);
@@ -501,6 +549,8 @@ function populateCompanyDetails(company) {
   setText("det-name", companyName);
   setText("det-meta", `${company.industry || "Industry"} • ${prefecture || "Japan"}`);
   setText("det-short-description", company.description || "No summary available.");
+  setText("det-contact-email", company.contact?.email || "Not specified");
+setText("det-contact-phone", company.contact?.phone || "Not specified");  
 
   const descEl = document.getElementById("det-description");
   if (descEl) {
