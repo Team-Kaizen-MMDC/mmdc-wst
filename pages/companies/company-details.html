@@ -1,159 +1,334 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Company Details</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Company details - Japan SSW" />
+    <title>Company Details | Japan SSW</title>
 
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-  />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
 
-  <link rel="stylesheet" href="../../assets/css/main.css" />
-</head>
-<body>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
 
-  <main id="main-content" class="py-5 bg-light">
-    <div class="container">
-      <div id="companyDetailContent">
-        <header class="card shadow-sm rounded-4 border-0 mb-4 overflow-hidden">
-          <div class="card-body p-4 p-md-5">
-            <div class="row align-items-center g-4">
-              <div class="col-md-auto text-center">
-                <img
-                  id="det-logo"
-                  src=""
-                  alt=""
-                  class="rounded-4 border shadow-sm bg-white p-3"
-                  style="width: 130px; height: 130px; object-fit: contain;"
-                />
-              </div>
+    <link rel="stylesheet" href="../../assets/css/main.css" />
+    <link rel="icon" type="image/x-icon" href="../../assets/icons/favicon.ico" />
+  </head>
+  <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
 
-              <div class="col">
-                <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
-                  <h1 id="det-name" class="h2 fw-bold mb-0">Loading...</h1>
-                  <span id="det-verified" class="badge text-bg-success d-none">Verified</span>
-                </div>
+    <header class="site-header" role="banner">
+      <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light" role="navigation" aria-label="Main navigation">
+          <a
+            class="navbar-brand site-header__brand"
+            href="../../index.html"
+            aria-label="Japan SSW - Home"
+          >
+            Japan SSW
+          </a>
 
-                <p id="det-meta" class="text-muted fs-6 mb-3">Industry • Location</p>
-                <p id="det-short-description" class="text-secondary lh-lg mb-4">
-                  Loading company summary...
-                </p>
+          <button
+            class="btn btn-outline-secondary d-lg-none"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#siteOffcanvas"
+            aria-controls="siteOffcanvas"
+            aria-label="Open menu"
+            aria-expanded="false"
+          >
+            <span class="navbar-toggler-icon" aria-hidden="true"></span>
+          </button>
 
-                <div class="d-flex flex-wrap gap-2">
-                  <a
-                    id="det-website"
-                    href="#"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="btn btn-danger rounded-pill px-4"
-                  >
-                    Visit Website
-                  </a>
+          <div class="collapse navbar-collapse d-none d-lg-flex" id="navbarNav">
+            <ul class="navbar-nav mx-auto mb-2 mb-lg-0" role="menubar">
+              <li class="nav-item" role="none">
+                <a class="nav-link site-header__nav-link" href="../jobs/jobFilter.html" role="menuitem">
+                  Jobs
+                </a>
+              </li>
+              <li class="nav-item" role="none">
+                <a class="nav-link site-header__nav-link" href="./company-list.html" role="menuitem">
+                  Companies
+                </a>
+              </li>
+              <li class="nav-item" role="none">
+                <a class="nav-link site-header__nav-link" href="../agency.html" role="menuitem">
+                  Agency
+                </a>
+              </li>
+              <li class="nav-item" role="none">
+                <a class="nav-link site-header__nav-link" href="../about.html" role="menuitem">
+                  About
+                </a>
+              </li>
+            </ul>
 
-
-                <div id="adminEditActions" class="d-none">
-                <button id="adminEditBtn" class="btn btn-outline-primary rounded-pill px-4">
-                  Edit Company
-                </button>
-
-              <button id="saveCompanyBtn" class="btn btn-primary rounded-pill px-4 d-none">
-                Save
-              </button>
-
-              <button id="cancelEditBtn" class="btn btn-light rounded-pill px-4 d-none">
-                Cancel
-              </button>
-
-              </div>
-              
-                </div>
-              </div>
-            </div>
-
-            <div class="row g-3 mt-4">
-              <div class="col-6 col-md-3">
-                <div class="bg-light rounded-4 p-3 h-100 border">
-                  <small class="text-muted d-block mb-1">Open Jobs</small>
-                  <span id="det-open-jobs" class="fw-bold fs-5">0</span>
-                </div>
-              </div>
-              <div class="col-6 col-md-3">
-                <div class="bg-light rounded-4 p-3 h-100 border">
-                  <small class="text-muted d-block mb-1">Industry</small>
-                  <span id="det-industry-stat" class="fw-bold fs-6">—</span>
-                </div>
-              </div>
-              <div class="col-6 col-md-3">
-                <div class="bg-light rounded-4 p-3 h-100 border">
-                  <small class="text-muted d-block mb-1">Headquarters</small>
-                  <span id="det-location-stat" class="fw-bold fs-6">—</span>
-                </div>
-              </div>
-              <div class="col-6 col-md-3">
-                <div class="bg-light rounded-4 p-3 h-100 border">
-                  <small class="text-muted d-block mb-1">Founded</small>
-                  <span id="det-founded-stat" class="fw-bold fs-6">—</span>
-                </div>
-              </div>
+            <div class="d-flex align-items-center gap-2 site-header__actions" role="group" aria-label="User account actions">
+              <a class="site-header__signup muted text-decoration-none" href="../createAccount.html">
+                Signup
+              </a>
+              <a class="btn btn-primary site-header__login-btn" href="../signin.html">
+                Login
+              </a>
             </div>
           </div>
-        </header>
+        </nav>
+      </div>
 
-        <div class="row g-4">
-          <div class="col-lg-8">
-            <section class="card shadow-sm rounded-4 border-0 mb-4">
-              <div class="card-body p-4">
-                <h2 class="h5 fw-bold mb-3">About the Company</h2>
-                <div id="det-description" class="text-secondary lh-lg"></div>
-              </div>
-            </section>
+      <div
+        class="offcanvas offcanvas-start"
+        tabindex="-1"
+        id="siteOffcanvas"
+        aria-labelledby="siteOffcanvasLabel"
+      >
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="siteOffcanvasLabel">Menu</h5>
+          <button
+            type="button"
+            class="btn-close text-reset"
+            data-bs-dismiss="offcanvas"
+            aria-label="Close"
+          ></button>
+        </div>
 
-            <section id="companyActiveJobsSection" class="mb-4">
-              <div class="d-flex justify-content-between align-items-center mb-3">
-                <h2 class="h5 fw-bold mb-0">Active Job Openings</h2>
-                <span class="text-muted small">
-                  <span id="det-job-count-text">0</span> jobs available
-                </span>
-              </div>
+        <div class="offcanvas-body d-flex flex-column">
+          <nav role="navigation" aria-label="Mobile navigation">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link py-3" href="../jobs/jobFilter.html" data-bs-dismiss="offcanvas">Jobs</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link py-3" href="./company-list.html" data-bs-dismiss="offcanvas">Companies</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link py-3" href="../agency.html" data-bs-dismiss="offcanvas">Agency</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link py-3" href="../about.html" data-bs-dismiss="offcanvas">About</a>
+              </li>
+            </ul>
+          </nav>
 
-              <div id="companyActiveJobs" class="row g-3"></div>
-            </section>
+          <div class="mt-auto d-flex justify-content-between align-items-center pt-3 border-top">
+            <a class="btn btn-outline-secondary" href="../createAccount.html" data-bs-dismiss="offcanvas">
+              Signup
+            </a>
+            <a class="btn btn-danger" href="../signin.html" data-bs-dismiss="offcanvas">
+              Login
+            </a>
           </div>
-
-          <aside class="col-lg-4">
-            <div class="card shadow-sm rounded-4 border-0 sticky-lg-top" style="top: 2rem;">
-              <div class="card-body p-4">
-                <h3 class="h6 fw-bold text-uppercase mb-4">Company Overview</h3>
-
-                <div class="mb-3">
-                  <label class="small text-muted d-block">Headquarters</label>
-                  <span id="det-location" class="fw-semibold text-dark">—</span>
-                </div>
-
-                <div class="mb-3">
-                  <label class="small text-muted d-block">Industry Sector</label>
-                  <span id="det-industry" class="fw-semibold text-dark">—</span>
-                </div>
-
-                <div class="mb-3">
-                  <label class="small text-muted d-block">Founded</label>
-                  <span id="det-founded" class="fw-semibold text-dark">—</span>
-                </div>
-
-                <div class="mb-3">
-                  <label class="small text-muted d-block">Company Size</label>
-                  <span id="det-size" class="fw-semibold text-dark">—</span>
-                </div>
-              </div>
-            </div>
-          </aside>
         </div>
       </div>
-    </div>
-  </main>
+    </header>
 
-  <script src="../../assets/js/features/companyDetails.js"></script>
-</body>
+    <main id="main-content" class="py-5 bg-light">
+      <div class="container">
+        <div class="mb-3">
+          <a href="./company-list.html" class="text-decoration-none text-muted small">
+            &larr; Back to Company Directory
+          </a>
+        </div>
+
+        <div id="companyDetailContent">
+          <header class="card shadow-sm rounded-4 border-0 mb-4 overflow-hidden">
+            <div class="card-body p-4 p-md-5">
+              <div class="row align-items-center g-4">
+                <div class="col-md-auto text-center">
+                  <img
+                    id="det-logo"
+                    src=""
+                    alt=""
+                    class="rounded-4 border shadow-sm bg-white p-3"
+                    style="width: 130px; height: 130px; object-fit: contain;"
+                  />
+                </div>
+
+                <div class="col">
+                  <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+                    <h1 id="det-name" class="h2 fw-bold mb-0">Loading...</h1>
+                    <span id="det-verified" class="badge text-bg-success d-none">Verified</span>
+                  </div>
+
+                  <p id="det-meta" class="text-muted fs-6 mb-3">Industry • Location</p>
+                  <p id="det-short-description" class="text-secondary lh-lg mb-4">
+                    Loading company summary...
+                  </p>
+
+                  <div class="d-flex flex-wrap gap-2">
+                    <a
+                      id="det-website"
+                      href="#"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="btn btn-danger rounded-pill px-4"
+                    >
+                      Visit Website
+                    </a>
+
+                    <div id="adminEditActions" class="d-none">
+                      <button id="adminEditBtn" class="btn btn-outline-primary rounded-pill px-4">
+                        Edit Company
+                      </button>
+                      <button id="saveCompanyBtn" class="btn btn-primary rounded-pill px-4 d-none">
+                        Save
+                      </button>
+                      <button id="cancelEditBtn" class="btn btn-light rounded-pill px-4 d-none">
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row g-3 mt-4">
+                <div class="col-6 col-md-3">
+                  <div class="bg-light rounded-4 p-3 h-100 border">
+                    <small class="text-muted d-block mb-1">Open Jobs</small>
+                    <span id="det-open-jobs" class="fw-bold fs-5">0</span>
+                  </div>
+                </div>
+                <div class="col-6 col-md-3">
+                  <div class="bg-light rounded-4 p-3 h-100 border">
+                    <small class="text-muted d-block mb-1">Industry</small>
+                    <span id="det-industry-stat" class="fw-bold fs-6">—</span>
+                  </div>
+                </div>
+                <div class="col-6 col-md-3">
+                  <div class="bg-light rounded-4 p-3 h-100 border">
+                    <small class="text-muted d-block mb-1">Headquarters</small>
+                    <span id="det-location-stat" class="fw-bold fs-6">—</span>
+                  </div>
+                </div>
+                <div class="col-6 col-md-3">
+                  <div class="bg-light rounded-4 p-3 h-100 border">
+                    <small class="text-muted d-block mb-1">Founded</small>
+                    <span id="det-founded-stat" class="fw-bold fs-6">—</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </header>
+
+          <div class="row g-4 align-items-start">
+            <div class="col-lg-8">
+              <section class="card shadow-sm rounded-4 border-0 mb-4">
+                <div class="card-body p-4">
+                  <h2 class="h5 fw-bold mb-3">About the Company</h2>
+                  <div id="det-description" class="text-secondary lh-lg"></div>
+                </div>
+              </section>
+
+              <section id="companyActiveJobsSection" class="card shadow-sm rounded-4 border-0 mb-4">
+                <div class="card-body p-4">
+                  <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                    <h2 class="h5 fw-bold mb-0">Active Job Openings</h2>
+                    <span class="text-muted small">
+                      <span id="det-job-count-text">0</span> jobs available
+                    </span>
+                  </div>
+
+                  <div id="companyActiveJobs" class="row g-3"></div>
+                </div>
+              </section>
+            </div>
+
+            <aside class="col-lg-4">
+              <div class="card shadow-sm rounded-4 border-0 sticky-lg-top" style="top: 2rem;">
+                <div class="card-body p-4">
+                  <h3 class="h6 fw-bold text-uppercase mb-4">Company Overview</h3>
+
+                  <div class="mb-3">
+                    <label class="small text-muted d-block">Headquarters</label>
+                    <span id="det-location" class="fw-semibold text-dark">—</span>
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="small text-muted d-block">Industry Sector</label>
+                    <span id="det-industry" class="fw-semibold text-dark">—</span>
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="small text-muted d-block">Founded</label>
+                    <span id="det-founded" class="fw-semibold text-dark">—</span>
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="small text-muted d-block">Company Size</label>
+                    <span id="det-size" class="fw-semibold text-dark">—</span>
+                  </div>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer site-footer--dark py-3 py-md-4" role="contentinfo">
+      <div class="container footer-grid site-footer__grid">
+        <div class="footer-cta site-footer__cta">
+          <h3>Want to post jobs on JapanSSW?</h3>
+          <p class="muted site-footer__cta-muted">
+            Reach qualified candidates under the SSW programme.
+          </p>
+          <div class="footer-cta-actions site-footer__cta-actions d-flex gap-2"></div>
+        </div>
+
+        <div class="footer-links site-footer__links">
+          <div class="link-col site-footer__link-col">
+            <h4>Company</h4>
+            <ul>
+              <li><a href="../../index.html">Home</a></li>
+              <li><a href="../about.html">About</a></li>
+              <li><a href="../contact.html">Contact</a></li>
+            </ul>
+          </div>
+
+          <div class="link-col site-footer__link-col">
+            <h4>Jobs</h4>
+            <ul>
+              <li><a href="../jobs/jobFilter.html">Search Jobs</a></li>
+              <li><a href="./company-list.html">Top Companies</a></li>
+              <li><a href="../agency.html">RSO</a></li>
+            </ul>
+          </div>
+
+          <div class="link-col site-footer__link-col">
+            <h4>Resources</h4>
+            <ul>
+              <li><a href="../visaGuidance.html">Visa Guidance</a></li>
+              <li><a href="../createAccount.html">Create Account</a></li>
+              <li><a href="../privacy.html">Privacy</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="container footer-legal site-footer__legal">
+        <div class="legal-inner site-footer__legal-inner">
+          <small>&copy; 2025 Japan SSW. All rights reserved.</small>
+          <nav aria-label="Footer legal">
+            <a href="../terms.html">Terms</a>
+            <a href="../privacy.html">Privacy</a>
+          </nav>
+        </div>
+      </div>
+    </footer>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    ></script>
+
+    <script type="module" src="../../assets/js/main.js"></script>
+    <script src="../../assets/js/features/animations.js"></script>
+    <script src="../../assets/js/features/companyDetails.js"></script>
+  </body>
 </html>
