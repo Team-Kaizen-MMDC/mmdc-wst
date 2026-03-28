@@ -5465,7 +5465,7 @@ body.profile-dashboard .profile-dashboard-hero-text {
   margin: 0;
 }
 
-body.profile-dashboard .profile-dashboard-completion-pill {
+body.profile-dashboard .profile-status-badge {
   align-self: flex-start;
   background: linear-gradient(135deg, rgba(239, 68, 68, 0.12), rgba(59, 130, 246, 0.12));
   border: 1px solid rgba(239, 68, 68, 0.14);
