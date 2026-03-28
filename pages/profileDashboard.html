@@ -468,6 +468,12 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                         <span class="profile-dashboard-stat__value" id="stat-rejected">–</span>
                       </div>
                     </div>
+                    <div class="col-12">
+                      <div class="profile-dashboard-stat profile-dashboard-stat--hired">
+                        <span class="profile-dashboard-stat__label">🎉 Hired / Offer</span>
+                        <span class="profile-dashboard-stat__value" id="stat-hired">–</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -4221,6 +4227,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
         var STATUS_PENDING    = ['submitted', 'reviewing'];
         var STATUS_INTERVIEW  = ['interview'];
         var STATUS_REJECTED   = ['rejected'];
+        var STATUS_HIRED      = ['accepted', 'offer'];
 
         function statusBadge(status) {
           var map = {
@@ -4383,15 +4390,18 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
             var pending   = apps.filter(function(a){ return STATUS_PENDING.includes(a.status); }).length;
             var interview = apps.filter(function(a){ return STATUS_INTERVIEW.includes(a.status); }).length;
             var rejected  = apps.filter(function(a){ return STATUS_REJECTED.includes(a.status); }).length;
+            var hired     = apps.filter(function(a){ return STATUS_HIRED.includes(a.status); }).length;
 
             var elApplied   = document.getElementById('stat-applied');
             var elPending   = document.getElementById('stat-pending');
             var elInterview = document.getElementById('stat-interview');
             var elRejected  = document.getElementById('stat-rejected');
+            var elHired     = document.getElementById('stat-hired');
             if (elApplied)   elApplied.textContent   = total;
             if (elPending)   elPending.textContent   = pending;
             if (elInterview) elInterview.textContent = interview;
             if (elRejected)  elRejected.textContent  = rejected;
+            if (elHired)     elHired.textContent     = hired;
 
             // ── Modal table ─────────────────────────────────────────────
             var tbody = document.getElementById('applicationTableBody');
@@ -4410,7 +4420,8 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
               var location   = city ? city + ', ' + prefecture : prefecture;
               var date       = formatDate(a.createdAt);
               var badge      = statusBadge(a.status);
-              return '<tr>' +
+              var rowCls     = STATUS_HIRED.includes(a.status) ? ' class="table-success"' : '';
+              return '<tr' + rowCls + '>' +
                 '<td><div class="fw-semibold">' + jobTitle + '</div>' +
                     '<div class="small text-muted">' + company + '</div></td>' +
                 '<td>' + location + '</td>' +
@@ -4423,6 +4434,11 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
             var notifEl = document.getElementById('interviewNotifications');
             if (notifEl) {
               var today = new Date();
+              // Hired / offer applications (most recent first)
+              var hiredApps = apps
+                .filter(function(a) { return STATUS_HIRED.includes(a.status); })
+                .sort(function(a, b) { return new Date(b.updatedAt || b.createdAt) - new Date(a.updatedAt || a.createdAt); });
+
               // All applications with status 'interview', sorted by interview date ascending
               var interviews = apps
                 .filter(function(a) { return a.status === 'interview'; })
@@ -4432,10 +4448,26 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                   return da - db;
                 });
 
-              if (interviews.length === 0) {
+              var notifHtml = '';
+
+              if (hiredApps.length > 0) {
+                notifHtml += hiredApps.slice(0, 3).map(function(a) {
+                  var company  = escapeH(a.job && a.job.company && a.job.company.name ? a.job.company.name : 'a company');
+                  var jobTitle = escapeH(a.job && a.job.title ? a.job.title : 'a position');
+                  var isOffer  = a.status === 'offer';
+                  var icon     = isOffer ? '📩' : '🎉';
+                  var label    = isOffer ? 'Offer received' : 'Congratulations — you\'ve been hired!';
+                  return '<p class="small mb-2 text-dark fw-semibold">' +
+                    icon + ' <strong>' + label + '</strong><br>' +
+                    '<span class="fw-normal text-success">' + jobTitle + ' at ' + company + '</span>' +
+                  '</p>';
+                }).join('');
+              }
+
+              if (interviews.length === 0 && notifHtml === '') {
                 notifEl.innerHTML = '<p class="small text-muted mb-0">No upcoming interviews.</p>';
               } else {
-                notifEl.innerHTML = interviews.slice(0, 4).map(function(a, idx) {
+                notifHtml += interviews.slice(0, 4).map(function(a, idx) {
                   var company    = escapeH(a.job && a.job.company && a.job.company.name ? a.job.company.name : 'Company');
                   var prefecture = escapeH(a.job && a.job.location && a.job.location.prefecture ? a.job.location.prefecture.toUpperCase() : '');
                   var jobTitle   = escapeH(a.job && a.job.title ? a.job.title : 'Interview');
@@ -4444,7 +4476,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                   var dateLabel  = iDate
                     ? iDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
                     : 'Date TBD';
-                  var textCls    = idx === 0 ? 'text-dark' : 'text-secondary';
+                  var textCls    = idx === 0 && hiredApps.length === 0 ? 'text-dark' : 'text-secondary';
                   var pastBadge  = isPast ? ' <span class="badge bg-secondary-subtle text-secondary border border-secondary-subtle ms-1" style="font-size:0.65rem">Past</span>' : '';
                   var loc        = prefecture ? ' (' + prefecture + ')' : '';
                   return '<p class="small mb-1 ' + textCls + '">' +
@@ -4452,6 +4484,7 @@ This is the default profile description. Click 'Edit' to make changes.</textarea
                     '<span class="text-muted">' + jobTitle + ' – ' + company + loc + '</span>' +
                   '</p>';
                 }).join('');
+                notifEl.innerHTML = notifHtml;
               }
             }
 
