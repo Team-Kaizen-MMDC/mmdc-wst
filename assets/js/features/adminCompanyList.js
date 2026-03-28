@@ -129,7 +129,7 @@ function renderCompanyPage(page) {
           <td class="ps-4 fw-semibold">${escapeHtml(company.name || "-")}</td>
           <td>${escapeHtml(location || "-")}</td>
           <td>${escapeHtml(company.industry || "-")}</td>
-          <td>${escapeHtml(String(company.jobsCount ?? 0))}</td>
+          <td>${escapeHtml(String(company.jobCount ?? 0))}</td>
           <td class="text-end pe-4">
             <a
               href="/pages/companies/company-details.html?slug=${encodeURIComponent(slug)}"
